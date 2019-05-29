@@ -55,8 +55,11 @@ export class ModelcontentComponent {
     this.paramters.isbalanced = this.isbalanced.toString();
     this.paramters.model_generator_job_id = '';
     if (this.file) {
-      this.uploaderService.upload(this.file, this.paramters).subscribe(d => {
-        console.log(d);
+      this.uploaderService.modelJobinit(this.paramters).subscribe( res => {
+        console.log('test: ' + res.toString());
+        this.uploaderService.upload(this.file, res.toString()).subscribe(d => {
+          console.log(d);
+        });
       });
     }
   }
