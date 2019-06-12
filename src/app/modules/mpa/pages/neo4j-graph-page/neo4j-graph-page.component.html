@@ -1,0 +1,13 @@
+<mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile [colspan]=1 [rowspan]=1>
+        Neo4j Graph Page
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]=1 [rowspan]=1>
+        <mat-form-field>
+            <input matInput #textEntered type="text" placeholder="Experiment ID">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]=1 [rowspan]=1>
+        <button mat-raised-button color="primary" (click)="graphFromExpID(textEntered.value)">Create Graph From Experiment ID</button>
+    </mat-grid-tile>
+</mat-grid-list>

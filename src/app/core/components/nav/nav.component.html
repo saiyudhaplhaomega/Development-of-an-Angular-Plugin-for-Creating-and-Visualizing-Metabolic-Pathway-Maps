@@ -1,0 +1,16 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" opened role="navigation">
+    <mat-nav-list>
+      <a mat-list-item (click)="sidenav.toggle()" routerLink='/first'>Home</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item (click)="sidenav.toggle()" routerLink='/dbsearch'>DBsearch</a>
+      <a mat-list-item (click)="sidenav.toggle()" routerLink='/proteinloader'>ProteinLoader</a>
+      <a mat-list-item (click)="sidenav.toggle()" routerLink='/modeltrainer'>ModelTrainer</a>
+      <a mat-list-item (click)="sidenav.toggle()" routerLink='/neo4j'>Neo4J</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-navigation-bar (toggleSidenav)="sidenav.toggle()" ></app-navigation-bar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
