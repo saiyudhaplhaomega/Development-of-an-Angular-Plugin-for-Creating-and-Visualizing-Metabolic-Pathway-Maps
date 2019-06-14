@@ -4,10 +4,11 @@ import {HomedashboardComponent} from './modules/mpa/pages/home-dashboard-page/ho
 import {DBSearchContentComponent} from './modules/mpa/pages/database-search-page/dbsearchcontent.component';
 import {ProteinloadercontentComponent} from './modules/mpa/pages/protein-database-page/proteinloadercontent.component';
 import {ModelcontentComponent} from './modules/mpa/pages/model-generator-page/modelcontent.component';
+import {SigninComponent} from './signin/signin.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  //{ path: 'login', component: LoginComponent },
+  { path: 'login', component: SigninComponent },
   { path: 'home', component: HomedashboardComponent},
   { path: 'neo4j', component: Neo4jGraphPageComponent},
   { path: 'dbsearch', component: DBSearchContentComponent},

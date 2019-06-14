@@ -12,6 +12,23 @@ import {HttpClient} from '@angular/common/http';
 
 import {WebserveraddressService} from './shared/services/webserveraddress.service';
 import {Neo4jhttprequestsService} from './modules/mpa/services/neo4jhttprequests.service';
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider} from 'angular-6-social-login';
+
+// Configs
+export function getAuthServiceConfigs() {
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('533975881425-kerne9k4q8rhiqt6q0mn0gtcftohibcp.apps.googleusercontent.com')
+      }
+    ]);
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -26,13 +43,20 @@ import {Neo4jhttprequestsService} from './modules/mpa/services/neo4jhttprequests
     MpaModule,
 
     HttpClientModule,
+    SocialLoginModule
   ],
   providers: [
     Neo4jhttprequestsService,
     HttpClient,
-    WebserveraddressService
+    WebserveraddressService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
   ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule {
 }

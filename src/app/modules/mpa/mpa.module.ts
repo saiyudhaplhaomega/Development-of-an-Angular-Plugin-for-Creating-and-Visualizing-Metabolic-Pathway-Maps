@@ -18,6 +18,8 @@ import {ProteinUploaderService} from './pages/protein-database-page/proteindbupl
 import {DbsearchcontentService} from './pages/database-search-page/dbsearchcontent.service';
 import {ModelContentService} from './pages/model-generator-page/modelcontent.service';
 import {ProtDBContentService} from './pages/protein-database-page/proteinloadercontent.service';
+import {SigninComponent} from '../../signin/signin.component';
+import {WebserverloginService} from './services/webserverlogin.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {ProtDBContentService} from './pages/protein-database-page/proteinloaderc
     HomedashboardComponent,
     DBSearchContentComponent,
     ProteinloadercontentComponent,
-    ModelcontentComponent
+    ModelcontentComponent,
+    SigninComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import {ProtDBContentService} from './pages/protein-database-page/proteinloaderc
     DbsearchcontentService,
     ModelContentService,
     ProtDBContentService,
+    WebserverloginService
   ]
 })
 export class MpaModule { }
