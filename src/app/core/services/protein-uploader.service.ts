@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import {WebserveraddressService} from '../../../../shared/services/webserveraddress.service';
+import {WebserveraddressService} from '../../shared/services/webserveraddress.service'
 
 @Injectable()
 export class ProteinUploaderService {

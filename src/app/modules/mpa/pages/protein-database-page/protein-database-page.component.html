@@ -1,0 +1,23 @@
+<mat-grid-list cols="1" rowHeight="64px">
+  <mat-grid-tile [colspan]=1 [rowspan]=1>
+    <h3>Protein database page</h3>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]=1 [rowspan]=1>
+    <button mat-raised-button color="primary" mat-raised-button (click)="file.click()">Choose File</button>
+    <input hidden type="file" #file (change)="onChange(file.files)" multiple />
+    <ul>
+      <li *ngFor="let f of files">{{ f.name }}</li>
+    </ul>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]=1 [rowspan]=1>
+    <button mat-raised-button color="primary" (click)="upload()">Upload</button>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]=1 [rowspan]=1>
+    <button mat-raised-button color="primary" (click)="getProtDBs()">View List of Existing Protein Databases</button>
+    <ul class="protdbs">
+      <li *ngFor="let protdb of this.protdbs">
+        <span class="badge">{{ protdb.protdb_id }}</span>
+      </li>
+    </ul>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,16 +1,16 @@
 import {Component} from '@angular/core';
-import {ModeluploaderService} from './modeluploader.service';
-import {ModelDownloaderService} from './modeldownloader.service';
+import {ModeluploaderService} from '../../../../core/services/modeluploader.service';
+import {ModelDownloaderService} from '../../../../core/services/modeldownloader.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
-import {ModelContentService} from './modelcontent.service';
-import {ModelJSON} from './modeljson';
-import {ModelJobObject} from './modeljobjson';
+import {ModelContentService} from '../../../../core/services/modelcontent.service';
+import {ModelJSON} from '../../../../core/models/modeljson';
+import {ModelJobObject} from '../../../../core/models/modeljobjson';
 
 @Component({
-  selector: 'app-modelcontent',
-  templateUrl: './modelcontent.component.html',
-  styleUrls: ['./modelcontent.component.css']
+  selector: 'app-model-database-page',
+  templateUrl: './model-database-page.component.html',
+  styleUrls: ['./model-database-page.component.css']
 })
 
 export class ModelcontentComponent {

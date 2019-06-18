@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {DbsearchcontentService} from './dbsearchcontent.service';
-import {StreamJSON} from './streamjson';
-import {ExperimentJSON} from './experimentjson';
+import {DbsearchcontentService} from '../../../../core/services/dbsearchcontent.service';
+import {StreamJSON} from '../../../../core/models/streamjson';
+import {ExperimentJSON} from '../../../../core/models/experimentjson';
 
 @Component({
-  selector: 'app-dbsearchcontent',
-  templateUrl: './dbsearchcontent.component.html',
-  styleUrls: ['./dbsearchcontent.component.css']
+  selector: 'app-database-search-page',
+  templateUrl: './database-search-page.component.html',
+  styleUrls: ['./database-search-page.component.css']
 })
 
 export class DBSearchContentComponent {

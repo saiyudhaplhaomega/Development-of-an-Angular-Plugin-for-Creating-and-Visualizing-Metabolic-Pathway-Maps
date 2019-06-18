@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {ProteinUploaderService} from './proteindbuploader.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ProtDBJSON} from './protdbjson';
-import {ProtDBContentService} from './proteinloadercontent.service';
+import {ProteinUploaderService} from '../../../../core/services/protein-uploader.service';
+import {HttpClient} from '@angular/common/http';
+import {ProtDBJSON} from '../../../../core/models/protdbjson';
+import {ProtDBContentService} from '../../../../core/services/protein-database.service';
 
 @Component({
-  selector: 'app-proteinloadercontent',
-  templateUrl: './proteinloadercontent.component.html',
-  styleUrls: ['./proteinloadercontent.component.css']
+  selector: 'app-protein-database-page',
+  templateUrl: './protein-database-page.component.html',
+  styleUrls: ['./protein-database-page.component.css']
 })
 
 export class ProteinloadercontentComponent {

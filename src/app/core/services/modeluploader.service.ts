@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {WebserveraddressService} from '../../../../shared/services/webserveraddress.service';
-import {ModelJobObject} from './modeljobjson';
+import {WebserveraddressService} from '../../shared/services/webserveraddress.service';
+import {ModelJobObject} from '../models/modeljobjson';
 
 @Injectable()
 export class ModeluploaderService {

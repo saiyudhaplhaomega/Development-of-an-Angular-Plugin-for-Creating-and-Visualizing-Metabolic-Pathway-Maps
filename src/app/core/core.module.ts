@@ -11,6 +11,14 @@ import {Routing} from '../app.routing';
 import {MaterialModule} from './../shared/material-module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import {ProteinUploaderService} from './services/protein-uploader.service';
+import {ProtDBContentService} from './services/protein-database.service';
+
+import {ModeluploaderService} from './services/modeluploader.service';
+import {ModelDownloaderService} from './services/modeldownloader.service';
+import {ModelContentService} from './services/modelcontent.service';
+import {DbsearchcontentService} from './services/dbsearchcontent.service';
+
 @NgModule({
   declarations: [
     NavigationBarComponent,
@@ -26,6 +34,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   exports: [
     NavigationBarComponent,
     NavComponent
+  ],
+  providers: [
+    ProteinUploaderService,
+    ProtDBContentService,
+    ModeluploaderService,
+    ModelDownloaderService,
+    ModelContentService,
+    DbsearchcontentService
   ]
 })
 

@@ -1,24 +1,4 @@
-.example-container {
-  position: relative;
-  top: 40px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.example-events {
-  width: 300px;
-  height: 200px;
-  overflow: auto;
-  border: 1px solid #555;
-}
-
-.top-bar {
-  height: 40px;
-  background-color: red;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  margin-left: auto;
-  margin-right: auto;
+.center {
+  margin:auto;
+  background-color:green;
 }
