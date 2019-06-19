@@ -13,7 +13,7 @@ import {ModelJobObject} from '../../../../core/models/modeljobjson';
   styleUrls: ['./model-database-page.component.css']
 })
 
-export class ModelcontentComponent {
+export class ModelDatabasePageComponent {
 
   file: File;
   files: FileList;

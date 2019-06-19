@@ -10,7 +10,7 @@ import {ProtDBContentService} from '../../../../core/services/protein-database.s
   styleUrls: ['./protein-database-page.component.css']
 })
 
-export class ProteinloadercontentComponent {
+export class ProteinDatabasePageComponent {
 
   file: File;
   files: FileList;

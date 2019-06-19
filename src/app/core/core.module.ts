@@ -18,8 +18,10 @@ import {ModeluploaderService} from './services/modeluploader.service';
 import {ModelDownloaderService} from './services/modeldownloader.service';
 import {ModelContentService} from './services/modelcontent.service';
 import {DbsearchcontentService} from './services/dbsearchcontent.service';
+import {Neo4jhttprequestsService} from './services/neo4jhttprequests.service';
 
-import {AuthGuard} from './services/auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { InternalAuthService } from './services/internal-auth.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import {AuthGuard} from './services/auth-guard.service';
     ModelDownloaderService,
     ModelContentService,
     DbsearchcontentService,
-
+    Neo4jhttprequestsService,
+    InternalAuthService,
     AuthGuard
   ]
 })

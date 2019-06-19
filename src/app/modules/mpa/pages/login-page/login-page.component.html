@@ -1,0 +1,18 @@
+<h1>Account Managment</h1>
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <div *ngIf="!user">
+      <button mat-raised-button color="primary" (click)="signInWithGoogle()">Sign in with Google</button>
+    </div>
+    <div *ngIf="user">
+      <button mat-raised-button color="primary" (click)="signOut()">Sign out with Google</button>
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">
+    <img src="{{ user.photoUrl }}">
+    <div>
+      <h4>{{ user.name }}</h4>
+      <p>{{ user.email }}</p>
+    </div>
+  </div>
+</div>

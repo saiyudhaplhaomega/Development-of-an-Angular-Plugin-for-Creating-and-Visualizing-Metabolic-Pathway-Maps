@@ -7,25 +7,24 @@ import {MaterialModule} from '../../shared/material-module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {Neo4jGraphPageComponent} from './pages/neo4j-graph-page/neo4j-graph-page.component';
-import {HomedashboardComponent} from './pages/home-dashboard-page/home-dashboard-page.component';
-import {DBSearchContentComponent} from './pages/database-search-page/database-search-page.component';
-import {ProteinloadercontentComponent} from './pages/protein-database-page/protein-database-page.component';
-import {ModelcontentComponent} from './pages/model-database-page/model-database-page.component';
+import {HomeDashboardPageComponent} from './pages/home-dashboard-page/home-dashboard-page.component';
+import {DatabaseSearchPageComponent} from './pages/database-search-page/database-search-page.component';
+import {ProteinDatabasePageComponent} from './pages/protein-database-page/protein-database-page.component';
+import {ModelDatabasePageComponent} from './pages/model-database-page/model-database-page.component';
 import { TestPageComponent } from './pages/test-page/test-page.component';
 
-import {SigninComponent} from '../../signin/signin.component';
-import {WebserverloginService} from './services/webserverlogin.service';
+import {LoginPageComponent} from './pages/login-page/login-page.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     Neo4jGraphPageComponent,
-    HomedashboardComponent,
-    DBSearchContentComponent,
-    ProteinloadercontentComponent,
-    ModelcontentComponent,
-    SigninComponent,
+    HomeDashboardPageComponent,
+    DatabaseSearchPageComponent,
+    ProteinDatabasePageComponent,
+    ModelDatabasePageComponent,
+    LoginPageComponent,
     TestPageComponent
   ],
   imports: [
@@ -38,8 +37,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     FlexLayoutModule
   ],
-  providers: [
-    WebserverloginService
-  ]
+  providers: []
 })
 export class MpaModule { }

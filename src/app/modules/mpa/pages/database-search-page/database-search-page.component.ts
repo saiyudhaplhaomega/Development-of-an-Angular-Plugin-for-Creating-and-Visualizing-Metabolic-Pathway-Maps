@@ -10,7 +10,7 @@ import {ExperimentJSON} from '../../../../core/models/experimentjson';
   styleUrls: ['./database-search-page.component.css']
 })
 
-export class DBSearchContentComponent {
+export class DatabaseSearchPageComponent {
   title = 'app';
 
   experimentList: ExperimentJSON[];

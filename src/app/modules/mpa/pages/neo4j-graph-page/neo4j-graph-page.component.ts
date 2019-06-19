@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Neo4jJSON} from '../../services/neo4jjson';
+import {Neo4jJSON} from '../../../../core/models/neo4jjson';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {WebserveraddressService} from '../../../../shared/services/webserveraddress.service';
 
