@@ -11,9 +11,12 @@ import {HomedashboardComponent} from './pages/home-dashboard-page/home-dashboard
 import {DBSearchContentComponent} from './pages/database-search-page/database-search-page.component';
 import {ProteinloadercontentComponent} from './pages/protein-database-page/protein-database-page.component';
 import {ModelcontentComponent} from './pages/model-database-page/model-database-page.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
 
 import {SigninComponent} from '../../signin/signin.component';
 import {WebserverloginService} from './services/webserverlogin.service';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import {WebserverloginService} from './services/webserverlogin.service';
     DBSearchContentComponent,
     ProteinloadercontentComponent,
     ModelcontentComponent,
-    SigninComponent
+    SigninComponent,
+    TestPageComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,9 @@ import {WebserverloginService} from './services/webserverlogin.service';
     Routing,
 
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
+    FlexLayoutModule
   ],
   providers: [
     WebserverloginService

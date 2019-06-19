@@ -1,35 +1,33 @@
-<div class='center'>
-<mat-grid-list cols="1" rowHeight="64px">
-  <mat-grid-tile [colspan]=1 [rowspan]=1>
+<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+  <div fxLayout="row">
     <h3>Database search page</h3>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=1 [rowspan]=1>
+  </div>
+  <div fxLayout="row">
     <button mat-raised-button color="primary" (click)="getExperiments()">View List of Experiments</button>
     <ul class="experiments">
       <li *ngFor="let exp of experimentList">
           <span class="badge">{{ exp.exp_id }}</span>
       </li>
     </ul>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=1 [rowspan]=1>
+  </div>
+  <div fxLayout="row">
     <button mat-raised-button color="primary" (click)="getStreamingSessions()">View List of Streaming Session</button>
     <ul class="experiments">
       <li *ngFor="let stream of streamList">
         <span class="badge">{{ stream.streaming_session_id }}</span>
       </li>
     </ul>
-  </mat-grid-tile>
-  <mat-grid-tile>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field>
       <input matInput #textEntered placeholder="Experiment ID">
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="newExperiment(textEntered.value)">New Experiment</button>        
-  </mat-grid-tile>
-  <mat-grid-tile>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field>
       <input matInput #textEntered placeholder="Session ID">
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="newStreamingSession(textEntered2.value)">New Streaming Session</button>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
 </div>

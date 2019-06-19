@@ -5,6 +5,7 @@ import {DBSearchContentComponent} from './modules/mpa/pages/database-search-page
 import {ProteinloadercontentComponent} from './modules/mpa/pages/protein-database-page/protein-database-page.component';
 import {ModelcontentComponent} from './modules/mpa/pages/model-database-page/model-database-page.component';
 import {SigninComponent} from './signin/signin.component';
+import {TestPageComponent} from './modules/mpa/pages/test-page/test-page.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'dbsearch', component: DBSearchContentComponent},
   { path: 'proteinloader', component: ProteinloadercontentComponent},
   { path: 'modeltrainer', component: ModelcontentComponent},
+  { path: 'test', component: TestPageComponent},
 
   { path: '**', redirectTo: 'home' }
 ];

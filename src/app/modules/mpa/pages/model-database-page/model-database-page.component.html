@@ -1,27 +1,28 @@
-<mat-grid-list cols="2" rowHeight="64px">
-  <mat-grid-tile [colspan]=2 [rowspan]=1>
-    <h2>Model database page</h2>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=1 [rowspan]=1>
-    <mat-form-field>
-      <input matInput #textEntered type="text" placeholder="PRIDE ID">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=1 [rowspan]=1>
-    <button mat-raised-button color="primary" (click)="newCSV(textEntered.value)">Create CSV from PRIDE ID</button>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=2 [rowspan]=1>
-      <h2>Upload csv file</h2>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]=2 [rowspan]=1>
-    <button mat-raised-button color="primary" mat-raised-button (click)="filechooser.click()">Choose File</button>
-    <input type="file" hidden #filechooser (change)="onChange(filechooser.files)" multiple />
-    <ul>
-      <li *ngFor="let f of files">{{ f.name }}</li>
-    </ul>
-    <mat-checkbox name="balanced" #isbalanced (change)="changeBalancedCheckbox(isbalanced.name)">
-      Balanced? 
-    </mat-checkbox>
-    <button mat-raised-button color="primary" (click)="upload()">Upload</button>
-  </mat-grid-tile>
-</mat-grid-list>
+<h2>Model database page</h2>
+<mat-tab-group>
+  <mat-tab label="Create CSV">
+    <h4>Create CSV from PRIDE ID</h4>
+    <div fxFlex fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <mat-form-field>
+        <input matInput #textEntered type="text" placeholder="PRIDE ID">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="newCSV(textEntered.value)">Create CSV from PRIDE ID</button>
+    </div>
+  </mat-tab>
+  <mat-tab label="Upload CSV">
+    <h4>
+      Upload CSV file
+    </h4>
+    <div fxFlex fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <button mat-raised-button color="primary" mat-raised-button (click)="filechooser.click()">Choose File</button>
+      <input type="file" hidden #filechooser (change)="onChange(filechooser.files)" multiple />
+      <ul>
+        <li *ngFor="let f of files">{{ f.name }}</li>
+      </ul>
+      <mat-checkbox name="balanced" #isbalanced (change)="changeBalancedCheckbox(isbalanced.name)">
+        Balanced? 
+      </mat-checkbox>
+      <button mat-raised-button color="primary" (click)="upload()">Upload</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
