@@ -19,6 +19,8 @@ import {ModelDownloaderService} from './services/modeldownloader.service';
 import {ModelContentService} from './services/modelcontent.service';
 import {DbsearchcontentService} from './services/dbsearchcontent.service';
 
+import {AuthGuard} from './services/auth-guard.service';
+
 @NgModule({
   declarations: [
     NavigationBarComponent,
@@ -41,7 +43,9 @@ import {DbsearchcontentService} from './services/dbsearchcontent.service';
     ModeluploaderService,
     ModelDownloaderService,
     ModelContentService,
-    DbsearchcontentService
+    DbsearchcontentService,
+
+    AuthGuard
   ]
 })
 

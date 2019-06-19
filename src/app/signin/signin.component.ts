@@ -37,7 +37,6 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('hallo w****');
-
   }
 
 }

@@ -2,7 +2,7 @@
 <mat-tab-group>
   <mat-tab label="Create CSV">
     <h4>Create CSV from PRIDE ID</h4>
-    <div fxFlex fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <mat-form-field>
         <input matInput #textEntered type="text" placeholder="PRIDE ID">
       </mat-form-field>
@@ -13,7 +13,7 @@
     <h4>
       Upload CSV file
     </h4>
-    <div fxFlex fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <button mat-raised-button color="primary" mat-raised-button (click)="filechooser.click()">Choose File</button>
       <input type="file" hidden #filechooser (change)="onChange(filechooser.files)" multiple />
       <ul>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -9,6 +10,14 @@ export class NavigationBarComponent {
 
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  navigateLogin() {
+    this.router.navigateByUrl('/login');
+  }
+
+  navigateTest() {
+    this.router.navigateByUrl('/test');
+  }
 
 }

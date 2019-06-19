@@ -5,17 +5,19 @@ import {DBSearchContentComponent} from './modules/mpa/pages/database-search-page
 import {ProteinloadercontentComponent} from './modules/mpa/pages/protein-database-page/protein-database-page.component';
 import {ModelcontentComponent} from './modules/mpa/pages/model-database-page/model-database-page.component';
 import {SigninComponent} from './signin/signin.component';
-import {TestPageComponent} from './modules/mpa/pages/test-page/test-page.component'
+import {TestPageComponent} from './modules/mpa/pages/test-page/test-page.component';
+
+import {AuthGuard} from './core/services/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'login', component: SigninComponent },
+  { path: 'login', component: SigninComponent},
   { path: 'home', component: HomedashboardComponent},
-  { path: 'neo4j', component: Neo4jGraphPageComponent},
-  { path: 'dbsearch', component: DBSearchContentComponent},
-  { path: 'proteinloader', component: ProteinloadercontentComponent},
-  { path: 'modeltrainer', component: ModelcontentComponent},
-  { path: 'test', component: TestPageComponent},
+  { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},
+  { path: 'dbsearch', component: DBSearchContentComponent, canActivate: [AuthGuard]},
+  { path: 'proteinloader', component: ProteinloadercontentComponent, canActivate: [AuthGuard]},
+  { path: 'modeltrainer', component: ModelcontentComponent, canActivate: [AuthGuard]},
+  { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},
 
   { path: '**', redirectTo: 'home' }
 ];
