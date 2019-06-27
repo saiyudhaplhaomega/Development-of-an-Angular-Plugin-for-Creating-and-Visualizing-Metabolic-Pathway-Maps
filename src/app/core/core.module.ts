@@ -11,7 +11,6 @@ import {Routing} from '../app.routing';
 import {MaterialModule} from './../shared/material-module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {ProteinUploaderService} from './services/protein-uploader.service';
 import {ProtDBContentService} from './services/protein-database.service';
 
 import {ModeluploaderService} from './services/modeluploader.service';
@@ -40,7 +39,6 @@ import { InternalAuthService } from './services/internal-auth.service';
     NavComponent
   ],
   providers: [
-    ProteinUploaderService,
     ProtDBContentService,
     ModeluploaderService,
     ModelDownloaderService,

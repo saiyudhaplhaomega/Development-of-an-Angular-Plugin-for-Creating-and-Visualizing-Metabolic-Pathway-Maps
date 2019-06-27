@@ -27,7 +27,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      this.internalAuthService.setAuthState((user != null));
+      this.internalAuthService.setUser(user);
     });
   }
 

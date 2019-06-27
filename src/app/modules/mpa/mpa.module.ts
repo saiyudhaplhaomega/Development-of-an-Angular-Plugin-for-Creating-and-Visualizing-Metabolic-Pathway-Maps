@@ -16,6 +16,7 @@ import { TestPageComponent } from './pages/test-page/test-page.component';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProphaneJobPageComponent } from './pages/prophane-job-page/prophane-job-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ProteinDatabasePageComponent,
     ModelDatabasePageComponent,
     LoginPageComponent,
-    TestPageComponent
+    TestPageComponent,
+    ProphaneJobPageComponent
   ],
   imports: [
     CommonModule,

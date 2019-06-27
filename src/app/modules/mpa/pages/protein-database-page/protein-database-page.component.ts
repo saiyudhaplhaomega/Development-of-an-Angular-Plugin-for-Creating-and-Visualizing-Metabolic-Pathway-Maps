@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ProteinUploaderService} from '../../../../core/services/protein-uploader.service';
+import {FileUploaderService} from '../../../../shared/services/file-uploader.service';
 import {HttpClient} from '@angular/common/http';
 import {ProtDBJSON} from '../../../../core/models/protdbjson';
 import {ProtDBContentService} from '../../../../core/services/protein-database.service';
@@ -16,7 +16,7 @@ export class ProteinDatabasePageComponent {
   files: FileList;
   protdbs: ProtDBJSON[];
 
-  constructor (private uploaderService: ProteinUploaderService, private http: HttpClient, private protdbservice: ProtDBContentService) {}
+  constructor (private uploaderService: FileUploaderService, private http: HttpClient, private protdbservice: ProtDBContentService) {}
 
   onChange(files: FileList) {
     this.files = files;
@@ -26,7 +26,7 @@ export class ProteinDatabasePageComponent {
   upload(): void {
     console.log(this.file)
     if (this.file) {
-      this.uploaderService.upload(this.file).subscribe(d => {   // "data" can be your file or image in base64 or other encoding
+      this.uploaderService.postFile(this.file, 'mpacloud/v1/proteinDBLoader').subscribe(d => {
         console.log(d);
       });
     }

@@ -1,0 +1,36 @@
+<h3>Prophane job page</h3>
+<mat-tab-group>
+  <mat-tab label="Upload job data">
+    <h4>
+      Select and upload fasta and csv file to start prophane job
+    </h4>
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+        <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
+        <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
+        <p *ngIf="fastaFile">{{ fastaFile.name }}</p>        
+      </div>
+      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose CSV file</button>
+        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
+        <p *ngIf="csvFile">{{ csvFile.name }}</p>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="uploadFiles()">Start</button>
+  </mat-tab>
+  <mat-tab label="Download job results">
+    <h4>
+      View a list of existing protein database ids
+    </h4>
+    <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+      <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
+      <mat-radio-group [(ngModel)]="prophaneResult" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <mat-radio-button *ngFor="let result of prophaneResults" value="result">{{ result }}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf='prophaneResults'>
+      <button mat-raised-button color="primary" (click)="downloadResult()">Download selected result</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>

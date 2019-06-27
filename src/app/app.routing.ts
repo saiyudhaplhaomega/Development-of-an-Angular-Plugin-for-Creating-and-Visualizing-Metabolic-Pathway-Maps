@@ -8,6 +8,7 @@ import {LoginPageComponent} from './modules/mpa/pages/login-page/login-page.comp
 import {TestPageComponent} from './modules/mpa/pages/test-page/test-page.component';
 
 import {AuthGuard} from './core/services/auth-guard.service';
+import { ProphaneJobPageComponent } from './modules/mpa/pages/prophane-job-page/prophane-job-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'dbsearch', component: DatabaseSearchPageComponent, canActivate: [AuthGuard]},
   { path: 'proteinloader', component: ProteinDatabasePageComponent, canActivate: [AuthGuard]},
   { path: 'modeltrainer', component: ModelDatabasePageComponent, canActivate: [AuthGuard]},
+  { path: 'prophane', component: ProphaneJobPageComponent, canActivate: [AuthGuard]},
   { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},
 
   { path: '**', redirectTo: 'home' }

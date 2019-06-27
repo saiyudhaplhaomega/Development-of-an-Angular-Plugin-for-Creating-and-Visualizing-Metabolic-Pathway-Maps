@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {WebserveraddressService} from '../../shared/services/webserveraddress.service';
-import {ModelJobObject} from '../models/modeljobjson';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebserveraddressService } from '../../shared/services/webserveraddress.service';
+import { ModelJobObject } from '../models/modeljobjson';
 
 @Injectable()
 export class ModeluploaderService {
@@ -17,12 +17,12 @@ export class ModeluploaderService {
     fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', data);
     // TODO: proper error handling
-    return this.http.post(this.webserver.getwebserverurl() + 'mpacloud/v1/csv2model?modeljobid=' + uuid, fd, {responseType: 'text'});
+    return this.http.post(this.webserver.getwebserverurl() + 'mpacloud/v1/csv2model?modeljobid=' + uuid, fd, { responseType: 'text' });
   }
 
-  modelJobinit(paramters: ModelJobObject) {
+  modelJobinit(parameters: ModelJobObject) {
     // TODO: proper error handling
-    return this.http.post(this.webserver.getwebserverurl() + '/mpacloud/v1/csv2modelinit', JSON.stringify(paramters), {responseType: 'text'});
+    return this.http.post(this.webserver.getwebserverurl() + '/mpacloud/v1/csv2modelinit', JSON.stringify(parameters), { responseType: 'text' });
   }
 
 }
