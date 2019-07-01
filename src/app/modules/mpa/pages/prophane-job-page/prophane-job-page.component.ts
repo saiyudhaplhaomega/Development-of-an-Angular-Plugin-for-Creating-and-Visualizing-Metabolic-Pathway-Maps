@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploaderService } from '../../../../shared/services/file-uploader.service';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -16,6 +17,12 @@ export class ProphaneJobPageComponent implements OnInit {
   constructor(private uploaderService: FileUploaderService) { }
 
   ngOnInit() {
+    this.prophaneResults = ['1', '2'];
+  }
+
+  onChange(mrChange: MatRadioChange) {
+    this.prophaneResult = mrChange.source.value;
+    console.log(this.prophaneResult);
   }
 
   uploadFasta(): void {
@@ -39,6 +46,8 @@ export class ProphaneJobPageComponent implements OnInit {
   uploadFiles(): void {
     this.uploadCSV();
     this.uploadFasta();
+    // one more post  to /prophaneParameter
+
   }
 
   getProphaneResults(): void {
