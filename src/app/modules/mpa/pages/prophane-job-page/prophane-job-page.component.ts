@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FileUploaderService } from '../../../../shared/services/file-uploader.service';
-import { MatRadioChange } from '@angular/material/radio';
+import {Component, OnInit} from '@angular/core';
+import {FileUploaderService} from '../../../../shared/services/file-uploader.service';
+import {MatRadioChange} from '@angular/material/radio';
+import {SerializableObjectUploaderService} from '../../../../shared/services/serializable-object-uploader.service';
+import {ProphaneParamObject} from '../../../../core/models/prophaneparamjson';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -13,8 +15,10 @@ export class ProphaneJobPageComponent implements OnInit {
   csvFile: File;
   prophaneResults: String[];
   prophaneResult: String;
+  parameters: ProphaneParamObject;
 
-  constructor(private uploaderService: FileUploaderService) { }
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
+  }
 
   ngOnInit() {
     this.prophaneResults = ['1', '2'];
@@ -43,11 +47,23 @@ export class ProphaneJobPageComponent implements OnInit {
     }
   }
 
-  uploadFiles(): void {
+  startProphaneJob(): void {
+    console.log(this.parameters);
+    this.jsonUpload.postObj(this.parameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
+      console.log(d);
+    });
+  }
+
+  requestNewJob(): void {
+    this.jsonUpload.postObj(this.parameters, 'mpacloud/v1/prophaneRequestJob').subscribe(d => {
+      console.log(d);
+    });
+  }
+
+  startButton(): void {
     this.uploadCSV();
     this.uploadFasta();
-    // one more post  to /prophaneParameter
-
+    this.startProphaneJob();
   }
 
   getProphaneResults(): void {
