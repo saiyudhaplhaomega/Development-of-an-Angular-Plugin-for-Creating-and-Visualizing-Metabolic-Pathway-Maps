@@ -22,7 +22,8 @@ export class ModeluploaderService {
 
   modelJobinit(parameters: ModelJobObject) {
     // TODO: proper error handling
-    return this.http.post(this.webserver.getwebserverurl() + '/mpacloud/v1/csv2modelinit', JSON.stringify(parameters), { responseType: 'text' });
+    return this.http.post(this.webserver.getwebserverurl() + '/mpacloud/v1/csv2modelinit', JSON.stringify(parameters), 
+    { responseType: 'text' });
   }
 
 }

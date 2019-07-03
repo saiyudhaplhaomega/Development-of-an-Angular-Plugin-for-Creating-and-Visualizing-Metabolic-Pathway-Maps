@@ -1,11 +1,11 @@
 export interface ProphaneParamJSON {
-  prophanejobuuid: string;
-  csvfilename: string;
-  fastafilename: string;
+  prophaneJobUUID: string;
+  csvFilename: string;
+  fastaFilename: string;
 }
 
 export class ProphaneParamObject implements ProphaneParamJSON {
-  public prophanejobuuid: string;
-  public csvfilename: string;
-  public fastafilename: string;
+  public prophaneJobUUID: string;
+  csvFilename: string;
+  fastaFilename: string;
 }

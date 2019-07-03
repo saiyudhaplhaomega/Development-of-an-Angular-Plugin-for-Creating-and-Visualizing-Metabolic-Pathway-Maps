@@ -5,20 +5,26 @@
       Select and upload fasta and csv file to start prophane job
     </h4>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+      <p *ngIf="currentProphaneParameters && currentProphaneParameters.prophaneJobUUID">Current job ID: {{ currentProphaneParameters.prophaneJobUUID }}</p>
       <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
         <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
         <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
-        <p *ngIf="fastaFile">{{ fastaFile.name }}</p>
+        <div *ngIf="fastaFile">
+          <p>{{ fastaFile.name }}</p>
+          <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New Prophane Job</button>
       </div>
       <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
         <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose CSV file</button>
         <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
-        <p *ngIf="csvFile">{{ csvFile.name }}</p>
+        <div *ngIf="csvFile">
+          <p>{{ csvFile.name }}</p>
+          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start Job</button>
       </div>
     </div>
-
-    <button mat-raised-button color="primary" (click)="requestNewJob()">New Prophane Job</button>
-    <button mat-raised-button color="primary" (click)="startButton()">Start Job</button>
   </mat-tab>
   <mat-tab label="Download job results">
   <h4>

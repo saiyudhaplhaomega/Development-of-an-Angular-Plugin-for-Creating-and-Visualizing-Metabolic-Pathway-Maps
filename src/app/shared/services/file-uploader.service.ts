@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WebserveraddressService } from './webserveraddress.service'
+import { WebserveraddressService } from './webserveraddress.service';
 
 @Injectable()
 export class FileUploaderService {
@@ -8,11 +8,14 @@ export class FileUploaderService {
     private http: HttpClient, private webserver: WebserveraddressService) {
   }
 
-  postFile(data: File, api: String) {
+  postFile(file: File, api: string) {
     const fd = new FormData();
     fd.set('Content-Type', 'multipart/form-data');
-    fd.append('uploaded_file', data);
-    return this.http.post(this.webserver.getwebserverurl() + api, fd);
+    fd.append('uploaded_file', file);
+    return this.http.post(this.webserver.getwebserverurl() + api, fd, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
 }
