@@ -32,12 +32,13 @@
   </h4>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
     <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
-    <mat-radio-group (change)="onChange($event)" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+<!--    <mat-radio-group (change)="onChange($event)" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
       <mat-radio-button *ngFor="let result of prophaneResults" value="result">{{ result }}</mat-radio-button>
-    </mat-radio-group>
+    </mat-radio-group>-->
   </div>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf='prophaneResults'>
-    <button mat-raised-button color="primary" (click)="downloadResult()">Download selected result</button>
+    <button mat-raised-button color="primary" (click)="requestStatus()">Download selected result</button>
+    <a ng-href="http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/" download="file.txt">Download Results</a>
   </div>
 </mat-tab>
 </mat-tab-group>

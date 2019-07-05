@@ -21,15 +21,17 @@ export class ProphaneJobPageComponent implements OnInit {
   prophaneJobReady: boolean;
   csvProgress: number;
   fastaProgress: number;
+  fileUrl: string;
 
   constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
     this.prophaneJobReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
+    this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
   }
 
   ngOnInit() {
-    this.prophaneResults = ['1', '2'];
+   //this.prophaneResults = ['1', '2'];
   }
 
   onChange(mrChange: MatRadioChange) {
@@ -111,6 +113,12 @@ export class ProphaneJobPageComponent implements OnInit {
 
   onCSVChange(files: FileList) {
     this.csvFile = files[0];
+  }
+
+  requestStatus() {
+    // request status
+    // call service to request status json
+    //{status:zahl, downloadlink:null}
   }
 
 }
