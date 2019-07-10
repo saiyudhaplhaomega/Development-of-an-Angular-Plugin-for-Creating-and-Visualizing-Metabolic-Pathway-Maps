@@ -32,6 +32,7 @@ export class ProphaneJobPageComponent implements OnInit {
 
   ngOnInit() {
    //this.prophaneResults = ['1', '2'];
+    this.fileUrl = "http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/"
   }
 
   onChange(mrChange: MatRadioChange) {
