@@ -26,6 +26,7 @@
   <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
   <div *ngIf='prophaneResults'>
     <button mat-raised-button color="primary" (click)="requestStatus()">Download selected result</button>
-    <a href="http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/file.txt">Download Results</a>
+    <a href="{{fileUrl}}" name="downloadLink">Download</a>
   </div>
-</div>
+  </mat-tab>
+</mat-tab-group>
