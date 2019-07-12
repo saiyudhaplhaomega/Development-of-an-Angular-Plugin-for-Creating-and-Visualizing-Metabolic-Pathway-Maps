@@ -1,44 +1,31 @@
 <h3>Prophane job page</h3>
-<mat-tab-group>
-  <mat-tab label="Upload job data">
-    <h4>
-      Select and upload fasta and csv file to start prophane job
-    </h4>
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
-      <p *ngIf="currentProphaneParameters && currentProphaneParameters.prophaneJobUUID">Current job ID: {{ currentProphaneParameters.prophaneJobUUID }}</p>
-      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-        <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
-        <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
-        <div *ngIf="fastaFile">
-          <p>{{ fastaFile.name }}</p>
-          <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
-        </div>
-        <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New Prophane Job</button>
-      </div>
-      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose CSV file</button>
-        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
-        <div *ngIf="csvFile">
-          <p>{{ csvFile.name }}</p>
-          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-        </div>
-        <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start Job</button>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="Download job results">
-  <h4>
-    View a list of existing protein database ids
-  </h4>
+<h4>Select and upload fasta and csv file to start prophane job</h4>
+<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <p *ngIf="currentProphaneParameters && currentProphaneParameters.prophaneJobUUID">Current job ID: {{ currentProphaneParameters.prophaneJobUUID }}</p>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-    <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
-<!--    <mat-radio-group (change)="onChange($event)" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-      <mat-radio-button *ngFor="let result of prophaneResults" value="result">{{ result }}</mat-radio-button>
-    </mat-radio-group>-->
+    <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
+    <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
+    <div *ngIf="fastaFile">
+      <p>{{ fastaFile.name }}</p>
+      <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New Prophane Job</button>
   </div>
-  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf='prophaneResults'>
+  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+    <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose CSV file</button>
+    <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
+    <div *ngIf="csvFile">
+      <p>{{ csvFile.name }}</p>
+      <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start Job</button>
+  </div>
+</div>
+<h4> View a list of existing protein database ids </h4>
+<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
+  <div *ngIf='prophaneResults'>
     <button mat-raised-button color="primary" (click)="requestStatus()">Download selected result</button>
-    <a ng-href="http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/" download="file.txt">Download Results</a>
+    <a href="http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/file.txt">Download Results</a>
   </div>
-</mat-tab>
-</mat-tab-group>
+</div>

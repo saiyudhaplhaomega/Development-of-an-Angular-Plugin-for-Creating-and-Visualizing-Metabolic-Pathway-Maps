@@ -1,47 +1,22 @@
-<h1>TEST PAGE</h1>
-<mat-toolbar color="primary">
-
-    <mat-toolbar-row>
-  
-      <button mat-icon-button (click)="toggleSidenav.emit()">
-        <mat-icon>menu</mat-icon>
+<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start" >
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <mat-icon>{{node.data.icon}}</mat-icon>
+      {{node.data.name}}
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+      <button mat-icon-button
+              [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
       </button>
-  
-      <span> MPA_CLOUD </span>
-  
-      <div fxFlex fxLayout fxLayoutAlign="flex-end">
-  
-        <ul fxLayout fxLayoutGap="20px">
-  
-          <li fxHide.xs>
-            <button mat-icon-button>
-              <mat-icon>settings</mat-icon>
-            </button>
-          </li>
-  
-          <li fxHide.xs>
-            <button mat-icon-button>
-              <mat-icon>help_outline</mat-icon>
-            </button>
-          </li>
-  
-          <li>
-            <button mat-icon-button [matMenuTriggerFor]="auth">
-              <mat-icon>person_outline</mat-icon>
-            </button>
-            <mat-menu #auth="matMenu">
-              <button mat-menu-item (click)="logout()">
-                <mat-icon>exit_to_app</mat-icon>
-                <span>Sign out</span>
-              </button>
-            </mat-menu>
-          </li>
-  
-        </ul>
-  
-      </div>
-  
-    </mat-toolbar-row>
-  
-  </mat-toolbar>
-  
+      <mat-icon>{{node.data.icon}}</mat-icon>
+      {{node.data.name}}
+      <mat-progress-bar *ngIf="node.isLoading"
+                        mode="indeterminate"
+                        class="example-tree-progress-bar"></mat-progress-bar>
+    </mat-tree-node>
+  </mat-tree>
+</div>
