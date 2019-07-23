@@ -1,0 +1,13 @@
+.mat-tree-node { 
+    min-height: 20px;
+    font-size: 1 em 
+}
+
+.mat-icon { 
+    min-height: 20px;
+    font-size: 1em 
+}
+
+.mat-tree {
+    height: 100%;
+}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import {Routing} from '../../app.routing';
 
@@ -17,6 +18,13 @@ import {LoginPageComponent} from './pages/login-page/login-page.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProphaneJobPageComponent } from './pages/prophane-job-page/prophane-job-page.component';
+import { NodeComponent } from './components/node/node.component';
+import { ExperimentComponent } from './components/experiment/experiment.component';
+import { FolderComponent } from './components/folder/folder.component';
+import { SearchComponent } from './components/search/search.component';
+import { FileComponent } from './components/file/file.component';
+import { TreeComponent } from './components/tree/tree.component';
+import { ContentComponent } from './components/content/content.component';
 
 @NgModule({
   declarations: [
@@ -27,10 +35,18 @@ import { ProphaneJobPageComponent } from './pages/prophane-job-page/prophane-job
     ModelDatabasePageComponent,
     LoginPageComponent,
     TestPageComponent,
-    ProphaneJobPageComponent
+    ProphaneJobPageComponent,
+    NodeComponent,
+    ExperimentComponent,
+    FolderComponent,
+    SearchComponent,
+    FileComponent,
+    TreeComponent,
+    ContentComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
 
     Routing,
 
@@ -38,6 +54,12 @@ import { ProphaneJobPageComponent } from './pages/prophane-job-page/prophane-job
     BrowserAnimationsModule,
 
     FlexLayoutModule
+  ],
+  entryComponents: [
+    ExperimentComponent,
+    FolderComponent,
+    SearchComponent,
+    FileComponent
   ],
   providers: []
 })
