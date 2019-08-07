@@ -1,4 +1,4 @@
 export interface ContentComponent {
-    uuid: String;
-    name: String;
+    uuid: string;
+    name: string;
 }

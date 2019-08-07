@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 
 export interface MPAData {
-    component: Type<any>;
+    type: string;
     name: string;
     icon: string;
     uuid: string;

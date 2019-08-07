@@ -8,8 +8,8 @@ import { ContentComponent } from '../../interfaces/content.component';
 })
 export class SearchComponent implements ContentComponent {
 
-  uuid: String;
-  name: String;
+  uuid: string;
+  name: string;
 
   constructor() { }
 

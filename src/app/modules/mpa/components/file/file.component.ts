@@ -8,15 +8,9 @@ import { ContentComponent } from '../../interfaces/content.component';
 })
 export class FileComponent implements ContentComponent {
 
-  uuid: String;
-  name: String;
-
-  @Output() delete: EventEmitter<String> = new EventEmitter<String>();
+  uuid: string;
+  name: string;
 
   constructor() { }
-
-  deleteThis() {
-    this.delete.emit(this.uuid);
-  }
 
 }
