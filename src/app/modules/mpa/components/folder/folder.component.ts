@@ -12,4 +12,8 @@ export class FolderComponent implements ContentComponent {
   name: string;
 
   constructor() { }
+
+  renameFolder() {
+    
+  }
 }

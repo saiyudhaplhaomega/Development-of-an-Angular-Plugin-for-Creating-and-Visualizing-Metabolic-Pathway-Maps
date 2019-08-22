@@ -43,13 +43,63 @@ export class DynamicDatabaseService {
     return this.dataMap.get(id);
   }
 
-  update(id: number, value: MPAData) {
-    return this.dataMap.set(id, value);
+  update(id: number, data: MPAData) {
+    this.dataMap.set(id, data);
+
+    let currentTreeArray;
+    this.tree.currentTreeArray.subscribe( arr => currentTreeArray = arr);
+    currentTreeArray.forEach((value: DynamicFlatNode) => {
+      if (value.id === id && value.isExpanded) {
+        const childNode = new DynamicFlatNode(+data.uuid, value.level + 1, this.isExpandable(+data.uuid));
+        console.log(childNode);
+        currentTreeArray.splice(currentTreeArray.indexOf(value) + 1, 0, childNode);
+      }
+    });
+
+    this.tree.changeTree(currentTreeArray);
   }
 
   isExpandable(id: number): boolean {
     console.log(id, this.dataMap.get(id).children.length);
     return this.dataMap.get(id).children.length > 0;
+  }
+
+  addChild(parentId: number, data: MPAData): boolean {
+    console.log(+data.uuid);
+    console.log(this.dataMap.size);
+
+    this.dataMap.set(+data.uuid, data);
+    console.log(this.dataMap.size);
+
+    const parent = this.dataMap.get(parentId);
+    parent.children.push(+data.uuid);
+    this.dataMap.set(parentId, parent);
+
+    let currentTreeArray;
+    this.tree.currentTreeArray.subscribe( arr => currentTreeArray = arr);
+    currentTreeArray.forEach((value: DynamicFlatNode) => {
+      if (value.id === parentId && value.isExpanded) {
+        const childNode = new DynamicFlatNode(+data.uuid, value.level + 1, this.isExpandable(+data.uuid));
+        console.log(childNode);
+        currentTreeArray.splice(currentTreeArray.indexOf(value) + 1, 0, childNode);
+      }
+    });
+
+    this.tree.changeTree(currentTreeArray);
+
+    return true;
+  }
+
+  getLength(): number {
+    return this.dataMap.size;
+  }
+
+  getUnclaimedId(): number {
+    let idCandidate = 0;
+    while (this.dataMap.get(idCandidate) != null) {
+      idCandidate = Math.random() * Number.MAX_SAFE_INTEGER;
+    }
+    return idCandidate;
   }
 
   delete(id: number): boolean {
@@ -64,9 +114,18 @@ export class DynamicDatabaseService {
       }
     });
     let currentTreeArray;
+    let currentIndex;
     this.tree.currentTreeArray.subscribe( arr => currentTreeArray = arr);
-    currentTreeArray.splice(currentTreeArray.indexOf(new DynamicFlatNode(id, 0, this.isExpandable(id)), 1));
+    currentTreeArray.forEach((value: DynamicFlatNode) => {
+      if (value.id === id) {
+        currentIndex = currentTreeArray.indexOf(value);
+      }
+    });
+    console.log(currentTreeArray.length);
+    currentTreeArray.splice(currentIndex, 1);
+    console.log(currentTreeArray.length);
     this.tree.changeTree(currentTreeArray);
     return true;
   }
+
 }

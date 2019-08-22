@@ -5,9 +5,6 @@
     <button mat-icon-button (click)="deleteNode(node)">
       <mat-icon class="mat-icon-rtl-mirror">close</mat-icon>
     </button>
-    <button mat-icon-button (click)="addNode(node)">
-      <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
-    </button>
   </mat-tree-node>
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <button mat-icon-button

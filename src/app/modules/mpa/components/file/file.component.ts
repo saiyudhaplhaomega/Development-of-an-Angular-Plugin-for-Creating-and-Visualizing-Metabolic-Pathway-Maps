@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { ContentComponent } from '../../interfaces/content.component';
+import { DynamicDatabaseService } from '../../services/dynamic-database.service';
 
 @Component({
   selector: 'app-file',
@@ -11,6 +12,11 @@ export class FileComponent implements ContentComponent {
   uuid: string;
   name: string;
 
-  constructor() { }
+  constructor(private database: DynamicDatabaseService) {
+  }
+
+  deleteThis() {
+    this.database.delete(+this.uuid);
+  }
 
 }

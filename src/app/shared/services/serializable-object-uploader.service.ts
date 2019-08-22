@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { WebserveraddressService } from './webserveraddress.service'
+import { WebserveraddressService } from './webserveraddress.service';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'my-auth-token'
+    'Authorization': 'null'
   })
 };
 

@@ -26,7 +26,8 @@ export class DynamicDataSource {
   }
 
   constructor(private _treeControl: FlatTreeControl<DynamicFlatNode>,
-              private _database: DynamicDatabaseService) {}
+              private _database: DynamicDatabaseService,
+              private _tree: TreeService) {}
 
   connect(collectionViewer: CollectionViewer): Observable<DynamicFlatNode[]> {
     this._treeControl.expansionModel.changed.subscribe(change => {
@@ -67,17 +68,20 @@ export class DynamicDataSource {
         const nodes = children.map(id =>
           new DynamicFlatNode(id, node.level + 1, this._database.isExpandable(id)));
         this.data.splice(index + 1, 0, ...nodes);
+        node.isExpanded = true;
       } else {
         let count = 0;
         for (let i = index + 1; i < this.data.length
           && this.data[i].level > node.level; i++, count++) {}
         this.data.splice(index + 1, count);
+        node.isExpanded = false;
       }
 
       // noindextify the change
       this.dataChange.next(this.data);
       node.isLoading = false;
     }, 500);
+    this._tree.changeTree(this.data);
   }
 }
 
@@ -90,7 +94,7 @@ export class TreeComponent implements OnInit{
 
   constructor(database: DynamicDatabaseService, private tree: TreeService) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new DynamicDataSource(this.treeControl, database);
+    this.dataSource = new DynamicDataSource(this.treeControl, database, tree);
     this.dataSource.data = database.initialData();
     this.databaseService = database;
   }
@@ -109,18 +113,15 @@ export class TreeComponent implements OnInit{
 
   deleteNode(node: DynamicFlatNode) {
     this.databaseService.delete(node.id);
-    const data = this.dataSource.data;
-    data.splice(this.dataSource.data.indexOf(node), 1);
-    this.dataSource.data = data;
-  }
-
-  addNode(node: DynamicFlatNode) {
-
   }
 
   ngOnInit(): void {
     this.tree.changeTree(this.dataSource.data);
-    this.tree.currentTreeArray.subscribe(arr => this.dataSource.data = arr)
+    this.tree.currentTreeArray.subscribe(arr => {
+      console.log('Tree Changed!');
+      console.log(arr);
+      this.dataSource.data = arr;
+    });
   }
 
 }
