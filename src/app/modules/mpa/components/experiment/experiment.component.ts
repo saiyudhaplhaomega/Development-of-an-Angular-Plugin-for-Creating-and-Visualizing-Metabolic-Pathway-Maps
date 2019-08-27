@@ -13,17 +13,12 @@ export class ExperimentComponent implements ContentComponent {
 
   uuid: string;
   name: string;
+  description: string;
 
   constructor(private database: DynamicDatabaseService) { }
 
-  addSearch() {
-    const searchChild = new Search(this.database.getUnclaimedId().toString());
-    this.database.addChild(+this.uuid, searchChild);
-  }
-
-  addFile() {
-    const fileChild = new File(this.database.getUnclaimedId().toString());
-    this.database.addChild(+this.uuid, fileChild);
+  initializeStream() {
+    return true;
   }
 
 }

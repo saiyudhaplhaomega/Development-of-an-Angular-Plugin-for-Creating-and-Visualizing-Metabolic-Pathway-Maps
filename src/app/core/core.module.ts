@@ -20,7 +20,6 @@ import {DbsearchcontentService} from './services/dbsearchcontent.service';
 import {Neo4jhttprequestsService} from './services/neo4jhttprequests.service';
 
 import { AuthGuard } from './services/auth-guard.service';
-import { InternalAuthService } from './services/internal-auth.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,6 @@ import { InternalAuthService } from './services/internal-auth.service';
     ModelContentService,
     DbsearchcontentService,
     Neo4jhttprequestsService,
-    InternalAuthService,
     AuthGuard
   ]
 })

@@ -115,6 +115,14 @@ export class TreeComponent implements OnInit{
     this.databaseService.delete(node.id);
   }
 
+  addFolder() {
+
+  }
+
+  addExperiment() {
+
+  }
+
   ngOnInit(): void {
     this.tree.changeTree(this.dataSource.data);
     this.tree.currentTreeArray.subscribe(arr => {
