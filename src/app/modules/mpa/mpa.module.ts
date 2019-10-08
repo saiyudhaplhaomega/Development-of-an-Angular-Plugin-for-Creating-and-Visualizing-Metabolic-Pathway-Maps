@@ -50,8 +50,8 @@ import { ContentComponent } from './components/content/content.component';
 
     Routing,
 
-    MaterialModule,
     BrowserAnimationsModule,
+    MaterialModule,
 
     FlexLayoutModule
   ],

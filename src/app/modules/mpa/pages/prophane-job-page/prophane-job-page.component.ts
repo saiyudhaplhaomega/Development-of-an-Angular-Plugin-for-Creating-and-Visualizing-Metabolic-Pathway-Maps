@@ -34,18 +34,33 @@ export class ProphaneJobPageComponent implements OnInit {
   fileUrl: string;
   downloadReady: boolean;
 
+
+  slidervalue = 2;
   showadvanced = false;
 
   jobLabel = 'Another Job';
 
-  newGroupMember = 'group member';
+  newGroupMember = 'new group member';
   newGroupItem = {groupname: 'Default Group', groupmembers: []};
   sampleGroups: Array<Object> = [];
 
-  taskCounter = 2;
+  taskCounter = 3;
+  newAnnotationTask = {scope: 'Taxonomy', type: 'diamond',
+    evalue: '0.01', optionstring: '-m diamond', database: 'ncbi_nr latest'};
   annotationTasks: Array<Object> =
-    [{displayName: 'Annotation Task 1', scope: 'Function', type: 'emapper', evalue: '0.01', database: 'eggnog latest'},
-     {displayName: 'Annotation Task 2', scope: 'Taxonomy', type: 'diamond', evalue: '0.01', database: 'ncbi_nr latest'}];
+    [{scope: 'Function', type: 'emapper', evalue: '0.01', optionstring: '-m diamond', database: 'eggnog latest'},
+      {scope: 'Taxonomy', type: 'diamond', evalue: '0.01', optionstring: '--more-sensitive', database: 'ncbi_nr latest'}];
+
+  scopetdata: Array<Object> = [
+    {id: 0, name: 'Taxonomy'},
+    {id: 1, name: 'Function'},
+  ];
+
+  evalueOptions: Array<Object> = [
+    {id: 0, numerical: '0.01', text: 'Relaxed'},
+    {id: 1, numerical: '0.001', text: 'Mid-Range'},
+    {id: 2, numerical: '0.0005', text: 'Strict'}
+  ];
 
   contAccession = '';
   selectedContaminationOption;
@@ -54,13 +69,19 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 1, name: 'end at accession'},
   ];
 
+  databaseOptions: Array<Object> = [
+    {id: 0, name: '??? Hmmer'},
+    {id: 1, name: 'Eggnog Emapper'},
+    {id: 2, name: 'NCBI_nr Diamond'},
+  ];
+
   selectedLevel;
   typedata: Array<Object> = [
     {id: 0, name: 'MetaProteomeAnalyzer (MPA)'},
     {id: 1, name: 'Scaffold'},
     {id: 2, name: 'Generic Input'},
     {id: 3, name: 'Proteome Discoverer'},
-    ];
+  ];
 
   selectedQuant;
   quantdata: Array<Object> = [
@@ -70,13 +91,7 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)'},
   ];
 
-  selectedScope;
-  scopetdata: Array<Object> = [
-    {id: 0, name: 'Taxonomy'},
-    {id: 1, name: 'Function'},
-   ];
-
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
+   constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
     this.prophaneJobReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
@@ -85,36 +100,41 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   ngOnInit() {
-   /*this.prophaneResults = ['1', '2'];*/
+    /*this.prophaneResults = ['1', '2'];*/
     this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
     this.selectedContaminationOption = this.contaminationdata[0];
     this.selectedQuant = this.quantdata[0];
   }
 
-  testLog() {
-    console.log(this.jobLabel);
-  }
-
-  addSampleGroup(obj) {
-    this.sampleGroups.push(obj);
+  addSampleGroup() {
+    this.sampleGroups.push(this.newGroupItem);
     this.newGroupItem = {groupname: 'Default Group', groupmembers: []};
   }
-
   removeSampleGroup(removeGroup) {
     this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
-
   addNewGroupMember(newmember, group) {
-    group.groupmembers.push(newmember);
+    if (!group.groupmembers.includes(newmember)) {
+      group.groupmembers.push(newmember);
+    }
     this.newGroupMember = 'group member';
   }
-
   removeGroupMember(removemember, group) {
     group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
   }
 
 
 
+  addAnnotationTask() {
+    this.annotationTasks.push(this.newAnnotationTask);
+    this.taskCounter++;
+    this.newAnnotationTask = {scope: 'Taxonomy', type: 'diamond', evalue: '0.01', optionstring: 'lala', database: 'ncbi_nr latest'};
+  }
+
+  removeAnnotationTask(removeTask) {
+    this.annotationTasks = this.annotationTasks.filter(obj => obj !== removeTask);
+    this.taskCounter--;
+  }
 
 
 
@@ -133,16 +153,16 @@ export class ProphaneJobPageComponent implements OnInit {
     if (this.fastaFile) {
       this.uploaderService.postFile(this.fastaFile,
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneParameters.prophaneJobUUID).subscribe(
-          event => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.fastaProgress = Math.round((event.loaded / event.total) * 100);
-            } else if (event.type === HttpEventType.Response) {
-              let response: any;
-              response = event.body;
-              this.fastaProgress = 0;
-              console.log('Response:' + response);
-            }
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.fastaProgress = Math.round((event.loaded / event.total) * 100);
+          } else if (event.type === HttpEventType.Response) {
+            let response: any;
+            response = event.body;
+            this.fastaProgress = 0;
+            console.log('Response:' + response);
           }
+        }
       );
     }
   }
@@ -152,16 +172,16 @@ export class ProphaneJobPageComponent implements OnInit {
     if (this.csvFile) {
       this.uploaderService.postFile(this.csvFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneParameters.prophaneJobUUID).subscribe(
-          event => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.csvProgress = Math.round((event.loaded / event.total) * 100);
-            } else if (event.type === HttpEventType.Response) {
-              let response: any;
-              response = event.body;
-              this.csvProgress = 0;
-              console.log('Response:' + response);
-            }
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.csvProgress = Math.round((event.loaded / event.total) * 100);
+          } else if (event.type === HttpEventType.Response) {
+            let response: any;
+            response = event.body;
+            this.csvProgress = 0;
+            console.log('Response:' + response);
           }
+        }
       );
     }
   }
