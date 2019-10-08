@@ -1,4 +1,4 @@
-import { MPAData } from "../interfaces/mpadata";
+import { MPAData } from '../interfaces/mpadata';
 
 export class Experiment implements MPAData {
     type = 'experiment';

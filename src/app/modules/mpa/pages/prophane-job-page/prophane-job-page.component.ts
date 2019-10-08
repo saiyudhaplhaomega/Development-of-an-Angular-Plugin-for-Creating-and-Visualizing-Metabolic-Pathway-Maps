@@ -97,7 +97,7 @@ export class ProphaneJobPageComponent implements OnInit {
 
   addSampleGroup(obj) {
     this.sampleGroups.push(obj);
-    this.newGroupItem = {groupname: 'Default Group', groupmembers: ['group member']};
+    this.newGroupItem = {groupname: 'Default Group', groupmembers: []};
   }
 
   removeSampleGroup(removeGroup) {

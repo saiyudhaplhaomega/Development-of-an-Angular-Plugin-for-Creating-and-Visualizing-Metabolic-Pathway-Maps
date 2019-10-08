@@ -1,10 +1,8 @@
-
-
 <!-- SELECT FASTA -->
-<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
   <mat-card>
     <mat-card-title>Prophane job page</mat-card-title>
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
       <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
       <div *ngIf="fastaFile">
@@ -19,7 +17,7 @@
     <br>
 
     <!-- SELECT TYPE -->
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <mat-form-field>
         <mat-label>Select Input Type (Origin of data)</mat-label>
         <mat-select [(value)]="selectedLevel">
@@ -30,9 +28,10 @@
 
 
     <!-- SELECT INPUT -->
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0">
-        <button mat-raised-button color="primary" mat-raised-button (click)="mpacsvFile.click()">Choose MPA CSV file</button>
+        <button mat-raised-button color="primary" mat-raised-button (click)="mpacsvFile.click()">Choose MPA CSV
+          file</button>
         <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(mpacsvFile.files)" />
         <div *ngIf="mpacsvFile">
           <p>{{ mpacsvFile.name }}</p>
@@ -43,7 +42,8 @@
         </div>
       </div>
       <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1">
-        <button mat-raised-button color="primary" mat-raised-button (click)="scaffoldxlsFile.click()">Choose Scaffold XLS file</button>
+        <button mat-raised-button color="primary" mat-raised-button (click)="scaffoldxlsFile.click()">Choose Scaffold
+          XLS file</button>
         <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(scaffoldxlsFile.files)" />
         <div *ngIf="scaffoldxlsFile">
           <p>{{ scaffoldxlsFile.name }}</p>
@@ -55,7 +55,8 @@
       </div>
 
       <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2">
-        <button mat-raised-button color="primary" mat-raised-button (click)="generictsvFile.click()">Choose TSV file (generic format)</button>
+        <button mat-raised-button color="primary" mat-raised-button (click)="generictsvFile.click()">Choose TSV file
+          (generic format)</button>
         <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(generictsvFile.files)" />
         <div *ngIf="generictsvFile">
           <p>{{ generictsvFile.name }}</p>
@@ -67,7 +68,8 @@
       </div>
 
       <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3">
-        <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic format)</button>
+        <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic
+          format)</button>
         <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdxmlFile.files)" />
         <div *ngIf="pdxmlFile">
           <p>{{ pdxmlFile.name }}</p>
@@ -77,7 +79,8 @@
           <p>No TSV file selected</p>
         </div>
 
-        <button mat-raised-button color="primary" mat-raised-button (click)="pdtxtFile.click()">Choose TSV file (generic format)</button>
+        <button mat-raised-button color="primary" mat-raised-button (click)="pdtxtFile.click()">Choose TSV file (generic
+          format)</button>
         <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdtxtFile.files)" />
         <div *ngIf="pdtxtFile">
           <p>{{ pdtxtFile.name }}</p>
@@ -92,7 +95,7 @@
     <br>
 
     <!-- CONTAMINATION LEVEL -->
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
 
       <p>Contamination Label</p>
 
@@ -108,14 +111,16 @@
     </div>
 
     <!-- JOB MANAGEMENT -->
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
-      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-        <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New Prophane Job</button>
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New
+          Prophane Job</button>
       </div>
-      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-        <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start Job</button>
+      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start
+          Job</button>
       </div>
-      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
+      <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
         <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
         <div *ngIf='prophaneResults'>
           <button mat-raised-button color="primary" (click)="requestStatus()">Download selected result</button>
@@ -134,7 +139,7 @@
 
 
 <!-- ADVANCED OPTIONS -->
-<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
   <button mat-icon-button (click)='toggleAdvancedOptions()'>
     <mat-icon aria-label="test icon">control_point</mat-icon>
   </button>
@@ -145,7 +150,7 @@
 <div *ngIf="showadvanced">
 
   <!-- LABEL -->
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <mat-form-field>
       <mat-label>Job Label</mat-label>
       <input matInput [(ngModel)]="jobLabel" value="{{ jobLabel }}">
@@ -156,7 +161,7 @@
   <br>
 
   <!-- QUANT METHOD -->
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <mat-form-field>
       <mat-label>Select Quantification Method</mat-label>
       <mat-select (value)="selectedQuant">
@@ -168,61 +173,52 @@
   <br>
 
   <!-- SAMPLE GROUPS -->
-  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" >
-    <mat-card>
-      <mat-card-title>Sample Groups</mat-card-title>
-      <div fxLayout="column" fxLayoutGap="20px" fxFlex>
-      <mat-list>
-        <mat-list-item *ngFor="let groupitem of sampleGroups">
-
-            <p mat-line>
-              <mat-form-field>
-                <mat-label>Group Name</mat-label>
-                <input matInput [(ngModel)]="groupitem.groupname" value="{{ groupitem.groupname }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='removeSampleGroup(groupitem)'>
-                <mat-icon aria-label="test icon">remove</mat-icon>
-              </button>
-            </p>
-
-            <p matLine *ngFor="let groupelement of groupitem.groupmembers">
-              <mat-form-field>
-                <mat-label>Group Member</mat-label>
-                <input matInput [(ngModel)]="groupelement" value="{{ groupelement }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='removeGroupMember(groupelement, groupitem)'>
-                <mat-icon aria-label="test icon">remove</mat-icon>
-              </button>
-            </p>
-
-            <p mat-line>
-              <mat-form-field>
-                <mat-label>Group Member</mat-label>
-                <input matInput [(ngModel)]="newGroupMember" value="{{ newGroupMember }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='addNewGroupMember(newGroupMember, groupitem)'>
-                <mat-icon aria-label="test icon">add</mat-icon>
-              </button>
-            </p>
-
-        </mat-list-item>
-
-        <mat-list-item>
+  <mat-card>
+    <mat-card-title>Sample Groups</mat-card-title>
+    <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <div *ngFor="let groupitem of sampleGroups">
+        <div>
           <mat-form-field>
             <mat-label>Group Name</mat-label>
-            <input matInput [(ngModel)]="newGroupItem.groupname" value="{{ newGroupItem.groupname }}">
+            <input matInput [(ngModel)]="groupitem.groupname" value="{{ groupitem.groupname }}">
           </mat-form-field>
-          <button mat-icon-button (click)='addSampleGroup(newGroupItem)'>
+          <button mat-icon-button (click)='removeSampleGroup(groupitem)'>
+            <mat-icon aria-label="test icon">remove</mat-icon>
+          </button>
+        </div>
+        <div *ngFor="let groupelement of groupitem.groupmembers">
+          <mat-form-field>
+            <mat-label>Group Member</mat-label>
+            <input matInput [(ngModel)]="groupelement" value="{{ groupelement }}">
+          </mat-form-field>
+          <button mat-icon-button (click)='removeGroupMember(groupelement, groupitem)'>
+            <mat-icon aria-label="test icon">remove</mat-icon>
+          </button>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Group Member</mat-label>
+            <input matInput [(ngModel)]="newGroupMember" value="{{ newGroupMember }}">
+          </mat-form-field>
+          <button mat-icon-button (click)='addNewGroupMember(newGroupMember, groupitem)'>
             <mat-icon aria-label="test icon">add</mat-icon>
           </button>
-        </mat-list-item>
-      </mat-list>
+        </div>
       </div>
-    </mat-card>
-  </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Group Name</mat-label>
+          <input matInput [(ngModel)]="newGroupItem.groupname" value="{{ newGroupItem.groupname }}">
+        </mat-form-field>
+        <button mat-icon-button (click)='addSampleGroup(newGroupItem)'>
+          <mat-icon aria-label="test icon">add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
 
   <!-- ANNOTATION TASKS -->
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <div class="mdc-text-field mdc-text-field--outlined">
       <input type="text" id="tf-outlined-2" class="mdc-text-field__input">
       <div class="mdc-notched-outline">
@@ -249,7 +245,7 @@
   <label class="mdc-floating-label">Select Scope</label>
   <div class="mdc-line-ripple"></div>
 
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" >
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <mat-slider min="1" max="5" step="0.5" value="1.5"></mat-slider>
   </div>
 
@@ -273,7 +269,3 @@
 </div>
 
 <!--<p *ngIf="currentProphaneParameters && currentProphaneParameters.prophaneJobUUID">Current job ID: {{ currentProphaneParameters.prophaneJobUUID }}</p>-->
-
-
-
-

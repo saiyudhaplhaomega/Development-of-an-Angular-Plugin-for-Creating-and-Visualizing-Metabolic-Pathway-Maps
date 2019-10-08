@@ -38,11 +38,10 @@ export class AuthGuard implements CanActivate {
     this._serverUser.sessionID = null;
 
     if (user != null) {
-      this.setAuthState(true);
-      //this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
-      //  this.setAuthState(res != null);
-      //  this._serverUser = res;
-      //});
+      this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
+        this.setAuthState(res != null);
+        this._serverUser = res;
+      });
     }
   }
 
