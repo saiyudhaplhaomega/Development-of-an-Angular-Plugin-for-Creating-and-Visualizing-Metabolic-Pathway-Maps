@@ -6,6 +6,8 @@ import { ProphaneParamObject, ProphaneParamJSON } from '../../../../core/models/
 import { HttpEventType } from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
+
+
 @Component({
   selector: 'app-prophane-job-page',
   templateUrl: './prophane-job-page.component.html',
@@ -14,7 +16,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class ProphaneJobPageComponent implements OnInit {
 
   fastaFile: File;
+
   csvFile: File;
+
+  mpacsvFile: File;
+  scaffoldxlsFile: File;
+  generictsvFile: File;
+  pdxmlFile: File;
+  pdtxtFile: File;
+
   prophaneResults: string[];
   prophaneResult: string;
   currentProphaneParameters: ProphaneParamObject;
@@ -22,23 +32,97 @@ export class ProphaneJobPageComponent implements OnInit {
   csvProgress: number;
   fastaProgress: number;
   fileUrl: string;
+  downloadReady: boolean;
+
+  showadvanced = false;
+
+  jobLabel = 'Another Job';
+
+  newGroupMember = 'group member';
+  newGroupItem = {groupname: 'Default Group', groupmembers: []};
+  sampleGroups: Array<Object> = [];
+
+  taskCounter = 2;
+  annotationTasks: Array<Object> =
+    [{displayName: 'Annotation Task 1', scope: 'Function', type: 'emapper', evalue: '0.01', database: 'eggnog latest'},
+     {displayName: 'Annotation Task 2', scope: 'Taxonomy', type: 'diamond', evalue: '0.01', database: 'ncbi_nr latest'}];
+
+  contAccession = '';
+  selectedContaminationOption;
+  contaminationdata: Array<Object> = [
+    {id: 0, name: 'start at accession'},
+    {id: 1, name: 'end at accession'},
+  ];
+
+  selectedLevel;
+  typedata: Array<Object> = [
+    {id: 0, name: 'MetaProteomeAnalyzer (MPA)'},
+    {id: 1, name: 'Scaffold'},
+    {id: 2, name: 'Generic Input'},
+    {id: 3, name: 'Proteome Discoverer'},
+    ];
+
+  selectedQuant;
+  quantdata: Array<Object> = [
+    {id: 0, name: 'Raw value (no normalization)'},
+    {id: 1, name: 'NSAF (normalized to longest metaprotein sequence)'},
+    {id: 2, name: 'NSAF (normalized to shortest metaprotein sequence)'},
+    {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)'},
+  ];
+
+  selectedScope;
+  scopetdata: Array<Object> = [
+    {id: 0, name: 'Taxonomy'},
+    {id: 1, name: 'Function'},
+   ];
 
   constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
     this.prophaneJobReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
     this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
+    this.downloadReady = false;
   }
 
   ngOnInit() {
-   //this.prophaneResults = ['1', '2'];
-    this.fileUrl = "http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/"
+   /*this.prophaneResults = ['1', '2'];*/
+    this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
+    this.selectedContaminationOption = this.contaminationdata[0];
+    this.selectedQuant = this.quantdata[0];
+  }
+
+  testLog() {
+    console.log(this.jobLabel);
+  }
+
+  addSampleGroup(obj) {
+    this.sampleGroups.push(obj);
+    this.newGroupItem = {groupname: 'Default Group', groupmembers: ['group member']};
+  }
+
+  removeGroupMember(removemember, group) {
+    group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
+  }
+
+
+  addNewGroupMember(newmember, group) {
+    group.groupmembers.push(newmember);
+    this.newGroupMember = 'group member';
+  }
+
+  removeSampleGroup(removeGroup) {
+    this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
+  }
+
+  toggleAdvancedOptions() {
+    this.showadvanced = !this.showadvanced;
   }
 
   onChange(mrChange: MatRadioChange) {
     this.prophaneResult = mrChange.source.value;
     console.log(this.prophaneResult);
   }
+
 
   uploadFasta(): void {
     console.log(this.fastaFile);
@@ -119,7 +203,12 @@ export class ProphaneJobPageComponent implements OnInit {
   requestStatus() {
     // request status
     // call service to request status json
-    //{status:zahl, downloadlink:null}
+    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneCheckStatus').subscribe(d => {
+      if (d.status === '6') {
+        this.fileUrl = this.fileUrl + ':' + d.prophaneJobUUID;
+        this.downloadReady = true;
+      }
+    });
   }
 
 }
