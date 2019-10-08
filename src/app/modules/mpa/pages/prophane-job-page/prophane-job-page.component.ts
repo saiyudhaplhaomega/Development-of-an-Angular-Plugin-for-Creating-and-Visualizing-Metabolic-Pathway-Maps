@@ -34,46 +34,7 @@ export class ProphaneJobPageComponent implements OnInit {
   fileUrl: string;
   downloadReady: boolean;
 
-
-  slidervalue = 2;
-  showadvanced = false;
-
-  jobLabel = 'Another Job';
-
-  newGroupMember = 'new group member';
-  newGroupItem = {groupname: 'Default Group', groupmembers: []};
-  sampleGroups: Array<Object> = [];
-
-  taskCounter = 3;
-  newAnnotationTask = {scope: 'Taxonomy', type: 'diamond',
-    evalue: '0.01', optionstring: '-m diamond', database: 'ncbi_nr latest'};
-  annotationTasks: Array<Object> =
-    [{scope: 'Function', type: 'emapper', evalue: '0.01', optionstring: '-m diamond', database: 'eggnog latest'},
-      {scope: 'Taxonomy', type: 'diamond', evalue: '0.01', optionstring: '--more-sensitive', database: 'ncbi_nr latest'}];
-
-  scopetdata: Array<Object> = [
-    {id: 0, name: 'Taxonomy'},
-    {id: 1, name: 'Function'},
-  ];
-
-  evalueOptions: Array<Object> = [
-    {id: 0, numerical: '0.01', text: 'Relaxed'},
-    {id: 1, numerical: '0.001', text: 'Mid-Range'},
-    {id: 2, numerical: '0.0005', text: 'Strict'}
-  ];
-
-  contAccession = '';
-  selectedContaminationOption;
-  contaminationdata: Array<Object> = [
-    {id: 0, name: 'start at accession'},
-    {id: 1, name: 'end at accession'},
-  ];
-
-  databaseOptions: Array<Object> = [
-    {id: 0, name: '??? Hmmer'},
-    {id: 1, name: 'Eggnog Emapper'},
-    {id: 2, name: 'NCBI_nr Diamond'},
-  ];
+  // Main options
 
   selectedLevel;
   typedata: Array<Object> = [
@@ -83,6 +44,19 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 3, name: 'Proteome Discoverer'},
   ];
 
+  contAccession = '';
+  selectedContaminationOption;
+  contaminationdata: Array<Object> = [
+    {id: 0, name: 'start at accession'},
+    {id: 1, name: 'end at accession'},
+  ];
+
+  showadvanced = false;
+
+
+  // Advanced Options
+
+  jobLabel = 'Another Job';
   selectedQuant;
   quantdata: Array<Object> = [
     {id: 0, name: 'Raw value (no normalization)'},
@@ -91,7 +65,60 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)'},
   ];
 
-   constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
+  scopetdata: Array<Object> = [
+    {id: 0, name: 'Taxonomy'},
+    {id: 1, name: 'Function'},
+  ];
+
+  databaseOptions: Array<Object> = [
+    {id: 0, scope: 'Function', name: 'hmmscan'},
+    {id: 1, scope: 'Function', name: 'hmmsearch'},
+    {id: 2, scope: 'Function', name: 'emapper'},
+    {id: 3, scope: 'Taxonomy', name: 'diamond blastp'},
+  ];
+
+  sampleGroups: Array<Object> = [];
+  newGroupMember = 'new group member';
+  newGroupItem = {groupname: 'Default Group', groupmembers: []};
+
+  annotationTasks: Array<Object> =
+    [{scope: 'Function', database: 'emapper', optionstring: '-m diamond', evalue: '0.01', tasklabel: 'task 1'},
+      {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'task 2'}];
+  taskCounter = 3;
+  newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+  defaultAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+
+  evalueOptions: Array<Object> = [
+    {id: 0, numerical: '0.01', text: 'Relaxed'},
+    {id: 1, numerical: '0.001', text: 'Mid-Range'},
+    {id: 2, numerical: '0.0005', text: 'Strict'}
+  ];
+
+  setDefaultOptionString(event, task) {
+    switch (event.value) {
+      case 'hmmscan': {
+        task.optionstring = '--cut_tc';
+        break;
+      }
+      case 'hmmsearch' : {
+        task.optionstring = '--cut_tc';
+        break;
+      }
+      case 'emapper' : {
+        task.optionstring = '-m diamond';
+        break;
+      }
+      case 'diamond blastp' : {
+        task.optionstring = '--more-sensitive';
+        break;
+      }
+      default : {
+        console.log('F**K');
+      }
+    }
+  }
+
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService) {
     this.prophaneJobReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
@@ -128,7 +155,7 @@ export class ProphaneJobPageComponent implements OnInit {
   addAnnotationTask() {
     this.annotationTasks.push(this.newAnnotationTask);
     this.taskCounter++;
-    this.newAnnotationTask = {scope: 'Taxonomy', type: 'diamond', evalue: '0.01', optionstring: 'lala', database: 'ncbi_nr latest'};
+    this.newAnnotationTask = this.defaultAnnotationTask;
   }
 
   removeAnnotationTask(removeTask) {
