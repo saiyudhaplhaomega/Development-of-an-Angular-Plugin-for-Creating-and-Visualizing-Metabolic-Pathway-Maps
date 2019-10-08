@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { InternalAuthService } from '../../../../core/services/internal-auth.service';
+import { AuthGuard } from '../../../../core/services/auth-guard.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -12,7 +12,7 @@ export class LoginPageComponent implements OnInit {
 
   private user: SocialUser;
 
-  constructor( private authService: AuthService, private internalAuthService: InternalAuthService) {}
+  constructor( private authService: AuthService, private AuthGuardService: AuthGuard) {}
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
@@ -27,8 +27,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      if (user && this.internalAuthService.getUser() !== user) {
-        this.internalAuthService.setUser(user);
+      if (user && this.AuthGuardService.getUser() !== user) {
+        this.AuthGuardService.setUser(user);
       }
     });
   }

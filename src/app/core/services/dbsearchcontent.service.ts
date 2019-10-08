@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {StreamJSON} from '../models/streamjson';
 import {ExperimentJSON} from '../models/experimentjson';
 import {WebserveraddressService} from '../../shared/services/webserveraddress.service';
-import { InternalAuthService } from './internal-auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,7 +15,7 @@ const httpOptions = {
 
 @Injectable()
 export class DbsearchcontentService {
-  constructor(private http: HttpClient, private webserver: WebserveraddressService, private authService: InternalAuthService) { }
+  constructor(private http: HttpClient, private webserver: WebserveraddressService, private authService: AuthGuard) { }
 
 
   newExperiment(value: string): Observable<string> {

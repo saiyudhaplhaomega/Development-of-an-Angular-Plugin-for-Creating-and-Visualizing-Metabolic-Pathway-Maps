@@ -1,7 +1,24 @@
-<p>
-  experiment works!
-</p>
-<p>{{ name }}</p>
-<p>{{ uuid }}</p>
-<button mat-button (click)="addSearch()">Add Search</button>
-<button mat-button (click)="addFile()">Add File</button>
+ <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+  
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <mat-form-field class="example-form-field">
+      <input matInput type="text" placeholder="name" [(ngModel)]="name">
+      <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <mat-form-field class="example-form-field">
+      <input matInput type="text" placeholder="description" [(ngModel)]="description">
+      <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>  
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <button mat-button (click)="initializeStream()">Initialize stream</button>
+  </div>
+</div>

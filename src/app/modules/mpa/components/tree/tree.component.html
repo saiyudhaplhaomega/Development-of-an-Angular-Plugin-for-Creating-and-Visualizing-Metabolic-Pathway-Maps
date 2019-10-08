@@ -1,3 +1,11 @@
+<button mat-button (click)="true">
+  Create folder
+  <mat-icon class="mat-icon-rtl-mirror">create_new_folder</mat-icon>
+</button> <br>
+<button mat-button (click)="true">
+  Create experiment
+  <mat-icon class="mat-icon-rtl-mirror">create</mat-icon>
+</button>
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <button mat-icon-button disabled></button>
