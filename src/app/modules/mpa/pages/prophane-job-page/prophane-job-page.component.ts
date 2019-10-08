@@ -100,19 +100,23 @@ export class ProphaneJobPageComponent implements OnInit {
     this.newGroupItem = {groupname: 'Default Group', groupmembers: ['group member']};
   }
 
-  removeGroupMember(removemember, group) {
-    group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
+  removeSampleGroup(removeGroup) {
+    this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
-
 
   addNewGroupMember(newmember, group) {
     group.groupmembers.push(newmember);
     this.newGroupMember = 'group member';
   }
 
-  removeSampleGroup(removeGroup) {
-    this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
+  removeGroupMember(removemember, group) {
+    group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
   }
+
+
+
+
+
 
   toggleAdvancedOptions() {
     this.showadvanced = !this.showadvanced;
