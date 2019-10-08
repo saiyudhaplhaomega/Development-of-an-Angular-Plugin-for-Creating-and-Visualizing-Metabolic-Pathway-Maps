@@ -13,3 +13,6 @@ export class ProphaneParamObject implements ProphaneParamJSON {
   status: string;
   downloadURL: string;
 }
+
+
+
