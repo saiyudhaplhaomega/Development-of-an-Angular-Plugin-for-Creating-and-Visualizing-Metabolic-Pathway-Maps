@@ -6,6 +6,11 @@ import { ProphaneParamObject, ProphaneParamJSON } from '../../../../core/models/
 import { HttpEventType } from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
+import {forEach} from '@angular/router/src/utils/collection';
+import {ProphaneAnnotationTaskObject} from '../../../../core/models/prophaneannotationtaskjson';
+import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegroupjson';
+
+
 
 
 @Component({
@@ -17,13 +22,7 @@ export class ProphaneJobPageComponent implements OnInit {
 
   fastaFile: File;
 
-  csvFile: File;
-
-  mpacsvFile: File;
-  scaffoldxlsFile: File;
-  generictsvFile: File;
-  pdxmlFile: File;
-  pdtxtFile: File;
+  proteinReportFile: File;
 
   prophaneResults: string[];
   prophaneResult: string;
@@ -41,7 +40,7 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 0, name: 'MetaProteomeAnalyzer (MPA)'},
     {id: 1, name: 'Scaffold'},
     {id: 2, name: 'Generic Input'},
-    {id: 3, name: 'Proteome Discoverer'},
+    // {id: 3, name: 'Proteome Discoverer'}
   ];
 
   contAccession = '';
@@ -58,37 +57,41 @@ export class ProphaneJobPageComponent implements OnInit {
 
   jobLabel = 'Another Job';
   selectedQuant;
-  quantdata: Array<Object> = [
+  quantdata: object[] = [
     {id: 0, name: 'Raw value (no normalization)'},
     {id: 1, name: 'NSAF (normalized to longest metaprotein sequence)'},
     {id: 2, name: 'NSAF (normalized to shortest metaprotein sequence)'},
     {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)'},
   ];
 
-  scopetdata: Array<Object> = [
+  scopetdata: object[] = [
     {id: 0, name: 'Taxonomy'},
     {id: 1, name: 'Function'},
   ];
 
-  databaseOptions: Array<Object> = [
+  databaseOptions: object[] = [
     {id: 0, scope: 'Function', name: 'hmmscan'},
     {id: 1, scope: 'Function', name: 'hmmsearch'},
     {id: 2, scope: 'Function', name: 'emapper'},
     {id: 3, scope: 'Taxonomy', name: 'diamond blastp'},
   ];
 
-  sampleGroups: Array<Object> = [];
+  sampleGroups: ProphaneSampleGroupJSON[] = [];
   newGroupMember = 'new group member';
   newGroupItem = {groupname: 'Default Group', groupmembers: []};
 
-  annotationTasks: Array<Object> =
-    [{scope: 'Function', database: 'emapper', optionstring: '-m diamond', evalue: '0.01', tasklabel: 'task 1'},
-      {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'task 2'}];
-  taskCounter = 3;
-  newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
-  defaultAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+  annotationTasks: ProphaneAnnotationTaskObject[] =
+    [{scope: 'Function', database: 'emapper', databaseversion: 'latest',
+      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'task 1'},
+      {scope: 'Taxonomy', database: 'diamond blastp', databaseversion: 'latest',
+        optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'task 2'}];
 
-  evalueOptions: Array<Object> = [
+  taskCounter = 3;
+  newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp',
+    databaseversion: 'latest', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+  // defaultAnnotationTask = ;
+
+  evalueOptions: object[] = [
     {id: 0, numerical: '0.01', text: 'Relaxed'},
     {id: 1, numerical: '0.001', text: 'Mid-Range'},
     {id: 2, numerical: '0.0005', text: 'Strict'}
@@ -122,13 +125,13 @@ export class ProphaneJobPageComponent implements OnInit {
     this.prophaneJobReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
-    this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
+    this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.downloadReady = false;
   }
 
   ngOnInit() {
     /*this.prophaneResults = ['1', '2'];*/
-    this.fileUrl = 'http://129.70.51.126:9092/mpacloud/v1/prophaneDownload/';
+    this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.selectedContaminationOption = this.contaminationdata[0];
     this.selectedQuant = this.quantdata[0];
   }
@@ -155,7 +158,7 @@ export class ProphaneJobPageComponent implements OnInit {
   addAnnotationTask() {
     this.annotationTasks.push(this.newAnnotationTask);
     this.taskCounter++;
-    this.newAnnotationTask = this.defaultAnnotationTask;
+    this.newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', databaseversion: 'latest', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
   }
 
   removeAnnotationTask(removeTask) {
@@ -195,9 +198,9 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   uploadCSV(): void {
-    console.log(this.csvFile);
-    if (this.csvFile) {
-      this.uploaderService.postFile(this.csvFile,
+    console.log(this.proteinReportFile);
+    if (this.proteinReportFile) {
+      this.uploaderService.postFile(this.proteinReportFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneParameters.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -215,15 +218,30 @@ export class ProphaneJobPageComponent implements OnInit {
 
   startProphaneJob(): void {
     console.log(this.currentProphaneParameters);
+    // TODO add minor check to integrity of parameters
+    // adding form values into parameters object
+
+    this.currentProphaneParameters.searchFormat = this.selectedLevel;
+    this.currentProphaneParameters.contaminationLabel = this.selectedContaminationOption;
+    this.currentProphaneParameters.contaminationPosition = this.contAccession;
+    this.currentProphaneParameters.jobLabel = this.jobLabel;
+    this.currentProphaneParameters.quantification = this.selectedQuant;
+    this.currentProphaneParameters.sampleGroups = this.sampleGroups;
+    this.currentProphaneParameters.annotationTasks = [];
+    // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
+    this.annotationTasks.forEach( (atask: ProphaneAnnotationTaskObject) => {
+      this.currentProphaneParameters.annotationTasks.push(atask);
+    });
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
       console.log(d);
     });
   }
 
   requestNewJob(): void {
+    // TODO add minor check to integrity of parameters
     this.currentProphaneParameters = new ProphaneParamObject();
     this.currentProphaneParameters.prophaneJobUUID = '';
-    this.currentProphaneParameters.csvFilename = this.csvFile.name;
+    this.currentProphaneParameters.csvFilename = this.proteinReportFile.name;
     this.currentProphaneParameters.fastaFilename = this.fastaFile.name;
     console.log(this.currentProphaneParameters);
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
@@ -248,7 +266,7 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   onCSVChange(files: FileList) {
-    this.csvFile = files[0];
+    this.proteinReportFile = files[0];
   }
 
   requestStatus() {

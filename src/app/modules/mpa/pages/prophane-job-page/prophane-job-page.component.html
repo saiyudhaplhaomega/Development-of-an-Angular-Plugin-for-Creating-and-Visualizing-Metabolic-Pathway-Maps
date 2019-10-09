@@ -29,44 +29,44 @@
       <!-- SELECT INPUT -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
         <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0">
-          <button mat-raised-button color="primary" mat-raised-button (click)="mpacsvFile.click()">Choose MPA CSV
+          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose MPA CSV
             file</button>
-          <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(mpacsvFile.files)" />
-          <div *ngIf="mpacsvFile">
-            <p>{{ mpacsvFile.name }}</p>
+          <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
+          <div *ngIf="proteinReportFile">
+            <p>{{ proteinReportFile.name }}</p>
             <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
           </div>
-          <div *ngIf="!mpacsvFile">
+          <div *ngIf="!proteinReportFile">
             <p>No CSV file selected</p>
           </div>
         </div>
         <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1">
-          <button mat-raised-button color="primary" mat-raised-button (click)="scaffoldxlsFile.click()">Choose Scaffold
+          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose Scaffold
             XLS file</button>
-          <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(scaffoldxlsFile.files)" />
-          <div *ngIf="scaffoldxlsFile">
-            <p>{{ scaffoldxlsFile.name }}</p>
+          <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
+          <div *ngIf="proteinReportFile">
+            <p>{{ proteinReportFile.name }}</p>
             <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
           </div>
-          <div *ngIf="!scaffoldxlsFile">
+          <div *ngIf="!proteinReportFile">
             <p>No XLS file selected</p>
           </div>
         </div>
 
         <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2">
-          <button mat-raised-button color="primary" mat-raised-button (click)="generictsvFile.click()">Choose TSV file
+          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose TSV file
             (generic format)</button>
-          <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(generictsvFile.files)" />
-          <div *ngIf="generictsvFile">
-            <p>{{ generictsvFile.name }}</p>
+          <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
+          <div *ngIf="proteinReportFile">
+            <p>{{ proteinReportFile.name }}</p>
             <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
           </div>
-          <div *ngIf="!generictsvFile">
+          <div *ngIf="!proteinReportFile">
             <p>No TSV file selected</p>
           </div>
         </div>
 
-        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3">
+<!--        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3">
           <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic
             format)</button>
           <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdxmlFile.files)" />
@@ -88,7 +88,7 @@
           <div *ngIf="!pdtxtFile">
             <p>No TSV file selected</p>
           </div>
-        </div>
+        </div>-->
       </div>
 
       <!-- CONTAMINATION LEVEL -->
