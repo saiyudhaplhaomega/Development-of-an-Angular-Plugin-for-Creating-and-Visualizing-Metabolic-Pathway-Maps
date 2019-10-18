@@ -20,11 +20,11 @@ import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegro
 })
 export class ProphaneJobPageComponent implements OnInit {
 
-  fastaFile: File;
+  statusDisplayString = 'No Job Pending';
 
+  fastaFile: File;
   proteinReportFile: File;
 
-  prophaneResults: string[];
   prophaneResult: string;
   currentProphaneParameters: ProphaneParamObject;
   prophaneJobReady: boolean;
@@ -34,34 +34,32 @@ export class ProphaneJobPageComponent implements OnInit {
   downloadReady: boolean;
 
   // Main options
-
   selectedLevel;
   typedata: Array<Object> = [
-    {id: 0, name: 'MetaProteomeAnalyzer (MPA)'},
-    {id: 1, name: 'Scaffold'},
-    {id: 2, name: 'Generic Input'},
+    {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
+    {id: 1, name: 'Scaffold', valueString: 'scaffold'},
+    {id: 2, name: 'Generic Input', valueString: 'generic'},
     // {id: 3, name: 'Proteome Discoverer'}
   ];
 
   contAccession = '';
   selectedContaminationOption;
   contaminationdata: Array<Object> = [
-    {id: 0, name: 'start at accession'},
-    {id: 1, name: 'end at accession'},
+    {id: 0, name: 'start at accession', valueString: 'start'},
+    {id: 1, name: 'end at accession', valueString: 'end'}
   ];
 
   showadvanced = false;
-
 
   // Advanced Options
 
   jobLabel = 'Another Job';
   selectedQuant;
   quantdata: object[] = [
-    {id: 0, name: 'Raw value (no normalization)'},
-    {id: 1, name: 'NSAF (normalized to longest metaprotein sequence)'},
-    {id: 2, name: 'NSAF (normalized to shortest metaprotein sequence)'},
-    {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)'},
+    {id: 0, name: 'Raw value (no normalization)', valueString: 'raw'},
+    {id: 1, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
+    {id: 2, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
+    {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)', valueString: 'mean_nsaf'},
   ];
 
   scopetdata: object[] = [
@@ -70,10 +68,13 @@ export class ProphaneJobPageComponent implements OnInit {
   ];
 
   databaseOptions: object[] = [
-    {id: 0, scope: 'Function', name: 'hmmscan'},
-    {id: 1, scope: 'Function', name: 'hmmsearch'},
-    {id: 2, scope: 'Function', name: 'emapper'},
-    {id: 3, scope: 'Taxonomy', name: 'diamond blastp'},
+    {id: 0, scope: 'Function', database: 'eggnog', algorithm: ['emapper']},
+    {id: 1, scope: 'Function', database: 'pfams', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 2, scope: 'Function', database: 'tigrfams', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 3, scope: 'Taxonomy', database: 'ncbi_nr', algorithm: ['diamond blastp']},
+    {id: 4, scope: 'Taxonomy', database: 'uniprot_complete', algorithm: ['diamond blastp']},
+    {id: 5, scope: 'Taxonomy', database: 'uniprot_sp', algorithm: ['diamond blastp']},
+    {id: 6, scope: 'Taxonomy', database: 'uniprot_tr', algorithm: ['diamond blastp']},
   ];
 
   sampleGroups: ProphaneSampleGroupJSON[] = [];
@@ -81,14 +82,14 @@ export class ProphaneJobPageComponent implements OnInit {
   newGroupItem = {groupname: 'Default Group', groupmembers: []};
 
   annotationTasks: ProphaneAnnotationTaskObject[] =
-    [{scope: 'Function', database: 'emapper', databaseversion: 'latest',
+    [{scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
       optionstring: '-m diamond', evalue: '0.01', tasklabel: 'task 1'},
-      {scope: 'Taxonomy', database: 'diamond blastp', databaseversion: 'latest',
+      {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
         optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'task 2'}];
 
   taskCounter = 3;
-  newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp',
-    databaseversion: 'latest', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+  newAnnotationTask = {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
   // defaultAnnotationTask = ;
 
   evalueOptions: object[] = [
@@ -158,7 +159,8 @@ export class ProphaneJobPageComponent implements OnInit {
   addAnnotationTask() {
     this.annotationTasks.push(this.newAnnotationTask);
     this.taskCounter++;
-    this.newAnnotationTask = {scope: 'Taxonomy', database: 'diamond blastp', databaseversion: 'latest', optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+    this.newAnnotationTask = {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
   }
 
   removeAnnotationTask(removeTask) {
@@ -221,11 +223,11 @@ export class ProphaneJobPageComponent implements OnInit {
     // TODO add minor check to integrity of parameters
     // adding form values into parameters object
 
-    this.currentProphaneParameters.searchFormat = this.selectedLevel;
-    this.currentProphaneParameters.contaminationLabel = this.selectedContaminationOption;
+    this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
+    this.currentProphaneParameters.contaminationLabel = this.selectedContaminationOption.valueString;
     this.currentProphaneParameters.contaminationPosition = this.contAccession;
     this.currentProphaneParameters.jobLabel = this.jobLabel;
-    this.currentProphaneParameters.quantification = this.selectedQuant;
+    this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
     this.currentProphaneParameters.sampleGroups = this.sampleGroups;
     this.currentProphaneParameters.annotationTasks = [];
     // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
@@ -257,9 +259,9 @@ export class ProphaneJobPageComponent implements OnInit {
     this.startProphaneJob();
   }
 
-  getProphaneResults(): void {
-    this.prophaneResults = ['1', '2'];
-  }
+  /*  getProphaneResults(): void {
+      this.prophaneResults = ['1', '2'];
+    }*/
 
   onFastaChange(files: FileList) {
     this.fastaFile = files[0];
@@ -273,11 +275,38 @@ export class ProphaneJobPageComponent implements OnInit {
     // request status
     // call service to request status json
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneCheckStatus').subscribe(d => {
-      if (d.status === '6') {
-        this.fileUrl = this.fileUrl + ':' + d.prophaneJobUUID;
-        this.downloadReady = true;
+      switch (d.status) {
+        case '1': {
+          this.statusDisplayString = 'Job not started yet';
+          break;
+        }
+        case '2': {
+          this.statusDisplayString = 'Prophane is waiting for files';
+          break;
+        }
+        case '3': {
+          this.statusDisplayString = 'Prophane running';
+          break;
+        }
+        case '4': {
+          this.statusDisplayString = 'Prophane finished, preparing download';
+          break;
+        }
+        case '5': {
+          this.fileUrl = this.fileUrl + d.prophaneJobUUID;
+          this.downloadReady = true;
+          break;
+        }
+        default: {
+          this.statusDisplayString = 'No Job Pending';
+          break;
+        }
       }
     });
+  }
+
+  downloadProphaneResult() {
+    window.open(this.fileUrl);
   }
 
 }

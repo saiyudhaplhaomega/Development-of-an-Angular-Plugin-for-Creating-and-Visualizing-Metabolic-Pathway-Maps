@@ -27,69 +27,67 @@
       </div>
 
       <!-- SELECT INPUT -->
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0">
-          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose MPA CSV
-            file</button>
-          <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
-          <div *ngIf="proteinReportFile">
-            <p>{{ proteinReportFile.name }}</p>
-            <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-          </div>
-          <div *ngIf="!proteinReportFile">
-            <p>No CSV file selected</p>
-          </div>
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose MPA CSV
+          file</button>
+        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
+        <div *ngIf="proteinReportFile">
+          <p>{{ proteinReportFile.name }}</p>
+          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
         </div>
-        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1">
-          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose Scaffold
-            XLS file</button>
-          <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
-          <div *ngIf="proteinReportFile">
-            <p>{{ proteinReportFile.name }}</p>
-            <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-          </div>
-          <div *ngIf="!proteinReportFile">
-            <p>No XLS file selected</p>
-          </div>
+        <div *ngIf="!proteinReportFile">
+          <p>No CSV file selected</p>
         </div>
-
-        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2">
-          <button mat-raised-button color="primary" mat-raised-button (click)="proteinReportFile.click()">Choose TSV file
-            (generic format)</button>
-          <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(proteinReportFile.files)" />
-          <div *ngIf="proteinReportFile">
-            <p>{{ proteinReportFile.name }}</p>
-            <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-          </div>
-          <div *ngIf="!proteinReportFile">
-            <p>No TSV file selected</p>
-          </div>
-        </div>
-
-<!--        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3">
-          <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic
-            format)</button>
-          <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdxmlFile.files)" />
-          <div *ngIf="pdxmlFile">
-            <p>{{ pdxmlFile.name }}</p>
-            <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
-          </div>
-          <div *ngIf="!pdxmlFile">
-            <p>No TSV file selected</p>
-          </div>
-
-          <button mat-raised-button color="primary" mat-raised-button (click)="pdtxtFile.click()">Choose TSV file (generic
-            format)</button>
-          <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdtxtFile.files)" />
-          <div *ngIf="pdtxtFile">
-            <p>{{ pdtxtFile.name }}</p>
-            <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
-          </div>
-          <div *ngIf="!pdtxtFile">
-            <p>No TSV file selected</p>
-          </div>
-        </div>-->
       </div>
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose Scaffold
+          XLS file</button>
+        <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(csvfile.files)" />
+        <div *ngIf="proteinReportFile">
+          <p>{{ proteinReportFile.name }}</p>
+          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
+        </div>
+        <div *ngIf="!proteinReportFile">
+          <p>No XLS file selected</p>
+        </div>
+      </div>
+
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose TSV file
+          (generic format)</button>
+        <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(csvfile.files)" />
+        <div *ngIf="proteinReportFile">
+          <p>{{ proteinReportFile.name }}</p>
+          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
+        </div>
+        <div *ngIf="!proteinReportFile">
+          <p>No TSV file selected</p>
+        </div>
+      </div>
+
+      <!--        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+                <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic
+                  format)</button>
+                <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdxmlFile.files)" />
+                <div *ngIf="pdxmlFile">
+                  <p>{{ pdxmlFile.name }}</p>
+                  <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
+                </div>
+                <div *ngIf="!pdxmlFile">
+                  <p>No TSV file selected</p>
+                </div>
+
+                <button mat-raised-button color="primary" mat-raised-button (click)="pdtxtFile.click()">Choose TSV file (generic
+                  format)</button>
+                <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdtxtFile.files)" />
+                <div *ngIf="pdtxtFile">
+                  <p>{{ pdtxtFile.name }}</p>
+                  <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
+                </div>
+                <div *ngIf="!pdtxtFile">
+                  <p>No TSV file selected</p>
+                </div>
+              </div>-->
 
       <!-- CONTAMINATION LEVEL -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
@@ -110,7 +108,7 @@
       <!-- JOB MANAGEMENT -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" [disabled]="!(csvFile && fastaFile)" (click)="requestNewJob()">New
+          <button mat-raised-button color="primary" [disabled]="!(proteinReportFile && fastaFile)" (click)="requestNewJob()">New
             Prophane Job</button>
         </div>
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
@@ -118,14 +116,18 @@
             Job</button>
         </div>
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" (click)="getProphaneResults()">View Prophane results</button>
-          <div *ngIf='prophaneResults'>
-            <button mat-raised-button color="primary" (click)="requestStatus()">Download selected result</button>
-            <div *ngIf="fileUrl">
+          <button mat-raised-button color="primary" (click)="requestStatus()">Get Status</button>
+          <div *ngIf='downloadReady; else statusdisplay'>
+            <button mat-raised-button color="primary" (click)="downloadProphaneResult()">Download Result</button>
+
+            <!--<div *ngIf="fileUrl">
               <a href="{{fileUrl}}" name="downloadLink">Download</a>
-            </div>
+            </div>-->
           </div>
+          <ng-template #statusdisplay>{{statusDisplayString}}</ng-template>
+          <!--{{statusDisplayString}}-->
         </div>
+
       </div>
     </mat-card>
   </div>
@@ -220,21 +222,47 @@
               </button>
             </div>
             <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+              <!-- scope -->
               <mat-form-field>
                 <mat-label>Scope</mat-label>
                 <mat-select [(value)]="task.scope">
                   <mat-option *ngFor="let scope of scopetdata" [value]="scope.name">{{scope.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
+              <!-- database -->
               <mat-form-field>
                 <mat-label>Database</mat-label>
-                <mat-select [(value)]="task.database" (selectionChange)="setDefaultOptionString($event, task)">
+                <mat-select [(value)]="task.database">
                   <ng-container *ngFor="let dbitem of databaseOptions">
-                    <mat-option *ngIf = "dbitem.scope == task.scope" [value]="dbitem.name">
-                      {{dbitem.name}}</mat-option>
+                    <mat-option *ngIf = "dbitem.scope == task.scope" [value]="dbitem.database">
+                      {{dbitem.database}}</mat-option>
                   </ng-container>
                 </mat-select>
               </mat-form-field>
+              <!-- database version -->
+              <mat-form-field>
+                <mat-label>Database</mat-label>
+                <mat-select [(value)]="task.databaseversion">
+                    <mat-option value="'latest'">latest</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+              <!-- algorithm -->
+              <mat-form-field>
+                <mat-label>Algorithm</mat-label>
+                <mat-select [(value)]="task.algorithm" (selectionChange)="setDefaultOptionString($event, task)">
+                  <ng-container *ngFor="let dbitem of databaseOptions">
+                    <ng-container *ngIf = "dbitem.scope == task.scope && dbitem.database == task.database">
+                      <ng-container *ngFor="let algo of dbitem.algorithm">
+                      <mat-option [value]="algo">
+                      {{algo}}</mat-option>
+                    </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <!-- option string -->
               <mat-form-field>
                 <mat-label>Option String</mat-label>
                 <input matInput [(ngModel)]="task.optionstring">
