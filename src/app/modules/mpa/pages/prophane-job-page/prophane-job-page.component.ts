@@ -98,6 +98,12 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 2, numerical: '0.0005', text: 'Strict'}
   ];
 
+  killAllJobs() {
+    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneKillJobs').subscribe(d => {
+      console.log(d);
+    });
+  }
+
   setDefaultOptionString(event, task) {
     switch (event.value) {
       case 'hmmscan': {
