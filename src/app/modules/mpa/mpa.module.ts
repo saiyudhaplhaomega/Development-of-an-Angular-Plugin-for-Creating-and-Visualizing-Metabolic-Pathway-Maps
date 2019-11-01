@@ -26,6 +26,8 @@ import { FileComponent } from './components/file/file.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { ContentComponent } from './components/content/content.component';
 
+import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     Neo4jGraphPageComponent,
@@ -47,6 +49,7 @@ import { ContentComponent } from './components/content/content.component';
   imports: [
     CommonModule,
     FormsModule,
+    NgbButtonsModule,
 
     Routing,
 
