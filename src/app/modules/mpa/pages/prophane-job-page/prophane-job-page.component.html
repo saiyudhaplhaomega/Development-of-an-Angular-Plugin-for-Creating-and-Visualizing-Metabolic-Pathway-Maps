@@ -1,23 +1,76 @@
 <!-- SELECT FASTA -->
 <!--<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">-->
 <div fxFlex>
-  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button>
-  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <mat-card>
-      <mat-card-title>Prophane job page</mat-card-title>
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
-        <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
-        <div *ngIf="fastaFile">
-          <p>{{ fastaFile.name }}</p>
-          <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
-        </div>
-        <div *ngIf="!fastaFile">
-          <p>No FASTA selected</p>
-        </div>
-      </div>
+  <!--  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button> -->
+  <mat-tab-group>
+    <mat-tab label="Job Submission">
+      <h1>Some tab content</h1>
+      <p>...</p>
+    </mat-tab>
+    <mat-tab label="Job Control">
+      <h1>Some more tab content</h1>
+      <p>...</p>
+    </mat-tab>
+    <mat-tab label="About">
+      <h1>Some more tab content</h1>
+      <p>...</p>
+    </mat-tab>
+  </mat-tab-group>
 
-      <!-- SELECT TYPE -->
+  <mat-vertical-stepper>
+    <mat-step label="Input">
+      <mat-card class="Input">
+        <mat-card-header>
+          <mat-card-title>Input</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            data
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Prev</button>
+          <button mat-button>Next</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </mat-step>
+    <mat-step label="Annotation 1">
+      Content 2
+    </mat-step>
+    <mat-step label="Annotation 2">
+      Content 2
+    </mat-step>
+    <mat-step label="Submit">
+      Content 2
+    </mat-step>
+  </mat-vertical-stepper>
+  <div class="card">
+    <h5 class="card-header">Featured</h5>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+
+
+   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+     <mat-card>
+       <mat-card-title>Prophane job page</mat-card-title>
+       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+         <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
+         <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
+         <div *ngIf="fastaFile">
+           <p>{{ fastaFile.name }}</p>
+           <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+         </div>
+         <div *ngIf="!fastaFile">
+           <p>No FASTA selected</p>
+         </div>
+       </div>
+
+       <!-- SELECT TYPE -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
         <mat-form-field>
           <mat-label>Select Input Type (Origin of data)</mat-label>
