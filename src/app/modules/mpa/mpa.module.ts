@@ -25,8 +25,7 @@ import { SearchComponent } from './components/search/search.component';
 import { FileComponent } from './components/file/file.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { ContentComponent } from './components/content/content.component';
-
-import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,7 @@ import {NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     FormsModule,
-    NgbButtonsModule,
+    NgbModule,
 
     Routing,
 
