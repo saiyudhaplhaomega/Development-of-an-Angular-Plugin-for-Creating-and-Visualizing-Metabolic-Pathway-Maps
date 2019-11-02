@@ -29,29 +29,39 @@
         <div class="card-body">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
+              <!-- Source selection -->
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
             <mat-select class="custom-select" [(value)]="selectedLevel" id="source">
               <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0"  class="input-group mb-3">
+          <!-- MPA -->
+          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01">
+              <input type="file" accept=".csv" class="custom-file-input" id="inputGroupFile01">
               <label class="custom-file-label" for="inputGroupFile01">Choose file (csv)</label>
             </div>
           </div>
 
+          <!-- Fasta -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">FASTA file</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              <input type="file" accept=".fasta,.faa" #fastafile (change)="onFastaChange(fastafile.files)"
+                     class="custom-file-input" id="fasta" (click)="fastafile.click()">
+              <div *ngIf="!fastaFile">
+              <label class="custom-file-label" for="fasta">Choose file</label>
+              </div>
+              <div *ngIf="fastaFile">
+                <label class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
+                <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+              </div>
             </div>
           </div>
           <div class="input-group mb-3">
