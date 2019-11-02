@@ -17,6 +17,9 @@
     </mat-tab>
   </mat-tab-group>
 
+
+
+
   <mat-vertical-stepper>
     <!-- STEP 1: Input -->
     <mat-step label="Input">
@@ -24,26 +27,51 @@
         <div class="card-header">
           <h5>Input<span class="card-title-button-wrapper"><mat-slide-toggle color>expert</mat-slide-toggle></span></h5>
         </div>
-
-
         <div class="card-body">
+
+          <!-- Source selection -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <!-- Source selection -->
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="custom-select" [(value)]="selectedLevel" id="source">
+            <mat-select class="custom-select" [(value)]="selectedLevel" id="sourceSelect" (selectionChange)="onSourceChange()">
               <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
+
           <!-- MPA -->
           <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".csv" class="custom-file-input" id="inputGroupFile01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file (csv)</label>
+              <input type="file" accept=".csv"  lass="custom-file-input" id="mpa" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
+          <!-- Scaffold -->
+          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".xls"  lass="custom-file-input" id="scaffold" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file (.xls)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label" for="scaffold">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
+          <!-- Generic -->
+          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".tsv,.txt"  lass="custom-file-input" id="generic" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file (.tsv, .txt)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label" for="generic">{{proteinReportFile.name}}</label>
             </div>
           </div>
 
@@ -55,32 +83,24 @@
             <div class="custom-file">
               <input type="file" accept=".fasta,.faa" #fastafile (change)="onFastaChange(fastafile.files)"
                      class="custom-file-input" id="fasta" (click)="fastafile.click()">
-              <div *ngIf="!fastaFile">
-              <label class="custom-file-label" for="fasta">Choose file</label>
-              </div>
-              <div *ngIf="fastaFile">
-                <label class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
-                <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
-              </div>
+              <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa)</label>
+              <label *ngIf="fastaFile" class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
+              <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
             </div>
           </div>
+
+          <!-- Exclude -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="">Contamination</span>
+              <span class="input-group-text">Exclude</span>
             </div>
-            <select class="custom-select" [(value)]="selectedContaminationOption">
-              <option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</option>
-            </select>
-            <input type="text" class="form-control">
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="">Reverse Sequences</span>
-            </div>
-            <select class="custom-select" [(value)]="selectedContaminationOption">
-              <option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</option>
-            </select>
-            <input type="text" class="form-control">
+            <mat-select class="custom-select" [(value)]="selectedContaminationOption">
+              <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
+            </mat-select>
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text" class="form-control" value="text">
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text" class="form-control" value="regular rexpression">
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text" class="form-control" [disabled]="true">
+
           </div>
         </div>
       </div>

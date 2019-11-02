@@ -21,6 +21,7 @@ import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegro
 export class ProphaneJobPageComponent implements OnInit {
 
   statusDisplayString = 'No Job Pending';
+  expertView: boolean;
 
   fastaFile: File;
   proteinReportFile: File;
@@ -45,8 +46,10 @@ export class ProphaneJobPageComponent implements OnInit {
   contAccession = '';
   selectedContaminationOption;
   contaminationdata: Array<Object> = [
-    {id: 0, name: 'start at accession', valueString: 'start'},
-    {id: 1, name: 'end at accession', valueString: 'end'}
+    {id: 0, name: 'accessions starting with', valueString: 'start'},
+    {id: 1, name: 'accessions ending with', valueString: 'end'},
+    {id: 2, name: 'accessions matching to', valueString: 'regex'},
+    {id: 3, name: 'none', valueString: 'none'}
   ];
 
   showadvanced = false;
@@ -96,7 +99,7 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 0, numerical: '0.01', text: 'Relaxed'},
     {id: 1, numerical: '0.001', text: 'Mid-Range'},
     {id: 2, numerical: '0.0005', text: 'Strict'}
-  ];
+  ]
 
   killAllJobs() {
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneKillJobs').subscribe(d => {
@@ -186,6 +189,9 @@ export class ProphaneJobPageComponent implements OnInit {
     console.log(this.prophaneResult);
   }
 
+  test() {
+    alert(this.selectedContaminationOption.id)
+  }
 
   uploadFasta(): void {
     console.log(this.fastaFile);
@@ -276,6 +282,10 @@ export class ProphaneJobPageComponent implements OnInit {
 
   onCSVChange(files: FileList) {
     this.proteinReportFile = files[0];
+  }
+
+  onSourceChange() {
+    this.proteinReportFile = null;
   }
 
   requestStatus() {
