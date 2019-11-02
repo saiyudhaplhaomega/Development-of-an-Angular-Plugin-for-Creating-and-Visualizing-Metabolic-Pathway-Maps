@@ -25,11 +25,24 @@
     <mat-step label="Input">
       <div class="card w-50" style="margin-left: 200px;">
         <div class="card-header">
-          <h5>Input<span class="card-title-button-wrapper"><mat-slide-toggle color>expert</mat-slide-toggle></span></h5>
+          <h5>
+            Input
+            <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+            </span>
+          </h5>
         </div>
         <div class="card-body">
 
-          <!-- Source selection -->
+          <!-- Job label (expert) -->
+          <div *ngIf="expertView == true" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-expert" id="job_label">Job label</span>
+            </div>
+            <input type="text" class="form-control" value="{{jobLabel}}">
+          </div>
+
+         <!-- Source selection -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
@@ -100,8 +113,26 @@
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text" class="form-control" value="text">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text" class="form-control" value="regular rexpression">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text" class="form-control" [disabled]="true">
-
           </div>
+
+          <!-- Quantification (expert) -->
+          <div *ngIf="expertView == true" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-expert">Quantification method</span>
+            </div>
+            <mat-select class="custom-select" [(value)]="selectedQuant">
+              <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
+            </mat-select>
+          </div>
+
+          <!-- Sample groups (expert) -->
+          <div *ngIf="expertView == true" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-expert">Sample group</span>
+            </div>
+            <input type="text" class="form-control" value="{{jobLabel}}">
+          </div>
+
         </div>
       </div>
 

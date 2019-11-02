@@ -11,8 +11,6 @@ import {ProphaneAnnotationTaskObject} from '../../../../core/models/prophaneanno
 import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegroupjson';
 
 
-
-
 @Component({
   selector: 'app-prophane-job-page',
   templateUrl: './prophane-job-page.component.html',
@@ -21,7 +19,7 @@ import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegro
 export class ProphaneJobPageComponent implements OnInit {
 
   statusDisplayString = 'No Job Pending';
-  expertView: boolean;
+  expertView = false;
 
   fastaFile: File;
   proteinReportFile: File;
@@ -56,13 +54,13 @@ export class ProphaneJobPageComponent implements OnInit {
 
   // Advanced Options
 
-  jobLabel = 'Another Job';
+  jobLabel = 'Yet Another Job';
   selectedQuant;
   quantdata: object[] = [
-    {id: 0, name: 'Raw value (no normalization)', valueString: 'raw'},
-    {id: 1, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
-    {id: 2, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
-    {id: 3, name: 'NSAF (normalized to mean metaprotein sequence)', valueString: 'mean_nsaf'},
+    {id: 0, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
+    {id: 1, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
+    {id: 2, name: 'NSAF (normalized to mean metaprotein sequence)', valueString: 'mean_nsaf'},
+    {id: 3, name: 'Raw value (no normalization)', valueString: 'raw'},
   ];
 
   scopetdata: object[] = [
@@ -189,10 +187,6 @@ export class ProphaneJobPageComponent implements OnInit {
     console.log(this.prophaneResult);
   }
 
-  test() {
-    alert(this.selectedContaminationOption.id)
-  }
-
   uploadFasta(): void {
     console.log(this.fastaFile);
     if (this.fastaFile) {
@@ -275,6 +269,12 @@ export class ProphaneJobPageComponent implements OnInit {
   /*  getProphaneResults(): void {
       this.prophaneResults = ['1', '2'];
     }*/
+
+  onViewChange(files: FileList) {
+    if (this.expertView == true) {
+
+    }
+  }
 
   onFastaChange(files: FileList) {
     this.fastaFile = files[0];

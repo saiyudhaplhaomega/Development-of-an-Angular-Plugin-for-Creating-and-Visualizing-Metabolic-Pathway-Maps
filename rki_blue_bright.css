@@ -2062,15 +2062,15 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: #007bff
+  background-color: #003f97
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: rgba(0,123,255, .54)
+  background-color: rgba(0, 63, 151, 0.54)
 }
 
 .mat-slide-toggle.mat-checked .mat-ripple-element {
-  background-color: #007bff
+  background-color: #003f97
 }
 
 .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
@@ -2461,4 +2461,10 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 .custom-file-label {
   white-space: nowrap;
   overflow:hidden;
+}
+
+.input-expert {
+  background: #003f97 !important;
+  color: #fff !important;
+  border-color: #003f97 !important;
 }
