@@ -35,10 +35,10 @@ export class ProphaneJobPageComponent implements OnInit {
 
   // Main options
   selectedLevel;
-  typedata: Array<Object> = [
+  leveldata: Array<Object> = [
     {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
     {id: 1, name: 'Scaffold', valueString: 'scaffold'},
-    {id: 2, name: 'Generic Input', valueString: 'generic'},
+    {id: 2, name: 'Generic Format', valueString: 'generic'},
     // {id: 3, name: 'Proteome Discoverer'}
   ];
 
@@ -139,6 +139,7 @@ export class ProphaneJobPageComponent implements OnInit {
   ngOnInit() {
     /*this.prophaneResults = ['1', '2'];*/
     this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
+    this.selectedLevel = this.leveldata[0];
     this.selectedContaminationOption = this.contaminationdata[0];
     this.selectedQuant = this.quantdata[0];
   }

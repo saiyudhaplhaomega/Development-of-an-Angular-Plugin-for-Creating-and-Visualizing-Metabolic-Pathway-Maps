@@ -18,21 +18,62 @@
   </mat-tab-group>
 
   <mat-vertical-stepper>
+    <!-- STEP 1: Input -->
     <mat-step label="Input">
-      <mat-card class="Input">
-        <mat-card-header>
-          <mat-card-title>Input</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            data
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Prev</button>
-          <button mat-button>Next</button>
-        </mat-card-actions>
-      </mat-card>
+      <div class="card w-50" style="margin-left: 200px;">
+        <div class="card-header">
+          <h5>Input<span class="card-title-button-wrapper"><mat-slide-toggle color>expert</mat-slide-toggle></span></h5>
+        </div>
+
+
+        <div class="card-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="sourceSelect">Source</label>
+            </div>
+            <mat-select class="custom-select" [(value)]="selectedLevel" id="source">
+              <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
+            </mat-select>
+          </div>
+          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0"  class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file (csv)</label>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">FASTA file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="">Contamination</span>
+            </div>
+            <select class="custom-select" [(value)]="selectedContaminationOption">
+              <option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</option>
+            </select>
+            <input type="text" class="form-control">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="">Reverse Sequences</span>
+            </div>
+            <select class="custom-select" [(value)]="selectedContaminationOption">
+              <option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</option>
+            </select>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
 
     </mat-step>
     <mat-step label="Annotation 1">
@@ -45,35 +86,36 @@
       Content 2
     </mat-step>
   </mat-vertical-stepper>
-  <div class="card w-50" style="margin-left: 200px;">
-    <div class="card-header">
-      <h5>Input<span class="card-title-button-wrapper"><mat-slide-toggle color>expert</mat-slide-toggle></span></h5>
-    </div>
-
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
 
 
-   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-     <mat-card>
-       <mat-card-title>Prophane job page</mat-card-title>
-       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-         <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file</button>
-         <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)" />
-         <div *ngIf="fastaFile">
-           <p>{{ fastaFile.name }}</p>
-           <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
-         </div>
-         <div *ngIf="!fastaFile">
-           <p>No FASTA selected</p>
-         </div>
-       </div>
+  <mat-form-field>
+    <mat-select [(value)]="selectedContaminationOption">
+      <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Accession</mat-label>
+    <input matInput [(ngModel)]="contAccession" value="{{ contAccession }}">
+  </mat-form-field>
 
-       <!-- SELECT TYPE -->
+
+  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <mat-card>
+      <mat-card-title>Prophane job page</mat-card-title>
+      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file
+        </button>
+        <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)"/>
+        <div *ngIf="fastaFile">
+          <p>{{ fastaFile.name }}</p>
+          <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+        </div>
+        <div *ngIf="!fastaFile">
+          <p>No FASTA selected</p>
+        </div>
+      </div>
+
+      <!-- SELECT TYPE -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
         <mat-form-field>
           <mat-label>Select Input Type (Origin of data)</mat-label>
@@ -84,10 +126,12 @@
       </div>
 
       <!-- SELECT INPUT -->
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" fxLayout="row" fxLayoutGap="20px"
+           fxLayoutAlign="center center">
         <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose MPA CSV
-          file</button>
-        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)" />
+          file
+        </button>
+        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)"/>
         <div *ngIf="proteinReportFile">
           <p>{{ proteinReportFile.name }}</p>
           <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
@@ -96,10 +140,12 @@
           <p>No CSV file selected</p>
         </div>
       </div>
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" fxLayout="row" fxLayoutGap="20px"
+           fxLayoutAlign="center center">
         <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose Scaffold
-          XLS file</button>
-        <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(csvfile.files)" />
+          XLS file
+        </button>
+        <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(csvfile.files)"/>
         <div *ngIf="proteinReportFile">
           <p>{{ proteinReportFile.name }}</p>
           <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
@@ -109,10 +155,12 @@
         </div>
       </div>
 
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" fxLayout="row" fxLayoutGap="20px"
+           fxLayoutAlign="center center">
         <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose TSV file
-          (generic format)</button>
-        <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(csvfile.files)" />
+          (generic format)
+        </button>
+        <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(csvfile.files)"/>
         <div *ngIf="proteinReportFile">
           <p>{{ proteinReportFile.name }}</p>
           <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
@@ -165,12 +213,15 @@
       <!-- JOB MANAGEMENT -->
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" [disabled]="!(proteinReportFile && fastaFile)" (click)="requestNewJob()">New
-            Prophane Job</button>
+          <button mat-raised-button color="primary" [disabled]="!(proteinReportFile && fastaFile)"
+                  (click)="requestNewJob()">New
+            Prophane Job
+          </button>
         </div>
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
           <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start
-            Job</button>
+            Job
+          </button>
         </div>
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
           <button mat-raised-button color="primary" (click)="requestStatus()">Get Status</button>
@@ -273,7 +324,7 @@
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
           <div *ngFor="let task of annotationTasks; let i = index">
             <div>
-              Annotation Task {{ i+1 }}
+              Annotation Task {{ i + 1 }}
               <button mat-icon-button (click)='removeAnnotationTask(task)'>
                 <mat-icon aria-label="test icon">remove</mat-icon>
               </button>
@@ -291,7 +342,7 @@
                 <mat-label>Database</mat-label>
                 <mat-select [(value)]="task.database">
                   <ng-container *ngFor="let dbitem of databaseOptions">
-                    <mat-option *ngIf = "dbitem.scope == task.scope" [value]="dbitem.database">
+                    <mat-option *ngIf="dbitem.scope == task.scope" [value]="dbitem.database">
                       {{dbitem.database}}</mat-option>
                   </ng-container>
                 </mat-select>
@@ -300,7 +351,7 @@
               <mat-form-field>
                 <mat-label>Database</mat-label>
                 <mat-select [(value)]="task.databaseversion">
-                    <mat-option value="'latest'">latest</mat-option>
+                  <mat-option value="'latest'">latest</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -310,11 +361,11 @@
                 <mat-label>Algorithm</mat-label>
                 <mat-select [(value)]="task.algorithm" (selectionChange)="setDefaultOptionString($event, task)">
                   <ng-container *ngFor="let dbitem of databaseOptions">
-                    <ng-container *ngIf = "dbitem.scope == task.scope && dbitem.database == task.database">
+                    <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                       <ng-container *ngFor="let algo of dbitem.algorithm">
-                      <mat-option [value]="algo">
-                      {{algo}}</mat-option>
-                    </ng-container>
+                        <mat-option [value]="algo">
+                          {{algo}}</mat-option>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
                 </mat-select>
@@ -332,7 +383,8 @@
               </mat-form-field>
               <mat-form-field>
                 <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions" [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  <mat-option *ngFor="let evalueRange of evalueOptions"
+                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

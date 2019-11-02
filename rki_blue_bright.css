@@ -2453,3 +2453,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   float: right;
   font-size: 14px;
 }
+
+.input-group-text {
+  width: 13em;
+}
