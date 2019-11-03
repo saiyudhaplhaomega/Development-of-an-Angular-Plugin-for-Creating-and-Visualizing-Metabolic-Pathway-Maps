@@ -79,8 +79,9 @@ export class ProphaneJobPageComponent implements OnInit {
   ];
 
   sampleGroups: ProphaneSampleGroupJSON[] = [];
-  newGroupMember = 'new group member';
-  newGroupItem = {groupname: 'Default Group', groupmembers: []};
+  newGroupMember = 'New Sample';
+  sampleCount = 0;
+  groupCount = 0;
 
   annotationTasks: ProphaneAnnotationTaskObject[] =
     [{scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
@@ -97,7 +98,7 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 0, numerical: '0.01', text: 'Relaxed'},
     {id: 1, numerical: '0.001', text: 'Mid-Range'},
     {id: 2, numerical: '0.0005', text: 'Strict'}
-  ]
+  ];
 
   killAllJobs() {
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneKillJobs').subscribe(d => {
@@ -146,22 +147,28 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   addSampleGroup() {
-    this.sampleGroups.push(this.newGroupItem);
-    this.newGroupItem = {groupname: 'Default Group', groupmembers: []};
+    //this.newGroupItem = {groupname: 'New Group '  + (this.sampleGroups.length + 1), groupmembers: ['New Sample '  + (this.newGroupMember.length + 1)]};
+    this.sampleGroups.push(this.getNewGroupItem());
   }
   removeSampleGroup(removeGroup) {
     this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
-  addNewGroupMember(newmember, group) {
-    if (!group.groupmembers.includes(newmember)) {
-      group.groupmembers.push(newmember);
-    }
-    this.newGroupMember = 'group member';
+
+  addNewGroupMember(group) {
+    //this.newGroupMember = 'New Sample ' + (group.newGroupMember.length + 1);
+    this.sampleCount += 1
+    group.groupmembers.push("New Sample " + this.sampleCount);
   }
+
   removeGroupMember(removemember, group) {
     group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
   }
 
+  getNewGroupItem(){
+    this.sampleCount += 1
+    this.groupCount += 1
+    return {groupname: 'New Group ' + this.groupCount, groupmembers: ["New Sample " + this.sampleCount]};
+  }
 
 
   addAnnotationTask() {

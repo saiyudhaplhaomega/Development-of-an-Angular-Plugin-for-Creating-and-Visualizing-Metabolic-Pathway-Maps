@@ -18,8 +18,6 @@
   </mat-tab-group>
 
 
-
-
   <mat-vertical-stepper>
     <!-- STEP 1: Input -->
     <mat-step label="Input">
@@ -34,20 +32,21 @@
         </div>
         <div class="card-body">
 
-          <!-- Job label (expert) -->
-          <div *ngIf="expertView == true" class="input-group mb-3">
+          <!-- Job label -->
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text input-expert" id="job_label">Job label</span>
+              <span class="input-group-text" id="job_label">Job label</span>
             </div>
             <input type="text" class="form-control" value="{{jobLabel}}">
           </div>
 
-         <!-- Source selection -->
+          <!-- Source selection -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="custom-select" [(value)]="selectedLevel" id="sourceSelect" (selectionChange)="onSourceChange()">
+            <mat-select class="custom-select" [(value)]="selectedLevel" id="sourceSelect"
+                        (selectionChange)="onSourceChange()">
               <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
@@ -58,7 +57,9 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".csv"  lass="custom-file-input" id="mpa" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
+              <input type="file" accept=".csv" lass="custom-file-input" id="mpa" #proteinreportfile
+                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
+                     (click)="proteinreportfile.click()">
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
               <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
             </div>
@@ -70,9 +71,13 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".xls"  lass="custom-file-input" id="scaffold" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file (.xls)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label" for="scaffold">{{proteinReportFile.name}}</label>
+              <input type="file" accept=".xls" lass="custom-file-input" id="scaffold" #proteinreportfile
+                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
+                     (click)="proteinreportfile.click()">
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file
+                (.xls)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label"
+                     for="scaffold">{{proteinReportFile.name}}</label>
             </div>
           </div>
 
@@ -82,9 +87,13 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".tsv,.txt"  lass="custom-file-input" id="generic" #proteinreportfile (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input" (click)="proteinreportfile.click()">
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file (.tsv, .txt)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label" for="generic">{{proteinReportFile.name}}</label>
+              <input type="file" accept=".tsv,.txt" lass="custom-file-input" id="generic" #proteinreportfile
+                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
+                     (click)="proteinreportfile.click()">
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file
+                (.tsv, .txt)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label"
+                     for="generic">{{proteinReportFile.name}}</label>
             </div>
           </div>
 
@@ -110,13 +119,84 @@
             <mat-select class="custom-select" [(value)]="selectedContaminationOption">
               <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text" class="form-control" value="text">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text" class="form-control" value="regular rexpression">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text" class="form-control" [disabled]="true">
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text"
+                   class="form-control" value="text">
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
+                   class="form-control" value="regular rexpression">
+            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
+                   class="form-control" [disabled]="true">
           </div>
 
-          <!-- Quantification (expert) -->
+          <!-- Sample groups (expert)
           <div *ngIf="expertView == true" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-expert">Sample group</span>
+            </div>
+            <input type="text" class="form-control" value="{{jobLabel}}">
+          </div>
+          -->
+        </div>
+      </div>
+
+    </mat-step>
+
+    <!-- STEP 2: Sample Grouping -->
+    <mat-step *ngIf="expertView == true" label="Sample Grouping">
+      <div class="card w-50" style="margin-left: 200px;">
+        <div class="card-header">
+          <h5>
+            Sample Grouping
+            <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+            </span>
+          </h5>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="expertView == true">
+            <ng-container *ngFor="let groupitem of sampleGroups" >
+              <!-- Group name -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text input-expert">Sample Group</span>
+                </div>
+                <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
+                       value="{{ groupitem.groupname }}">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)='removeSampleGroup(groupitem)'>—</button>
+                </div>
+              </div>
+              <!-- group member -->
+              <div *ngFor="let groupelement of groupitem.groupmembers" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Sample Name</span>
+                </div>
+                <input type="text" class="form-control" [(ngModel)]="groupelement" value="{{ groupelement }}">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)='addNewGroupMember(groupitem)'>+</button>
+                  <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary" type="button" (click)='removeGroupMember(groupelement, groupitem)'>—</button>
+                </div>
+              </div>
+              <mat-divider class="mb-3"></mat-divider>
+            </ng-container>
+            <button type="button" class="btn btn-primary float-right" (click)='addSampleGroup()' >Add Group</button>
+          </ng-container>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- STEP 3: Quantification -->
+    <mat-step *ngIf="expertView == true" label="Quantification">
+      <div class="card w-50" style="margin-left: 200px;">
+        <div class="card-header">
+          <h5>
+            Quantification method
+            <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+            </span>
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text input-expert">Quantification method</span>
             </div>
@@ -124,18 +204,8 @@
               <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
             </mat-select>
           </div>
-
-          <!-- Sample groups (expert) -->
-          <div *ngIf="expertView == true" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-expert">Sample group</span>
-            </div>
-            <input type="text" class="form-control" value="{{jobLabel}}">
-          </div>
-
         </div>
       </div>
-
     </mat-step>
     <mat-step label="Annotation 1">
       Content 2
@@ -336,6 +406,7 @@
       <mat-card>
         <mat-card-title>Sample Groups</mat-card-title>
         <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+
           <div *ngFor="let groupitem of sampleGroups">
             <div>
               <mat-form-field>
