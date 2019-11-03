@@ -141,7 +141,7 @@
     </mat-step>
 
     <!-- STEP 2: Sample Grouping -->
-    <mat-step *ngIf="expertView == true" label="Sample Grouping">
+    <mat-step *ngIf="expertView == true" label="Sample Groups">
       <div class="card w-50" style="margin-left: 200px;">
         <div class="card-header">
           <h5>
@@ -152,34 +152,37 @@
           </h5>
         </div>
         <div class="card-body">
-          <ng-container *ngIf="expertView == true">
-            <ng-container *ngFor="let groupitem of sampleGroups" >
-              <!-- Group name -->
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text input-expert">Sample Group</span>
-                </div>
-                <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
-                       value="{{ groupitem.groupname }}">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" (click)='removeSampleGroup(groupitem)'>—</button>
-                </div>
+          <div *ngIf="sampleGroups.length == 0">no group defined yet</div>
+          <ng-container *ngFor="let groupitem of sampleGroups">
+            <!-- Group name -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text input-expert">Sample Group</span>
               </div>
-              <!-- group member -->
-              <div *ngFor="let groupelement of groupitem.groupmembers" class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Sample Name</span>
-                </div>
-                <input type="text" class="form-control" [(ngModel)]="groupelement" value="{{ groupelement }}">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" (click)='addNewGroupMember(groupitem)'>+</button>
-                  <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary" type="button" (click)='removeGroupMember(groupelement, groupitem)'>—</button>
-                </div>
+              <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
+                     value="{{ groupitem.groupname }}">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)='removeSampleGroup(groupitem)'>—
+                </button>
               </div>
-              <mat-divider class="mb-3"></mat-divider>
-            </ng-container>
-            <button type="button" class="btn btn-primary float-right" (click)='addSampleGroup()' >Add Group</button>
+            </div>
+            <!-- group member -->
+            <div *ngFor="let groupelement of groupitem.groupmembers" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Sample Name</span>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="groupelement" value="{{ groupelement }}">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)='addNewGroupMember(groupitem)'>+
+                </button>
+                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary" type="button"
+                        (click)='removeGroupMember(groupelement, groupitem)'>—
+                </button>
+              </div>
+            </div>
+            <mat-divider class="mb-3"></mat-divider>
           </ng-container>
+          <button type="button" class="btn btn-primary float-right" (click)='addSampleGroup()'>Add Group</button>
         </div>
       </div>
     </mat-step>
@@ -207,9 +210,33 @@
         </div>
       </div>
     </mat-step>
-    <mat-step label="Annotation 1">
-      Content 2
+
+    <!-- STEP 4: Taxonomic Annotation -->
+    <mat-step *ngIf="expertView == true" label="Taxonomy">
+      <div class="card w-50" style="margin-left: 200px;">
+        <div class="card-header">
+          <h5>
+            Quantification method
+            <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+            </span>
+          </h5>
+        </div>
+        <div class="card-body">
+          <ng-container *ngFor="let task of filterAnnotationTasks('Taxonomy'); let i = index">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text input-expert">Quantification method</span>
+              </div>
+              <mat-select class="custom-select" [(value)]="selectedQuant">
+                <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
+              </mat-select>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </mat-step>
+
     <mat-step label="Annotation 2">
       Content 2
     </mat-step>

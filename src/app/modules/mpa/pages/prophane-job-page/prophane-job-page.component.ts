@@ -164,12 +164,15 @@ export class ProphaneJobPageComponent implements OnInit {
     group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
   }
 
-  getNewGroupItem(){
+  getNewGroupItem() {
     this.sampleCount += 1
     this.groupCount += 1
     return {groupname: 'New Group ' + this.groupCount, groupmembers: ["New Sample " + this.sampleCount]};
   }
 
+  filterAnnotationTasks(scope): any[] {
+      return this.annotationTasks.filter(i => i.scope === scope);
+    }
 
   addAnnotationTask() {
     this.annotationTasks.push(this.newAnnotationTask);
@@ -334,3 +337,4 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
 }
+
