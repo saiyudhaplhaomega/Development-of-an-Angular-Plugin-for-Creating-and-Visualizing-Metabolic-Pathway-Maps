@@ -82,16 +82,18 @@ export class ProphaneJobPageComponent implements OnInit {
   newGroupMember = 'New Sample';
   sampleCount = 0;
   groupCount = 0;
+  taxtasks = 1;
+  functasks = 1;
 
   annotationTasks: ProphaneAnnotationTaskObject[] =
     [{scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'task 1'},
+      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'},
       {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-        optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'task 2'}];
+        optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'}];
 
   taskCounter = 3;
   newAnnotationTask = {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'};
   // defaultAnnotationTask = ;
 
   evalueOptions: object[] = [
@@ -165,8 +167,8 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   getNewGroupItem() {
-    this.sampleCount += 1
-    this.groupCount += 1
+    this.sampleCount++;
+    this.groupCount++;
     return {groupname: 'New Group ' + this.groupCount, groupmembers: ["New Sample " + this.sampleCount]};
   }
 
@@ -174,19 +176,17 @@ export class ProphaneJobPageComponent implements OnInit {
       return this.annotationTasks.filter(i => i.scope === scope);
     }
 
-  addAnnotationTask() {
-    this.annotationTasks.push(this.newAnnotationTask);
+  addTaxTask() {
+    this.taxtasks++;
     this.taskCounter++;
-    this.newAnnotationTask = {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: ''};
+    this.annotationTasks.push({scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks });
   }
 
   removeAnnotationTask(removeTask) {
     this.annotationTasks = this.annotationTasks.filter(obj => obj !== removeTask);
     this.taskCounter--;
   }
-
-
 
   toggleAdvancedOptions() {
     this.showadvanced = !this.showadvanced;

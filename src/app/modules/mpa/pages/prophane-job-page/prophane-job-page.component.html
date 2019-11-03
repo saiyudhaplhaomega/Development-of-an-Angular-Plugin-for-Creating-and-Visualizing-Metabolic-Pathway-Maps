@@ -216,23 +216,90 @@
       <div class="card w-50" style="margin-left: 200px;">
         <div class="card-header">
           <h5>
-            Quantification method
+            Taxonomic Annotation
             <span class="card-title-button-wrapper">
               <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
         <div class="card-body">
+
+          <!-- Task Label -->
+          <div *ngIf="filterAnnotationTasks('Taxonomy').length == 0">no taxonomic annotation task defined yet</div>
           <ng-container *ngFor="let task of filterAnnotationTasks('Taxonomy'); let i = index">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text input-expert">Quantification method</span>
+                <span class="input-group-text input-expert">Task Label</span>
               </div>
-              <mat-select class="custom-select" [(value)]="selectedQuant">
-                <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
+              <input type="text" class="form-control" [(ngModel)]="task.tasklabel"
+                     value="{{ task.tasklabel }}">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)='removeAnnotationTask(task)'>—
+                </button>
+              </div>
+            </div>
+
+            <!-- Database & Version -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Reference Database</span>
+              </div>
+              <mat-select class="custom-select" [(value)]="task.database">
+                <ng-container *ngFor="let dbitem of databaseOptions">
+                  <mat-option *ngIf="dbitem.scope == task.scope"
+                              [value]="dbitem.database">{{dbitem.database}}</mat-option>
+                </ng-container>
+              </mat-select>
+              <div class="input-group-append custom-select">
+                <mat-select [(value)]="task.databaseversion">
+                  <mat-option value="'latest'">latest</mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+            <!-- Algorithm -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Search Algorithm</span>
+              </div>
+              <mat-select class="custom-select" [(value)]="task.algorithm"
+                          (selectionChange)="setDefaultOptionString($event, task)">
+                <ng-container *ngFor="let dbitem of databaseOptions">
+                  <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
+                    <ng-container *ngFor="let algo of dbitem.algorithm">
+                      <mat-option [value]="algo">
+                        {{algo}}</mat-option>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
               </mat-select>
             </div>
+
+            <!-- Option String -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Option String</span>
+              </div>
+              <input class="form-control" [(ngModel)]="task.optionstring">
+            </div>
+
+            <!-- E-value-->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">E-Value</span>
+              </div>
+              <input class="form-control" [(ngModel)]="task.evalue" value="{{ task.evalue }}">
+              <div class="input-group-append custom-select">
+                  <mat-select [(value)]="task.evalue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+              </div>
+            </div>
+            <mat-divider class="mb-3"></mat-divider>
           </ng-container>
+          <button type="button" class="btn btn-primary float-right" (click)='addTaxTask(newAnnotationTask)'>Add Task</button>
+
         </div>
       </div>
     </mat-step>
