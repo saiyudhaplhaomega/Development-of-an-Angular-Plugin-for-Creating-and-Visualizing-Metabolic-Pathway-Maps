@@ -4,29 +4,23 @@
   <!--  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button> -->
   <mat-tab-group>
     <mat-tab label="Job Submission">
-      <h1>Some tab content</h1>
-      <p>...</p>
     </mat-tab>
     <mat-tab label="Job Control">
-      <h1>Some more tab content</h1>
-      <p>...</p>
     </mat-tab>
     <mat-tab label="About">
-      <h1>Some more tab content</h1>
-      <p>...</p>
     </mat-tab>
   </mat-tab-group>
 
 
-  <mat-vertical-stepper>
+  <mat-vertical-stepper #stepper >
     <!-- STEP 1: Input -->
-    <mat-step label="Input">
+    <mat-step label="Input" >
       <div class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Input
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -37,7 +31,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
             </div>
-            <input type="text" class="form-control" value="{{jobLabel}}">
+            <input type="text" class="form-control" [(ngModel)]="jobLabel">
           </div>
 
           <!-- Source selection -->
@@ -47,7 +41,7 @@
             </div>
             <mat-select class="no-arrow custom-select" [(ngModel)]="selectedLevel" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
-             <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
+              <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
@@ -116,17 +110,23 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Exclude</span>
             </div>
-            <mat-select class="custom-select" [(value)]="selectedContaminationOption">
+            <mat-select class="custom-select" [(ngModel)]="selectedContaminationOption"
+                        (change)="setContaminationLabel(false)">
               <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text"
-                   class="form-control" value="text">
+                   class="form-control" [(ngModel)]="contval" placeholder="text"
+                   (change)="setContaminationLabel(contval)">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
-                   class="form-control" value="regular rexpression">
+                   class="form-control" [(ngModel)]="contval" placeholder="regular expression"
+                   (change)="setContaminationLabel(contval)">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
-                   class="form-control" [disabled]="true">
+                   class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
           </div>
         </div>
+      </div>
+      <div class="w-50 ml-job-form">
+        <button mat-button matStepperNext class="float-right">Next ></button>
       </div>
 
     </mat-step>
@@ -138,7 +138,7 @@
           <h5>
             Sample Grouping
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -162,7 +162,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Sample Name</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="groupelement" value="{{ groupelement }}">
+              <input type="text" class="form-control" [(ngModel)]="groupelement">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='addNewGroupMember(groupitem)'>+
                 </button>
@@ -173,8 +173,13 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group</button>
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group
+          </button>
         </div>
+      </div>
+      <div class="w-50 ml-job-form">
+        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
+        <button mat-button matStepperNext class="float-right">Next ></button>
       </div>
     </mat-step>
 
@@ -185,7 +190,7 @@
           <h5>
             Quantification method
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -200,6 +205,10 @@
           </div>
         </div>
       </div>
+      <div class="w-50 ml-job-form">
+        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
+        <button mat-button matStepperNext class="float-right">Next ></button>
+      </div>
     </mat-step>
 
     <!-- STEP 4: Taxonomic Annotation -->
@@ -209,7 +218,7 @@
           <h5>
             Taxonomic Annotation
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -222,8 +231,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel"
-                     value="{{ task.tasklabel }}">
+              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
                 </button>
@@ -279,12 +287,12 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">E-Value</span>
               </div>
-              <input class="form-control" [(ngModel)]="task.evalue" value="{{ task.evalue }}">
+              <input class="form-control" [(ngModel)]="task.evalue">
               <div class="input-group-append custom-select">
-                  <mat-select [(value)]="task.evalue" placeholder="Custom">
-                    <mat-option *ngFor="let evalueRange of evalueOptions"
-                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                  </mat-select>
+                <mat-select [(value)]="task.evalue" placeholder="Custom">
+                  <mat-option *ngFor="let evalueRange of evalueOptions"
+                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                </mat-select>
               </div>
             </div>
             <mat-divider class="mb-3"></mat-divider>
@@ -292,6 +300,10 @@
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task</button>
 
         </div>
+      </div>
+      <div class="w-50 ml-job-form">
+        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
+        <button mat-button matStepperNext class="float-right">Next ></button>
       </div>
     </mat-step>
 
@@ -302,7 +314,7 @@
           <h5>
             Functional Annotation
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange($event)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -315,8 +327,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel"
-                     value="{{ task.tasklabel }}">
+              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
                 </button>
@@ -382,400 +393,198 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task</button>
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
+          </button>
 
         </div>
       </div>
+      <div class="w-50 ml-job-form">
+        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
+        <button mat-button matStepperNext class="float-right">Next ></button>
+      </div>
     </mat-step>
-    
+
+    <!-- Summary & Submit -->
     <mat-step label="Submit">
-      Content 2
+      <div class="card w-50 ml-job-form">
+        <div class="card-header">
+          <h5>
+            Summary
+            <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+          </h5>
+        </div>
+        <div class="card-body">
+
+          <!-- Input (Summary) -->
+          <table class="table .table-light table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row" class="ml-summary-col">Job Label:</th>
+              <td>
+                {{ jobLabel }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col">Source:</th>
+              <td>
+                {{ selectedLevel.name }}
+              </td>
+            </tr>
+            <tr>
+              <th [ngClass]="!proteinReportFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Report
+                File:
+              </th>
+              <td [ngClass]="!proteinReportFile ? 'table-warning' : ''">
+                {{ proteinReportFile ? proteinReportFile.name : 'not selected yet' }}
+              </td>
+            </tr>
+            <tr>
+              <th [ngClass]="!fastaFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Fasta File:</th>
+              <td *ngIf="!fastaFile" [ngClass]="!fastaFile ? 'table-warning' : ''">
+                {{ fastaFile ? fastaFile.name : 'not selected yet' }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"
+                  [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''"
+                  class="ml-summary-col">
+                Exclude:
+              </th>
+              <td
+                [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''">
+                {{ selectedContaminationOption.name + " " + contaminationLabel.valueString }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- Sample Groups (Summary) -->
+          <table *ngIf="expertView == true" class="table .table-light table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr *ngIf="sampleGroups.length == 0">
+              <th scope="row" class="ml-summary-col" class="ml-summary-col">Sample Groups:</th>
+              <td>
+                not defined (expert option)
+              </td>
+            </tr>
+            <tr *ngFor="let group of sampleGroups">
+              <th scope="row" class="ml-summary-col">
+                Sample Group:
+              </th>
+              <td>
+                {{ group.groupname }}<br>
+                <mat-list dense>
+                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member }} </mat-list-item>
+                </mat-list>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col"></th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- Quantification (Summary) -->
+          <table *ngIf="expertView == true" class="table .table-light table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row" class="ml-summary-col">Quantification Method:</th>
+              <td>
+                {{ selectedQuant.name }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col"></th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- Taxonomic Task (Summary) -->
+          <table *ngIf="expertView == true" class="table .table-light table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr *ngIf="filterAnnotationTasks('Taxonomy').length == 0">
+              <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
+              <td>
+                not defined
+              </td>
+            </tr>
+            <tr *ngFor="let task of filterAnnotationTasks('Taxonomy')">
+              <th scope="row" class="ml-summary-col">
+                Taxonomic Annotation:
+              </th>
+              <td>
+                {{ task.tasklabel }}<br>
+                <mat-list dense>
+                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                  <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
+                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                </mat-list>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col"></th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- Functional Task (Summary) -->
+          <table *ngIf="expertView == true" class="table .table-light table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr *ngIf="filterAnnotationTasks('Function').length == 0">
+              <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
+              <td>
+                not defined
+              </td>
+            </tr>
+            <tr *ngFor="let task of filterAnnotationTasks('Function')">
+              <th scope="row" class="ml-summary-col">
+                Functional Annotation:
+              </th>
+              <td>
+                {{ task.tasklabel }}<br>
+                <mat-list dense>
+                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                  <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
+                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                </mat-list>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col"></th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+          <button mat-raised-button color="primary"
+                  (click)="requestNewJob()" class="float-left"> Reset
+          </button>
+          <button mat-raised-button color="primary" class="float-right"
+                  [disabled]="!(proteinReportFile && fastaFile && (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                  (click)="startButton()">Submit
+          </button>
+        </div>
+      </div>
     </mat-step>
+
   </mat-vertical-stepper>
-
-
-  <mat-form-field>
-    <mat-select [(value)]="selectedContaminationOption">
-      <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Accession</mat-label>
-    <input matInput [(ngModel)]="contAccession" value="{{ contAccession }}">
-  </mat-form-field>
-
-
-  <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <mat-card>
-      <mat-card-title>Prophane job page</mat-card-title>
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-raised-button (click)="fastafile.click()">Choose FASTA file
-        </button>
-        <input hidden type="file" accept=".fasta" #fastafile (change)="onFastaChange(fastafile.files)"/>
-        <div *ngIf="fastaFile">
-          <p>{{ fastaFile.name }}</p>
-          <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
-        </div>
-        <div *ngIf="!fastaFile">
-          <p>No FASTA selected</p>
-        </div>
-      </div>
-
-      <!-- SELECT TYPE -->
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-        <mat-form-field>
-          <mat-label>Select Input Type (Origin of data)</mat-label>
-          <mat-select [(value)]="selectedLevel">
-            <mat-option *ngFor="let typeitem of typedata" [value]="typeitem">{{typeitem.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <!-- SELECT INPUT -->
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" fxLayout="row" fxLayoutGap="20px"
-           fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose MPA CSV
-          file
-        </button>
-        <input hidden type="file" accept=".csv" #csvfile (change)="onCSVChange(csvfile.files)"/>
-        <div *ngIf="proteinReportFile">
-          <p>{{ proteinReportFile.name }}</p>
-          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-        </div>
-        <div *ngIf="!proteinReportFile">
-          <p>No CSV file selected</p>
-        </div>
-      </div>
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" fxLayout="row" fxLayoutGap="20px"
-           fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose Scaffold
-          XLS file
-        </button>
-        <input hidden type="file" accept=".xls" #csvfile (change)="onCSVChange(csvfile.files)"/>
-        <div *ngIf="proteinReportFile">
-          <p>{{ proteinReportFile.name }}</p>
-          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-        </div>
-        <div *ngIf="!proteinReportFile">
-          <p>No XLS file selected</p>
-        </div>
-      </div>
-
-      <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" fxLayout="row" fxLayoutGap="20px"
-           fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-raised-button (click)="csvfile.click()">Choose TSV file
-          (generic format)
-        </button>
-        <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(csvfile.files)"/>
-        <div *ngIf="proteinReportFile">
-          <p>{{ proteinReportFile.name }}</p>
-          <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>
-        </div>
-        <div *ngIf="!proteinReportFile">
-          <p>No TSV file selected</p>
-        </div>
-      </div>
-
-      <!--        <div *ngIf="selectedLevel != undefined && selectedLevel.id == 3" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-                <button mat-raised-button color="primary" mat-raised-button (click)="pdxmlFile.click()">Choose TSV file (generic
-                  format)</button>
-                <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdxmlFile.files)" />
-                <div *ngIf="pdxmlFile">
-                  <p>{{ pdxmlFile.name }}</p>
-                  <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
-                </div>
-                <div *ngIf="!pdxmlFile">
-                  <p>No TSV file selected</p>
-                </div>
-
-                <button mat-raised-button color="primary" mat-raised-button (click)="pdtxtFile.click()">Choose TSV file (generic
-                  format)</button>
-                <input hidden type="file" accept=".tsv" #csvfile (change)="onCSVChange(pdtxtFile.files)" />
-                <div *ngIf="pdtxtFile">
-                  <p>{{ pdtxtFile.name }}</p>
-                  <mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="pdxmlFile"></mat-progress-bar>
-                </div>
-                <div *ngIf="!pdtxtFile">
-                  <p>No TSV file selected</p>
-                </div>
-              </div>-->
-
-      <!-- CONTAMINATION LEVEL -->
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-
-        <p>Contamination Label</p>
-
-        <mat-form-field>
-          <mat-select [(value)]="selectedContaminationOption">
-            <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Accession</mat-label>
-          <input matInput [(ngModel)]="contAccession" value="{{ contAccession }}">
-        </mat-form-field>
-      </div>
-
-      <!-- JOB MANAGEMENT -->
-      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" [disabled]="!(proteinReportFile && fastaFile)"
-                  (click)="requestNewJob()">New
-            Prophane Job
-          </button>
-        </div>
-        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" [disabled]="prophaneJobReady" (click)="startButton()">Start
-            Job
-          </button>
-        </div>
-        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary" (click)="requestStatus()">Get Status</button>
-          <div *ngIf='downloadReady; else statusdisplay'>
-            <button mat-raised-button color="primary" (click)="downloadProphaneResult()">Download Result</button>
-
-            <!--<div *ngIf="fileUrl">
-              <a href="{{fileUrl}}" name="downloadLink">Download</a>
-            </div>-->
-          </div>
-          <ng-template #statusdisplay>{{statusDisplayString}}</ng-template>
-          <!--{{statusDisplayString}}-->
-        </div>
-
-      </div>
-    </mat-card>
-  </div>
-
-  <!-- ADVANCED OPTIONS -->
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <button mat-icon-button (click)='toggleAdvancedOptions()'>
-      <mat-icon aria-label="test icon">control_point</mat-icon>
-    </button>
-    <h3>Advanced Options</h3>
-  </div>
-
-  <div fxLayout="column" *ngIf="showadvanced" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <div>
-      <mat-card>
-        <!-- LABEL -->
-        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <mat-form-field>
-            <mat-label>Job Label</mat-label>
-            <input matInput [(ngModel)]="jobLabel" value="{{ jobLabel }}">
-          </mat-form-field>
-        </div>
-
-        <!-- QUANT METHOD -->
-        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <mat-form-field>
-            <mat-label>Select Quantification Method</mat-label>
-            <mat-select (value)="selectedQuant">
-              <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-card>
-    </div>
-    <!-- SAMPLE GROUPS -->
-    <div>
-      <mat-card>
-        <mat-card-title>Sample Groups</mat-card-title>
-        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-
-          <div *ngFor="let groupitem of sampleGroups">
-            <div>
-              <mat-form-field>
-                <mat-label>Group Name</mat-label>
-                <input matInput [(ngModel)]="groupitem.groupname" value="{{ groupitem.groupname }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='removeSampleGroup(groupitem)'>
-                <mat-icon aria-label="test icon">remove</mat-icon>
-              </button>
-            </div>
-            <div *ngFor="let groupelement of groupitem.groupmembers">
-              <mat-form-field>
-                <mat-label>Group Member</mat-label>
-                <input matInput [(ngModel)]="groupelement" value="{{ groupelement }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='removeGroupMember(groupelement, groupitem)'>
-                <mat-icon aria-label="test icon">remove</mat-icon>
-              </button>
-            </div>
-            <div>
-              <mat-form-field>
-                <mat-label>Group Member</mat-label>
-                <input matInput [(ngModel)]="newGroupMember" value="{{ newGroupMember }}">
-              </mat-form-field>
-              <button mat-icon-button (click)='addNewGroupMember(newGroupMember, groupitem)'>
-                <mat-icon aria-label="test icon">add</mat-icon>
-              </button>
-            </div>
-          </div>
-          <div>
-            <mat-form-field>
-              <mat-label>Group Name</mat-label>
-              <input matInput [(ngModel)]="newGroupItem.groupname" value="{{ newGroupItem.groupname }}">
-            </mat-form-field>
-            <button mat-icon-button (click)='addSampleGroup()'>
-              <mat-icon aria-label="test icon">add</mat-icon>
-            </button>
-          </div>
-        </div>
-      </mat-card>
-    </div>
-
-    <!-- ANNOTATION TASKS -->
-    <div>
-      <mat-card>
-        <mat-card-title>Annotation Tasks</mat-card-title>
-        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
-          <div *ngFor="let task of annotationTasks; let i = index">
-            <div>
-              Annotation Task {{ i + 1 }}
-              <button mat-icon-button (click)='removeAnnotationTask(task)'>
-                <mat-icon aria-label="test icon">remove</mat-icon>
-              </button>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-              <!-- scope -->
-              <mat-form-field>
-                <mat-label>Scope</mat-label>
-                <mat-select [(value)]="task.scope">
-                  <mat-option *ngFor="let scope of scopetdata" [value]="scope.name">{{scope.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <!-- database -->
-              <mat-form-field>
-                <mat-label>Database</mat-label>
-                <mat-select [(value)]="task.database">
-                  <ng-container *ngFor="let dbitem of databaseOptions">
-                    <mat-option *ngIf="dbitem.scope == task.scope" [value]="dbitem.database">
-                      {{dbitem.database}}</mat-option>
-                  </ng-container>
-                </mat-select>
-              </mat-form-field>
-              <!-- database version -->
-              <mat-form-field>
-                <mat-label>Database</mat-label>
-                <mat-select [(value)]="task.databaseversion">
-                  <mat-option value="'latest'">latest</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-              <!-- algorithm -->
-              <mat-form-field>
-                <mat-label>Algorithm</mat-label>
-                <mat-select [(value)]="task.algorithm" (selectionChange)="setDefaultOptionString($event, task)">
-                  <ng-container *ngFor="let dbitem of databaseOptions">
-                    <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
-                      <ng-container *ngFor="let algo of dbitem.algorithm">
-                        <mat-option [value]="algo">
-                          {{algo}}</mat-option>
-                      </ng-container>
-                    </ng-container>
-                  </ng-container>
-                </mat-select>
-              </mat-form-field>
-              <!-- option string -->
-              <mat-form-field>
-                <mat-label>Option String</mat-label>
-                <input matInput [(ngModel)]="task.optionstring">
-              </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-              <mat-form-field>
-                <mat-label>Evalue</mat-label>
-                <input matInput [(ngModel)]="task.evalue" value="{{ task.evalue }}">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <mat-label>Task label</mat-label>
-                <input matInput [(ngModel)]="task.tasklabel">
-              </mat-form-field>
-            </div>
-          </div>
-
-          <!-- New Task -->
-          <div>
-            Annotation Task {{ this.taskCounter }}
-            <button mat-icon-button (click)='addAnnotationTask(newAnnotationTask)'>
-              <mat-icon aria-label="test icon">add</mat-icon>
-            </button>
-          </div>
-          <!-- copy from above -->
-        </div>
-      </mat-card>
-    </div>
-    <!--show advanced-->
-  </div>
-  <!-- Flex -->
-</div>
-
-<!--
-<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-  <mat-slider min="1" max="5" step="0.5" [(value)]="slidervalue"></mat-slider>
-</div>
-{{ slidervalue }}-->
-
-
-<!--  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <div class="mdc-text-field mdc-text-field&#45;&#45;outlined">
-      <input type="text" id="tf-outlined-2" class="mdc-text-field__input">
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
-          <label for="tf-outlined" class="mdc-floating-label">New Annotation Task</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>
-    </div>
-    <button mat-icon-button (click)='addAnnotationTask()'>
-      <mat-icon aria-label="test icon">add</mat-icon>
-    </button>
-    <button mat-icon-button (click)='removeAnnotationTask()'>
-      <mat-icon aria-label="test icon">remove</mat-icon>
-    </button>
-  </div>
-
-  <i class="mdc-select__dropdown-icon" name="typeselector"></i>
-  <select class="mdc-select__native-control" [(ngModel)]="selectedScope">>
-    <option value="" disabled selected></option>
-    <option *ngFor="let scopeitem of scopetdata" [ngValue]="scopeitem">{{scopeitem.name}}</option>
-  </select>
-  <label class="mdc-floating-label">Select Scope</label>
-  <div class="mdc-line-ripple"></div>
-
-  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <mat-slider min="1" max="5" step="0.5" value="1.5"></mat-slider>
-  </div>-->
-
-<!-- ADVANCED OPTIONS -->
-
-<!--<p>{{jobLabel}}</p>
-<p>{{contAccession}}</p>
-<p>{{selectedContaminationOption.name}}</p>
-<p>{{newAnnotationTask.scope}}</p>
-&lt;!&ndash;<p>{{newAnnotationTask.displayName}}</p>&ndash;&gt;
-
-<div *ngIf="selectedLevel != undefined && selectedLevel.id == 0">
-  <p>0 MPA</p>
-</div>
-<div *ngIf="selectedLevel != undefined && selectedLevel.id == 1">
-  <p>1 Scaffold</p>
-</div>
-<div *ngIf="selectedLevel != undefined && selectedLevel.id == 2">
-  <p>2 Generic</p>
-</div>
-<div *ngIf="selectedLevel != undefined && selectedLevel.id == 3">
-  <p>3 PD</p>
-</div>-->
-
-<!--<p *ngIf="currentProphaneParameters && currentProphaneParameters.prophaneJobUUID">Current job ID: {{ currentProphaneParameters.prophaneJobUUID }}</p>-->

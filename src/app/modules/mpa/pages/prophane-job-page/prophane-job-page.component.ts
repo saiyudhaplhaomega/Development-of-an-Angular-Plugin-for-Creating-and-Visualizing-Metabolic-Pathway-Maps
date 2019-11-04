@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../../../../shared/services/file-uploader.service';
 import {MatRadioChange} from '@angular/material/radio';
 import {SerializableObjectUploaderService} from '../../../../shared/services/serializable-object-uploader.service';
@@ -8,7 +8,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {forEach} from '@angular/router/src/utils/collection';
 import {ProphaneAnnotationTaskObject} from '../../../../core/models/prophaneannotationtaskjson';
 import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegroupjson';
-import { ViewEncapsulation } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
+import {MatStepper} from '@angular/material/stepper';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { ViewEncapsulation } from '@angular/core';
   styleUrls: ['./prophane-job-page.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class ProphaneJobPageComponent implements OnInit {
 
   statusDisplayString = 'No Job Pending';
@@ -25,6 +27,7 @@ export class ProphaneJobPageComponent implements OnInit {
   fastaFile: File;
   proteinReportFile: File;
 
+  contval: string;
   prophaneResult: string;
   currentProphaneParameters: ProphaneParamObject;
   prophaneJobReady: boolean;
@@ -32,6 +35,7 @@ export class ProphaneJobPageComponent implements OnInit {
   fastaProgress: number;
   fileUrl: string;
   downloadReady: boolean;
+  stepperIndex: number;
 
   // Main options
   selectedLevel;
@@ -42,7 +46,7 @@ export class ProphaneJobPageComponent implements OnInit {
     // {id: 3, name: 'Proteome Discoverer'}
   ];
 
-  contAccession = '';
+  contaminationLabel = {valueString: '', regex: ''};
   selectedContaminationOption;
   contaminationdata: Array<Object> = [
     {id: 0, name: 'accessions starting with', valueString: 'start'},
@@ -55,7 +59,7 @@ export class ProphaneJobPageComponent implements OnInit {
 
   // Advanced Options
 
-  jobLabel = 'Yet Another Job';
+  jobLabel: string;
   selectedQuant;
   quantdata: object[] = [
     {id: 0, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
@@ -149,14 +153,31 @@ export class ProphaneJobPageComponent implements OnInit {
 
   ngOnInit() {
     /*this.prophaneResults = ['1', '2'];*/
+    this.jobLabel = 'Yet Another Job';
     this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.selectedLevel = this.leveldata[0];
-    this.selectedContaminationOption = this.contaminationdata[0];
+    this.contaminationLabel = {valueString: '', regex: '[|]{10000}'};
+    this.selectedContaminationOption = this.contaminationdata[3];
     this.selectedQuant = this.quantdata[0];
+    this.stepperIndex = 0;
+  }
+
+  setContaminationLabel(val) {
+    if (val === false) {
+      val = this.contaminationLabel.valueString;
+    }
+    if (this.selectedContaminationOption.valueString === 'start') {
+      this.contaminationLabel = {valueString: val, regex: '^' + val};
+    } else if (this.selectedContaminationOption.valueString === 'end') {
+      this.contaminationLabel = {valueString: val, regex: val + '$'};
+    } else if (this.selectedContaminationOption.valueString === 'regex') {
+      this.contaminationLabel = {valueString: val, regex: val};
+    } else if (this.selectedContaminationOption.valueString === 'none') {
+      this.contaminationLabel = {valueString: '', regex: '[|]{10000}'};
+    }
   }
 
   addSampleGroup() {
-    //this.newGroupItem = {groupname: 'New Group '  + (this.sampleGroups.length + 1), groupmembers: ['New Sample '  + (this.newGroupMember.length + 1)]};
     this.sampleGroups.push(this.getNewGroupItem());
   }
 
@@ -165,8 +186,7 @@ export class ProphaneJobPageComponent implements OnInit {
   }
 
   addNewGroupMember(group) {
-    //this.newGroupMember = 'New Sample ' + (group.newGroupMember.length + 1);
-    this.sampleCount += 1;
+    this.sampleCount++;
     group.groupmembers.push('New Sample ' + this.sampleCount);
   }
 
@@ -197,18 +217,14 @@ export class ProphaneJobPageComponent implements OnInit {
     this.functasks++;
     this.taskCounter++;
     this.annotationTasks.push({
-        scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-        optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task ' + this.functasks
-      });
+      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
+      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task ' + this.functasks
+    });
   }
 
   removeAnnotationTask(removeTask) {
     this.annotationTasks = this.annotationTasks.filter(obj => obj !== removeTask);
     this.taskCounter--;
-  }
-
-  toggleAdvancedOptions() {
-    this.showadvanced = !this.showadvanced;
   }
 
   onChange(mrChange: MatRadioChange) {
@@ -260,8 +276,8 @@ export class ProphaneJobPageComponent implements OnInit {
     // adding form values into parameters object
 
     this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
-    this.currentProphaneParameters.contaminationLabel = this.selectedContaminationOption.valueString;
-    this.currentProphaneParameters.contaminationPosition = this.contAccession;
+    this.currentProphaneParameters.contaminationLabel = this.contaminationLabel.regex;
+    this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
     this.currentProphaneParameters.jobLabel = this.jobLabel;
     this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
     this.currentProphaneParameters.sampleGroups = this.sampleGroups;
@@ -299,11 +315,28 @@ export class ProphaneJobPageComponent implements OnInit {
       this.prophaneResults = ['1', '2'];
     }*/
 
-  onViewChange(files: FileList) {
-    if (this.expertView == true) {
+  @ViewChild('stepper') stepper: MatStepper;
 
+  onViewChange(view) {
+    if (view === false) {
+      if (this.stepper.selectedIndex == 5) {
+        this.moveStepper(1);
+      } else if (this.stepper.selectedIndex > 0) {
+        this.moveStepper(0);
+      }
+    } else if (this.stepper.selectedIndex == 1) {
+      setTimeout(this.moveStepperToLast, 30000);
     }
   }
+
+  moveStepper(step: number){
+    this.stepper.selectedIndex = step;
+  }
+
+  moveStepperToLast(){
+    this.stepper.selectedIndex = 5;
+  }
+
 
   onFastaChange(files: FileList) {
     this.fastaFile = files[0];
