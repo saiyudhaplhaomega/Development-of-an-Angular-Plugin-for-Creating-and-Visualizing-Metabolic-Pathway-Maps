@@ -1985,7 +1985,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 }
 
 .mat-select-arrow {
-  color: rgba(0, 0, 0, .54)
+  /*color: rgba(0, 0, 0, .54)*/
+  color: rgba(255, 255, 255, 1)
 }
 
 .mat-select-panel {
@@ -2463,7 +2464,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   overflow:hidden;
 }
 
-.input-expert {
+.rki-blue-input {
   background: #003f97 !important;
   color: #fff !important;
   border-color: #003f97 !important;
@@ -2471,4 +2472,16 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 
 .ml-job-form{
   margin-left: 13em;
+}
+
+.rki-blue-divider{
+  border-top-color: rgba(0, 63, 151, 1) !important;
+}
+
+.rki-blue-bg{
+  background: #003f97 !important;
+}
+
+.w-sbtn{
+  width: 3em;
 }

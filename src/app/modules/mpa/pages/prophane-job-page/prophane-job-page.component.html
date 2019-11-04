@@ -35,7 +35,7 @@
           <!-- Job label -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="job_label">Job label</span>
+              <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
             </div>
             <input type="text" class="form-control" value="{{jobLabel}}">
           </div>
@@ -45,9 +45,9 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="custom-select" [(value)]="selectedLevel" id="sourceSelect"
+            <mat-select class="no-arrow custom-select input-text-color" [(value)]="selectedLevel" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
-              <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
+             <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
@@ -126,15 +126,6 @@
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
                    class="form-control" [disabled]="true">
           </div>
-
-          <!-- Sample groups (expert)
-          <div *ngIf="expertView == true" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-expert">Sample group</span>
-            </div>
-            <input type="text" class="form-control" value="{{jobLabel}}">
-          </div>
-          -->
         </div>
       </div>
 
@@ -157,12 +148,12 @@
             <!-- Group name -->
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text input-expert">Sample Group</span>
+                <span class="input-group-text rki-blue-input">Sample Group</span>
               </div>
               <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
                      value="{{ groupitem.groupname }}">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)='removeSampleGroup(groupitem)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeSampleGroup(groupitem)'>—
                 </button>
               </div>
             </div>
@@ -173,16 +164,16 @@
               </div>
               <input type="text" class="form-control" [(ngModel)]="groupelement" value="{{ groupelement }}">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)='addNewGroupMember(groupitem)'>+
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='addNewGroupMember(groupitem)'>+
                 </button>
-                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary" type="button"
+                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn" type="button"
                         (click)='removeGroupMember(groupelement, groupitem)'>—
                 </button>
               </div>
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right" (click)='addSampleGroup()'>Add Group</button>
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group</button>
         </div>
       </div>
     </mat-step>
@@ -201,7 +192,7 @@
         <div class="card-body">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text input-expert">Quantification method</span>
+              <span class="input-group-text rki-blue-input">Quantification method</span>
             </div>
             <mat-select class="custom-select" [(value)]="selectedQuant">
               <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
@@ -229,12 +220,12 @@
           <ng-container *ngFor="let task of filterAnnotationTasks('Taxonomy'); let i = index">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text input-expert">Task Label</span>
+                <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
               <input type="text" class="form-control" [(ngModel)]="task.tasklabel"
                      value="{{ task.tasklabel }}">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)='removeAnnotationTask(task)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
                 </button>
               </div>
             </div>
@@ -252,7 +243,7 @@
               </mat-select>
               <div class="input-group-append custom-select">
                 <mat-select [(value)]="task.databaseversion">
-                  <mat-option value="'latest'">latest</mat-option>
+                  <mat-option value="latest">latest</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -298,7 +289,7 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right" (click)='addTaxTask()'>Add Task</button>
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task</button>
 
         </div>
       </div>
@@ -322,12 +313,12 @@
           <ng-container *ngFor="let task of filterAnnotationTasks('Function'); let i = index">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text input-expert">Task Label</span>
+                <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
               <input type="text" class="form-control" [(ngModel)]="task.tasklabel"
                      value="{{ task.tasklabel }}">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)='removeAnnotationTask(task)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
                 </button>
               </div>
             </div>
@@ -345,7 +336,7 @@
               </mat-select>
               <div class="input-group-append custom-select">
                 <mat-select [(value)]="task.databaseversion">
-                  <mat-option value="'latest'">latest</mat-option>
+                  <mat-option value="latest">latest</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -381,7 +372,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">E-Value</span>
               </div>
-              <input class="form-control" [(ngModel)]="task.evalue" value="{{ task.evalue }}">
+              <input class="form-control" [(ngModel)]="task.evalue" [(value)]="task.evalue">
               <div class="input-group-append custom-select">
                 <mat-select [(value)]="task.evalue" placeholder="Custom">
                   <mat-option *ngFor="let evalueRange of evalueOptions"
@@ -391,7 +382,7 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right" (click)='addFuncTask()'>Add Task</button>
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task</button>
 
         </div>
       </div>
