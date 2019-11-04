@@ -2468,3 +2468,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   color: #fff !important;
   border-color: #003f97 !important;
 }
+
+.ml-job-form{
+  margin-left: 13em;
+}

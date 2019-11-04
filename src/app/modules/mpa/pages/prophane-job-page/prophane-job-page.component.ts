@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FileUploaderService } from '../../../../shared/services/file-uploader.service';
-import { MatRadioChange } from '@angular/material/radio';
-import { SerializableObjectUploaderService } from '../../../../shared/services/serializable-object-uploader.service';
-import { ProphaneParamObject, ProphaneParamJSON } from '../../../../core/models/prophaneparamjson';
-import { HttpEventType } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FileUploaderService} from '../../../../shared/services/file-uploader.service';
+import {MatRadioChange} from '@angular/material/radio';
+import {SerializableObjectUploaderService} from '../../../../shared/services/serializable-object-uploader.service';
+import {ProphaneParamObject, ProphaneParamJSON} from '../../../../core/models/prophaneparamjson';
+import {HttpEventType} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {forEach} from '@angular/router/src/utils/collection';
@@ -86,14 +86,20 @@ export class ProphaneJobPageComponent implements OnInit {
   functasks = 1;
 
   annotationTasks: ProphaneAnnotationTaskObject[] =
-    [{scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'},
-      {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-        optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'}];
+    [{
+      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
+      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
+    },
+      {
+        scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+        optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
+      }];
 
   taskCounter = 3;
-  newAnnotationTask = {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'};
+  newAnnotationTask = {
+    scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
+  };
   // defaultAnnotationTask = ;
 
   evalueOptions: object[] = [
@@ -152,14 +158,15 @@ export class ProphaneJobPageComponent implements OnInit {
     //this.newGroupItem = {groupname: 'New Group '  + (this.sampleGroups.length + 1), groupmembers: ['New Sample '  + (this.newGroupMember.length + 1)]};
     this.sampleGroups.push(this.getNewGroupItem());
   }
+
   removeSampleGroup(removeGroup) {
     this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
 
   addNewGroupMember(group) {
     //this.newGroupMember = 'New Sample ' + (group.newGroupMember.length + 1);
-    this.sampleCount += 1
-    group.groupmembers.push("New Sample " + this.sampleCount);
+    this.sampleCount += 1;
+    group.groupmembers.push('New Sample ' + this.sampleCount);
   }
 
   removeGroupMember(removemember, group) {
@@ -169,18 +176,29 @@ export class ProphaneJobPageComponent implements OnInit {
   getNewGroupItem() {
     this.sampleCount++;
     this.groupCount++;
-    return {groupname: 'New Group ' + this.groupCount, groupmembers: ["New Sample " + this.sampleCount]};
+    return {groupname: 'New Group ' + this.groupCount, groupmembers: ['New Sample ' + this.sampleCount]};
   }
 
   filterAnnotationTasks(scope): any[] {
-      return this.annotationTasks.filter(i => i.scope === scope);
-    }
+    return this.annotationTasks.filter(i => i.scope === scope);
+  }
 
   addTaxTask() {
     this.taxtasks++;
     this.taskCounter++;
-    this.annotationTasks.push({scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks });
+    this.annotationTasks.push({
+      scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
+      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks
+    });
+  }
+
+  addFuncTask() {
+    this.functasks++;
+    this.taskCounter++;
+    this.annotationTasks.push({
+        scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
+        optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task ' + this.functasks
+      });
   }
 
   removeAnnotationTask(removeTask) {
@@ -248,7 +266,7 @@ export class ProphaneJobPageComponent implements OnInit {
     this.currentProphaneParameters.sampleGroups = this.sampleGroups;
     this.currentProphaneParameters.annotationTasks = [];
     // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
-    this.annotationTasks.forEach( (atask: ProphaneAnnotationTaskObject) => {
+    this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
       this.currentProphaneParameters.annotationTasks.push(atask);
     });
     this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
