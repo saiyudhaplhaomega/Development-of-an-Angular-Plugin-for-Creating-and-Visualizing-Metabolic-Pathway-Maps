@@ -5,16 +5,17 @@ import {SerializableObjectUploaderService} from '../../../../shared/services/ser
 import {ProphaneParamObject, ProphaneParamJSON} from '../../../../core/models/prophaneparamjson';
 import {HttpEventType} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-
 import {forEach} from '@angular/router/src/utils/collection';
 import {ProphaneAnnotationTaskObject} from '../../../../core/models/prophaneannotationtaskjson';
 import {ProphaneSampleGroupJSON} from '../../../../core/models/prophanesamplegroupjson';
+import { ViewEncapsulation } from '@angular/core';
 
 
 @Component({
   selector: 'app-prophane-job-page',
   templateUrl: './prophane-job-page.component.html',
-  styleUrls: ['./prophane-job-page.component.css']
+  styleUrls: ['./prophane-job-page.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProphaneJobPageComponent implements OnInit {
 

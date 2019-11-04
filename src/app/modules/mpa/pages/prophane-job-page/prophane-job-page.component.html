@@ -41,11 +41,11 @@
           </div>
 
           <!-- Source selection -->
-          <div class="input-group mb-3">
+          <div class="input-group mb-3" style="color: #495057 !important">
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="no-arrow custom-select input-text-color" [(value)]="selectedLevel" id="sourceSelect"
+            <mat-select class="no-arrow custom-select" [(ngModel)]="selectedLevel" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
              <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
@@ -71,7 +71,7 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".xls" lass="custom-file-input" id="scaffold" #proteinreportfile
+              <input type="file" accept=".xls" class="custom-file-input" id="scaffold" #proteinreportfile
                      (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
                      (click)="proteinreportfile.click()">
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file
@@ -387,6 +387,7 @@
         </div>
       </div>
     </mat-step>
+    
     <mat-step label="Submit">
       Content 2
     </mat-step>
