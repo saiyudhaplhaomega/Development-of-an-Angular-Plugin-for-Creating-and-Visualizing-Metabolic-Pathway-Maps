@@ -175,13 +175,13 @@
               </div>
               <input type="text" class="form-control" [(ngModel)]="groupelement">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button"
-                        (click)='addNewGroupMember(groupitem)'>
-                  +
-                </button>
                 <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn"
                         type="button"
                         (click)='removeGroupMember(groupelement, groupitem)'>—
+                </button>
+                <button class="btn btn-outline-secondary w-sbtn" type="button"
+                        (click)='addNewGroupMember(groupitem)'>
+                  +
                 </button>
               </div>
             </div>
@@ -575,10 +575,14 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(!proteinReportFile && !fastaFile && (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                  [disabled]="(!proteinReportFile || !fastaFile || (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>
+      </div>
+      <div class="w-50 mt-1 mb-5">
+        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)" (click)="nextStep()" class="float-right">Next</button>
+        <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
       </div>
 
     </div>

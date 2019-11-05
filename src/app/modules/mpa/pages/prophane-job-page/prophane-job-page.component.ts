@@ -333,6 +333,14 @@ export class ProphaneJobPageComponent implements OnInit {
     }
   }
 
+  nextStep(){
+    this.stepper.selectedIndex++;
+  }
+
+  prevStep(){
+    this.stepper.selectedIndex--;
+  }
+
   moveStepper(step: number) {
     if (this.expertView == false && step > 0){
       step = 1
