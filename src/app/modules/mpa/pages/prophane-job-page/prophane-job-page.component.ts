@@ -35,7 +35,7 @@ export class ProphaneJobPageComponent implements OnInit {
   fastaProgress: number;
   fileUrl: string;
   downloadReady: boolean;
-  stepperIndex: number;
+  jobCard: number;
 
   // Main options
   selectedLevel;
@@ -159,7 +159,7 @@ export class ProphaneJobPageComponent implements OnInit {
     this.contaminationLabel = {valueString: '', regex: '[|]{10000}'};
     this.selectedContaminationOption = this.contaminationdata[3];
     this.selectedQuant = this.quantdata[0];
-    this.stepperIndex = 0;
+    this.jobCard = 0;
   }
 
   setContaminationLabel(val) {
@@ -318,19 +318,32 @@ export class ProphaneJobPageComponent implements OnInit {
   @ViewChild('jobStepper') stepper: MatStepper;
 
   onViewChange(view) {
-    if (view === false) {
+    if (view == false) {
       if (this.stepper.selectedIndex == 5) {
         this.moveStepper(1);
-      } else if (this.stepper.selectedIndex > 0) {
+      } else {
         this.moveStepper(0);
       }
-    } else if (this.stepper.selectedIndex == 1) {
-      setTimeout(this.moveStepperToLast, 30000);
+    } else {
+      if (this.stepper.selectedIndex > 0) {
+        setTimeout(() => this.moveStepper(5), 10);
+      } else {
+        this.moveStepper(0);
+      }
     }
   }
 
-  moveStepper(step: number){
+  moveStepper(step: number) {
+    if (this.expertView == false && step > 0){
+      step = 1
+    }
     this.stepper.selectedIndex = step;
+    this.jobCard = step;
+  }
+
+
+  showJobCard(){
+      this.jobCard = this.stepper.selectedIndex;
   }
 
   moveStepperToLast(){

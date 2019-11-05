@@ -1,8 +1,8 @@
 <!-- SELECT FASTA -->
 <!--<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">-->
-<div fxFlex>
+<div fxFlex class="bg-white">
   <!--  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button> -->
-  <mat-tab-group>
+  <mat-tab-group class="mb-5">
     <mat-tab label="Job Submission">
     </mat-tab>
     <mat-tab label="Job Control">
@@ -11,15 +11,29 @@
     </mat-tab>
   </mat-tab-group>
 
-  <mat-vertical-stepper #jobStepper >
-    <!-- STEP 1: Input -->
-    <mat-step label="Input" >
-      <div class="card w-50 ml-job-form">
+  <!-- Job Stepper -->
+  <div class="d-flex justify-content-between">
+    <div class="jobStepper pl-5">
+      <mat-vertical-stepper [@.disabled]="true" (animationDone)="showJobCard()" #jobStepper>
+        <mat-step label="Input"></mat-step>
+        <mat-step *ngIf="expertView == true" label="Sample Groups"></mat-step>
+        <mat-step *ngIf="expertView == true" label="Quantification"></mat-step>
+        <mat-step *ngIf="expertView == true" label="Taxonomy"></mat-step>
+        <mat-step *ngIf="expertView == true" label="Function"></mat-step>
+        <mat-step label="Submit"></mat-step>
+      </mat-vertical-stepper>
+    </div>
+
+    <!-- Job Form -->
+    <div class="jobCards">
+      <!-- JobForm: Input -->
+      <div *ngIf="jobCard == 0" class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Input
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -100,7 +114,8 @@
                      class="custom-file-input" id="fasta" (click)="fastafile.click()">
               <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa)</label>
               <label *ngIf="fastaFile" class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
-              <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>
+              <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate"
+                                [value]="fastaProgress"></mat-progress-bar>
             </div>
           </div>
 
@@ -124,20 +139,15 @@
           </div>
         </div>
       </div>
-      <div class="w-50 ml-job-form">
-        <button mat-button matStepperNext class="float-right">Next ></button>
-      </div>
 
-    </mat-step>
-
-    <!-- STEP 2: Sample Grouping -->
-    <mat-step *ngIf="expertView == true" label="Sample Groups">
-      <div class="card w-50 ml-job-form">
+      <!-- Sample Groups -->
+      <div *ngIf="jobCard == 1 && expertView == true" class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Sample Grouping
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -152,7 +162,9 @@
               <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
                      value="{{ groupitem.groupname }}">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeSampleGroup(groupitem)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button"
+                        (click)='removeSampleGroup(groupitem)'>
+                  —
                 </button>
               </div>
             </div>
@@ -163,9 +175,12 @@
               </div>
               <input type="text" class="form-control" [(ngModel)]="groupelement">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='addNewGroupMember(groupitem)'>+
+                <button class="btn btn-outline-secondary w-sbtn" type="button"
+                        (click)='addNewGroupMember(groupitem)'>
+                  +
                 </button>
-                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn" type="button"
+                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn"
+                        type="button"
                         (click)='removeGroupMember(groupelement, groupitem)'>—
                 </button>
               </div>
@@ -176,20 +191,15 @@
           </button>
         </div>
       </div>
-      <div class="w-50 ml-job-form">
-        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
-        <button mat-button matStepperNext class="float-right">Next ></button>
-      </div>
-    </mat-step>
 
-    <!-- STEP 3: Quantification -->
-    <mat-step *ngIf="expertView == true" label="Quantification">
-      <div class="card w-50 ml-job-form">
+      <!-- Quantification -->
+      <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Quantification method
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -204,20 +214,15 @@
           </div>
         </div>
       </div>
-      <div class="w-50 ml-job-form">
-        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
-        <button mat-button matStepperNext class="float-right">Next ></button>
-      </div>
-    </mat-step>
 
-    <!-- STEP 4: Taxonomic Annotation -->
-    <mat-step *ngIf="expertView == true" label="Taxonomy">
-      <div class="card w-50 ml-job-form">
+      <!-- Taxonomic Annotation Task -->
+      <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Taxonomic Annotation
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -232,7 +237,8 @@
               </div>
               <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+                  —
                 </button>
               </div>
             </div>
@@ -296,24 +302,19 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task</button>
-
+          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task
+          </button>
         </div>
       </div>
-      <div class="w-50 ml-job-form">
-        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
-        <button mat-button matStepperNext class="float-right">Next ></button>
-      </div>
-    </mat-step>
 
-    <!-- STEP 5: Functional Annotation -->
-    <mat-step *ngIf="expertView == true" label="Function">
-      <div class="card w-50 ml-job-form">
+      <!-- Functional Annotation Task -->
+      <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Functional Annotation
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -328,7 +329,8 @@
               </div>
               <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>—
+                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+                  —
                 </button>
               </div>
             </div>
@@ -394,23 +396,17 @@
           </ng-container>
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
           </button>
-
         </div>
       </div>
-      <div class="w-50 ml-job-form">
-        <button mat-button matStepperPrevious class="float right mr-2">< Back</button>
-        <button mat-button matStepperNext class="float-right">Next ></button>
-      </div>
-    </mat-step>
 
-    <!-- Summary & Submit -->
-    <mat-step label="Submit">
-      <div class="card w-50 ml-job-form">
+      <!-- Summary -->
+      <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"  class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Summary
             <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView" (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
@@ -584,6 +580,7 @@
           </button>
         </div>
       </div>
-    </mat-step>
 
-  </mat-vertical-stepper>
+    </div>
+  </div>
+</div>

@@ -2470,10 +2470,6 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   border-color: #003f97 !important;
 }
 
-.ml-job-form{
-  margin-left: 13em;
-}
-
 .ml-summary-col{
   width: 15em !important;
 }
@@ -2494,6 +2490,17 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   color: #495057 !important;
 }
 
-.job_stepper {
-  width: 20em;
+.jobStepper {
+  width: 17em;
 }
+
+.ml-job-form{
+  margin-left: 1em;
+}
+
+.jobCards {
+  width: calc(100% - 18em)
+}
+
+
+
