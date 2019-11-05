@@ -315,7 +315,7 @@ export class ProphaneJobPageComponent implements OnInit {
       this.prophaneResults = ['1', '2'];
     }*/
 
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('jobStepper') stepper: MatStepper;
 
   onViewChange(view) {
     if (view === false) {
