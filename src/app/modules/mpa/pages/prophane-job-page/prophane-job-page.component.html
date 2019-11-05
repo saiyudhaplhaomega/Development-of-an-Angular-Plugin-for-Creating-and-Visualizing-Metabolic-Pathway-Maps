@@ -2,6 +2,7 @@
 <!--<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">-->
 <div fxFlex class="bg-white">
   <!--  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button> -->
+
   <mat-tab-group class="mb-5">
     <mat-tab label="Job Submission">
     </mat-tab>
@@ -26,6 +27,7 @@
 
     <!-- Job Form -->
     <div class="jobCards">
+
       <!-- JobForm: Input -->
       <div *ngIf="jobCard == 0" class="card w-50 ml-job-form">
         <div class="card-header">
@@ -400,7 +402,8 @@
       </div>
 
       <!-- Summary -->
-      <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"  class="card w-50 ml-job-form">
+      <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"
+           class="card w-50 ml-job-form">
         <div class="card-header">
           <h5>
             Summary
@@ -413,7 +416,7 @@
         <div class="card-body">
 
           <!-- Input (Summary) -->
-          <table class="table .table-light table-hover">
+          <table class="table table-light table-hover">
             <thead>
             </thead>
             <tbody>
@@ -581,7 +584,9 @@
         </div>
       </div>
       <div class="w-50 mt-1 mb-5">
-        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)" (click)="nextStep()" class="float-right">Next</button>
+        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)"
+                (click)="nextStep()" class="float-right">Next
+        </button>
         <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
       </div>
 

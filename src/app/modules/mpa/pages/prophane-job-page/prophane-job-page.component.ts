@@ -55,8 +55,6 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 3, name: 'none', valueString: 'none'}
   ];
 
-  showadvanced = false;
-
   // Advanced Options
 
   jobLabel: string;
@@ -66,11 +64,6 @@ export class ProphaneJobPageComponent implements OnInit {
     {id: 1, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
     {id: 2, name: 'NSAF (normalized to mean metaprotein sequence)', valueString: 'mean_nsaf'},
     {id: 3, name: 'Raw value (no normalization)', valueString: 'raw'},
-  ];
-
-  scopetdata: object[] = [
-    {id: 0, name: 'Taxonomy'},
-    {id: 1, name: 'Function'},
   ];
 
   databaseOptions: object[] = [
@@ -84,7 +77,6 @@ export class ProphaneJobPageComponent implements OnInit {
   ];
 
   sampleGroups: ProphaneSampleGroupJSON[] = [];
-  newGroupMember = 'New Sample';
   sampleCount = 0;
   groupCount = 0;
   taxtasks = 1;
@@ -101,11 +93,6 @@ export class ProphaneJobPageComponent implements OnInit {
       }];
 
   taskCounter = 3;
-  newAnnotationTask = {
-    scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-    optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
-  };
-  // defaultAnnotationTask = ;
 
   evalueOptions: object[] = [
     {id: 0, numerical: '0.01', text: 'Relaxed'},
