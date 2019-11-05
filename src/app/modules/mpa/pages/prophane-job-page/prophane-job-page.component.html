@@ -110,9 +110,9 @@
               <span class="input-group-text">FASTA file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".fasta,.faa" #fastafile (change)="onFastaChange(fastafile.files)"
+              <input type="file" accept=".fasta,.faa,.fa" #fastafile (change)="onFastaChange(fastafile.files)"
                      class="custom-file-input" id="fasta" (click)="fastafile.click()">
-              <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa)</label>
+              <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa, .fa)</label>
               <label *ngIf="fastaFile" class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
               <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate"
                                 [value]="fastaProgress"></mat-progress-bar>
@@ -439,7 +439,7 @@
             </tr>
             <tr>
               <th [ngClass]="!fastaFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Fasta File:</th>
-              <td *ngIf="!fastaFile" [ngClass]="!fastaFile ? 'table-warning' : ''">
+              <td [ngClass]="!fastaFile ? 'table-warning' : ''">
                 {{ fastaFile ? fastaFile.name : 'not selected yet' }}
               </td>
             </tr>
@@ -575,7 +575,7 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="!(proteinReportFile && fastaFile && (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                  [disabled]="(!proteinReportFile && !fastaFile && (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>
