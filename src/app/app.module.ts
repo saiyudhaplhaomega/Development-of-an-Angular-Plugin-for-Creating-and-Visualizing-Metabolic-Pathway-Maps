@@ -1,10 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-
-import { MpaModule } from './modules/mpa/mpa.module';
+import {Routing} from './app.routing';
 
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
@@ -12,6 +9,69 @@ import {HttpClient} from '@angular/common/http';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HomeDashboardPageComponent} from './home/components/home-dashboard-page/home-dashboard-page.component';
+import {DatabaseSearchPageComponent} from './mpa/components/database-search-page/database-search-page.component';
+import {LoginPageComponent} from './main/components/login-page/login-page.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProphaneComponent } from './prophane/prophane.component';
+import {WebserveraddressService} from './main/services/webserveraddress.service';
+import { SerializableObjectUploaderService_UNUSED } from './old_files/serializable-object-uploader.service_UNUSED';
+import { FileUploaderService } from './main/services/file-uploader.service';
+import {MPAComponent} from './mpa/mpa.component';
+import {DataNavigationTreeComponent} from './mpa/components/data-navigation-tree/data-navigation-tree.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NavigationBarComponent} from './main/components/navigation-bar/navigation-bar.component';
+import {ModelDownloaderService} from './old_files/services_UNUSED/modeldownloader.service';
+import {Neo4jhttprequestsService} from './old_files/services_UNUSED/neo4jhttprequests.service';
+import {AuthGuard} from './main/services/auth-guard.service';
+import {ModeluploaderService} from './old_files/services_UNUSED/modeluploader.service';
+import {ModelContentService} from './old_files/services_UNUSED/modelcontent.service';
+import {ProtDBContentService} from './old_files/services_UNUSED/protein-database.service';
+import {DbsearchcontentService} from './mpa/components/database-search-page/services/dbsearchcontent.service';
+import {
+  MatAutocompleteModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatTreeModule,
+} from '@angular/material';
+import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
+import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
+/*import {MaterialModule} from './material-module';*/
 
 // Configs
 const config = new AuthServiceConfig([
@@ -28,23 +88,74 @@ export function provideConfig() {
 @NgModule({
   declarations: [
     AppComponent,
+    HomeDashboardPageComponent,
+    DatabaseSearchPageComponent,
+    MPAComponent,
+    DataNavigationTreeComponent,
+    LoginPageComponent,
+    ProphaneComponent,
+    NavigationBarComponent,
   ],
   imports: [
     BrowserModule,
-
-    CoreModule,
-    SharedModule,
-    MpaModule,
-
+    BrowserAnimationsModule,
+    Routing,
+    CommonModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FormsModule,
+    NgbModule,
+    FlexLayoutModule,
+
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatTreeModule,
   ],
   providers: [
     HttpClient,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
-    }
+    },
+    WebserveraddressService,
+    SerializableObjectUploaderService_UNUSED,
+    FileUploaderService,
+    DbsearchcontentService,
+    NavService,
+    DataService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

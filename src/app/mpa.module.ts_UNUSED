@@ -1,0 +1,48 @@
+// TODO: add to app.module or organize differently
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import {Routing} from './app.routing';
+
+import {MaterialModule} from './material-module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {Neo4jGraphPageComponent} from './old_files/pages_UNUSED/neo4j-graph-page/neo4j-graph-page.component';
+import {HomeDashboardPageComponent} from './home/components/home-dashboard-page/home-dashboard-page.component';
+import {DatabaseSearchPageComponent} from './mpa/components/database-search-page/database-search-page.component';
+import {ProteinDatabasePageComponent} from './old_files/pages_UNUSED/protein-database-page/protein-database-page.component';
+import {ModelDatabasePageComponent} from './old_files/pages_UNUSED/model-database-page/model-database-page.component';
+
+import {LoginPageComponent} from './main/components/login-page/login-page.component';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProphaneComponent } from './prophane/prophane.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+@NgModule({
+  declarations: [
+    Neo4jGraphPageComponent,
+    HomeDashboardPageComponent,
+    DatabaseSearchPageComponent,
+    ProteinDatabasePageComponent,
+    ModelDatabasePageComponent,
+    LoginPageComponent,
+    ProphaneComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+
+    Routing,
+
+    BrowserAnimationsModule,
+    MaterialModule,
+
+    FlexLayoutModule
+  ],
+  providers: []
+})
+export class MpaModule { }
