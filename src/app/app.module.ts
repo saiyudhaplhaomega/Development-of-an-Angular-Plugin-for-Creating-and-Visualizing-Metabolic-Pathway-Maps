@@ -71,6 +71,9 @@ import {
 } from '@angular/material';
 import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
 import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
+import { ProphaneViewerComponent } from './prophane-viewer/prophane-viewer.component';
+import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
+import { ProphaneAboutComponent } from './prophane-about/prophane-about.component';
 /*import {MaterialModule} from './material-module';*/
 
 // Configs
@@ -95,6 +98,9 @@ export function provideConfig() {
     LoginPageComponent,
     ProphaneComponent,
     NavigationBarComponent,
+    ProphaneViewerComponent,
+    ProphaneJobControlComponent,
+    ProphaneAboutComponent,
   ],
   imports: [
     BrowserModule,
