@@ -1,3 +1,34 @@
-<p>
-  prophane-job-control works!
-</p>
+<div class="card w-50 ml-5">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">job label</th>
+      <th scope="col">creation time</th>
+      <th scope="col">status</th>
+      <th scope="col">results</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let job of jobs; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ job.label }}
+      </td>
+      <td>
+        {{ job.creation }}
+      </td>
+      <td>
+        {{ job.status }}
+      </td>
+      <td>
+        <span *ngIf="job.status == 'completed'"><a href="#">download</a></span>
+      </td>
+      <td>
+        <button mat-flat-button color="warn" (click)="confirmDelete(i, job.label)">delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
