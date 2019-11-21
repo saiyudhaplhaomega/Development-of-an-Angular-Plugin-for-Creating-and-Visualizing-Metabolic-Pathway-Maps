@@ -6,9 +6,11 @@ import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjso
 import {HttpEventType} from '@angular/common/http';
 import {ProphaneAnnotationTaskObject} from './objects/prophaneannotationtaskjson';
 import {ProphaneSampleGroupJSON} from './objects/prophanesamplegroupjson';
+import {ProphaneSampleJSON} from './objects/prophanesamplejson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 import {ProphaneJobObject} from './objects/prophanejobjson';
+import {ProphaneSampleObject} from './objects/prophanesamplejson';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -131,58 +133,58 @@ export class ProphaneComponent implements OnInit {
   // TODO: switch all posts to ProphaneJob[]-Array
 
   // TODO: method obsolete? replaced by joblist method
-/*  requestStatus() {
-    // request status
-    // call service to request status json
-    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneCheckStatus').subscribe(d => {
-      switch (d.status) {
-        case '1': {
-          this.statusDisplayString = 'Job not started yet';
-          break;
+  /*  requestStatus() {
+      // request status
+      // call service to request status json
+      this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneCheckStatus').subscribe(d => {
+        switch (d.status) {
+          case '1': {
+            this.statusDisplayString = 'Job not started yet';
+            break;
+          }
+          case '2': {
+            this.statusDisplayString = 'Prophane is waiting for files';
+            break;
+          }
+          case '3': {
+            this.statusDisplayString = 'Prophane running';
+            break;
+          }
+          case '4': {
+            this.statusDisplayString = 'Prophane finished, preparing download';
+            break;
+          }
+          case '5': {
+            this.fileUrl = this.fileUrl + d.prophaneJobUUID;
+            this.downloadReady = true;
+            break;
+          }
+          default: {
+            this.statusDisplayString = 'No Job Pending';
+            break;
+          }
         }
-        case '2': {
-          this.statusDisplayString = 'Prophane is waiting for files';
-          break;
-        }
-        case '3': {
-          this.statusDisplayString = 'Prophane running';
-          break;
-        }
-        case '4': {
-          this.statusDisplayString = 'Prophane finished, preparing download';
-          break;
-        }
-        case '5': {
-          this.fileUrl = this.fileUrl + d.prophaneJobUUID;
-          this.downloadReady = true;
-          break;
-        }
-        default: {
-          this.statusDisplayString = 'No Job Pending';
-          break;
-        }
-      }
-    });
-  }*/
+      });
+    }*/
 
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
-/*    // TODO add minor check to integrity of parameters
-    this.currentProphaneParameters = new ProphaneParamObject();
-    this.currentProphaneJob = new ProphaneJobObject();
-    this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
-    this.currentProphaneJob.status = '0';
-    this.currentProphaneJob.parameter = this.currentProphaneParameters;
-    // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    console.log(this.currentProphaneJob);
-    this.jsonUpload.postObj<ProphaneJobObject[]>([this.currentProphaneJob], 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
-      if (res instanceof ProphaneJobObject[]) {
-        this.currentProphaneJob = res[0];
+    /*    // TODO add minor check to integrity of parameters
+        this.currentProphaneParameters = new ProphaneParamObject();
+        this.currentProphaneJob = new ProphaneJobObject();
+        this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
+        this.currentProphaneJob.status = '0';
+        this.currentProphaneJob.parameter = this.currentProphaneParameters;
+        // request new job creates a job with status 0 now, status 1 when files are send (start job method)
+        console.log(this.currentProphaneJob);
+        this.jsonUpload.postObj<ProphaneJobObject[]>([this.currentProphaneJob], 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
+          if (res instanceof ProphaneJobObject[]) {
+            this.currentProphaneJob = res[0];
 
-      }
-      this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID.length > 0);
-      console.log(this.currentProphaneParameters);
-    });*/
+          }
+          this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID.length > 0);
+          console.log(this.currentProphaneParameters);
+        });*/
   }
 
   // this is the submit button
@@ -231,24 +233,24 @@ export class ProphaneComponent implements OnInit {
   }
 
   startProphaneJob(): void {
-/*    console.log(this.currentProphaneJob);
-    // TODO add minor check to integrity of parameters
-    // adding form values into parameters object
+    /*    console.log(this.currentProphaneJob);
+        // TODO add minor check to integrity of parameters
+        // adding form values into parameters object
 
-    this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
-    this.currentProphaneParameters.contaminationLabel = this.contaminationLabel.regex;
-    this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
-    this.currentProphaneParameters.jobLabel = this.jobLabel;
-    this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
-    this.currentProphaneParameters.sampleGroups = this.sampleGroups;
-    this.currentProphaneParameters.annotationTasks = [];
-    // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
-    this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
-      this.currentProphaneParameters.annotationTasks.push(atask);
-    });
-    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
-      console.log(d);
-    });*/
+        this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
+        this.currentProphaneParameters.contaminationLabel = this.contaminationLabel.regex;
+        this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
+        this.currentProphaneParameters.jobLabel = this.jobLabel;
+        this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
+        this.currentProphaneParameters.sampleGroups = this.sampleGroups;
+        this.currentProphaneParameters.annotationTasks = [];
+        // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
+        this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
+          this.currentProphaneParameters.annotationTasks.push(atask);
+        });
+        this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
+          console.log(d);
+        });*/
   }
 
   // methods for website functionality
@@ -292,6 +294,11 @@ export class ProphaneComponent implements OnInit {
     }
   }
 
+  getNewGroupItem() {
+    this.groupCount++;
+    return {id: this.groupCount, groupname: 'New Group ' + this.groupCount, groupmembers: [this.getNewSample()]};
+  }
+
   addSampleGroup() {
     this.sampleGroups.push(this.getNewGroupItem());
   }
@@ -300,19 +307,34 @@ export class ProphaneComponent implements OnInit {
     this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
 
-  addNewGroupMember(group) {
+  getNewSample() {
     this.sampleCount++;
-    group.groupmembers.push('New Sample ' + this.sampleCount);
+    return {
+      id: this.sampleCount,
+      name: 'Sample ' + this.sampleCount,
+      biocat: 'Biological sample category ' + this.sampleCount,
+      bioname: 'Biological sample name ' + this.sampleCount
+    };
   }
 
-  removeGroupMember(removemember, group) {
-    group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
+  setSampleName(groupid, sampleid) {
+    this.sampleGroups.forEach(function iter(group) {
+      if (group.id == groupid) {
+        group.groupmembers.forEach(function iter(sample) {
+          if (sample.id == sampleid) {
+            sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
+          }
+        });
+      }
+    });
   }
 
-  getNewGroupItem() {
-    this.sampleCount++;
-    this.groupCount++;
-    return {groupname: 'New Group ' + this.groupCount, groupmembers: ['New Sample ' + this.sampleCount]};
+  addNewSample(group) {
+    group.groupmembers.push(this.getNewSample());
+  }
+
+  removeSample(id, group) {
+    group.groupmembers = group.groupmembers.filter(obj => obj.id !== id);
   }
 
   filterAnnotationTasks(scope): any[] {
@@ -349,6 +371,7 @@ export class ProphaneComponent implements OnInit {
   }
 
   @ViewChild('jobStepper') stepper: MatStepper;
+
   onViewChange(view) {
     if (view === false) {
       if (this.stepper.selectedIndex == 5) {
@@ -383,7 +406,7 @@ export class ProphaneComponent implements OnInit {
 
 
   showJobCard() {
-      this.jobCard = this.stepper.selectedIndex;
+    this.jobCard = this.stepper.selectedIndex;
   }
 
   moveStepperToLast() {

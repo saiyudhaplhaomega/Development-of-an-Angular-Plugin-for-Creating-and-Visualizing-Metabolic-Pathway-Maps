@@ -162,18 +162,20 @@
               </div>
             </div>
             <!-- group member -->
-            <div *ngFor="let groupelement of groupitem.groupmembers" class="input-group mb-3">
+            <div *ngFor="let sample of groupitem.groupmembers" class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">Sample Name</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="groupelement">
+              <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
+              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
+              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
               <div class="input-group-append">
                 <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn"
                         type="button"
-                        (click)='removeGroupMember(groupelement, groupitem)'>—
+                        (click)='removeSample(sample.id, groupitem)'>—
                 </button>
                 <button class="btn btn-outline-secondary w-sbtn" type="button"
-                        (click)='addNewGroupMember(groupitem)'>
+                        (click)='addNewSample(groupitem)'>
                   +
                 </button>
               </div>
@@ -473,7 +475,7 @@
               <td>
                 {{ group.groupname }}<br>
                 <mat-list dense>
-                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member }} </mat-list-item>
+                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member.name }} </mat-list-item>
                 </mat-list>
               </td>
             </tr>
