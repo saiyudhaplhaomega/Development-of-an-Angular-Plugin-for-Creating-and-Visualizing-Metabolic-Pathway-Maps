@@ -2507,3 +2507,17 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   opacity: 1 !important;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 4em;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, .05);
+  color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, .04);
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
