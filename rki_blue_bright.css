@@ -2521,3 +2521,14 @@ footer {
   font-size: 14px;
   font-weight: 500;
 }
+
+.no-border {
+  border: 0;
+}
+
+.sticky{
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  z-index: 10;
+}

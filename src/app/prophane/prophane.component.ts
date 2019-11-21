@@ -10,13 +10,14 @@ import {ProphaneSampleJSON} from './objects/prophanesamplejson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 import {ProphaneJobObject} from './objects/prophanejobjson';
-import {ProphaneSampleObject} from './objects/prophanesamplejson';
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prophane-job-page',
   templateUrl: './prophane.component.html',
   styleUrls: ['./prophane.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [NgbTooltipConfig]
 })
 
 export class ProphaneComponent implements OnInit {
@@ -108,12 +109,14 @@ export class ProphaneComponent implements OnInit {
   ];
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService_UNUSED) {
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService_UNUSED, tooltipConfig: NgbTooltipConfig) {
     this.prophaneJobIDReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
     this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.downloadReady = false;
+    tooltipConfig.placement = 'top';
+    tooltipConfig.triggers = 'hover';
   }
 
   ngOnInit(): void {
