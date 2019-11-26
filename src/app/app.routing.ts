@@ -9,6 +9,7 @@ import {LoginPageComponent} from './main/components/login-page/login-page.compon
 import {AuthGuard} from './main/services/auth-guard.service';
 import { ProphaneComponent } from './prophane/prophane.component';
 import {MPAComponent} from './mpa/mpa.component';
+import { UserPageComponent } from './mpa/components/user-page/user-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

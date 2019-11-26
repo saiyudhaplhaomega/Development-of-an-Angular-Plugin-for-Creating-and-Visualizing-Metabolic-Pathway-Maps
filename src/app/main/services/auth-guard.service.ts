@@ -36,13 +36,12 @@ export class AuthGuard implements CanActivate {
     this._serverUser.idToken = user.idToken;
     this._serverUser.provider = 'google';
     this._serverUser.sessionID = null;
-
-    if (user != null) {
-      this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
-        this.setAuthState(res != null);
-        this._serverUser = res;
-      });
-    }
+    this.setAuthState(user != null);
+    //if (user != null) {
+      //this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
+        //this.setAuthState(res != null);
+        //this._serverUser = res;
+    //}
   }
 
 /*  getUser(): SocialUser {

@@ -71,6 +71,10 @@ import {
 } from '@angular/material';
 import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
 import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
+import { TreeNodeComponent } from './mpa/components/tree-node/tree-node.component';
+import { UserPageComponent } from './mpa/components/user-page/user-page.component';
+import { FolderPageComponent } from './mpa/components/folder-page/folder-page.component';
+import { ExperimentPageComponent } from './mpa/components/experiment-page/experiment-page.component';
 /*import {MaterialModule} from './material-module';*/
 
 // Configs
@@ -95,6 +99,10 @@ export function provideConfig() {
     LoginPageComponent,
     ProphaneComponent,
     NavigationBarComponent,
+    TreeNodeComponent,
+    UserPageComponent,
+    FolderPageComponent,
+    ExperimentPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,6 +164,11 @@ export function provideConfig() {
     NavService,
     DataService,
     AuthGuard
+  ],
+  entryComponents: [
+    UserPageComponent,
+    FolderPageComponent,
+    ExperimentPageComponent
   ],
   bootstrap: [AppComponent]
 })

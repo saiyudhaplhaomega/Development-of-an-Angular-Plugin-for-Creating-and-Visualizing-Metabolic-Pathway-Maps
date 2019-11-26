@@ -1,17 +1,3 @@
-<a mat-list-item [ngStyle]="{'padding-left': item.children && item.children.length ? (depth * 12) + 'px' : (depth * 12 + 40) + 'px'}"
-   (click)="onNavigate($event, item)">
-   <span fxFlex *ngIf="item.children && item.children.length">
-        <span fxFlex></span>
-        <button mat-icon-button (click)="onExpand($event, item)">
-            <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
-            expand_more
-            </mat-icon>
-        </button>
-    </span>
-  <mat-icon class="routeIcon">{{item.icon}}</mat-icon>
-  {{item.displayName}}
-</a>
-<div *ngIf="expanded">
-  <app-data-navigation-tree *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
-  </app-data-navigation-tree>
+<div *ngFor='let item of treeNodes'>
+  <app-tree-node (expandChange)="onExpand($event, item)" [node]='item'></app-tree-node>
 </div>
