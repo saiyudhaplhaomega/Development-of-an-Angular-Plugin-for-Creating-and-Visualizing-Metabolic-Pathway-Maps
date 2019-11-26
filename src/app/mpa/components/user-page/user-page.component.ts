@@ -12,7 +12,7 @@ export class UserPageComponent implements OnInit {
 
   uuid: string;
   name: string;
-  parentUUID: string;
+
   private _dataItems: DataItem[];
 
   constructor(private dataService: DataService) { }
@@ -42,8 +42,9 @@ export class UserPageComponent implements OnInit {
       parent: this.uuid,
     };
     this._dataItems.forEach( item => {
-      if (item.uuid === this.parentUUID) {
+      if (item.uuid === this.uuid) {
         item.children.push(newFolderUUID);
+        return;
       }
     });
     this._dataItems.push(newFolder);

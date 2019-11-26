@@ -9,7 +9,6 @@ import { ExperimentPageComponent } from '../experiment-page/experiment-page.comp
 
 export interface ContentComponent {
   uuid: string;
-  parentUUID: string;
   name: string;
 }
 
@@ -75,7 +74,6 @@ export class TreeNodeComponent implements OnInit {
     // Create a component
     const componentRef = this.contentRef.createComponent(componentFactory);
     (<ContentComponent>componentRef.instance).uuid = this.node.uuid;
-    (<ContentComponent>componentRef.instance).parentUUID = this.node.uuid;
     (<ContentComponent>componentRef.instance).name = this.node.displayName;
   }
 }

@@ -19,4 +19,15 @@ export class ExperimentPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  onAccept() {
+    this._dataItems.forEach( item => {
+      if (item.uuid === this.uuid) {
+        item.displayName = this.name;
+        console.log(this.name);
+        return;
+      }
+    });
+    this.dataService.dataItems.next(this._dataItems);
+  }
+
 }

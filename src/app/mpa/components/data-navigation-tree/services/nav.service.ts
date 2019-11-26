@@ -16,6 +16,7 @@ export class NavService {
   public expandedNodes = new BehaviorSubject<string[]>(undefined);
 
   private _dataItems: DataItem[];
+  private _expandedNodes: string[] = [];
 
   constructor(private router: Router, private dataService: DataService, private componentFactoryResolver: ComponentFactoryResolver) {
     this.router.events.subscribe(event => {
@@ -26,11 +27,12 @@ export class NavService {
     this.dataService.dataItems.subscribe(items => {
       if (items) {
         this._dataItems = items;
-        this.treeNodes.next(this.processData(items, []));
+        this.treeNodes.next(this.processData(items, this._expandedNodes));
       }
     });
     this.expandedNodes.subscribe(expandedNodes => {
       if (expandedNodes) {
+        this._expandedNodes = expandedNodes;
         this.treeNodes.next(this.processData(this._dataItems, expandedNodes));
       }
     });
@@ -43,6 +45,7 @@ export class NavService {
     while (processedUUID.size < this._dataItems.length) {
       this._dataItems.forEach( item => {
         if (!item.parent) {
+          // No Parent
           tree.push(
             {
               displayName: item.displayName,
@@ -55,7 +58,8 @@ export class NavService {
             }
           );
           processedUUID.set(item.uuid, 0);
-        } else if (item.parent && processedUUID.has(item.parent)) {
+        } else if (item.parent && processedUUID.has(item.parent) && expandedNodes.indexOf(item.parent) > -1) {
+          // UNHIDDEN and PROCESSED Parent
           tree.push(
             {
               displayName: item.displayName,
@@ -67,6 +71,9 @@ export class NavService {
               type: item.type,
             }
           );
+          processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
+        } else if (expandedNodes.indexOf(item.parent) >= -1) {
+          //HIDDEN
           processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
         }
       });

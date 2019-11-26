@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
-import v1 from 'uuid/v1'‚;
+import v1 from 'uuid/v1';
 
 @Component({
   selector: 'app-folder-page',
@@ -23,26 +23,40 @@ export class FolderPageComponent implements OnInit {
     });
   }
 
-  onAddExperiment() {
-    console.log('add experiment');
-    this.addExperiment(this._dataItems);
+  onAccept() {
+    this._dataItems.forEach( item => {
+      if (item.uuid === this.uuid) {
+        item.displayName = this.name;
+        console.log(this.name);
+        return;
+      }
+    });
     this.dataService.dataItems.next(this._dataItems);
   }
 
-  addExperiment(dataItems: DataItem[]) {
-    this._dataItems.forEach(item => {
+  onAddExperiment() {
+    console.log('add experiment');
+    this.addExperiment();
+    this.dataService.dataItems.next(this._dataItems);
+  }
+
+  addExperiment() {
+    const newExperimentUUID = v1();
+    const newExperiment = {
+      displayName: 'new experiment',
+      icon: 'computer',
+      children: [],
+      uuid: v1(),
+      type: 'experiment',
+      parent: this.uuid,
+    };
+    this._dataItems.forEach( item => {
       if (item.uuid === this.uuid) {
-        item.children.push({
-          displayName: 'new experiment',
-          icon: 'computer',
-          children: [],
-          uuid: v1(),
-          type: 'experiment'
-        });
-      } else if (item.children && item.children.length > 0) {
-        this.addExperiment(item.children);
+        item.children.push(newExperimentUUID);
       }
     });
+    this._dataItems.push(newExperiment);
+    console.log(this._dataItems);
   }
 
 }
