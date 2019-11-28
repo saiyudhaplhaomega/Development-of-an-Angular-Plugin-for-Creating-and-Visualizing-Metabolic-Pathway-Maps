@@ -264,11 +264,11 @@ export class ProphaneComponent implements OnInit {
   setDefaultOptionString(event, task) {
     switch (event.value) {
       case 'hmmscan': {
-        task.optionstring = '--cut_tc';
+        task.optionstring = '';
         break;
       }
       case 'hmmsearch' : {
-        task.optionstring = '--cut_tc';
+        task.optionstring = '';
         break;
       }
       case 'emapper' : {
@@ -400,15 +400,6 @@ export class ProphaneComponent implements OnInit {
 
   prevStep() {
     this.stepper.selectedIndex--;
-  }
-
-  hasManyOptions(arr: array) {
-    if (arr.length < 2) {
-      return false
-    }
-    else {
-      return true
-    }
   }
 
   moveStepper(step: number) {
