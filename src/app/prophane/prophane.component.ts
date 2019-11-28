@@ -5,11 +5,13 @@ import {SerializableObjectUploaderService_UNUSED} from '../old_files/serializabl
 import {HttpEventType} from '@angular/common/http';
 import {ProphaneAnnotationTaskObject} from './objects/prophaneannotationtaskjson';
 import {ProphaneSampleGroupJSON} from './objects/prophanesamplegroupjson';
+import {ProphaneSampleJSON} from './objects/prophanesamplejson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
 import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjson';
 import {ProphaneJobObject} from './objects/prophanejobjson';
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {ProphaneJobStatusJSON, ProphaneJobStatusObject} from './objects/prophanejobstatusjson';
 import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
 import {forEach} from '@angular/router/src/utils/collection';
@@ -18,7 +20,8 @@ import {forEach} from '@angular/router/src/utils/collection';
   selector: 'app-prophane-job-page',
   templateUrl: './prophane.component.html',
   styleUrls: ['./prophane.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [NgbTooltipConfig]
 })
 
 export class ProphaneComponent implements OnInit {
@@ -76,13 +79,16 @@ export class ProphaneComponent implements OnInit {
   ];
 
   databaseOptions: object[] = [
-    {id: 0, scope: 'Function', database: 'eggnog', algorithm: ['emapper']},
-    {id: 1, scope: 'Function', database: 'pfams', algorithm: ['hmmsearch', 'hmmscan']},
-    {id: 2, scope: 'Function', database: 'tigrfams', algorithm: ['hmmsearch', 'hmmscan']},
-    {id: 3, scope: 'Taxonomy', database: 'ncbi_nr', algorithm: ['diamond blastp']},
-    {id: 4, scope: 'Taxonomy', database: 'uniprot_complete', algorithm: ['diamond blastp']},
-    {id: 5, scope: 'Taxonomy', database: 'uniprot_sp', algorithm: ['diamond blastp']},
-    {id: 6, scope: 'Taxonomy', database: 'uniprot_tr', algorithm: ['diamond blastp']},
+    {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog',algorithm: ['emapper']},
+    {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 3, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 4, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 5, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 6, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
+    {id: 7, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
+    {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
+    {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
   ];
 
   sampleGroups: ProphaneSampleGroupJSON[] = [];
@@ -110,12 +116,14 @@ export class ProphaneComponent implements OnInit {
   ];
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService) {
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService, tooltipConfig: NgbTooltipConfig) {
     this.prophaneJobIDReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
     this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.downloadReady = false;
+    tooltipConfig.placement = 'top';
+    tooltipConfig.triggers = 'hover';
   }
 
   ngOnInit(): void {
@@ -225,11 +233,11 @@ export class ProphaneComponent implements OnInit {
   setDefaultOptionString(event, task) {
     switch (event.value) {
       case 'hmmscan': {
-        task.optionstring = '--cut_tc';
+        task.optionstring = '';
         break;
       }
       case 'hmmsearch' : {
-        task.optionstring = '--cut_tc';
+        task.optionstring = '';
         break;
       }
       case 'emapper' : {
@@ -261,6 +269,11 @@ export class ProphaneComponent implements OnInit {
     }
   }
 
+  getNewGroupItem() {
+    this.groupCount++;
+    return {id: this.groupCount, groupname: 'New Group ' + this.groupCount, groupmembers: [this.getNewSample()]};
+  }
+
   addSampleGroup() {
     this.sampleGroups.push(this.getNewGroupItem());
   }
@@ -269,19 +282,34 @@ export class ProphaneComponent implements OnInit {
     this.sampleGroups = this.sampleGroups.filter(obj => obj !== removeGroup);
   }
 
-  addNewGroupMember(group) {
+  getNewSample() {
     this.sampleCount++;
-    group.groupmembers.push('New Sample ' + this.sampleCount);
+    return {
+      id: this.sampleCount,
+      name: 'Sample ' + this.sampleCount,
+      biocat: 'Biological sample category ' + this.sampleCount,
+      bioname: 'Biological sample name ' + this.sampleCount
+    };
   }
 
-  removeGroupMember(removemember, group) {
-    group.groupmembers = group.groupmembers.filter(obj => obj !== removemember);
+  setSampleName(groupid, sampleid) {
+    this.sampleGroups.forEach(function iter(group) {
+      if (group.id == groupid) {
+        group.groupmembers.forEach(function iter(sample) {
+          if (sample.id == sampleid) {
+            sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
+          }
+        });
+      }
+    });
   }
 
-  getNewGroupItem() {
-    this.sampleCount++;
-    this.groupCount++;
-    return {groupname: 'New Group ' + this.groupCount, groupmembers: ['New Sample ' + this.sampleCount]};
+  addNewSample(group) {
+    group.groupmembers.push(this.getNewSample());
+  }
+
+  removeSample(id, group) {
+    group.groupmembers = group.groupmembers.filter(obj => obj.id !== id);
   }
 
   filterAnnotationTasks(scope): any[] {
@@ -318,6 +346,7 @@ export class ProphaneComponent implements OnInit {
   }
 
   @ViewChild('jobStepper') stepper: MatStepper;
+
   onViewChange(view) {
     if (view === false) {
       if (this.stepper.selectedIndex == 5) {
@@ -352,7 +381,7 @@ export class ProphaneComponent implements OnInit {
 
 
   showJobCard() {
-      this.jobCard = this.stepper.selectedIndex;
+    this.jobCard = this.stepper.selectedIndex;
   }
 
   moveStepperToLast() {
@@ -375,4 +404,3 @@ export class ProphaneComponent implements OnInit {
   }
 
 }
-
