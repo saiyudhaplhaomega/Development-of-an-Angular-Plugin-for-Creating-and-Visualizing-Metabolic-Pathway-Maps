@@ -1,17 +1,5 @@
-<!-- SELECT FASTA -->
-<!--<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">-->
+
 <div fxFlex class="bg-white">
-  <!--  <button mat-raised-button color="primary" mat-raised-button (click)="killAllJobs()">Kill All Jobs</button> -->
-
-  <mat-tab-group class="mb-5">
-    <mat-tab label="Job Submission">
-    </mat-tab>
-    <mat-tab label="Job Control">
-    </mat-tab>
-    <mat-tab label="About">
-    </mat-tab>
-  </mat-tab-group>
-
   <!-- Job Stepper -->
   <div class="d-flex justify-content-between">
     <div class="jobStepper pl-5">
@@ -29,7 +17,7 @@
     <div class="jobCards">
 
       <!-- JobForm: Input -->
-      <div *ngIf="jobCard == 0" class="card w-50 ml-job-form">
+      <div *ngIf="jobCard == 0" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Input
@@ -134,7 +122,7 @@
                    class="form-control" [(ngModel)]="contval" placeholder="text"
                    (change)="setContaminationLabel(contval)">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="regular expression"
+                   class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
                    (change)="setContaminationLabel(contval)">
             <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
                    class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
@@ -143,7 +131,7 @@
       </div>
 
       <!-- Sample Groups -->
-      <div *ngIf="jobCard == 1 && expertView == true" class="card w-50 ml-job-form">
+      <div *ngIf="jobCard == 1 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Sample Grouping
@@ -171,18 +159,20 @@
               </div>
             </div>
             <!-- group member -->
-            <div *ngFor="let groupelement of groupitem.groupmembers" class="input-group mb-3">
+            <div *ngFor="let sample of groupitem.groupmembers" class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">Sample Name</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="groupelement">
+              <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
+              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
+              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
               <div class="input-group-append">
                 <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn"
                         type="button"
-                        (click)='removeGroupMember(groupelement, groupitem)'>—
+                        (click)='removeSample(sample.id, groupitem)'>—
                 </button>
                 <button class="btn btn-outline-secondary w-sbtn" type="button"
-                        (click)='addNewGroupMember(groupitem)'>
+                        (click)='addNewSample(groupitem)'>
                   +
                 </button>
               </div>
@@ -195,7 +185,7 @@
       </div>
 
       <!-- Quantification -->
-      <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form">
+      <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Quantification method
@@ -218,7 +208,7 @@
       </div>
 
       <!-- Taxonomic Annotation Task -->
-      <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form">
+      <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Taxonomic Annotation
@@ -253,7 +243,7 @@
               <mat-select class="custom-select" [(value)]="task.database">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
-                              [value]="dbitem.database">{{dbitem.database}}</mat-option>
+                              [value]="dbitem.database">{{dbitem.name}}</mat-option>
                 </ng-container>
               </mat-select>
               <div class="input-group-append custom-select">
@@ -310,7 +300,7 @@
       </div>
 
       <!-- Functional Annotation Task -->
-      <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form">
+      <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Functional Annotation
@@ -345,7 +335,7 @@
               <mat-select class="custom-select" [(value)]="task.database">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
-                              [value]="dbitem.database">{{dbitem.database}}</mat-option>
+                              [value]="dbitem.database">{{dbitem.name}}</mat-option>
                 </ng-container>
               </mat-select>
               <div class="input-group-append custom-select">
@@ -403,7 +393,7 @@
 
       <!-- Summary -->
       <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"
-           class="card w-50 ml-job-form">
+           class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Summary
@@ -482,7 +472,7 @@
               <td>
                 {{ group.groupname }}<br>
                 <mat-list dense>
-                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member }} </mat-list-item>
+                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member.name }} </mat-list-item>
                 </mat-list>
               </td>
             </tr>
@@ -583,13 +573,12 @@
           </button>
         </div>
       </div>
-      <div class="w-50 mt-1 mb-5">
+      <div class="w-50 mt-1 mb-5 min-w-600">
         <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)"
                 (click)="nextStep()" class="float-right">Next
         </button>
         <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
       </div>
-
     </div>
   </div>
 </div>

@@ -1,0 +1,149 @@
+<!-- this is the sticky menu -->
+<div class="w-50 ml-5">
+<mat-accordion MatAccordion>
+  <mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        About Prophane
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    Prophane provides a tailored and fully automated workflow for metaproteomics analysis
+    with special focus on metaprotein annotation.<br>
+    For this, Prophane supports inputs from different programs such as MetaProteomeAnalyzer
+    (transfer: metaprotein report), Scaffold (transfer: protein report),
+    Proteome Discoverer (transfer: protXML and PSMS.txt) and a generic format (tabular).
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Workflow Description
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <img src="assets/img/workflow.png" alt="simpilified Workflow">
+    <br><br>
+    In metaproteomics, protein identifications can be ambiguous when a identfied peptide (or
+    subset of identfied peptides) can be assigned to more than one protein. The most common
+    approach is, to group these ambiguous identifications to so-called protein groups (synonyme:
+    metaprotein, protein family). Prophane provides consistent protein annotation based
+    on sequence homology and condensates metaprotein annotation based on a lowest common ancestor
+    approach (LCA). Moreover, quantitative data is provided in a sample-specific manner based on
+    normalized spectral abundance factors (NSAF). While the standard analysis needs minimal input,
+    an expert mode is available allowing detailed customizations of each workflow step and the
+    selection of various annotation databases and search algorithms.
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Annotation Databases & Algorithms
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      We are very grateful to all people putting a lot of effort in the development of innovative search
+      algorithms and doing a great job in the curation and maintenance of protein annotation databases. Prophane
+      provides the following annotation combinations:
+      <br><br>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">scope</th>
+          <th scope="col">database</th>
+          <th scope="col">search algorithm</th>
+          <th scope="col">url</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="col">taxonomy</td>
+            <td scope="col">NCBI protein nr</td>
+            <td scope="col">diamond blastp</td>
+            <td scope="col"><a target="_blank" href="https://www.ncbi.nlm.nih.gov/protein">https://www.ncbi.nlm.nih.gov/protein</a></td>
+          </tr>
+          <tr>
+            <td scope="col">taxonomy</td>
+            <td scope="col">UniprotKB</td>
+            <td scope="col">diamond blastp</td>
+            <td scope="col"><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
+          </tr>
+          <tr>
+            <td scope="col">taxonomy</td>
+            <td scope="col">Swiss-Prot</td>
+            <td scope="col">diamond blastp</td>
+            <td scope="col"><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
+          </tr>
+          <tr>
+            <td scope="col">taxonomy</td>
+            <td scope="col">TrEMBL</td>
+            <td scope="col">diamond blastp</td>
+            <td scope="col"><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
+          </tr>
+          <tr>
+            <td scope="col">function</td>
+            <td scope="col">eggNOG</td>
+            <td scope="col">eggnog-mapper</td>
+            <td scope="col"><a target="_blank" href="http://eggnogdb.embl.de/">http://eggnogdb.embl.de/</a></td>
+          </tr>
+          <tr>
+            <td scope="col">function</td>
+            <td scope="col">PFAMs</td>
+            <td scope="col">hmmer3</td>
+            <td scope="col"><a target="_blank" href="https://pfam.xfam.org/">http://eggnogdb.embl.de/</a></td>
+          </tr>
+          <tr>
+            <td scope="col">function</td>
+            <td scope="col">TIGRFAMs</td>
+            <td scope="col">hmmer3</td>
+            <td scope="col"><a target="_blank" href="http://tigrfams.jcvi.org/cgi-bin/index.cgi">http://tigrfams.jcvi.org/cgi-bin/index.cgi</a></td>
+          </tr>
+          <tr>
+            <td scope="col">function</td>
+            <td scope="col">Resfams</td>
+            <td scope="col">hmmer3</td>
+            <td scope="col"><a target="_blank" href="http://www.dantaslab.org/resfams">http://www.dantaslab.org/resfams</a></td>
+          </tr>
+          <tr>
+            <td scope="col">function</td>
+            <td scope="col">CAzY/dbCAN</td>
+            <td scope="col">hmmer3</td>
+            <td scope="col"><a target="_blank" href="http://bcb.unl.edu/dbCAN2/">http://bcb.unl.edu/dbCAN2/</a></td>
+          </tr>
+        </tbody>
+      </table>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Output
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    Once an analysis is completed you can download all results as a single archive
+    in the Job Control section.
+    To learn more about the different result files, please read the respective section
+    in the README file (<a href="https://gitlab.com/s.fuchs/prophane/blob/master/README.md" target="_blank">https://gitlab.com/s.fuchs/prophane/blob/master/README.md</a>).
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Funding and Support
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    This project is funded by
+    <ul>
+        <li>Deutsche Forschungsgesellschaft (DFG), "Research Software Sustainability"</li>
+        <li>de.NBI, computational ressources and support</li>
+    </ul>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Contact
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    In case of questions or problems, do not hesitate to contact us:
+    <br><br><b>support@prophane.de</b>
+  </mat-expansion-panel>
+</mat-accordion>
+</div>
