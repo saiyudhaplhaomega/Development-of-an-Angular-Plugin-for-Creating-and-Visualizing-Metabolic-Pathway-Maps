@@ -75,13 +75,16 @@ export class ProphaneComponent implements OnInit {
   ];
 
   databaseOptions: object[] = [
-    {id: 0, scope: 'Function', database: 'eggnog', algorithm: ['emapper']},
-    {id: 1, scope: 'Function', database: 'pfams', algorithm: ['hmmsearch', 'hmmscan']},
-    {id: 2, scope: 'Function', database: 'tigrfams', algorithm: ['hmmsearch', 'hmmscan']},
-    {id: 3, scope: 'Taxonomy', database: 'ncbi_nr', algorithm: ['diamond blastp']},
-    {id: 4, scope: 'Taxonomy', database: 'uniprot_complete', algorithm: ['diamond blastp']},
-    {id: 5, scope: 'Taxonomy', database: 'uniprot_sp', algorithm: ['diamond blastp']},
-    {id: 6, scope: 'Taxonomy', database: 'uniprot_tr', algorithm: ['diamond blastp']},
+    {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog',algorithm: ['emapper']},
+    {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 3, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 4, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 5, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmsearch', 'hmmscan']},
+    {id: 6, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
+    {id: 7, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
+    {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
+    {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
   ];
 
   sampleGroups: ProphaneSampleGroupJSON[] = [];
@@ -399,6 +402,15 @@ export class ProphaneComponent implements OnInit {
     this.stepper.selectedIndex--;
   }
 
+  hasManyOptions(arr: array) {
+    if (arr.length < 2) {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
   moveStepper(step: number) {
     if (this.expertView === false && step > 0) {
       step = 1;
@@ -432,4 +444,3 @@ export class ProphaneComponent implements OnInit {
   }
 
 }
-

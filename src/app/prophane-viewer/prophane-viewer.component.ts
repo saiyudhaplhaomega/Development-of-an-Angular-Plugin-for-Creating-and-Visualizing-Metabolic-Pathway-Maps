@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-prophane-viewer',
@@ -10,6 +11,7 @@ export class ProphaneViewerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+     imports: [ FlexLayoutModule ]
   }
 
 }

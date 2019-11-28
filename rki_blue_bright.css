@@ -2492,43 +2492,57 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 }
 
 .jobStepper {
-  width: 17em;
+  width: 17em !important;
 }
 
 .ml-job-form{
-  margin-left: 1em;
+  margin-left: 20px !important;
 }
 
 .jobCards {
-  width: calc(100% - 18em)
+  width: calc(100% - 18em);
+  margin-left: 0px !important;
 }
 
 .mat-tab-label-active {
   opacity: 1 !important;
 }
 
+
+.content_and_footer{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content-view {
+  flex: 1;
+}
+
 footer {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  line-height: 4em;
+  min-height: 4em;
   text-align: center;
   border-top: 1px solid rgba(0, 0, 0, .05);
   color: rgba(0, 0, 0, .4);
   background-color: rgba(0, 0, 0, .04);
-  margin: 0;
+  margin-top: 2em;
+  line-height: 4em;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
+  self-align: flex-end
 }
 
 .no-border {
   border: 0;
 }
 
-.sticky{
-  position: fixed;
-  top: 0;
-  overflow: hidden;
-  z-index: 10;
+a.mat-tab-link:hover{
+  color: rgba(0, 0, 0, .87) !important;
+  text-decoration: none !important;
+}
+
+.min-w-600{
+  min-width: 600px !important;
 }

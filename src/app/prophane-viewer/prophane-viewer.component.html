@@ -1,12 +1,14 @@
 <nav mat-tab-nav-bar class="mb-5">
-  <a mat-tab-link routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive" [routerLink]="[{ outlets: { prophaneContent: ['new'] } }]" [routerLinkActiveOptions]="{exact: true}">Job Submission</a>
+  <a mat-tab-link routerLinkActive class="noHover" #rla1="routerLinkActive" [active]="rla1.isActive" [routerLink]="[{ outlets: { prophaneContent: ['new'] } }]" [routerLinkActiveOptions]="{exact: true}">Job Submission</a>
   <a mat-tab-link routerLinkActive #rla2="routerLinkActive" [active]="rla2.isActive" [routerLink]="[{ outlets: { prophaneContent: ['jobs'] } }]" [routerLinkActiveOptions]="{exact: true}">Job Control</a>
   <a mat-tab-link routerLinkActive #rla3="routerLinkActive" [active]="rla3.isActive" [routerLink]="[{ outlets: { prophaneContent: ['about'] } }]" [routerLinkActiveOptions]="{exact: true}">About</a>
 </nav>
 
-
-<router-outlet name="prophaneContent"></router-outlet>
-
-<footer>
-  proudly supported by DFG and de.NBI
-</footer>
+<div fxLayout="column" style="min-height: 100vh">
+  <div fxFlex style="flex-grow: 1">
+    <router-outlet name="prophaneContent"></router-outlet>
+  </div>
+  <footer fxFlex>
+    proudly supported by DFG and de.NBI
+  </footer>
+</div>
