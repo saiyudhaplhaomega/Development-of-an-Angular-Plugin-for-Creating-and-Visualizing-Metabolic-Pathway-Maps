@@ -2,13 +2,17 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../main/services/file-uploader.service';
 import {MatRadioChange} from '@angular/material/radio';
 import {SerializableObjectUploaderService_UNUSED} from '../old_files/serializable-object-uploader.service_UNUSED';
-import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjson';
 import {HttpEventType} from '@angular/common/http';
 import {ProphaneAnnotationTaskObject} from './objects/prophaneannotationtaskjson';
 import {ProphaneSampleGroupJSON} from './objects/prophanesamplegroupjson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
+
+import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjson';
 import {ProphaneJobObject} from './objects/prophanejobjson';
+import {ProphaneJobStatusJSON, ProphaneJobStatusObject} from './objects/prophanejobstatusjson';
+import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -42,7 +46,7 @@ export class ProphaneComponent implements OnInit {
   currentProphaneParameters: ProphaneParamObject;
 
 
-  // prophane parameter related variables
+  // prophane parameters related variables
   // Main options
   selectedLevel;
   leveldata: Array<Object> = [
@@ -54,7 +58,7 @@ export class ProphaneComponent implements OnInit {
   contval: string;
   contaminationLabel = {valueString: '', regex: ''};
   selectedContaminationOption;
-  contaminationdata: Array<Object> = [
+  contaminationdata: Object[] = [
     {id: 0, name: 'accessions starting with', valueString: 'start'},
     {id: 1, name: 'accessions ending with', valueString: 'end'},
     {id: 2, name: 'accessions matching to', valueString: 'regex'},
@@ -106,7 +110,7 @@ export class ProphaneComponent implements OnInit {
   ];
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: SerializableObjectUploaderService_UNUSED) {
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService) {
     this.prophaneJobIDReady = true;
     this.csvProgress = 0;
     this.fastaProgress = 0;
@@ -128,72 +132,37 @@ export class ProphaneComponent implements OnInit {
   }
 
   // Server job related methods
-  // TODO: switch all posts to ProphaneJob[]-Array
-
-  // TODO: method obsolete? replaced by joblist method
-/*  requestStatus() {
-    // request status
-    // call service to request status json
-    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneCheckStatus').subscribe(d => {
-      switch (d.status) {
-        case '1': {
-          this.statusDisplayString = 'Job not started yet';
-          break;
-        }
-        case '2': {
-          this.statusDisplayString = 'Prophane is waiting for files';
-          break;
-        }
-        case '3': {
-          this.statusDisplayString = 'Prophane running';
-          break;
-        }
-        case '4': {
-          this.statusDisplayString = 'Prophane finished, preparing download';
-          break;
-        }
-        case '5': {
-          this.fileUrl = this.fileUrl + d.prophaneJobUUID;
-          this.downloadReady = true;
-          break;
-        }
-        default: {
-          this.statusDisplayString = 'No Job Pending';
-          break;
-        }
-      }
-    });
-  }*/
 
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
-/*    // TODO add minor check to integrity of parameters
     this.currentProphaneParameters = new ProphaneParamObject();
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
-    this.currentProphaneJob.status = '0';
-    this.currentProphaneJob.parameter = this.currentProphaneParameters;
+    this.currentProphaneJob.status = ''; // the status is set exclusively by the server
+    this.currentProphaneJob.csvFilename = '';
+    this.currentProphaneJob.fastaFilename = '';
+    this.currentProphaneJob.downloadURL = '';
+    this.currentProphaneJob.parameters = this.currentProphaneParameters;
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    console.log(this.currentProphaneJob);
-    this.jsonUpload.postObj<ProphaneJobObject[]>([this.currentProphaneJob], 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
-      if (res instanceof ProphaneJobObject[]) {
-        this.currentProphaneJob = res[0];
-
-      }
+    console.log('ID: ' + this.currentProphaneJob);
+    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
+      console.log('returned object: ' + res);
+      this.currentProphaneJob = res;
       this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID.length > 0);
-      console.log(this.currentProphaneParameters);
-    });*/
+      console.log(this.currentProphaneJob);
+    });
   }
 
   // this is the submit button
   startButton(): void {
+    console.log("start button pressed")
     this.uploadCSV();
     this.uploadFasta();
     this.startProphaneJob();
   }
 
   uploadFasta(): void {
-    console.log(this.fastaFile);
+    console.log("upload triggered " + this.fastaFile);
     if (this.fastaFile) {
       this.uploaderService.postFile(this.fastaFile,
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
@@ -204,7 +173,7 @@ export class ProphaneComponent implements OnInit {
             let response: any;
             response = event.body;
             this.fastaProgress = 0;
-            console.log('Response:' + response);
+            console.log('Response to upload fasta:' + response);
           }
         }
       );
@@ -212,7 +181,7 @@ export class ProphaneComponent implements OnInit {
   }
 
   uploadCSV(): void {
-    console.log(this.proteinReportFile);
+    console.log("upload triggered " + this.proteinReportFile);
     if (this.proteinReportFile) {
       this.uploaderService.postFile(this.proteinReportFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
@@ -223,7 +192,7 @@ export class ProphaneComponent implements OnInit {
             let response: any;
             response = event.body;
             this.csvProgress = 0;
-            console.log('Response:' + response);
+            console.log('Response to upload csv:' + response);
           }
         }
       );
@@ -231,10 +200,9 @@ export class ProphaneComponent implements OnInit {
   }
 
   startProphaneJob(): void {
-/*    console.log(this.currentProphaneJob);
+    console.log(this.currentProphaneJob);
     // TODO add minor check to integrity of parameters
     // adding form values into parameters object
-
     this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
     this.currentProphaneParameters.contaminationLabel = this.contaminationLabel.regex;
     this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
@@ -242,13 +210,14 @@ export class ProphaneComponent implements OnInit {
     this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
     this.currentProphaneParameters.sampleGroups = this.sampleGroups;
     this.currentProphaneParameters.annotationTasks = [];
-    // (const atask: ProphaneAnnotationTaskObject in this.annotationTasks) {
     this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
       this.currentProphaneParameters.annotationTasks.push(atask);
     });
-    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
+    // reassigning the parameterobject to the jobobject (unnessecary?)
+    this.currentProphaneJob.parameters = this.currentProphaneParameters;
+    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
       console.log(d);
-    });*/
+    });
   }
 
   // methods for website functionality
@@ -397,8 +366,8 @@ export class ProphaneComponent implements OnInit {
 
   onCSVChange(files: FileList) {
     this.proteinReportFile = files[0];
-    this.currentProphaneJob.prophaneJobUUID = 'e078eef0-0788-11ea-a792-b5c08a0d06a4';
-    this.uploadCSV();
+    // this.currentProphaneJob.prophaneJobUUID = 'e078eef0-0788-11ea-a792-b5c08a0d06a4';
+   // this.uploadCSV();
   }
 
   onSourceChange() {

@@ -35,7 +35,6 @@ export class AuthGuard implements CanActivate {
     this._serverUser = new UserLogin();
     this._serverUser.idToken = user.idToken;
     this._serverUser.provider = 'google';
-    this._serverUser.sessionID = null;
 
     if (user != null) {
       this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
@@ -54,7 +53,7 @@ export class AuthGuard implements CanActivate {
   }
 
   getSessionID(): string {
-    return this._serverUser.sessionID;
+    return this._serverUser.idToken;
   }
 
   getServerAuthState(): boolean {

@@ -22,7 +22,7 @@ export class ModelDownloaderService {
     return this.http.post<Blob>(this.webserver.getwebserverurl() + 'mpacloud/v1/downloadtest', {headers: headers, responseType: 'blob' as 'json' });
     // The Observable returned by get() is of type Observable<string>
     // because a text response was specified.
-    // There's no need to pass a <string> type parameter to get().
+    // There's no need to pass a <string> type parameters to get().
     /*return this.http.get(filename, {responseType: 'text'});*/
 
   }

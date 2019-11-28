@@ -6,8 +6,7 @@ export interface ProphaneJobJSON {
   fastaFilename: string;
   status: string;
   downloadURL: string;
-  parameter: ProphaneParamJSON;
-
+  parameters: ProphaneParamJSON;
 }
 
 export class ProphaneJobObject implements ProphaneJobJSON {
@@ -16,5 +15,5 @@ export class ProphaneJobObject implements ProphaneJobJSON {
   fastaFilename: string;
   status: string;
   downloadURL: string;
-  parameter: ProphaneParamJSON;
+  parameters: ProphaneParamJSON;
 }
