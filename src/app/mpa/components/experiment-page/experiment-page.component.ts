@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-experiment-page',
@@ -14,20 +16,30 @@ export class ExperimentPageComponent implements OnInit {
 
   private _dataItems: DataItem[];
 
-  constructor(private dataService: DataService) { }
+  constructor(private _snackBar: MatSnackBar, private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.dataItems.subscribe( items => {
+      this._dataItems = items;
+    });
   }
 
   onAccept() {
-    this._dataItems.forEach( item => {
-      if (item.uuid === this.uuid) {
-        item.displayName = this.name;
-        console.log(this.name);
-        return;
-      }
-    });
-    this.dataService.dataItems.next(this._dataItems);
+    if (this.name.length > 24) {
+      this._snackBar.open('Names longer than 24 characters are not allowed!');
+      this.name = '';
+    } else if (this.name.length <= 0) {
+      this._snackBar.open('Empty names are not allowed!');
+    } else {
+      this._dataItems.forEach( item => {
+        if (item.uuid === this.uuid) {
+          item.displayName = this.name;
+          console.log(this.name);
+          return;
+        }
+      });
+      this.dataService.dataItems.next(this._dataItems);
+    }
   }
 
 }

@@ -28,10 +28,9 @@ export class DataService {
     this.authGuardService.user.subscribe(user => {
       console.log(user);
       if (user !== null && user !== undefined) {
-        let newData = [{
+        const newData = [{
           displayName: user.name,
           icon: 'account_circle',
-          route: 'user',
           children: [],
           uuid: v1(),
           type: 'user',

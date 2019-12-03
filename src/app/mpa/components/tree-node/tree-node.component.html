@@ -1,4 +1,4 @@
-<a mat-list-item [ngStyle]="{'padding-left': node.hasChildren ? (node.depth * 12) + 'px' : (node.depth * 12 + 42) + 'px'}">
+<a mat-list-item [ngStyle]="{'padding-left': node.hasChildren ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}">
   <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
     <div *ngIf="node.hasChildren">
       <button mat-icon-button (click)="onExpand($event, item)">
