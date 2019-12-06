@@ -14,7 +14,7 @@ import {ProphaneViewerComponent} from './prophane-viewer/prophane-viewer.compone
 import {MPAComponent} from './mpa/mpa.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
   { path: 'prophane', component: ProphaneViewerComponent, canActivate: [AuthGuard], children: [
@@ -35,3 +35,4 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: 'home' }
 ];
 export const Routing = RouterModule.forRoot(appRoutes);
+

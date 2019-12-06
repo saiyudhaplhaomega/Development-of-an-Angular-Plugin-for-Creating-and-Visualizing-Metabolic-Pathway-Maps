@@ -1,584 +1,594 @@
 
 <div fxFlex class="bg-white">
-  <!-- Job Stepper -->
-  <div class="d-flex justify-content-between">
-    <div class="jobStepper pl-5">
-      <mat-vertical-stepper [@.disabled]="true" (animationDone)="showJobCard()" #jobStepper>
-        <mat-step label="Input"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Sample Groups"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Quantification"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Taxonomy"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Function"></mat-step>
-        <mat-step label="Submit"></mat-step>
-      </mat-vertical-stepper>
-    </div>
 
-    <!-- Job Form -->
-    <div class="jobCards">
-
-      <!-- JobForm: Input -->
-      <div *ngIf="jobCard == 0" class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Input
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-
-          <!-- Job label -->
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
-            </div>
-            <input type="text" class="form-control" [(ngModel)]="jobLabel">
-          </div>
-
-          <!-- Source selection -->
-          <div class="input-group mb-3" style="color: #495057 !important">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="sourceSelect">Source</label>
-            </div>
-            <mat-select class="no-arrow custom-select" [(ngModel)]="selectedLevel" id="sourceSelect"
-                        (selectionChange)="onSourceChange()">
-              <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
-            </mat-select>
-          </div>
-
-          <!-- MPA -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Report file</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" accept=".csv" lass="custom-file-input" id="mpa" #proteinreportfile
-                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
-                     (click)="proteinreportfile.click()">
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
-            </div>
-          </div>
-
-          <!-- Scaffold -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Report file</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" accept=".xls" class="custom-file-input" id="scaffold" #proteinreportfile
-                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
-                     (click)="proteinreportfile.click()">
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file
-                (.xls)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label"
-                     for="scaffold">{{proteinReportFile.name}}</label>
-            </div>
-          </div>
-
-          <!-- Generic -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Report file</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" accept=".tsv,.txt" lass="custom-file-input" id="generic" #proteinreportfile
-                     (change)="onCSVChange(proteinreportfile.files)" class="custom-file-input"
-                     (click)="proteinreportfile.click()">
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file
-                (.tsv, .txt)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label"
-                     for="generic">{{proteinReportFile.name}}</label>
-            </div>
-          </div>
-
-          <!-- Fasta -->
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">FASTA file</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" accept=".fasta,.faa,.fa" #fastafile (change)="onFastaChange(fastafile.files)"
-                     class="custom-file-input" id="fasta" (click)="fastafile.click()">
-              <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa, .fa)</label>
-              <label *ngIf="fastaFile" class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
-              <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate"
-                                [value]="fastaProgress"></mat-progress-bar>
-            </div>
-          </div>
-
-          <!-- Exclude -->
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Exclude</span>
-            </div>
-            <mat-select class="custom-select" [(ngModel)]="selectedContaminationOption"
-                        (change)="setContaminationLabel(false)">
-              <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
-            </mat-select>
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="text"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
-                   class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
-          </div>
-        </div>
-      </div>
-
-      <!-- Sample Groups -->
-      <div *ngIf="jobCard == 1 && expertView == true" class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Sample Grouping
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-          <div *ngIf="sampleGroups.length == 0">no group defined yet</div>
-          <ng-container *ngFor="let groupitem of sampleGroups">
-            <!-- Group name -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text rki-blue-input">Sample Group</span>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
-                     value="{{ groupitem.groupname }}">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button"
-                        (click)='removeSampleGroup(groupitem)'>
-                  —
-                </button>
-              </div>
-            </div>
-            <!-- group member -->
-            <div *ngFor="let sample of groupitem.groupmembers" class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Sample Name</span>
-              </div>
-              <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
-              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
-              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
-              <div class="input-group-append">
-                <button *ngIf="groupitem.groupmembers.length > 1" class="btn btn-outline-secondary w-sbtn"
-                        type="button"
-                        (click)='removeSample(sample.id, groupitem)'>—
-                </button>
-                <button class="btn btn-outline-secondary w-sbtn" type="button"
-                        (click)='addNewSample(groupitem)'>
-                  +
-                </button>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
-          </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group
-          </button>
-        </div>
-      </div>
-
-      <!-- Quantification -->
-      <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Quantification method
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text rki-blue-input">Quantification method</span>
-            </div>
-            <mat-select class="custom-select" [(value)]="selectedQuant">
-              <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
-            </mat-select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Taxonomic Annotation Task -->
-      <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Taxonomic Annotation
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-
-          <!-- Task Label -->
-          <div *ngIf="filterAnnotationTasks('Taxonomy').length == 0">no taxonomic annotation task defined yet</div>
-          <ng-container *ngFor="let task of filterAnnotationTasks('Taxonomy'); let i = index">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text rki-blue-input">Task Label</span>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
-                  —
-                </button>
-              </div>
-            </div>
-
-            <!-- Database & Version -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Reference Database</span>
-              </div>
-              <mat-select class="custom-select" [(value)]="task.database">
-                <ng-container *ngFor="let dbitem of databaseOptions">
-                  <mat-option *ngIf="dbitem.scope == task.scope"
-                              [value]="dbitem.database">{{dbitem.name}}</mat-option>
-                </ng-container>
-              </mat-select>
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.databaseversion">
-                  <mat-option value="latest">latest</mat-option>
-                </mat-select>
-              </div>
-            </div>
-
-            <!-- Algorithm -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Search Algorithm</span>
-              </div>
-              <mat-select class="custom-select" [(value)]="task.algorithm"
-                          (selectionChange)="setDefaultOptionString($event, task)">
-                <ng-container *ngFor="let dbitem of databaseOptions">
-                  <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
-                    <ng-container *ngFor="let algo of dbitem.algorithm">
-                      <mat-option [value]="algo">
-                        {{algo}}</mat-option>
-                    </ng-container>
-                  </ng-container>
-                </ng-container>
-              </mat-select>
-            </div>
-
-            <!-- Option String -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Option String</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.optionstring">
-            </div>
-
-            <!-- E-value-->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">E-Value</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.evalue">
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
-          </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task
-          </button>
-        </div>
-      </div>
-
-      <!-- Functional Annotation Task -->
-      <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Functional Annotation
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-
-          <!-- Task Label -->
-          <div *ngIf="filterAnnotationTasks('Function').length == 0">no functional annotation task defined yet</div>
-          <ng-container *ngFor="let task of filterAnnotationTasks('Function'); let i = index">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text rki-blue-input">Task Label</span>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
-                  —
-                </button>
-              </div>
-            </div>
-
-            <!-- Database & Version -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Reference Database</span>
-              </div>
-              <mat-select class="custom-select" [(value)]="task.database">
-                <ng-container *ngFor="let dbitem of databaseOptions">
-                  <mat-option *ngIf="dbitem.scope == task.scope"
-                              [value]="dbitem.database">{{dbitem.name}}</mat-option>
-                </ng-container>
-              </mat-select>
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.databaseversion">
-                  <mat-option value="latest">latest</mat-option>
-                </mat-select>
-              </div>
-            </div>
-
-            <!-- Algorithm -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Search Algorithm</span>
-              </div>
-              <mat-select class="custom-select" [(value)]="task.algorithm"
-                          (selectionChange)="setDefaultOptionString($event, task)">
-                <ng-container *ngFor="let dbitem of databaseOptions">
-                  <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
-                    <ng-container *ngFor="let algo of dbitem.algorithm">
-                      <mat-option [value]="algo">
-                        {{algo}}</mat-option>
-                    </ng-container>
-                  </ng-container>
-                </ng-container>
-              </mat-select>
-            </div>
-
-            <!-- Option String -->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Option String</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.optionstring">
-            </div>
-
-            <!-- E-value-->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">E-Value</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.evalue" [(value)]="task.evalue">
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
-          </ng-container>
-          <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
-          </button>
-        </div>
-      </div>
-
-      <!-- Summary -->
-      <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"
-           class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            Summary
-            <span class="card-title-button-wrapper">
-              <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
-            </span>
-          </h5>
-        </div>
-        <div class="card-body">
-
-          <!-- Input (Summary) -->
-          <table class="table table-light table-hover">
-            <thead>
-            </thead>
-            <tbody>
-            <tr>
-              <th scope="row" class="ml-summary-col">Job Label:</th>
-              <td>
-                {{ jobLabel }}
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="ml-summary-col">Source:</th>
-              <td>
-                {{ selectedLevel.name }}
-              </td>
-            </tr>
-            <tr>
-              <th [ngClass]="!proteinReportFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Report
-                File:
-              </th>
-              <td [ngClass]="!proteinReportFile ? 'table-warning' : ''">
-                {{ proteinReportFile ? proteinReportFile.name : 'not selected yet' }}
-              </td>
-            </tr>
-            <tr>
-              <th [ngClass]="!fastaFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Fasta File:</th>
-              <td [ngClass]="!fastaFile ? 'table-warning' : ''">
-                {{ fastaFile ? fastaFile.name : 'not selected yet' }}
-              </td>
-            </tr>
-            <tr>
-              <th scope="row"
-                  [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''"
-                  class="ml-summary-col">
-                Exclude:
-              </th>
-              <td
-                [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''">
-                {{ selectedContaminationOption.name + " " + contaminationLabel.valueString }}
-              </td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-
-          <!-- Sample Groups (Summary) -->
-          <table *ngIf="expertView == true" class="table .table-light table-hover">
-            <thead>
-            </thead>
-            <tbody>
-            <tr *ngIf="sampleGroups.length == 0">
-              <th scope="row" class="ml-summary-col" class="ml-summary-col">Sample Groups:</th>
-              <td>
-                not defined (expert option)
-              </td>
-            </tr>
-            <tr *ngFor="let group of sampleGroups">
-              <th scope="row" class="ml-summary-col">
-                Sample Group:
-              </th>
-              <td>
-                {{ group.groupname }}<br>
-                <mat-list dense>
-                  <mat-list-item *ngFor="let member of group.groupmembers"> {{ member.name }} </mat-list-item>
-                </mat-list>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="ml-summary-col"></th>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-
-          <!-- Quantification (Summary) -->
-          <table *ngIf="expertView == true" class="table .table-light table-hover">
-            <thead>
-            </thead>
-            <tbody>
-            <tr>
-              <th scope="row" class="ml-summary-col">Quantification Method:</th>
-              <td>
-                {{ selectedQuant.name }}
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="ml-summary-col"></th>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-
-          <!-- Taxonomic Task (Summary) -->
-          <table *ngIf="expertView == true" class="table .table-light table-hover">
-            <thead>
-            </thead>
-            <tbody>
-            <tr *ngIf="filterAnnotationTasks('Taxonomy').length == 0">
-              <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
-              <td>
-                not defined
-              </td>
-            </tr>
-            <tr *ngFor="let task of filterAnnotationTasks('Taxonomy')">
-              <th scope="row" class="ml-summary-col">
-                Taxonomic Annotation:
-              </th>
-              <td>
-                {{ task.tasklabel }}<br>
-                <mat-list dense>
-                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-                  <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
-                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
-                </mat-list>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="ml-summary-col"></th>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-
-          <!-- Functional Task (Summary) -->
-          <table *ngIf="expertView == true" class="table .table-light table-hover">
-            <thead>
-            </thead>
-            <tbody>
-            <tr *ngIf="filterAnnotationTasks('Function').length == 0">
-              <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
-              <td>
-                not defined
-              </td>
-            </tr>
-            <tr *ngFor="let task of filterAnnotationTasks('Function')">
-              <th scope="row" class="ml-summary-col">
-                Functional Annotation:
-              </th>
-              <td>
-                {{ task.tasklabel }}<br>
-                <mat-list dense>
-                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-                  <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
-                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
-                </mat-list>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="ml-summary-col"></th>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-          <button mat-raised-button color="primary"
-                  (click)="requestNewJob()" class="float-left"> Reset
-          </button>
-          <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(!proteinReportFile || !fastaFile || (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
-                  (click)="startButton()">Submit
-          </button>
-        </div>
-      </div>
-      <div class="w-50 mt-1 mb-5 min-w-600">
-        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)"
-                (click)="nextStep()" class="float-right">Next
-        </button>
-        <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
-      </div>
-    </div>
+  <div *ngIf="!prophaneJobIDReady" class="align-content-center mb-2 alert-danger">
+    {{this.jobUnavailableMessage}}
   </div>
+
+  <!--<div *ngIf="prophaneJobIDReady">-->
+
+    <!-- Job Stepper -->
+    <div class="d-flex justify-content-between">
+      <div class="jobStepper pl-5">
+        <mat-vertical-stepper [@.disabled]="true" (animationDone)="showJobCard()" #jobStepper>
+          <mat-step label="Input"></mat-step>
+          <mat-step *ngIf="expertView == true" label="Sample Groups"></mat-step>
+          <mat-step *ngIf="expertView == true" label="Quantification"></mat-step>
+          <mat-step *ngIf="expertView == true" label="Taxonomy"></mat-step>
+          <mat-step *ngIf="expertView == true" label="Function"></mat-step>
+          <mat-step label="Submit"></mat-step>
+        </mat-vertical-stepper>
+      </div>
+
+      <!-- Job Form -->
+      <div class="jobCards">
+
+        <!-- JobForm: Input -->
+        <div *ngIf="jobCard == 0" class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Input
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+
+            <!-- Job label -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="jobLabel">
+            </div>
+
+            <!-- Source selection -->
+            <div class="input-group mb-3" style="color: #495057 !important">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="sourceSelect">Source</label>
+              </div>
+              <mat-select class="no-arrow custom-select" [(ngModel)]="selectedLevel" id="sourceSelect"
+                          (selectionChange)="onSourceChange()">
+                <mat-option *ngFor="let typeitem of leveldata" [value]="typeitem">{{typeitem.name}}</mat-option>
+              </mat-select>
+            </div>
+
+            <!-- MPA -->
+            <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Report file</span>
+              </div>
+              <div class="custom-file">
+                <input type="file" accept=".csv" lass="custom-file-input" id="mpa" #proteinreportfile
+                       (change)="onCSVChange(proteinreportfile.files)"
+                       class="custom-file-input" >
+                <!---(click)="proteinreportfile.click()"-->
+                <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
+                <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
+              </div>
+            </div>
+
+            <!-- Scaffold -->
+            <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Report file</span>
+              </div>
+              <div class="custom-file">
+                <input type="file" accept=".xls" class="custom-file-input" id="scaffold" #proteinreportfile
+                       class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+                <!--(click)="proteinreportfile.click()"-->
+                <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file
+                  (.xls)</label>
+                <label *ngIf="proteinReportFile" class="custom-file-label"
+                       for="scaffold">{{proteinReportFile.name}}</label>
+              </div>
+            </div>
+
+            <!-- Generic -->
+            <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Report file</span>
+              </div>
+              <div class="custom-file">
+                <input type="file" accept=".tsv,.txt" lass="custom-file-input" id="generic" #proteinreportfile
+                       class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+                <!--(click)="proteinreportfile.click()"-->
+                <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file
+                  (.tsv, .txt)</label>
+                <label *ngIf="proteinReportFile" class="custom-file-label"
+                       for="generic">{{proteinReportFile.name}}</label>
+              </div>
+            </div>
+
+            <!-- Fasta -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">FASTA file</span>
+              </div>
+              <div class="custom-file">
+                <input type="file" accept=".fasta,.faa,.fa" #fastafile
+                       class="custom-file-input" id="fasta" (change)="onFastaChange(fastafile.files)">
+                <!--(click)="fastafile.click()"-->
+                <label *ngIf="!fastaFile" class="custom-file-label" for="fasta">Choose file (.fasta, .faa, .fa)</label>
+                <label *ngIf="fastaFile" class="custom-file-label" for="fasta">{{ fastaFile.name }}</label>
+                <mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate"
+                                  [value]="fastaProgress"></mat-progress-bar>
+              </div>
+            </div>
+
+            <!-- Exclude -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Exclude</span>
+              </div>
+              <mat-select class="custom-select" [(ngModel)]="selectedContaminationOption"
+                          (change)="setContaminationLabel(false)">
+                <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
+              </mat-select>
+              <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text"
+                     class="form-control" [(ngModel)]="contval" placeholder="text"
+                     (change)="setContaminationLabel(contval)">
+              <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
+                     class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
+                     (change)="setContaminationLabel(contval)">
+              <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
+                     class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Groups -->
+        <div *ngIf="jobCard == 1 && expertView == true" class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Sample Grouping
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="sampleGroups.length == 0">no group defined yet</div>
+            <ng-container *ngFor="let groupitem of sampleGroups">
+              <!-- Group name -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rki-blue-input">Sample Group</span>
+                </div>
+                <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
+                       value="{{ groupitem.groupname }}">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary w-sbtn" type="button"
+                          (click)='removeSampleGroup(groupitem)'>
+                    —
+                  </button>
+                </div>
+              </div>
+              <!-- group member -->
+              <div *ngFor="let sample of groupitem.groupmembersGUI" class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Sample Name</span>
+                </div>
+                <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
+                <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
+                <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
+                <div class="input-group-append">
+                  <button *ngIf="groupitem.groupmembersGUI.length > 1" class="btn btn-outline-secondary w-sbtn"
+                          type="button"
+                          (click)='removeSample(sample.id, groupitem)'>—
+                  </button>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button"
+                          (click)='addNewSample(groupitem)'>
+                    +
+                  </button>
+                </div>
+              </div>
+              <mat-divider class="mb-3"></mat-divider>
+            </ng-container>
+            <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group
+            </button>
+          </div>
+        </div>
+
+        <!-- Quantification -->
+        <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Quantification method
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text rki-blue-input">Quantification method</span>
+              </div>
+              <mat-select class="custom-select" [(value)]="selectedQuant">
+                <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
+              </mat-select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Taxonomic Annotation Task -->
+        <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Taxonomic Annotation
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+
+            <!-- Task Label -->
+            <div *ngIf="filterAnnotationTasks('Taxonomy').length == 0">no taxonomic annotation task defined yet</div>
+            <ng-container *ngFor="let task of filterAnnotationTasks('Taxonomy'); let i = index">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rki-blue-input">Task Label</span>
+                </div>
+                <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+                    —
+                  </button>
+                </div>
+              </div>
+
+              <!-- Database & Version -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Reference Database</span>
+                </div>
+                <mat-select class="custom-select" [(value)]="task.database">
+                  <ng-container *ngFor="let dbitem of databaseOptions">
+                    <mat-option *ngIf="dbitem.scope == task.scope"
+                                [value]="dbitem.database">{{dbitem.name}}</mat-option>
+                  </ng-container>
+                </mat-select>
+                <div class="input-group-append custom-select">
+                  <mat-select [(value)]="task.databaseversion">
+                    <mat-option value="latest">latest</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <!-- Algorithm -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Search Algorithm</span>
+                </div>
+                <mat-select class="custom-select" [(value)]="task.algorithm"
+                            (selectionChange)="setDefaultOptionString($event, task)">
+                  <ng-container *ngFor="let dbitem of databaseOptions">
+                    <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
+                      <ng-container *ngFor="let algo of dbitem.algorithm">
+                        <mat-option [value]="algo">
+                          {{algo}}</mat-option>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </mat-select>
+              </div>
+
+              <!-- Option String -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Option String</span>
+                </div>
+                <input class="form-control" [(ngModel)]="task.optionstring">
+              </div>
+
+              <!-- E-value-->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">E-Value</span>
+                </div>
+                <input class="form-control" [(ngModel)]="task.evalue">
+                <div class="input-group-append custom-select">
+                  <mat-select [(value)]="task.evalue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <mat-divider class="mb-3"></mat-divider>
+            </ng-container>
+            <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task
+            </button>
+          </div>
+        </div>
+
+        <!-- Functional Annotation Task -->
+        <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Functional Annotation
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+
+            <!-- Task Label -->
+            <div *ngIf="filterAnnotationTasks('Function').length == 0">no functional annotation task defined yet</div>
+            <ng-container *ngFor="let task of filterAnnotationTasks('Function'); let i = index">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rki-blue-input">Task Label</span>
+                </div>
+                <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+                    —
+                  </button>
+                </div>
+              </div>
+
+              <!-- Database & Version -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Reference Database</span>
+                </div>
+                <mat-select class="custom-select" [(value)]="task.database">
+                  <ng-container *ngFor="let dbitem of databaseOptions">
+                    <mat-option *ngIf="dbitem.scope == task.scope"
+                                [value]="dbitem.database">{{dbitem.name}}</mat-option>
+                  </ng-container>
+                </mat-select>
+                <div class="input-group-append custom-select">
+                  <mat-select [(value)]="task.databaseversion">
+                    <mat-option value="latest">latest</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <!-- Algorithm -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Search Algorithm</span>
+                </div>
+                <mat-select class="custom-select" [(value)]="task.algorithm"
+                            (selectionChange)="setDefaultOptionString($event, task)">
+                  <ng-container *ngFor="let dbitem of databaseOptions">
+                    <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
+                      <ng-container *ngFor="let algo of dbitem.algorithm">
+                        <mat-option [value]="algo">
+                          {{algo}}</mat-option>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </mat-select>
+              </div>
+
+              <!-- Option String -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Option String</span>
+                </div>
+                <input class="form-control" [(ngModel)]="task.optionstring">
+              </div>
+
+              <!-- E-value-->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">E-Value</span>
+                </div>
+                <input class="form-control" [(ngModel)]="task.evalue" [(value)]="task.evalue">
+                <div class="input-group-append custom-select">
+                  <mat-select [(value)]="task.evalue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <mat-divider class="mb-3"></mat-divider>
+            </ng-container>
+            <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div *ngIf="(jobCard > 0 && expertView == false) || (jobCard == 5 && expertView == true)"
+             class="card w-50 ml-job-form min-w-600">
+          <div class="card-header">
+            <h5>
+              Summary
+              <span class="card-title-button-wrapper">
+              <mat-slide-toggle color [(ngModel)]="expertView"
+                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+            </span>
+            </h5>
+          </div>
+          <div class="card-body">
+
+            <!-- Input (Summary) -->
+            <table class="table table-light table-hover">
+              <thead>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row" class="ml-summary-col">Job Label:</th>
+                <td>
+                  {{ jobLabel }}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col">Source:</th>
+                <td>
+                  {{ selectedLevel.name }}
+                </td>
+              </tr>
+              <tr>
+                <th [ngClass]="!proteinReportFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Report
+                  File:
+                </th>
+                <td [ngClass]="!proteinReportFile ? 'table-warning' : ''">
+                  {{ proteinReportFile != null ? proteinReportFile.name : 'not selected yet' }}
+                </td>
+              </tr>
+              <tr>
+                <th [ngClass]="!fastaFile ? 'table-warning' : ''" scope="row" class="ml-summary-col">Fasta File:</th>
+                <td [ngClass]="!fastaFile ? 'table-warning' : ''">
+                  {{ fastaFile != null ? fastaFile.name : 'not selected yet' }}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"
+                    [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''"
+                    class="ml-summary-col">
+                  Exclude:
+                </th>
+                <td
+                  [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''">
+                  {{ selectedContaminationOption.name + " " + contaminationLabel.valueString }}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <!-- Sample Groups (Summary) -->
+            <table *ngIf="expertView == true" class="table .table-light table-hover">
+              <thead>
+              </thead>
+              <tbody>
+              <tr *ngIf="sampleGroups.length == 0">
+                <th scope="row" class="ml-summary-col" class="ml-summary-col">Sample Groups:</th>
+                <td>
+                  not defined (expert option)
+                </td>
+              </tr>
+              <tr *ngFor="let group of sampleGroups">
+                <th scope="row" class="ml-summary-col">
+                  Sample Group:
+                </th>
+                <td>
+                  {{ group.groupname }}<br>
+                  <mat-list dense>
+                    <mat-list-item *ngFor="let member of group.groupmembersGUI"> {{ member.name }} </mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col"></th>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <!-- Quantification (Summary) -->
+            <table *ngIf="expertView == true" class="table .table-light table-hover">
+              <thead>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row" class="ml-summary-col">Quantification Method:</th>
+                <td>
+                  {{ selectedQuant.name }}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col"></th>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <!-- Taxonomic Task (Summary) -->
+            <table *ngIf="expertView == true" class="table .table-light table-hover">
+              <thead>
+              </thead>
+              <tbody>
+              <tr *ngIf="filterAnnotationTasks('Taxonomy').length == 0">
+                <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
+                <td>
+                  not defined
+                </td>
+              </tr>
+              <tr *ngFor="let task of filterAnnotationTasks('Taxonomy')">
+                <th scope="row" class="ml-summary-col">
+                  Taxonomic Annotation:
+                </th>
+                <td>
+                  {{ task.tasklabel }}<br>
+                  <mat-list dense>
+                    <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                    <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                    <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
+                    <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col"></th>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <!-- Functional Task (Summary) -->
+            <table *ngIf="expertView == true" class="table .table-light table-hover">
+              <thead>
+              </thead>
+              <tbody>
+              <tr *ngIf="filterAnnotationTasks('Function').length == 0">
+                <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
+                <td>
+                  not defined
+                </td>
+              </tr>
+              <tr *ngFor="let task of filterAnnotationTasks('Function')">
+                <th scope="row" class="ml-summary-col">
+                  Functional Annotation:
+                </th>
+                <td>
+                  {{ task.tasklabel }}<br>
+                  <mat-list dense>
+                    <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                    <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                    <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
+                    <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col"></th>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+            <button mat-raised-button color="primary"
+                    (click)="requestNewJob()" class="float-left"> Reset
+            </button>
+            <button mat-raised-button color="primary" class="float-right"
+                    [disabled]="(!proteinReportFile || !fastaFile || (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                    (click)="startButton()">Submit
+            </button>
+          </div>
+        </div>
+        <div class="w-50 mt-1 mb-5 min-w-600">
+          <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)"
+                  (click)="nextStep()" class="float-right">Next
+          </button>
+          <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
+        </div>
+      </div>
+    </div>
+  <!--</div>-->
 </div>

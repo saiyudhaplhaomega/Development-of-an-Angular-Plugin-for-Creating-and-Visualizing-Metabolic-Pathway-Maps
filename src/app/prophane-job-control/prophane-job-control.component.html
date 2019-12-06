@@ -11,19 +11,22 @@
     </tr>
     </thead>
     <tbody>
+    <tr *ngIf="jobs == undefined || jobs.length < 1">
+      <td colspan="6"><span class="align-content-center">no jobs yet</span></td>
+    </tr>
     <tr *ngFor="let job of jobs; index as i">
       <th scope="row">{{ i + 1 }}</th>
       <td>
-        {{ job.label }}
+        {{ job.parameters.jobLabel }}
       </td>
       <td>
-        {{ job.creation }}
+        {{ job.creationdate }}
       </td>
       <td>
-        {{ job.status }}
+        {{ job.statusmessage }}
       </td>
       <td>
-        <span *ngIf="job.status == 'completed'"><a href="#">download</a></span>
+        <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
       </td>
       <td>
         <button mat-flat-button color="warn" (click)="confirmDelete(i, job.label)">delete</button>

@@ -1,20 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../main/services/file-uploader.service';
 import {MatRadioChange} from '@angular/material/radio';
-import {SerializableObjectUploaderService_UNUSED} from '../old_files/serializable-object-uploader.service_UNUSED';
 import {HttpEventType} from '@angular/common/http';
 import {ProphaneAnnotationTaskObject} from './objects/prophaneannotationtaskjson';
-import {ProphaneSampleGroupJSON} from './objects/prophanesamplegroupjson';
-import {ProphaneSampleJSON} from './objects/prophanesamplejson';
+import {ProphaneSampleGroupObject} from './objects/prophanesamplegroupjson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
 import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjson';
 import {ProphaneJobObject} from './objects/prophanejobjson';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
-import {ProphaneJobStatusJSON, ProphaneJobStatusObject} from './objects/prophanejobstatusjson';
 import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -34,6 +30,7 @@ export class ProphaneComponent implements OnInit {
   jobCard: number;
   // global variable that should be able to disable the website (because no server connection or server busy)
   prophaneJobIDReady: boolean;
+  jobUnavailable = false;
 
   // prophane server job related variables
   fastaFile: File;
@@ -48,11 +45,10 @@ export class ProphaneComponent implements OnInit {
   currentProphaneJob: ProphaneJobObject;
   currentProphaneParameters: ProphaneParamObject;
 
-
   // prophane parameters related variables
   // Main options
   selectedLevel;
-  leveldata: Array<Object> = [
+  leveldata: object[] = [
     {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
     {id: 1, name: 'Scaffold', valueString: 'scaffold'},
     {id: 2, name: 'Generic Format', valueString: 'generic'},
@@ -61,7 +57,7 @@ export class ProphaneComponent implements OnInit {
   contval: string;
   contaminationLabel = {valueString: '', regex: ''};
   selectedContaminationOption;
-  contaminationdata: Object[] = [
+  contaminationdata: object[] = [
     {id: 0, name: 'accessions starting with', valueString: 'start'},
     {id: 1, name: 'accessions ending with', valueString: 'end'},
     {id: 2, name: 'accessions matching to', valueString: 'regex'},
@@ -79,7 +75,7 @@ export class ProphaneComponent implements OnInit {
   ];
 
   databaseOptions: object[] = [
-    {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog',algorithm: ['emapper']},
+    {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog', algorithm: ['emapper']},
     {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
     {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmsearch', 'hmmscan']},
     {id: 3, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
@@ -91,7 +87,7 @@ export class ProphaneComponent implements OnInit {
     {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
   ];
 
-  sampleGroups: ProphaneSampleGroupJSON[] = [];
+  sampleGroups: ProphaneSampleGroupObject[] = [];
   sampleCount = 0;
   groupCount = 0;
   taxtasks = 1;
@@ -116,19 +112,26 @@ export class ProphaneComponent implements OnInit {
   ];
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService, tooltipConfig: NgbTooltipConfig) {
-    this.prophaneJobIDReady = true;
+  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
+              tooltipConfig: NgbTooltipConfig) {
+    this.prophaneJobIDReady = false;
     this.csvProgress = 0;
     this.fastaProgress = 0;
     this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
+    this.selectedContaminationOption = this.contaminationdata[3];
     this.downloadReady = false;
     tooltipConfig.placement = 'top';
     tooltipConfig.triggers = 'hover';
   }
 
   ngOnInit(): void {
-    // TODO: deleted accidentally
+    // TODO: more inits?
     this.currentProphaneJob = new ProphaneJobObject();
+    this.jobLabel = 'Yet another Prophane job';
+    this.currentProphaneParameters = new ProphaneParamObject();
+    this.selectedLevel = this.leveldata[0];
+    this.selectedContaminationOption = this.contaminationdata[3];
+    this.selectedQuant = this.quantdata[0];
     this.requestNewJob();
   }
 
@@ -144,6 +147,7 @@ export class ProphaneComponent implements OnInit {
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
     this.currentProphaneParameters = new ProphaneParamObject();
+    this.currentProphaneParameters.jobLabel = this.jobLabel;
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
@@ -156,21 +160,28 @@ export class ProphaneComponent implements OnInit {
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
       console.log('returned object: ' + res);
       this.currentProphaneJob = res;
-      this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID.length > 0);
+      this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+      if (res.status === 'JOB_REJECTED') {
+        this.jobUnavailable = true;
+      } else {
+        this.jobUnavailable = false;
+      }
+      console.log(this.prophaneJobIDReady);
       console.log(this.currentProphaneJob);
     });
+
   }
 
   // this is the submit button
   startButton(): void {
-    console.log("start button pressed")
+    console.log('start button pressed');
     this.uploadCSV();
     this.uploadFasta();
     this.startProphaneJob();
   }
 
   uploadFasta(): void {
-    console.log("upload triggered " + this.fastaFile);
+    console.log('upload triggered ' + this.fastaFile);
     if (this.fastaFile) {
       this.uploaderService.postFile(this.fastaFile,
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
@@ -189,7 +200,7 @@ export class ProphaneComponent implements OnInit {
   }
 
   uploadCSV(): void {
-    console.log("upload triggered " + this.proteinReportFile);
+    console.log('upload triggered ' + this.proteinReportFile);
     if (this.proteinReportFile) {
       this.uploaderService.postFile(this.proteinReportFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
@@ -216,6 +227,14 @@ export class ProphaneComponent implements OnInit {
     this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
     this.currentProphaneParameters.jobLabel = this.jobLabel;
     this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
+    this.sampleGroups.forEach(sampleGroup => {
+      sampleGroup.groupmembersGUI.forEach(sample => {
+        if (this.currentProphaneParameters.searchFormat == 'scaffold') {
+          sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
+        }
+        sampleGroup.groupmembers.push(sample.name);
+      });
+    });
     this.currentProphaneParameters.sampleGroups = this.sampleGroups;
     this.currentProphaneParameters.annotationTasks = [];
     this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
@@ -224,6 +243,12 @@ export class ProphaneComponent implements OnInit {
     // reassigning the parameterobject to the jobobject (unnessecary?)
     this.currentProphaneJob.parameters = this.currentProphaneParameters;
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
+      console.log(d);
+    });
+  }
+
+  requestUserJobList(): void {
+    this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe(d => {
       console.log(d);
     });
   }
@@ -271,7 +296,7 @@ export class ProphaneComponent implements OnInit {
 
   getNewGroupItem() {
     this.groupCount++;
-    return {id: this.groupCount, groupname: 'New Group ' + this.groupCount, groupmembers: [this.getNewSample()]};
+    return {id: this.groupCount, groupname: 'New Group ' + this.groupCount, groupmembers: [], groupmembersGUI: [this.getNewSample()]};
   }
 
   addSampleGroup() {
@@ -295,8 +320,8 @@ export class ProphaneComponent implements OnInit {
   setSampleName(groupid, sampleid) {
     this.sampleGroups.forEach(function iter(group) {
       if (group.id == groupid) {
-        group.groupmembers.forEach(function iter(sample) {
-          if (sample.id == sampleid) {
+        group.groupmembersGUI.forEach(sample => {
+          if (sample.id === sampleid) {
             sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
           }
         });
@@ -305,11 +330,11 @@ export class ProphaneComponent implements OnInit {
   }
 
   addNewSample(group) {
-    group.groupmembers.push(this.getNewSample());
+    group.groupmembersGUI.push(this.getNewSample());
   }
 
   removeSample(id, group) {
-    group.groupmembers = group.groupmembers.filter(obj => obj.id !== id);
+    group.groupmembersGUI = group.groupmembersGUI.filter(obj => obj.id !== id);
   }
 
   filterAnnotationTasks(scope): any[] {

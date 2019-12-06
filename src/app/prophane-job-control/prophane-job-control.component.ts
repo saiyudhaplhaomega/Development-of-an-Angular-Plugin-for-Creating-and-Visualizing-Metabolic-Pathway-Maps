@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
+import {FileUploaderService} from '../main/services/file-uploader.service';
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
+import {ProphaneJobObject} from '../prophane/objects/prophanejobjson';
 
-interface JobDummy {
+/*interface JobDummy {
   label: string;
   creation: string;
   status: string;
   resultlink: string;
-}
+}*/
 
-const JOBS: JobDummy[] = [
+/*const JOBS: JobDummy[] = [
   {
     label: 'Mein erster Job',
     creation: "18.11.2019 13:45 MEZ",
@@ -32,7 +36,8 @@ const JOBS: JobDummy[] = [
     status: 'in queue',
     resultlink: ''
   }
-];
+];*/
+
 
 @Component({
   selector: 'app-prophane-job-control',
@@ -40,14 +45,29 @@ const JOBS: JobDummy[] = [
   styleUrls: ['./prophane-job-control.component.css']
 })
 
-export class ProphaneJobControlComponent {
+export class ProphaneJobControlComponent implements OnInit {
 
-  jobs = JOBS;
+  jobs: ProphaneJobObject[];
+
+  constructor(private jsonUpload: AuthenticatedSerializableObjectUploaderService) {
+
+  }
+
+  ngOnInit(): void {
+    this.triggerJobListLoading();
+  }
+  triggerJobListLoading(): void {
+    this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe(d => {
+      this.jobs = d;
+    });
+  }
 
   confirmDelete(jobno: number, joblabel: string) {
-    if(confirm("Are you sure to delete job #" + jobno + " (" + joblabel + ")" )) {
-      console.log("Implement delete functionality here");
+    if (confirm("Are you sure to delete job #" + jobno + " (" + joblabel + ")" )) {
+      console.log('Implement delete functionality here');
     }
   }
 
 }
+
+

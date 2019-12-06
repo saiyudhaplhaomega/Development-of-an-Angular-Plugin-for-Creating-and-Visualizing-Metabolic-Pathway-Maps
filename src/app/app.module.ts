@@ -74,6 +74,11 @@ import {NavService} from './mpa/components/data-navigation-tree/services/nav.ser
 import { ProphaneViewerComponent } from './prophane-viewer/prophane-viewer.component';
 import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './prophane-about/prophane-about.component';
+import {ModelDatabasePageComponent} from './old_files/pages_UNUSED/model-database-page/model-database-page.component';
+import {ResultTableComponent} from './mpa/components/result-table/result-table.component';
+import {NavComponent} from './old_files/nav_UNUSED/nav.component';
+import {ProteinDatabasePageComponent} from './old_files/pages_UNUSED/protein-database-page/protein-database-page.component';
+import {Neo4jGraphPageComponent} from './old_files/pages_UNUSED/neo4j-graph-page/neo4j-graph-page.component';
 /*import {MaterialModule} from './material-module';*/
 
 // Configs
@@ -101,6 +106,11 @@ export function provideConfig() {
     ProphaneViewerComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
+    ModelDatabasePageComponent,
+    ResultTableComponent,
+    NavComponent,
+    ProteinDatabasePageComponent,
+    Neo4jGraphPageComponent,
   ],
   imports: [
     BrowserModule,

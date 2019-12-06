@@ -10,7 +10,7 @@ import { AuthGuard } from '../../services/auth-guard.service';
 
 export class LoginPageComponent implements OnInit {
 
-  private user: SocialUser;
+  user: SocialUser;
 
   constructor( private authService: AuthService, private AuthGuardService: AuthGuard) {}
 
