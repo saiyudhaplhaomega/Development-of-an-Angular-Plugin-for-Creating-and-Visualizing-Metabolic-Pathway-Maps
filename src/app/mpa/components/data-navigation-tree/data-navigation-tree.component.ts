@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from './objects/tree-node';
 import { Router } from '@angular/router';
 import { NavService } from './services/nav.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-data-navigation-tree',
@@ -10,7 +12,7 @@ import { NavService } from './services/nav.service';
 })
 export class DataNavigationTreeComponent implements OnInit {
 
-  treeNodes: TreeNode[];
+  private _treeNodes: TreeNode[];
   private _expandedNodes: string[] = [];
 
   constructor(public navService: NavService, public router: Router) {
@@ -18,7 +20,7 @@ export class DataNavigationTreeComponent implements OnInit {
 
   ngOnInit() {
     this.navService.treeNodes.subscribe(nodes => {
-      this.treeNodes = nodes;
+      this._treeNodes = nodes;
     });
   }
 
@@ -30,6 +32,11 @@ export class DataNavigationTreeComponent implements OnInit {
       this._expandedNodes.push(treeNode.uuid);
     }
     this.navService.expandedNodes.next(this._expandedNodes);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+    moveItemInArray(this._treeNodes, event.previousIndex, event.currentIndex);
   }
 
 }

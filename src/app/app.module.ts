@@ -69,6 +69,8 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
 import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
 import { TreeNodeComponent } from './mpa/components/tree-node/tree-node.component';
@@ -114,6 +116,8 @@ export function provideConfig() {
     FormsModule,
     NgbModule,
     FlexLayoutModule,
+
+    DragDropModule,
 
     MatAutocompleteModule,
     MatBadgeModule,
