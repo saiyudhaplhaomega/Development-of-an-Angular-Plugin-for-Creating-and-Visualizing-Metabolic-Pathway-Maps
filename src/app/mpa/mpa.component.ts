@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DataService} from './components/data-navigation-tree/services/data.service';
-import {NavService} from './components/data-navigation-tree/services/nav.service';
-import {NavItem} from './components/data-navigation-tree/objects/nav-item';
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { NavService } from './components/data-navigation-tree/services/nav.service';
 
 @Component({
   selector: 'app-mpa',
@@ -9,30 +7,17 @@ import {NavItem} from './components/data-navigation-tree/objects/nav-item';
   styleUrls: ['./mpa.component.css']
 })
 
-export class MPAComponent implements /*AfterViewInit,*/ OnInit {
+export class MPAComponent implements AfterViewInit/*, OnInit*/ {
 /*  @ViewChild('appDrawer', {static: false}) appDrawer: ElementRef;*/
 
-  navItems: NavItem[];
+  @ViewChild('treeoutlet', {
+    read: ViewContainerRef
+  }) viewContainerRef: ViewContainerRef;
 
-  constructor(private navService: NavService, private dataService: DataService) {
+  constructor(private navService: NavService) {
   }
 
-  onCollapseAll() {
-    this.navService.toogleAllChildren.next(true);
+  ngAfterViewInit() {
+    this.navService.treeContentRef.next(this.viewContainerRef);
   }
-
-  onHideAll() {
-    this.navService.toogleAllChildren.next(false);
-  }
-
-/*  ngAfterViewInit() {
-    this.navService.appDrawer = this.appDrawer;
-  }*/
-
-  ngOnInit(): void {
-    this.dataService.NavItems.subscribe(data => {
-      this.navItems = data;
-    });
-  }
-
 }

@@ -1,61 +1,42 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { NavItem } from './objects/nav-item';
+import { Component, OnInit } from '@angular/core';
+import { TreeNode } from './objects/tree-node';
 import { Router } from '@angular/router';
 import { NavService } from './services/nav.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-data-navigation-tree',
   templateUrl: './data-navigation-tree.component.html',
-  animations: [
-    trigger('indicatorRotate', [
-      state('collapsed', style({ transform: 'rotate(0deg)' })),
-      state('expanded', style({ transform: 'rotate(180deg)' })),
-      transition('expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
-      ),
-    ])
-  ],
   styleUrls: ['./data-navigation-tree.component.css']
 })
 export class DataNavigationTreeComponent implements OnInit {
 
-  expanded: boolean;
-  @Input() item: NavItem;
-  @Input() depth: number;
+  private _treeNodes: TreeNode[];
+  private _expandedNodes: string[] = [];
 
   constructor(public navService: NavService, public router: Router) {
-    if (this.depth === undefined) {
-      this.depth = 0;
-    }
   }
 
   ngOnInit() {
-    this.navService.toogleAllChildren.subscribe(value => {
-      this.expanded = value;
-    });
-    this.navService.toogleNode.subscribe(value => {
-      if (this.item.uuid === value) {
-        if (this.item.children && this.item.children.length) {
-          this.expanded = !this.expanded;
-        }
-      }
+    this.navService.treeNodes.subscribe(nodes => {
+      this._treeNodes = nodes;
     });
   }
 
-  onExpand(event: Event, item: NavItem) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    if (item.children && item.children.length) {
-      this.expanded = !this.expanded;
+  onExpand(event, treeNode) {
+    const index = this._expandedNodes.indexOf(treeNode.uuid);
+    if (index > -1) {
+      this._expandedNodes.splice(index, 1);
+    } else {
+      this._expandedNodes.push(treeNode.uuid);
     }
+    this.navService.expandedNodes.next(this._expandedNodes);
   }
 
-  onNavigate(event: Event, item: NavItem) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    console.log(this.depth);
-    this.router.navigate([item.route, item.uuid]);
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+    moveItemInArray(this._treeNodes, event.previousIndex, event.currentIndex);
   }
 
 }

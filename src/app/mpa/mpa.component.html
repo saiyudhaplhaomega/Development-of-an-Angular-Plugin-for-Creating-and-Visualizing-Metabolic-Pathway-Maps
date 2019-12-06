@@ -2,20 +2,13 @@
 <!--ADD ROUTES/SELECTION FOR DIFFERENT ELEMENTS-->
 <!--<app-top-nav class="fixed-topnav"></app-top-nav>-->
 
-<mat-sidenav-container>
+<mat-sidenav-container id="container" fullscreen>
   <mat-sidenav #appDrawer mode="side" opened="true">
-
     <mat-nav-list>
-      <app-data-navigation-tree *ngFor="let item of navItems" [item]="item"></app-data-navigation-tree>
+      <app-data-navigation-tree></app-data-navigation-tree>
     </mat-nav-list>
-    <button mat-button (click)="onHideAll()">
-      Hide all!
-    </button>
-    <button mat-button (click)="onCollapseAll()">
-      Collapse all!
-    </button>
   </mat-sidenav>
-<!--  <router-outlet></router-outlet>-->
-  <app-database-search-page></app-database-search-page>
+  <mat-sidenav-content>
+    <ng-template #treeoutlet></ng-template>
+  </mat-sidenav-content>
 </mat-sidenav-container>
-

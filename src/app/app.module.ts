@@ -69,16 +69,17 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
 import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
+import { TreeNodeComponent } from './mpa/components/tree-node/tree-node.component';
+import { UserPageComponent } from './mpa/components/user-page/user-page.component';
+import { FolderPageComponent } from './mpa/components/folder-page/folder-page.component';
+import { ExperimentPageComponent } from './mpa/components/experiment-page/experiment-page.component';
 import { ProphaneViewerComponent } from './prophane-viewer/prophane-viewer.component';
 import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './prophane-about/prophane-about.component';
-import {ModelDatabasePageComponent} from './old_files/pages_UNUSED/model-database-page/model-database-page.component';
-import {ResultTableComponent} from './mpa/components/result-table/result-table.component';
-import {NavComponent} from './old_files/nav_UNUSED/nav.component';
-import {ProteinDatabasePageComponent} from './old_files/pages_UNUSED/protein-database-page/protein-database-page.component';
-import {Neo4jGraphPageComponent} from './old_files/pages_UNUSED/neo4j-graph-page/neo4j-graph-page.component';
 /*import {MaterialModule} from './material-module';*/
 
 // Configs
@@ -103,14 +104,13 @@ export function provideConfig() {
     LoginPageComponent,
     ProphaneComponent,
     NavigationBarComponent,
+    TreeNodeComponent,
+    UserPageComponent,
+    FolderPageComponent,
+    ExperimentPageComponent,
     ProphaneViewerComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
-    ModelDatabasePageComponent,
-    ResultTableComponent,
-    NavComponent,
-    ProteinDatabasePageComponent,
-    Neo4jGraphPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -122,6 +122,8 @@ export function provideConfig() {
     FormsModule,
     NgbModule,
     FlexLayoutModule,
+
+    DragDropModule,
 
     MatAutocompleteModule,
     MatBadgeModule,
@@ -172,6 +174,11 @@ export function provideConfig() {
     NavService,
     DataService,
     AuthGuard
+  ],
+  entryComponents: [
+    UserPageComponent,
+    FolderPageComponent,
+    ExperimentPageComponent
   ],
   bootstrap: [AppComponent]
 })

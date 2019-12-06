@@ -1,0 +1,13 @@
+<mat-form-field>
+  <input matInput type="text" placeholder="experiment name" [(ngModel)]="name">
+  <button mat-button matSuffix mat-icon-button aria-label="Accept" (click)="onAccept()">
+    <mat-icon>done</mat-icon>
+  </button>  
+  <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-tab-group>
+  <mat-tab label="Streaming"> Content 1 </mat-tab>
+  <mat-tab label="Results"> Content 3 </mat-tab>
+</mat-tab-group>

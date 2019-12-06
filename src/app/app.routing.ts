@@ -12,6 +12,7 @@ import {ProphaneJobControlComponent} from './prophane-job-control/prophane-job-c
 import {ProphaneAboutComponent} from './prophane-about/prophane-about.component';
 import {ProphaneViewerComponent} from './prophane-viewer/prophane-viewer.component';
 import {MPAComponent} from './mpa/mpa.component';
+import { UserPageComponent } from './mpa/components/user-page/user-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
