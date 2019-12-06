@@ -77,6 +77,10 @@ import { TreeNodeComponent } from './mpa/components/tree-node/tree-node.componen
 import { UserPageComponent } from './mpa/components/user-page/user-page.component';
 import { FolderPageComponent } from './mpa/components/folder-page/folder-page.component';
 import { ExperimentPageComponent } from './mpa/components/experiment-page/experiment-page.component';
+import { ProphaneViewerComponent } from './prophane-viewer/prophane-viewer.component';
+import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
+import { ProphaneAboutComponent } from './prophane-about/prophane-about.component';
+
 /*import {MaterialModule} from './material-module';*/
 
 // Configs
@@ -105,6 +109,10 @@ export function provideConfig() {
     UserPageComponent,
     FolderPageComponent,
     ExperimentPageComponent,
+    ProphaneViewerComponent,
+    ProphaneJobControlComponent,
+    ProphaneAboutComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,10 @@ import {ModelDatabasePageComponent} from './old_files/pages_UNUSED/model-databas
 import {LoginPageComponent} from './main/components/login-page/login-page.component';
 
 import {AuthGuard} from './main/services/auth-guard.service';
-import { ProphaneComponent } from './prophane/prophane.component';
+import {ProphaneComponent} from './prophane/prophane.component';
+import {ProphaneJobControlComponent} from './prophane-job-control/prophane-job-control.component';
+import {ProphaneAboutComponent} from './prophane-about/prophane-about.component';
+import {ProphaneViewerComponent} from './prophane-viewer/prophane-viewer.component';
 import {MPAComponent} from './mpa/mpa.component';
 import { UserPageComponent } from './mpa/components/user-page/user-page.component';
 
@@ -15,7 +18,11 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
-  { path: 'prophane', component: ProphaneComponent, canActivate: [AuthGuard]},
+  { path: 'prophane', component: ProphaneViewerComponent, canActivate: [AuthGuard], children: [
+    { path: '', redirectTo: '/prophane/(prophaneContent:new)', pathMatch: 'full'},
+    { path: 'new', component: ProphaneComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'},
+    { path: 'jobs', component: ProphaneJobControlComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'},
+    { path: 'about', component: ProphaneAboutComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'} ]},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
 
 /*  { path: 'home', component: HomeDashboardPageComponent},
