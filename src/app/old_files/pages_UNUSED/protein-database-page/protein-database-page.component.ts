@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {FileUploaderService} from '../../../main/services/file-uploader.service';
+import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {HttpClient} from '@angular/common/http';
-import {ProtDBJSON} from '../../../main/objects/protdbjson';
+import {ProtDBJSON} from '../../../mpa/objects/protdbjson';
 import {ProtDBContentService} from '../../services_UNUSED/protein-database.service';
 
 @Component({

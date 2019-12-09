@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { WebserveraddressService } from './webserveraddress.service';
-import {UserLogin} from '../objects/user-login';
+import {UserLogin} from '../../mpa/objects/user-login';
 import {AuthGuard} from './auth-guard.service';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class FileUploaderService {
   postFile(file: File, api: string) {
     const fd = new FormData();
     const headers = new HttpHeaders({
-      'Authorization': this.authService.getSessionID()
+      'Authorization': this.authService.getIDToken()
     })
     // TODO: this seems to be wrong, should go into header
     fd.set('Content-Type', 'multipart/form-data');

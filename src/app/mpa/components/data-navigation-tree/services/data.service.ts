@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataItem } from '../objects/data-item';
 /*import { JsonUploaderService } from './json-uploader.service';*/
-import { AuthGuard } from '../../../../main/services/auth-guard.service';
+import { AuthGuard } from '../../../../core/services/auth-guard.service';
 import { HttpHeaders } from '@angular/common/http';
-import {AuthenticatedSerializableObjectUploaderService} from '../../../../main/services/authenticated-serializable-object-uploader.service';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
 
 @Injectable({
@@ -37,7 +37,7 @@ export class DataService {
         }];
         const headers = new HttpHeaders({
               'Content-Type': 'application/json',
-              Authorization: this.authGuardService.getSessionID()});
+              Authorization: this.authGuardService.getIDToken()});
         //this.jsonUploader.postObj(newData, 'mpacloud/v1/updateuserdata').subscribe(result => {
           //if (result != null) {
             //newData = result;
@@ -64,7 +64,7 @@ export class DataService {
       if (this.authGuardService.getServerAuthState()) {
         const headers = new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: authGuardService.getSessionID()});
+        Authorization: authGuardService.getIDToken()});
         //this.jsonUploader.postObj(value, 'mpacloud/v1/updateuserdata').subscribe(result => {
           //if (result != null) {
             //value = result;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 import { AuthGuard } from '../../services/auth-guard.service';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -12,11 +13,12 @@ export class LoginPageComponent implements OnInit {
 
   user: SocialUser;
 
-  constructor( private authService: AuthService, private AuthGuardService: AuthGuard) {}
+  constructor(private authService: AuthService, private AuthGuardService: AuthGuard, private router: Router) {}
 
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    console.log('Signing in?');
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(_ => {
+      this.router.navigateByUrl('/prophane'); }
+    );
   }
 
   signOut(): void {

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {Neo4jJSON} from '../../../main/objects/neo4jjson';
+import {Neo4jJSON} from '../../../mpa/objects/neo4jjson';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {WebserveraddressService} from '../../../main/services/webserveraddress.service';
+import {WebserveraddressService} from '../../../core/services/webserveraddress.service';
 
 const httpOptions = {
   headers: new HttpHeaders({

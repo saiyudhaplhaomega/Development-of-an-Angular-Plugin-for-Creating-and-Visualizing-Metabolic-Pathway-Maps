@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {WebserveraddressService} from '../../main/services/webserveraddress.service';
+import {WebserveraddressService} from '../../core/services/webserveraddress.service';
 
 /*const thumbnailFetchUrl = WebserveraddressService.getwebserverurl() + 'mpacloud/v1/downloadtestLALA';*/
 const headers = new HttpHeaders({

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Neo4jJSON} from '../../main/objects/neo4jjson';
-import {WebserveraddressService} from '../../main/services/webserveraddress.service';
+import {Neo4jJSON} from '../../mpa/objects/neo4jjson';
+import {WebserveraddressService} from '../../core/services/webserveraddress.service';
 
 @Injectable()
 export class Neo4jhttprequestsService {

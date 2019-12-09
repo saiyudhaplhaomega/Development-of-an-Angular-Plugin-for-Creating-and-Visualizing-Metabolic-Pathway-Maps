@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ModelJSON} from '../../main/objects/modeljson';
-import {WebserveraddressService} from '../../main/services/webserveraddress.service';
+import {ModelJSON} from '../../mpa/objects/modeljson';
+import {WebserveraddressService} from '../../core/services/webserveraddress.service';
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { WebserveraddressService } from '../main/services/webserveraddress.service';
+import { WebserveraddressService } from '../core/services/webserveraddress.service';
 import { Observable } from 'rxjs';
 
 const httpOptions = {

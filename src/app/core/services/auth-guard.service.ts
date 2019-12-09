@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import { SocialUser } from 'angularx-social-login';
-import { UserLogin } from '../objects/user-login';
+import { UserLogin } from '../../mpa/objects/user-login';
 import { SerializableObjectUploaderService_UNUSED } from 'src/app/old_files/serializable-object-uploader.service_UNUSED';
 
 @Injectable()
@@ -40,6 +40,9 @@ export class AuthGuard implements CanActivate {
       this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
         this.setAuthState(res != null);
         this._serverUser = res;
+        // if (this._authState) {
+        //   this._router.navigateByUrl('/prophane');
+        // }
       });
     }
   }
@@ -52,7 +55,7 @@ export class AuthGuard implements CanActivate {
     this._authState = authState;
   }
 
-  getSessionID(): string {
+  getIDToken(): string {
     return this._serverUser.idToken;
   }
 
@@ -63,5 +66,6 @@ export class AuthGuard implements CanActivate {
   getAuthState(): boolean {
     return this._authState;
   }
+
 
 }

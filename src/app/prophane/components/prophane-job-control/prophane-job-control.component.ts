@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
-import {FileUploaderService} from '../main/services/file-uploader.service';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
+import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
-import {ProphaneJobObject} from '../prophane/objects/prophanejobjson';
+import {ProphaneJobObject} from '../../objects/prophanejobjson';
 
 /*interface JobDummy {
   label: string;
@@ -63,7 +63,7 @@ export class ProphaneJobControlComponent implements OnInit {
   }
 
   confirmDelete(jobno: number, joblabel: string) {
-    if (confirm("Are you sure to delete job #" + jobno + " (" + joblabel + ")" )) {
+    if (confirm('Are you sure to delete job #' + jobno + ' (' + joblabel + ')' )) {
       console.log('Implement delete functionality here');
     }
   }
