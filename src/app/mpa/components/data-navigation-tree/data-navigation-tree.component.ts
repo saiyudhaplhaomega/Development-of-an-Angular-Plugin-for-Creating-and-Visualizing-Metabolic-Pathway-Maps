@@ -12,7 +12,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class DataNavigationTreeComponent implements OnInit {
 
-  private _treeNodes: TreeNode[];
+  _treeNodes: TreeNode[];
   private _expandedNodes: string[] = [];
 
   constructor(public navService: NavService, public router: Router) {

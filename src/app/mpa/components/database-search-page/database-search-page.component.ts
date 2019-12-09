@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DbsearchcontentService} from './services/dbsearchcontent.service';
-import {StreamJSON} from '../../../main/objects/streamjson';
-import {ExperimentJSON} from '../../../main/objects/experimentjson';
+import {StreamJSON} from '../../objects/streamjson';
+import {ExperimentJSON} from '../../objects/experimentjson';
 
 @Component({
   selector: 'app-database-search-page',

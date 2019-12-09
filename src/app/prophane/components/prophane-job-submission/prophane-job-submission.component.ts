@@ -1,26 +1,27 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FileUploaderService} from '../main/services/file-uploader.service';
+import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {MatRadioChange} from '@angular/material/radio';
 import {HttpEventType} from '@angular/common/http';
-import {ProphaneAnnotationTaskObject} from './objects/prophaneannotationtaskjson';
-import {ProphaneSampleGroupObject} from './objects/prophanesamplegroupjson';
+import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
+import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
-import {ProphaneParamObject, ProphaneParamJSON} from './objects/prophaneparamjson';
-import {ProphaneJobObject} from './objects/prophanejobjson';
+import {ProphaneParamObject, ProphaneParamJSON} from '../../objects/prophaneparamjson';
+import {ProphaneJobObject} from '../../objects/prophanejobjson';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
-import {AuthenticatedSerializableObjectUploaderService} from '../main/services/authenticated-serializable-object-uploader.service';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-prophane-job-page',
-  templateUrl: './prophane.component.html',
-  styleUrls: ['./prophane.component.css'],
+  templateUrl: './prophane-job-submission.component.html',
+  styleUrls: ['./prophane-job-submission.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [NgbTooltipConfig]
 })
 
-export class ProphaneComponent implements OnInit {
+export class ProphaneJobSubmissionComponent implements OnInit {
 
   // Website related variables
 
@@ -113,11 +114,11 @@ export class ProphaneComponent implements OnInit {
 
   // constructor and init
   constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig) {
+              tooltipConfig: NgbTooltipConfig, private router: Router ) {
     this.prophaneJobIDReady = false;
     this.csvProgress = 0;
     this.fastaProgress = 0;
-    this.fileUrl = 'http://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
+    this.fileUrl = 'https://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.selectedContaminationOption = this.contaminationdata[3];
     this.downloadReady = false;
     tooltipConfig.placement = 'top';
@@ -178,6 +179,8 @@ export class ProphaneComponent implements OnInit {
     this.uploadCSV();
     this.uploadFasta();
     this.startProphaneJob();
+    // TODO: add redirect to Job Control
+    this.router.navigateByUrl('jobs');
   }
 
   uploadFasta(): void {

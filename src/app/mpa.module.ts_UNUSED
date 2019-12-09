@@ -18,7 +18,7 @@ import {ModelDatabasePageComponent} from './old_files/pages_UNUSED/model-databas
 import {LoginPageComponent} from './main/components/login-page/login-page.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ProphaneComponent } from './prophane/prophane.component';
+import { ProphaneJobSubmissionComponent } from './prophane/prophane.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProteinDatabasePageComponent,
     ModelDatabasePageComponent,
     LoginPageComponent,
-    ProphaneComponent,
+    ProphaneJobSubmissionComponent,
   ],
   imports: [
     CommonModule,

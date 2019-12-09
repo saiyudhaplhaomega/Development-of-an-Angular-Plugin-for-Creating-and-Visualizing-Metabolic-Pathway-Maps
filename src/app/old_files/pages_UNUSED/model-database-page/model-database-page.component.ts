@@ -4,8 +4,8 @@ import {ModelDownloaderService} from '../../services_UNUSED/modeldownloader.serv
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {ModelContentService} from '../../services_UNUSED/modelcontent.service';
-import {ModelJSON} from '../../../main/objects/modeljson';
-import {ModelJobObject} from '../../../main/objects/modeljobjson';
+import {ModelJSON} from '../../../mpa/objects/modeljson';
+import {ModelJobObject} from '../../../mpa/objects/modeljobjson';
 
 @Component({
   selector: 'app-model-database-page',
