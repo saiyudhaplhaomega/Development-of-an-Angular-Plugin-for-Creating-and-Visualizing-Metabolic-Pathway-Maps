@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataItem } from '../objects/data-item';
-/*import { JsonUploaderService } from './json-uploader.service';*/
-import { AuthGuard } from '../../../../core/services/auth-guard.service';
-import { HttpHeaders } from '@angular/common/http';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
 import { AuthService } from 'angularx-social-login';
-import { NavService } from './nav.service';
 
 @Injectable({
   providedIn: 'root'

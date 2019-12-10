@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DataItem } from '../data-navigation-tree/objects/data-item';
+import { Component } from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
-import v1 from 'uuid/v1';
 
 @Component({
   selector: 'app-user-page',

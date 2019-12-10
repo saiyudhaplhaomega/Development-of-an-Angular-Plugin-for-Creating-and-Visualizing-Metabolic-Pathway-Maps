@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TreeNode } from '../data-navigation-tree/objects/tree-node';
 import { NavService } from '../data-navigation-tree/services/nav.service';
