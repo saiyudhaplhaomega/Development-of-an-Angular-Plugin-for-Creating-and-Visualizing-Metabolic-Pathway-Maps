@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
-import v1 from 'uuid/v1';
 import { MatSnackBar } from '@angular/material';
 
 @Component({

@@ -7,6 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
 import { AuthService } from 'angularx-social-login';
+import { NavService } from './nav.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +26,12 @@ export class DataService {
     ]
   );
 
+  public dataChange = new BehaviorSubject<String>(undefined);
+
   private _dataItems: DataItem[];
 
-  constructor(private authService: AuthService, private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
+  constructor(private authService: AuthService,
+    private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
     this.authService.authState.subscribe(user => {
       console.log(user);
       if (user !== null && user !== undefined) {
@@ -96,6 +100,7 @@ export class DataService {
     this._dataItems.push(newExperiment);
     console.log(this._dataItems);
     this.updateDataItems();
+    this.dataChange.next('addExperiment');
   }
 
   addFolder(parentUuid: string) {
@@ -117,6 +122,7 @@ export class DataService {
     this._dataItems.push(newFolder);
     console.log(this._dataItems);
     this.updateDataItems();
+    this.dataChange.next('addFolder');
   }
 
   removeFolder(folderUuid: string) {
@@ -143,6 +149,7 @@ export class DataService {
     });
     this._dataItems.splice(this._dataItems.indexOf(deletedItem), 1);
     this.updateDataItems();
+    this.dataChange.next('removeFolder');
   }
 
   private updateDataItems() {

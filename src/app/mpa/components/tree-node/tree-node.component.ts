@@ -2,15 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ComponentFactoryResolve
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TreeNode } from '../data-navigation-tree/objects/tree-node';
 import { NavService } from '../data-navigation-tree/services/nav.service';
-import { UserPageComponent } from '../user-page/user-page.component';
-import { DatabaseSearchPageComponent } from '../database-search-page/database-search-page.component';
-import { FolderPageComponent } from '../folder-page/folder-page.component';
-import { ExperimentPageComponent } from '../experiment-page/experiment-page.component';
-
-export interface ContentComponent {
-  uuid: string;
-  name: string;
-}
 
 @Component({
   selector: 'app-tree-node',
@@ -26,23 +17,14 @@ export interface ContentComponent {
   ],
   styleUrls: ['./tree-node.component.css']
 })
-export class TreeNodeComponent implements OnInit {
+export class TreeNodeComponent {
 
   @Input() node: TreeNode;
 
   @Output() expandChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private contentRef: ViewContainerRef;
-
   constructor(
-    private navService: NavService,
-    private resolver: ComponentFactoryResolver) { }
-
-  ngOnInit() {
-    this.navService.treeContentRef.subscribe(ref => {
-      this.contentRef = ref;
-    });
-  }
+    private navService: NavService) { }
 
   onExpand() {
     this.node.expanded = !this.node.expanded;
@@ -50,30 +32,6 @@ export class TreeNodeComponent implements OnInit {
   }
 
   onNavigate() {
-    this.contentRef.clear();
-    // Resolve a factory
-    let componentFactory;
-    switch (this.node.type) {
-      case 'user': {
-        componentFactory = this.resolver.resolveComponentFactory(UserPageComponent);
-        break;
-      }
-      case 'folder': {
-        console.log('folder');
-        componentFactory = this.resolver.resolveComponentFactory(FolderPageComponent);
-        break;
-      }
-      case 'experiment': {
-        componentFactory = this.resolver.resolveComponentFactory(ExperimentPageComponent);
-        break;
-      }
-      default: {
-        componentFactory = this.resolver.resolveComponentFactory(DatabaseSearchPageComponent);
-      }
-    }
-    // Create a component
-    const componentRef = this.contentRef.createComponent(componentFactory);
-    (<ContentComponent>componentRef.instance).uuid = this.node.uuid;
-    (<ContentComponent>componentRef.instance).name = this.node.displayName;
+    this.navService.navigateOutlet(this.node.displayName, this.node.uuid, this.node.type);
   }
 }
