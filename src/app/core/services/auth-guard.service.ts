@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route } from '@angular/router';
-import {BehaviorSubject, Observable} from 'rxjs';
-
-import { SocialUser } from 'angularx-social-login';
-import { UserLogin } from '../../mpa/objects/user-login';
-import { SerializableObjectUploaderService_UNUSED } from 'src/app/old_files/serializable-object-uploader.service_UNUSED';
+import { Injectable, OnInit } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SocialUser, AuthService } from 'angularx-social-login';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  public user = new BehaviorSubject<SocialUser>(undefined);
-  private _serverUser: UserLogin;
-  private _authState = false;
+  private _user: SocialUser;
 
-  constructor(private jsonUploader: SerializableObjectUploaderService_UNUSED, private _router: Router) {
+  constructor(private authService: AuthService, private _router: Router) {
+    this.authService.authState.subscribe((user) => {
+      console.log(user);
+      this._user = user;
+    });
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(this.getAuthState());
-    if (this.getAuthState()) {
+  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    console.log(this._user);
+    if (this._user) {
         return true;
     }
 
@@ -28,44 +27,12 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-  setUser(user: SocialUser) {
-    console.log('set user');
-    this.user.next(user);
-
-    this._serverUser = new UserLogin();
-    this._serverUser.idToken = user.idToken;
-    this._serverUser.provider = 'google';
-
-    if (user != null) {
-      this.jsonUploader.postObj(this._serverUser, 'mpacloud/v1/login').subscribe(res => {
-        this.setAuthState(res != null);
-        this._serverUser = res;
-        // if (this._authState) {
-        //   this._router.navigateByUrl('/prophane');
-        // }
-      });
-    }
+  getIDToken() {
+    return this._user.authToken;
   }
 
-/*  getUser(): SocialUser {
-    return this.user;
-  }*/
-
-  private setAuthState(authState: boolean) {
-    this._authState = authState;
+  getUser() {
+    return this._user;
   }
-
-  getIDToken(): string {
-    return this._serverUser.idToken;
-  }
-
-  getServerAuthState(): boolean {
-    return (this._serverUser !== undefined && this._serverUser != null);
-  }
-
-  getAuthState(): boolean {
-    return this._authState;
-  }
-
 
 }

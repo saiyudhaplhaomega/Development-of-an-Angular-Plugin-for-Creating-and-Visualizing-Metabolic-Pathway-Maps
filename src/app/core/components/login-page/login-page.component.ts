@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { AuthGuard } from '../../services/auth-guard.service';
 import {Router} from '@angular/router';
 @Component({
   selector: 'app-login-page',
@@ -13,7 +12,7 @@ export class LoginPageComponent implements OnInit {
 
   user: SocialUser;
 
-  constructor(private authService: AuthService, private AuthGuardService: AuthGuard, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(_ => {
@@ -29,9 +28,6 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      if (user !== undefined) {
-        this.AuthGuardService.setUser(user);
-      }
     });
   }
 

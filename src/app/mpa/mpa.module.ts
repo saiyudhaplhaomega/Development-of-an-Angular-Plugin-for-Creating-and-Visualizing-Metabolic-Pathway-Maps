@@ -14,6 +14,7 @@ import {MPAComponent} from './mpa.component';
 import {LoginPageComponent} from '../core/components/login-page/login-page.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
+import { SocialLoginModule } from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {FormsModule} from '@angular/forms';
     DragDropModule,
     FlexLayoutModule,
     FormsModule,
+    SocialLoginModule,
     // material module last
     MaterialModule,
   ],
