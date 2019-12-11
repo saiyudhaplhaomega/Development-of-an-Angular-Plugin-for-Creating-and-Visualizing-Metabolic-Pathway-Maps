@@ -151,4 +151,49 @@ export class DataService {
   private updateDataItems() {
     this.dataItems.next(this._dataItems);
   }
+
+  moveDataItem(newParentID: string, movedUUID: string) {
+    // check if the newparentid is the child of the current movedid
+    // TODO cleanup
+    let family = [];
+    this._dataItems.forEach( item => {
+      if (item.uuid === movedUUID) {
+        let children = item.children;
+        let newchildren = [];
+        console.log(item.displayName);
+        while (children.length > 0) {
+          console.log("doing it");
+          this._dataItems.forEach( child_item => {
+            if (children.indexOf(child_item.uuid) > -1) {
+              newchildren = newchildren.concat(child_item.children);
+            }
+          });
+          family = family.concat(children);
+          children = newchildren;
+          newchildren = [];
+        }
+      }
+    });
+    console.log(family);
+    if (family.indexOf(newParentID) > - 1) {
+      console.log("oh nooooooasfdsafdsa")
+      return;
+    }
+    // normal move
+    let oldParent = '';
+    this._dataItems.forEach( item => {
+      if (item.uuid === newParentID) {
+        item.children.push(movedUUID);
+      } else if (item.uuid === movedUUID) {
+        oldParent = item.parent;
+        item.parent = newParentID;
+      }
+    });
+    this._dataItems.forEach( item => {
+      if (item.uuid === oldParent) {
+        item.children.splice(item.children.indexOf(movedUUID), 1);
+      }
+    });
+    this.updateDataItems();
+  }
 }
