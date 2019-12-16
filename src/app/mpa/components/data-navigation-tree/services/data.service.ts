@@ -10,7 +10,7 @@ import { AuthService } from 'angularx-social-login';
 })
 export class DataService {
 
-  public dataItems = new BehaviorSubject<DataItem[]>(
+ /* public dataItems = new BehaviorSubject<DataItem[]>(
     [
       {
         displayName: 'unknown user',
@@ -20,24 +20,27 @@ export class DataService {
         type: 'user'
       }
     ]
-  );
+  ); */
 
+  public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   public dataChange = new BehaviorSubject<String>(undefined);
-
-  private _dataItems: DataItem[];
+ // private _dataItems: DataItem[];
+  private _dataItemMap: Map<string, DataItem>;
 
   constructor(private authService: AuthService,
     private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
     this.authService.authState.subscribe(user => {
       console.log(user);
       if (user !== null && user !== undefined) {
-        const newData = [{
+        const key = v1();
+        const newMap = new Map();
+        newMap.set(key, {
           displayName: user.name,
           icon: 'account_circle',
           children: [],
-          uuid: v1(),
+          uuid: key,
           type: 'user',
-        }];
+        });
         //const headers = new HttpHeaders({
           //    'Content-Type': 'application/json',
             //  Authorization: this.authService.getIDToken()});
@@ -46,25 +49,24 @@ export class DataService {
             //newData = result;
             //this.dataItems.next(newData);
           //} else {
-            this.dataItems.next(newData);
+            this.dataMap.next(newMap);
           //}
         //});
       } else {
-        this.dataItems.next(
-          [
-            {
-              displayName: 'no user',
-              icon: 'account_circle',
-              children: [],
-              uuid: v1(),
-              type: 'user'
-            }
-          ]
-        );
+        const key = v1();
+        const newMap = new Map();
+        newMap.set(key, {
+          displayName: 'no user',
+          icon: 'account_circle',
+          children: [],
+          uuid: key,
+          type: 'user'
+        });
+        this.dataMap.next(newMap);
       }
     });
-    this.dataItems.subscribe(value => {
-      this._dataItems = value;
+    this.dataMap.subscribe(value => {
+      this._dataItemMap = value;
     //  if (this.authGuardService.getServerAuthState()) {
       //  const headers = new HttpHeaders({
        // 'Content-Type': 'application/json',
@@ -88,13 +90,13 @@ export class DataService {
       type: 'experiment',
       parent: parentUuid,
     };
-    this._dataItems.forEach( item => {
-      if (item.uuid === parentUuid) {
-        item.children.push(newExperimentUUID);
-      }
-    });
-    this._dataItems.push(newExperiment);
-    console.log(this._dataItems);
+
+    const item = this._dataItemMap.get(parentUuid);
+    item.children.push(newExperimentUUID);
+    this._dataItemMap.set(parentUuid, item);
+
+    this._dataItemMap.set(newExperimentUUID, newExperiment);
+    console.log(this._dataItemMap);
     this.updateDataItems();
     this.dataChange.next('addExperiment');
   }
@@ -109,14 +111,12 @@ export class DataService {
       type: 'folder',
       parent: parentUuid,
     };
-    this._dataItems.forEach( item => {
-      if (item.uuid === parentUuid) {
-        item.children.push(newFolderUUID);
-        return;
-      }
-    });
-    this._dataItems.push(newFolder);
-    console.log(this._dataItems);
+    const item = this._dataItemMap.get(parentUuid);
+    item.children.push(newFolderUUID);
+    this._dataItemMap.set(parentUuid, item);
+
+    this._dataItemMap.set(newFolderUUID, newFolder);
+    console.log(this._dataItemMap);
     this.updateDataItems();
     this.dataChange.next('addFolder');
   }
@@ -126,74 +126,70 @@ export class DataService {
     let children = [];
     let deletedItem;
 
-    this._dataItems.forEach( item => {
-      if (item.uuid === folderUuid) {
-        children = item.children;
-        parent = item.parent;
-        deletedItem = item;
-        return;
+    const item = this._dataItemMap.get(folderUuid);
+    children = item.children;
+    parent = item.parent;
+
+    const parentItem = this._dataItemMap.get(parent);
+    parentItem.children.splice(parentItem.children.indexOf(folderUuid), 1);
+    parentItem.children = parentItem.children.concat(children);
+
+    children.forEach(item => {
+      const childItem = this._dataItemMap.get(item);
+      if (childItem) {
+        childItem.parent = parent;
+        this._dataItemMap.set(item, childItem);
       }
     });
 
-    this._dataItems.forEach( item => {
-      if (item.uuid === parent) {
-        item.children.splice(item.children.indexOf(folderUuid), 1);
-        item.children = item.children.concat(children);
-      } else if (children.indexOf(item.uuid) > -1) {
-        item.parent = parent;
-      }
-    });
-    this._dataItems.splice(this._dataItems.indexOf(deletedItem), 1);
+    this._dataItemMap.delete(folderUuid);
     this.updateDataItems();
     this.dataChange.next('removeFolder');
   }
 
   private updateDataItems() {
-    this.dataItems.next(this._dataItems);
+    this.dataMap.next(this._dataItemMap);
   }
 
   moveDataItem(newParentID: string, movedUUID: string) {
     // check if the newparentid is the child of the current movedid
     // TODO cleanup
     let family = [];
-    this._dataItems.forEach( item => {
-      if (item.uuid === movedUUID) {
-        let children = item.children;
-        let newchildren = [];
-        console.log(item.displayName);
-        while (children.length > 0) {
-          console.log("doing it");
-          this._dataItems.forEach( child_item => {
-            if (children.indexOf(child_item.uuid) > -1) {
-              newchildren = newchildren.concat(child_item.children);
-            }
-          });
-          family = family.concat(children);
-          children = newchildren;
-          newchildren = [];
+    const item = this._dataItemMap.get(movedUUID);
+    let children = item.children;
+    let newchildren = [];
+    console.log(item.displayName);
+    while (children.length > 0) {
+      for (const child_item of this._dataItemMap.values()) {
+        if (children.indexOf(child_item.uuid) > -1) {
+          newchildren = newchildren.concat(child_item.children);
         }
       }
-    });
+      family = family.concat(children);
+      children = newchildren;
+      newchildren = [];
+    }
+
     console.log(family);
     if (family.indexOf(newParentID) > - 1) {
-      console.log("oh nooooooasfdsafdsa")
       return;
     }
+
+    const parentItem = this._dataItemMap.get(newParentID);
+    parentItem.children.push(movedUUID);
+    this._dataItemMap.set(newParentID, parentItem);
+
+    const movedItem = this._dataItemMap.get(movedUUID);
+    const oldParentID = movedItem.parent;
+    movedItem.parent = newParentID;
+    parentItem.children.push(movedUUID);
+    this._dataItemMap.set(newParentID, parentItem);
+
+    const oldParentItem = this._dataItemMap.get(oldParentID);
+    oldParentItem.children.splice(oldParentItem.children.indexOf(movedUUID), 1);
+    this._dataItemMap.set(oldParentID, oldParentItem);
+
     // normal move
-    let oldParent = '';
-    this._dataItems.forEach( item => {
-      if (item.uuid === newParentID) {
-        item.children.push(movedUUID);
-      } else if (item.uuid === movedUUID) {
-        oldParent = item.parent;
-        item.parent = newParentID;
-      }
-    });
-    this._dataItems.forEach( item => {
-      if (item.uuid === oldParent) {
-        item.children.splice(item.children.indexOf(movedUUID), 1);
-      }
-    });
     this.updateDataItems();
   }
 }

@@ -14,13 +14,13 @@ export class ExperimentPageComponent implements OnInit {
   uuid: string;
   name: string;
 
-  private _dataItems: DataItem[];
+  private _dataMap: Map<string, DataItem>;
 
   constructor(private _snackBar: MatSnackBar, private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.dataItems.subscribe( items => {
-      this._dataItems = items;
+    this.dataService.dataMap.subscribe( items => {
+      this._dataMap = items;
     });
   }
 
@@ -31,14 +31,10 @@ export class ExperimentPageComponent implements OnInit {
     } else if (this.name.length <= 0) {
       this._snackBar.open('Empty names are not allowed!');
     } else {
-      this._dataItems.forEach( item => {
-        if (item.uuid === this.uuid) {
-          item.displayName = this.name;
-          console.log(this.name);
-          return;
-        }
-      });
-      this.dataService.dataItems.next(this._dataItems);
+      const item = this._dataMap.get(this.uuid);
+      item.displayName = this.name;
+      this._dataMap.set(this.uuid, item);
+      this.dataService.dataMap.next(this._dataMap);
     }
   }
 

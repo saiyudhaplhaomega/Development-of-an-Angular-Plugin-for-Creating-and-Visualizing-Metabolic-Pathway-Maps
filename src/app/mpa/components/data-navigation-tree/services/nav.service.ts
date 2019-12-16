@@ -24,7 +24,7 @@ export class NavService {
   public treeNodes = new BehaviorSubject<TreeNode[]>(undefined);
   public expandedNodes = new BehaviorSubject<string[]>(undefined);
 
-  private _dataItems: DataItem[];
+  private _dataMap: Map<string, DataItem>;
   private _expandedNodes: string[] = [];
 
   constructor(private router: Router,
@@ -35,16 +35,16 @@ export class NavService {
         this.currentUrl.next(event.urlAfterRedirects);
       }
     });
-    this.dataService.dataItems.subscribe(items => {
+    this.dataService.dataMap.subscribe(items => {
       if (items) {
-        this._dataItems = items;
+        this._dataMap = items;
         this.treeNodes.next(this.processData(items, this._expandedNodes));
       }
     });
     this.expandedNodes.subscribe(expandedNodes => {
       if (expandedNodes) {
         this._expandedNodes = expandedNodes;
-        this.treeNodes.next(this.processData(this._dataItems, expandedNodes));
+        this.treeNodes.next(this.processData(this._dataMap, expandedNodes));
       }
     });
     this.treeContentRef.subscribe((val) => {
@@ -57,14 +57,14 @@ export class NavService {
     });
   }
 
-  private processData(data: DataItem[], expandedNodes: string[]) {
+  private processData(data: Map<string, DataItem>, expandedNodes: string[]) {
     let tree: TreeNode[] = new Array();
     let processedUUID = new Map();
 
-    console.log(this._dataItems);
+    console.log(this._dataMap.size);
 
-    while (processedUUID.size < this._dataItems.length) {
-      this._dataItems.forEach( item => {
+    while (processedUUID.size < this._dataMap.size) {
+      for (const item of this._dataMap.values()) {
         if (!processedUUID.has(item.uuid)) {
           if (!item.parent) {
             // No Parent
@@ -109,7 +109,7 @@ export class NavService {
             processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
           }
         }
-      });
+      }
       }
     return tree;
   }

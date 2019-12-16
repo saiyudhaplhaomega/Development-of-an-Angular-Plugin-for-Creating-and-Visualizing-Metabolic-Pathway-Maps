@@ -1,4 +1,3 @@
-<button mat-button>Reset</button>
 <div cdkDropList (cdkDropListDropped)="drop($event)">
   <div *ngFor='let item of _treeNodes' cdkDrag>
     <app-tree-node (expandChange)="onExpand($event, item)" [node]='item'></app-tree-node>
