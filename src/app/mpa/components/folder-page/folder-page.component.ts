@@ -48,7 +48,10 @@ export class FolderPageComponent implements OnInit {
   }
 
   onRemoveFolder() {
-    this.dataService.removeFolder(this.uuid);
+    const snackBarRef = this._snackBar.open('Delete folder', 'Confirm', {duration: 5000});
+    snackBarRef.onAction().subscribe(() => {
+      this.dataService.removeFolder(this.uuid);
+    });
   }
 
 }

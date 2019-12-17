@@ -116,33 +116,36 @@ export class DataService {
     this._dataItemMap.set(parentUuid, item);
 
     this._dataItemMap.set(newFolderUUID, newFolder);
-    console.log(this._dataItemMap);
     this.updateDataItems();
     this.dataChange.next('addFolder');
   }
 
   removeFolder(folderUuid: string) {
-    let parent = '';
-    let children = [];
-    let deletedItem;
-
     const item = this._dataItemMap.get(folderUuid);
-    children = item.children;
-    parent = item.parent;
+    const parent = item.parent;
 
     const parentItem = this._dataItemMap.get(parent);
     parentItem.children.splice(parentItem.children.indexOf(folderUuid), 1);
-    parentItem.children = parentItem.children.concat(children);
 
-    children.forEach(item => {
-      const childItem = this._dataItemMap.get(item);
-      if (childItem) {
-        childItem.parent = parent;
-        this._dataItemMap.set(item, childItem);
+    let children = item.children;
+    let newchildren = [];
+    let family = [folderUuid];
+    while (children.length > 0) {
+      for (const child_item of this._dataItemMap.values()) {
+        if (children.indexOf(child_item.uuid) > -1) {
+          newchildren = newchildren.concat(child_item.children);
+        }
       }
+      family = family.concat(children);
+      children = newchildren;
+      newchildren = [];
+    }
+
+    family.forEach(id => {
+      this._dataItemMap.delete(id);
     });
 
-    this._dataItemMap.delete(folderUuid);
+    console.log(family);
     this.updateDataItems();
     this.dataChange.next('removeFolder');
   }
@@ -158,7 +161,6 @@ export class DataService {
     const item = this._dataItemMap.get(movedUUID);
     let children = item.children;
     let newchildren = [];
-    console.log(item.displayName);
     while (children.length > 0) {
       for (const child_item of this._dataItemMap.values()) {
         if (children.indexOf(child_item.uuid) > -1) {
@@ -182,8 +184,7 @@ export class DataService {
     const movedItem = this._dataItemMap.get(movedUUID);
     const oldParentID = movedItem.parent;
     movedItem.parent = newParentID;
-    parentItem.children.push(movedUUID);
-    this._dataItemMap.set(newParentID, parentItem);
+    this._dataItemMap.set(movedUUID, movedItem);
 
     const oldParentItem = this._dataItemMap.get(oldParentID);
     oldParentItem.children.splice(oldParentItem.children.indexOf(movedUUID), 1);
