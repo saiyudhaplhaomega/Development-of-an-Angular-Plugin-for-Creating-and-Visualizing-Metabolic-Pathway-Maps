@@ -13,6 +13,9 @@ import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {Router} from '@angular/router';
 
+
+import * as Formdata from './prophane-job-submission-formdata';
+
 @Component({
   selector: 'app-prophane-job-page',
   templateUrl: './prophane-job-submission.component.html',
@@ -23,41 +26,40 @@ import {Router} from '@angular/router';
 
 export class ProphaneJobSubmissionComponent implements OnInit {
 
-  // Website related variables
+  reportStyles = Formdata.ProphaneReportStyles;
 
-  // TODO: is this obsolete?
-  statusDisplayString = 'No Job Pending';
+  // Website related variables
   expertView = false;
   jobCard: number;
+  currentProphaneJob: ProphaneJobObject;
+  // TODO: better solution for this
+  jobUnavailableMessage = 'No connection to server or queue full';
   // global variable that should be able to disable the website (because no server connection or server busy)
-  prophaneJobIDReady: boolean;
+  // TODO: two variables doing the same thing?
+  prophaneJobIDReady = false;
   jobUnavailable = false;
-
-  // prophane server job related variables
+  // TODO: is this necessary? is there really a distinction between file and string here?
   fastaFile: File;
   proteinReportFile: File;
+  // TODO: progress bars are currently unused, but all the code is there
   csvProgress: number;
   fastaProgress: number;
-  // TODO: is this necessary?
-  fileUrl: string;
-  downloadReady: boolean;
-  // TODO: is this necessary?
-  prophaneResult: string;
-  currentProphaneJob: ProphaneJobObject;
-  currentProphaneParameters: ProphaneParamObject;
+
+  // prophane server job related variables
 
   // prophane parameters related variables
   // Main options
-  selectedLevel;
-  leveldata: object[] = [
-    {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
-    {id: 1, name: 'Scaffold', valueString: 'scaffold'},
-    {id: 2, name: 'Generic Format', valueString: 'generic'},
-    // {id: 3, name: 'Proteome Discoverer'}
-  ];
+  // TODO: job object
+  //selectedLevel;
+
+  // TODO: form options should be unified and simplified
+  // +----
+  // TODO: all 3 --> job object
   contval: string;
   contaminationLabel = {valueString: '', regex: ''};
   selectedContaminationOption;
+
+  // TODO: form options should be unified and simplified
   contaminationdata: object[] = [
     {id: 0, name: 'accessions starting with', valueString: 'start'},
     {id: 1, name: 'accessions ending with', valueString: 'end'},
@@ -66,8 +68,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   ];
 
   // Advanced Options
+  // TODO: check if we can get around these counters ...
+  sampleCount = 0;
+  groupCount = 0;
+  taxtasks = 1;
+  functasks = 1;
+  taskCounter = 3;
+
+  // TODO: both --> job object
   jobLabel: string;
   selectedQuant;
+
+  // TODO: form options should be unified and simplified
   quantdata: object[] = [
     {id: 0, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
     {id: 1, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
@@ -75,6 +87,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     {id: 3, name: 'Raw value (no normalization)', valueString: 'raw'},
   ];
 
+  // TODO: form options should be unified and simplified
   databaseOptions: object[] = [
     {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog', algorithm: ['emapper']},
     {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
@@ -87,25 +100,123 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
     {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
   ];
+// TODO: move into job object, new class required
 
+  selectedOptionString = [
+    {param: 'header', valueType: 'none', defaultValue: ''},
+    {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
+    {param: 'top', valueType: 'number', defaultValue: '0.0'}];
+
+// TODO: form options should be unified and simplified
+  optionStrings: object[] = [
+    {dbitem: 'emapper', options: [
+        {param: 'guessdb', valueType: 'none', defaultValue: ''},
+        {param: 'tax_scope', valueType: 'none', defaultValue: ''},
+        {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one',
+          values: ['one2one', 'many2one', 'one2many', 'many2many', 'all']},
+        {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental',
+          values: ['experimental', 'non-electronic']},
+        {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1'},
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+        {param: 'hmm_score', valueType: 'number', defaultValue: '0.0'},
+        {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '1'},
+        {param: 'hmm_qcov', valueType: 'number', defaultValue: '0.0'},
+        {param: 'Z', valueType: 'int', defaultValue: '1'},
+        {param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62',
+          values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30']},
+        {param: 'gapopen', valueType: 'number', defaultValue: '0.0'},
+        {param: 'gapextend', valueType: 'number', defaultValue: '0.0'},
+        {param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.0'},
+        {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '0.0'},
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond',
+          values: ['diamond', 'hmmer']},
+      ]},
+    {dbitem: 'hmmscan', options: [
+        // TODO: this 'evalue' seems wrong
+        {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+        {param: 'T', valueType: 'number', defaultValue: '0.0'},
+        {param: 'domE', valueType: 'number', defaultValue: '0.0'},
+        {param: 'domT', valueType: 'number', defaultValue: '0.0'},
+        {param: 'incE', valueType: 'number', defaultValue: '0.0'},
+        {param: 'incT', valueType: 'number', defaultValue: '0.0'},
+        {param: 'incdomE', valueType: 'number', defaultValue: '0.0'},
+        {param: 'incdomT', valueType: 'number', defaultValue: '0.0'},
+        {param: 'F1', valueType: 'number', defaultValue: '0.0'},
+        {param: 'F2', valueType: 'number', defaultValue: '0.0'},
+        {param: 'F3', valueType: 'number', defaultValue: '0.0'},
+        {param: 'nobias', valueType: 'none', defaultValue: ''},
+        {param: 'nonull2', valueType: 'none', defaultValue: ''},
+        {param: 'Z', valueType: 'int', defaultValue: '1'},
+        {param: 'domZ', valueType: 'int', defaultValue: '1'},
+        {param: 'seed', valueType: 'int', defaultValue: '1'},
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.01'},
+        {param: 'cut_ga', valueType: 'none', defaultValue: ''},
+        {param: 'cut_nc', valueType: 'none', defaultValue: ''},
+        {param: 'cut_tc', valueType: 'none', defaultValue: ''}
+      ]},
+    {dbitem: 'diamond blastp', options: [
+        {param: 'header', valueType: 'none', defaultValue: ''},
+        {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
+        {param: 'top', valueType: 'number', defaultValue: '0.0'},
+        {param: 'range-culling', valueType: 'none', defaultValue: ''},
+        {param: 'min-score', valueType: 'number', defaultValue: '0.0'},
+        {param: 'id', valueType: 'number', defaultValue: '0.0'},
+        {param: 'sensitive', valueType: 'none', defaultValue: ''},
+        {param: 'more-sensitive', valueType: 'none', defaultValue: ''},
+        {param: 'block-size', valueType: 'number', defaultValue: '0.0'},
+        {param: 'index-chunks', valueType: 'int', defaultValue: '1'},
+        {param: 'gapopen', valueType: 'number', defaultValue: '0.0'},
+        {param: 'gapextend', valueType: 'number', defaultValue: '0.0'},
+        {param: 'frameshift', valueType: 'number', defaultValue: '0.0'},
+        {param: 'matrix', valueType: 'string', defaultValue: ''},
+        {param: 'custom-matrix', valueType: 'string', defaultValue: ''},
+        {param: 'lambda', valueType: 'number', defaultValue: '0.0'},
+        {param: 'K', valueType: 'number', defaultValue: '0.0'},
+        {param: 'comp-based-stats', valueType: 'enum', defaultValue: '0', values: [0, 1]},
+        {param: 'masking', valueType: 'enum', defaultValue: '0', values: [0, 1]},
+        {param: 'taxonmap', valueType: 'string', defaultValue: ''},
+        {param: 'taxonlist', valueType: 'string', defaultValue: ''},
+        {param: 'algo', valueType: 'enum', defaultValue: '0', values: [0, 1]},
+        {param: 'bin', valueType: 'int', defaultValue: '1'},
+        {param: 'min-orf', valueType: 'none', defaultValue: ''},
+        {param: 'freq-sd', valueType: 'number', defaultValue: '0.0'},
+        {param: 'id2', valueType: 'number', defaultValue: '0.0'},
+        {param: 'window', valueType: 'number', defaultValue: '0.0'},
+        {param: 'xdrop', valueType: 'number', defaultValue: '0.0'},
+        {param: 'ungapped-score', valueType: 'number', defaultValue: '0.0'},
+        {param: 'hit-band', valueType: 'string', defaultValue: ''},
+        {param: 'hit-score', valueType: 'number', defaultValue: '0.0'},
+        {param: 'gapped-xdrop', valueType: 'number', defaultValue: '0.0'},
+        {param: 'band', valueType: 'string', defaultValue: ''},
+        {param: 'shapes', valueType: 'int', defaultValue: '1'},
+        {param: 'shape-mask', valueType: 'int', defaultValue: '1'},
+        {param: 'index-mode', valueType: 'enum', defaultValue: '0', values: [0, 1]},
+        {param: 'rank-ratio', valueType: 'none', defaultValue: ''},
+        {param: 'rank-ratio2', valueType: 'none', defaultValue: ''},
+        {param: 'max-hsps', valueType: 'int', defaultValue: '1'},
+        {param: 'range-cover', valueType: 'number', defaultValue: '0.0'},
+        {param: 'dbsize', valueType: 'int', defaultValue: '1'},
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
+        {param: 'query-cover', valueType: 'number', defaultValue: '0.0'},
+        {param: 'max-target-seqs', valueType: 'int', defaultValue: '1'},
+      ]}];
+
+  // TODO: move to job object
   sampleGroups: ProphaneSampleGroupObject[] = [];
-  sampleCount = 0;
-  groupCount = 0;
-  taxtasks = 1;
-  functasks = 1;
 
+  // TODO: form options should be unified and simplified
   annotationTasks: ProphaneAnnotationTaskObject[] =
-    [{
-      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
-    },
+    [
+      {
+        scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
+        optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
+      },
       {
         scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
         optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
       }];
 
-  taskCounter = 3;
-
+// TODO: form options should be unified and simplified
   evalueOptions: object[] = [
     {id: 0, numerical: '0.01', text: 'Relaxed'},
     {id: 1, numerical: '0.001', text: 'Mid-Range'},
@@ -115,22 +226,26 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // constructor and init
   constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
               tooltipConfig: NgbTooltipConfig, private router: Router ) {
+
+    const formdata = Formdata;
     this.prophaneJobIDReady = false;
     this.csvProgress = 0;
     this.fastaProgress = 0;
-    this.fileUrl = 'https://129.70.51.126:9091/mpacloud/v1/prophaneDownload/';
     this.selectedContaminationOption = this.contaminationdata[3];
-    this.downloadReady = false;
     tooltipConfig.placement = 'top';
     tooltipConfig.triggers = 'hover';
   }
 
+  //
+  currentParams: ProphaneParamObject;
+
   ngOnInit(): void {
     // TODO: more inits?
     this.currentProphaneJob = new ProphaneJobObject();
+    this.currentProphaneJob.parameters = new ProphaneParamObject();
+    this.currentParams = new ProphaneParamObject();
     this.jobLabel = 'Yet another Prophane job';
-    this.currentProphaneParameters = new ProphaneParamObject();
-    this.selectedLevel = this.leveldata[0];
+    this.currentProphaneJob.parameters.reportStyle = Formdata.ProphaneReportStyles[0].valueString;
     this.selectedContaminationOption = this.contaminationdata[3];
     this.selectedQuant = this.quantdata[0];
     this.requestNewJob();
@@ -138,7 +253,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // debug methods
   killAllJobs() {
-    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneParameters, 'mpacloud/v1/prophaneKillJobs').subscribe(d => {
+    this.jsonUpload.postObj<ProphaneParamObject>(this.currentProphaneJob.parameters, 'mpacloud/v1/prophaneKillJobs').subscribe(d => {
       console.log(d);
     });
   }
@@ -147,15 +262,15 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
-    this.currentProphaneParameters = new ProphaneParamObject();
-    this.currentProphaneParameters.jobLabel = this.jobLabel;
+    // TODO: this is cumbersome, just use one variable: the job object
+    this.currentProphaneJob.parameters = new ProphaneParamObject();
+    this.currentProphaneJob.parameters.jobLabel = this.jobLabel;
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-    this.currentProphaneJob.parameters = this.currentProphaneParameters;
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
     console.log('ID: ' + this.currentProphaneJob);
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
@@ -180,7 +295,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.uploadFasta();
     this.startProphaneJob();
     // TODO: add redirect to Job Control
-    this.router.navigateByUrl('jobs');
+    this.router.navigateByUrl('/jobs');
   }
 
   uploadFasta(): void {
@@ -225,26 +340,26 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     console.log(this.currentProphaneJob);
     // TODO add minor check to integrity of parameters
     // adding form values into parameters object
-    this.currentProphaneParameters.searchFormat = this.selectedLevel.valueString;
-    this.currentProphaneParameters.contaminationLabel = this.contaminationLabel.regex;
-    this.currentProphaneParameters.contaminationPosition = this.selectedContaminationOption.valueString;
-    this.currentProphaneParameters.jobLabel = this.jobLabel;
-    this.currentProphaneParameters.quantification = this.selectedQuant.valueString;
+    //this.currentProphaneJob.parameters.reportStyle = this.selectedLevel.valueString;
+    this.currentProphaneJob.parameters.contaminationLabel = this.contaminationLabel.regex;
+    this.currentProphaneJob.parameters.contaminationPosition = this.selectedContaminationOption.valueString;
+    this.currentProphaneJob.parameters.jobLabel = this.jobLabel;
+    this.currentProphaneJob.parameters.quantification = this.selectedQuant.valueString;
     this.sampleGroups.forEach(sampleGroup => {
       sampleGroup.groupmembersGUI.forEach(sample => {
-        if (this.currentProphaneParameters.searchFormat == 'scaffold') {
+        if (this.currentProphaneJob.parameters.reportStyle == 'scaffold') {
           sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
         }
         sampleGroup.groupmembers.push(sample.name);
       });
     });
-    this.currentProphaneParameters.sampleGroups = this.sampleGroups;
-    this.currentProphaneParameters.annotationTasks = [];
+    this.currentProphaneJob.parameters.sampleGroups = this.sampleGroups;
+    this.currentProphaneJob.parameters.annotationTasks = [];
     this.annotationTasks.forEach((atask: ProphaneAnnotationTaskObject) => {
-      this.currentProphaneParameters.annotationTasks.push(atask);
+      this.currentProphaneJob.parameters.annotationTasks.push(atask);
     });
     // reassigning the parameterobject to the jobobject (unnessecary?)
-    this.currentProphaneJob.parameters = this.currentProphaneParameters;
+    this.currentProphaneJob.parameters = this.currentProphaneJob.parameters;
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
       console.log(d);
     });
@@ -367,12 +482,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.taskCounter--;
   }
 
-  // TODO: this is obsolete?
-  onChange(mrChange: MatRadioChange) {
-    this.prophaneResult = mrChange.source.value;
-    console.log(this.prophaneResult);
-  }
-
   @ViewChild('jobStepper') stepper: MatStepper;
 
   onViewChange(view) {
@@ -424,11 +533,25 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   onCSVChange(files: FileList) {
     this.proteinReportFile = files[0];
     // this.currentProphaneJob.prophaneJobUUID = 'e078eef0-0788-11ea-a792-b5c08a0d06a4';
-   // this.uploadCSV();
+    // this.uploadCSV();
   }
 
   onSourceChange() {
     this.proteinReportFile = null;
+  }
+
+  addOptionString(paramName: string) {
+    this.optionStrings.forEach(obj => {
+      // if (obj.dbitem === 'diamond blastp') {
+      //   obj.options.forEach(option => {
+      //
+      //   });
+      // }
+    });
+  }
+
+  removeOptionString() {
+    // TODO: implement me
   }
 
 }
