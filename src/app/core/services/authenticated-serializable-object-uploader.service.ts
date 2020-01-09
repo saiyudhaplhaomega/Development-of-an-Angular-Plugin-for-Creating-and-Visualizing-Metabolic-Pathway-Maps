@@ -17,13 +17,13 @@ const httpOptions = {
 export class AuthenticatedSerializableObjectUploaderService {
 
   constructor(
-    private http: HttpClient, private webserver: WebserveraddressService, private authService: AuthGuard) {
+    private http: HttpClient, private webserver: WebserveraddressService, private authGuard: AuthGuard) {
   }
 
   postObj<T>(obj: T, api: string): Observable<T> {
     httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': this.authService.getIDToken()
+      'Authorization': this.authGuard.getIDToken()
     });
     return this.http.post<T>(this.webserver.getwebserverurl() + api, obj, httpOptions);
   }

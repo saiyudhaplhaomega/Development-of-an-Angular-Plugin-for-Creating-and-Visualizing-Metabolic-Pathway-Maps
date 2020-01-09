@@ -10,7 +10,6 @@ import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angular
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
-import {SerializableObjectUploaderService_UNUSED} from './old_files/serializable-object-uploader.service_UNUSED';
 import {FileUploaderService} from './core/services/file-uploader.service';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
 import {AuthGuard} from './core/services/auth-guard.service';
@@ -57,17 +56,16 @@ export function provideConfig() {
   ],
   providers: [
     HttpClient,
+    AuthGuard,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
     },
     WebserveraddressService,
-    SerializableObjectUploaderService_UNUSED,
     FileUploaderService,
     DbsearchcontentService,
     NavService,
     DataService,
-    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
