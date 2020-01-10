@@ -13,8 +13,7 @@ import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {Router} from '@angular/router';
 
-
-import * as Formdata from './prophane-job-submission-formdata';
+import {ProphaneReportStyle} from './prophane-job-submission-formdata';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -26,12 +25,14 @@ import * as Formdata from './prophane-job-submission-formdata';
 
 export class ProphaneJobSubmissionComponent implements OnInit {
 
-  reportStyles = Formdata.ProphaneReportStyles;
-
   // Website related variables
   expertView = false;
   jobCard: number;
   currentProphaneJob: ProphaneJobObject;
+
+
+  currentParams: ProphaneParamObject = new ProphaneParamObject();
+
   // TODO: better solution for this
   jobUnavailableMessage = 'No connection to server or queue full';
   // global variable that should be able to disable the website (because no server connection or server busy)
@@ -58,6 +59,13 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   contval: string;
   contaminationLabel = {valueString: '', regex: ''};
   selectedContaminationOption;
+
+  prophaneReportStyles: ProphaneReportStyle[] = [
+    {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
+    {id: 1, name: 'Scaffold', valueString: 'scaffold'},
+    {id: 2, name: 'Generic Format', valueString: 'generic'},
+    // {id: 3, name: 'Proteome Discoverer'}
+  ];
 
   // TODO: form options should be unified and simplified
   contaminationdata: object[] = [
@@ -227,7 +235,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
               tooltipConfig: NgbTooltipConfig, private router: Router ) {
 
-    const formdata = Formdata;
     this.prophaneJobIDReady = false;
     this.csvProgress = 0;
     this.fastaProgress = 0;
@@ -237,15 +244,14 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   //
-  currentParams: ProphaneParamObject;
 
   ngOnInit(): void {
     // TODO: more inits?
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
-    this.currentParams = new ProphaneParamObject();
+    this.currentParams = this.currentProphaneJob.parameters;
     this.jobLabel = 'Yet another Prophane job';
-    this.currentProphaneJob.parameters.reportStyle = Formdata.ProphaneReportStyles[0].valueString;
+    this.currentProphaneJob.parameters.reportStyle = this.prophaneReportStyles[0].valueString;
     this.selectedContaminationOption = this.contaminationdata[3];
     this.selectedQuant = this.quantdata[0];
     this.requestNewJob();

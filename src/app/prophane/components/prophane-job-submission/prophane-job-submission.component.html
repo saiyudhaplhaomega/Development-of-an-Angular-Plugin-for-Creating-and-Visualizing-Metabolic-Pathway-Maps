@@ -48,9 +48,9 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters['reportStyle']" id="sourceSelect"
+            <mat-select class="no-arrow custom-select" [(ngModel)]="currentParams.reportStyle" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
-              <mat-option *ngFor="let typeitem of reportStyles" [value]="typeitem.valueString">{{typeitem.name}}</mat-option>
+              <mat-option *ngFor="let typeitem of prophaneReportStyles" [value]="typeitem.valueString">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
