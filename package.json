@@ -28,6 +28,7 @@
     "@material/textfield": "^3.2.0",
     "@ng-bootstrap/ng-bootstrap": "^3.3.1",
     "angular-animations": "0.0.9",
+    "angular-inject": "^1.1.1",
     "angularx-social-login": "^1.2.7",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.9",

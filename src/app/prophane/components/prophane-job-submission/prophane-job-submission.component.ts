@@ -14,6 +14,7 @@ import {AuthenticatedSerializableObjectUploaderService} from '../../../core/serv
 import {Router} from '@angular/router';
 
 import {ProphaneReportStyle} from './prophane-job-submission-formdata';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -233,7 +234,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // constructor and init
   constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig, private router: Router ) {
+              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal) {
 
     this.prophaneJobIDReady = false;
     this.csvProgress = 0;
@@ -297,11 +298,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // this is the submit button
   startButton(): void {
     console.log('start button pressed');
+    this.openUploadDialog();
     this.uploadCSV();
     this.uploadFasta();
     this.startProphaneJob();
     // TODO: add redirect to Job Control
     this.router.navigateByUrl('/jobs');
+  }
+
+  openUploadDialog(): void {
+
+    this.modalService.open(
+      "<h2 mat-dialog-title>Please be patient while your data will be uploaded:</h2>",
+      { centered: true, keyboard: false });
   }
 
   uploadFasta(): void {
