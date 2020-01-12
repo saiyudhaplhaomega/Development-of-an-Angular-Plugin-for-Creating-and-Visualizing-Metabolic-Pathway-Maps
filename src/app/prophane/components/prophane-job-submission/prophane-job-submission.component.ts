@@ -307,9 +307,14 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-
     this.modalService.open(
-      "<h2 mat-dialog-title>Please be patient while your data will be uploaded:</h2>",
+      "<h2 mat-dialog-title>Please be patient while your data is being uploaded:</h2>" +
+      "<div>" + this.proteinReportFile.name + ": " +
+      "<mat-progress-bar *ngIf=\"csvProgress > 0\" mode=\"determinate\" [value]=\"csvProgress\"></mat-progress-bar>" +
+      "</div>" +
+      "<div>" + this.fastaFile.name + ": " +
+      "<mat-progress-bar *ngIf=\"fastaProgress > 0\" mode=\"determinate\" [value]=\"fastaProgress\"></mat-progress-bar>" +
+      "</div>",
       { centered: true, keyboard: false });
   }
 
