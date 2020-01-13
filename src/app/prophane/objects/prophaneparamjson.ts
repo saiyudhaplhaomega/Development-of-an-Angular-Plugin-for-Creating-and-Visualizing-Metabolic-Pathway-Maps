@@ -2,7 +2,7 @@ import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneSampleGroupObject} from './prophanesamplegroupjson';
 
 export interface ProphaneParamJSON {
-  searchFormat: string;
+  reportStyle: string;
   contaminationLabel: string;
   contaminationPosition: string;
   jobLabel: string;
@@ -12,7 +12,7 @@ export interface ProphaneParamJSON {
 }
 
 export class ProphaneParamObject implements ProphaneParamJSON {
-  searchFormat: string;
+  reportStyle: string;
   contaminationLabel: string;
   contaminationPosition: string;
   jobLabel: string;
