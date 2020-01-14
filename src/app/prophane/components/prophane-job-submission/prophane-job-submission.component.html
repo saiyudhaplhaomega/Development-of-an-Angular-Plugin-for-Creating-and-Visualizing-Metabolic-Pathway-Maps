@@ -1,7 +1,7 @@
 
 <div fxFlex class="bg-white">
 
-  <div *ngIf="!prophaneJobIDReady" class="align-content-center mb-2 alert-danger">
+  <div *ngIf="jobUnavailable" class="align-content-center mb-2 alert-danger">
     {{this.jobUnavailableMessage}}
   </div>
 
@@ -40,7 +40,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="jobLabel">
+            <input type="text" class="form-control" [(ngModel)]="currentProphaneJob.parameters.jobLabel">
           </div>
 
           <!-- Source selection -->
@@ -48,14 +48,14 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="no-arrow custom-select" [(ngModel)]="currentParams.reportStyle" id="sourceSelect"
+            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
-              <mat-option *ngFor="let typeitem of prophaneReportStyles" [value]="typeitem.valueString">{{typeitem.name}}</mat-option>
+              <mat-option *ngFor="let typeitem of this.reportStyles" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
           <!-- MPA -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 0" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 0" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -70,7 +70,7 @@
           </div>
 
           <!-- Scaffold -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 1" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 1" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -86,7 +86,7 @@
           </div>
 
           <!-- Generic -->
-          <div *ngIf="selectedLevel != undefined && selectedLevel.id == 2" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 2" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -122,17 +122,17 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Exclude</span>
             </div>
-            <mat-select class="custom-select" [(ngModel)]="selectedContaminationOption"
+            <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption"
                         (change)="setContaminationLabel(false)">
               <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id < 2" type="text"
+            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() < 2" type="text"
                    class="form-control" [(ngModel)]="contval" placeholder="text"
                    (change)="setContaminationLabel(contval)">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 2" type="text"
+            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 2" type="text"
                    class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
                    (change)="setContaminationLabel(contval)">
-            <input *ngIf="selectedContaminationOption != undefined && selectedContaminationOption.id == 3" type="text"
+            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 3" type="text"
                    class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
           </div>
         </div>

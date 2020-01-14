@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
   }
 
   getIDToken() {
-    return this._user.authToken;
+    return this._user.idToken;
   }
 
   getUser() {

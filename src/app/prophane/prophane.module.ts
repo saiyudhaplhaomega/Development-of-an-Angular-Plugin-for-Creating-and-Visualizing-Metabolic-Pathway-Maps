@@ -12,6 +12,7 @@ import {Routing} from '../app.routing';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
+import {prophaneReportStyles} from './objects/prophaneFormData';
 
 @NgModule({
   declarations: [
