@@ -1,0 +1,75 @@
+<div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? toggleRow(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <!-- Accession Column -->
+    <ng-container matColumnDef="accession">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Accession </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.accession}}% </mat-cell>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.description}}% </mat-cell>
+    </ng-container>
+
+    <!-- Spectral Count Column -->
+    <ng-container matColumnDef="spectral_count">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Spectral Count </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.spectral_count}} </mat-cell>
+    </ng-container>
+
+    <!-- Peptide Count Column -->
+    <ng-container matColumnDef="peptide_count">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Peptide Count </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.peptide_count}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl">
+    </mat-row>
+      
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100, 1000]" showFirstLastButtons></mat-paginator>
+</div>
+
+<ng-template #tpl let-element>
+	<div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
+		<mat-tab-group>
+      <mat-tab label="Peptides">
+        <app-peptide-table class='peptide-detail-table' [data]='element.peptides'>
+        </app-peptide-table>
+      </mat-tab>
+      <mat-tab label="Extras"> 🧬 </mat-tab>
+    </mat-tab-group>
+	</div>
+</ng-template>
