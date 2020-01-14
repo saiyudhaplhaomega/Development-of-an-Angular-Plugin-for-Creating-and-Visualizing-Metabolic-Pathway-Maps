@@ -23,34 +23,16 @@
       </mat-cell>
     </ng-container>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-    </ng-container>
-
     <!-- Accession Column -->
-    <ng-container matColumnDef="accession">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Accession </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.accession}}% </mat-cell>
+    <ng-container matColumnDef="representative_accession">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rep. Accession </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.representative_accession}}% </mat-cell>
     </ng-container>
 
     <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.description}}% </mat-cell>
-    </ng-container>
-
-    <!-- Spectral Count Column -->
-    <ng-container matColumnDef="spectral_count">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Spectral Count </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.spectral_count}} </mat-cell>
-    </ng-container>
-
-    <!-- Peptide Count Column -->
-    <ng-container matColumnDef="peptide_count">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Peptide Count </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.peptide_count}} </mat-cell>
+    <ng-container matColumnDef="representative_description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rep. Description </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.representative_description}}% </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
@@ -64,12 +46,6 @@
 
 <ng-template #tpl let-element>
 	<div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
-		<mat-tab-group>
-      <mat-tab label="Peptides">
-        <app-peptide-table class='peptide-detail-table' [data]='element.peptides'>
-        </app-peptide-table>
-      </mat-tab>
-      <mat-tab label="Extras"> 🧬 </mat-tab>
-    </mat-tab-group>
+    <app-proteingroup-detail-view [proteinGroupUUID]='element.proteingroup_uuid'></app-proteingroup-detail-view>
 	</div>
 </ng-template>

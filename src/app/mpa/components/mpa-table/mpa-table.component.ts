@@ -1,4 +1,4 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -17,22 +17,25 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class MpaTableComponent implements AfterViewInit {
 
-  displayedColumns = ['select', 'accession', 'description', 'spectral_count', 'peptide_count'];
-  dataSource: MatTableDataSource<ProteinData>;
-  selection: SelectionModel<ProteinData>;
+  displayedColumns = ['select', 'representative_accession', 'representative_description'];
+  dataSource: MatTableDataSource<ProteinGroup>;
+  selection: SelectionModel<ProteinGroup>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Input() set data(value: ProteinGroup[]) {
+    this.dataSource.data = value;
+  }
+  get data(): ProteinGroup[] {
+    return this.dataSource.data;
+  }
+
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
   constructor() {
-    const proteins: ProteinData[] = [];
-    for (let i = 1; i <= 1000; i++) { proteins.push(createNewProtein(i)); }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(proteins);
-    this.selection = new SelectionModel<ProteinData>(true, []);
+    this.dataSource = new MatTableDataSource([]);
+    this.selection = new SelectionModel<ProteinGroup>(true, []);
   }
 
   /**
@@ -69,7 +72,7 @@ export class MpaTableComponent implements AfterViewInit {
   }
 }
 
-function createNewProtein(id: number): ProteinData {
+export function createNewProtein(id: number): ProteinData {
 
   const peptides: PeptideData[] = [];
 
@@ -97,18 +100,47 @@ export interface ProteinData {
 function createNewPeptide(id: number): PeptideData {
 
   return {
-    id: id.toString(),
-    accession: Math.random().toString(36).substring(7),
-    description: Math.random().toString(36).substring(7),
-    spectral_count: Math.random().toString(),
+    peptide_spectrum_match: [],
     sequence: Math.random().toString(36).substring(7),
   };
 }
 
+export function createNewProteinGroup(id: number): ProteinGroup {
+  return {
+    proteingroup_uuid: Math.random().toString(36).substring(7),
+    representative_accession: Math.random().toString(36).substring(7),
+    representative_description: Math.random().toString(36).substring(7),
+  };
+}
+
 export interface PeptideData {
-  id: string;
-  accession: string;
-  description: string;
-  spectral_count: string;
+  peptide_spectrum_match: PSM[];
   sequence: string;
+}
+
+export interface PSM {
+  peptide: PeptideData;
+  spectrum: Spectrum;
+  search_engine: string;
+  q_value: number;
+}
+
+export interface Spectrum {
+  uuid: string;
+}
+
+export interface ProteinGroup {
+  proteingroup_uuid: string;
+  representative_accession: string;
+  representative_description: string;
+}
+
+export interface ProteinGroupList {
+  experiment_uuid: string;
+  protein_groups: ProteinGroup[];
+}
+
+export interface ProteinList {
+  proteingroup_uuid: string;
+  proteins: ProteinData[];
 }
