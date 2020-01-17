@@ -1,21 +1,22 @@
-import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { PeptideData } from '../mpa-table/mpa-table.component';
+import { Component, AfterViewInit, Input, ViewChild } from '@angular/core';
+import { ProteinData } from '../mpa-table/mpa-table.component';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
-  selector: 'app-peptide-table',
-  templateUrl: './peptide-table.component.html',
-  styleUrls: ['./peptide-table.component.css']
+  selector: 'app-protein-table',
+  templateUrl: './protein-table.component.html',
+  styleUrls: ['./protein-table.component.css']
 })
-export class PeptideTableComponent implements AfterViewInit {
+export class ProteinTableComponent implements AfterViewInit {
 
-  displayedColumns = ['empty', 'sequence'];
-  dataSource: MatTableDataSource<PeptideData>;
+  displayedColumns = ['empty', 'accession'];
+  dataSource: MatTableDataSource<ProteinData>;
 
-  @Input() set data(value: PeptideData[]) {
+  @Input() set data(value: ProteinData[]) {
+    console.log(value);
     this.dataSource.data = value;
   }
-  get data(): PeptideData[] {
+  get data(): ProteinData[] {
     return this.dataSource.data;
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;

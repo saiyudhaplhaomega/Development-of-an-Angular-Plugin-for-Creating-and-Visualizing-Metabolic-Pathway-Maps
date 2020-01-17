@@ -26,13 +26,13 @@
     <!-- Accession Column -->
     <ng-container matColumnDef="representative_accession">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rep. Accession </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.representative_accession}}% </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.representative_accession}} </mat-cell>
     </ng-container>
 
     <!-- Description Column -->
     <ng-container matColumnDef="representative_description">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rep. Description </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.representative_description}}% </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.representative_description}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
@@ -46,6 +46,6 @@
 
 <ng-template #tpl let-element>
 	<div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
-    <app-proteingroup-detail-view [proteinGroupUUID]='element.proteingroup_uuid'></app-proteingroup-detail-view>
+    <app-proteingroup-detail-view [proteinGroupUUID]='element.proteingroup_uuid' [experimentUUID]='experimentUUID'></app-proteingroup-detail-view>
 	</div>
 </ng-template>
