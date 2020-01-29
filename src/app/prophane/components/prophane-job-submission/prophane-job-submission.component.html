@@ -48,14 +48,14 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle" id="sourceSelect"
+            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle" [compareWith]="sourceCompare" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
               <mat-option *ngFor="let typeitem of this.reportStyles" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
           <!-- MPA -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 0" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 0" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -70,7 +70,7 @@
           </div>
 
           <!-- Scaffold -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 1" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 1" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -86,7 +86,7 @@
           </div>
 
           <!-- Generic -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 2" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 2" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -122,18 +122,22 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Exclude</span>
             </div>
-            <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption"
-                        (change)="setContaminationLabel(false)">
-              <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
+            <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption" [compareWith]="contCompare"
+                        (selectionChange)="setContaminationLabel(false)">
+              <mat-option *ngFor="let contitem of this.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() < 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="text"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 3" type="text"
-                   class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 0" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" [disabled]="true" placeholder="">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" placeholder="text"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" placeholder="text"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.regex" placeholder="regular expression (PCRE)"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+
           </div>
         </div>
       </div>
@@ -171,7 +175,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Sample Name</span>
               </div>
-              <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
+              <input *ngIf="currentProphaneJob.parameters.reportStyle == undefined || currentProphaneJob.parameters.reportStyle.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
               <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
               <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
               <div class="input-group-append">
@@ -493,13 +497,13 @@
             <tr>
               <th scope="row" class="ml-summary-col">Job Label:</th>
               <td>
-                {{ jobLabel }}
+                {{ currentProphaneJob.parameters.jobLabel }}
               </td>
             </tr>
             <tr>
               <th scope="row" class="ml-summary-col">Source:</th>
               <td>
-                {{ selectedLevel.name }}
+                {{ currentProphaneJob.parameters.reportStyle.name }}
               </td>
             </tr>
             <tr>
@@ -518,13 +522,13 @@
             </tr>
             <tr>
               <th scope="row"
-                  [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''"
+                  [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''"
                   class="ml-summary-col">
                 Exclude:
               </th>
               <td
-                [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''">
-                {{ selectedContaminationOption.name + " " + contaminationLabel.valueString }}
+                [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''">
+                {{ currentProphaneJob.parameters.contaminationOption.name + " " + currentProphaneJob.parameters.contaminationOption.label }}
               </td>
             </tr>
             <tr>
@@ -648,7 +652,7 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(!proteinReportFile || !fastaFile || (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                  [disabled]="(!proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>

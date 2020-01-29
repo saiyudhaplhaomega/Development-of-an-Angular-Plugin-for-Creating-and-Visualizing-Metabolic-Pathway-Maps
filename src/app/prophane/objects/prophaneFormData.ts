@@ -52,10 +52,10 @@ export const evalueOptions: object[] = [
 ];
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
-  {id: 0, name: 'accessions starting with', valueString: 'start', label: '', regex: ''},
-  {id: 1, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
-  {id: 2, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
-  {id: 3, name: 'none', valueString: 'none', label: '', regex: ''}
+  {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
+  {id: 1, name: 'accessions starting with', valueString: 'start', label: '', regex: ''},
+  {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
+  {id: 3, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
 ];
 
 export const optionStrings: object[] = [

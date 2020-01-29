@@ -1,9 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
-import {MatRadioChange} from '@angular/material/radio';
 import {HttpEventType} from '@angular/common/http';
-import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
-import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
@@ -13,7 +10,6 @@ import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {Router} from '@angular/router';
 
-import {ProphaneReportStyle} from './prophane-job-submission-formdata';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { prophaneReportStyles } from '../../objects/prophaneFormData';
@@ -24,6 +20,8 @@ import { annotationTasks } from '../../objects/prophaneFormData';
 import { selectedOptionString } from '../../objects/prophaneFormData';
 import { databaseOptions } from '../../objects/prophaneFormData';
 import { optionStrings } from '../../objects/prophaneFormData';
+import {ProphaneJobSubmissionDialogComponent} from './prophane-job-submission-dialog';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -35,11 +33,6 @@ import { optionStrings } from '../../objects/prophaneFormData';
 
 export class ProphaneJobSubmissionComponent implements OnInit {
 
-  //currentProphaneJob = new ProphaneJobObject();
-  //currentProphaneJob.parameters = new ProphaneParamObject();
-  //currentProphaneJob.parameters.reportStyle = prophaneReportStyles[0];
-
-  reportStyles = prophaneReportStyles;
 
   // Website related variables
   expertView = false;
@@ -56,8 +49,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
 
   // job data is tracked in this variable
-  currentProphaneJob: ProphaneJobObject;
 
+  currentProphaneJob: ProphaneJobObject;
+  // currentProphaneJob = new ProphaneJobObject();
+
+  // currentProphaneJob.parameters.reportStyle = prophaneReportStyles[0];
+
+  // this is necessary because typescript doesnt like constants from other files
+  reportStyles = prophaneReportStyles;
+  contoptions = contaminationdata;
+  quantdata = quantdata;
+  evalueOptions = evalueOptions;
+  annotationTasks = annotationTasks;
+  selectedOptionString = selectedOptionString;
+  databaseOptions = databaseOptions;
+  optionStrings = optionStrings;
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -69,7 +75,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   contval = '';
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
+  constructor(public dialog: MatDialog, private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
               tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal) {
 
     this.jobUnavailable = false;
@@ -93,17 +99,20 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     // TODO: move to init?
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
-    this.currentProphaneJob.parameters.contaminationOption = contaminationdata[3];
+    this.currentProphaneJob.parameters.contaminationOption = this.contoptions[3];
+    console.log('TEST1: ' + this.contoptions[3].valueString);
+    console.log('TEST: ' + this.currentProphaneJob.parameters.contaminationOption.valueString);
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
-    this.currentProphaneJob.parameters.reportStyle = prophaneReportStyles[2];
-    this.currentProphaneJob.parameters.quantification = quantdata[0];
+    this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
+    this.currentProphaneJob.parameters.quantification = this.quantdata[0];
+    this.currentProphaneJob.parameters.annotationTasks = annotationTasks;
+    this.currentProphaneJob.parameters.sampleGroups = [];
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-    console.log(this.currentProphaneJob.parameters.reportStyle.name)
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
     console.log('ID: ' + this.currentProphaneJob);
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
@@ -133,15 +142,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-    this.modalService.open(
-      '<h2 mat-dialog-title>Please be patient while your data is being uploaded:</h2>' +
-      '<div>' + this.proteinReportFile.name + ': ' +
-      '<mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>' +
-      '</div>' +
-      '<div>' + this.fastaFile.name + ': ' +
-      '<mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>' +
-      '</div>',
-      { centered: true, keyboard: false });
+    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
+      data: {proteinreportfilename: this.proteinReportFile.name,
+        fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress}
+    });
   }
 
   uploadFasta(): void {
@@ -198,6 +202,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // methods for website functionality
 
+  sourceCompare(o1, o2) {
+    console.log('comparator call' + (o1.id === o2.id));
+    // this is somewhat of a hack and makes the object value always take precedence over the form value, thus overriding it sometimes
+    return true;
+    //return o1.id === o2.id;
+  }
+
+  // same as above
+  contCompare(o1, o2) {
+    console.log('contcomparator call' + (o1.id === o2.id));
+    // this is somewhat of a hack and makes the object value always take precedence over the form value, thus overriding it sometimes
+    return true;
+    //return o1.id === o2.id;
+  }
+
   // TODO: will soon be replaced
   setDefaultOptionString(event, task) {
     switch (event.value) {
@@ -224,6 +243,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   setContaminationLabel(val) {
+    console.log('TEST: ' +  this.currentProphaneJob.parameters.contaminationOption.valueString);
     if (val === false) {
       val = this.currentProphaneJob.parameters.contaminationOption.valueString;
     }

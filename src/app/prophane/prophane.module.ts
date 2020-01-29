@@ -13,6 +13,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {prophaneReportStyles} from './objects/prophaneFormData';
+import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-submission/prophane-job-submission-dialog';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {prophaneReportStyles} from './objects/prophaneFormData';
     ProphaneViewerComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
+    ProphaneJobSubmissionDialogComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import {prophaneReportStyles} from './objects/prophaneFormData';
     // material module last
     MaterialModule,
   ],
+  entryComponents: [ProphaneJobSubmissionDialogComponent],
   exports: [
     ProphaneViewerComponent,
   ]

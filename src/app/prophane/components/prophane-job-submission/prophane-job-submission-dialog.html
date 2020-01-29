@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>Please be patient while your data is being uploaded</h2>
+<div>{{ this.data.proteinreportfilename }} :
+  <mat-progress-bar *ngIf="this.data.csvprogress > 0" mode="determinate" [value]="this.data.csvprogress"></mat-progress-bar>
+</div>
+<div>{{ this.data.fastafilename }}:
+  <mat-progress-bar *ngIf="this.data.fastaProgress > 0" mode="determinate" [value]="this.data.fastaProgress"></mat-progress-bar>
+</div>
