@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PeptideData, ProteinData, ProteinList } from '../mpa-table/mpa-table.component';
+import { PeptideData, ProteinData, ProteinList, PGPeptideList } from '../mpa-table/mpa-table.component';
 import { AuthenticatedSerializableObjectUploaderService } from 'src/app/core/services/authenticated-serializable-object-uploader.service';
 
 @Component({
@@ -10,17 +10,27 @@ import { AuthenticatedSerializableObjectUploaderService } from 'src/app/core/ser
 export class ProteingroupDetailViewComponent implements OnInit {
 
   @Input() proteinGroupUUID: string;
+  @Input() experimentUUID: string;
   tabSelectionState = 0;
 
   peptides: PeptideData[];
   proteins: ProteinData[];
 
-  constructor(private _uploaderService: AuthenticatedSerializableObjectUploaderService) { }
+  constructor(private _uploaderService: AuthenticatedSerializableObjectUploaderService) {
+    this.peptides = [];
+    this.proteins = [];
+  }
 
   ngOnInit() {
     this._uploaderService.postObj<ProteinList>(
       {proteingroup_uuid: this.proteinGroupUUID, proteins: []}, 'mpacloud/v1/fetchProteins').subscribe(data => {
         this.proteins = data.proteins;
+      });
+    this._uploaderService.postObj<PGPeptideList>(
+      {proteingroup_uuid: this.proteinGroupUUID, experiment_uuid: this.experimentUUID,
+         peptides: []}, 'mpacloud/v1/fetchPeptidesProteinGroup').subscribe(data => {
+        console.log(data);
+        this.peptides = data.peptides;
       });
   }
 

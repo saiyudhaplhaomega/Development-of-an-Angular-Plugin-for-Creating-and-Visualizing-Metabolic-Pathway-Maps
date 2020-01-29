@@ -1,21 +1,33 @@
 <div fxLayout="row">
   <mat-tab-group [(selectedIndex)]='tabSelectionState'>
     <mat-tab label="Proteins">
-      <app-peptide-table class='peptide-detail-table' [data]='proteins'>
-      </app-peptide-table>
+      <app-protein-table class='protein-detail-table' [data]='proteins'>
+      </app-protein-table>
     </mat-tab>
     <mat-tab label="Peptides">
       <app-peptide-table class='peptide-detail-table' [data]='peptides'>
       </app-peptide-table>
     </mat-tab>
-    <mat-tab label="PSM"> 🧬 </mat-tab>
+    <mat-tab label="PSM">       
+      <app-psm-table>
+      </app-psm-table>
+    </mat-tab>
     <mat-tab label="Extras"> 🧬 </mat-tab>
   </mat-tab-group>
   <mat-tab-group>
-    <mat-tab *ngIf='tabSelectionState==0' label="Description"></mat-tab>
-    <mat-tab *ngIf='tabSelectionState==0' label="Peptide"></mat-tab>
-    <mat-tab *ngIf='tabSelectionState!=2' label="PSM"> 🧬 </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==0' label="Description"> 
+      <app-description-details>
+      </app-description-details> 
+    </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==0' label="Peptides">
+      <app-peptide-table class='peptide-detail-table' [data]='peptides'>
+      </app-peptide-table>
+    </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==1' label="PSM">
+      <app-psm-table>
+      </app-psm-table>
+    </mat-tab>
     <mat-tab *ngIf='tabSelectionState==0' label="Sequence"> 🧬 </mat-tab>
-    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"></mat-tab>
+    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"> 🧬 </mat-tab>
   </mat-tab-group>
 </div>

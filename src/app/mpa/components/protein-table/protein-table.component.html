@@ -14,10 +14,16 @@
       <mat-cell *matCellDef="let row"></mat-cell>
     </ng-container>
 
-    <!-- Peptide Count Column -->
-    <ng-container matColumnDef="sequence">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Sequence </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.peptide_sequence}} </mat-cell>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.protein_uuid}} </mat-cell>
+    </ng-container>
+
+    <!-- Accession Column -->
+    <ng-container matColumnDef="accession">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Accession </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.protein_accession}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>

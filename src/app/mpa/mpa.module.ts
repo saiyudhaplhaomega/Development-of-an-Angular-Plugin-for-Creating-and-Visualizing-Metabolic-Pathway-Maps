@@ -16,6 +16,9 @@ import { MpaTableComponent } from './components/mpa-table/mpa-table.component';
 import { PeptideTableComponent } from './components/peptide-table/peptide-table.component';
 import {CdkDetailRowDirective} from './components/mpa-table/cdk-detail-row.directive';
 import { ProteingroupDetailViewComponent } from './components/proteingroup-detail-view/proteingroup-detail-view.component';
+import { ProteinTableComponent } from './components/protein-table/protein-table.component';
+import { PsmTableComponent } from './components/psm-table/psm-table.component';
+import { DescriptionDetailsComponent } from './components/description-details/description-details.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { ProteingroupDetailViewComponent } from './components/proteingroup-detai
     PeptideTableComponent,
     CdkDetailRowDirective,
     ProteingroupDetailViewComponent,
+    ProteinTableComponent,
+    PsmTableComponent,
+    DescriptionDetailsComponent,
   ],
   imports: [
     CommonModule,

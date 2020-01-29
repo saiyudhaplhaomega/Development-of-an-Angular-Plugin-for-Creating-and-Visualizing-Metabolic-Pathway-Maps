@@ -29,7 +29,7 @@ export class MpaTableComponent implements AfterViewInit {
   get data(): ProteinGroup[] {
     return this.dataSource.data;
   }
-
+  @Input() experimentUUID: string;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
@@ -79,29 +79,21 @@ export function createNewProtein(id: number): ProteinData {
   for (let i = 1; i <= 100; i++) { peptides.push(createNewPeptide(i)); }
 
   return {
-    id: id.toString(),
-    accession: Math.random().toString(36).substring(7),
-    description: Math.random().toString(36).substring(7),
-    spectral_count: Math.random().toString(),
-    peptide_count: Math.random().toString(),
-    peptides: peptides,
+    protein_uuid: id.toString(),
+    protein_accession: Math.random().toString(36).substring(7),
   };
 }
 
 export interface ProteinData {
-  id: string;
-  accession: string;
-  description: string;
-  spectral_count: string;
-  peptide_count: string;
-  peptides: PeptideData[];
+  protein_uuid: string;
+  protein_accession: string;
 }
 
 function createNewPeptide(id: number): PeptideData {
 
   return {
-    peptide_spectrum_match: [],
-    sequence: Math.random().toString(36).substring(7),
+    peptide_spectrum_matches: [],
+    peptide_sequence: Math.random().toString(36).substring(7),
   };
 }
 
@@ -114,8 +106,20 @@ export function createNewProteinGroup(id: number): ProteinGroup {
 }
 
 export interface PeptideData {
-  peptide_spectrum_match: PSM[];
-  sequence: string;
+  peptide_spectrum_matches: PSM[];
+  peptide_sequence: string;
+}
+
+export interface PGPeptideList {
+  proteingroup_uuid: string;
+  experiment_uuid: string;
+  peptides: PeptideData[];
+}
+
+export interface ProtPeptideList {
+  protein_uuid: string;
+  experiment_uuid: string;
+  peptides: PeptideData[];
 }
 
 export interface PSM {
