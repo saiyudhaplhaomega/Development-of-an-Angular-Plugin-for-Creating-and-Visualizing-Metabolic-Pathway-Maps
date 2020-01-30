@@ -2,6 +2,7 @@ import {ProphaneReportStyle} from '../components/prophane-job-submission/prophan
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
+import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
@@ -29,20 +30,27 @@ export const databaseOptions: object[] = [
   {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
   {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
 ];
-export const selectedOptionString = [
+export const defaultOptionString = [
   {param: 'header', valueType: 'none', defaultValue: ''},
   {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
   {param: 'top', valueType: 'number', defaultValue: '0.0'}];
 
-export const annotationTasks: ProphaneAnnotationTaskObject[] =
-  [
-    {
-      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
+export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] =
+  [{scope: 'Function', database: 'eggnog', databaseversion: 'latest',
+    algorithm: 'emapper', tasklabel: 'Functional Annotation Task 1',
+      optionstring: [
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']},
+        ],
+    formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
     },
-    {
-      scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
+    {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest',
+      algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',
+      optionstring: [
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
+        {param: 'more-sensitive', valueType: 'none', defaultValue: ''}
+        ],
+      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
     }];
 
 export const evalueOptions: object[] = [
@@ -104,7 +112,29 @@ export const optionStrings: object[] = [
       {param: 'cut_nc', valueType: 'none', defaultValue: ''},
       {param: 'cut_tc', valueType: 'none', defaultValue: ''}
     ]},
-
+  {dbitem: 'hmmsearch', options: [
+      // TODO: this 'evalue' seems wrong
+      {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+      {param: 'T', valueType: 'number', defaultValue: '0.0'},
+      {param: 'domE', valueType: 'number', defaultValue: '0.0'},
+      {param: 'domT', valueType: 'number', defaultValue: '0.0'},
+      {param: 'incE', valueType: 'number', defaultValue: '0.0'},
+      {param: 'incT', valueType: 'number', defaultValue: '0.0'},
+      {param: 'incdomE', valueType: 'number', defaultValue: '0.0'},
+      {param: 'incdomT', valueType: 'number', defaultValue: '0.0'},
+      {param: 'F1', valueType: 'number', defaultValue: '0.0'},
+      {param: 'F2', valueType: 'number', defaultValue: '0.0'},
+      {param: 'F3', valueType: 'number', defaultValue: '0.0'},
+      {param: 'nobias', valueType: 'none', defaultValue: ''},
+      {param: 'nonull2', valueType: 'none', defaultValue: ''},
+      {param: 'Z', valueType: 'int', defaultValue: '1'},
+      {param: 'domZ', valueType: 'int', defaultValue: '1'},
+      {param: 'seed', valueType: 'int', defaultValue: '1'},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.01'},
+      {param: 'cut_ga', valueType: 'none', defaultValue: ''},
+      {param: 'cut_nc', valueType: 'none', defaultValue: ''},
+      {param: 'cut_tc', valueType: 'none', defaultValue: ''}
+    ]},
   {dbitem: 'diamond blastp', options: [
       {param: 'header', valueType: 'none', defaultValue: ''},
       {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
