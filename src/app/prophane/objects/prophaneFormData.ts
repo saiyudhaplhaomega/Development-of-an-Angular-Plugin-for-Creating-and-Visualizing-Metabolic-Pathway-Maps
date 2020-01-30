@@ -29,20 +29,21 @@ export const databaseOptions: object[] = [
   {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
   {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
 ];
-export const selectedOptionString = [
+export const defaultOptionString = [
   {param: 'header', valueType: 'none', defaultValue: ''},
   {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
   {param: 'top', valueType: 'number', defaultValue: '0.0'}];
 
-export const annotationTasks: ProphaneAnnotationTaskObject[] =
+export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] =
   [
     {
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
+      optionstring: [{param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}],
+      evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
     },
     {
       scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
+      optionstring: [{param: 'more-sensitive', valueType: 'none', defaultValue: ''}], evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
     }];
 
 export const evalueOptions: object[] = [
@@ -57,7 +58,7 @@ export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
   {id: 3, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
 ];
-
+none enum int evalue number
 export const optionStrings: object[] = [
   {dbitem: 'emapper', options: [
       {param: 'guessdb', valueType: 'none', defaultValue: ''},

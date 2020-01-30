@@ -24,6 +24,7 @@ export class ProphaneParamObject implements ProphaneParamJSON {
 
   constructor () {
     this.contaminationOption = new ProphaneContaminationOptionObject();
+    this.sampleGroups = [] as ProphaneSampleGroupObject[];
   }
 
 }
