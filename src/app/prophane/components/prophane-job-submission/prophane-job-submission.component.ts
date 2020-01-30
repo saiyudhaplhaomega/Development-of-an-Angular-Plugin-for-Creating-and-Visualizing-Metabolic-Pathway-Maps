@@ -212,21 +212,33 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // TODO: will soon be replaced
   setDefaultOptionString(event, task) {
+    console.log('setting default option ')
     switch (event.value) {
       case 'hmmscan': {
-        task.optionstring = '';
+        task.optionstring = [
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+        ];
         break;
       }
       case 'hmmsearch' : {
-        task.optionstring = '';
+        task.optionstring = [
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+        ];
         break;
       }
       case 'emapper' : {
-        task.optionstring = '-m diamond';
+        task.optionstring = [
+          {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+          {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
+        ];
         break;
       }
       case 'diamond blastp' : {
-        task.optionstring = '--more-sensitive';
+        console.log('setting new tax ');
+        task.optionstring = [
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
+          {param: 'more-sensitive', valueType: 'none', defaultValue: ''}
+        ];
         break;
       }
       default : {
@@ -307,7 +319,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.taskCounter++;
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks
+      optionstring: [
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
+        {param: 'more-sensitive', valueType: 'none', defaultValue: ''}
+      ], tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks
     });
   }
 
@@ -316,7 +331,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.taskCounter++;
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task ' + this.functasks
+      optionstring: [
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
+      ], tasklabel: 'Functional Annotation Task ' + this.functasks
     });
   }
 

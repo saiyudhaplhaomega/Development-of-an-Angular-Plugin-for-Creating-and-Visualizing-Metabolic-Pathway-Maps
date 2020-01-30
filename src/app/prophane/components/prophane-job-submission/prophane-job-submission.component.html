@@ -291,7 +291,9 @@
               </div>
               <ng-container *ngFor="let algo of optionStrings">
                 <ng-container *ngIf="algo.dbitem == task.algorithm">
-                  <mat-select class="custom-select" [(value)]="task.formOptionStringSelection">
+                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                              [(value)]="task.formOptionStringSelection" [compareWith]="paramCompare"
+                              placeholder="Choose Option">
                     <ng-container *ngFor="let dropDownItem of algo.options">
                       <mat-option [value]="dropDownItem">
                         {{dropDownItem.param}}</mat-option>
@@ -328,11 +330,24 @@
                 </div>
               </ng-container>
 
+              <ng-container *ngIf="algoSel.valueType == 'string'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
               <ng-container *ngIf="algoSel.valueType == 'evalue'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                     <mat-option *ngFor="let evalueRange of evalueOptions"
                                 [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
@@ -349,7 +364,7 @@
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
                   <div class="input-group-append custom-select">
-                    <mat-select [(value)]="algoSel.values" placeholder="Custom">
+                    <mat-select [(value)]="algoSel.defaultValue">
                       <ng-container *ngFor="let enumVal of algoSel.values">
                         <mat-option [value]="enumVal">
                           {{enumVal}}</mat-option>
@@ -361,6 +376,7 @@
                   </button>
                 </div>
               </ng-container>
+
               <ng-container *ngIf="algoSel.valueType == 'number'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -387,6 +403,7 @@
       </div>
 
       <!-- Functional Annotation Task -->
+
       <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
@@ -452,29 +469,118 @@
 
             <!-- Option String -->
             <div class="input-group mb-3">
+              <!-- The Dropbox that displays optionstrings that can be added -->
               <div class="input-group-prepend">
-                <span class="input-group-text">Option String</span>
+                <span class="input-group-text">Options</span>
               </div>
-              <input class="form-control" [(ngModel)]="task.optionstring">
+              <ng-container *ngFor="let algo of optionStrings">
+                <ng-container *ngIf="algo.dbitem == task.algorithm">
+                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                              [(value)]="task.formOptionStringSelection"
+                              [compareWith]="paramCompare" placeholder="Choose Option">>
+                    <ng-container *ngFor="let dropDownItem of algo.options">
+                      <mat-option [value]="dropDownItem">
+                        {{dropDownItem.param}}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
+                    +
+                  </button>
+                </ng-container>
+              </ng-container>
             </div>
+            <!-- The List of already added optionstrings -->
+            <!-- TODO: there are several types of optionstrings and their displayed item is different -->
+            <ng-container *ngFor="let algoSel of task.optionstring">
+              <ng-container *ngIf="algoSel.valueType == 'none'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
 
-            <!-- E-value-->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">E-Value</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.evalue" [(value)]="task.evalue">
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
+              <ng-container *ngIf="algoSel.valueType == 'int'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'string'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'evalue'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'enum'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <div class="input-group-append custom-select">
+                    <mat-select [(value)]="algoSel.defaultValue">
+                      <ng-container *ngFor="let enumVal of algoSel.values">
+                        <mat-option [value]="enumVal">
+                          {{enumVal}}</mat-option>
+                      </ng-container>
+                    </mat-select>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="algoSel.valueType == 'number'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <div class="input-group-append custom-select">
+                    <mat-select [(value)]="task.evalue" placeholder="Custom">
+                      <mat-option *ngFor="let evalueRange of evalueOptions"
+                                  [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                    </mat-select>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+            </ng-container>
           </ng-container>
+
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
           </button>
+
         </div>
       </div>
 
