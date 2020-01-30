@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
+import { MatDialogRef } from "@angular/material/dialog";
+import {Router} from "@angular/router"
 
 
 export interface DialogData {
@@ -19,7 +21,7 @@ export class ProphaneJobSubmissionDialogComponent {
 
   progress: number;
 
-  constructor(private _uploadProgressService: UploadProgressService) {
+  constructor(private _uploadProgressService: UploadProgressService, private router: Router, public dialogRef: MatDialogRef<ProphaneJobSubmissionDialogComponent>) {
 
   }
 
@@ -27,4 +29,11 @@ export class ProphaneJobSubmissionDialogComponent {
     this._uploadProgressService.currentProgress.subscribe(progress => this.progress = progress);
   }
 
+  closeAndRedirect(){
+    this.dialogRef.close();
+    this.router.navigate(['./prophanejobs'])
+  }
+
 }
+
+

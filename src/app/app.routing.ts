@@ -13,6 +13,7 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
+  { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full', canActivate: [AuthGuard]},
   { path: 'prophane', component: ProphaneViewerComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: '/prophane/(prophaneContent:new)', pathMatch: 'full', canActivate: [AuthGuard]},
       { path: 'new', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'},

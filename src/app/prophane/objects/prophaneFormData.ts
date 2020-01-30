@@ -39,7 +39,7 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] =
   [{scope: 'Function', database: 'eggnog', databaseversion: 'latest',
     algorithm: 'emapper', tasklabel: 'Functional Annotation Task 1',
       optionstring: [
-        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
         {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']},
         ],
     formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}

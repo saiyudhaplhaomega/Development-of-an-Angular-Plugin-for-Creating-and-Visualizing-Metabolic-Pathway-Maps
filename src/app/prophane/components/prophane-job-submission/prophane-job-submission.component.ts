@@ -148,7 +148,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
+    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, { disableClose: true,
       data: {proteinreportfilename: this.proteinReportFile.name,
         fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress}
     });
@@ -408,7 +408,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     console.log(task.name);
     console.log(task.formOptionStringSelection.param);
     console.log(task.optionstring.length);
-    if task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
     console.log(task.optionstring.length);

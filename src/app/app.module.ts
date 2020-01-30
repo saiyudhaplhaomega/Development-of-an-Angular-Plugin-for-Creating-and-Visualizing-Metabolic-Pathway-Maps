@@ -24,6 +24,7 @@ import {HomeModule} from './home/home.module';
 import {MaterialModule} from './material-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+
 // Configs
 const config = new AuthServiceConfig([
   {
