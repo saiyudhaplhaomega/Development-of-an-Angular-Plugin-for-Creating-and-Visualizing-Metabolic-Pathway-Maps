@@ -1,5 +1,6 @@
-import {Component, Inject} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {UploadProgressService} from '../../../core/services/upload-progress.service';
+
 
 export interface DialogData {
   proteinreportfilename: string;
@@ -16,16 +17,14 @@ export interface DialogData {
 
 export class ProphaneJobSubmissionDialogComponent {
 
-  progressData: DialogData;
+  progress: number;
 
-  constructor(
-    public dialogRef: MatDialogRef<ProphaneJobSubmissionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.progressData = data;
-    }
+  constructor(private _uploadProgressService: UploadProgressService) {
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  }
+
+  ngOnInit(){
+    this._uploadProgressService.currentProgress.subscribe(progress => this.progress = progress);
   }
 
 }
