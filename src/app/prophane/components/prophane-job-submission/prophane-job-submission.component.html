@@ -306,7 +306,6 @@
               </ng-container>
             </div>
             <!-- The List of already added optionstrings -->
-            <!-- TODO: there are several types of optionstrings and their displayed item is different -->
             <ng-container *ngFor="let algoSel of task.optionstring">
               <ng-container *ngIf="algoSel.valueType == 'none'">
                 <div class="input-group mb-3">
@@ -381,12 +380,6 @@
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
-                  </div>
-                  <div class="input-group-append custom-select">
-                    <mat-select [(value)]="task.evalue" placeholder="Custom">
-                      <mat-option *ngFor="let evalueRange of evalueOptions"
-                                  [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                    </mat-select>
                   </div>
                   <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
                     —
@@ -490,7 +483,6 @@
               </ng-container>
             </div>
             <!-- The List of already added optionstrings -->
-            <!-- TODO: there are several types of optionstrings and their displayed item is different -->
             <ng-container *ngFor="let algoSel of task.optionstring">
               <ng-container *ngIf="algoSel.valueType == 'none'">
                 <div class="input-group mb-3">
@@ -563,12 +555,6 @@
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
-                  </div>
-                  <div class="input-group-append custom-select">
-                    <mat-select [(value)]="task.evalue" placeholder="Custom">
-                      <mat-option *ngFor="let evalueRange of evalueOptions"
-                                  [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                    </mat-select>
                   </div>
                   <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
                     —

@@ -216,19 +216,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     switch (event.value) {
       case 'hmmscan': {
         task.optionstring = [
-          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
         ];
         break;
       }
       case 'hmmsearch' : {
         task.optionstring = [
-          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'}
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
         ];
         break;
       }
       case 'emapper' : {
         task.optionstring = [
-          {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+          {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
           {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
         ];
         break;
@@ -236,8 +236,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       case 'diamond blastp' : {
         console.log('setting new tax ');
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
-          {param: 'more-sensitive', valueType: 'none', defaultValue: ''}
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+          {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
         ];
         break;
       }
@@ -320,9 +320,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
       optionstring: [
-        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
-        {param: 'more-sensitive', valueType: 'none', defaultValue: ''}
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+        {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
       ], tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks
+      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []}
     });
   }
 
@@ -333,8 +334,9 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
       optionstring: [
         {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
-        {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
-      ], tasklabel: 'Functional Annotation Task ' + this.functasks
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
+      ], tasklabel: 'Functional Annotation Task ' + this.functasks,
+      formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
     });
   }
 
@@ -403,7 +405,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     console.log(task.name);
     console.log(task.formOptionStringSelection.param);
     console.log(task.optionstring.length);
-    if task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
     console.log(task.optionstring.length);
