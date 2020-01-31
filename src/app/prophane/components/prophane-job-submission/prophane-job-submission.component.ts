@@ -406,20 +406,15 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.proteinReportFile = null;
   }
 
-  addOptionString(task) {
-    console.log(task.name);
-    console.log(task.formOptionStringSelection.param);
-    console.log(task.optionstring.length);
+  addOptionString(task, selectBox) {
     if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
-    console.log(task.optionstring.length);
+    task.formOptionStringSelection = undefined;
   }
 
   removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
-    console.log(task.optionstring.length);
     task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
-    console.log(task.optionstring.length);
   }
 
 
