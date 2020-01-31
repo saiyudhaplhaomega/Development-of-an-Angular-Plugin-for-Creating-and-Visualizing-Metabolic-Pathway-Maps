@@ -1,6 +1,6 @@
 import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { PeptideData } from '../mpa-table/mpa-table.component';
+import { PeptideData } from '../../objects/tableobjects';
 
 @Component({
   selector: 'app-peptide-table',
@@ -39,5 +39,9 @@ export class PeptideTableComponent implements AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  log(event) {
+    console.log(event);
   }
 }

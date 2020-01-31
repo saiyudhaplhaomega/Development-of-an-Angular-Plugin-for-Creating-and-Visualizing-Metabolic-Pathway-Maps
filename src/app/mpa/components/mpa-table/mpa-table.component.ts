@@ -2,6 +2,7 @@ import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ProteinGroup, PeptideData, ProteinData } from '../../objects/tableobjects';
 
 @Component({
   selector: 'app-mpa-table',
@@ -84,11 +85,6 @@ export function createNewProtein(id: number): ProteinData {
   };
 }
 
-export interface ProteinData {
-  protein_uuid: string;
-  protein_accession: string;
-}
-
 function createNewPeptide(id: number): PeptideData {
 
   return {
@@ -103,48 +99,4 @@ export function createNewProteinGroup(id: number): ProteinGroup {
     representative_accession: Math.random().toString(36).substring(7),
     representative_description: Math.random().toString(36).substring(7),
   };
-}
-
-export interface PeptideData {
-  peptide_spectrum_matches: PSM[];
-  peptide_sequence: string;
-}
-
-export interface PGPeptideList {
-  proteingroup_uuid: string;
-  experiment_uuid: string;
-  peptides: PeptideData[];
-}
-
-export interface ProtPeptideList {
-  protein_uuid: string;
-  experiment_uuid: string;
-  peptides: PeptideData[];
-}
-
-export interface PSM {
-  peptide: PeptideData;
-  spectrum: Spectrum;
-  search_engine: string;
-  q_value: number;
-}
-
-export interface Spectrum {
-  uuid: string;
-}
-
-export interface ProteinGroup {
-  proteingroup_uuid: string;
-  representative_accession: string;
-  representative_description: string;
-}
-
-export interface ProteinGroupList {
-  experiment_uuid: string;
-  protein_groups: ProteinGroup[];
-}
-
-export interface ProteinList {
-  proteingroup_uuid: string;
-  proteins: ProteinData[];
 }
