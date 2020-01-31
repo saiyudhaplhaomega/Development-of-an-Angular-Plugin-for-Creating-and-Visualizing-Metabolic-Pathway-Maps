@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
+import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {HttpEventType} from '@angular/common/http';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
@@ -26,6 +27,7 @@ import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {Observable} from 'rxjs';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -80,7 +82,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // constructor and init
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
               private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal) {
+              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -94,6 +96,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   ngOnInit(): void {
     // TODO: more inits?
     this.requestNewJob();
+    this._uploadProgressService.currentProgress.subscribe(progress => this.fastaProgress = progress);
   }
 
   // Server job related methods
@@ -145,7 +148,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
+    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, { disableClose: true,
       data: {proteinreportfilename: this.proteinReportFile.name,
         fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress}
     });
@@ -154,11 +157,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   uploadFasta(): void {
     console.log('upload triggered ' + this.fastaFile);
     if (this.fastaFile) {
+      this._uploadProgressService.addToTotal(this.fastaFile.size);
       this.uploaderService.postFile(this.fastaFile,
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.fastaProgress = Math.round((event.loaded / event.total) * 100);
+            this._uploadProgressService.changeFastaLoaded(event.loaded)
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;
@@ -173,11 +177,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   uploadCSV(): void {
     console.log('upload triggered ' + this.proteinReportFile);
     if (this.proteinReportFile) {
+      this._uploadProgressService.addToTotal(this.proteinReportFile.size);
       this.uploaderService.postFile(this.proteinReportFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.proteinReportProgress = Math.round((event.loaded / event.total) * 100);
+            this._uploadProgressService.changeReportLoaded(event.loaded)
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;

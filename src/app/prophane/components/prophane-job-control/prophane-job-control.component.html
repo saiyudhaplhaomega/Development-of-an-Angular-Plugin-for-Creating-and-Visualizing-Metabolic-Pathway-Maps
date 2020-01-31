@@ -11,8 +11,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="jobs == undefined || jobs.length < 1">
-      <td colspan="6"><span class="align-content-center">no jobs yet</span></td>
+    <tr *ngIf="jobs == undefined">
+      <td colspan="6" style="background-color: white;"><mat-progress-bar mode="indeterminate"></mat-progress-bar></td>
+    </tr>
+    <tr *ngIf="jobs != undefined && jobs.length < 1">
+      <td colspan="6"><span class="align-content-center">no jobs yet.</span></td>
     </tr>
     <tr *ngFor="let job of jobs; index as i">
       <th scope="row">{{ i + 1 }}</th>

@@ -11,6 +11,7 @@ import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
 import {FileUploaderService} from './core/services/file-uploader.service';
+import {UploadProgressService} from './core/services/upload-progress.service';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
 import {AuthGuard} from './core/services/auth-guard.service';
 import {DbsearchcontentService} from './mpa/components/database-search-page/services/dbsearchcontent.service';
@@ -22,6 +23,7 @@ import {MpaModule} from './mpa/mpa.module';
 import {HomeModule} from './home/home.module';
 import {MaterialModule} from './material-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+
 
 // Configs
 const config = new AuthServiceConfig([
@@ -63,6 +65,7 @@ export function provideConfig() {
     },
     WebserveraddressService,
     FileUploaderService,
+    UploadProgressService,
     DbsearchcontentService,
     NavService,
     DataService,
