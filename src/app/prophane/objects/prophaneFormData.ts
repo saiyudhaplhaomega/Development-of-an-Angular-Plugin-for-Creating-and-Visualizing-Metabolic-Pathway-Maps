@@ -2,6 +2,7 @@ import {ProphaneReportStyle} from '../components/prophane-job-submission/prophan
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
+import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
@@ -29,21 +30,12 @@ export const databaseOptions: object[] = [
   {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
   {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
 ];
-export const selectedOptionString = [
+export const defaultOptionString = [
   {param: 'header', valueType: 'none', defaultValue: ''},
   {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
   {param: 'top', valueType: 'number', defaultValue: '0.0'}];
 
-export const annotationTasks: ProphaneAnnotationTaskObject[] =
-  [
-    {
-      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task 1'
-    },
-    {
-      scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task 1'
-    }];
+
 
 export const evalueOptions: object[] = [
   {id: 0, numerical: '0.01', text: 'Relaxed'},
@@ -52,102 +44,145 @@ export const evalueOptions: object[] = [
 ];
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
-  {id: 0, name: 'accessions starting with', valueString: 'start', label: '', regex: ''},
-  {id: 1, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
-  {id: 2, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
-  {id: 3, name: 'none', valueString: 'none', label: '', regex: ''}
+  {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
+  {id: 1, name: 'accessions starting with', valueString: 'start', label: '', regex: ''},
+  {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
+  {id: 3, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
+];
+
+export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
+  {scope: 'Function', database: 'eggnog', databaseversion: 'latest',
+    algorithm: 'emapper', tasklabel: 'Functional Annotation Task 1',
+    optionstring: [
+      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
+    ],
+    formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+  },
+  {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest',
+    algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',
+    optionstring: [
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+    ],
+    formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []}
+  }
 ];
 
 export const optionStrings: object[] = [
   {dbitem: 'emapper', options: [
-      {param: 'guessdb', valueType: 'none', defaultValue: ''},
-      {param: 'tax_scope', valueType: 'none', defaultValue: ''},
-      {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one',
+      {param: 'guessdb', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'tax_scope', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: '-1', max: '-1',
         values: ['one2one', 'many2one', 'one2many', 'many2many', 'all']},
-      {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental',
+      {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: '-1', max: '-1',
         values: ['experimental', 'non-electronic']},
-      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1'},
-      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
-      {param: 'hmm_score', valueType: 'number', defaultValue: '0.0'},
-      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '1'},
-      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0.0'},
-      {param: 'Z', valueType: 'int', defaultValue: '1'},
-      {param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62',
+      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+      {param: 'hmm_score', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'Z', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62', min: '-1', max: '-1',
         values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30']},
-      {param: 'gapopen', valueType: 'number', defaultValue: '0.0'},
-      {param: 'gapextend', valueType: 'number', defaultValue: '0.0'},
-      {param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.0'},
-      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '0.0'},
-      {param: 'm', valueType: 'enum', defaultValue: 'diamond',
+      {param: 'gapopen', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'gapextend', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1',
         values: ['diamond', 'hmmer']},
     ]},
   {dbitem: 'hmmscan', options: [
       // TODO: this 'evalue' seems wrong
-      {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
-      {param: 'T', valueType: 'number', defaultValue: '0.0'},
-      {param: 'domE', valueType: 'number', defaultValue: '0.0'},
-      {param: 'domT', valueType: 'number', defaultValue: '0.0'},
-      {param: 'incE', valueType: 'number', defaultValue: '0.0'},
-      {param: 'incT', valueType: 'number', defaultValue: '0.0'},
-      {param: 'incdomE', valueType: 'number', defaultValue: '0.0'},
-      {param: 'incdomT', valueType: 'number', defaultValue: '0.0'},
-      {param: 'F1', valueType: 'number', defaultValue: '0.0'},
-      {param: 'F2', valueType: 'number', defaultValue: '0.0'},
-      {param: 'F3', valueType: 'number', defaultValue: '0.0'},
-      {param: 'nobias', valueType: 'none', defaultValue: ''},
-      {param: 'nonull2', valueType: 'none', defaultValue: ''},
-      {param: 'Z', valueType: 'int', defaultValue: '1'},
-      {param: 'domZ', valueType: 'int', defaultValue: '1'},
-      {param: 'seed', valueType: 'int', defaultValue: '1'},
-      {param: 'evalue', valueType: 'evalue', defaultValue: '0.01'},
-      {param: 'cut_ga', valueType: 'none', defaultValue: ''},
-      {param: 'cut_nc', valueType: 'none', defaultValue: ''},
-      {param: 'cut_tc', valueType: 'none', defaultValue: ''}
+      {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'domE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incdomE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F1', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F2', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F3', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'nobias', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'nonull2', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'Z', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'domZ', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'seed', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '-1', max: '-1', values: []},
+      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
     ]},
-
+  {dbitem: 'hmmsearch', options: [
+      // TODO: this 'evalue' seems wrong
+      {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'domE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incdomE', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F1', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F2', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'F3', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'nobias', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'nonull2', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'Z', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'domZ', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'seed', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '-1', max: '-1', values: []},
+      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+    ]},
   {dbitem: 'diamond blastp', options: [
-      {param: 'header', valueType: 'none', defaultValue: ''},
-      {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
-      {param: 'top', valueType: 'number', defaultValue: '0.0'},
-      {param: 'range-culling', valueType: 'none', defaultValue: ''},
-      {param: 'min-score', valueType: 'number', defaultValue: '0.0'},
-      {param: 'id', valueType: 'number', defaultValue: '0.0'},
-      {param: 'sensitive', valueType: 'none', defaultValue: ''},
-      {param: 'more-sensitive', valueType: 'none', defaultValue: ''},
-      {param: 'block-size', valueType: 'number', defaultValue: '0.0'},
-      {param: 'index-chunks', valueType: 'int', defaultValue: '1'},
-      {param: 'gapopen', valueType: 'number', defaultValue: '0.0'},
-      {param: 'gapextend', valueType: 'number', defaultValue: '0.0'},
-      {param: 'frameshift', valueType: 'number', defaultValue: '0.0'},
-      {param: 'matrix', valueType: 'string', defaultValue: ''},
-      {param: 'custom-matrix', valueType: 'string', defaultValue: ''},
-      {param: 'lambda', valueType: 'number', defaultValue: '0.0'},
-      {param: 'K', valueType: 'number', defaultValue: '0.0'},
-      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '0', values: [0, 1]},
-      {param: 'masking', valueType: 'enum', defaultValue: '0', values: [0, 1]},
-      {param: 'taxonmap', valueType: 'string', defaultValue: ''},
-      {param: 'taxonlist', valueType: 'string', defaultValue: ''},
-      {param: 'algo', valueType: 'enum', defaultValue: '0', values: [0, 1]},
-      {param: 'bin', valueType: 'int', defaultValue: '1'},
-      {param: 'min-orf', valueType: 'none', defaultValue: ''},
-      {param: 'freq-sd', valueType: 'number', defaultValue: '0.0'},
-      {param: 'id2', valueType: 'number', defaultValue: '0.0'},
-      {param: 'window', valueType: 'number', defaultValue: '0.0'},
-      {param: 'xdrop', valueType: 'number', defaultValue: '0.0'},
-      {param: 'ungapped-score', valueType: 'number', defaultValue: '0.0'},
-      {param: 'hit-band', valueType: 'string', defaultValue: ''},
-      {param: 'hit-score', valueType: 'number', defaultValue: '0.0'},
-      {param: 'gapped-xdrop', valueType: 'number', defaultValue: '0.0'},
-      {param: 'band', valueType: 'string', defaultValue: ''},
-      {param: 'shapes', valueType: 'int', defaultValue: '1'},
-      {param: 'shape-mask', valueType: 'int', defaultValue: '1'},
-      {param: 'index-mode', valueType: 'enum', defaultValue: '0', values: [0, 1]},
-      {param: 'rank-ratio', valueType: 'none', defaultValue: ''},
-      {param: 'rank-ratio2', valueType: 'none', defaultValue: ''},
-      {param: 'max-hsps', valueType: 'int', defaultValue: '1'},
-      {param: 'range-cover', valueType: 'number', defaultValue: '0.0'},
-      {param: 'dbsize', valueType: 'int', defaultValue: '1'},
-      {param: 'evalue', valueType: 'evalue', defaultValue: '0.0'},
-      {param: 'query-cover', valueType: 'number', defaultValue: '0.0'},
-      {param: 'max-target-seqs', valueType: 'int', defaultValue: '1'},
-    ]}];
+      {param: 'header', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'strand', valueType: 'enum', defaultValue: 'both', min: '-1', max: '-1', values: ['both', 'minus', 'plus']},
+      {param: 'top', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'range-culling', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'min-score', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'id', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'block-size', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'index-chunks', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'gapopen', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'gapextend', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'frameshift', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'matrix', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'custom-matrix', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'lambda', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'K', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '0', min: '-1', max: '-1', values: [0, 1]},
+      {param: 'masking', valueType: 'enum', defaultValue: '0', min: '-1', max: '-1', values: [0, 1]},
+      {param: 'taxonmap', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'taxonlist', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'algo', valueType: 'enum', defaultValue: '0', min: '-1', max: '-1', values: [0, 1]},
+      {param: 'bin', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'min-orf', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'freq-sd', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'id2', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'window', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'xdrop', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'ungapped-score', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'hit-band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'hit-score', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'gapped-xdrop', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'shapes', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'shape-mask', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'index-mode', valueType: 'enum', defaultValue: '0', min: '-1', max: '-1', values: [0, 1]},
+      {param: 'rank-ratio', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'rank-ratio2', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
+      {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'range-cover', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'dbsize', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'query-cover', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+      {param: 'max-target-seqs', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
+    ]
+  }
+];

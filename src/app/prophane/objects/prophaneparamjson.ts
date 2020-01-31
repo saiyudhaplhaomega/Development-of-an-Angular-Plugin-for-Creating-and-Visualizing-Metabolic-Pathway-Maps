@@ -14,12 +14,19 @@ export interface ProphaneParamJSON {
 }
 
 export class ProphaneParamObject implements ProphaneParamJSON {
+
   reportStyle: ProphaneReportStyle;
   contaminationOption: ProphaneContaminationOptionObject;
   jobLabel: string;
   quantification: ProphaneQuantDataObject;
   sampleGroups: ProphaneSampleGroupObject[];
   annotationTasks: ProphaneAnnotationTaskObject[];
+
+  constructor () {
+    this.contaminationOption = new ProphaneContaminationOptionObject();
+    this.sampleGroups = [] as ProphaneSampleGroupObject[];
+  }
+
 }
 
 

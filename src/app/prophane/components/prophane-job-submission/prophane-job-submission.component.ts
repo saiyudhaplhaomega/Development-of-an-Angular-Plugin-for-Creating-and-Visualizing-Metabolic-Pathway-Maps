@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
-import {MatRadioChange} from '@angular/material/radio';
+import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {HttpEventType} from '@angular/common/http';
-import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
-import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
@@ -13,17 +11,23 @@ import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {Router} from '@angular/router';
 
-import {ProphaneReportStyle} from './prophane-job-submission-formdata';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { prophaneReportStyles } from '../../objects/prophaneFormData';
 import { contaminationdata } from '../../objects/prophaneFormData';
 import { quantdata } from '../../objects/prophaneFormData';
 import { evalueOptions } from '../../objects/prophaneFormData';
-import { annotationTasks } from '../../objects/prophaneFormData';
-import { selectedOptionString } from '../../objects/prophaneFormData';
+import { defaultAnnotationTasks } from '../../objects/prophaneFormData';
+import { defaultOptionString } from '../../objects/prophaneFormData';
 import { databaseOptions } from '../../objects/prophaneFormData';
 import { optionStrings } from '../../objects/prophaneFormData';
+import { ProphaneJobSubmissionDialogComponent } from './prophane-job-submission-dialog';
+import { MatDialog } from '@angular/material';
+import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
+import {Observable} from 'rxjs';
+import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
+import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+
 
 @Component({
   selector: 'app-prophane-job-page',
@@ -34,12 +38,6 @@ import { optionStrings } from '../../objects/prophaneFormData';
 })
 
 export class ProphaneJobSubmissionComponent implements OnInit {
-
-  //currentProphaneJob = new ProphaneJobObject();
-  //currentProphaneJob.parameters = new ProphaneParamObject();
-  //currentProphaneJob.parameters.reportStyle = prophaneReportStyles[0];
-
-  reportStyles = prophaneReportStyles;
 
   // Website related variables
   expertView = false;
@@ -56,8 +54,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
 
   // job data is tracked in this variable
-  currentProphaneJob: ProphaneJobObject;
 
+  currentProphaneJob: ProphaneJobObject;
+  // currentProphaneJob = new ProphaneJobObject();
+
+  // currentProphaneJob.parameters.reportStyle = prophaneReportStyles[0];
+
+  // this is necessary because typescript doesnt like constants from other files
+  reportStyles = prophaneReportStyles;
+  contoptions = contaminationdata;
+  quantdata = quantdata;
+  evalueOptions = evalueOptions;
+  annotationTasks = defaultAnnotationTasks;
+  defaultOptionString = defaultOptionString;
+  databaseOptions = databaseOptions;
+  optionStrings = optionStrings;
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -69,8 +80,9 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   contval = '';
 
   // constructor and init
-  constructor(private uploaderService: FileUploaderService, private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal) {
+  constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
+              private jsonUpload: AuthenticatedSerializableObjectUploaderService,
+              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -84,6 +96,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   ngOnInit(): void {
     // TODO: more inits?
     this.requestNewJob();
+    this._uploadProgressService.currentProgress.subscribe(progress => this.fastaProgress = progress);
   }
 
   // Server job related methods
@@ -93,17 +106,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     // TODO: move to init?
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
-    this.currentProphaneJob.parameters.contaminationOption = contaminationdata[3];
+    this.currentProphaneJob.parameters.contaminationOption = this.contoptions[3];
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
-    this.currentProphaneJob.parameters.reportStyle = prophaneReportStyles[2];
-    this.currentProphaneJob.parameters.quantification = quantdata[0];
+    this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
+    this.currentProphaneJob.parameters.quantification = this.quantdata[0];
+    this.currentProphaneJob.parameters.annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks));
+    this.currentProphaneJob.parameters.sampleGroups = [] as ProphaneSampleGroupObject[];
+    console.log('length: ' + this.currentProphaneJob.parameters.sampleGroups.length)
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-    console.log(this.currentProphaneJob.parameters.reportStyle.name)
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
     console.log('ID: ' + this.currentProphaneJob);
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
@@ -133,25 +148,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-    this.modalService.open(
-      '<h2 mat-dialog-title>Please be patient while your data is being uploaded:</h2>' +
-      '<div>' + this.proteinReportFile.name + ': ' +
-      '<mat-progress-bar *ngIf="csvProgress > 0" mode="determinate" [value]="csvProgress"></mat-progress-bar>' +
-      '</div>' +
-      '<div>' + this.fastaFile.name + ': ' +
-      '<mat-progress-bar *ngIf="fastaProgress > 0" mode="determinate" [value]="fastaProgress"></mat-progress-bar>' +
-      '</div>',
-      { centered: true, keyboard: false });
+    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, { disableClose: true,
+      data: {proteinreportfilename: this.proteinReportFile.name,
+        fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress}
+    });
   }
 
   uploadFasta(): void {
     console.log('upload triggered ' + this.fastaFile);
     if (this.fastaFile) {
+      this._uploadProgressService.addToTotal(this.fastaFile.size);
       this.uploaderService.postFile(this.fastaFile,
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.fastaProgress = Math.round((event.loaded / event.total) * 100);
+            this._uploadProgressService.changeFastaLoaded(event.loaded)
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;
@@ -166,11 +177,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   uploadCSV(): void {
     console.log('upload triggered ' + this.proteinReportFile);
     if (this.proteinReportFile) {
+      this._uploadProgressService.addToTotal(this.proteinReportFile.size);
       this.uploaderService.postFile(this.proteinReportFile,
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.proteinReportProgress = Math.round((event.loaded / event.total) * 100);
+            this._uploadProgressService.changeReportLoaded(event.loaded)
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;
@@ -197,24 +209,41 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   // methods for website functionality
+  paramCompare(o1, o2) {
+    console.log('comparator call' + (o1.id === o2.id));
+    //return o1.id === o2.id;
+    return true;
+  }
 
   // TODO: will soon be replaced
   setDefaultOptionString(event, task) {
+    console.log('setting default option ')
     switch (event.value) {
       case 'hmmscan': {
-        task.optionstring = '';
+        task.optionstring = [
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
+        ];
         break;
       }
       case 'hmmsearch' : {
-        task.optionstring = '';
+        task.optionstring = [
+          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
+        ];
         break;
       }
       case 'emapper' : {
-        task.optionstring = '-m diamond';
+        task.optionstring = [
+          {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+          {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
+        ];
         break;
       }
       case 'diamond blastp' : {
-        task.optionstring = '--more-sensitive';
+        console.log('setting new tax ');
+        task.optionstring = [
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+          {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+        ];
         break;
       }
       default : {
@@ -224,6 +253,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   setContaminationLabel(val) {
+    console.log('TEST: ' +  this.currentProphaneJob.parameters.contaminationOption.valueString);
     if (val === false) {
       val = this.currentProphaneJob.parameters.contaminationOption.valueString;
     }
@@ -294,7 +324,11 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.taskCounter++;
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: '--more-sensitive', evalue: '0.01', tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks
+      optionstring: [
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+        {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+      ], tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks,
+      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []}
     });
   }
 
@@ -303,7 +337,11 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.taskCounter++;
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: '-m diamond', evalue: '0.01', tasklabel: 'Functional Annotation Task ' + this.functasks
+      optionstring: [
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
+      ], tasklabel: 'Functional Annotation Task ' + this.functasks,
+      formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
     });
   }
 
@@ -362,27 +400,27 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   onCSVChange(files: FileList) {
     this.proteinReportFile = files[0];
-    // this.currentProphaneJob.prophaneJobUUID = 'e078eef0-0788-11ea-a792-b5c08a0d06a4';
-    // this.uploadCSV();
   }
 
   onSourceChange() {
     this.proteinReportFile = null;
   }
 
-  addOptionString(paramName: string) {
-    // TODO:
-    //this.currentProphaneJob.parameters.optionStrings.forEach(obj => {
-      // if (obj.dbitem === 'diamond blastp') {
-      //   obj.options.forEach(option => {
-      //
-      //   });
-      // }
-    //});
+  addOptionString(task) {
+    console.log(task.name);
+    console.log(task.formOptionStringSelection.param);
+    console.log(task.optionstring.length);
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+      task.optionstring.push(task.formOptionStringSelection);
+    }
+    console.log(task.optionstring.length);
   }
 
-  removeOptionString() {
-    // TODO: implement me
+  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    console.log(task.optionstring.length);
+    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
+    console.log(task.optionstring.length);
   }
+
 
 }

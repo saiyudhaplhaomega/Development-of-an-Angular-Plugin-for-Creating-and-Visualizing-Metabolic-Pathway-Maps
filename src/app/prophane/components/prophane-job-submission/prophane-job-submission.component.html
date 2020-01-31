@@ -48,14 +48,14 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="sourceSelect">Source</label>
             </div>
-            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle" id="sourceSelect"
+            <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle" [compareWith]="paramCompare" id="sourceSelect"
                         (selectionChange)="onSourceChange()">
               <mat-option *ngFor="let typeitem of this.reportStyles" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
           </div>
 
           <!-- MPA -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 0" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 0" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -70,7 +70,7 @@
           </div>
 
           <!-- Scaffold -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 1" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 1" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -86,7 +86,7 @@
           </div>
 
           <!-- Generic -->
-          <div *ngIf="currentProphaneJob.getReportStyleValueString() != undefined && currentProphaneJob.getReportStyleID() == 2" class="input-group mb-3">
+          <div *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 2" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
@@ -122,18 +122,22 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Exclude</span>
             </div>
-            <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption"
-                        (change)="setContaminationLabel(false)">
-              <mat-option *ngFor="let contitem of contaminationdata" [value]="contitem">{{contitem.name}}</mat-option>
+            <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption" [compareWith]="paramCompare"
+                        (selectionChange)="setContaminationLabel(false)">
+              <mat-option *ngFor="let contitem of this.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() < 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="text"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 2" type="text"
-                   class="form-control" [(ngModel)]="contval" placeholder="regular expression (PCRE)"
-                   (change)="setContaminationLabel(contval)">
-            <input *ngIf="currentProphaneJob.getContaminationOption() != undefined && currentProphaneJob.getContaminationOptionID() == 3" type="text"
-                   class="form-control" [(ngModel)]="contval" [disabled]="true" placeholder="">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 0" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" [disabled]="true" placeholder="">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" placeholder="text"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label" placeholder="text"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+            <input *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3" type="text"
+                   class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.regex" placeholder="regular expression (PCRE)"
+                   (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+
           </div>
         </div>
       </div>
@@ -150,8 +154,8 @@
           </h5>
         </div>
         <div class="card-body">
-          <div *ngIf="sampleGroups.length == 0">no group defined yet</div>
-          <ng-container *ngFor="let groupitem of sampleGroups">
+          <div *ngIf="currentProphaneJob.parameters.sampleGroups.length == 0">no group defined yet</div>
+          <ng-container *ngFor="let groupitem of currentProphaneJob.parameters.sampleGroups">
             <!-- Group name -->
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -171,7 +175,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Sample Name</span>
               </div>
-              <input *ngIf="selectedLevel == undefined || selectedLevel.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
+              <input *ngIf="currentProphaneJob.parameters.reportStyle == undefined || currentProphaneJob.parameters.reportStyle.id != 1" type="text" class="form-control" [(ngModel)]="sample.name">
               <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
               <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control" [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
               <div class="input-group-append">
@@ -208,7 +212,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text rki-blue-input">Quantification method</span>
             </div>
-            <mat-select class="custom-select" [(value)]="selectedQuant">
+            <mat-select class="custom-select" [(value)]="currentProphaneJob.parameters.quantification" [compareWith]="paramCompare">
               <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
             </mat-select>
           </div>
@@ -272,107 +276,119 @@
                   <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                     <ng-container *ngFor="let algo of dbitem.algorithm">
                       <mat-option [value]="algo">
-                        {{algo}}</mat-option>
+                        {{ algo }}</mat-option>
                     </ng-container>
                   </ng-container>
                 </ng-container>
               </mat-select>
             </div>
-
-            <!-- E-value-->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">E-Value</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.evalue">
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
-
 
             <!-- Option String -->
             <div class="input-group mb-3">
               <!-- The Dropbox that displays optionstrings that can be added -->
               <div class="input-group-prepend">
-                <span class="input-group-text">Option String</span>
+                <span class="input-group-text">Options</span>
               </div>
-              <mat-select class="custom-select" [(value)]="something"
-                          (selectionChange)="addOptionString()">
-                <ng-container *ngFor="let algo of optionStrings">
-                  <ng-container *ngIf="algo.dbitem == task.algorithm">
+              <ng-container *ngFor="let algo of optionStrings">
+                <ng-container *ngIf="algo.dbitem == task.algorithm">
+                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                              [(value)]="task.formOptionStringSelection" [compareWith]="paramCompare"
+                              placeholder="Choose Option">
                     <ng-container *ngFor="let dropDownItem of algo.options">
-                      <!-- TODO: add further check here to disallow already used options -->
                       <mat-option [value]="dropDownItem">
                         {{dropDownItem.param}}</mat-option>
                     </ng-container>
-                  </ng-container>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
+                    +
+                  </button>
                 </ng-container>
-              </mat-select>
-              <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='addOptionString(dropDownItem.param)'>
-                +
-              </button>
+              </ng-container>
             </div>
             <!-- The List of already added optionstrings -->
-            <!-- TODO: there are several types of optionstrings and their displayed item is different -->
-            <ng-container *ngFor="let algoSel of selectedOptionString">
+            <ng-container *ngFor="let algoSel of task.optionstring">
               <ng-container *ngIf="algoSel.valueType == 'none'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString()'>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
                     —
                   </button>
                 </div>
               </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'int'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'string'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'evalue'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
               <ng-container *ngIf="algoSel.valueType == 'enum'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
                   <div class="input-group-append custom-select">
-                  <mat-select [(value)]="somevalue" placeholder="Custom">
-                    <ng-container *ngFor="let enumVal of algoSel.values">
-                      <mat-option [value]="enumVal">
-                        {{enumVal}}</mat-option>
-                    </ng-container>
-                  </mat-select>
+                    <mat-select [(value)]="algoSel.defaultValue">
+                      <ng-container *ngFor="let enumVal of algoSel.values">
+                        <mat-option [value]="enumVal">
+                          {{enumVal}}</mat-option>
+                      </ng-container>
+                    </mat-select>
                   </div>
-                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString()'>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
                     —
                   </button>
                 </div>
               </ng-container>
+
               <ng-container *ngIf="algoSel.valueType == 'number'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <div class="input-group-append custom-select">
-                    <mat-select [(value)]="task.evalue" placeholder="Custom">
-                      <mat-option *ngFor="let evalueRange of evalueOptions"
-                                  [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                    </mat-select>
-                  </div>
-                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString()'>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
                     —
                   </button>
                 </div>
               </ng-container>
             </ng-container>
           </ng-container>
-          <!-- OLD Option String -->
-          <!--<div class="input-group mb-3">-->
-          <!--<div class="input-group-prepend">-->
-          <!--<span class="input-group-text">Option String</span>-->
-          <!--</div>-->
-          <!--<input class="form-control" [(ngModel)]="task.optionstring">-->
-          <!--</div>-->
+
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>Add Task
           </button>
 
@@ -380,6 +396,7 @@
       </div>
 
       <!-- Functional Annotation Task -->
+
       <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
@@ -445,29 +462,111 @@
 
             <!-- Option String -->
             <div class="input-group mb-3">
+              <!-- The Dropbox that displays optionstrings that can be added -->
               <div class="input-group-prepend">
-                <span class="input-group-text">Option String</span>
+                <span class="input-group-text">Options</span>
               </div>
-              <input class="form-control" [(ngModel)]="task.optionstring">
+              <ng-container *ngFor="let algo of optionStrings">
+                <ng-container *ngIf="algo.dbitem == task.algorithm">
+                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                              [(value)]="task.formOptionStringSelection"
+                              [compareWith]="paramCompare" placeholder="Choose Option">>
+                    <ng-container *ngFor="let dropDownItem of algo.options">
+                      <mat-option [value]="dropDownItem">
+                        {{dropDownItem.param}}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
+                    +
+                  </button>
+                </ng-container>
+              </ng-container>
             </div>
+            <!-- The List of already added optionstrings -->
+            <ng-container *ngFor="let algoSel of task.optionstring">
+              <ng-container *ngIf="algoSel.valueType == 'none'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
 
-            <!-- E-value-->
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">E-Value</span>
-              </div>
-              <input class="form-control" [(ngModel)]="task.evalue" [(value)]="task.evalue">
-              <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.evalue" placeholder="Custom">
-                  <mat-option *ngFor="let evalueRange of evalueOptions"
-                              [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <mat-divider class="mb-3"></mat-divider>
+              <ng-container *ngIf="algoSel.valueType == 'int'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'string'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'evalue'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
+                    <mat-option *ngFor="let evalueRange of evalueOptions"
+                                [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
+                  </mat-select>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="algoSel.valueType == 'enum'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <div class="input-group-append custom-select">
+                    <mat-select [(value)]="algoSel.defaultValue">
+                      <ng-container *ngFor="let enumVal of algoSel.values">
+                        <mat-option [value]="enumVal">
+                          {{enumVal}}</mat-option>
+                      </ng-container>
+                    </mat-select>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="algoSel.valueType == 'number'">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{algoSel.param}}</span>
+                  </div>
+                  <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeOptionString(algoSel, task)'>
+                    —
+                  </button>
+                </div>
+              </ng-container>
+            </ng-container>
           </ng-container>
+
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addFuncTask()'>Add Task
           </button>
+
         </div>
       </div>
 
@@ -493,13 +592,13 @@
             <tr>
               <th scope="row" class="ml-summary-col">Job Label:</th>
               <td>
-                {{ jobLabel }}
+                {{ currentProphaneJob.parameters.jobLabel }}
               </td>
             </tr>
             <tr>
               <th scope="row" class="ml-summary-col">Source:</th>
               <td>
-                {{ selectedLevel.name }}
+                {{ currentProphaneJob.parameters.reportStyle.name }}
               </td>
             </tr>
             <tr>
@@ -518,13 +617,13 @@
             </tr>
             <tr>
               <th scope="row"
-                  [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''"
+                  [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''"
                   class="ml-summary-col">
                 Exclude:
               </th>
               <td
-                [ngClass]="selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == '' ? 'table-warning' : ''">
-                {{ selectedContaminationOption.name + " " + contaminationLabel.valueString }}
+                [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''">
+                {{ currentProphaneJob.parameters.contaminationOption.name + " " + currentProphaneJob.parameters.contaminationOption.label }}
               </td>
             </tr>
             <tr>
@@ -539,13 +638,13 @@
             <thead>
             </thead>
             <tbody>
-            <tr *ngIf="sampleGroups.length == 0">
+            <tr *ngIf="currentProphaneJob.parameters.sampleGroups.length == 0">
               <th scope="row" class="ml-summary-col" class="ml-summary-col">Sample Groups:</th>
               <td>
                 not defined (expert option)
               </td>
             </tr>
-            <tr *ngFor="let group of sampleGroups">
+            <tr *ngFor="let group of currentProphaneJob.parameters.sampleGroups">
               <th scope="row" class="ml-summary-col">
                 Sample Group:
               </th>
@@ -571,7 +670,7 @@
             <tr>
               <th scope="row" class="ml-summary-col">Quantification Method:</th>
               <td>
-                {{ selectedQuant.name }}
+                {{ currentProphaneJob.parameters.quantification.name }}
               </td>
             </tr>
             <tr>
@@ -634,7 +733,7 @@
                   <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
                   <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
                   <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
-                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                  <mat-list-item> options: {{ task.optionstring }} </mat-list-item>
                 </mat-list>
               </td>
             </tr>
@@ -648,7 +747,7 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(!proteinReportFile || !fastaFile || (selectedContaminationOption.valueString != 'none' && contaminationLabel.valueString == ''))"
+                  [disabled]="(jobUnavailable || !proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>

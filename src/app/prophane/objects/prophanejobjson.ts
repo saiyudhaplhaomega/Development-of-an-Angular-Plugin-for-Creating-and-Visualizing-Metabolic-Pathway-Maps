@@ -1,5 +1,6 @@
-import {ProphaneParamJSON} from './prophaneparamjson';
+import {ProphaneParamObject} from './prophaneparamjson';
 import {ProphaneReportStyle} from '../components/prophane-job-submission/prophane-job-submission-formdata';
+import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 
 export interface ProphaneJobJSON {
   prophaneJobUUID: string;
@@ -9,7 +10,7 @@ export interface ProphaneJobJSON {
   status: string;
   statusmessage: string;
   downloadURL: string;
-  parameters: ProphaneParamJSON;
+  parameters: ProphaneParamObject;
 }
 
 export class ProphaneJobObject implements ProphaneJobJSON {
@@ -20,7 +21,12 @@ export class ProphaneJobObject implements ProphaneJobJSON {
   status: string;
   statusmessage: string;
   downloadURL: string;
-  parameters: ProphaneParamJSON;
+  parameters: ProphaneParamObject;
+
+  constructor () {
+    this.parameters = new ProphaneParamObject();
+    console.log('created a param object');
+  }
 
   getReportStyle() {
     return this.parameters.reportStyle;

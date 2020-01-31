@@ -2546,3 +2546,26 @@ a.mat-tab-link:hover{
 .min-w-600{
   min-width: 600px !important;
 }
+
+.uploadprogress {
+  width: 40em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadprogresstext {
+  color: #003f97 !important;
+  font-size: 30px !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+.uploadsuccesstext {
+  color: #009300 !important;
+  font-size: 30px !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+
