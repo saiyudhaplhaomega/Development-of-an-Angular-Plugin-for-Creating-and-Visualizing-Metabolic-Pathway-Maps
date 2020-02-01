@@ -2,7 +2,7 @@ import {ProphaneReportStyle} from '../components/prophane-job-submission/prophan
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
-import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
+import { sortBy } from 'lodash';
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
@@ -70,7 +70,7 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
 ];
 
 export const optionStrings: object[] = [
-  {dbitem: 'emapper', options: [
+  {dbitem: 'emapper', options: sortBy([
       {param: 'guessdb', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'tax_scope', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: '-1', max: '-1',
@@ -93,8 +93,9 @@ export const optionStrings: object[] = [
       {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '-1', max: '-1', values: []},
       {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1',
         values: ['diamond', 'hmmer']},
-    ]},
-  {dbitem: 'hmmscan', options: [
+    ], "param")
+  },
+  {dbitem: 'hmmscan', options: sortBy([
       {param: 'T', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
       {param: 'domE', valueType: 'evalue', defaultValue: '10', min: '0.0', max: '10.0', values: []},
       {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
@@ -114,8 +115,9 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
-    ]},
-  {dbitem: 'hmmsearch', options: [
+    ], "param")
+  },
+  {dbitem: 'hmmsearch', options: sortBy([
       {param: 'T', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
       {param: 'domE', valueType: 'evalue', defaultValue: '10', min: '0.0', max: '10.0', values: []},
       {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
@@ -135,8 +137,9 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
-    ]},
-  {dbitem: 'diamond blastp', options: [
+    ], "param")
+  },
+  {dbitem: 'diamond blastp', options: sortBy([
       {param: 'strand', valueType: 'enum', defaultValue: 'both', min: '-1', max: '-1', values: ['both', 'minus', 'plus']},
       {param: 'min-score', valueType: 'number', defaultValue: '20', min: '-1', max: '-1', values: []},
       {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: []},
@@ -171,6 +174,6 @@ export const optionStrings: object[] = [
       {param: 'range-cover', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
       {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '-1', max: '-1', values: []},
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
-    ]
+    ], "param")
   }
 ];
