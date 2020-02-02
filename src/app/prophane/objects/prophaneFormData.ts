@@ -141,7 +141,7 @@ export const optionStrings: object[] = [
   },
   {dbitem: 'diamond blastp', options: sortBy([
       {param: 'strand', valueType: 'enum', defaultValue: 'both', min: '-1', max: '-1', values: ['both', 'minus', 'plus']},
-      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '-1', max: '-1', values: []},
+      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '0', max: undefined, values: []},
       {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: []},
       {param: 'query-cover', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: []},
       {param: 'subject-cover', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: []},

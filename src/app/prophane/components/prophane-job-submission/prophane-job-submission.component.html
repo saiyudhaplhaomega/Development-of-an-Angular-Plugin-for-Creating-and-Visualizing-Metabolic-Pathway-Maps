@@ -328,7 +328,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control" [ngStyle]="{'background-color': isInt(algoSel.defaultValue, algoSel.min, algoSel.max, i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -344,7 +344,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control" [ngStyle]="{'background-color': isString(algoSel.defaultValue, i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
                             (click)='removeOptionString(algoSel, task)'>
@@ -359,7 +359,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input class="form-control" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
                     <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                       <mat-option *ngFor="let evalueRange of evalueOptions"
@@ -396,7 +396,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control" [ngStyle]="{'background-color': isNumber(algoSel.defaultValue, algoSel.min, algoSel.max, i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -751,8 +751,8 @@
                 <mat-list dense>
                   <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
                   <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-                  <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
-                  <mat-list-item> option string: {{ task.optionstring }} </mat-list-item>
+                  <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
+                  <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
                 </mat-list>
               </td>
             </tr>
@@ -784,7 +784,7 @@
                   <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
                   <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
                   <mat-list-item> e-value: {{ task.evalue }} </mat-list-item>
-                  <mat-list-item> options: {{ task.optionstring }} </mat-list-item>
+                  <mat-list-item> advanced options: {{ task.optionstring }} </mat-list-item>
                 </mat-list>
               </td>
             </tr>
@@ -798,7 +798,7 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(jobUnavailable || !proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
+                  [disabled]="(formInputError.length > 0 || jobUnavailable || !proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>

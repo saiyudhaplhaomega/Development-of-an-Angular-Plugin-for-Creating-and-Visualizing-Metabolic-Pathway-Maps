@@ -51,7 +51,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   jobUnavailableMessage = 'Service unavailable';
   // global variable that should be able to disable the website (because no server connection or server busy)
   jobUnavailable = false;
-
+  formErrorColor = "#f8d7da"
 
   // job data is tracked in this variable
 
@@ -69,6 +69,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   defaultOptionString = defaultOptionString;
   databaseOptions = databaseOptions;
   optionStrings = optionStrings;
+  formInputError = [];
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -78,6 +79,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   functasks = 1;
   taskCounter = 3;
   contval = '';
+
 
   // constructor and init
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
@@ -95,15 +97,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: more inits?
-    this.requestNewJob();
     this._uploadProgressService.currentProgress.subscribe(progress => this.fastaProgress = progress);
-  }
 
-  // Server job related methods
-
-  // method is called on init, checks server connection and if server is full
-  requestNewJob(): void {
-    // TODO: move to init?
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.contaminationOption = this.contoptions[3];
@@ -113,16 +108,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
     this.currentProphaneJob.parameters.annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks));
     this.currentProphaneJob.parameters.sampleGroups = [] as ProphaneSampleGroupObject[];
-    console.log('length: ' + this.currentProphaneJob.parameters.sampleGroups.length)
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
+
+    this.requestNewJob();
+  }
+
+  // Server job related methods
+
+  // method is called on init, checks server connection and if server is full
+  requestNewJob(): void {
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    console.log('ID: ' + this.currentProphaneJob);
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
-      console.log('returned object: ' + res);
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
       if (res.status === 'JOB_REJECTED') {
@@ -130,8 +130,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       } else {
         this.jobUnavailable = false;
       }
-      // console.log(this.prophaneJobIDReady);
-      console.log(this.currentProphaneJob);
     });
 
   }
@@ -143,8 +141,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.uploadCSV();
     this.uploadFasta();
     this.startProphaneJob();
-    // TODO: add redirect to Job Control
-    this.router.navigateByUrl('/jobs');
   }
 
   openUploadDialog(): void {
@@ -406,7 +402,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.proteinReportFile = null;
   }
 
-  addOptionString(task, selectBox) {
+  addOptionString(task) {
     if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
@@ -417,5 +413,96 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
   }
 
+  checkFormInput(target, algoSel){
+    var err = false;
+    console.log(target.id)
+    if (algoSel.param == "evalue") {
+      if (target.value === undefined || !target.value.match("^[0-9]+(\[.\][0-9]*)?$") || target.value < 0) {
+        target.style.background = "#f8d7da";
+        this.formInputError.push(target.id)
+        err = true
+      }
+    }
 
+    if (err === false) {
+      target.style.background = "white"
+      this.formInputError = this.formInputError.filter(id => id !== target.id);
+    }
+  }
+
+  isEvalue(value, elemid) {
+    if (value.match("^[0-9]+(\[.\][0-9]*)?$")) {
+      this.removeFormInputErr(elemid);
+      return true;
+    }
+    else {
+      this.addFormInputErr(elemid);
+      return false;
+    }
+  }
+
+  isNumber(value, min, max, elemid) {
+    if (!value.match("^-?[0-9]+(\[.\][0-9]*)?$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+      this.addFormInputErr(elemid);
+      return false;
+    }
+    else {
+      this.removeFormInputErr(elemid);
+      return true;
+    }
+  }
+
+  isInt(value, min, max, elemid) {
+    if (!value.match("^-?[0-9]+$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+      this.addFormInputErr(elemid);
+      return false;
+    }
+    else {
+      this.removeFormInputErr(elemid);
+      return true;
+    }
+  }
+
+  isString(value, elemid) {
+    if (value.length === 0) {
+      this.addFormInputErr(elemid);
+      return false;
+    }
+    else {
+      this.removeFormInputErr(elemid);
+      return true;
+    }
+  }
+
+  addFormInputErr(elemid) {
+    if (this.formInputError.indexOf(elemid) === -1) {
+      this.formInputError.push(elemid);
+    }
+  }
+
+  removeFormInputErr(elemid) {
+    this.formInputError = this.formInputError.filter(id => id !== elemid);
+  }
+
+  optionstringToString(optstr) {
+    var s = [];
+    var i;
+    if (optstr.length == 1) {
+      return '-';
+    }
+    for (i = 0; i < optstr.length; i++) {
+      if (optstr[i].valueType === 'none') {
+        s.push(optstr[i].param);
+      }
+      else if (optstr[i].param !== 'evalue') {
+        s.push(optstr[i].param + '=' + optstr[i].defaultValue);
+      }
+    }
+    return s.sort().join("; ");
+  }
+
+  getEvalue(optstr) {
+    return optstr.filter(el => el.param == 'evalue')[0].defaultValue
+  }
 }
+
