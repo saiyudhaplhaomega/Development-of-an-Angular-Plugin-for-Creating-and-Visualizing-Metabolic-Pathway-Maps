@@ -22,20 +22,20 @@ export const databaseOptions: object[] = [
   {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog', algorithm: ['emapper']},
   {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
   {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 3, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 4, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 5, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 6, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
-  {id: 7, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
-  {id: 8, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
-  {id: 9, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
+  {id: 3, scope: 'Function', database: 'foam', name: 'FOAM', algorithm: ['hmmsearch', 'hmmscan']},
+  {id: 4, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
+  {id: 5, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmsearch', 'hmmscan']},
+  {id: 6, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmsearch', 'hmmscan']},
+  {id: 7, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
+  {id: 8, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
+  {id: 9, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
+  {id: 10, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
 ];
+
 export const defaultOptionString = [
   {param: 'header', valueType: 'none', defaultValue: ''},
   {param: 'strand', valueType: 'enum', defaultValue: 'both', values: ['both', 'minus', 'plus']},
   {param: 'top', valueType: 'number', defaultValue: '0.0'}];
-
-
 
 export const evalueOptions: object[] = [
   {id: 0, numerical: '0.01', text: 'Relaxed'},
@@ -54,7 +54,7 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
   {scope: 'Function', database: 'eggnog', databaseversion: 'latest',
     algorithm: 'emapper', tasklabel: 'Functional Annotation Task 1',
     optionstring: [
-      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},
       {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
     ],
     formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},

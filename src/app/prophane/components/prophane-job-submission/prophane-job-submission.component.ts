@@ -217,19 +217,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     switch (event.value) {
       case 'hmmscan': {
         task.optionstring = [
-          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
         ];
         break;
       }
       case 'hmmsearch' : {
         task.optionstring = [
-          {param: 'E', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
         ];
         break;
       }
       case 'emapper' : {
         task.optionstring = [
-          {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
           {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
         ];
         break;
@@ -237,13 +237,13 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       case 'diamond blastp' : {
         console.log('setting new tax ');
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
           {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
         ];
         break;
       }
       default : {
-        console.log('Nothingness');
+        console.log();
       }
     }
   }
@@ -403,7 +403,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   addOptionString(task) {
-    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+    if (task.formOptionStringSelection != undefined && task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
     task.formOptionStringSelection = undefined;

@@ -25,7 +25,6 @@ export class ProphaneJobObject implements ProphaneJobJSON {
 
   constructor () {
     this.parameters = new ProphaneParamObject();
-    console.log('created a param object');
   }
 
   getReportStyle() {
