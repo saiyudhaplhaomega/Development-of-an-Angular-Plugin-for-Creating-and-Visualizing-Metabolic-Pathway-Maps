@@ -23,10 +23,10 @@ import { databaseOptions } from '../../objects/prophaneFormData';
 import { optionStrings } from '../../objects/prophaneFormData';
 import { ProphaneJobSubmissionDialogComponent } from './prophane-job-submission-dialog';
 import { MatDialog } from '@angular/material';
-import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
-import {Observable} from 'rxjs';
-import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
-import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+import { ProphaneSampleGroupObject } from '../../objects/prophanesamplegroupjson';
+import { Observable } from 'rxjs';
+import { ProphaneAnnotationTaskObject } from '../../objects/prophaneannotationtaskjson';
+import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
 
 
 @Component({
@@ -82,7 +82,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // constructor and init
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
               private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
+              tooltipConfig: NgbTooltipConfig, private router: Router,
+              private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -338,7 +339,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
       optionstring: [
-        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0'},
+        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
         {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
       ], tasklabel: 'Functional Annotation Task ' + this.functasks,
       formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}

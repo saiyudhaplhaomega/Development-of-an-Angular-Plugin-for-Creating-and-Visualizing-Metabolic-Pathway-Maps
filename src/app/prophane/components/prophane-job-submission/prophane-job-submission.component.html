@@ -747,7 +747,7 @@
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
           <button mat-raised-button color="primary" class="float-right"
-                  [disabled]="(!jobUnavailable || !proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
+                  [disabled]="(jobUnavailable || !proteinReportFile || !fastaFile || (currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == ''))"
                   (click)="startButton()">Submit
           </button>
         </div>
