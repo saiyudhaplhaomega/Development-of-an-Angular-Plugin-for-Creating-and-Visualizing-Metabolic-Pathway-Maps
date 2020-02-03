@@ -230,7 +230,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       case 'emapper' : {
         task.optionstring = [
           {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
-          {param: 'm', valueType: 'enum', defaultValue: 'diamond', values: ['diamond', 'hmmer']}
         ];
         break;
       }
@@ -335,7 +334,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
       optionstring: [
         {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
-        {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
       ], tasklabel: 'Functional Annotation Task ' + this.functasks,
       formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
     });
