@@ -54,9 +54,9 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     algorithm: 'emapper', tasklabel: 'Functional Annotation Task 1',
     optionstring: [
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},
-      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1', values: ['diamond', 'hmmer']}
+      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer']}
     ],
-    formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},
+    formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '10.0', values: []},
   },
   {scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest',
     algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',

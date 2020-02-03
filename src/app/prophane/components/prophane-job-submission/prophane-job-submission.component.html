@@ -133,11 +133,7 @@
                         (selectionChange)="setContaminationLabel(false)">
               <mat-option *ngFor="let contitem of this.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
-            <input
-              *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 0"
-              type="text"
-              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
-              [disabled]="true" placeholder="">
+            <div class="input-group-append">
             <input
               *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
               [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
@@ -159,7 +155,7 @@
               class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
               placeholder="regular expression (PCRE)"
               (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
-
+            </div>
           </div>
         </div>
       </div>
@@ -286,7 +282,7 @@
                 </ng-container>
               </mat-select>
               <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.databaseversion">
+                <mat-select [(value)]="task.databaseversion" [disabled]="true">
                   <mat-option value="latest">latest</mat-option>
                 </mat-select>
               </div>

@@ -47,7 +47,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   fastaProgress: number;
   fastaFile: File;
   // TODO: better solution for this? --> popup message?
-  // TODO: rename: serverUnavailable??
   jobUnavailableMessage = 'Service unavailable';
   // global variable that should be able to disable the website (because no server connection or server busy)
   jobUnavailable = false;
@@ -98,10 +97,9 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   ngOnInit(): void {
     // TODO: more inits?
     this._uploadProgressService.currentProgress.subscribe(progress => this.fastaProgress = progress);
-
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
-    this.currentProphaneJob.parameters.contaminationOption = this.contoptions[3];
+    this.currentProphaneJob.parameters.contaminationOption = this.contoptions[0];
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
@@ -217,27 +215,27 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     switch (event.value) {
       case 'hmmscan': {
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
         ];
         break;
       }
       case 'hmmsearch' : {
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
         ];
         break;
       }
       case 'emapper' : {
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
+          {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer']}
         ];
         break;
       }
       case 'diamond blastp' : {
         console.log('setting new tax ');
         task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
-          {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
         ];
         break;
       }
@@ -320,8 +318,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
       optionstring: [
-        {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []},
-        {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
       ], tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks,
       formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []}
     });
@@ -333,9 +330,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.push({
       scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
       optionstring: [
-        {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []},
+        {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '1.0', values: []},
+        {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer']}
       ], tasklabel: 'Functional Annotation Task ' + this.functasks,
-      formOptionStringSelection: {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
+      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
     });
   }
 
