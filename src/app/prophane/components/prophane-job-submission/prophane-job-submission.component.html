@@ -140,18 +140,21 @@
               [disabled]="true" placeholder="">
             <input
               *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
+              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
               type="text"
               class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
               placeholder="text"
               (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
             <input
               *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2"
+              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : formErrorColor }"
               type="text"
               class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
               placeholder="text"
               (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
             <input
               *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
+              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.regex, 'cont_3') ? 'white' : formErrorColor }"
               type="text"
               class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.regex"
               placeholder="regular expression (PCRE)"
@@ -828,5 +831,4 @@
       </div>
     </div>
   </div>
-  <!--</div>-->
 </div>
