@@ -1,7 +1,7 @@
 <div fxLayout="row">
-  <mat-tab-group [(selectedIndex)]='tabSelectionState'>
+  <mat-tab-group [(selectedIndex)]='tabSelectionState' mat-stretch-tabs>
     <mat-tab label="Proteins">
-      <app-protein-table class='protein-detail-table' [data]='proteins'>
+      <app-protein-table class='protein-detail-table' [data]='proteins' (selectedProtein)="selectProtein($event)">
       </app-protein-table>
     </mat-tab>
     <mat-tab label="Peptides">
@@ -14,13 +14,13 @@
     </mat-tab>
     <mat-tab label="Extras"> 🧬 </mat-tab>
   </mat-tab-group>
-  <mat-tab-group>
+  <mat-tab-group mat-stretch-tabs>
     <mat-tab *ngIf='tabSelectionState==0' label="Description"> 
-      <app-description-details>
+      <app-description-details [selectedProtein]='selectedProtein'>
       </app-description-details> 
     </mat-tab>
     <mat-tab *ngIf='tabSelectionState==0' label="Peptides">
-      <app-peptide-table class='peptide-detail-table' [data]='peptides'>
+      <app-peptide-table class='peptide-detail-table' [data]='selectedPeptides'>
       </app-peptide-table>
     </mat-tab>
     <mat-tab *ngIf='tabSelectionState==1' label="PSM">

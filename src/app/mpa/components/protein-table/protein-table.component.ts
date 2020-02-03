@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, Input, ViewChild } from '@angular/core';
-import { ProteinData } from '../mpa-table/mpa-table.component';
+import { Component, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { ProteinData } from '../../objects/tableobjects';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
@@ -19,6 +19,7 @@ export class ProteinTableComponent implements AfterViewInit {
   get data(): ProteinData[] {
     return this.dataSource.data;
   }
+  @Output() selectedProtein = new EventEmitter<ProteinData>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -40,5 +41,9 @@ export class ProteinTableComponent implements AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  setProtein(protein: ProteinData) {
+    this.selectedProtein.emit(protein);
   }
 }

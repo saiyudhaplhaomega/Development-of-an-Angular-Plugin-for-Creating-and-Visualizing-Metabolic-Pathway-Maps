@@ -29,7 +29,10 @@ export class UploadProgressService {
   }
 
   updateProgress() {
-    this.pSource.next(Math.round((this.fastaProgress + this.reportProgress) / this.total * 100))
+    const p = Math.round((this.fastaProgress + this.reportProgress) / this.total * 100)
+    if (p > this.progress) {
+      this.pSource.next(p)
+    }
   }
 
 }

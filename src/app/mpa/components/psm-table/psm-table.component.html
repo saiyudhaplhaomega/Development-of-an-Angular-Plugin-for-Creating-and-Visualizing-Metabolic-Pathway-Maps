@@ -1,3 +1,37 @@
-<p>
-  psm-table works!
-</p>
+<div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="peptide">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Peptide </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.peptide.peptide_sequence}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="spectrum">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Spectrum </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.protein_accession}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="search_engine">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Search Engine </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.search_engine}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="q_value">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Q-Value </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.q_value}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="log(row)">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>

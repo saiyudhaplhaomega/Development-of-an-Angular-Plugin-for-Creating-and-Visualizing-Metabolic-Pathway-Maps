@@ -3,8 +3,9 @@ import { DataService } from '../data-navigation-tree/services/data.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticatedSerializableObjectUploaderService } from '../../../core/services/authenticated-serializable-object-uploader.service';
-import { ProteinGroupList, createNewProteinGroup } from '../mpa-table/mpa-table.component';
+import { createNewProteinGroup } from '../mpa-table/mpa-table.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProteinGroupList } from '../../objects/tableobjects';
 
 
 @Component({
