@@ -8,7 +8,6 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
   {id: 1, name: 'Scaffold', valueString: 'scaffold'},
   {id: 2, name: 'Generic Format', valueString: 'generic'},
-  // {id: 3, name: 'Proteome Discoverer'}
 ];
 
 export const quantdata: ProphaneQuantDataObject[] = [
@@ -45,9 +44,9 @@ export const evalueOptions: object[] = [
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
-  {id: 1, name: 'accessions starting with', valueString: 'start', label: '', regex: ''},
-  {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: ''},
-  {id: 3, name: 'accessions matching to', valueString: 'regex', label: '', regex: ''},
+  {id: 1, name: 'accessions starting with', valueString: '', label: '', regex: ''},
+  {id: 2, name: 'accessions ending with', valueString: '', label: '', regex: ''},
+  {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: ''},
 ];
 
 export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
@@ -71,27 +70,27 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
 
 export const optionStrings: object[] = [
   {dbitem: 'emapper', options: sortBy([
-      {param: 'guessdb', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
-      {param: 'tax_scope', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []},
-      {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: '-1', max: '-1',
+      {param: 'guessdb', valueType: 'int', defaultValue: '131567', min: 0, max: undefined, values: []},
+      {param: 'tax_scope', valueType: 'int', defaultValue: '131567', min: 0, max: undefined, values: []},
+      {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: undefined, max: undefined,
         values: ['one2one', 'many2one', 'one2many', 'many2many', 'all']},
-      {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: '-1', max: '-1',
+      {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: undefined, max: undefined,
         values: ['experimental', 'non-electronic']},
-      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: '-1', max: '-1', values: []},
-      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '1.0', values: []},
-      {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '-1', max: '-1', values: []},
-      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: '-1', max: '-1', values: []},
-      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: []},
-      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '-1', max: '-1', values: []},
-      {param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62', min: '-1', max: '-1',
+      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: 1, max: undefined, values: []},
+      {param: 'hmm_evalue', valueType: 'evalue', defaultValue: '0.001', min: 0.0, max: undefined, values: []},
+      {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: 0, max: undefined, values: []},
+      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: 0, max: undefined, values: []},
+      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: 0, max: 1, values: []},
+      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: 1, max: undefined, values: []},
+      {param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62', min: undefined, max: undefined,
         values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30']},
-      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: []},
-      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: []},
-      {param: 'gapopen', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
-      {param: 'gapextend', valueType: 'number', defaultValue: '0.0', min: '-1', max: '-1', values: []},
-      {param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: '0', max: '10', values: []},
-      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '-1', max: '-1', values: []},
-      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: '-1', max: '-1',
+      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: 0, max: undefined, values: []},
+      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: 0, max: undefined, values: []},
+      {param: 'gapopen', valueType: 'int', defaultValue: 0, min: 0, max: undefined, values: []},
+      {param: 'gapextend', valueType: 'int', defaultValue: 0, min: 0, max: undefined, values: []},
+      {param: 'seed_ortholog_evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
+      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: 0, max: undefined, values: []},
+      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined,
         values: ['diamond', 'hmmer']},
     ], "param")
   },

@@ -154,9 +154,9 @@
               (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
             <input
               *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
-              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.regex, 'cont_3') ? 'white' : formErrorColor }"
+              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : formErrorColor }"
               type="text"
-              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.regex"
+              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
               placeholder="regular expression (PCRE)"
               (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
 
