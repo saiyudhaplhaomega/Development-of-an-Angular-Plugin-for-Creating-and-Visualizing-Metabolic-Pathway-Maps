@@ -62,7 +62,6 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',
     optionstring: [
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: '10', values: []},
-      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: '-1', max: '-1', values: []}
     ],
     formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: '10', values: []}
   }
