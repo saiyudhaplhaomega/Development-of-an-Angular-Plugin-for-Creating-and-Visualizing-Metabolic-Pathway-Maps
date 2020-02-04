@@ -27,6 +27,7 @@ import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {Observable} from 'rxjs';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+import {HttpUploadResponseObject} from '../../objects/httpUploadResponse';
 
 
 @Component({
@@ -113,6 +114,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.downloadURL = '';
 
     this.requestNewJob();
+
   }
 
   // Server job related methods
@@ -313,28 +315,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   addTaxTask() {
-    this.taxtasks++;
-    this.taskCounter++;
-    this.currentProphaneJob.parameters.annotationTasks.push({
-      scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest', algorithm: 'diamond blastp',
-      optionstring: [
-        {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '-1', max: '-1', values: []},
-      ], tasklabel: 'Taxonomic Annotation Task ' + this.taxtasks,
-      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.0', min: '-1', max: '-1', values: []}
-    });
+    var task = defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0];
+    task['tasklabel'] = 'Taxonomic Annotation Task' + this.taxtasks;
+    console.log(task)
+    this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
 
   addFuncTask() {
     this.functasks++;
     this.taskCounter++;
-    this.currentProphaneJob.parameters.annotationTasks.push({
-      scope: 'Function', database: 'eggnog', databaseversion: 'latest', algorithm: 'emapper',
-      optionstring: [
-        {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: '1.0', values: []},
-        {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer']}
-      ], tasklabel: 'Functional Annotation Task ' + this.functasks,
-      formOptionStringSelection: {param: 'evalue', valueType: 'evalue', defaultValue: '0.01', min: '0.0', max: '1.0', values: []}
-    });
+    var task = this.annotationTasks.filter(i => i['scope'] === 'Function')[0];
+    task['tasklabel'] =  'Functional Annotation Task' + this.functasks
+    this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
 
   removeAnnotationTask(removeTask) {
@@ -399,14 +391,9 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   addOptionString(task) {
-    if (task.formOptionStringSelection != undefined && task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
-    task.formOptionStringSelection = undefined;
-  }
-
-  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
-    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
   }
 
   checkFormInput(target, algoSel){

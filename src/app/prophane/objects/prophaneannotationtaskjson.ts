@@ -7,7 +7,6 @@ export interface ProphaneAnnotationTaskJSON {
   algorithm: string;
   tasklabel: string;
   optionstring: ProphaneTaskOptionString[];
-  formOptionStringSelection: ProphaneTaskOptionString;
 }
 
 export class ProphaneAnnotationTaskObject implements ProphaneAnnotationTaskJSON {
@@ -17,5 +16,4 @@ export class ProphaneAnnotationTaskObject implements ProphaneAnnotationTaskJSON 
   algorithm: string;
   tasklabel: string;
   optionstring: ProphaneTaskOptionString[];
-  formOptionStringSelection: ProphaneTaskOptionString;
 }
