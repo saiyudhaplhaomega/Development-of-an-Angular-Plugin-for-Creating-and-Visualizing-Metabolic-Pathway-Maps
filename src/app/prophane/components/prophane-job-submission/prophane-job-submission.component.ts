@@ -190,9 +190,30 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
   }
 
+  setEmapperEvalue(): void{
+    this.currentProphaneJob.parameters.annotationTasks.forEach(
+    task => {
+      if (task.database === 'eggnog') {
+        let m = task.optionstring.filter(i => i.param === 'm')[0].defaultValue;
+        task.optionstring.forEach(
+        parameter => {
+          if (parameter.param === 'evalue') {
+            if (m === 'diamond') {
+              parameter.param = 'seed_ortholog_evalue';
+            } else {
+              parameter.param = 'hmm_evalue';
+            }
+            return;
+          }
+        });
+      }
+    });
+  }
+
   startProphaneJob(): void {
     this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
     this.currentProphaneJob.fastaFilename = this.fastaFile.name;
+    this.setEmapperEvalue();
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
       console.log(d);
     });
@@ -209,42 +230,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     console.log('comparator call' + (o1.id === o2.id));
     //return o1.id === o2.id;
     return true;
-  }
-
-  // TODO: will soon be replaced
-  setDefaultOptionString(event, task) {
-    console.log('setting default option ')
-    switch (event.value) {
-      case 'hmmscan': {
-        task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
-        ];
-        break;
-      }
-      case 'hmmsearch' : {
-        task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
-        ];
-        break;
-      }
-      case 'emapper' : {
-        task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
-          {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer']}
-        ];
-        break;
-      }
-      case 'diamond blastp' : {
-        console.log('setting new tax ');
-        task.optionstring = [
-          {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: 0, max: undefined, values: []},
-        ];
-        break;
-      }
-      default : {
-        console.log();
-      }
-    }
   }
 
   setContaminationLabel(val) {
@@ -324,7 +309,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   addFuncTask() {
     this.functasks++;
     this.taskCounter++;
-    var task = this.annotationTasks.filter(i => i['scope'] === 'Function')[0];
+    var task = defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0];
     task['tasklabel'] =  'Functional Annotation Task' + this.functasks
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
@@ -396,36 +381,23 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
   }
 
-  checkFormInput(target, algoSel){
-    var err = false;
-    console.log(target.id)
-    if (algoSel.param == "evalue") {
-      if (target.value === undefined || !target.value.match("^[0-9]+(\[.\][0-9]*)?$") || target.value < 0) {
-        target.style.background = "#f8d7da";
-        this.formInputError.push(target.id)
-        err = true
-      }
-    }
-
-    if (err === false) {
-      target.style.background = "white"
-      this.formInputError = this.formInputError.filter(id => id !== target.id);
-    }
+  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
   }
 
   isEvalue(value, elemid) {
-    if (value.match("^[0-9]+(\[.\][0-9]*)?$")) {
-      this.removeFormInputErr(elemid);
-      return true;
-    }
-    else {
+    if (value === undefined || !String(value).match("^[0-9]+(\[.\][0-9]*)?$")) {
       this.addFormInputErr(elemid);
       return false;
+    }
+    else {
+      this.removeFormInputErr(elemid);
+      return true;
     }
   }
 
   isNumber(value, min, max, elemid) {
-    if (!value.match("^-?[0-9]+(\[.\][0-9]*)?$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+    if (value === undefined || !String(value).match("^-?[0-9]+(\[.\][0-9]*)?$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
       this.addFormInputErr(elemid);
       return false;
     }
@@ -436,7 +408,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isInt(value, min, max, elemid) {
-    if (!value.match("^-?[0-9]+$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+    if (value === undefined || !String(value).match("^-?[0-9]+$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+      console.log("IF2")
       this.addFormInputErr(elemid);
       return false;
     }
@@ -447,7 +420,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isString(value, elemid) {
-    if (value.length === 0) {
+    if (value === undefined || value.length === 0) {
       this.addFormInputErr(elemid);
       return false;
     }

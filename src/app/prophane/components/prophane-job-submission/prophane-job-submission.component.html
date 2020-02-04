@@ -294,7 +294,7 @@
                 <span class="input-group-text">Search Algorithm</span>
               </div>
               <mat-select class="custom-select" [(value)]="task.algorithm"
-                          (selectionChange)="setDefaultOptionString($event, task)" [compareWith]="paramCompare">
+                          [compareWith]="paramCompare">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                     <ng-container *ngFor="let algo of dbitem.algorithm">
@@ -356,7 +356,7 @@
               <ng-container *ngIf="algoSel.valueType == 'evalue'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">{{algoSel.param}}</span>
+                    <span class="input-group-text">evalue</span>
                   </div>
                   <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
@@ -492,7 +492,7 @@
                 <span class="input-group-text">Search Algorithm</span>
               </div>
               <mat-select class="custom-select" [(value)]="task.algorithm"
-                          (selectionChange)="setDefaultOptionString($event, task)" [compareWith]="paramCompare">
+                          [compareWith]="paramCompare">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                     <ng-container *ngFor="let algo of dbitem.algorithm">
@@ -554,7 +554,7 @@
               <ng-container *ngIf="algoSel.valueType == 'evalue'">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">{{algoSel.param}}</span>
+                    <span class="input-group-text">evalue1</span>
                   </div>
                   <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
