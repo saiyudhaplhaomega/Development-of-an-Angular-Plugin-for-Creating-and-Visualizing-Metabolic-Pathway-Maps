@@ -5,6 +5,7 @@ export interface ProphaneTaskOptionStringJSON {
   min: string;
   max: string;
   values: string[];
+  isDefault: string;
 }
 
 export class ProphaneTaskOptionString implements ProphaneTaskOptionStringJSON {
@@ -14,4 +15,5 @@ export class ProphaneTaskOptionString implements ProphaneTaskOptionStringJSON {
   min: string;
   max: string;
   values: string[];
+  isDefault: string;
 }

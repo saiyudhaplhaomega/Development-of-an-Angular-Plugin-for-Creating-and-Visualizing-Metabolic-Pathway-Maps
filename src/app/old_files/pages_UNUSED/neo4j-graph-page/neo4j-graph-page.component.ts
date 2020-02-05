@@ -16,17 +16,17 @@ const httpOptions = {
   styleUrls: ['./neo4j-graph-page.component.css']
 })
 export class Neo4jGraphPageComponent {
-
-  constructor(private http: HttpClient, private webserver: WebserveraddressService) {
-  }
-
-  title = 'app';
-  expID: string;
-  data: Neo4jJSON;
-
-  graphFromExpID(id: string) {
-    this.http.post<string>(this.webserver.getwebserverurl() + 'mpacloud/v1/createresultgraph', 'body', httpOptions);
-  }
+  //
+  // constructor(private http: HttpClient, private webserver: WebserveraddressService) {
+  // }
+  //
+  // title = 'app';
+  // expID: string;
+  // data: Neo4jJSON;
+  //
+  // graphFromExpID(id: string) {
+  //   this.http.post<string>(this.webserver.getwebserverurl() + 'mpacloud/v1/createresultgraph', 'body', httpOptions);
+  // }
 }
 
 

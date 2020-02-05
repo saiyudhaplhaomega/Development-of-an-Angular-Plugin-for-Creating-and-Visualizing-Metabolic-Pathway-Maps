@@ -19,6 +19,8 @@ import { ProteingroupDetailViewComponent } from './components/proteingroup-detai
 import { ProteinTableComponent } from './components/protein-table/protein-table.component';
 import { PsmTableComponent } from './components/psm-table/psm-table.component';
 import { DescriptionDetailsComponent } from './components/description-details/description-details.component';
+import {ResultTableComponent} from './components/result-table/result-table.component';
+import {DatabaseSearchPageComponent} from './components/database-search-page/database-search-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { DescriptionDetailsComponent } from './components/description-details/de
     ProteinTableComponent,
     PsmTableComponent,
     DescriptionDetailsComponent,
+    ResultTableComponent,
+    DatabaseSearchPageComponent,
   ],
   imports: [
     CommonModule,

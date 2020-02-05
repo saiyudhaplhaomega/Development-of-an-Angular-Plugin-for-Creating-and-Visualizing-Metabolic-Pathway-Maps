@@ -12,29 +12,29 @@ import {ProtDBContentService} from '../../services_UNUSED/protein-database.servi
 
 export class ProteinDatabasePageComponent {
 
-  file: File;
-  files: FileList;
-  protdbs: ProtDBJSON[];
-
-  constructor (private uploaderService: FileUploaderService, private http: HttpClient, private protdbservice: ProtDBContentService) {}
-
-  onChange(files: FileList) {
-    this.files = files;
-    this.file = files[0];
-  }
-
-  upload(): void {
-    console.log(this.file)
-    if (this.file) {
-      this.uploaderService.postFile(this.file, 'mpacloud/v1/proteinDBLoader').subscribe(d => {
-        console.log(d);
-      });
-    }
-  }
-
-  getProtDBs() {
-    this.protdbservice.getProtDBs().subscribe(res => {
-      this.protdbs = res;
-    });
-  }
+  // file: File;
+  // files: FileList;
+  // protdbs: ProtDBJSON[];
+  //
+  // constructor (private uploaderService: FileUploaderService, private http: HttpClient, private protdbservice: ProtDBContentService) {}
+  //
+  // onChange(files: FileList) {
+  //   this.files = files;
+  //   this.file = files[0];
+  // }
+  //
+  // upload(): void {
+  //   console.log(this.file)
+  //   if (this.file) {
+  //     this.uploaderService.postFile(this.file, 'mpacloud/v1/proteinDBLoader').subscribe(d => {
+  //       console.log(d);
+  //     });
+  //   }
+  // }
+  //
+  // getProtDBs() {
+  //   this.protdbservice.getProtDBs().subscribe(res => {
+  //     this.protdbs = res;
+  //   });
+  // }
 }

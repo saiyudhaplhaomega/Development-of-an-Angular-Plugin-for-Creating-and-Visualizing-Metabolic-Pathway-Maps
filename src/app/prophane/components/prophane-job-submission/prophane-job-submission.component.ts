@@ -23,11 +23,11 @@ import { databaseOptions } from '../../objects/prophaneFormData';
 import { optionStrings } from '../../objects/prophaneFormData';
 import { ProphaneJobSubmissionDialogComponent } from './prophane-job-submission-dialog';
 import { MatDialog } from '@angular/material';
-import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
-import {Observable} from 'rxjs';
-import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
-import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
-import {HttpUploadResponseObject} from '../../objects/httpUploadResponse';
+import { ProphaneSampleGroupObject } from '../../objects/prophanesamplegroupjson';
+import { Observable } from 'rxjs';
+import { ProphaneAnnotationTaskObject } from '../../objects/prophaneannotationtaskjson';
+import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
+import { HttpUploadResponseObject } from '../../objects/httpUploadResponse';
 
 
 @Component({
@@ -39,7 +39,6 @@ import {HttpUploadResponseObject} from '../../objects/httpUploadResponse';
 })
 
 export class ProphaneJobSubmissionComponent implements OnInit {
-
   // Website related variables
   expertView = false;
   jobCard: number;
@@ -84,7 +83,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // constructor and init
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
               private jsonUpload: AuthenticatedSerializableObjectUploaderService,
-              tooltipConfig: NgbTooltipConfig, private router: Router, private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
+              tooltipConfig: NgbTooltipConfig, private router: Router,
+              private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -194,7 +194,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.forEach(
     task => {
       if (task.database === 'eggnog') {
-        let m = task.optionstring.filter(i => i.param === 'm')[0].defaultValue;
+        const m = task.optionstring.filter(i => i.param === 'm')[0]['defaultValue'];
         task.optionstring.forEach(
         parameter => {
           if (parameter.param === 'evalue') {
@@ -214,6 +214,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
     this.currentProphaneJob.fastaFilename = this.fastaFile.name;
     this.setEmapperEvalue();
+    console.log(this.currentProphaneJob.prophaneJobUUID)
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
       console.log(d);
     });
