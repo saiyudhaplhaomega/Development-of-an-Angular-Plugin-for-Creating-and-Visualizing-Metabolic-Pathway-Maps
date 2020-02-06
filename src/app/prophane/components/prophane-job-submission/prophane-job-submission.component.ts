@@ -207,6 +207,11 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // methods for website functionality
   paramCompare(o1, o2) {
+    console.log(JSON.stringify(o2))
+    console.log("-------------")
+    if (o1 === undefined) {
+      return false;
+    }
     if (o1.hasOwnProperty('id')) {
       return parseInt(o1.id) === parseInt(o2.id);
     } else {
@@ -233,7 +238,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       this.currentProphaneJob.parameters.contaminationOption.regex = val;
     } else if (this.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
       this.currentProphaneJob.parameters.contaminationOption.label = '';
-      this.currentProphaneJob.parameters.contaminationOption.regex = '[|]{100000}';
+      this.currentProphaneJob.parameters.contaminationOption.regex = '';
     }
   }
 
