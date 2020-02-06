@@ -206,8 +206,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   // methods for website functionality
-  paramCompare(o1,o2) {
-    return parseInt(o1.id) === parseInt(o2.id);
+  paramCompare(o1, o2) {
+    if (o1.hasOwnProperty('id')) {
+      return parseInt(o1.id) === parseInt(o2.id);
+    } else {
+      return JSON.stringify(o1) === JSON.stringify(o2);
+    }
   }
 
   escapeRegExp(text) {
