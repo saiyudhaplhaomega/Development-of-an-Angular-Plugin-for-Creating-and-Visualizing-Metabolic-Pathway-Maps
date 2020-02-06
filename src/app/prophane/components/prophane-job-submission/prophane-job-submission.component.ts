@@ -232,6 +232,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return true;
   }
 
+  escapeRegExp(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  }
+
   setContaminationLabel(val) {
     console.log('TEST: ' +  this.currentProphaneJob.parameters.contaminationOption.valueString);
     if (val === false) {
@@ -239,16 +243,16 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
     if (this.currentProphaneJob.parameters.contaminationOption.valueString === 'start') {
       this.currentProphaneJob.parameters.contaminationOption.label = val;
-      this.currentProphaneJob.parameters.contaminationOption.regex = '^' + val;
+      this.currentProphaneJob.parameters.contaminationOption.regex = '^' + this.escapeRegExp(val);
     } else if (this.currentProphaneJob.parameters.contaminationOption.valueString === 'end') {
       this.currentProphaneJob.parameters.contaminationOption.label = val;
-      this.currentProphaneJob.parameters.contaminationOption.regex = val + '$';
+      this.currentProphaneJob.parameters.contaminationOption.regex = this.escapeRegExp(val) + '$';
     } else if (this.currentProphaneJob.parameters.contaminationOption.valueString === 'regex') {
       this.currentProphaneJob.parameters.contaminationOption.label = val;
       this.currentProphaneJob.parameters.contaminationOption.regex = val;
     } else if (this.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
       this.currentProphaneJob.parameters.contaminationOption.label = '';
-      this.currentProphaneJob.parameters.contaminationOption.regex = '[|]{10000}';
+      this.currentProphaneJob.parameters.contaminationOption.regex = '[|]{100000}';
     }
   }
 
