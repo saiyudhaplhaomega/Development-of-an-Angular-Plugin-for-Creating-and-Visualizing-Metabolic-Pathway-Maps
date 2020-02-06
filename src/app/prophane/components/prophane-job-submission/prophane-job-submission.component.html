@@ -361,7 +361,7 @@
                   </div>
                   <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
-                    <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom" [compareWith]="paramCompare">
+                    <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                       <mat-option *ngFor="let evalueRange of evalueOptions"
                                   [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
                     </mat-select>
@@ -559,7 +559,7 @@
                   </div>
                   <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
-                    <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom" [compareWith]="paramCompare">
+                    <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                       <mat-option *ngFor="let evalueRange of evalueOptions"
                                   [value]="evalueRange.numerical">{{ evalueRange.text}}</mat-option>
                     </mat-select>
