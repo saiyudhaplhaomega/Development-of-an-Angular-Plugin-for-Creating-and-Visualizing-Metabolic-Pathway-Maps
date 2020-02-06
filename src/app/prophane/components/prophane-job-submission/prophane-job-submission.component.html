@@ -263,7 +263,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
+              <input type="text" class="form-control" [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'tax_' + i + '_tasklabel') ? 'white' : formErrorColor }" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
                   —
@@ -461,7 +461,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="task.tasklabel">
+              <input type="text" class="form-control" [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'fun_' + i + '_tasklabel') ? 'white' : formErrorColor }" [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
                   —

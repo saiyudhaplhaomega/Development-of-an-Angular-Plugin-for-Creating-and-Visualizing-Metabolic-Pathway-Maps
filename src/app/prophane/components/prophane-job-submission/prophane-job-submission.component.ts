@@ -431,6 +431,28 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
   }
 
+  isUniqueTaskLabel(label, elemid) {
+    if (!this.isString(label, elemid)) {
+      return false;
+    }
+    var n = 0;
+    this.currentProphaneJob.parameters.annotationTasks.forEach(
+      task => {
+        if (task.tasklabel === label) {
+          n +=1;
+        }
+      });
+    if (n > 1) {
+      this.addFormInputErr(elemid);
+      return false;
+    }
+    else {
+      this.removeFormInputErr(elemid);
+      return true;
+    }
+  }
+
+
   addFormInputErr(elemid) {
     if (this.formInputError.indexOf(elemid) === -1) {
       this.formInputError.push(elemid);
