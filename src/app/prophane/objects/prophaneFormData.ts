@@ -20,13 +20,13 @@ export const quantdata: ProphaneQuantDataObject[] = [
 
 export const databaseOptions: object[] = [
   {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog', algorithm: ['emapper']},
-  {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 3, scope: 'Function', database: 'foam', name: 'FOAM', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 4, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 5, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 6, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmsearch', 'hmmscan']},
-  {id: 7, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
+  {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 3, scope: 'Function', database: 'foam', name: 'FOAM', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 4, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 5, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 6, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 7, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['hmmscan', 'hmmsearch']},
   {id: 8, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
   {id: 9, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
   {id: 10, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
@@ -82,7 +82,16 @@ export const optionStrings: object[] = [
       //{param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: 0, max: undefined, values: [], isDefault: 0},
       {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer'], isDefault: '1'},
-    ], 'param')
+    ], 'param'),
+    defaultOptionStringSelection: {
+      param: 'm',
+      valueType: 'enum',
+      defaultValue: 'diamond',
+      min: undefined,
+      max: undefined,
+      values: ['diamond', 'hmmer'],
+      isDefault: '1'
+    }
   },
   {
     dbitem: 'hmmscan', options: sortBy([
@@ -105,7 +114,10 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param')
+    ], 'param'),
+    defaultOptionStringSelection: {
+      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
+    }
   },
   {
     dbitem: 'hmmsearch', options: sortBy([
@@ -128,7 +140,10 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param')
+    ], 'param'),
+    defaultOptionStringSelection: {
+      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
+    }
   },
   {
     dbitem: 'diamond blastp', options: sortBy([
@@ -175,7 +190,15 @@ export const optionStrings: object[] = [
       {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
-    ], 'param')
+    ], 'param'),
+    defaultOptionStringSelection: {
+      param: 'min-score',
+      valueType: 'number',
+      defaultValue: '20',
+      min: '0',
+      max: undefined,
+      values: [],
+      isDefault: '0'    }
   }
 ];
 
@@ -187,29 +210,12 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     algorithm: 'emapper',
     tasklabel: 'Functional Annotation Task 1',
     optionstring: optionStrings.filter(i => i['dbitem'] === 'emapper')[0]['options'].filter(i => i['isDefault'] === '1'),
-    formOptionStringSelection: {
-      param: 'm',
-      valueType: 'enum',
-      defaultValue: 'diamond',
-      min: undefined,
-      max: undefined,
-      values: ['diamond', 'hmmer'],
-      isDefault: '1'
-    }
+    formOptionStringSelection: optionStrings.filter(i => i['dbitem'] === 'emapper')[0]['defaultOptionStringSelection'],
   },
   {
     scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest',
     algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',
     optionstring: optionStrings.filter(i => i['dbitem'] === 'diamond blastp')[0]['options'].filter(i => i['isDefault'] === '1'),
-    formOptionStringSelection: {
-      param: 'min-score',
-      valueType: 'number',
-      defaultValue: '20',
-      min: '0',
-      max: undefined,
-      values: [],
-      isDefault: '0'
-    }
+    formOptionStringSelection: optionStrings.filter(i => i['dbitem'] === 'diamond blastp')[0]['defaultOptionStringSelection']
   }
 ];
-

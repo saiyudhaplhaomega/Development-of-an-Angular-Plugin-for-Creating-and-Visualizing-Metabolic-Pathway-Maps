@@ -206,9 +206,28 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   // methods for website functionality
-  paramCompare(o1, o2) {
+  setNewDb(task) {
+    console.log(JSON.stringify(task));
+  }
+
+  compareByID(o1, o2) {
+    return parseInt(o1.id) === parseInt(o2.id);
+  }
+
+  compare(o1, o2) {
+    return o1 === o2;
+  }
+
+  noCompare(o1, o2){
+    return true;
+  }
+
+  newparamCompare(o1, o2) {
+    console.log(JSON.stringify(o1))
     console.log(JSON.stringify(o2))
+    console.log(JSON.stringify(o1) === JSON.stringify(o2))
     console.log("-------------")
+    return true;
     if (o1 === undefined) {
       return false;
     }
@@ -303,6 +322,21 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); //Important: copy object instead of linking!
     task['tasklabel'] =  'Functional Annotation Task ' + this.functasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
+  }
+
+  setDefaultAlgorithm(task) {
+    task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
+    this.resetOptstr(task);
+    console.log(task.algorithm);
+  }
+
+  resetOptstr(task) {
+    console.log("DONE");
+    console.log(task.algorithm);
+    task.optionstring = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['options'].filter(i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['defaultOptionStringSelection'];
+    console.log("DONE");
+    console.log(task.algorithm);
   }
 
   removeAnnotationTask(removeTask) {

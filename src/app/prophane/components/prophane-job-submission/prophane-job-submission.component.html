@@ -5,8 +5,6 @@
     {{this.jobUnavailableMessage}}
   </div>
 
-  <!--<div *ngIf="prophaneJobIDReady">-->
-
   <!-- Job Stepper -->
   <div class="d-flex justify-content-between">
     <div class="jobStepper pl-5">
@@ -46,10 +44,10 @@
           <!-- Source selection -->
           <div class="input-group mb-3" style="color: #495057 !important">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="sourceSelect">Source</label>
+              <label class="input-group-text">Source</label>
             </div>
             <mat-select class="no-arrow custom-select" [(ngModel)]="currentProphaneJob.parameters.reportStyle"
-                        [compareWith]="paramCompare"
+                        [compareWith]="compareByID"
                         (selectionChange)="onSourceChange()">
               <mat-option *ngFor="let typeitem of this.reportStyles" [value]="typeitem">{{typeitem.name}}</mat-option>
             </mat-select>
@@ -130,7 +128,7 @@
               <span class="input-group-text">Exclude</span>
             </div>
             <mat-select class="custom-select" [(ngModel)]="currentProphaneJob.parameters.contaminationOption"
-                        [compareWith]="paramCompare"
+                        [compareWith]="compareByID"
                         (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption)">
               <mat-option *ngFor="let contitem of this.contoptions" [(value)]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
@@ -236,7 +234,7 @@
               <span class="input-group-text rki-blue-input">Quantification method</span>
             </div>
             <mat-select class="custom-select" [(value)]="currentProphaneJob.parameters.quantification"
-                        [compareWith]="paramCompare">
+                        [compareWith]="compareByID">
               <mat-option *ngFor="let quantitem of quantdata" [value]="quantitem">{{quantitem.name}}</mat-option>
             </mat-select>
           </div>
@@ -276,14 +274,14 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Reference Database</span>
               </div>
-              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="paramCompare">
+              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare" (valueChange)="setDefaultAlgorithm(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
                               [value]="dbitem.database">{{dbitem.name}}</mat-option>
                 </ng-container>
               </mat-select>
               <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.databaseversion" [disabled]="true" [compareWith]="paramCompare">
+                <mat-select [(value)]="task.databaseversion" [disabled]="true" [compareWith]="compare">
                   <mat-option value="latest">latest</mat-option>
                 </mat-select>
               </div>
@@ -295,7 +293,7 @@
                 <span class="input-group-text">Search Algorithm</span>
               </div>
               <mat-select class="custom-select" [(value)]="task.algorithm"
-                          [compareWith]="paramCompare">
+                          [compareWith]="compare" (valueChange)="resetOptstr(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                     <ng-container *ngFor="let algo of dbitem.algorithm">
@@ -375,7 +373,7 @@
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
                   <div class="input-group-append custom-select">
-                    <mat-select [(value)]="algoSel.defaultValue" [compareWith]="paramCompare">
+                    <mat-select [(value)]="algoSel.defaultValue" [compareWith]="compare">
                       <ng-container *ngFor="let enumVal of algoSel.values">
                         <mat-option [value]="enumVal">
                           {{enumVal}}</mat-option>
@@ -417,7 +415,7 @@
               <ng-container *ngFor="let algo of optionStrings">
                 <ng-container *ngIf="algo.dbitem == task.algorithm">
                   <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
-                              [(value)]="task.formOptionStringSelection" [compareWith]="paramCompare"
+                              [(value)]="task.formOptionStringSelection" [compareWith]="compare"
                               placeholder="Choose Option" #optionStringBoxTax>
                     <ng-container *ngFor="let dropDownItem of algo.options">
                       <mat-option [value]="dropDownItem">
@@ -474,14 +472,14 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Reference Database</span>
               </div>
-              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="paramCompare">
+              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare" (valueChange)="setDefaultAlgorithm(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
                               [value]="dbitem.database">{{dbitem.name}}</mat-option>
                 </ng-container>
               </mat-select>
               <div class="input-group-append custom-select">
-                <mat-select [(value)]="task.databaseversion" [compareWith]="paramCompare" [disabled]="true">
+                <mat-select [(value)]="task.databaseversion" [compareWith]="compare" [disabled]="true">
                   <mat-option value="latest">latest</mat-option>
                 </mat-select>
               </div>
@@ -493,7 +491,7 @@
                 <span class="input-group-text">Search Algorithm</span>
               </div>
               <mat-select class="custom-select" [(value)]="task.algorithm"
-                          [compareWith]="paramCompare">
+                          [compareWith]="noCompare" (valueChange)="resetOptstr(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <ng-container *ngIf="dbitem.scope == task.scope && dbitem.database == task.database">
                     <ng-container *ngFor="let algo of dbitem.algorithm">
@@ -573,7 +571,7 @@
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
                   <div class="input-group-append custom-select">
-                    <mat-select [(value)]="algoSel.defaultValue" [compareWith]="paramCompare">
+                    <mat-select [(value)]="algoSel.defaultValue" [compareWith]="compare">
                       <ng-container *ngFor="let enumVal of algoSel.values">
                         <mat-option [value]="enumVal">
                           {{enumVal}}</mat-option>
@@ -615,7 +613,7 @@
               <ng-container *ngFor="let algo of optionStrings">
                 <ng-container *ngIf="algo.dbitem == task.algorithm">
                   <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
-                              [(value)]="task.formOptionStringSelection" [compareWith]="paramCompare"
+                              [(value)]="task.formOptionStringSelection" [compareWith]="compare"
                               placeholder="Choose Option" #optionStringBoxTax>
                     <ng-container *ngFor="let dropDownItem of algo.options">
                       <mat-option [value]="dropDownItem">
