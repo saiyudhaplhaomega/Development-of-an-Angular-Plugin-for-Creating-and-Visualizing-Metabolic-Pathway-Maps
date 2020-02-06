@@ -53,13 +53,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   formErrorColor = "#f8d7da"
 
   // job data is tracked in this variable
-
   currentProphaneJob: ProphaneJobObject;
-  // currentProphaneJob = new ProphaneJobObject();
-
-  // currentProphaneJob.parameters.reportStyle = prophaneReportStyles[0];
-
-  // this is necessary because typescript doesnt like constants from other files
   reportStyles = prophaneReportStyles;
   contoptions = contaminationdata;
   quantdata = quantdata;
@@ -77,7 +71,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   taxtasks = 1;
   functasks = 1;
   taskCounter = 3;
-  contval = '';
 
 
   // constructor and init
@@ -101,7 +94,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.contaminationOption = this.contoptions[0];
-    this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
@@ -112,9 +104,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-
     this.requestNewJob();
-
   }
 
   // Server job related methods
@@ -135,7 +125,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // this is the submit button
   startButton(): void {
-    console.log('start button pressed');
     this.openUploadDialog();
     this.uploadCSV();
     this.uploadFasta();
@@ -150,7 +139,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   uploadFasta(): void {
-    console.log('upload triggered ' + this.fastaFile);
     if (this.fastaFile) {
       this._uploadProgressService.addToTotal(this.fastaFile.size);
       this.uploaderService.postFile(this.fastaFile,
@@ -162,7 +150,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
             let response: any;
             response = event.body;
             this.fastaProgress = 0;
-            console.log('Response to upload fasta:' + response);
           }
         }
       );
@@ -170,7 +157,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   uploadCSV(): void {
-    console.log('upload triggered ' + this.proteinReportFile);
     if (this.proteinReportFile) {
       this._uploadProgressService.addToTotal(this.proteinReportFile.size);
       this.uploaderService.postFile(this.proteinReportFile,
@@ -182,7 +168,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
             let response: any;
             response = event.body;
             this.proteinReportProgress = 0;
-            console.log('Response to upload csv:' + response);
           }
         }
       );
@@ -213,23 +198,16 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
     this.currentProphaneJob.fastaFilename = this.fastaFile.name;
     this.setEmapperEvalue();
-    console.log(this.currentProphaneJob.prophaneJobUUID)
-    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe(d => {
-      console.log(d);
-    });
+    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe();
   }
 
   requestUserJobList(): void {
-    this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe(d => {
-      console.log(d);
-    });
+    this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe();
   }
 
   // methods for website functionality
-  paramCompare(o1, o2) {
-    console.log('comparator call' + (o1.id === o2.id));
-    //return o1.id === o2.id;
-    return true;
+  paramCompare(o1,o2) {
+    return parseInt(o1.id) === parseInt(o2.id);
   }
 
   escapeRegExp(text) {
@@ -237,7 +215,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   setContaminationLabel(val) {
-    console.log('TEST: ' +  this.currentProphaneJob.parameters.contaminationOption.valueString);
     if (val === false) {
       val = this.currentProphaneJob.parameters.contaminationOption.valueString;
     }
@@ -414,7 +391,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   isInt(value, min, max, elemid) {
     if (value === undefined || !String(value).match("^-?[0-9]+$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
-      console.log("IF2")
       this.addFormInputErr(elemid);
       return false;
     }
