@@ -64,7 +64,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   contoptions = contaminationdata;
   quantdata = quantdata;
   evalueOptions = evalueOptions;
-  annotationTasks = defaultAnnotationTasks;
+  annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
   defaultOptionString = defaultOptionString;
   databaseOptions = databaseOptions;
   optionStrings = optionStrings;
@@ -300,17 +300,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   addTaxTask() {
-    var task = defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0];
-    task['tasklabel'] = 'Taxonomic Annotation Task' + this.taxtasks;
-    console.log(task)
+    this.taxtasks++;
+    this.taskCounter++;
+    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0])); //Important: copy object instead of linking!
+    task['tasklabel'] = 'Taxonomic Annotation Task ' + this.taxtasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
 
   addFuncTask() {
     this.functasks++;
     this.taskCounter++;
-    var task = defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0];
-    task['tasklabel'] =  'Functional Annotation Task' + this.functasks
+    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); //Important: copy object instead of linking!
+    task['tasklabel'] =  'Functional Annotation Task ' + this.functasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
 
