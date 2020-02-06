@@ -10,13 +10,11 @@ export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private _router: Router) {
     this.authService.authState.subscribe((user) => {
-      console.log(user);
       this._user = user;
     });
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(this._user);
     if (this._user) {
         return true;
     }
