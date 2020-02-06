@@ -32,7 +32,7 @@
         <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
       </td>
       <td>
-        <button mat-flat-button color="warn" (click)="confirmDelete(i, job.label)">delete</button>
+        <button mat-flat-button color="warn" (click)="confirmDelete(i, job.prophaneJobUUID)">delete</button>
       </td>
     </tr>
     </tbody>

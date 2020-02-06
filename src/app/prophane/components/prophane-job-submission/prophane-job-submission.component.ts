@@ -105,7 +105,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
-    this.currentProphaneJob.parameters.annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks));
+    this.currentProphaneJob.parameters.annotationTasks = this.annotationTasks;
     this.currentProphaneJob.parameters.sampleGroups = [] as ProphaneSampleGroupObject[];
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
@@ -131,7 +131,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         this.jobUnavailable = false;
       }
     });
-
   }
 
   // this is the submit button
@@ -190,11 +189,11 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
   }
 
-  setEmapperEvalue(): void{
+  setEmapperEvalue(): void {
     this.currentProphaneJob.parameters.annotationTasks.forEach(
     task => {
       if (task.database === 'eggnog') {
-        const m = task.optionstring.filter(i => i.param === 'm')[0]['defaultValue'];
+        const m = task.optionstring.filter(i => i['param'] === 'm')[0]['defaultValue'];
         task.optionstring.forEach(
         parameter => {
           if (parameter.param === 'evalue') {
@@ -459,7 +458,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   getEvalue(optstr) {
-    return optstr.filter(el => el.param == 'evalue')[0].defaultValue
+    return optstr.filter(el => el.param === 'evalue')[0].defaultValue;
   }
 }
 

@@ -64,8 +64,13 @@ export class ProphaneJobControlComponent implements OnInit {
 
   confirmDelete(jobno: number, joblabel: string) {
     if (confirm('Are you sure to delete job #' + jobno + ' (' + joblabel + ')' )) {
-      console.log('Implement delete functionality here');
+      const jobToDelete: ProphaneJobObject = this.jobs.filter(i => i.prophaneJobUUID === joblabel)[0];
+      console.log(jobToDelete)
+      this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, 'mpacloud/v1/prophaneDeleteJob').subscribe(res => {
+        console.log('job deleted');
+      });
     }
+    this.triggerJobListLoading();
   }
 
 }
