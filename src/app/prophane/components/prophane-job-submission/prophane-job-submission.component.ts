@@ -206,10 +206,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   // methods for website functionality
-  setNewDb(task) {
-    console.log(JSON.stringify(task));
-  }
-
   compareByID(o1, o2) {
     return parseInt(o1.id) === parseInt(o2.id);
   }
@@ -220,22 +216,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   noCompare(o1, o2){
     return true;
-  }
-
-  newparamCompare(o1, o2) {
-    console.log(JSON.stringify(o1))
-    console.log(JSON.stringify(o2))
-    console.log(JSON.stringify(o1) === JSON.stringify(o2))
-    console.log("-------------")
-    return true;
-    if (o1 === undefined) {
-      return false;
-    }
-    if (o1.hasOwnProperty('id')) {
-      return parseInt(o1.id) === parseInt(o2.id);
-    } else {
-      return JSON.stringify(o1) === JSON.stringify(o2);
-    }
   }
 
   escapeRegExp(text) {
@@ -327,16 +307,11 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   setDefaultAlgorithm(task) {
     task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
     this.resetOptstr(task);
-    console.log(task.algorithm);
   }
 
   resetOptstr(task) {
-    console.log("DONE");
-    console.log(task.algorithm);
     task.optionstring = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['options'].filter(i => i['isDefault'] === '1');
     task.formOptionStringSelection = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['defaultOptionStringSelection'];
-    console.log("DONE");
-    console.log(task.algorithm);
   }
 
   removeAnnotationTask(removeTask) {
@@ -504,7 +479,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   getEvalue(optstr) {
-    return optstr.filter(el => el.param === 'evalue')[0].defaultValue;
+    return optstr.filter(el => el.valueType === 'evalue')[0].defaultValue;
   }
 }
 
