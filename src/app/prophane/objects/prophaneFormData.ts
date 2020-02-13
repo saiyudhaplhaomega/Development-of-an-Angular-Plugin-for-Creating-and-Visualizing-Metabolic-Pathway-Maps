@@ -26,7 +26,7 @@ export const databaseOptions: object[] = [
   {id: 4, scope: 'Function', database: 'dbcan', name: 'CAzY/dbCAN', algorithm: ['hmmscan', 'hmmsearch']},
   {id: 5, scope: 'Function', database: 'resfams_full', name: 'ResFAMs (full)', algorithm: ['hmmscan', 'hmmsearch']},
   {id: 6, scope: 'Function', database: 'resfams_core', name: 'ResFAMs (core)', algorithm: ['hmmscan', 'hmmsearch']},
-  {id: 7, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['hmmscan', 'hmmsearch']},
+  {id: 7, scope: 'Taxonomy', database: 'ncbi_nr', name: 'NCBI protein nr', algorithm: ['diamond blastp']},
   {id: 8, scope: 'Taxonomy', database: 'uniprot_complete', name: 'UniprotKB (Swiss-Prot & TrEMBL)', algorithm: ['diamond blastp']},
   {id: 9, scope: 'Taxonomy', database: 'uniprot_sp', name: 'Swiss-Prot', algorithm: ['diamond blastp']},
   {id: 10, scope: 'Taxonomy', database: 'uniprot_tr', name: 'TrEMBL', algorithm: ['diamond blastp']},
