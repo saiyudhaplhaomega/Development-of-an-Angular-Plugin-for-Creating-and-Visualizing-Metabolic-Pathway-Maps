@@ -288,6 +288,17 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
   }
 
+  isTaskDropDownSelected(taskOptionStrings: ProphaneTaskOptionString[], dropDownItem: ProphaneTaskOptionString): boolean {
+    //taskOptionStrings.forEach(opt1 => {
+    //  if (opt1 === dropDownItem) {
+    //    return true;
+    //  }
+    //});
+    //return false;
+    // TODO: this is a override until the above implementation works
+    return true;
+  }
+
   addTaxTask() {
     this.taxtasks++;
     this.taskCounter++;

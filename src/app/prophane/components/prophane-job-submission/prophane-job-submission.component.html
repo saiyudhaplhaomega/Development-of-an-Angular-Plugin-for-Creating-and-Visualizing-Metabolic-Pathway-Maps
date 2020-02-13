@@ -133,27 +133,27 @@
               <mat-option *ngFor="let contitem of this.contoptions" [(value)]="contitem">{{contitem.name}}</mat-option>
             </mat-select>
             <div class="input-group-append">
-            <input
-              *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
-              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
-              type="text"
-              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
-              placeholder="text"
-              (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
-            <input
-              *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2"
-              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : formErrorColor }"
-              type="text"
-              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
-              placeholder="text"
-              (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
-            <input
-              *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
-              [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : formErrorColor }"
-              type="text"
-              class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
-              placeholder="regular expression (PCRE)"
-              (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+              <input
+                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
+                [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
+                type="text"
+                class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
+                placeholder="text"
+                (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+              <input
+                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2"
+                [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : formErrorColor }"
+                type="text"
+                class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
+                placeholder="text"
+                (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
+              <input
+                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
+                [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : formErrorColor }"
+                type="text"
+                class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
+                placeholder="regular expression (PCRE)"
+                (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
             </div>
           </div>
         </div>
@@ -418,8 +418,10 @@
                               [(value)]="task.formOptionStringSelection" [compareWith]="compare"
                               placeholder="Choose Option" #optionStringBoxTax>
                     <ng-container *ngFor="let dropDownItem of algo.options">
-                      <mat-option [value]="dropDownItem">
-                        {{dropDownItem.param}}</mat-option>
+                      <ng-container *ngIf="isTaskDropDownSelected(task['optionStrings'], dropDownItem)">
+                        <mat-option [value]="dropDownItem">
+                          {{dropDownItem.param}}</mat-option>
+                      </ng-container>
                     </ng-container>
                   </mat-select>
                   <div class="input-group-append">
@@ -616,8 +618,10 @@
                               [(value)]="task.formOptionStringSelection" [compareWith]="compare"
                               placeholder="Choose Option" #optionStringBoxTax>
                     <ng-container *ngFor="let dropDownItem of algo.options">
-                      <mat-option [value]="dropDownItem">
-                        {{dropDownItem.param}}</mat-option>
+                      <ng-container *ngIf="isTaskDropDownSelected(task['optionStrings'], dropDownItem)">
+                        <mat-option [value]="dropDownItem">
+                          {{dropDownItem.param}}</mat-option>
+                      </ng-container>
                     </ng-container>
                   </mat-select>
                   <div class="input-group-append">
@@ -689,7 +693,7 @@
               </th>
               <td *ngIf="currentProphaneJob.parameters.contaminationOption.valueString === 'none'">none</td>
               <td *ngIf="currentProphaneJob.parameters.contaminationOption.valueString != 'none'"
-                [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''">
+                  [ngClass]="currentProphaneJob.parameters.contaminationOption.valueString != 'none' && currentProphaneJob.parameters.contaminationOption.label == '' ? 'table-warning' : ''">
                 {{ currentProphaneJob.parameters.contaminationOption.name + " " + currentProphaneJob.parameters.contaminationOption.label }}
               </td>
             </tr>
@@ -759,20 +763,20 @@
               </td>
             </tr>
             <ng-container *ngIf="filterAnnotationTasks('Taxonomy').length > 0">
-            <tr *ngFor="let task of filterAnnotationTasks('Taxonomy')">
-              <th scope="row" class="ml-summary-col">
-                Taxonomic Annotation:
-              </th>
-              <td>
-                {{ task.tasklabel }}<br>
-                <mat-list dense>
-                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-                  <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
-                  <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
-                </mat-list>
-              </td>
-            </tr>
+              <tr *ngFor="let task of filterAnnotationTasks('Taxonomy')">
+                <th scope="row" class="ml-summary-col">
+                  Taxonomic Annotation:
+                </th>
+                <td>
+                  {{ task.tasklabel }}<br>
+                  <mat-list dense>
+                    <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                    <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                    <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
+                    <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
             </ng-container>
             <tr>
               <th scope="row" class="ml-summary-col"></th>
@@ -793,20 +797,20 @@
               </td>
             </tr>
             <ng-container *ngIf="filterAnnotationTasks('Function').length > 0">
-            <tr *ngFor="let task of filterAnnotationTasks('Function')">
-              <th scope="row" class="ml-summary-col">
-                Functional Annotation:
-              </th>
-              <td>
-                {{ task.tasklabel }}<br>
-                <mat-list dense>
-                  <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-                  <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-                  <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
-                  <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
-                </mat-list>
-              </td>
-            </tr>
+              <tr *ngFor="let task of filterAnnotationTasks('Function')">
+                <th scope="row" class="ml-summary-col">
+                  Functional Annotation:
+                </th>
+                <td>
+                  {{ task.tasklabel }}<br>
+                  <mat-list dense>
+                    <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
+                    <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
+                    <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
+                    <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
             </ng-container>
             <tr>
               <th scope="row" class="ml-summary-col"></th>
