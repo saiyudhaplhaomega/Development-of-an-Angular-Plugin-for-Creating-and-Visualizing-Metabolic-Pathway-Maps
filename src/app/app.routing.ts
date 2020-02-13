@@ -10,7 +10,7 @@ import {ProphaneViewerComponent} from './prophane/prophane-viewer.component';
 import {MPAComponent} from './mpa/mpa.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'prophane', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
   { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full', canActivate: [AuthGuard]},
