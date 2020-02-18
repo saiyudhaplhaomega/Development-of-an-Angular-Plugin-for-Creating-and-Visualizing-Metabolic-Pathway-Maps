@@ -288,7 +288,13 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
   }
 
-  isTaskDropDownSelected(taskOptionStrings: ProphaneTaskOptionString[], dropDownItem: ProphaneTaskOptionString): boolean {
+  isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
+    //console.log(task.optionstring);
+    //console.log(option)
+    if (optionstring.filter(i => i.param == option.param).length > 0) {
+      return true;
+    }
+    return false;
     //taskOptionStrings.forEach(opt1 => {
     //  if (opt1 === dropDownItem) {
     //    return true;
@@ -296,7 +302,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     //});
     //return false;
     // TODO: this is a override until the above implementation works
-    return true;
   }
 
   addTaxTask() {
