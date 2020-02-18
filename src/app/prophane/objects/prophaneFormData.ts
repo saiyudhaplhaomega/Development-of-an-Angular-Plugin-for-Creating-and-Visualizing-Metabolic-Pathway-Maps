@@ -71,11 +71,6 @@ export const algparams = {
       {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: [], isDefault: '0'},
-      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
-      {
-        param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62', min: undefined, max: undefined,
-        values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30'], isDefault: '0'
-      },
       {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
@@ -91,7 +86,10 @@ export const algparams = {
         values: ['diamond', 'hmmer'],
         isDefault: '1'
       },
-    ], 'param'),
+      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'm',
       valueType: 'enum',
@@ -124,7 +122,9 @@ export const algparams = {
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
     }
@@ -151,7 +151,9 @@ export const algparams = {
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
     }
@@ -202,7 +204,9 @@ export const algparams = {
       {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'min-score',
       valueType: 'number',
