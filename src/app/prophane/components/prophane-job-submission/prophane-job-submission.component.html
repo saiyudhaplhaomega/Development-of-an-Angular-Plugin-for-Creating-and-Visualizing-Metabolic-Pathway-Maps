@@ -846,6 +846,8 @@
             </tr>
             </tbody>
           </table>
+          <div *ngIf="hasAdvancedOpts()" class="alert">
+            You have used advanced options in one or more annotation tasks. Please make sure that the options used do not conflict with each other and are supported by the selected database, otherwise the analysis will be terminated abnormally.          </div>
           <button mat-raised-button color="primary"
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>

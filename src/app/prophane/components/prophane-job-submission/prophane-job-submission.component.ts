@@ -489,6 +489,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return s.sort().join("; ");
   }
 
+  hasAdvancedOpts(){
+    let advanced = false;
+    this.currentProphaneJob.parameters.annotationTasks.forEach(
+      function(task) {
+        console.log(task.optionstring)
+        if (task.optionstring.filter(i => i.isDefault == '0').length > 0) {
+          advanced = true;
+        }
+      }
+    );
+    return advanced;
+  }
+
   getEvalue(optstr) {
     return optstr.filter(el => el.valueType === 'evalue')[0].defaultValue;
   }

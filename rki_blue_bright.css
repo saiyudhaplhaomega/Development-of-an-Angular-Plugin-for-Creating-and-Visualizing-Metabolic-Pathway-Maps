@@ -2571,3 +2571,10 @@ a.mat-tab-link:hover{
 .table-warning {
   background-color: #f8d7da !important;
 }
+
+.alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 25px;
+}
