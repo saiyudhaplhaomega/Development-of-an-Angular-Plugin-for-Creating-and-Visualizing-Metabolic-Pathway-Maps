@@ -321,8 +321,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   resetOptstr(task) {
-    task.optionstring = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['options'].filter(i => i['isDefault'] === '1');
-    task.formOptionStringSelection = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['defaultOptionStringSelection'];
+    task.optionstring = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
   }
 
   removeAnnotationTask(removeTask) {
