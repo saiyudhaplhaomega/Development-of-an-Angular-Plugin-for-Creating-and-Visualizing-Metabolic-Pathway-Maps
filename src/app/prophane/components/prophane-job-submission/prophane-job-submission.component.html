@@ -643,10 +643,10 @@
                       <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
                                   [(value)]="task.formOptionStringSelection" [compareWith]="compare"
                                   placeholder="Choose Option" #optionStringBoxTax>
-                        <ng-container *ngFor="let dropDownItem of algo.options">
-                          <ng-container *ngIf="isTaskDropDownSelected(task['optionStrings'], dropDownItem)">
-                            <mat-option [value]="dropDownItem">
-                              {{dropDownItem.param}}</mat-option>
+                        <ng-container *ngFor="let option of algo.options">
+                          <ng-container *ngIf="!isAlreadyInTask(task.optionstring, option)">
+                            <mat-option [value]="option">
+                              {{option.param}}</mat-option>
                           </ng-container>
                         </ng-container>
                       </mat-select>
