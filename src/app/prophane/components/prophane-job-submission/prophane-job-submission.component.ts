@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { prophaneReportStyles } from '../../objects/prophaneFormData';
+import {algparams, prophaneReportStyles} from '../../objects/prophaneFormData';
 import { contaminationdata } from '../../objects/prophaneFormData';
 import { quantdata } from '../../objects/prophaneFormData';
 import { evalueOptions } from '../../objects/prophaneFormData';

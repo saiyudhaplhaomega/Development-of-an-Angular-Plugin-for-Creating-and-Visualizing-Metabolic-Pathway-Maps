@@ -215,19 +215,28 @@ export const algparams = {
   }
 };
 
+function getAlgoData(algo, excluded_options) {
+  let algodata = algparams[algo];
+  if (excluded_options.length > 0) {
+    algodata['options'] = algodata['options'].filter(i => excluded_options.indexOf(i['param']) < 0);
+  }
+  return algodata;
+};
+
 export const optionStrings: object[] = [
-  {database: 'ncbi_nr', algs: [algparams['diamond_blastp']]},
-  {database: 'uniprot_complete', algs: [algparams['diamond_blastp']]},
-  {database: 'uniprot_sp', algs: [algparams['diamond_blastp']]},
-  {database: 'uniprot_tr', algs: [algparams['diamond_blastp']]},
-  {database: 'eggnog', algs: [algparams['emapper']]},
-  {database: 'pfams', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
-  {database: 'tigrfams', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
-  {database: 'foam', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
-  {database: 'resfams_full', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
-  {database: 'resfams_core', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
-  {database: 'dbcan', algs: [algparams['hmmscan'], algparams['hmmsearch']]},
+  {database: 'ncbi_nr', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_complete', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_sp', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_tr', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'eggnog', algs: [getAlgoData('emapper', [])]},
+  {database: 'pfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
+  {database: 'tigrfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
+  {database: 'foam', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
+  {database: 'resfams_full', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
+  {database: 'resfams_core', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
+  {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
 ];
+
 
 export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
   {
