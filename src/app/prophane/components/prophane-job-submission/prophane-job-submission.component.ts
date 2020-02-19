@@ -54,15 +54,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // job data is tracked in this variable
   currentProphaneJob: ProphaneJobObject;
-  reportStyles = prophaneReportStyles;
-  contoptions = contaminationdata;
-  quantdata = quantdata;
-  evalueOptions = evalueOptions;
-  annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
-  defaultOptionString = defaultOptionString;
-  databaseOptions = databaseOptions;
-  optionStrings = optionStrings;
   formInputError = [];
+
+  readonly reportStyles = prophaneReportStyles;
+  readonly contoptions = contaminationdata;
+  readonly quantdata = quantdata;
+  readonly evalueOptions = evalueOptions;
+  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
+  //readonly defaultOptionString = defaultOptionString;
+  readonly databaseOptions = databaseOptions;
+  readonly optionStrings = optionStrings;
+
+
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...

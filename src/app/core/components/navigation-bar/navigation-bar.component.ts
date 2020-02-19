@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, SocialUser } from 'angularx-social-login';
+import {SocialUser} from 'angularx-social-login';
+//import { AuthService, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -12,7 +13,8 @@ export class NavigationBarComponent implements OnInit {
   @Output() toggleSidenav = new EventEmitter<void>();
   user: SocialUser;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  //constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router) { }
 
   navigateLogin() {
     this.router.navigateByUrl('/login');
@@ -35,10 +37,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.authService.authState.subscribe(res => {
-      this.user = res;
-    });
-  }
+   ngOnInit(): void {
+   }
+  //   this.authService.authState.subscribe(res => {
+  //     this.user = res;
+  //   });
+  // }
 
 }

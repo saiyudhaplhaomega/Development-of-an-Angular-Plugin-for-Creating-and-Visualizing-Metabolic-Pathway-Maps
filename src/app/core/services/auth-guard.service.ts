@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SocialUser, AuthService } from 'angularx-social-login';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  private _user: SocialUser;
+  private _user: User;
 
-  constructor(private authService: AuthService, private _router: Router) {
-    this.authService.authState.subscribe((user) => {
-      this._user = user;
-    });
+  //constructor(private authService: AuthService, private _router: Router) {
+  constructor(private _router: Router) {
+    // this.authService.authState.subscribe((user) => {
+    //   this._user = user;
+    // });
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {

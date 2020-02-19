@@ -3,10 +3,10 @@
 <div fxLayout="column" fxLayoutGap="20px" class="mt-5">
   <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <div *ngIf="!user">
-      <button mat-raised-button color="primary" (click)="signInWithGoogle()">Sign in with Google</button>
+      <button mat-raised-button color="primary" (click)="login()">Sign in with Google</button>
     </div>
     <div *ngIf="user">
-      <button mat-raised-button color="primary" (click)="signOut()">Sign out with Google</button>
+      <button mat-raised-button color="primary" (click)="logoff()">Sign out with Google</button>
     </div>
   </div>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">

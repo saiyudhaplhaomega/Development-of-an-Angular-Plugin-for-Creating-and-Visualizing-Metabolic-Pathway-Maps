@@ -3,9 +3,10 @@ import {NgModule} from '@angular/core';
 import {Routing} from './app.routing';
 
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import {AppComponent} from './app.component';
 
-import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
+//import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
 
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
@@ -25,17 +26,20 @@ import {MaterialModule} from './material-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 
-// Configs
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('533975881425-kerne9k4q8rhiqt6q0mn0gtcftohibcp.apps.googleusercontent.com')
-  }
-]);
 
-export function provideConfig() {
-  return config;
-}
+
+
+// // Configs
+// const config = new AuthServiceConfig([
+//   {
+//     id: GoogleLoginProvider.PROVIDER_ID,
+//     provider: new GoogleLoginProvider('533975881425-kerne9k4q8rhiqt6q0mn0gtcftohibcp.apps.googleusercontent.com')
+//   }
+// ]);
+
+// export function provideConfig() {
+//   return config;
+// }
 
 @NgModule({
   declarations: [
@@ -47,10 +51,12 @@ export function provideConfig() {
     // BrowserModule,
     // BrowserAnimationsModule,
     Routing,
+    HttpClientModule,
+    OAuthModule.forRoot(),
     CommonModule,
     FlexLayoutModule,
     HttpClientModule,
-    SocialLoginModule,
+    //SocialLoginModule,
     HomeModule,
     MpaModule,
     ProphaneModule,
@@ -59,10 +65,10 @@ export function provideConfig() {
   providers: [
     HttpClient,
     AuthGuard,
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
-    },
+    // {
+    //   provide: AuthServiceConfig,
+    //   useFactory: provideConfig
+    // },
     WebserveraddressService,
     FileUploaderService,
     UploadProgressService,

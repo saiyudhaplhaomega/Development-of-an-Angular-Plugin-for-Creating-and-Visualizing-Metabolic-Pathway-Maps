@@ -10,7 +10,7 @@ import {ProphaneViewerComponent} from './prophane/prophane-viewer.component';
 import {MPAComponent} from './mpa/mpa.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'prophane', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
   { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full'},
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard]},
     { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},*/
 
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'login' }
 ];
 export const Routing = RouterModule.forRoot(appRoutes);
 
