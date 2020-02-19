@@ -6,8 +6,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import {AppComponent} from './app.component';
 
-//import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
-
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
@@ -26,21 +24,6 @@ import {MaterialModule} from './material-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 
-
-
-
-// // Configs
-// const config = new AuthServiceConfig([
-//   {
-//     id: GoogleLoginProvider.PROVIDER_ID,
-//     provider: new GoogleLoginProvider('533975881425-kerne9k4q8rhiqt6q0mn0gtcftohibcp.apps.googleusercontent.com')
-//   }
-// ]);
-
-// export function provideConfig() {
-//   return config;
-// }
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,15 +31,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     NavigationBarComponent,
   ],
   imports: [
-    // BrowserModule,
-    // BrowserAnimationsModule,
     Routing,
     HttpClientModule,
     OAuthModule.forRoot(),
     CommonModule,
     FlexLayoutModule,
     HttpClientModule,
-    //SocialLoginModule,
     HomeModule,
     MpaModule,
     ProphaneModule,
@@ -65,10 +45,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
   providers: [
     HttpClient,
     AuthGuard,
-    // {
-    //   provide: AuthServiceConfig,
-    //   useFactory: provideConfig
-    // },
     WebserveraddressService,
     FileUploaderService,
     UploadProgressService,
