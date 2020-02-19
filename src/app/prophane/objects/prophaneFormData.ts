@@ -235,10 +235,10 @@ export const optionStrings: object[] = [
   {database: 'eggnog', algs: [getAlgoData('emapper', [])]},
   {database: 'pfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
   {database: 'tigrfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
-  {database: 'foam', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
-  {database: 'resfams_full', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
-  {database: 'resfams_core', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
-  {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', [])]},
+  {database: 'foam', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'resfams_full', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'resfams_core', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
 ];
 
 
