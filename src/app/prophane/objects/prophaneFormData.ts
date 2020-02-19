@@ -220,7 +220,7 @@ export const algparams = {
 };
 
 function getAlgoData(algo, excluded_options) {
-  let algodata = algparams[algo];
+  let algodata = {...algparams[algo]};
   if (excluded_options.length > 0) {
     algodata['options'] = algodata['options'].filter(i => excluded_options.indexOf(i['param']) < 0);
   }
