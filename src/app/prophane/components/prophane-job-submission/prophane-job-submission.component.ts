@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { prophaneReportStyles } from '../../objects/prophaneFormData';
+import {algparams, prophaneReportStyles} from '../../objects/prophaneFormData';
 import { contaminationdata } from '../../objects/prophaneFormData';
 import { quantdata } from '../../objects/prophaneFormData';
 import { evalueOptions } from '../../objects/prophaneFormData';
@@ -288,7 +288,13 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
   }
 
-  isTaskDropDownSelected(taskOptionStrings: ProphaneTaskOptionString[], dropDownItem: ProphaneTaskOptionString): boolean {
+  isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
+    //console.log(task.optionstring);
+    //console.log(option)
+    if (optionstring.filter(i => i.param == option.param).length > 0) {
+      return true;
+    }
+    return false;
     //taskOptionStrings.forEach(opt1 => {
     //  if (opt1 === dropDownItem) {
     //    return true;
@@ -296,7 +302,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     //});
     //return false;
     // TODO: this is a override until the above implementation works
-    return true;
   }
 
   addTaxTask() {
@@ -321,8 +326,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   resetOptstr(task) {
-    task.optionstring = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['options'].filter(i => i['isDefault'] === '1');
-    task.formOptionStringSelection = optionStrings.filter(i => i['dbitem'] === task.algorithm)[0]['defaultOptionStringSelection'];
+    task.optionstring = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
   }
 
   removeAnnotationTask(removeTask) {
@@ -487,6 +492,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       }
     }
     return s.sort().join("; ");
+  }
+
+  hasAdvancedOpts(){
+    let advanced = false;
+    this.currentProphaneJob.parameters.annotationTasks.forEach(
+      function(task) {
+        console.log(task.optionstring)
+        if (task.optionstring.filter(i => i.isDefault == '0').length > 0) {
+          advanced = true;
+        }
+      }
+    );
+    return advanced;
   }
 
   getEvalue(optstr) {

@@ -52,9 +52,10 @@ export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: ''},
 ];
 
-export const optionStrings: object[] = [
-  {
-    dbitem: 'emapper', options: sortBy([
+export const algparams = {
+  emapper: {
+    name: 'emapper',
+    options: sortBy([
       {param: 'guessdb', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'tax_scope', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0'},
       {
@@ -70,19 +71,25 @@ export const optionStrings: object[] = [
       {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: [], isDefault: '0'},
-      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
-      {
-        param: ' target_orthologs', valueType: 'enum', defaultValue: 'BLOSUM62', min: undefined, max: undefined,
-        values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30'], isDefault: '0'
-      },
       {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
       //{param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: 0, max: undefined, values: [], isDefault: 0},
       {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer'], isDefault: '1'},
-    ], 'param'),
+      {
+        param: 'm',
+        valueType: 'enum',
+        defaultValue: 'diamond',
+        min: undefined,
+        max: undefined,
+        values: ['diamond', 'hmmer'],
+        isDefault: '1'
+      },
+      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'm',
       valueType: 'enum',
@@ -93,8 +100,9 @@ export const optionStrings: object[] = [
       isDefault: '1'
     }
   },
-  {
-    dbitem: 'hmmscan', options: sortBy([
+  hmmscan: {
+    name: 'hmmscan',
+    options: sortBy([
       {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
@@ -114,13 +122,16 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
     }
   },
-  {
-    dbitem: 'hmmsearch', options: sortBy([
+  hmmsearch: {
+    name: 'hmmsearch',
+    options: sortBy([
       {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
       {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
@@ -140,13 +151,16 @@ export const optionStrings: object[] = [
       {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
       {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
     }
   },
-  {
-    dbitem: 'diamond blastp', options: sortBy([
+  diamond_blastp: {
+    name: 'diamond blastp',
+    options: sortBy([
       {
         param: 'strand',
         valueType: 'enum',
@@ -190,7 +204,9 @@ export const optionStrings: object[] = [
       {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
-    ], 'param'),
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
     defaultOptionStringSelection: {
       param: 'min-score',
       valueType: 'number',
@@ -198,9 +214,33 @@ export const optionStrings: object[] = [
       min: '0',
       max: undefined,
       values: [],
-      isDefault: '0'    }
+      isDefault: '0'
+    }
   }
+};
+
+function getAlgoData(algo, excluded_options) {
+  let algodata = algparams[algo];
+  if (excluded_options.length > 0) {
+    algodata['options'] = algodata['options'].filter(i => excluded_options.indexOf(i['param']) < 0);
+  }
+  return algodata;
+};
+
+export const optionStrings: object[] = [
+  {database: 'ncbi_nr', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_complete', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_sp', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'uniprot_tr', algs: [getAlgoData('diamond_blastp', [])]},
+  {database: 'eggnog', algs: [getAlgoData('emapper', [])]},
+  {database: 'pfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
+  {database: 'tigrfams', algs: [getAlgoData('hmmscan', []), getAlgoData('hmmsearch', [])]},
+  {database: 'foam', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'resfams_full', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'resfams_core', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
 ];
+
 
 export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
   {
@@ -209,13 +249,16 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     databaseversion: 'latest',
     algorithm: 'emapper',
     tasklabel: 'Functional Annotation Task 1',
-    optionstring: optionStrings.filter(i => i['dbitem'] === 'emapper')[0]['options'].filter(i => i['isDefault'] === '1'),
-    formOptionStringSelection: optionStrings.filter(i => i['dbitem'] === 'emapper')[0]['defaultOptionStringSelection'],
+    optionstring: optionStrings.filter(i => i['database'] === 'eggnog')[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1'),
+    formOptionStringSelection: optionStrings.filter(i => i['database'] === 'eggnog')[0]['algs'][0]['defaultOptionStringSelection'],
   },
   {
-    scope: 'Taxonomy', database: 'ncbi_nr', databaseversion: 'latest',
-    algorithm: 'diamond blastp', tasklabel: 'Taxonomic Annotation Task 1',
-    optionstring: optionStrings.filter(i => i['dbitem'] === 'diamond blastp')[0]['options'].filter(i => i['isDefault'] === '1'),
-    formOptionStringSelection: optionStrings.filter(i => i['dbitem'] === 'diamond blastp')[0]['defaultOptionStringSelection']
+    scope: 'Taxonomy',
+    database: 'ncbi_nr',
+    databaseversion: 'latest',
+    algorithm: 'diamond blastp',
+    tasklabel: 'Taxonomic Annotation Task 1',
+    optionstring: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1'),
+    formOptionStringSelection: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0]['defaultOptionStringSelection'],
   }
 ];

@@ -1,4 +1,3 @@
-
 <div fxFlex class="bg-white">
 
   <div *ngIf="jobUnavailable" class="align-content-center mb-2 alert-danger">
@@ -261,7 +260,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'tax_' + i + '_tasklabel') ? 'white' : formErrorColor }" [(ngModel)]="task.tasklabel">
+              <input type="text" class="form-control"
+                     [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'tax_' + i + '_tasklabel') ? 'white' : formErrorColor }"
+                     [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
                   —
@@ -274,7 +275,8 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Reference Database</span>
               </div>
-              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare" (valueChange)="setDefaultAlgorithm(task)">
+              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare"
+                          (valueChange)="setDefaultAlgorithm(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
                               [value]="dbitem.database">{{dbitem.name}}</mat-option>
@@ -326,7 +328,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [ngStyle]="{'background-color': isInt(algoSel.defaultValue, algoSel.min, algoSel.max, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control"
+                         [ngStyle]="{'background-color': isInt(algoSel.defaultValue, algoSel.min, algoSel.max, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -342,7 +346,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input class="form-control" [ngStyle]="{'background-color': isString(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control"
+                         [ngStyle]="{'background-color': isString(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
                             (click)='removeOptionString(algoSel, task)'>
@@ -357,7 +363,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">evalue</span>
                   </div>
-                  <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control"
+                         [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
                     <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                       <mat-option *ngFor="let evalueRange of evalueOptions"
@@ -394,7 +402,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [ngStyle]="{'background-color': isNumber(algoSel.defaultValue, algoSel.min, algoSel.max, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control"
+                         [ngStyle]="{'background-color': isNumber(algoSel.defaultValue, algoSel.min, algoSel.max, 'tax_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -412,23 +422,27 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Add Advanced Options</span>
               </div>
-              <ng-container *ngFor="let algo of optionStrings">
-                <ng-container *ngIf="algo.dbitem == task.algorithm">
-                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
-                              [(value)]="task.formOptionStringSelection" [compareWith]="compare"
-                              placeholder="Choose Option" #optionStringBoxTax>
-                    <ng-container *ngFor="let dropDownItem of algo.options">
-                      <ng-container *ngIf="isTaskDropDownSelected(task['optionStrings'], dropDownItem)">
-                        <mat-option [value]="dropDownItem">
-                          {{dropDownItem.param}}</mat-option>
-                      </ng-container>
+              <ng-container *ngFor="let db of optionStrings">
+                <ng-container *ngIf="db.database == task.database">
+                  <ng-container *ngFor="let algo of db.algs">
+                    <ng-container *ngIf="algo.name == task.algorithm">
+                      <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                                  [(value)]="task.formOptionStringSelection" [compareWith]="compare"
+                                  placeholder="Choose Option" #optionStringBoxTax>
+                        <ng-container *ngFor="let option of algo.options">
+                          <ng-container *ngIf="!isAlreadyInTask(task.optionstring, option)">
+                            <mat-option [value]="option">
+                              {{option.param}}</mat-option>
+                          </ng-container>
+                        </ng-container>
+                      </mat-select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
+                          +
+                        </button>
+                      </div>
                     </ng-container>
-                  </mat-select>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
-                      +
-                    </button>
-                  </div>
+                  </ng-container>
                 </ng-container>
               </ng-container>
             </div>
@@ -441,7 +455,6 @@
       </div>
 
       <!-- Functional Annotation Task -->
-
       <div *ngIf="jobCard == 4 && expertView == true" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
@@ -461,7 +474,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rki-blue-input">Task Label</span>
               </div>
-              <input type="text" class="form-control" [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'fun_' + i + '_tasklabel') ? 'white' : formErrorColor }" [(ngModel)]="task.tasklabel">
+              <input type="text" class="form-control"
+                     [ngStyle]="{'background-color': isUniqueTaskLabel(task.tasklabel, 'fun_' + i + '_tasklabel') ? 'white' : formErrorColor }"
+                     [(ngModel)]="task.tasklabel">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
                   —
@@ -474,7 +489,8 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Reference Database</span>
               </div>
-              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare" (valueChange)="setDefaultAlgorithm(task)">
+              <mat-select class="custom-select" [(value)]="task.database" [compareWith]="compare"
+                          (valueChange)="setDefaultAlgorithm(task)">
                 <ng-container *ngFor="let dbitem of databaseOptions">
                   <mat-option *ngIf="dbitem.scope == task.scope"
                               [value]="dbitem.database">{{dbitem.name}}</mat-option>
@@ -526,7 +542,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [ngStyle]="{'background-color': isInt(algoSel.defaultValue, algoSel.min, algoSel.max, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control"
+                         [ngStyle]="{'background-color': isInt(algoSel.defaultValue, algoSel.min, algoSel.max, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -542,7 +560,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input class="form-control" [ngStyle]="{'background-color': isString(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control"
+                         [ngStyle]="{'background-color': isString(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
                             (click)='removeOptionString(algoSel, task)'>
@@ -557,7 +577,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">evalue</span>
                   </div>
-                  <input class="form-control" [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
+                  <input class="form-control"
+                         [ngStyle]="{'background-color': isEvalue(algoSel.defaultValue, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue" [(value)]="algoSel.defaultValue">
                   <div class="input-group-append custom-select">
                     <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
                       <mat-option *ngFor="let evalueRange of evalueOptions"
@@ -594,7 +616,9 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">{{algoSel.param}}</span>
                   </div>
-                  <input type="text" class="form-control" [ngStyle]="{'background-color': isNumber(algoSel.defaultValue, algoSel.min, algoSel.max, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }" [(ngModel)]="algoSel.defaultValue"
+                  <input type="text" class="form-control"
+                         [ngStyle]="{'background-color': isNumber(algoSel.defaultValue, algoSel.min, algoSel.max, 'fun_' + i + '_' + algoSel.param) ? 'white' : formErrorColor }"
+                         [(ngModel)]="algoSel.defaultValue"
                          [(value)]="algoSel.defaultValue">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary w-sbtn" type="button"
@@ -612,23 +636,27 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Add Advanced Options</span>
               </div>
-              <ng-container *ngFor="let algo of optionStrings">
-                <ng-container *ngIf="algo.dbitem == task.algorithm">
-                  <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
-                              [(value)]="task.formOptionStringSelection" [compareWith]="compare"
-                              placeholder="Choose Option" #optionStringBoxTax>
-                    <ng-container *ngFor="let dropDownItem of algo.options">
-                      <ng-container *ngIf="isTaskDropDownSelected(task['optionStrings'], dropDownItem)">
-                        <mat-option [value]="dropDownItem">
-                          {{dropDownItem.param}}</mat-option>
-                      </ng-container>
+              <ng-container *ngFor="let db of optionStrings">
+                <ng-container *ngIf="db.database == task.database">
+                  <ng-container *ngFor="let algo of db.algs">
+                    <ng-container *ngIf="algo.name == task.algorithm">
+                      <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                                  [(value)]="task.formOptionStringSelection" [compareWith]="compare"
+                                  placeholder="Choose Option" #optionStringBoxTax>
+                        <ng-container *ngFor="let option of algo.options">
+                          <ng-container *ngIf="!isAlreadyInTask(task.optionstring, option)">
+                            <mat-option [value]="option">
+                              {{option.param}}</mat-option>
+                          </ng-container>
+                        </ng-container>
+                      </mat-select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
+                          +
+                        </button>
+                      </div>
                     </ng-container>
-                  </mat-select>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="addOptionString(task)">
-                      +
-                    </button>
-                  </div>
+                  </ng-container>
                 </ng-container>
               </ng-container>
             </div>
@@ -818,6 +846,8 @@
             </tr>
             </tbody>
           </table>
+          <div *ngIf="hasAdvancedOpts()" class="alert">
+            You have used advanced options in one or more annotation tasks. Please make sure that the options used do not conflict with each other and are supported by the selected database, otherwise the analysis will be terminated abnormally.          </div>
           <button mat-raised-button color="primary"
                   (click)="requestNewJob()" class="float-left"> Reset
           </button>
