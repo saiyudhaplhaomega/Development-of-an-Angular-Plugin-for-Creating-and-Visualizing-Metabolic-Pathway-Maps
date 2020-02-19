@@ -16,11 +16,13 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._user) {
-        return true;
+      console.log('auth true');
+      return true;
     }
 
     // navigate to login page
-    this._router.navigate(['/login']);
+    //this._router.navigate(['/login']);
+    console.log('auth false');
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }

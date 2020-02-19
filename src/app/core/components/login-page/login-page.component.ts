@@ -16,7 +16,8 @@ export class LoginPageComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(_ => {
-      this.router.navigateByUrl('/prophane'); }
+        //this.router.navigateByUrl('/login');
+      }
     );
   }
 

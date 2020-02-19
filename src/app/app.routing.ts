@@ -13,12 +13,12 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'prophane', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
   { path: 'home', component: HomeDashboardPageComponent},
-  { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full'},
   { path: 'prophane', component: ProphaneViewerComponent, canActivate: [AuthGuard], children: [
-      { path: '', redirectTo: '/prophane/(prophaneContent:new)', pathMatch: 'full', canActivate: [AuthGuard]},
-      { path: 'new', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'},
-      { path: 'jobs', component: ProphaneJobControlComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'},
-      { path: 'about', component: ProphaneAboutComponent, canActivate: [AuthGuard], outlet: 'prophaneContent'} ]},
+      { path: '', redirectTo: '/prophane/(prophaneContent:new)', pathMatch: 'full'},
+      { path: 'new', component: ProphaneJobSubmissionComponent, outlet: 'prophaneContent'},
+      { path: 'jobs', component: ProphaneJobControlComponent, outlet: 'prophaneContent'},
+      { path: 'about', component: ProphaneAboutComponent, outlet: 'prophaneContent'} ]},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
 
   /*  { path: 'home', component: HomeDashboardPageComponent},
