@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
+import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
 import { OIDCUser } from '../../objects/user';
 import { AuthGuard } from '../../services/auth-guard.service';
+import {authConfigGoogle} from '../../../authConfigGoogle';
+import {filter} from 'rxjs/operators';
+import {authConfigElixir} from '../../../authConfigElixir';
 
 @Component({
   selector: 'app-login-page',
@@ -15,10 +18,9 @@ export class LoginPageComponent implements OnInit {
 
   currUser: OIDCUser;
 
-  constructor(private router: Router, private oauthService: OAuthService, private authGuard: AuthGuard) {}
+  constructor(private router: Router, private oauthService: OAuthService,  private authGuard: AuthGuard) {}
 
   ngOnInit() {
-
     this.oauthService.events.subscribe(event => {
       console.log('event: ' + event.type);
       console.log('event: ' + event);
@@ -41,18 +43,42 @@ export class LoginPageComponent implements OnInit {
 
   }
 
-  public login() {
+  public loginElixir() {
+    this.configure(authConfigElixir);
+    this.oauthService.initLoginFlow();
+  }
+
+  public loginGoogle() {
+    this.configure(authConfigGoogle);
     this.oauthService.initLoginFlow();
   }
 
   public logoff() {
+    // TODO: do we have to call endSession for Elixir?
     this.oauthService.logOut();
   }
 
-  // public get name() {
-  //   let claims = this.oauthService.getIdentityClaims();
-  //   if (!claims) return null;
-  //   return claims.given_name;
-  // }
+  private configure(authConfig) {
+    this.oauthService.configure(authConfig);
+    this.oauthService.strictDiscoveryDocumentValidation = false;
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+
+    // Optional
+    //this.oauthService.setupAutomaticSilentRefresh();
+
+    // Display all events
+    this.oauthService.events.subscribe(e => {
+      // tslint:disable-next-line:no-console
+      console.debug('oauth/oidc event', e);
+    });
+
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'token_received'))
+      .subscribe(_ => {
+        this.oauthService.loadUserProfile();
+      });
+  }
+
 
 }
