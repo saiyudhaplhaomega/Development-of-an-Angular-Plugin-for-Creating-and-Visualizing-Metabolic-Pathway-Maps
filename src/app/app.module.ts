@@ -23,6 +23,10 @@ import {HomeModule} from './home/home.module';
 import {MaterialModule} from './material-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     NavigationBarComponent,
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     Routing,
     HttpClientModule,
     OAuthModule.forRoot(),

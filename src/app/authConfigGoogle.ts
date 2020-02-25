@@ -6,6 +6,8 @@ export const authConfigGoogle: AuthConfig = {
   redirectUri: window.location.origin + '/login',
   clientId: '533975881425-kerne9k4q8rhiqt6q0mn0gtcftohibcp.apps.googleusercontent.com',
   scope: 'openid profile email',
+  strictDiscoveryDocumentValidation: false,
+  showDebugInformation: true,
 
 }
 

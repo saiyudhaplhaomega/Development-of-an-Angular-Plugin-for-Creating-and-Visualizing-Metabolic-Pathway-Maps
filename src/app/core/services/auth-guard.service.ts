@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { OIDCUser } from '../objects/user';
+import { UserToken } from '../objects/user-token';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  public user: BehaviorSubject<OIDCUser> = new BehaviorSubject(undefined);
-  private _user: OIDCUser;
+  public user: BehaviorSubject<UserToken> = new BehaviorSubject(undefined);
+  private _user: UserToken;
 
   constructor(private _router: Router) {
     this.user.subscribe((user) => {
@@ -22,18 +22,19 @@ export class AuthGuard implements CanActivate {
     }
 
     // navigate to login page
-    //this._router.navigate(['/login']);
+    this._router.navigate(['/login']);
+
     console.log('auth false');
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }
 
-  getIDToken() {
-    return this._user.idToken;
-  }
-
   getUser() {
     return this._user;
+  }
+
+  getUserId() {
+    return this._user.sub;
   }
 
 }

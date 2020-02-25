@@ -6,6 +6,7 @@ export const authConfigElixir: AuthConfig = {
   redirectUri: window.location.origin + '/login',
   clientId: 'd7737d10-75d0-40c1-9732-cca9683eabc6',
   scope: 'openid profile email',
+  strictDiscoveryDocumentValidation: false,
+  showDebugInformation: true,
 
 }
-
