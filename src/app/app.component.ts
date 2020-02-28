@@ -18,8 +18,10 @@ export class AppComponent {
 
     // Loads correct config for login provider
     if (sessionStorage.getItem('login_provider') === 'elixir') {
+      this.authGuard.setIdProvider('elixir');
       this.oauthService.configure(authConfigElixir);
     } else {
+      this.authGuard.setIdProvider('google');
       this.oauthService.configure(authConfigGoogle);
     }
 

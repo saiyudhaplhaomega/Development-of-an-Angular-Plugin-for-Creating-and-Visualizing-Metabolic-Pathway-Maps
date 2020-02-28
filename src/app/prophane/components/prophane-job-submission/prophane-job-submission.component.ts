@@ -126,6 +126,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     });
   }
 
+  saveForm(): void {
+    // save current job to server
+    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneSaveJobForm').subscribe(res => {
+      this.currentProphaneJob = res;
+      // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+      if (res.status === 'JOB_REJECTED') {
+        this.jobUnavailable = true;
+      } else {
+        this.jobUnavailable = false;
+      }
+    });
+  }
+
   // this is the submit button
   startButton(): void {
     this.openUploadDialog();

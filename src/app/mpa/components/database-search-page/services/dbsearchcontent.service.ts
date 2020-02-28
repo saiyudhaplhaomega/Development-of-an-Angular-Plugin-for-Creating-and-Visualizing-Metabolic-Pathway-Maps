@@ -21,7 +21,7 @@ export class DbsearchcontentService {
   newExperiment(value: string): Observable<string> {
     httpOptions.headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': this.authService.getIDToken()
+      'Authorization': this.authService.getUserId()
     });
     return this.http.post<string>( this.webserver.getwebserverurl() + 'mpacloud/v1/addexperiment', value, httpOptions);
   }
@@ -29,7 +29,7 @@ export class DbsearchcontentService {
   newStream(value: string): Observable<string> {
     httpOptions.headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': this.authService.getIDToken()
+      'Authorization': this.authService.getUserId()
     });
     return this.http.post<string>(this.webserver.getwebserverurl() + 'mpacloud/v1/addstreamingsession', value, httpOptions);
   }
@@ -37,7 +37,7 @@ export class DbsearchcontentService {
   getExperiments(): Observable<ExperimentJSON[]> {
     httpOptions.headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': this.authService.getIDToken()
+      'Authorization': this.authService.getUserId()
     });
     return this.http.post<ExperimentJSON[]>(this.webserver.getwebserverurl() + 'mpacloud/v1/listexperiments', 'body', httpOptions);
   }
@@ -45,7 +45,7 @@ export class DbsearchcontentService {
   getStreams(): Observable<StreamJSON[]> {
     httpOptions.headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': this.authService.getIDToken()
+      'Authorization': this.authService.getUserId()
     });
     return this.http.post<StreamJSON[]>(this.webserver.getwebserverurl() + 'mpacloud/v1/liststreamingsessions', 'body', httpOptions);
   }

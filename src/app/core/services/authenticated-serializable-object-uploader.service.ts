@@ -21,6 +21,7 @@ export class AuthenticatedSerializableObjectUploaderService {
   }
 
   postObj<T>(obj: T, api: string): Observable<T> {
+    console.log('IDPROVIDER: ' + this.authGuard.getIdProvider())
     httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': this.authGuard.getUserId(),
