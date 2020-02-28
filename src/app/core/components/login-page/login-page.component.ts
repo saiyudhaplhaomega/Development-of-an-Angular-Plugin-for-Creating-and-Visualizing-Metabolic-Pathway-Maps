@@ -41,6 +41,8 @@ export class LoginPageComponent {
   public logout() {
     // TODO: do we have to call endSession for Elixir?
     this.authGuard.user.next(undefined);
+    sessionStorage.setItem('user', '')
+    sessionStorage.setItem('login_provider', '')
     this.oauthService.logOut();
   }
 

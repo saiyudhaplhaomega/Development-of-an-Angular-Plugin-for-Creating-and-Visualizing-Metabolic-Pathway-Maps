@@ -4,21 +4,23 @@
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
     <div *ngIf="!user && checked">
       <button mat-flat-button (click)="loginElixir()">
-        <img width="382px" src="assets/elixir_signin/ELIXIR_login-buton-blue.svg">
+        <img width="250px" src="assets/elixir_signin/ELIXIR_login-buton-blue.svg">
       </button>
     </div>
     <div *ngIf="!user && checked">
       <button mat-flat-button (click)="loginGoogle()">
-        <img src="assets/google_signin/btn_google_signin_dark_normal_web@2x.png">
+        <img width="250px" src="assets/google_signin/btn_google_signin_dark_normal_web@2x.png">
       </button>
     </div>
-    <mat-checkbox [(ngModel)]="checked">I sell my soul!</mat-checkbox>
+    <div *ngIf="!user">
+      <mat-checkbox [(ngModel)]="checked">I agree to the terms of service and privacy notice</mat-checkbox>
+    </div>
     <div *ngIf="user">
       <button mat-raised-button color="primary" (click)="logout()">Sign out!</button>
     </div>
   </div>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">
-    <img src="{{ user.picture }}">
+    <img width="250px" src="{{ user.picture }}">
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">
       <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">
         <h4>Name:</h4>

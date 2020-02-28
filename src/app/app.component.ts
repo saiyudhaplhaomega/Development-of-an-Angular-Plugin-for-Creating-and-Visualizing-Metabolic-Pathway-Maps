@@ -35,11 +35,28 @@ export class AppComponent {
     this.oauthService.events
     .pipe(filter(e => e.type === 'token_received'))
     .subscribe(_ => {
-      this.oauthService.loadUserProfile().then(up => {console.log(up); authGuard.user.next(up as UserToken)})
+      this.oauthService.loadUserProfile().then(up => {
+        console.log(up); 
+        authGuard.user.next(up as UserToken);
+        sessionStorage.setItem('user', JSON.stringify(up));})
     });
     this.oauthService.events.subscribe(event => {
       console.log(event.type);
     });
+
+    // TODO: Timer for user expiration!!
+    let savedItem = sessionStorage.getItem('user')
+    if (savedItem != '') {
+      let savedToken = JSON.parse(savedItem) as UserToken;
+      if (savedToken.exp * 1000 >= Date.now()){
+        this.authGuard.user.next(savedToken)
+        console.log(new Date(savedToken.exp * 1000))
+      } else {
+        console.log("token expired")
+      }
+    } else {
+      console.log('oh neim')
+    }
   }
 
 }
