@@ -8,6 +8,9 @@ import {ProphaneJobControlComponent} from './prophane/components/prophane-job-co
 import {ProphaneAboutComponent} from './prophane/components/prophane-about/prophane-about.component';
 import {ProphaneViewerComponent} from './prophane/prophane-viewer.component';
 import {MPAComponent} from './mpa/mpa.component';
+import {TermsOfServicePageComponent} from './core/components/terms-of-service-page/terms-of-service-page.component';
+import {ImpressumPageComponent} from './core/components/impressum-page/impressum-page.component';
+import {PrivacyPolicyPageComponent} from './core/components/privacy-policy-page/privacy-policy-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +23,9 @@ const appRoutes: Routes = [
       { path: 'jobs', component: ProphaneJobControlComponent, outlet: 'prophaneContent'},
       { path: 'about', component: ProphaneAboutComponent, outlet: 'prophaneContent'} ]},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
+  { path: 'termsofservice', component: TermsOfServicePageComponent},
+  { path: 'privacypolicy', component: PrivacyPolicyPageComponent},
+  { path: 'impressum', component: ImpressumPageComponent},
 
   /*  { path: 'home', component: HomeDashboardPageComponent},
     { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},

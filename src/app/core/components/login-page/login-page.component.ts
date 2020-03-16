@@ -15,11 +15,27 @@ export class LoginPageComponent {
 
   private user: UserToken;
   checked = false;
+  guestlogin = false;
+  private guestEmail = '';
 
   constructor(private oauthService: OAuthService,  private authGuard: AuthGuard) {
     this.authGuard.user.subscribe(usert => {
+      console.log('auth user set')
       this.user = usert;
-    })
+    });
+    this.authGuard.guestemail.subscribe(guestEmail => {
+      console.log('guest email set')
+      this.guestEmail = guestEmail;
+    });
+  }
+
+  loginGuest() {
+    const tempStr = this.guestEmail;
+    this.logout()
+    this.guestlogin = true;
+    this.guestEmail = tempStr;
+    this.authGuard.guestemail.next(this.guestEmail);
+    console.log(this.guestEmail);
   }
 
   async loginElixir() {
@@ -39,8 +55,10 @@ export class LoginPageComponent {
   }
 
   public logout() {
+    this.guestlogin = false;
     // TODO: do we have to call endSession for Elixir?
     this.authGuard.user.next(undefined);
+    this.authGuard.guestemail.next(undefined);
     sessionStorage.setItem('user', '')
     sessionStorage.setItem('login_provider', '')
     this.oauthService.logOut();

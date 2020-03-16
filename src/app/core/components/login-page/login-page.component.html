@@ -3,11 +3,30 @@
 <div fxLayout="column" fxLayoutGap="20px" class="mt-5">
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
     <div *ngIf="!user && checked">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Guest user, use Email address </span>
+        </div>
+        <input type="text" class="form-control"
+               [(ngModel)]="guestEmail"
+               [(value)]="guestEmail">
+        <div class="input-group-append">
+          <button mat-raised-button color="primary"
+                  (click)="loginGuest()" class="float-left">Guest-Login
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ELIXIR LOGIN TEMPORARILY DISABLED
+    <div *ngIf="!user && !guestlogin && checked">
       <button mat-flat-button (click)="loginElixir()">
         <img width="250px" src="assets/elixir_signin/ELIXIR_login-buton-blue.svg">
       </button>
     </div>
-    <div *ngIf="!user && checked">
+    -->
+
+    <div *ngIf="!user && !guestlogin && checked">
       <button mat-flat-button (click)="loginGoogle()">
         <img width="250px" src="assets/google_signin/btn_google_signin_dark_normal_web@2x.png">
       </button>
@@ -15,7 +34,7 @@
     <div *ngIf="!user">
       <mat-checkbox [(ngModel)]="checked">I agree to the terms of service and privacy notice</mat-checkbox>
     </div>
-    <div *ngIf="user">
+    <div *ngIf="user || guestlogin">
       <button mat-raised-button color="primary" (click)="logout()">Sign out!</button>
     </div>
   </div>

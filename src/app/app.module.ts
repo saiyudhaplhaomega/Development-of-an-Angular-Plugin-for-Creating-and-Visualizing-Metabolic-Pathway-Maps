@@ -26,6 +26,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { TermsOfServicePageComponent } from './core/components/terms-of-service-page/terms-of-service-page.component';
+import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
+import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
 
 
 @NgModule({
@@ -33,6 +36,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     AppComponent,
     LoginPageComponent,
     NavigationBarComponent,
+    TermsOfServicePageComponent,
+    PrivacyPolicyPageComponent,
+    ImpressumPageComponent,
   ],
   imports: [
     BrowserModule,

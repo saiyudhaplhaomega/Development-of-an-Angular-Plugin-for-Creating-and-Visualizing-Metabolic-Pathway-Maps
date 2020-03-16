@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserToken } from '../objects/user-token';
 
@@ -7,18 +7,27 @@ import { UserToken } from '../objects/user-token';
 export class AuthGuard implements CanActivate {
 
   public user: BehaviorSubject<UserToken> = new BehaviorSubject(undefined);
+  public guestemail: BehaviorSubject<string> = new BehaviorSubject(undefined);
   private _user: UserToken;
+  private _guestemail: string;
   private idProvider: string;
 
   constructor(private _router: Router) {
     this.user.subscribe((user) => {
       this._user = user;
     });
+    this.guestemail.subscribe((guestemail) => {
+      this._guestemail = guestemail;
+    });
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._user) {
       console.log('auth true');
+      return true;
+    }
+    if (this._guestemail) {
+      console.log('auth true guest');
       return true;
     }
 
@@ -34,8 +43,17 @@ export class AuthGuard implements CanActivate {
     return this._user;
   }
 
-  getUserId() {
-    return this._user.sub;
+  /**
+   * This method returns the mpa-server-combatible authorization, either guestemail or idtoken
+   *
+   * @returns {string}
+   */
+  getUserAuthorization() {
+    if (this._user) {
+      return sessionStorage.getItem('id_token');
+    } else if (this._guestemail) {
+      return 'EMAIL:' + this._guestemail;
+    }
   }
 
   setIdProvider(idP: string) {

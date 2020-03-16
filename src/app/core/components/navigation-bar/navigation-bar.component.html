@@ -17,6 +17,19 @@
         Prophane
       </button>
 
+      <button mat-button (click)='toggleTOS()'>
+        Terms of Service
+      </button>
+
+      <button mat-button (click)='togglePP()'>
+        Privacy Policy
+      </button>
+
+      <button mat-button (click)='toggleImpressum()'>
+        Impressum
+      </button>
+
+
     </div>
     <div class="spacer"></div>
     <div *ngIf="!user; else elseBlock">

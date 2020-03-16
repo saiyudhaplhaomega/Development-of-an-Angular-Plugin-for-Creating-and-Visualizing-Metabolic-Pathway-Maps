@@ -15,7 +15,7 @@ export class FileUploaderService {
   postFile(file: File, api: string) {
     const fd = new FormData();
     const headers = new HttpHeaders({
-      'Authorization': this.authService.getUserId()
+      'Authorization': this.authService.getUserAuthorization()
     })
     // TODO: this seems to be wrong, should go into header
     fd.set('Content-Type', 'multipart/form-data');
