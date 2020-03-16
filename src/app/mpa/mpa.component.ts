@@ -8,7 +8,6 @@ import { NavService } from './components/data-navigation-tree/services/nav.servi
 })
 
 export class MPAComponent implements AfterViewInit/*, OnInit*/ {
-/*  @ViewChild('appDrawer', {static: false}) appDrawer: ElementRef;*/
 
   @ViewChild('treeoutlet', {
     read: ViewContainerRef

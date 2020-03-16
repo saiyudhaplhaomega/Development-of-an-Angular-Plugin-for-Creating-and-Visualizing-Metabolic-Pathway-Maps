@@ -54,15 +54,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // job data is tracked in this variable
   currentProphaneJob: ProphaneJobObject;
-  reportStyles = prophaneReportStyles;
-  contoptions = contaminationdata;
-  quantdata = quantdata;
-  evalueOptions = evalueOptions;
-  annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
-  defaultOptionString = defaultOptionString;
-  databaseOptions = databaseOptions;
-  optionStrings = optionStrings;
   formInputError = [];
+
+  readonly reportStyles = prophaneReportStyles;
+  readonly contoptions = contaminationdata;
+  readonly quantdata = quantdata;
+  readonly evalueOptions = evalueOptions;
+  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
+  //readonly defaultOptionString = defaultOptionString;
+  readonly databaseOptions = databaseOptions;
+  readonly optionStrings = optionStrings;
+
+
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -113,6 +116,19 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   requestNewJob(): void {
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
+      this.currentProphaneJob = res;
+      // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+      if (res.status === 'JOB_REJECTED') {
+        this.jobUnavailable = true;
+      } else {
+        this.jobUnavailable = false;
+      }
+    });
+  }
+
+  saveForm(): void {
+    // save current job to server
+    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneSaveJobForm').subscribe(res => {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
       if (res.status === 'JOB_REJECTED') {

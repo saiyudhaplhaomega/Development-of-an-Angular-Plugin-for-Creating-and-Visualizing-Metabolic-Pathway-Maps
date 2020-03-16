@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { SocialUser, AuthService } from 'angularx-social-login';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { UserToken } from '../objects/user-token';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  private _user: SocialUser;
+  public user: BehaviorSubject<UserToken> = new BehaviorSubject(undefined);
+  private _user: UserToken;
+  private idProvider: string;
 
-  constructor(private authService: AuthService, private _router: Router) {
-    this.authService.authState.subscribe((user) => {
+  constructor(private _router: Router) {
+    this.user.subscribe((user) => {
       this._user = user;
     });
   }
@@ -21,18 +23,27 @@ export class AuthGuard implements CanActivate {
     }
 
     // navigate to login page
-    //this._router.navigate(['/login']);
+    this._router.navigate(['/login']);
+
     console.log('auth false');
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }
 
-  getIDToken() {
-    return this._user.idToken;
-  }
-
   getUser() {
     return this._user;
+  }
+
+  getUserId() {
+    return this._user.sub;
+  }
+
+  setIdProvider(idP: string) {
+    this.idProvider = idP;
+  }
+
+  getIdProvider() {
+    return this.idProvider;
   }
 
 }

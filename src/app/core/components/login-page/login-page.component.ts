@@ -1,35 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthGuard } from '../../services/auth-guard.service';
+import { authConfigGoogle } from '../../../authConfigGoogle';
+import { authConfigElixir } from '../../../authConfigElixir';
+import { UserToken } from '../../objects/user-token';
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
 
+export class LoginPageComponent {
 
-export class LoginPageComponent implements OnInit {
+  private user: UserToken;
+  checked = false;
 
-  user: SocialUser;
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(_ => {
-        //this.router.navigateByUrl('/login');
-      }
-    );
+  constructor(private oauthService: OAuthService,  private authGuard: AuthGuard) {
+    this.authGuard.user.subscribe(usert => {
+      this.user = usert;
+    })
   }
 
-  signOut(): void {
-    this.authService.signOut();
-    console.log('Signing out?');
+  async loginElixir() {
+    this.logout()
+    this.oauthService.configure(authConfigElixir);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('login_provider', 'elixir');
+    this.oauthService.initLoginFlow();
   }
 
-  ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
+  async loginGoogle() {
+    this.logout()
+    this.oauthService.configure(authConfigGoogle);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('login_provider', 'google');
+    this.oauthService.initLoginFlow();
+  }
+
+  public logout() {
+    // TODO: do we have to call endSession for Elixir?
+    this.authGuard.user.next(undefined);
+    sessionStorage.setItem('user', '')
+    sessionStorage.setItem('login_provider', '')
+    this.oauthService.logOut();
   }
 
 }
