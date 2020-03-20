@@ -1,27 +1,27 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mb-4">
   <mat-toolbar-row>
 
     <!--div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user"-->
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-      <span *ngIf="!isProphane()">MPA</span>
-      <span *ngIf="isProphane()">Prophane</span>
-      <button mat-button (click)='toggleProphane()'>
-        Prophane
-      </button>
-
-      <button mat-button (click)='toggleTOS()'>
-        Terms of Service
-      </button>
-
-      <button mat-button (click)='togglePP()'>
-        Privacy Policy
-      </button>
-
-      <button mat-button (click)='toggleImpressum()'>
-        Impressum
-      </button>
-
-
+      <span *ngIf="!isProphane()">
+        <span>MPA</span>
+      </span>
+      <span *ngIf="isProphane()">
+        <span>Prophane</span>
+        <button mat-button (click)='goto("/prophane")' *ngIf='user'>
+          Job Submission
+        </button>
+        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user'>
+          Job Control
+        </button>
+        <button mat-button [matMenuTriggerFor]="aboutMenu">About</button>
+        <mat-menu #aboutMenu="matMenu">
+          <button mat-menu-item (click)='goto("/prophaneabout")'>About Prophane</button>
+          <button mat-menu-item (click)='goto("/termsofservice")'>Terms of Service</button>
+          <button mat-menu-item (click)='goto("/privacypolicy")'>Privacy Policy</button>
+          <button mat-menu-item (click)='goto("/impressum")'>Impressum</button>
+        </mat-menu>
+      </span>
     </div>
     <div class="spacer"></div>
     <div *ngIf="!user; else elseBlock">
@@ -34,6 +34,12 @@
         <img src="{{ user.picture }}">
       </button>
     </ng-template>
+    <button mat-button (click)='goto("/prophanejobs")' *ngIf='user'>
+      Log out
+    </button>
+    <button mat-button (click)='goto("/prophanejobs")' *ngIf='!user'>
+      Log in
+    </button>
     <span class="gap"></span>
   </mat-toolbar-row>
 </mat-toolbar>

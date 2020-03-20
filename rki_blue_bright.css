@@ -2578,3 +2578,8 @@ a.mat-tab-link:hover{
   color: white;
   margin-bottom: 25px;
 }
+
+button:focus, button:active:focus, button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}

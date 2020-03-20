@@ -26,29 +26,9 @@ export class NavigationBarComponent implements OnInit {
     return false;
   }
 
-  toggleHomepage() {
-      this.router.navigateByUrl('/home');
+  goto(route: string) {
+      this.router.navigateByUrl(route);
     }
-
-  toggleMPA() {
-    this.router.navigateByUrl('/mpa');
-  }
-
-  toggleProphane() {
-    this.router.navigateByUrl('/prophane');
-  }
-
-  toggleTOS() {
-    this.router.navigateByUrl('/termsofservice');
-  }
-
-  togglePP() {
-    this.router.navigateByUrl('/privacypolicy');
-  }
-
-  toggleImpressum() {
-    this.router.navigateByUrl('/impressum');
-  }
 
   ngOnInit(): void {
     this.authGuard.user.subscribe(res => {
