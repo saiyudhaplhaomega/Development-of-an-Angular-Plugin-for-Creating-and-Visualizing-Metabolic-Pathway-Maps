@@ -19,6 +19,13 @@ export class NavigationBarComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  isProphane() {
+    if (window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
+      return true;
+    }
+    return false;
+  }
+
   toggleHomepage() {
       this.router.navigateByUrl('/home');
     }

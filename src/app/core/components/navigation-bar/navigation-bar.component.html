@@ -3,16 +3,8 @@
 
     <!--div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user"-->
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
-      <span>MPA-Cloud</span>
-
-      <!--<button mat-button (click)='toggleHomepage()'>-->
-        <!--Home-->
-      <!--</button>-->
-
-      <!--<button mat-button (click)='toggleMPA()'>-->
-        <!--MPA-->
-      <!--</button>-->
-
+      <span *ngIf="!isProphane()">MPA</span>
+      <span *ngIf="isProphane()">Prophane</span>
       <button mat-button (click)='toggleProphane()'>
         Prophane
       </button>
