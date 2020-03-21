@@ -2583,3 +2583,57 @@ button:focus, button:active:focus, button.active:focus {
   outline: none !important;
   outline-style: none !important;
 }
+
+.startbox {
+  width: 100%;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.startbox-item {
+  margin: 1em;
+  width: 35em;
+  height: 10em;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  padding: 15px;
+}
+
+.startbox-item-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  display: block;
+  font-size: 1.4em;
+}
+
+.showpointer:hover {
+  box-shadow: 0 0 10px rgba(0, 63, 151, 1);
+}
+
+.showpointer {
+  cursor: pointer;
+}
+

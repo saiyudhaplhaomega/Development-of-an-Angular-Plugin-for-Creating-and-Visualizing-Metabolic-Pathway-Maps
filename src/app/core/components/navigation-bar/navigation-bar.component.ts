@@ -15,10 +15,6 @@ export class NavigationBarComponent implements OnInit {
 
   constructor(private router: Router, private authGuard: AuthGuard) { }
 
-  navigateLogin() {
-    this.router.navigateByUrl('/login');
-  }
-
   isProphane() {
     if (window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
       return true;
@@ -28,7 +24,7 @@ export class NavigationBarComponent implements OnInit {
 
   goto(route: string) {
       this.router.navigateByUrl(route);
-    }
+  }
 
   ngOnInit(): void {
     this.authGuard.user.subscribe(res => {

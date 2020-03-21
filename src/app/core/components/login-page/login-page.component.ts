@@ -16,6 +16,7 @@ export class LoginPageComponent {
   private user: UserToken;
   checked = false;
   guestlogin = false;
+  showGuestLogin = false;
   private guestEmail = '';
 
   constructor(private oauthService: OAuthService,  private authGuard: AuthGuard) {
@@ -27,6 +28,14 @@ export class LoginPageComponent {
       console.log('guest email set')
       this.guestEmail = guestEmail;
     });
+  }
+
+  showGuestInput(){
+    this.showGuestLogin = true;
+  }
+
+  hideGuestInput(){
+    this.showGuestLogin = false;
   }
 
   loginGuest() {
@@ -53,5 +62,4 @@ export class LoginPageComponent {
     sessionStorage.setItem('login_provider', 'google');
     this.oauthService.initLoginFlow();
   }
-
 }
