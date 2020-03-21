@@ -34,7 +34,7 @@
         <img src="{{ user.picture }}">
       </button>
     </ng-template>
-    <button mat-button (click)='goto("/prophanejobs")' *ngIf='user'>
+    <button mat-button (click)='authGuard.logout()' *ngIf='user'>
       Log out
     </button>
     <button mat-button (click)='goto("/login")' *ngIf='!user'>

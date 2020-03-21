@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserToken } from '../objects/user-token';
+import { OAuthService } from 'angular-oauth2-oidc';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -12,7 +14,7 @@ export class AuthGuard implements CanActivate {
   private _guestemail: string;
   private idProvider: string;
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private oauthService: OAuthService) {
     this.user.subscribe((user) => {
       this._user = user;
     });
@@ -62,6 +64,15 @@ export class AuthGuard implements CanActivate {
 
   getIdProvider() {
     return this.idProvider;
+  }
+
+  public logout() {
+    // TODO: do we have to call endSession for Elixir?
+    this.user.next(undefined);
+    this.guestemail.next(undefined);
+    sessionStorage.setItem('user', '')
+    sessionStorage.setItem('login_provider', '')
+    this.oauthService.logOut();
   }
 
 }

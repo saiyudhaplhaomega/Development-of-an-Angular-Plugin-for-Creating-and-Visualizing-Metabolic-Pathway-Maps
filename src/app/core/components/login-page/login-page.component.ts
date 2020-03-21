@@ -31,7 +31,7 @@ export class LoginPageComponent {
 
   loginGuest() {
     const tempStr = this.guestEmail;
-    this.logout()
+    this.authGuard.logout()
     this.guestlogin = true;
     this.guestEmail = tempStr;
     this.authGuard.guestemail.next(this.guestEmail);
@@ -39,7 +39,7 @@ export class LoginPageComponent {
   }
 
   async loginElixir() {
-    this.logout()
+    this.authGuard.logout()
     this.oauthService.configure(authConfigElixir);
     await this.oauthService.loadDiscoveryDocument();
     sessionStorage.setItem('login_provider', 'elixir');
@@ -47,21 +47,11 @@ export class LoginPageComponent {
   }
 
   async loginGoogle() {
-    this.logout()
+    this.authGuard.logout()
     this.oauthService.configure(authConfigGoogle);
     await this.oauthService.loadDiscoveryDocument();
     sessionStorage.setItem('login_provider', 'google');
     this.oauthService.initLoginFlow();
-  }
-
-  public logout() {
-    this.guestlogin = false;
-    // TODO: do we have to call endSession for Elixir?
-    this.authGuard.user.next(undefined);
-    this.authGuard.guestemail.next(undefined);
-    sessionStorage.setItem('user', '')
-    sessionStorage.setItem('login_provider', '')
-    this.oauthService.logOut();
   }
 
 }

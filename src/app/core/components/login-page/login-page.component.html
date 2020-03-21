@@ -35,7 +35,7 @@
       <mat-checkbox [(ngModel)]="checked">I agree to the terms of service and privacy notice</mat-checkbox>
     </div>
     <div *ngIf="user || guestlogin">
-      <button mat-raised-button color="primary" (click)="logout()">Sign out!</button>
+      <button mat-raised-button color="primary" (click)="authGuard.logout()">log out</button>
     </div>
   </div>
   <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user">
