@@ -10,8 +10,10 @@ export class AuthGuard implements CanActivate {
 
   public user: BehaviorSubject<UserToken> = new BehaviorSubject(undefined);
   public guestemail: BehaviorSubject<string> = new BehaviorSubject(undefined);
+  public guest: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private _user: UserToken;
   private _guestemail: string;
+  private _guest: boolean;
   private idProvider: string;
 
   constructor(private _router: Router, private oauthService: OAuthService) {
@@ -21,15 +23,13 @@ export class AuthGuard implements CanActivate {
     this.guestemail.subscribe((guestemail) => {
       this._guestemail = guestemail;
     });
+    this.guest.subscribe((guest) => {
+      this._guest = guest;
+    });
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._user) {
-      console.log('auth true');
-      return true;
-    }
-    if (this._guestemail) {
-      console.log('auth true guest');
+    if (this._user || this._guest) {
       return true;
     }
 
@@ -69,9 +69,10 @@ export class AuthGuard implements CanActivate {
   public logout() {
     // TODO: do we have to call endSession for Elixir?
     this.user.next(undefined);
+    this.guest.next(false);
     this.guestemail.next(undefined);
     sessionStorage.setItem('user', '')
-    sessionStorage.setItem('login_provider', '')
+    sessionStorage.setItem('login_provider', '');
     this.oauthService.logOut();
   }
 

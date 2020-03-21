@@ -12,6 +12,7 @@ export class NavigationBarComponent implements OnInit {
 
   @Output() toggleSidenav = new EventEmitter<void>();
   user: UserToken;
+  guest: boolean;
 
   constructor(private router: Router, private authGuard: AuthGuard) { }
 
@@ -29,6 +30,9 @@ export class NavigationBarComponent implements OnInit {
   ngOnInit(): void {
     this.authGuard.user.subscribe(res => {
       this.user = res;
+    });
+    this.authGuard.guest.subscribe(res => {
+      this.guest = res;
     });
   }
 
