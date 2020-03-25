@@ -2664,3 +2664,43 @@ button:focus, button:active:focus, button.active:focus {
 .footer a:hover{
   text-decoration: underline;
 }
+
+.jobcontrol {
+  max-width: 1000px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.legal-text {
+  font-size: 14px;
+  max-width: 750px;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.legal-text h1 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.legal-text h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.legal-text h3 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.legal-text h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
