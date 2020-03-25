@@ -1,13 +1,13 @@
 .gap {
-    margin: 0 6px;
+  margin: 0 6px;
 }
 
 .spacer {
-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 img {
-    vertical-align: middle;
-    width: 32px;
-    border-radius: 50%;
+  vertical-align: middle;
+  width: 32px;
+  border-radius: 50%;
 }

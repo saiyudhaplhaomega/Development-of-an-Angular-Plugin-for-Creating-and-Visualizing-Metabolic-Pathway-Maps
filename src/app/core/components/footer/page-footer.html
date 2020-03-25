@@ -1,0 +1,22 @@
+<div class="footer p-4">
+  <ul>
+    <li>About</li>
+    <li><a href="/prophaneabout">About Prophane</a></li>
+    <li><a href="/termsofservice">Terms of Service</a></li>
+    <li><a href="/privacypolicy">Privacy Policy</a></li>
+    <li><a href="/impressum">Impressum</a></li>
+  </ul>
+  <ul>
+    <li>Funding & Support</li>
+    <li><a href="http://www.dfg.de">DFG</a></li>
+    <li><a href="http://www.denbi.de">deNBI</a></li>
+    <li><a href="https://www.denbi.de/cloud">deNBI Cloud</a></li>
+  </ul>
+  <ul>
+    <li>Analysis</li>
+    <li *ngIf="authGuard.loggedIn()"><a href="/prophane">Job Submission</a></li>
+    <li *ngIf="authGuard.loggedIn()"><a href="/jobcontrol">Job Control</a></li>
+    <li *ngIf="!authGuard.loggedIn()"><a href="/login">Login</a></li>
+    <li *ngIf="authGuard.loggedIn()"><a href="" (click)="authGuard.logout()">Logout</a></li>
+  </ul>
+</div>

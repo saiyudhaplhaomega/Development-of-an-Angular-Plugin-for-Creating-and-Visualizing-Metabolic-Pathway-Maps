@@ -2,8 +2,15 @@
 @import '~rki_blue_bright.css';
 @import '~node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   text-align: center;
 }
+

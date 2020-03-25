@@ -2519,21 +2519,6 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   flex: 1;
 }
 
-footer {
-  width: 100%;
-  min-height: 4em;
-  text-align: center;
-  border-top: 1px solid rgba(0, 0, 0, .05);
-  color: rgba(0, 0, 0, .4);
-  background-color: rgba(0, 0, 0, .04);
-  margin-top: 2em;
-  line-height: 4em;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  self-align: flex-end
-}
-
 .no-border {
   border: 0;
 }
@@ -2637,3 +2622,45 @@ button:focus, button:active:focus, button.active:focus {
   cursor: pointer;
 }
 
+.footer {
+  color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .04);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  height: 140px;
+}
+
+.footer ul {
+  float: right;
+  margin-left: 3em;
+  list-style-type: none;
+}
+
+.footer ul:first-child {
+  margin-right: 2em;
+}
+
+.footer ul:last-child {
+  margin-left: 0;
+}
+
+.footer ul li {
+  flex: 1 0 25%;
+}
+
+.footer ul li:first-child {
+  font-weight: bold;
+}
+
+.content-container {
+  min-height: calc(100vH - 230px);
+  padding-bottom: 2em;
+}
+
+.footer a:link, .footer a:visited, .footer a:hover, .footer a:active{
+  color: rgba(0, 0, 0, .5);
+}
+
+.footer a:hover{
+  text-decoration: underline;
+}

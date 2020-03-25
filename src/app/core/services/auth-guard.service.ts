@@ -28,6 +28,15 @@ export class AuthGuard implements CanActivate {
     });
   }
 
+  loggedIn(){
+    if (this._user || this._guest) {
+      return true;
+    }
+    else {
+    return false;
+    }
+  }
+
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._user || this._guest) {
       return true;

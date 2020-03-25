@@ -12,6 +12,7 @@ import {WebserveraddressService} from './core/services/webserveraddress.service'
 import {FileUploaderService} from './core/services/file-uploader.service';
 import {UploadProgressService} from './core/services/upload-progress.service';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
+import {FooterComponent} from './core/components/footer/page-footer';
 import {AuthGuard} from './core/services/auth-guard.service';
 import {DbsearchcontentService} from './mpa/components/database-search-page/services/dbsearchcontent.service';
 
@@ -36,6 +37,7 @@ import { ImpressumPageComponent } from './core/components/impressum-page/impress
     AppComponent,
     LoginPageComponent,
     NavigationBarComponent,
+    FooterComponent,
     TermsOfServicePageComponent,
     PrivacyPolicyPageComponent,
     ImpressumPageComponent,
