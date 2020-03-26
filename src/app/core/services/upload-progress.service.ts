@@ -30,6 +30,12 @@ export class UploadProgressService {
 
   updateProgress() {
     var p = (this.fastaProgress + this.reportProgress) / this.total * 100;
+    if (p < 10) {
+      p = parseFloat(p.toFixed(2));
+    }
+    else {
+      p = parseFloat(p.toFixed(1));
+    }
     if (p > this.progress) {
       this.progress = p;
       this.pSource.next(p);
