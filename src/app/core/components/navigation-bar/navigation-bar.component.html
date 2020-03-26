@@ -8,10 +8,10 @@
       </span>
       <span *ngIf="isProphane()">
         <span>Prophane</span>
-        <button mat-button (click)='goto("/prophane")' *ngIf='user'>
+        <button mat-button (click)='goto("/prophane")' *ngIf='user || guest'>
           Job Submission
         </button>
-        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user'>
+        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user || guest'>
           Job Control
         </button>
         <button mat-button [matMenuTriggerFor]="aboutMenu">About</button>

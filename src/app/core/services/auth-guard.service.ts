@@ -37,6 +37,15 @@ export class AuthGuard implements CanActivate {
     }
   }
 
+  allowExpert() {
+    if (this._user) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._user || this._guest) {
       return true;
@@ -83,6 +92,7 @@ export class AuthGuard implements CanActivate {
     sessionStorage.setItem('user', '')
     sessionStorage.setItem('login_provider', '');
     this.oauthService.logOut();
+    this._router.navigate(['/login']);
   }
 
 }

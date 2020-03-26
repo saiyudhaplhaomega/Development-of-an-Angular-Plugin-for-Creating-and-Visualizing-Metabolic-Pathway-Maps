@@ -28,6 +28,8 @@ import { Observable } from 'rxjs';
 import { ProphaneAnnotationTaskObject } from '../../objects/prophaneannotationtaskjson';
 import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
 import { HttpUploadResponseObject } from '../../objects/httpUploadResponse';
+import { AuthGuard } from '../../../core/services/auth-guard.service';
+
 
 
 @Component({
@@ -80,7 +82,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
               private jsonUpload: AuthenticatedSerializableObjectUploaderService,
               tooltipConfig: NgbTooltipConfig, private router: Router,
-              private modalService: NgbModal, private _uploadProgressService: UploadProgressService) {
+              private modalService: NgbModal, private _uploadProgressService: UploadProgressService, private authGuard: AuthGuard) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;

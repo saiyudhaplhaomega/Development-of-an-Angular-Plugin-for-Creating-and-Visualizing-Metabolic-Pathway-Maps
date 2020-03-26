@@ -26,7 +26,7 @@
             Input
             <span class="card-title-button-wrapper">
               <mat-slide-toggle color [(ngModel)]="expertView"
-                                (change)="onViewChange(expertView)">expert</mat-slide-toggle>
+                                (change)="onViewChange(expertView)" *ngIf="authGuard.allowExpert()">expert</mat-slide-toggle>
             </span>
           </h5>
         </div>
