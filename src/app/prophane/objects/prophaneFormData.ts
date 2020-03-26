@@ -6,9 +6,10 @@ import {sortBy} from 'lodash';
 import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
-  {id: 0, name: 'MetaProteomeAnalyzer (MPA)', valueString: 'mpa'},
-  {id: 1, name: 'Scaffold', valueString: 'scaffold'},
-  {id: 2, name: 'Generic Format', valueString: 'generic'},
+  {id: 0, name: 'MPA (single experiment)', valueString: 'mpa'},
+  {id: 1, name: 'MPA (multiple experiments)', valueString: 'mpa_multisample'},
+  {id: 2, name: 'Scaffold', valueString: 'scaffold'},
+  {id: 3, name: 'Generic Format', valueString: 'generic'},
 ];
 
 export const quantdata: ProphaneQuantDataObject[] = [

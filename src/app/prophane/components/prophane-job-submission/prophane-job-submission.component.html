@@ -52,7 +52,7 @@
             </mat-select>
           </div>
 
-          <!-- MPA -->
+          <!-- MPA Single Experiment-->
           <div
             *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 0"
             class="input-group mb-3">
@@ -69,9 +69,26 @@
             </div>
           </div>
 
-          <!-- Scaffold -->
+          <!-- MPA Multiexperiment-->
           <div
             *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 1"
+            class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".csv" lass="custom-file-input" id="mpa" #proteinreportfile
+                     (change)="onCSVChange(proteinreportfile.files)"
+                     class="custom-file-input">
+              <!---(click)="proteinreportfile.click()"-->
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
+          <!-- Scaffold -->
+          <div
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 2"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -89,7 +106,7 @@
 
           <!-- Generic -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 2"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 3"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
