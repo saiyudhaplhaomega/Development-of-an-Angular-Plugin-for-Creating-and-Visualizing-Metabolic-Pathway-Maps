@@ -11,7 +11,7 @@
         <button mat-button (click)='goto("/prophane")' *ngIf='user || guest'>
           Job Submission
         </button>
-        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user || guest'>
+        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user'>
           Job Control
         </button>
         <button mat-button [matMenuTriggerFor]="aboutMenu">About</button>

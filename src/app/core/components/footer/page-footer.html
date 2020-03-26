@@ -15,7 +15,7 @@
   <ul>
     <li>Analysis</li>
     <li *ngIf="authGuard.loggedIn()"><a href="/prophane">Job Submission</a></li>
-    <li *ngIf="authGuard.loggedIn()"><a href="/jobcontrol">Job Control</a></li>
+    <li *ngIf="authGuard.getUser() != undefined"><a href="/jobcontrol">Job Control</a></li>
     <li *ngIf="!authGuard.loggedIn()"><a href="/login">Login</a></li>
     <li *ngIf="authGuard.loggedIn()"><a href="" (click)="authGuard.logout()">Logout</a></li>
   </ul>
