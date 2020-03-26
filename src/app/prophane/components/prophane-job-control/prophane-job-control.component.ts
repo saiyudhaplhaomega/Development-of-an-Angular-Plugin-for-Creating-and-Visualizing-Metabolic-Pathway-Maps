@@ -23,6 +23,7 @@ export class ProphaneJobControlComponent implements OnInit {
     this.triggerJobListLoading();
   }
   triggerJobListLoading(): void {
+    this.jobs = undefined;
     this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe(d => {
       this.jobs = sortBy(d, 'creationdate').reverse();
     });
@@ -31,7 +32,6 @@ export class ProphaneJobControlComponent implements OnInit {
   confirmDelete(jobno: number, joblabel: string) {
     if (confirm('Are you sure to delete job #' + jobno + ' (' + joblabel + ')' )) {
       const jobToDelete: ProphaneJobObject = this.jobs.filter(i => i.prophaneJobUUID === joblabel)[0];
-      console.log(jobToDelete)
       this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, 'mpacloud/v1/prophaneDeleteJob').subscribe(res => {
         console.log('job deleted');
       });
