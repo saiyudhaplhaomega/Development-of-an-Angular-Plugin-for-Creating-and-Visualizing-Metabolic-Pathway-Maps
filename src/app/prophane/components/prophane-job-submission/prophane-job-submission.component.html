@@ -857,18 +857,12 @@
           </button>
         </div>
       </div>
-      <div class="w-50 mt-1 mb-5 min-w-600">
-        <button mat-button
-                (click)="saveForm()" class="float-right">Save
-        </button>
-        <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
-      </div>
-      <div class="w-50 mt-1 mb-5 min-w-600">
-        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)"
-                (click)="nextStep()" class="float-right">Next
-        </button>
-        <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">Back</button>
+      <div class="w-50 pl-4 mt-1 mb-5 min-w-600">
+        <button mat-button (click)="saveForm()" class="float-left">save input</button>
+        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)" (click)="nextStep()" class="float-right">next &#187;</button>
+        <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">&#171; back</button>
       </div>
     </div>
   </div>
 </div>
+
