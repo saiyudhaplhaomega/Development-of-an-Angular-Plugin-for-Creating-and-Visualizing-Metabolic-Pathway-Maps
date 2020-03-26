@@ -31,7 +31,7 @@
                [(value)]="guestEmail" placeholder="enter your email" autofocus>
       <div class="input-group-append">
           <button mat-raised-button color="primary"
-                  (click)="loginGuest()">login
+                  (click)="loginGuest()" [disabled]="!isEmail(guestEmail)">login
           </button>
       </div>
     </div>

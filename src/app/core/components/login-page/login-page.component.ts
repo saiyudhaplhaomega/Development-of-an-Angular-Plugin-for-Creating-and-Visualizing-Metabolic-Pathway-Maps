@@ -63,4 +63,13 @@ export class LoginPageComponent {
     sessionStorage.setItem('login_provider', 'google');
     this.oauthService.initLoginFlow();
   }
+
+  isEmail(value) {
+    if (value === undefined || !String(value).match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 }
