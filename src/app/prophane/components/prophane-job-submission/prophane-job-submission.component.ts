@@ -419,6 +419,15 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
   }
 
+  showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    if (algoSel.avoid != undefined && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   isEvalue(value, elemid) {
     if (value === undefined || !String(value).match("^[0-9]+(\[.\][0-9]*)?$")) {
       this.addFormInputErr(elemid);

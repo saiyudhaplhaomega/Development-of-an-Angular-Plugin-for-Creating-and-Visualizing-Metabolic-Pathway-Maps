@@ -57,27 +57,27 @@ export const algparams = {
   emapper: {
     name: 'emapper',
     options: sortBy([
-      {param: 'guessdb', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'tax_scope', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0'},
+      {param: 'guessdb', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'tax_scope', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
       {
         param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: undefined, max: undefined, isDefault: '0',
-        values: ['one2one', 'many2one', 'one2many', 'many2many', 'all']
+        values: ['one2one', 'many2one', 'one2many', 'many2many', 'all'], avoid: []
       },
       {
         param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: undefined, max: undefined, isDefault: '0',
-        values: ['experimental', 'non-electronic']
+        values: ['experimental', 'non-electronic'], avoid: []
       },
-      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0'},
-      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: undefined, values: [], isDefault: '1'},
-      {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: [], isDefault: '0'},
-      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      //{param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: 0, max: undefined, values: [], isDefault: 0},
-      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '0', max: undefined, values: [], isDefault: '0'},
+      {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: undefined, values: [], isDefault: '1', avoid: []},
+      {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'hmm_maxseqlen', valueType: 'int', defaultValue: '5000', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'hmm_qcov', valueType: 'number', defaultValue: '0', min: '0', max: '1', values: [], isDefault: '0', avoid: []},
+      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      //{param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: 0, max: undefined, values: [], isDefault: 0, avoid: []},
+      {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
       {
         param: 'm',
         valueType: 'enum',
@@ -85,9 +85,10 @@ export const algparams = {
         min: undefined,
         max: undefined,
         values: ['diamond', 'hmmer'],
-        isDefault: '1'
+        isDefault: '1',
+        avoid: []
       },
-      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
+      {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
     ], function (option) {
       return option.param.toLowerCase();
     }),
@@ -98,65 +99,66 @@ export const algparams = {
       min: undefined,
       max: undefined,
       values: ['diamond', 'hmmer'],
-      isDefault: '1'
+      isDefault: '1',
+      avoid: []
     }
   },
   hmmscan: {
     name: 'hmmscan',
     options: sortBy([
-      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incdomE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F1', valueType: 'number', defaultValue: '0.02', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F2', valueType: 'number', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F3', valueType: 'number', defaultValue: '0.00001', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'nobias', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'nonull2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'Z', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domZ', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'seed', valueType: 'int', defaultValue: '42', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'E', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
-      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
+      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incdomE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F1', valueType: 'number', defaultValue: '0.02', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F2', valueType: 'number', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F3', valueType: 'number', defaultValue: '0.00001', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'nobias', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'nonull2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'Z', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domZ', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'seed', valueType: 'int', defaultValue: '42', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'E', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1', avoid: ['cut_ga', 'cut_tc', 'cut_nc']},
+      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
+      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
+      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
     ], function (option) {
       return option.param.toLowerCase();
     }),
     defaultOptionStringSelection: {
-      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
+      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []
     }
   },
   hmmsearch: {
     name: 'hmmsearch',
     options: sortBy([
-      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incdomE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F1', valueType: 'number', defaultValue: '0.02', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F2', valueType: 'number', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'F3', valueType: 'number', defaultValue: '0.00001', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'nobias', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'nonull2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'Z', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'domZ', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'seed', valueType: 'int', defaultValue: '42', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'E', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
-      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
+      {param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incdomE', valueType: 'number', defaultValue: '10', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'incdomT', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F1', valueType: 'number', defaultValue: '0.02', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F2', valueType: 'number', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'F3', valueType: 'number', defaultValue: '0.00001', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'nobias', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'nonull2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'Z', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'domZ', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'seed', valueType: 'int', defaultValue: '42', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'E', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1', avoid: ['cut_tc', 'cut_ga', 'cut_nc']},
+      {param: 'cut_ga', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
+      {param: 'cut_nc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
+      {param: 'cut_tc', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: ['E']},
     ], function (option) {
       return option.param.toLowerCase();
     }),
     defaultOptionStringSelection: {
-      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0'
+      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []
     }
   },
   diamond_blastp: {
@@ -169,43 +171,45 @@ export const algparams = {
         min: undefined,
         max: undefined,
         values: ['both', 'minus', 'plus'],
-        isDefault: '0'
+        isDefault: '0',
+        avoid: []
       },
-      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: [], isDefault: '0'},
-      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0'},
-      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0'},
-      {param: 'sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'block-size', valueType: 'number', defaultValue: '2.0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'frameshift', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
+      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
+      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
+      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
+      {param: 'sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'block-size', valueType: 'number', defaultValue: '2.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'frameshift', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
       {
         param: 'matrix', valueType: 'enum', defaultValue: 'BLOSUM62', min: undefined, max: undefined,
-        values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30'], isDefault: '0'
+        values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30'], isDefault: '0', avoid: []
       },
-      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0'},
-      {param: 'masking', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0'},
-      {param: 'algo', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0'},
-      {param: 'freq-sd', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'id2', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'window', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0'},
+      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'masking', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'algo', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'freq-sd', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'id2', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'window', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
       {param: 'ungapped-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'hit-band', valueType: 'string', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'hit-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'gapped-xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0'},
-      {param: 'band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: [], isDefault: '0'},
-      {param: 'shapes', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'shape-mask', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'index-mode', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0'},
-      {param: 'rank-ratio', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'rank-ratio2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0'},
-      {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0'},
-      {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0'},
-      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1'},
+      {param: 'hit-band', valueType: 'string', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'hit-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'gapped-xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: [], isDefault: '0', avoid: []},
+      {param: 'shapes', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'shape-mask', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'index-mode', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'rank-ratio', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'rank-ratio2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1', avoid: []},
     ], function (option) {
+      return option.param.toLowerCase();
       return option.param.toLowerCase();
     }),
     defaultOptionStringSelection: {
@@ -215,7 +219,8 @@ export const algparams = {
       min: '0',
       max: undefined,
       values: [],
-      isDefault: '0'
+      isDefault: '0',
+      avoid: []
     }
   }
 };

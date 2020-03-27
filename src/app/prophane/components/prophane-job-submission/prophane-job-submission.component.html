@@ -375,7 +375,7 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="algoSel.valueType == 'evalue'">
+              <ng-container *ngIf="algoSel.valueType == 'evalue' && showOption(algoSel, task)">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">evalue</span>
@@ -589,7 +589,7 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="algoSel.valueType == 'evalue'">
+              <ng-container *ngIf="algoSel.valueType == 'evalue' && showOption(algoSel, task)">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">evalue</span>
