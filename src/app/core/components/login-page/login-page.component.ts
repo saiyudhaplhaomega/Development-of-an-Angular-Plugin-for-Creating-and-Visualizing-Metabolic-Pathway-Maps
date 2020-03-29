@@ -4,6 +4,8 @@ import { AuthGuard } from '../../services/auth-guard.service';
 import { authConfigGoogle } from '../../../authConfigGoogle';
 import { authConfigElixir } from '../../../authConfigElixir';
 import { UserToken } from '../../objects/user-token';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login-page',
@@ -18,7 +20,7 @@ export class LoginPageComponent {
   showGuestLogin = false;
   private guestEmail = '';
 
-  constructor(private oauthService: OAuthService,  private authGuard: AuthGuard) {
+  constructor(private _router: Router, private oauthService: OAuthService,  private authGuard: AuthGuard) {
     this.authGuard.user.subscribe(usert => {
       this.user = usert;
     });
@@ -46,7 +48,7 @@ export class LoginPageComponent {
     this.authGuard.guestemail.next(this.guestEmail);
     this.authGuard.guest.next(this.guestlogin);
     this.hideGuestInput();
- }
+  }
 
   async loginElixir() {
     this.authGuard.logout()
