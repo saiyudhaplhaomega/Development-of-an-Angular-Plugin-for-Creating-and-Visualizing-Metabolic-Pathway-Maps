@@ -2654,7 +2654,7 @@ button:focus, button:active:focus, button.active:focus {
 
 .content-container {
   min-height: calc(100vH - 140px);
-  padding-bottom: 2em;
+  padding-bottom: 3em;
 }
 
 .footer a:link, .footer a:visited, .footer a:hover, .footer a:active{
