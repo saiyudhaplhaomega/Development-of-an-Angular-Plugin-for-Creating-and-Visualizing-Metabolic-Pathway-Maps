@@ -9,6 +9,7 @@ import {AppComponent} from './app.component';
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
+import {PolicyConsentService} from './core/services/policy-consent.service';
 import {FileUploaderService} from './core/services/file-uploader.service';
 import {UploadProgressService} from './core/services/upload-progress.service';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
@@ -30,6 +31,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TermsOfServicePageComponent } from './core/components/terms-of-service-page/terms-of-service-page.component';
 import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
 import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
+import { PrivacyConsentBannerComponent } from './core/components/privacy-consent-banner/privacy-consent-banner.component';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { ImpressumPageComponent } from './core/components/impressum-page/impress
     TermsOfServicePageComponent,
     PrivacyPolicyPageComponent,
     ImpressumPageComponent,
+    PrivacyConsentBannerComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { ImpressumPageComponent } from './core/components/impressum-page/impress
     HttpClient,
     AuthGuard,
     WebserveraddressService,
+    PolicyConsentService,
     FileUploaderService,
     UploadProgressService,
     DbsearchcontentService,

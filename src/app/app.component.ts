@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { authConfigGoogle } from './authConfigGoogle';
 import { filter } from 'rxjs/operators';
@@ -9,13 +9,12 @@ import { UserToken } from './core/objects/user-token';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 
 export class AppComponent {
 
   constructor(private oauthService: OAuthService, private authGuard: AuthGuard) {
-
     // Loads correct config for login provider
     if (sessionStorage.getItem('login_provider') === 'elixir') {
       this.authGuard.setIdProvider('elixir');
@@ -36,12 +35,10 @@ export class AppComponent {
     .pipe(filter(e => e.type === 'token_received'))
     .subscribe(_ => {
       this.oauthService.loadUserProfile().then(up => {
-        console.log(up);
         authGuard.user.next(up as UserToken);
         sessionStorage.setItem('user', JSON.stringify(up));})
     });
     this.oauthService.events.subscribe(event => {
-      console.log(event.type);
     });
 
     // TODO: Timer for user expiration!!
@@ -50,7 +47,6 @@ export class AppComponent {
       const savedToken = JSON.parse(savedItem) as UserToken;
       if (savedToken.exp * 1000 >= Date.now()) {
         this.authGuard.user.next(savedToken)
-        console.log(new Date(savedToken.exp * 1000));
       } else {
         console.log('token expired');
       }
@@ -59,4 +55,6 @@ export class AppComponent {
     }
   }
 
+  ngOnInit() {
+  }
 }

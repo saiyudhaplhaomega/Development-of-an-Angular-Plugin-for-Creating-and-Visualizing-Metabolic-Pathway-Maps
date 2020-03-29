@@ -11,5 +11,4 @@ export class ProphaneAboutComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

@@ -2653,7 +2653,7 @@ button:focus, button:active:focus, button.active:focus {
 }
 
 .content-container {
-  min-height: calc(100vH - 230px);
+  min-height: calc(100vH - 140px);
   padding-bottom: 2em;
 }
 
@@ -2703,4 +2703,43 @@ button:focus, button:active:focus, button.active:focus {
   margin-top: 10px;
   margin-bottom: 10px;
   font-style: italic;
+}
+
+.consent-wrapper{
+  z-index: 100000000000;
+  margin-top: -26px;
+}
+
+.policy-consent {
+  display: flex;
+  align-items: center;
+  color: white;
+  height: 100px;
+  margin: 10px 20px;
+}
+
+.policy-consent a:link, .policy-consent a:visited, .policy-consent a:hover, .policy-consent a:active{
+  color: white;
+  text-decoration: underline;
+}
+
+.policy-consent a:hover{
+  color: #fffc26;
+  text-decoration: underline;
+}
+
+.policy-consent button{
+  background-color: #f1d600;
+  margin-left: 25px;
+  width: 150px;
+}
+
+.policy-consent button:hover{
+  background-color: #fffc26;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 900 !important;
 }

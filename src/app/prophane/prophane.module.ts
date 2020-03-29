@@ -22,7 +22,6 @@ import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-su
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
     ProphaneJobSubmissionDialogComponent,
-
   ],
   imports: [
     CommonModule,
