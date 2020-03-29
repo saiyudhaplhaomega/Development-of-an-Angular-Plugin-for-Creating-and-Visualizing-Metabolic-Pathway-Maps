@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ProphaneJobControlComponent} from './components/prophane-job-control/prophane-job-control.component';
-import {ProphaneViewerComponent} from './prophane-viewer.component';
 import {ProphaneAboutComponent} from './components/prophane-about/prophane-about.component';
 import {ProphaneJobSubmissionComponent} from './components/prophane-job-submission/prophane-job-submission.component';
 import {MaterialModule} from '../material-module';
@@ -18,7 +17,6 @@ import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-su
 @NgModule({
   declarations: [
     ProphaneJobSubmissionComponent,
-    ProphaneViewerComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
     ProphaneJobSubmissionDialogComponent,
@@ -34,9 +32,7 @@ import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-su
     MaterialModule,
   ],
   entryComponents: [ProphaneJobSubmissionDialogComponent],
-  exports: [
-    ProphaneViewerComponent,
-  ]
+  exports: []
 })
 
 export class ProphaneModule { }

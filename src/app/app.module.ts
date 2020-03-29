@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
-import {PolicyConsentService} from './core/services/policy-consent.service';
 import {FileUploaderService} from './core/services/file-uploader.service';
 import {UploadProgressService} from './core/services/upload-progress.service';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
@@ -65,7 +64,6 @@ import { PrivacyConsentBannerComponent } from './core/components/privacy-consent
     HttpClient,
     AuthGuard,
     WebserveraddressService,
-    PolicyConsentService,
     FileUploaderService,
     UploadProgressService,
     DbsearchcontentService,
