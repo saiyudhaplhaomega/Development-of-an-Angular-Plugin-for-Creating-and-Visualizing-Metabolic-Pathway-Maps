@@ -35,9 +35,7 @@ export class PrivacyConsentBannerComponent {
   }
 
   hideBanner() {
-    console.log(this.hasConsented());
     this.consentDialogStatus = 'initial';
-    console.log(this.hasConsented());
   }
 
   getCurrentTimestamp() {
@@ -54,8 +52,8 @@ export class PrivacyConsentBannerComponent {
   }
 
   hasConsented() {
-    let value = parseInt(localStorage.getItem("prophane_mpa_policy_consent"));
-    if (value === null || this.isExpired(value)) {
+    let value = localStorage.getItem("prophane_mpa_policy_consent");
+    if (value === null || this.isExpired(parseInt(value))) {
       return false;
     }
     else {
