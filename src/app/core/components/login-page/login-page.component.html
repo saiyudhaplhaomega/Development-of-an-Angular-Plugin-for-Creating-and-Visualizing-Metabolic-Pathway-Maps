@@ -58,7 +58,8 @@
 
 </div>
 
-<div class="startbox"  *ngIf="user">
+<div class="startbox"  *ngIf="user" >
+  <div (mousemove)="onMouseMove()">{{navigateProphane()}}</div>
   <!-- Logged in  Box -->
   <div class="startbox-item example-ripple-container mat-elevation-z4">
     <div class="startbox-item-title">Logged in as registered user</div>
@@ -69,6 +70,7 @@
 </div>
 
 <div class="startbox"  *ngIf="guestlogin">
+  <div (mousemove)="onMouseMove()">{{navigateProphane()}}</div>
   <!-- Logged in  Box -->
   <div class="startbox-item example-ripple-container mat-elevation-z4">
     <div class="startbox-item-title">Logged in as guest (limited features)</div>

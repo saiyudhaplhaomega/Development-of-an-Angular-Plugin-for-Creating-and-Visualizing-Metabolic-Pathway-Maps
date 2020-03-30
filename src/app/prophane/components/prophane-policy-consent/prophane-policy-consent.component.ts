@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
-import { Subscription }   from 'rxjs';
+//import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { Subscription } from 'rxjs';
 
 
 @Component({
   selector: 'app-prophane-policy-consent',
-  //templateUrl: './prophane-about.component.html',
+  templateUrl: './prophane-policy-consent.component.html',
   //styleUrls: ['./prophane-about.component.css']
 })
 export class ProphaneAboutComponent implements OnInit {
@@ -17,7 +17,7 @@ export class ProphaneAboutComponent implements OnInit {
   private revokeChoiceSubscription: Subscription;
   private noCookieLawSubscription: Subscription;
 
-  constructor(private ccService: NgcCookieConsentService) { }
+  constructor() { }
 
   ngOnInit() {
   }

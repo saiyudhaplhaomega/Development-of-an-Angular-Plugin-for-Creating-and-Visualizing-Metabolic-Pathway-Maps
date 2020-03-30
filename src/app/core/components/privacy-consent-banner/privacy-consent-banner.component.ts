@@ -25,7 +25,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class PrivacyConsentBannerComponent {
 
   consentDialogStatus = 'initial';
-  expiryDays= 30;
+  expiryDays = 30;
 
   constructor () {
   }

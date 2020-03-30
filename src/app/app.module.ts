@@ -31,6 +31,7 @@ import { TermsOfServicePageComponent } from './core/components/terms-of-service-
 import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
 import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
 import { PrivacyConsentBannerComponent } from './core/components/privacy-consent-banner/privacy-consent-banner.component';
+import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { PrivacyConsentBannerComponent } from './core/components/privacy-consent
     PrivacyPolicyPageComponent,
     ImpressumPageComponent,
     PrivacyConsentBannerComponent,
+    ProphaneAboutComponent,
   ],
   imports: [
     BrowserModule,

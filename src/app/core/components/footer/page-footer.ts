@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
   user: UserToken;
   guest: boolean;
 
-  constructor(private authGuard: AuthGuard) {}
+  constructor(public authGuard: AuthGuard) {}
 
   ngOnInit(): void {
     this.authGuard.user.subscribe(res => {

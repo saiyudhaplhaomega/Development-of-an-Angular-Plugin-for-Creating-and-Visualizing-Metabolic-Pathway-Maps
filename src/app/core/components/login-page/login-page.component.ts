@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class LoginPageComponent {
 
-  private user: UserToken;
+  public user: UserToken;
   guestlogin = false;
   showGuestLogin = false;
   private guestEmail = '';
@@ -38,6 +38,12 @@ export class LoginPageComponent {
 
   hideGuestInput(){
     this.showGuestLogin = false;
+  }
+
+  navigateProphane() {
+    setTimeout(() => {
+        this._router.navigateByUrl('prophane');
+      }, 1000);
   }
 
   loginGuest() {
