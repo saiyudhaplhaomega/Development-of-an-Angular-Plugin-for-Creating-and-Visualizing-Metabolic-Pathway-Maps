@@ -282,6 +282,24 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     };
   }
 
+  resetSampleGroups() {
+    this.currentProphaneJob.parameters.sampleGroups = [] as ProphaneSampleGroupObject[];
+    this.sampleCount = 0;
+    this.groupCount = 0;
+  }
+
+  showScaffoldSampleInput(groupid, sampleid) {
+    if (this.currentProphaneJob.parameters.reportStyle != undefined && this.currentProphaneJob.parameters.reportStyle.id == 2) {
+      if (groupid != false && sampleid != false) {
+        this.setSampleName(groupid, sampleid);
+      }
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   setSampleName(groupid, sampleid) {
     this.currentProphaneJob.parameters.sampleGroups.forEach(function iter(group) {
       if (group.id === groupid) {
@@ -407,6 +425,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   onSourceChange() {
     this.proteinReportFile = null;
+    this.resetSampleGroups();
   }
 
   addOptionString(task) {
