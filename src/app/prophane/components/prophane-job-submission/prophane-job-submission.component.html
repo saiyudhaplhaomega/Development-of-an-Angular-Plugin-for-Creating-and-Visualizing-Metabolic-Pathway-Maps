@@ -209,11 +209,11 @@
                 <span class="input-group-text">Sample Name</span>
               </div>
               <input
-                *ngIf="currentProphaneJob.parameters.reportStyle == undefined || currentProphaneJob.parameters.reportStyle.id != 1"
+                *ngIf="currentProphaneJob.parameters.reportStyle == undefined || currentProphaneJob.parameters.reportStyle.id != 2"
                 type="text" class="form-control" [(ngModel)]="sample.name">
-              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control"
+              <input *ngIf="currentProphaneJob.parameters.reportStyle.id != undefined && currentProphaneJob.parameters.reportStyle.id == 2" type="text" class="form-control"
                      [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
-              <input *ngIf="selectedLevel != undefined && selectedLevel.id == 1" type="text" class="form-control"
+              <input *ngIf="currentProphaneJob.parameters.reportStyle.id != undefined && currentProphaneJob.parameters.reportStyle.id == 2" type="text" class="form-control"
                      [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
               <div class="input-group-append">
                 <button *ngIf="groupitem.groupmembersGUI.length > 1" class="btn btn-outline-secondary w-sbtn"
