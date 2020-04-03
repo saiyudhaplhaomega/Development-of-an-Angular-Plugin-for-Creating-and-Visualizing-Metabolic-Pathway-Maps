@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import { MatDialogRef } from "@angular/material/dialog";
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
+import { AuthGuard } from '../../../core/services/auth-guard.service';
+
 
 
 export interface DialogData {
@@ -21,7 +23,7 @@ export class ProphaneJobSubmissionDialogComponent {
 
   progress: number;
 
-  constructor(private _uploadProgressService: UploadProgressService, private router: Router, public dialogRef: MatDialogRef<ProphaneJobSubmissionDialogComponent>) {
+  constructor(private _uploadProgressService: UploadProgressService, private router: Router, public dialogRef: MatDialogRef<ProphaneJobSubmissionDialogComponent>, private authGuard: AuthGuard) {
 
   }
 
@@ -31,7 +33,12 @@ export class ProphaneJobSubmissionDialogComponent {
 
   closeAndRedirect(){
     this.dialogRef.close();
-    this.router.navigate(['./prophanejobcontrol'])
+    if (this.authGuard.allowExpert()){
+      this.router.navigate(['./prophanejobcontrol']);
+    }
+    else {
+      this.router.navigate(['./login']);
+    }
   }
 
 }
