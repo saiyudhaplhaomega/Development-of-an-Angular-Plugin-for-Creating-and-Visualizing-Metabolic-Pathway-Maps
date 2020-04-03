@@ -2,7 +2,10 @@
   <table class="table table-striped jobcontrol">
     <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">
+        <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+        <span *ngIf="!isUpdating">#</span>
+      </th>
       <th scope="col">job label</th>
       <th scope="col">creation time</th>
       <th scope="col">status</th>

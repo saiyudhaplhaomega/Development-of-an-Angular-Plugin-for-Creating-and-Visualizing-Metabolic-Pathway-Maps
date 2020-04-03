@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -14,20 +14,30 @@ import {sortBy} from 'lodash';
 export class ProphaneJobControlComponent implements OnInit {
 
   jobs: ProphaneJobObject[];
+  isUpdating = false;
 
   constructor(private jsonUpload: AuthenticatedSerializableObjectUploaderService) {
 
   }
 
   ngOnInit(): void {
+    this.jobs = undefined;
     this.triggerJobListLoading();
   }
+
   triggerJobListLoading(): void {
-    this.jobs = undefined;
     this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe(d => {
       this.jobs = sortBy(d, 'creationdate').reverse();
     });
   }
+
+  update() {
+    this.isUpdating = true;
+    this.triggerJobListLoading();
+    this.isUpdating = false;
+  }
+
+  intervalId = setInterval(() => this.update(), 60000);
 
   confirmDelete(jobno: number, joblabel: string) {
     if (confirm('Are you sure to delete job #' + jobno + ' (' + joblabel + ')' )) {
@@ -37,6 +47,10 @@ export class ProphaneJobControlComponent implements OnInit {
       });
     }
     this.triggerJobListLoading();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
   }
 
 }
