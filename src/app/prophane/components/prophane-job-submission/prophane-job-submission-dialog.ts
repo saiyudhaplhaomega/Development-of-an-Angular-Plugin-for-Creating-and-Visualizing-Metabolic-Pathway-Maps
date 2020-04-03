@@ -31,7 +31,7 @@ export class ProphaneJobSubmissionDialogComponent {
 
   closeAndRedirect(){
     this.dialogRef.close();
-    this.router.navigate(['./prophanejobs'])
+    this.router.navigate(['./prophanejobcontrol'])
   }
 
 }
