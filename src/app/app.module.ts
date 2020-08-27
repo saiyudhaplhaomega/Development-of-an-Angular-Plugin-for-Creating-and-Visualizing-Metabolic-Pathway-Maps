@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 
 import {Routing} from './app.routing';
 
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {OAuthModule} from 'angular-oauth2-oidc';
 import {AppComponent} from './app.component';
 
 import {CommonModule} from '@angular/common';
@@ -27,11 +27,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { TermsOfServicePageComponent } from './core/components/terms-of-service-page/terms-of-service-page.component';
-import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
-import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
-import { PrivacyConsentBannerComponent } from './core/components/privacy-consent-banner/privacy-consent-banner.component';
+import {TermsOfServicePageComponent} from './core/components/terms-of-service-page/terms-of-service-page.component';
+import {PrivacyPolicyPageComponent} from './core/components/privacy-policy-page/privacy-policy-page.component';
+import {ImpressumPageComponent} from './core/components/impressum-page/impressum-page.component';
+import {PrivacyConsentBannerComponent} from './core/components/privacy-consent-banner/privacy-consent-banner.component';
 import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
+import {GlobalHttpInterceptorService} from './core/services/global-http-interceptor.service';
 
 
 @NgModule({
@@ -71,6 +72,11 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
     DbsearchcontentService,
     NavService,
     DataService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

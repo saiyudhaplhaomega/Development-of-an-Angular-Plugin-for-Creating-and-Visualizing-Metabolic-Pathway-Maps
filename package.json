@@ -32,6 +32,7 @@
     "angular-oauth2-oidc": "^8.0.4",
     "angularx-social-login": "^1.2.7",
     "bootstrap": "^4.3.1",
+    "classlist.js": "^1.1.20150312",
     "cookieconsent": "^3.1.1",
     "core-js": "^2.6.9",
     "file-saver": "^2.0.2",
@@ -42,6 +43,7 @@
     "node-sass": "^4.13.0",
     "rxjs": "^6.5.2",
     "uuid": "^3.3.3",
+    "web-animations-js": "^2.3.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

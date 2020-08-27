@@ -163,7 +163,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this._uploadProgressService.changeFastaLoaded(event.loaded)
+            this._uploadProgressService.changeFastaLoaded(event.loaded);
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;
@@ -181,7 +181,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this._uploadProgressService.changeReportLoaded(event.loaded)
+            this._uploadProgressService.changeReportLoaded(event.loaded);
           } else if (event.type === HttpEventType.Response) {
             let response: any;
             response = event.body;
@@ -289,8 +289,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   showScaffoldSampleInput(groupid, sampleid) {
-    if (this.currentProphaneJob.parameters.reportStyle != undefined && this.currentProphaneJob.parameters.reportStyle.id == 2) {
-      if (groupid != false && sampleid != false) {
+    if (this.currentProphaneJob.parameters.reportStyle !== undefined && this.currentProphaneJob.parameters.reportStyle.id === 2) {
+      if (groupid !== false && sampleid !== false) {
         this.setSampleName(groupid, sampleid);
       }
       return true;
