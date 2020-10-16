@@ -1,4 +1,4 @@
-<div *ngIf="this.progress < 100">
+<div *ngIf="this.progress < 100 && this.uploadFailedBoolean == false">
   <div class="uploadprogress">
     <div class="mt-5 center">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -7,7 +7,7 @@
   </div>
   <div class="mt-5 uploadprogresstext">uploading ...</div>
 </div>
-<div *ngIf="this.progress >= 100">
+<div *ngIf="this.progress >= 100 && this.uploadFailedBoolean == false">
   <div class="uploadprogress">
     <div class="mt-5 center">
       <img src="assets/img/sucess-icon.png" alt="success" width="150" height="150">
@@ -16,5 +16,16 @@
   <div class="mt-5 uploadsuccesstext">Job successfully submitted</div>
   <div class="mt-5 uploadsuccesstext">
     <button mat-raised-button routerLink="." (click)="closeAndRedirect()">Ok</button>
+  </div>
+</div>
+<div *ngIf="this.uploadFailedBoolean == true">
+  <div class="uploadprogress">
+    <div class="mt-5 center">
+      <img src="assets/img/error-icon.png" alt="success" width="150" height="150">
+    </div>
+  </div>
+  <div class="mt-5 uploadsuccesstext">Upload Failed!</div>
+  <div class="mt-5 uploadsuccesstext">
+    <button mat-raised-button routerLink="." (click)="retryUpload()">Retry</button>
   </div>
 </div>

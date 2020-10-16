@@ -17,7 +17,7 @@ export class FileUploaderService {
     const headers = new HttpHeaders({
       'Authorization': this.authService.getUserAuthorization()
     })
-    // TODO: this seems to be wrong, should go into header
+    // TODO: this seems to be wrong, should go into header, or should it?
     fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', file);
     return this.http.post(this.webserver.getwebserverurl() + api, fd, {headers,

@@ -1,35 +1,30 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {HttpEventType} from '@angular/common/http';
-import {ViewEncapsulation} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
 
-import {ProphaneParamObject, ProphaneParamJSON} from '../../objects/prophaneparamjson';
+import {ProphaneParamObject} from '../../objects/prophaneparamjson';
 import {ProphaneJobObject} from '../../objects/prophanejobjson';
-import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 import {Router} from '@angular/router';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import {algparams, prophaneReportStyles} from '../../objects/prophaneFormData';
-import { contaminationdata } from '../../objects/prophaneFormData';
-import { quantdata } from '../../objects/prophaneFormData';
-import { evalueOptions } from '../../objects/prophaneFormData';
-import { defaultAnnotationTasks } from '../../objects/prophaneFormData';
-import { defaultOptionString } from '../../objects/prophaneFormData';
-import { databaseOptions } from '../../objects/prophaneFormData';
-import { optionStrings } from '../../objects/prophaneFormData';
-import { ProphaneJobSubmissionDialogComponent } from './prophane-job-submission-dialog';
-import { MatDialog } from '@angular/material';
-import { ProphaneSampleGroupObject } from '../../objects/prophanesamplegroupjson';
-import { Observable } from 'rxjs';
-import { ProphaneAnnotationTaskObject } from '../../objects/prophaneannotationtaskjson';
-import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
-import { HttpUploadResponseObject } from '../../objects/httpUploadResponse';
-import { AuthGuard } from '../../../core/services/auth-guard.service';
-
+import {
+  contaminationdata,
+  databaseOptions,
+  defaultAnnotationTasks,
+  evalueOptions,
+  optionStrings,
+  prophaneReportStyles,
+  quantdata
+} from '../../objects/prophaneFormData';
+import {ProphaneJobSubmissionDialogComponent} from './prophane-job-submission-dialog';
+import {MatDialog} from '@angular/material';
+import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
+import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
+import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+import {AuthGuard} from '../../../core/services/auth-guard.service';
 
 
 @Component({
@@ -52,7 +47,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   jobUnavailableMessage = 'Service unavailable';
   // global variable that should be able to disable the website (because no server connection or server busy)
   jobUnavailable = false;
-  formErrorColor = "#f8d7da"
+  formErrorColor = '#f8d7da';
 
   // job data is tracked in this variable
   currentProphaneJob: ProphaneJobObject;
@@ -66,7 +61,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   //readonly defaultOptionString = defaultOptionString;
   readonly databaseOptions = databaseOptions;
   readonly optionStrings = optionStrings;
-
 
 
   // prophane parameters related variables
@@ -120,6 +114,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+      // TODO: obsolete? --> rework
       if (res.status === 'JOB_REJECTED') {
         this.jobUnavailable = true;
       } else {
@@ -143,6 +138,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // this is the submit button
   startButton(): void {
+    this._uploadProgressService.reset();
     this.openUploadDialog();
     this.uploadCSV();
     this.uploadFasta();
@@ -150,9 +146,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
-    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, { disableClose: true,
-      data: {proteinreportfilename: this.proteinReportFile.name,
-        fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress}
+    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
+      disableClose: true,
+      data: {
+        proteinreportfilename: this.proteinReportFile.name,
+        fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress
+      }
     });
   }
 
@@ -168,6 +167,16 @@ export class ProphaneJobSubmissionComponent implements OnInit {
             let response: any;
             response = event.body;
             this.fastaProgress = 0;
+          }
+        },
+        error => {
+          if (error.status === 500) {
+            // handle failed upload
+            if (this.dialog instanceof ProphaneJobSubmissionDialogComponent) {
+              this.dialog.setUploadFailed();
+            }
+          } else {
+            throw error;
           }
         }
       );
@@ -187,6 +196,14 @@ export class ProphaneJobSubmissionComponent implements OnInit {
             response = event.body;
             this.proteinReportProgress = 0;
           }
+          },
+          error => {
+            if (error.status === 500) {
+              // handle failed upload
+              if (this.dialog instanceof ProphaneJobSubmissionDialogComponent) {
+                this.dialog.setUploadFailed();
+              }
+            }
         }
       );
     }
@@ -194,22 +211,22 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   setEmapperEvalue(): void {
     this.currentProphaneJob.parameters.annotationTasks.forEach(
-    task => {
-      if (task.database === 'eggnog') {
-        const m = task.optionstring.filter(i => i['param'] === 'm')[0]['defaultValue'];
-        task.optionstring.forEach(
-        parameter => {
-          if (parameter.param === 'evalue') {
-            if (m === 'diamond') {
-              parameter.param = 'seed_ortholog_evalue';
-            } else {
-              parameter.param = 'hmm_evalue';
-            }
-            return;
-          }
-        });
-      }
-    });
+      task => {
+        if (task.database === 'eggnog') {
+          const m = task.optionstring.filter(i => i['param'] === 'm')[0]['defaultValue'];
+          task.optionstring.forEach(
+            parameter => {
+              if (parameter.param === 'evalue') {
+                if (m === 'diamond') {
+                  parameter.param = 'seed_ortholog_evalue';
+                } else {
+                  parameter.param = 'hmm_evalue';
+                }
+                return;
+              }
+            });
+        }
+      });
   }
 
   startProphaneJob(): void {
@@ -232,7 +249,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return o1 === o2;
   }
 
-  noCompare(o1, o2){
+  noCompare(o1, o2) {
     return true;
   }
 
@@ -295,7 +312,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       }
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
@@ -352,7 +369,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.functasks++;
     this.taskCounter++;
     var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); //Important: copy object instead of linking!
-    task['tasklabel'] =  'Functional Annotation Task ' + this.functasks;
+    task['tasklabel'] = 'Functional Annotation Task ' + this.functasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
 
@@ -448,7 +465,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isEvalue(value, elemid) {
-    if (value === undefined || !String(value).match("^[0-9]+(\[.\][0-9]*)?$")) {
+    if (value === undefined || !String(value).match('^[0-9]+(\[.\][0-9]*)?$')) {
       this.addFormInputErr(elemid);
       return false;
     }
@@ -459,7 +476,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isNumber(value, min, max, elemid) {
-    if (value === undefined || !String(value).match("^-?[0-9]+(\[.\][0-9]*)?$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+    if (value === undefined || !String(value).match('^-?[0-9]+(\[.\][0-9]*)?$') || (min !== undefined && min > value) || (max !== undefined && max < value)) {
       this.addFormInputErr(elemid);
       return false;
     }
@@ -470,7 +487,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isInt(value, min, max, elemid) {
-    if (value === undefined || !String(value).match("^-?[0-9]+$") || (min !== undefined && min > value) || (max !== undefined && max < value) ) {
+    if (value === undefined || !String(value).match('^-?[0-9]+$') || (min !== undefined && min > value) || (max !== undefined && max < value)) {
       this.addFormInputErr(elemid);
       return false;
     }
@@ -499,7 +516,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.forEach(
       task => {
         if (task.tasklabel === label) {
-          n +=1;
+          n += 1;
         }
       });
     if (n > 1) {
@@ -526,7 +543,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   optionstringToString(optstr) {
     var s = [];
     var i;
-    if (optstr.length == 1) {
+    if (optstr.length === 1) {
       return '-';
     }
     for (i = 0; i < optstr.length; i++) {
@@ -537,14 +554,14 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         s.push(optstr[i].param + '=' + optstr[i].defaultValue);
       }
     }
-    return s.sort().join("; ");
+    return s.sort().join('; ');
   }
 
-  hasAdvancedOpts(){
+  hasAdvancedOpts() {
     let advanced = false;
     this.currentProphaneJob.parameters.annotationTasks.forEach(
-      function(task) {
-        console.log(task.optionstring)
+      function (task) {
+        console.log(task.optionstring);
         if (task.optionstring.filter(i => i.isDefault == '0').length > 0) {
           advanced = true;
         }

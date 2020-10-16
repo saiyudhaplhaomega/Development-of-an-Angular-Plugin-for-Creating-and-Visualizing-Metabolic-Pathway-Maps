@@ -29,7 +29,7 @@ export class UploadProgressService {
   }
 
   updateProgress() {
-    var p = Math.round((this.fastaProgress + this.reportProgress) / this.total * 100);
+    const p = Math.round((this.fastaProgress + this.reportProgress) / this.total * 100);
     if (p > this.progress) {
       this.progress = p;
       this.pSource.next(p);
@@ -41,6 +41,14 @@ export class UploadProgressService {
     if (this.complete > 1) {
       this.pSource.next(100);
     }
+  }
+
+  reset() {
+    this.fastaProgress = 0;
+    this.reportProgress = 0;
+    this.total = 0;
+    this.progress = 0;
+    this.complete = 0;
   }
 
 }
