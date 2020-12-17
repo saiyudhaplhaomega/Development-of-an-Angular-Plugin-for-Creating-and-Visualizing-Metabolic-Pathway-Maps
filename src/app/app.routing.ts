@@ -6,6 +6,7 @@ import {AuthGuard} from './core/services/auth-guard.service';
 import {ProphaneJobSubmissionComponent} from './prophane/components/prophane-job-submission/prophane-job-submission.component';
 import {ProphaneJobControlComponent} from './prophane/components/prophane-job-control/prophane-job-control.component';
 import {ProphaneAboutComponent} from './prophane/components/prophane-about/prophane-about.component';
+import {ProphaneResultViewComponent} from './prophane/components/prophane-result-view/prophane-result-view.component';
 import {MPAComponent} from './mpa/mpa.component';
 import {TermsOfServicePageComponent} from './core/components/terms-of-service-page/terms-of-service-page.component';
 import {ImpressumPageComponent} from './core/components/impressum-page/impressum-page.component';
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'prophaneabout', component: ProphaneAboutComponent },
   { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard] },
   { path: 'prophanejobcontrol', component: ProphaneJobControlComponent, canActivate: [AuthGuard] },
+  { path: 'results/:job_uuid', component: ProphaneResultViewComponent, canActivate: [AuthGuard] },
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
   { path: 'termsofservice', component: TermsOfServicePageComponent},
   { path: 'privacypolicy', component: PrivacyPolicyPageComponent},

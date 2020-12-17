@@ -35,6 +35,7 @@
         {{ job.statusmessage }}
       </td>
       <td>
+        <span *ngIf="job.downloadURL != ''"><a href="/results/{{ job.prophaneJobUUID }}">View</a></span> |
         <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
       </td>
       <td>
