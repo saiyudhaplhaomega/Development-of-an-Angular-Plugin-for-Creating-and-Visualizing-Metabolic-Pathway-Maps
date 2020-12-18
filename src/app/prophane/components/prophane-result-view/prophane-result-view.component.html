@@ -1,4 +1,38 @@
-<iframe src="/test_data/krona.html"
-        title="krona plot of job"
-        style="overflow:hidden;border:0"
-        height="100%" width="100%"></iframe>
+<div class="ml-5 mr-5">
+  <table class="table table-striped jobcontrol">
+    <thead>
+    <tr>
+      <th scope="col">job label</th>
+      <th scope="col">creation time</th>
+      <th scope="col">status</th>
+      <th scope="col">results</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="job == undefined">
+      <td colspan="4">
+        <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"></span>
+        Loading...
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ job.parameters.jobLabel }}
+      </td>
+      <td>
+        {{ job.creationdate }}
+      </td>
+      <td>
+        {{ job.statusmessage }}
+      </td>
+      <td>
+        <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!--<iframe src="/test_data/krona.html"-->
+<!--        title="krona plot of job"></iframe>-->
