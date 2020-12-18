@@ -25,6 +25,7 @@ import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
+import {JobService} from '../../job.service';
 
 
 @Component({
@@ -74,7 +75,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   // constructor and init
   constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
-              private jsonUpload: AuthenticatedSerializableObjectUploaderService,
+              private jobService: JobService,
               tooltipConfig: NgbTooltipConfig, private router: Router,
               private modalService: NgbModal, private _uploadProgressService: UploadProgressService, private authGuard: AuthGuard) {
 
@@ -111,7 +112,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneRequestJob').subscribe(res => {
+    this.jobService.requestJob(this.currentProphaneJob).subscribe(res => {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
       // TODO: obsolete? --> rework
@@ -125,7 +126,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   saveForm(): void {
     // save current job to server
-    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneSaveJobForm').subscribe(res => {
+    this.jobService.saveJob(this.currentProphaneJob).subscribe(res => {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
       if (res.status === 'JOB_REJECTED') {
@@ -233,11 +234,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
     this.currentProphaneJob.fastaFilename = this.fastaFile.name;
     this.setEmapperEvalue();
-    this.jsonUpload.postObj<ProphaneJobObject>(this.currentProphaneJob, 'mpacloud/v1/prophaneStartJob').subscribe();
-  }
-
-  requestUserJobList(): void {
-    this.jsonUpload.postObj<ProphaneJobObject[]>([], 'mpacloud/v1/prophaneJobList').subscribe();
+    this.jobService.addJob(this.currentProphaneJob).subscribe();
   }
 
   // methods for website functionality

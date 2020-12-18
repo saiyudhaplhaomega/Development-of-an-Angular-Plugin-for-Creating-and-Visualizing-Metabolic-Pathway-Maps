@@ -13,16 +13,26 @@ export class JobService {
   }
 
   private apiUrl = 'mpacloud/v1';
-  private jobListUrl = this.apiUrl + '/prophaneJobList';
-  private deleteJobUrl = this.apiUrl + '/prophaneDeleteJob';
 
   getJobs(): Observable<ProphaneJobObject[]> {
-    return this.jsonUpload.postObj<ProphaneJobObject[]>([], this.jobListUrl);
+    return this.jsonUpload.postObj<ProphaneJobObject[]>([], this.apiUrl + '/prophaneJobList');
+  }
+
+  requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneRequestJob');
+  }
+
+  saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneSaveJobForm');
+  }
+
+  addJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneStartJob');
   }
 
   /** DELETE: delete the job from the server */
   deleteJob(jobToDelete: ProphaneJobObject) {
-    this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, this.deleteJobUrl).subscribe(res => {
+    this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, this.apiUrl + '/prophaneDeleteJob').subscribe(res => {
       console.log('job deleted: ' + jobToDelete.prophaneJobUUID);
     });
   }
