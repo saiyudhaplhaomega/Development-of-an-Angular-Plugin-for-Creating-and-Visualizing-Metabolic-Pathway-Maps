@@ -11,7 +11,9 @@ import {ProphaneJobObject} from '../../objects/prophanejobjson';
   templateUrl: './prophane-result-view.component.html',
   styleUrls: ['./prophane-result-view.component.css']
 })
+
 export class ProphaneResultViewComponent implements OnInit {
+
   job: ProphaneJobObject;
   kronaHtml;
   isUpdating = true;
@@ -26,13 +28,16 @@ export class ProphaneResultViewComponent implements OnInit {
   ngOnInit(): void {
     this.getJob();
     this.isUpdating = false;
-    this.kronaHtml = this.getKrona(1);
+    //this.kronaHtml = this.getKrona(1);
   }
 
   getJob(): void {
     const uuid = this.route.snapshot.paramMap.get('job_uuid');
-    this.jobService.getJobs()
-      .subscribe(jobs => this.job = jobs.filter(j => j.prophaneJobUUID === uuid)[0]);
+    console.log('ID: ' + uuid)
+    this.jobService.getJob(uuid).subscribe(res => {
+      this.job = res;
+      console.log(this.job);
+    });
   }
 
   getKrona(id: number) {

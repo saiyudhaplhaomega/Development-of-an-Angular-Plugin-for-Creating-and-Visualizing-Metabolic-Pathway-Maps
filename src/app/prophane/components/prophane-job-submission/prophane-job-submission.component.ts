@@ -58,8 +58,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   readonly contoptions = contaminationdata;
   readonly quantdata = quantdata;
   readonly evalueOptions = evalueOptions;
-  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); //Important: copy object instead of linking!
-  //readonly defaultOptionString = defaultOptionString;
+  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); // Important: copy object instead of linking!
+  // readonly defaultOptionString = defaultOptionString;
   readonly databaseOptions = databaseOptions;
   readonly optionStrings = optionStrings;
 
@@ -147,6 +147,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   openUploadDialog(): void {
+    this._uploadProgressService.setUUID(this.currentProphaneJob.prophaneJobUUID);
     const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
       disableClose: true,
       data: {
@@ -308,8 +309,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         this.setSampleName(groupid, sampleid);
       }
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }

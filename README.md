@@ -50,6 +50,9 @@ sudo docker push mpacloud/mpawebsite
 
 container dann verfügbar auf dcos
 
+Test-Server Access:
+ssh -i cloud -L 80:129.70.51.126:10001 public
+
 =======
 mpa-cloud-website
 ===============

@@ -21,11 +21,20 @@ export class AuthenticatedSerializableObjectUploaderService {
   }
 
   postObj<T>(obj: T, api: string): Observable<T> {
-    console.log('IDPROVIDER: ' + this.authGuard.getIdProvider())
+    console.log('IDPROVIDER: ' + this.authGuard.getIdProvider());
+    let authorization = 'ANONYMOUS:noEmail';
+    if (!this.authGuard.getUserAuthorization() === undefined) {
+      authorization = this.authGuard.getUserAuthorization().toString();
+    }
     httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': this.authGuard.getUserAuthorization(),
+      'Authorization': authorization,
     });
     return this.http.post<T>(this.webserver.getwebserverurl() + api, obj, httpOptions);
   }
+
+  getObj<T>(api: string): Observable<T> {
+    return this.http.get<T>(this.webserver.getwebserverurl() + api);
+  }
+
 }

@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   { path: 'prophaneabout', component: ProphaneAboutComponent },
   { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard] },
   { path: 'prophanejobcontrol', component: ProphaneJobControlComponent, canActivate: [AuthGuard] },
-  { path: 'results/:job_uuid', component: ProphaneResultViewComponent, canActivate: [AuthGuard] },
+  { path: 'results/:job_uuid', component: ProphaneResultViewComponent},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
   { path: 'termsofservice', component: TermsOfServicePageComponent},
   { path: 'privacypolicy', component: PrivacyPolicyPageComponent},

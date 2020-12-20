@@ -10,6 +10,7 @@ export interface DialogData {
   fastafilename: string;
   fastaprogress: number;
   csvprogress: number;
+  jobUuid: string;
 }
 
 @Component({
@@ -22,6 +23,7 @@ export class ProphaneJobSubmissionDialogComponent {
 
   progress: number;
   uploadFailedBoolean = false;
+  jobUuid: string;
 
   constructor(private _uploadProgressService: UploadProgressService,
               private router: Router, public dialogRef: MatDialogRef<ProphaneJobSubmissionDialogComponent>, private authGuard: AuthGuard) {
@@ -30,7 +32,9 @@ export class ProphaneJobSubmissionDialogComponent {
 
   ngOnInit() {
     this._uploadProgressService.currentProgress.subscribe(progress => this.progress = progress);
+    this.jobUuid = this._uploadProgressService.getUUID();
   }
+
 
   public setUploadFailed() {
     this.uploadFailedBoolean = true;
@@ -41,7 +45,7 @@ export class ProphaneJobSubmissionDialogComponent {
     if (this.authGuard.allowExpert()) {
       this.router.navigate(['./prophanejobcontrol']);
     } else {
-      this.router.navigate(['./login']);
+      this.router.navigate(['./results/' + this.jobUuid]);
     }
   }
 

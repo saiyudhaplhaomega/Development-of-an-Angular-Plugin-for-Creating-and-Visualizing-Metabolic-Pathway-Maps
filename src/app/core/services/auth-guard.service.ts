@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { UserToken } from '../objects/user-token';
-import { OAuthService } from 'angular-oauth2-oidc';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Observable, BehaviorSubject} from 'rxjs';
+import {UserToken} from '../objects/user-token';
+import {OAuthService} from 'angular-oauth2-oidc';
 
 
 @Injectable()
@@ -28,12 +28,12 @@ export class AuthGuard implements CanActivate {
     });
   }
 
-  loggedIn(){
+  loggedIn() {
     if (this._user || this._guest) {
       return true;
     }
     else {
-    return false;
+      return false;
     }
   }
 
@@ -70,7 +70,7 @@ export class AuthGuard implements CanActivate {
     if (this._user) {
       return sessionStorage.getItem('id_token');
     } else if (this._guestemail) {
-      return 'EMAIL:' + this._guestemail;
+      return 'ANONYMOUS:' + this._guestemail;
     }
   }
 
@@ -87,7 +87,7 @@ export class AuthGuard implements CanActivate {
     this.user.next(undefined);
     this.guest.next(false);
     this.guestemail.next(undefined);
-    sessionStorage.setItem('user', '')
+    sessionStorage.setItem('user', '');
     sessionStorage.setItem('login_provider', '');
     this.oauthService.logOut();
     this._router.navigate(['/login']);

@@ -9,10 +9,20 @@ export class UploadProgressService {
   progress = 0;
   complete = 0;
 
+  jobUuid: string;
   private pSource = new BehaviorSubject(0);
   currentProgress = this.pSource.asObservable();
 
   constructor() {}
+
+  public setUUID(id) {
+    this.jobUuid = id;
+  }
+
+
+  public getUUID() {
+    return this.jobUuid;
+  }
 
   changeFastaLoaded(bytes: number) {
     this.fastaProgress = bytes;

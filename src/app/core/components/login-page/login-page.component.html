@@ -27,7 +27,7 @@
        [matRippleRadius]="radius"
        [matRippleColor]="color"
        (click)='showGuestInput()' *ngIf="!showGuestLogin">
-    <span class="startbox-item-title">Login as Guest</span>
+    <span class="startbox-item-title">Continue without Login</span>
     <span class="startbox-item-content">
       <ul>
         <li>no account required</li>
@@ -39,7 +39,7 @@
 
   <!-- Guest Login (input) -->
   <div class="startbox-item example-ripple-container mat-elevation-z4"  *ngIf="showGuestLogin">
-    <span class="startbox-item-title">Login as Guest
+    <span class="startbox-item-title">Continue as Guest
       <button type="button" class="close float-right" aria-label="Close" (click)="hideGuestInput()">
         <span aria-hidden="true">×</span>
       </button>
@@ -47,10 +47,10 @@
     <div class="input-group mt-4">
       <input type="text" class="form-control"
              [(ngModel)]="guestEmail"
-             [(value)]="guestEmail" placeholder="enter your email" autofocus>
+             [(value)]="guestEmail" placeholder="optional: email to receive results" autofocus>
       <div class="input-group-append">
         <button mat-raised-button color="primary"
-                (click)="loginGuest()" [disabled]="!isEmail(guestEmail)">login
+                (click)="loginGuest()">continue
         </button>
       </div>
     </div>

@@ -9,13 +9,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="job == undefined">
+    <tr *ngIf="job == undefined || job == null">
       <td colspan="4">
         <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"></span>
         Loading...
       </td>
     </tr>
-    <tr>
+    <tr *ngIf="job != undefined && job != null">
       <td>
         {{ job.parameters.jobLabel }}
       </td>
@@ -26,7 +26,9 @@
         {{ job.statusmessage }}
       </td>
       <td>
-        <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
+        <span *ngIf="job.downloadURL != ''">
+          <a href="{{ job.downloadURL }}">Download</a>
+        </span>
       </td>
     </tr>
     </tbody>

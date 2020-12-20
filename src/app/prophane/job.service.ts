@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {ProphaneJobObject} from './objects/prophanejobjson';
 import {AuthenticatedSerializableObjectUploaderService} from '../core/services/authenticated-serializable-object-uploader.service';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,20 @@ export class JobService {
   getJobs(): Observable<ProphaneJobObject[]> {
     return this.jsonUpload.postObj<ProphaneJobObject[]>([], this.apiUrl + '/prophaneJobList');
   }
+
+  getJob(uuid: string): Observable<ProphaneJobObject> {
+     return this.jsonUpload.getObj<ProphaneJobObject>(this.apiUrl + '/getJob/' + uuid);
+  }
+
+  // getWithName<T>(name: string, api: string): Observable<T> {
+  //   console.log('IDPROVIDER: ' + this.authGuard.getIdProvider());
+  //   httpOptions.headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': this.authGuard.getUserAuthorization()
+  //   });
+  //   return this.http.get<T>(this.webserver.getwebserverurl() + api + '?name=' + name, httpOptions);
+  // }
+
 
   requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
     return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneRequestJob');

@@ -32,11 +32,11 @@ export class LoginPageComponent {
     });
   }
 
-  showGuestInput(){
+  showGuestInput() {
     this.showGuestLogin = true;
   }
 
-  hideGuestInput(){
+  hideGuestInput() {
     this.showGuestLogin = false;
   }
 
@@ -47,13 +47,13 @@ export class LoginPageComponent {
   }
 
   loginGuest() {
-    const tempStr = this.guestEmail;
-    this.authGuard.logout()
-    this.guestlogin = true;
-    this.guestEmail = tempStr;
-    this.authGuard.guestemail.next(this.guestEmail);
-    this.authGuard.guest.next(this.guestlogin);
-    this.hideGuestInput();
+      const tempStr = this.guestEmail;
+      this.authGuard.logout();
+      this.guestlogin = true;
+      this.guestEmail = tempStr;
+      this.authGuard.guestemail.next(this.guestEmail);
+      this.authGuard.guest.next(this.guestlogin);
+      this.hideGuestInput();
   }
 
   async loginElixir() {
@@ -73,10 +73,9 @@ export class LoginPageComponent {
   }
 
   isEmail(value) {
-    if (value === undefined || !String(value).match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")) {
+    if (!String(value).match('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }

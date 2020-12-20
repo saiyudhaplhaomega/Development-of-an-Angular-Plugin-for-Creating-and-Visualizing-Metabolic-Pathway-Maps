@@ -14,8 +14,12 @@ export class FileUploaderService {
   // TODO: add authentification, clean up
   postFile(file: File, api: string) {
     const fd = new FormData();
+    let authorization = 'ANONYMOUS:noEmail';
+    if (!this.authService.getUserAuthorization() === undefined) {
+      authorization = this.authService.getUserAuthorization().toString();
+    }
     const headers = new HttpHeaders({
-      'Authorization': this.authService.getUserAuthorization()
+      'Authorization': authorization,
     })
     // TODO: this seems to be wrong, should go into header, or should it?
     fd.set('Content-Type', 'multipart/form-data');
