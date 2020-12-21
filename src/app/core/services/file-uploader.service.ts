@@ -14,10 +14,7 @@ export class FileUploaderService {
   // TODO: add authentification, clean up
   postFile(file: File, api: string) {
     const fd = new FormData();
-    let authorization = 'ANONYMOUS:noEmail';
-    if (!this.authService.getUserAuthorization() === undefined) {
-      authorization = this.authService.getUserAuthorization().toString();
-    }
+    const authorization = this.authService.getUserAuthorization().toString();
     const headers = new HttpHeaders({
       'Authorization': authorization,
     })

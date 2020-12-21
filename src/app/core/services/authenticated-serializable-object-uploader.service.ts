@@ -22,10 +22,7 @@ export class AuthenticatedSerializableObjectUploaderService {
 
   postObj<T>(obj: T, api: string): Observable<T> {
     console.log('IDPROVIDER: ' + this.authGuard.getIdProvider());
-    let authorization = 'ANONYMOUS:noEmail';
-    if (!this.authGuard.getUserAuthorization() === undefined) {
-      authorization = this.authGuard.getUserAuthorization().toString();
-    }
+    const authorization: string = this.authGuard.getUserAuthorization().toString();
     httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': authorization,

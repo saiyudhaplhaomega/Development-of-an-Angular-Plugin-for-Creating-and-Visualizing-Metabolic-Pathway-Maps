@@ -71,6 +71,8 @@ export class AuthGuard implements CanActivate {
       return sessionStorage.getItem('id_token');
     } else if (this._guestemail) {
       return 'ANONYMOUS:' + this._guestemail;
+    } else {
+      return 'ANONYMOUS:noEmail';
     }
   }
 

@@ -4,8 +4,8 @@ import {Injectable} from '@angular/core';
 export class WebserveraddressService {
 
   // TODO: should go to environment variables ... but thats not so easy --> during deployment as parameters
-  //webserverurl = 'https://www.prophane.de:9091/';
-  webserverurl = 'http://localhost:80/';
+  webserverurl = 'https://www.prophane.de:9091/';
+  //webserverurl = 'http://localhost:80/';
 
   constructor() {
   }
