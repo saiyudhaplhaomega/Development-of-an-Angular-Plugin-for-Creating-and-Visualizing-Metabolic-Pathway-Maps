@@ -1,4 +1,11 @@
+
+
 <div class="ml-5 mr-5">
+  <div class="input-group justify-content-center col-md-4 col-md-offset-4">
+    <input id="currentUrl" type="text" class="form-control input-monospace input-sm bg-gray-light"
+           data-autoselect="" value="{{ url }}" readonly="">
+    <button (click)="copyToClipboard()">copy</button>
+  </div>
   <table class="table table-striped jobcontrol">
     <thead>
     <tr>
