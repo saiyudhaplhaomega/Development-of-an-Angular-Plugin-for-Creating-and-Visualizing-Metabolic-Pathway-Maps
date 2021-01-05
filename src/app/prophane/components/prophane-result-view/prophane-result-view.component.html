@@ -42,7 +42,7 @@
   </table>
 </div>
 
-<!--<div [innerHtml]="kronaHtml"></div>-->
-
-<!--<iframe src="/test_data/krona.html"-->
-<!--        title="krona plot of job"></iframe>-->
+<div>
+  <object type="text/html" [data]=" getKronaUrl(1) | safe " width="800px" height="600px" style="overflow:auto">
+  </object>
+</div>

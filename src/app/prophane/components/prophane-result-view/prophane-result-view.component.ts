@@ -15,7 +15,6 @@ import {ProphaneJobObject} from '../../objects/prophanejobjson';
 export class ProphaneResultViewComponent implements OnInit {
 
   job: ProphaneJobObject;
-  kronaHtml;
   isUpdating = true;
   url: string;
 
@@ -29,7 +28,6 @@ export class ProphaneResultViewComponent implements OnInit {
   ngOnInit(): void {
     this.getJob();
     this.isUpdating = false;
-    // this.kronaHtml = this.getKrona(1);
     this.url = window.location.href;
   }
 
@@ -54,13 +52,10 @@ export class ProphaneResultViewComponent implements OnInit {
     document.execCommand('copy');
   }
 
-  getKrona(id: number) {
-    // const url = 'https://randalierer-cloud.chickenkiller.com/index.php/s/4JHKQHBeBQ2cwt5/download';
-    // const url = 'http://marbl.github.io/Krona/examples/xml.krona.html';
-    const url = 'https://kissht.com/';
-    this.http.get(url, {responseType: 'text'}).subscribe(res => {
-      this.kronaHtml = this.sanitizer.bypassSecurityTrustHtml(res);
-    });
+  getKronaUrl(taskId: number) {
+    const url = 'https://marbl.github.io/Krona/examples/xml.krona.html';
+    console.log('using mock krona url from ' + url);
+    return url;
   }
 
 

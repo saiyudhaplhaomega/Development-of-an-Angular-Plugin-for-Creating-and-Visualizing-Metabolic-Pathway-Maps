@@ -14,6 +14,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {prophaneReportStyles} from './objects/prophaneFormData';
 import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-submission/prophane-job-submission-dialog';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProphaneResultViewComponent } from './components/prophane-result-view/p
     ProphaneAboutComponent,
     ProphaneJobSubmissionDialogComponent,
     ProphaneResultViewComponent,
+    SafePipe,
   ],
   imports: [
     CommonModule,
