@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {DomSanitizer} from '@angular/platform-browser';
 
 import { JobService } from '../../job.service';
 import {ProphaneJobObject} from '../../objects/prophanejobjson';
@@ -20,9 +18,7 @@ export class ProphaneResultViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private jobService: JobService,
-    private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private jobService: JobService
   ) { }
 
   ngOnInit(): void {
