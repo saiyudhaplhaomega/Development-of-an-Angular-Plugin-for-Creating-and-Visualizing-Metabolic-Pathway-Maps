@@ -1,11 +1,12 @@
 
 
 <div class="ml-5 mr-5">
-  <div class="input-group justify-content-center col-md-4 col-md-offset-4">
-    <input id="currentUrl" type="text" class="form-control input-monospace input-sm bg-gray-light"
+  <div class="input-group justify-content-center">
+    <input type= "url" id="currentUrl" type="text" class="form-control"
            data-autoselect="" value="{{ url }}" readonly="">
-    <button (click)="copyToClipboard()">copy</button>
+      <button mat-raised-button color="primary" (click)="copyToClipboard()">copy url</button>
   </div>
+  <p></p>
   <table class="table table-striped jobcontrol">
     <thead>
     <tr>
@@ -42,7 +43,7 @@
   </table>
 </div>
 
-
+<p></p>
 <p></p>
 
 <app-side-bar-results></app-side-bar-results>

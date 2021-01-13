@@ -2,7 +2,7 @@
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
     <div class="btn-group-vertical">
-      <button mat-raised-button class="button" Active="active"
+      <button mat-raised-button class="button" color="primary"
         *ngFor="let task of tasks; let i = index"
         [ngClass]="(lastClickedIndex == i) ? 'activeBtn': ''"
         (click)="changeActive(i)">
