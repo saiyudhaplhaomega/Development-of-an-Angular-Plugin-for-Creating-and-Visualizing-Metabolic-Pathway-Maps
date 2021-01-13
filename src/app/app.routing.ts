@@ -25,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'termsofservice', component: TermsOfServicePageComponent},
   { path: 'privacypolicy', component: PrivacyPolicyPageComponent},
   { path: 'impressum', component: ImpressumPageComponent},
+  { path: '**', redirectTo: 'login' }
 
   /*  { path: 'home', component: HomeDashboardPageComponent},
     { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},
@@ -33,8 +34,6 @@ const appRoutes: Routes = [
     { path: 'modeltrainer', component: ModelDatabasePageComponent, canActivate: [AuthGuard]},
     { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard]},
     { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},*/
-
-  { path: '**', redirectTo: 'login' }
 ];
 export const Routing = RouterModule.forRoot(appRoutes);
 

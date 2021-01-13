@@ -1,0 +1,23 @@
+.button {
+  background-color: blue;
+  border: 1px solid darkblue;
+  color: white;
+  padding: 10px 24px;
+  cursor: pointer; /* Pointer/hand icon */
+  display: inline-flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.button:hover {
+  background-color: darkblue;
+}
+
+.button:active {
+  background-color: darkblue;
+}

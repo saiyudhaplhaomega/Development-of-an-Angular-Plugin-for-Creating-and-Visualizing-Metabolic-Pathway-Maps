@@ -15,6 +15,7 @@ import {prophaneReportStyles} from './objects/prophaneFormData';
 import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-submission/prophane-job-submission-dialog';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 import { SafePipe } from './safe.pipe';
+import { SideBarResultsComponent } from './components/side-bar-results/side-bar-results.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SafePipe } from './safe.pipe';
     ProphaneJobSubmissionDialogComponent,
     ProphaneResultViewComponent,
     SafePipe,
+    SideBarResultsComponent,
   ],
   imports: [
     CommonModule,

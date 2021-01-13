@@ -1,0 +1,19 @@
+
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <div class="btn-group-vertical">
+      <button mat-raised-button class="button" Active="active"
+        *ngFor="let task of tasks; let i = index"
+        [ngClass]="(lastClickedIndex == i) ? 'activeBtn': ''"
+        (click)="changeActive(i)">
+        {{task.name}}
+      </button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div>
+      <object type="text/html" [data]=" getKronaPlot() | safe " width="800px" height="600px" style="overflow:auto">
+      </object>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
