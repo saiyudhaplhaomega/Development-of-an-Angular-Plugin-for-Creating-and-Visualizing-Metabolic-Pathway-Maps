@@ -1,27 +1,22 @@
-.button {
-  font-weight: normal;
-  #background-color: blue;
+.mat-expansion-panel-header {
   border: 1px solid darkblue;
-  color: white;
+  background-color: #283593 !important;
   padding: 2px 10px;
   cursor: pointer; /* Pointer/hand icon */
-  display: inline-flex;
-  flex-direction: column;
   margin-bottom: 10px;
   margin-right: 10px;
   margin-left: 10px;
 }
-
-.button:not(:last-child) {
-  border-bottom: none; /* Prevent double borders */
+.mat-expansion-panel-header-title {
+  color: white
 }
 
 /* Add a background color on hover */
-.button:hover {
-  background-color: darkblue;
+.mat-expansion-panel-header:hover {
+  background-color: darkblue !important;
 }
 
-.button:active {
-  background-color: darkblue;
+.mat-expansion-panel-header:active {
+  background-color: darkblue !important;
 }
 

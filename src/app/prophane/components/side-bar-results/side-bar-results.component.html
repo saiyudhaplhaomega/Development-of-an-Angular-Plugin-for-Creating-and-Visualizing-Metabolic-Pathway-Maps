@@ -1,18 +1,25 @@
 
 <mat-sidenav-container autosize>
   <mat-sidenav mode="side" opened>
-    <div class="btn-group-vertical" >
-      <button mat-raised-button class="button" color="primary"
+    <mat-accordion>
+      <mat-expansion-panel
         *ngFor="let task of tasks; let i = index"
         [ngClass]="(lastClickedIndex == i) ? 'activeBtn': ''"
         (click)="changeActive(i)">
-        {{task.name}}
-      </button>
-    </div>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{task.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p *ngFor="let param of params[i]"> {{param}} </p>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
 
   <mat-sidenav-content>
-      <object type="text/html" [data]=" getKronaPlot() | safe " width="800px" height="600px" style="overflow:auto">
+      <object type="text/html" [data]=" getKronaPlot(lastClickedIndex) | safe " width="800px" height="600px" style="overflow:auto">
       </object>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+

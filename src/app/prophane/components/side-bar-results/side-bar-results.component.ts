@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ProphaneJobObject} from '../../objects/prophanejobjson';
 import { JobService } from '../../job.service';
 import { ActivatedRoute } from '@angular/router';
-import {FormControl} from '@angular/forms';
 
 export interface Task {
   taskid: number;
@@ -22,6 +21,8 @@ export class SideBarResultsComponent implements OnInit {
   job: ProphaneJobObject;
   url: string;
   tasks: Task[] = [];
+  all_param_obj: any[] = [];
+  params: any[] = [];
   lastClickedIndex = 0;
   uuid: string;
 
@@ -40,6 +41,7 @@ export class SideBarResultsComponent implements OnInit {
     ];*/
     // this.tasks = this.getJobTasks();
     this.getJobTasks();
+
   }
 
   getJobTasks(): void {
@@ -52,16 +54,36 @@ export class SideBarResultsComponent implements OnInit {
         const new_task: Task = {taskid: i, name: task_name, algorithm: task.algorithm, database: task.database, scope: task.scope};
         this.tasks.push(new_task);
         i = i + 1;
-    }});
+        this.all_param_obj.push(task.optionstring);
+    }
+      this.getParams();
+    });
+  }
+
+  getParams(): void {
+    for (const param_array_per_task of this.all_param_obj) {
+      const params_per_task = [];
+      for (const param_obj of param_array_per_task) {
+        let value: string;
+        if (param_obj.values.length === 0) {
+          value = param_obj.defaultValue;
+        } else {
+          value = param_obj.values[0];
+        }
+        const param_str = [param_obj.param, ': ', value].join('');
+        params_per_task.push(param_str);
+      }
+      // const params_per_task_str = params_per_task.join('\r\n');
+      this.params.push(params_per_task);
+    }
   }
 
   changeActive(i) {
     this.lastClickedIndex = i;
   }
 
-  getKronaPlot() {
-    const url = 'https://prophane.de:9091/mpacloud/v1/getKrona/' + this.uuid + '/' + 'task' + String(this.lastClickedIndex);
-    return url;
+  getKronaPlot(index) {
+    return 'https://prophane.de:9091/mpacloud/v1/getKrona/' + this.uuid + '/' + 'task' + String(index);
   }
 
 }
