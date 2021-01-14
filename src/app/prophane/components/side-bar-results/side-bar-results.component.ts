@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {ProphaneJobObject} from '../../objects/prophanejobjson';
 import { JobService } from '../../job.service';
 import { ActivatedRoute } from '@angular/router';
+import {FormControl} from '@angular/forms';
 
 export interface Task {
   taskid: number;
   name: string;
+  database: string;
+  algorithm: string;
+  scope: string;
 }
 
 @Component({
@@ -16,11 +20,10 @@ export interface Task {
 
 export class SideBarResultsComponent implements OnInit {
   job: ProphaneJobObject;
-  isUpdating = true;
   url: string;
   tasks: Task[] = [];
   lastClickedIndex = 0;
-  buttonClicked = null;
+  uuid: string;
 
   constructor(
     private jobService: JobService,
@@ -28,24 +31,28 @@ export class SideBarResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getJobTasks();
-    this.isUpdating = false;
+    this.uuid = this.route.snapshot.paramMap.get('job_uuid');
     this.url = window.location.href;
-    this.tasks = [
+    /*this.tasks = [
       {taskid: 0, name: 'tax task 0'},
       {taskid: 1, name: 'tax task 1'},
       {taskid: 2, name: 'tax task 2'}
-    ];
-    // this.tasks = this.getJobTasks()
+    ];*/
+    // this.tasks = this.getJobTasks();
+    this.getJobTasks();
   }
-  // funktioniert noch nicht
+
   getJobTasks(): void {
-    const uuid = this.route.snapshot.paramMap.get('job_uuid');
-    console.log('jobUuid: ' + uuid);
-    this.jobService.getJob(uuid).subscribe(res => {
+    this.jobService.getJob(this.uuid).subscribe(res => {
       this.job = res;
-    });
-    // into Task format
+      let i = 0;
+      for (const task of res.parameters.annotationTasks) {
+        // this.new_task.taskid = +task.tasklabel.split(' ')[-1];
+        const task_name = [task.scope, 'Annotation: \n', task.algorithm, task.database].join(' ');
+        const new_task: Task = {taskid: i, name: task_name, algorithm: task.algorithm, database: task.database, scope: task.scope};
+        this.tasks.push(new_task);
+        i = i + 1;
+    }});
   }
 
   changeActive(i) {
@@ -53,9 +60,7 @@ export class SideBarResultsComponent implements OnInit {
   }
 
   getKronaPlot() {
-    console.log(this.lastClickedIndex);
-    const url = 'https://marbl.github.io/Krona/examples/xml.krona.html';
-    console.log('using mock krona url');
+    const url = 'https://prophane.de:9091/mpacloud/v1/getKrona/' + this.uuid + '/' + 'task' + String(this.lastClickedIndex);
     return url;
   }
 

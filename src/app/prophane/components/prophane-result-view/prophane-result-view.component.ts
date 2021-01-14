@@ -26,10 +26,9 @@ export class ProphaneResultViewComponent implements OnInit {
     this.url = window.location.href;
   }
 
-  // funktioniert noch nicht
   getJob(): void {
     const uuid = this.route.snapshot.paramMap.get('job_uuid');
-    console.log('jobUuid: ' + uuid);
+    // console.log('jobUuid: ' + uuid);
     this.jobService.getJob(uuid).subscribe(res => {
       this.job = res;
     });
