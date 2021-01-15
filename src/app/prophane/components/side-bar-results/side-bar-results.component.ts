@@ -21,7 +21,6 @@ export class SideBarResultsComponent implements OnInit {
   job: ProphaneJobObject;
   url: string;
   tasks: Task[] = [];
-  all_param_obj: any[] = [];
   params: any[] = [];
   lastClickedIndex = 0;
   uuid: string;
@@ -34,14 +33,7 @@ export class SideBarResultsComponent implements OnInit {
   ngOnInit(): void {
     this.uuid = this.route.snapshot.paramMap.get('job_uuid');
     this.url = window.location.href;
-    /*this.tasks = [
-      {taskid: 0, name: 'tax task 0'},
-      {taskid: 1, name: 'tax task 1'},
-      {taskid: 2, name: 'tax task 2'}
-    ];*/
-    // this.tasks = this.getJobTasks();
     this.getJobTasks();
-
   }
 
   getJobTasks(): void {
@@ -49,33 +41,20 @@ export class SideBarResultsComponent implements OnInit {
       this.job = res;
       let i = 0;
       for (const task of res.parameters.annotationTasks) {
-        // this.new_task.taskid = +task.tasklabel.split(' ')[-1];
         const task_name = [task.scope, 'Annotation: \n', task.algorithm, task.database].join(' ');
         const new_task: Task = {taskid: i, name: task_name, algorithm: task.algorithm, database: task.database, scope: task.scope};
         this.tasks.push(new_task);
         i = i + 1;
-        this.all_param_obj.push(task.optionstring);
-    }
-      this.getParams();
-    });
+        this.getParams(task.optionstring);
+      }});
   }
 
-  getParams(): void {
-    for (const param_array_per_task of this.all_param_obj) {
-      const params_per_task = [];
-      for (const param_obj of param_array_per_task) {
-        let value: string;
-        if (param_obj.values.length === 0) {
-          value = param_obj.defaultValue;
-        } else {
-          value = param_obj.values[0];
-        }
-        const param_str = [param_obj.param, ': ', value].join('');
-        params_per_task.push(param_str);
-      }
-      // const params_per_task_str = params_per_task.join('\r\n');
-      this.params.push(params_per_task);
+  getParams(param_array_per_task): void {
+    const params_per_task = [];
+    for (const param_obj of param_array_per_task) {
+      params_per_task.push([param_obj.param, ': ', param_obj.defaultValue].join(''));
     }
+    this.params.push(params_per_task);
   }
 
   changeActive(i) {
@@ -85,5 +64,4 @@ export class SideBarResultsComponent implements OnInit {
   getKronaPlot(index) {
     return 'https://prophane.de:9091/mpacloud/v1/getKrona/' + this.uuid + '/' + 'task' + String(index);
   }
-
 }
