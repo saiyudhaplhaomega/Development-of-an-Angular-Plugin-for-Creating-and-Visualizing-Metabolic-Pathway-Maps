@@ -10,6 +10,8 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 1, name: 'MPA (multiple experiments)', valueString: 'mpa_multisample'},
   {id: 2, name: 'Scaffold', valueString: 'scaffold'},
   {id: 3, name: 'Generic Format', valueString: 'generic'},
+  {id: 4, name: 'MzTab', valueString: 'mztab'},
+  {id: 5, name: 'MzIdent', valueString: 'mzident'},
 ];
 
 export const quantdata: ProphaneQuantDataObject[] = [

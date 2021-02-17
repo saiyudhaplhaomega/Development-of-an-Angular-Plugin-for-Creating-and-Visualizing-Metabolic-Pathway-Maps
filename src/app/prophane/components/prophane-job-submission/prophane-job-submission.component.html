@@ -122,6 +122,42 @@
             </div>
           </div>
 
+          <!-- mzTab -->
+          <div
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 4"
+            class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".mztab" class="custom-file-input" id="mztab" #proteinreportfile
+                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+              <!--(click)="proteinreportfile.click()"-->
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mztab">Choose MzTab file
+                (.mztab)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label"
+                     for="mztab">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
+          <!-- mzIdent -->
+          <div
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 5"
+            class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".mzid" class="custom-file-input" id="mzident" #proteinreportfile
+                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+              <!--(click)="proteinreportfile.click()"-->
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mzident">Choose MzIdent2.0 file
+                (.mzid)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label"
+                     for="mzident">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
           <!-- Fasta -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
