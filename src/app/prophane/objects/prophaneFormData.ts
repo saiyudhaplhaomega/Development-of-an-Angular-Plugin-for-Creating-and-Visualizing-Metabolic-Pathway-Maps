@@ -12,6 +12,7 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 3, name: 'Generic Format', valueString: 'generic'},
   {id: 4, name: 'MzTab', valueString: 'mztab'},
   {id: 5, name: 'MzIdent', valueString: 'mzident'},
+  {id: 6, name: 'Proteome Discoverer protein group excel file', valueString: 'pd_xlsx'},
 ];
 
 export const quantdata: ProphaneQuantDataObject[] = [

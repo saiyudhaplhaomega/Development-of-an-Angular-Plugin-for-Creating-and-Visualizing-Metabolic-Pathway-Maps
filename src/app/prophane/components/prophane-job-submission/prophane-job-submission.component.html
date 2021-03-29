@@ -158,6 +158,24 @@
             </div>
           </div>
 
+          <!-- proteome discoverer -->
+          <div
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 6"
+            class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Report file</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" accept=".xlsx" class="custom-file-input" id="pd_xlsx" #proteinreportfile
+                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+              <!--(click)="proteinreportfile.click()"-->
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="pd_xlsx">Choose Proteome Discoverer protein group excel file
+                (.xlsx)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label"
+                     for="pd_xlsx">{{proteinReportFile.name}}</label>
+            </div>
+          </div>
+
           <!-- Fasta -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
