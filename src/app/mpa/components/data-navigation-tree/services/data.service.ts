@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { DataItem } from '../objects/data-item';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
-import { AuthService } from 'angularx-social-login';
+import {AuthGuard} from '../../../../core/services/auth-guard.service';
+// import {type} from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -27,31 +28,19 @@ export class DataService {
  // private _dataItems: DataItem[];
   private _dataItemMap: Map<string, DataItem>;
 
-  constructor(private authService: AuthService,
+  constructor(private authGuard: AuthGuard,
     private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
-    this.authService.authState.subscribe(user => {
-      console.log(user);
-      if (user !== null && user !== undefined) {
+      if (this.authGuard.loggedIn()) {
         const key = v1();
         const newMap = new Map();
         newMap.set(key, {
-          displayName: user.name,
+          displayName: 'a user',
           icon: 'account_circle',
           children: [],
           uuid: key,
           type: 'user',
         });
-        //const headers = new HttpHeaders({
-          //    'Content-Type': 'application/json',
-            //  Authorization: this.authService.getIDToken()});
-        //this.jsonUploader.postObj(newData, 'mpacloud/v1/updateuserdata').subscribe(result => {
-          //if (result != null) {
-            //newData = result;
-            //this.dataItems.next(newData);
-          //} else {
-            this.dataMap.next(newMap);
-          //}
-        //});
+        this.dataMap.next(newMap);
       } else {
         const key = v1();
         const newMap = new Map();
@@ -64,7 +53,7 @@ export class DataService {
         });
         this.dataMap.next(newMap);
       }
-    });
+
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
     //  if (this.authGuardService.getServerAuthState()) {
@@ -99,6 +88,27 @@ export class DataService {
     console.log(this._dataItemMap);
     this.updateDataItems();
     this.dataChange.next('addExperiment');
+  }
+
+  addProteinDatabase(parentUuid) {
+    const newProtDBUUID = v1();
+    const newProtDB = {
+      displayName: 'new proteinDB',
+      icon: 'computer',
+      children: [],
+      uuid: newProtDBUUID,
+      type: 'proteindb',
+      parent: parentUuid,
+    };
+
+    const item = this._dataItemMap.get(parentUuid);
+    item.children.push(newProtDBUUID);
+    this._dataItemMap.set(parentUuid, item);
+
+    this._dataItemMap.set(newProtDBUUID, newProtDB);
+    console.log(this._dataItemMap);
+    this.updateDataItems();
+    this.dataChange.next('addProteinDB');
   }
 
   addFolder(parentUuid: string) {

@@ -17,7 +17,8 @@ export class NavigationBarComponent implements OnInit {
   constructor(private router: Router, private authGuard: AuthGuard) { }
 
   isProphane() {
-    if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
+    //if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
+    if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de") {
       return true;
     }
     return false;

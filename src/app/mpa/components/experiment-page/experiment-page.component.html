@@ -1,17 +1,82 @@
 <mat-tab-group>
-  <mat-tab label="General"> 
-    <mat-form-field>
-      <input matInput type="text" placeholder="experiment name" [(ngModel)]="name">
-      <button mat-button matSuffix mat-icon-button aria-label="Accept" (click)="onAccept()">
-        <mat-icon>done</mat-icon>
-      </button>  
-      <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
-        <mat-icon>close</mat-icon>
+  <mat-tab label="General">
+    <div>
+      <mat-form-field>
+        <input matInput type="text" placeholder="experiment name" [(ngModel)]="name">
+        <button mat-button matSuffix mat-icon-button aria-label="Accept" (click)="onAccept()">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-button (click)="addData()" class="float-left">Add Data From Files</button>
+    </div>
+    <ng-container *ngIf="this.addDataBool == true">
+      <div>
+        <mat-select [(value)]="this.fileSelection" placeholder="Custom">
+          <mat-option *ngFor="let fileType of uploadFileTypeSelections"
+                      [value]="fileType">{{ fileType}}</mat-option>
+        </mat-select>
+      </div>
+      <ng-container *ngIf="this.fileSelection == 'MZIdentML'">
+        <div class="input-group-prepend">
+          <span class="input-group-text">MZIdentML File</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" accept=".mzid" class="custom-file-input" id="mzid" #selectedFileSpectra
+                 (change)="onSpectrumFileChange(selectedFileSpectra.files)"
+                 class="custom-file-input">
+          <label *ngIf="!this.selectedFileSpectra" class="custom-file-label" for="mzid">Choose MZIdentML file (.mzid, .mzidentml)</label>
+          <label *ngIf="this.selectedFileSpectra" class="custom-file-label" for="mzid">{{this.selectedFileSpectra.name}}</label>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="this.fileSelection == 'MZML'">
+        <div class="input-group-prepend">
+          <span class="input-group-text">MZML File</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" accept=".mzml" class="custom-file-input" id="mzml" #selectedFileSpectra
+                 (change)="onSpectrumFileChange(selectedFileSpectra.files)"
+                 class="custom-file-input">
+          <label *ngIf="!this.selectedFileSpectra" class="custom-file-label" for="mzml">Choose MZML file (.mzml)</label>
+          <label *ngIf="this.selectedFileSpectra" class="custom-file-label" for="mzml">{{this.selectedFileSpectra.name}}</label>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="this.fileSelection == 'Mascot-DAT'">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Mascot Dat File</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" accept=".dat" class="custom-file-input" id="dat" #selectedFileSpectra
+                 (change)="onSpectrumFileChange(selectedFileSpectra.files)"
+                 class="custom-file-input">
+          <label *ngIf="!this.selectedFileSpectra" class="custom-file-label" for="dat">Choose Mascot Dat file (.dat)</label>
+          <label *ngIf="this.selectedFileSpectra" class="custom-file-label" for="dat">{{this.selectedFileSpectra.name}}</label>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="this.fileSelection == 'MGF'">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Mascot Generic File</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
+                 (change)="onSpectrumFileChange(selectedFileSpectra.files)"
+                 class="custom-file-input">
+          <label *ngIf="!this.selectedFileSpectra" class="custom-file-label" for="mgf">Choose MGF file (.mgf)</label>
+          <label *ngIf="this.selectedFileSpectra" class="custom-file-label" for="mgf">{{this.selectedFileSpectra.name}}</label>
+        </div>
+      </ng-container>
+      <button mat-raised-button color="primary" class="float-right"
+              [disabled]="(!selectedFileSpectra)"
+              (click)="submitFiles()">Submit
       </button>
-    </mat-form-field>
+    </ng-container>
   </mat-tab>
-  <mat-tab label="Protein Groups"> 
-    <app-mpa-table [data]='proteinList.protein_groups' [experimentUUID]='uuid'></app-mpa-table> 
+  <mat-tab label="Protein Groups">
+    <app-mpa-table [data]='proteinList.protein_groups' [experimentUUID]='uuid'></app-mpa-table>
   </mat-tab>
   <mat-tab label="Streaming"> 🌊 </mat-tab>
 </mat-tab-group>

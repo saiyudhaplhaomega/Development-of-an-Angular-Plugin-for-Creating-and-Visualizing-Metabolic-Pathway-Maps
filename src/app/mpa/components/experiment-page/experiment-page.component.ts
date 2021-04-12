@@ -6,6 +6,7 @@ import { AuthenticatedSerializableObjectUploaderService } from '../../../core/se
 import { createNewProteinGroup } from '../mpa-table/mpa-table.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProteinGroupList } from '../../objects/tableobjects';
+import {ProphaneContaminationOptionObject} from '../../../prophane/objects/prophaneContaminationOption';
 
 
 @Component({
@@ -18,6 +19,14 @@ export class ExperimentPageComponent implements OnInit {
   uuid: string;
   name: string;
 
+  addDataBool = false;
+  fileSelection = 'MZIdentML';
+  selectedFileSpectra: File;
+
+  uploadFileTypeSelections: string[] = [
+    'MZIdentML', 'MZML', 'Mascot-DAT', 'MGF'
+  ];
+
   private _dataMap: Map<string, DataItem>;
   proteinList: ProteinGroupList = {experiment_uuid: this.uuid, protein_groups: []};
 
@@ -29,7 +38,7 @@ export class ExperimentPageComponent implements OnInit {
     this.dataService.dataMap.subscribe( items => {
       this._dataMap = items;
     });
-    this.uploaderService.postObj<ProteinGroupList>({experiment_uuid: this.uuid, protein_groups: []}, 
+    this.uploaderService.postObj<ProteinGroupList>({experiment_uuid: this.uuid, protein_groups: []},
       'mpacloud/v1/fetchProteinGroups').subscribe( data => {
       this.proteinList = data;
     }, err => {
@@ -41,6 +50,18 @@ export class ExperimentPageComponent implements OnInit {
 
   errorHandler(error: HttpErrorResponse) {
 
+  }
+
+  onSpectrumFileChange(files: FileList) {
+    this.selectedFileSpectra = files[0];
+  }
+
+  addData() {
+    this.addDataBool = !this.addDataBool;
+  }
+
+  submitFiles() {
+    // implement post of files
   }
 
   onAccept() {

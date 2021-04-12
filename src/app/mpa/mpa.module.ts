@@ -20,6 +20,7 @@ import { PsmTableComponent } from './components/psm-table/psm-table.component';
 import { DescriptionDetailsComponent } from './components/description-details/description-details.component';
 import {ResultTableComponent} from './components/result-table/result-table.component';
 import {DatabaseSearchPageComponent} from './components/database-search-page/database-search-page.component';
+import {DataService} from './components/data-navigation-tree/services/data.service';
 
 @NgModule({
   declarations: [

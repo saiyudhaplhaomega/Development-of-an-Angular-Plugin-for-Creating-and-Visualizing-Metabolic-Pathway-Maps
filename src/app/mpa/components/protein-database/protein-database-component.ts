@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './folder-page.component.html',
   styleUrls: ['./folder-page.component.css']
 })
-export class FolderPageComponent implements OnInit {
+export class ProteinDatabaseComponent implements OnInit {
 
   uuid: string;
   name: string;

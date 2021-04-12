@@ -5,6 +5,9 @@
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
       <span *ngIf="!isProphane()">
         <span>MePPi</span>
+        <button mat-button (click)='goto("/mpa")' *ngIf='user || guest'>
+          MPA
+        </button>
       </span>
       <span *ngIf="isProphane()">
         <span>Prophane</span>

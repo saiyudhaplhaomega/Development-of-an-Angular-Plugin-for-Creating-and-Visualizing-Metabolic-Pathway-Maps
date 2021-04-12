@@ -17,6 +17,7 @@ export interface ContentComponent {
   providedIn: 'root'
 })
 export class NavService {
+
   public treeContentRef = new BehaviorSubject<ViewContainerRef>(undefined);
   private _contentRef: ViewContainerRef;
 
