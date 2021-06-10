@@ -4,6 +4,7 @@ import { DataItem } from '../objects/data-item';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
+import {HttpHeaders} from '@angular/common/http';
 // import {type} from 'os';
 
 @Injectable({
@@ -54,21 +55,19 @@ export class DataService {
         this.dataMap.next(newMap);
       }
 
+    // '/mpacloud/v1/getuserdata'
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
-    //  if (this.authGuardService.getServerAuthState()) {
-      //  const headers = new HttpHeaders({
-       // 'Content-Type': 'application/json',
-       // Authorization: authGuardService.getIDToken()});
-        //this.jsonUploader.postObj(value, 'mpacloud/v1/updateuserdata').subscribe(result => {
-          //if (result != null) {
-            //value = result;
-          //}
-        //});
-      //}
+        const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': authGuard.getUserAuthorization().toString()});
+        this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
+          if (result != null) {
+            value = result;
+          }
+        });
     });
   }
-
   addExperiment(parentUuid) {
     const newExperimentUUID = v1();
     const newExperiment = {
