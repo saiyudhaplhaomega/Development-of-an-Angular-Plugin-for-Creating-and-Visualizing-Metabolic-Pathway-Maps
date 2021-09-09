@@ -7,6 +7,7 @@ import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {HttpHeaders} from '@angular/common/http';
 // import {type} from 'os';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,16 +33,22 @@ export class DataService {
   constructor(private authGuard: AuthGuard,
     private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
       if (this.authGuard.loggedIn()) {
-        const key = v1();
-        const newMap = new Map();
-        newMap.set(key, {
-          displayName: 'a user',
-          icon: 'account_circle',
-          children: [],
-          uuid: key,
-          type: 'user',
+        this.jsonUploader.postObj<DataItem[]>([], 'mpacloud/v1/getUserData').subscribe(res => {
+          const newMap = new Map();
+          res.forEach(obj => {
+            newMap.set(obj.uuid, obj);
+          });
+          this.dataMap.next(newMap);
         });
-        this.dataMap.next(newMap);
+        // test data from server
+        // newMap.set(key, {
+        //   displayName: 'a user',
+        //   icon: 'account_circle',
+        //   children: [],
+        //   uuid: key,
+        //   type: 'user',
+        // });
+
       } else {
         const key = v1();
         const newMap = new Map();
@@ -58,20 +65,26 @@ export class DataService {
     // '/mpacloud/v1/getuserdata'
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
-        const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': authGuard.getUserAuthorization().toString()});
-        this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
-          if (result != null) {
-            value = result;
-          }
-        });
+      const list = [];
+      if (value !== undefined) {
+        if (value.size !== 0) {
+          value.forEach(val => {
+            list.push(val);
+          });
+          this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
+            if (result != null) {
+              console.log(list);
+              // value = result;
+            }
+          });
+        }
+      }
     });
   }
   addExperiment(parentUuid) {
     const newExperimentUUID = v1();
     const newExperiment = {
-      displayName: 'new experiment',
+      displayName: 'New Experiment',
       icon: 'computer',
       children: [],
       uuid: newExperimentUUID,
@@ -92,8 +105,8 @@ export class DataService {
   addProteinDatabase(parentUuid) {
     const newProtDBUUID = v1();
     const newProtDB = {
-      displayName: 'new proteinDB',
-      icon: 'computer',
+      displayName: 'New Protein Database',
+      icon: 'fingerprint',
       children: [],
       uuid: newProtDBUUID,
       type: 'proteindb',
@@ -113,7 +126,7 @@ export class DataService {
   addFolder(parentUuid: string) {
     const newFolderUUID = v1();
     const newFolder = {
-      displayName: 'new folder',
+      displayName: 'New Folder',
       icon: 'folder',
       children: [],
       uuid: newFolderUUID,
@@ -127,6 +140,9 @@ export class DataService {
     this._dataItemMap.set(newFolderUUID, newFolder);
     this.updateDataItems();
     this.dataChange.next('addFolder');
+
+    console.log(this.dataMap);
+    console.log(this._dataItemMap);
   }
 
   removeFolder(folderUuid: string) {

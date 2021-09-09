@@ -1,5 +1,4 @@
 export class UserToken {
-
     iss: string;
     azp: string;
     aud: string;

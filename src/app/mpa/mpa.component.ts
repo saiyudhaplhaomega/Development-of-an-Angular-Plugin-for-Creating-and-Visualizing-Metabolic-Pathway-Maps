@@ -18,5 +18,7 @@ export class MPAComponent implements AfterViewInit/*, OnInit*/ {
 
   ngAfterViewInit() {
     this.navService.treeContentRef.next(this.viewContainerRef);
+    console.log(this.navService);
+    console.log(this.viewContainerRef);
   }
 }

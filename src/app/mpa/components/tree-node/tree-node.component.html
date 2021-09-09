@@ -1,16 +1,16 @@
-<a mat-list-item [ngStyle]="{'padding-left': node.hasChildren ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}">
+<a mat-list-item class="custom-list-item-content"
+   [ngStyle]="{'padding-left': node.hasChildren ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}" (click)="onNavigate()">
   <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
     <div *ngIf="node.hasChildren">
-      <button mat-icon-button (click)="onExpand($event, item)">
+      <button mat-icon-button (click)="onExpand()">
           <mat-icon [@indicatorRotate]="node.expanded ? 'expanded': 'collapsed'">
           expand_more
           </mat-icon>
       </button>
     </div>
-    <button mat-button fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center" (click)="onNavigate()">
-      <!--$event, item-->
+    <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
       <mat-icon class="routeIcon">{{node.icon}}</mat-icon>
       {{node.displayName}}
-    </button>
+    </div>
   </div>
 </a>

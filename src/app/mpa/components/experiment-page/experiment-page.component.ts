@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data-navigation-tree/services/data.service';
-import { DataItem } from '../data-navigation-tree/objects/data-item';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthenticatedSerializableObjectUploaderService } from '../../../core/services/authenticated-serializable-object-uploader.service';
-import { createNewProteinGroup } from '../mpa-table/mpa-table.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProteinGroupList } from '../../objects/tableobjects';
-import {ProphaneContaminationOptionObject} from '../../../prophane/objects/prophaneContaminationOption';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {DataService} from '../data-navigation-tree/services/data.service';
+import {DataItem} from '../data-navigation-tree/objects/data-item';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
+import {createNewProteinGroup} from '../mpa-table/mpa-table.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProteinGroupList} from '../../objects/tableobjects';
 
 
 @Component({
   selector: 'app-experiment-page',
   templateUrl: './experiment-page.component.html',
-  styleUrls: ['./experiment-page.component.css']
+  styleUrls: ['./experiment-page.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ExperimentPageComponent implements OnInit {
 

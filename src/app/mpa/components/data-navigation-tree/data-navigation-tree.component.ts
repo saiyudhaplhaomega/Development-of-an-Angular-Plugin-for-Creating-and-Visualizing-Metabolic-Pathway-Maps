@@ -13,6 +13,8 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./data-navigation-tree.component.css']
 })
 export class DataNavigationTreeComponent implements OnInit {
+  uuid: string;
+  name: string;
 
   _treeNodes: TreeNode[];
   private _expandedNodes: string[] = [];
@@ -34,6 +36,7 @@ export class DataNavigationTreeComponent implements OnInit {
       this._expandedNodes.push(treeNode.uuid);
     }
     this.navService.expandedNodes.next(this._expandedNodes);
+    console.log(this._treeNodes);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -49,5 +52,4 @@ export class DataNavigationTreeComponent implements OnInit {
     }
     this.dataService.moveDataItem(targetNode.uuid, movedNode.uuid);
   }
-
 }

@@ -18,9 +18,17 @@ import { ProteinGroup, PeptideData, ProteinData } from '../../objects/tableobjec
 })
 export class MpaTableComponent implements AfterViewInit {
 
+  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  expandedIndex = 0;
+
   displayedColumns = ['select', 'representative_accession', 'representative_description'];
   dataSource: MatTableDataSource<ProteinGroup>;
   selection: SelectionModel<ProteinGroup>;
+
+  private rowClicked = false;
+  proteinGroupUUID: string;
+  repAccession: string;
+  repDescription: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -58,7 +66,7 @@ export class MpaTableComponent implements AfterViewInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
+    return numSelected === numRows;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -70,6 +78,13 @@ export class MpaTableComponent implements AfterViewInit {
 
   toggleRow(row) {
     this.selection.toggle(row);
+  }
+
+  onClick(row) {
+    this.proteinGroupUUID = row.proteingroup_uuid;
+    this.repAccession = row.representative_accession;
+    this.repDescription = row.representative_description;
+    console.log(row);
   }
 }
 

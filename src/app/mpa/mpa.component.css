@@ -1,13 +1,15 @@
-#container {
-    top: 64px !important;
+.custom-sidenav-container {
+  margin-top: -3rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
-@media(max-width: 599px) {
-    #container {
-    top: 56px !important;
-    }
+.custom-sidenav-content {
+  margin: 1rem 1rem;
+  flex: 1 1 auto;
 }
 
 .mat-sidenav {
-    width: 320px;
+  width: 320px;
 }

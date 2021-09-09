@@ -40,15 +40,15 @@ import {DataService} from './components/data-navigation-tree/services/data.servi
     ResultTableComponent,
     DatabaseSearchPageComponent,
   ],
-  imports: [
-    CommonModule,
-    Routing,
-    DragDropModule,
-    FlexLayoutModule,
-    FormsModule,
-    // material module last
-    MaterialModule,
-  ],
+    imports: [
+        CommonModule,
+        Routing,
+        DragDropModule,
+        FlexLayoutModule,
+        FormsModule,
+        // material module last
+        MaterialModule,
+    ],
   entryComponents: [
     UserPageComponent,
     FolderPageComponent,

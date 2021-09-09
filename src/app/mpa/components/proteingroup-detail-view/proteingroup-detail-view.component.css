@@ -1,0 +1,27 @@
+.protein-details-tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.protein-detail-window {
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin: 1%;
+}
+
+.protein-detail-window.left {
+  flex-basis: 50%;
+  min-width: 0
+}
+
+.protein-detail-window.right {
+  flex-basis: 50%;
+  min-width: 0
+}
+
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  min-width: 10%!important;
+  flex-grow: 1;
+  flex-shrink: 1;
+}

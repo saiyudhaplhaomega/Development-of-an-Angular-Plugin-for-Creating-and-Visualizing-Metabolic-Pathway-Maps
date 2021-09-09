@@ -15,6 +15,7 @@ export class UserPageComponent {
 
   onAddFolder() {
     console.log('add folder');
+    console.log(this.dataService);
     this.dataService.addFolder(this.uuid);
   }
 }

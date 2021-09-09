@@ -1,26 +1,27 @@
-<div fxLayout="row">
-  <mat-tab-group [(selectedIndex)]='tabSelectionState' mat-stretch-tabs>
+<div class="protein-details-tabs">
+  <mat-tab-group [(selectedIndex)]='tabSelectionState' class="protein-detail-window left">
     <mat-tab label="Proteins">
-      <app-protein-table class='protein-detail-table' [data]='proteins' (selectedProtein)="selectProtein($event)">
+      <app-protein-table [data]='proteins' (selectedProtein)="selectProtein($event)">
       </app-protein-table>
     </mat-tab>
     <mat-tab label="Peptides">
-      <app-peptide-table class='peptide-detail-table' [data]='peptides'>
+      <app-peptide-table [data]='peptides'>
       </app-peptide-table>
     </mat-tab>
-    <mat-tab label="PSM">       
+    <mat-tab label="PSM">
       <app-psm-table>
       </app-psm-table>
     </mat-tab>
     <mat-tab label="Extras"> 🧬 </mat-tab>
   </mat-tab-group>
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab *ngIf='tabSelectionState==0' label="Description"> 
+
+  <mat-tab-group class="protein-detail-window right">
+    <mat-tab *ngIf='tabSelectionState==0' label="Description">
       <app-description-details [selectedProtein]='selectedProtein'>
-      </app-description-details> 
+      </app-description-details>
     </mat-tab>
     <mat-tab *ngIf='tabSelectionState==0' label="Peptides">
-      <app-peptide-table class='peptide-detail-table' [data]='selectedPeptides'>
+      <app-peptide-table [data]='selectedPeptides'>
       </app-peptide-table>
     </mat-tab>
     <mat-tab *ngIf='tabSelectionState==1' label="PSM">

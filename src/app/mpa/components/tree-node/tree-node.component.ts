@@ -33,5 +33,6 @@ export class TreeNodeComponent {
 
   onNavigate() {
     this.navService.navigateOutlet(this.node.displayName, this.node.uuid, this.node.type);
+    console.log(this.node);
   }
 }

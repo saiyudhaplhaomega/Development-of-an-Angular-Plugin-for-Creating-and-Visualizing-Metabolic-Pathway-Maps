@@ -1,35 +1,36 @@
-<div>
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
 
-<div>
+  <div>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
 
-  <mat-table [dataSource]="dataSource" matSort>
+<!--  <div style="height: 100%; width: 100%; overflow-y: auto">-->
+  <div>
+    <mat-table [dataSource]="dataSource" matSort>
 
-    <!-- Empty Column -->
-    <ng-container matColumnDef="empty">
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell *matCellDef="let row"></mat-cell>
-    </ng-container>
+      <!-- Empty Column -->
+      <ng-container matColumnDef="empty">
+        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let row"></mat-cell>
+      </ng-container>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.protein_uuid}} </mat-cell>
-    </ng-container>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.protein_uuid}} </mat-cell>
+      </ng-container>
 
-    <!-- Accession Column -->
-    <ng-container matColumnDef="accession">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Accession </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.protein_accession}} </mat-cell>
-    </ng-container>
+      <!-- Accession Column -->
+      <ng-container matColumnDef="accession">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Accession </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.protein_accession}} </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="setProtein(row)">
-    </mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="setProtein(row)">
+      </mat-row>
+    </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
 </div>

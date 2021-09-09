@@ -2,13 +2,19 @@
 <!--ADD ROUTES/SELECTION FOR DIFFERENT ELEMENTS-->
 <!--<app-top-nav class="fixed-topnav"></app-top-nav>-->
 
-<mat-sidenav-container id="container" fullscreen>
-  <mat-sidenav #appDrawer mode="side" opened="true">
-    <mat-nav-list>
+
+<mat-sidenav-container class="custom-sidenav-container">
+  <mat-sidenav #appDrawer mode="side" opened="true" class="mat-sidenav" >
+    <mat-nav-list style="padding-top: 0px">
       <app-data-navigation-tree></app-data-navigation-tree>
     </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <ng-template #treeoutlet></ng-template>
+  </mat-sidenav >
+  <mat-sidenav-content style="display: flex">
+<!--    <cdk-virtual-scroll-viewport itemSize="50" style="height: 100%; width: 100%">-->
+      <div class="custom-sidenav-content">
+      <ng-template #treeoutlet ></ng-template>
+      </div>
+<!--    </cdk-virtual-scroll-viewport>-->
   </mat-sidenav-content>
 </mat-sidenav-container>
+

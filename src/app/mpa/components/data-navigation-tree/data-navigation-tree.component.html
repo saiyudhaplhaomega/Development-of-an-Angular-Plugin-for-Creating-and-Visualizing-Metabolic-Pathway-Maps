@@ -1,5 +1,11 @@
+<div style="margin-top: 1rem"> </div>
 <div cdkDropList (cdkDropListDropped)="drop($event)">
   <div *ngFor='let item of _treeNodes' cdkDrag>
-    <app-tree-node (expandChange)="onExpand($event, item)" [node]='item'></app-tree-node>
+    <app-tree-node (expandChange)="onExpand($event, item)" [node]='item' ></app-tree-node>
   </div>
+<!--  <button (click)="onAddFolder()"> Add Folder </button>-->
 </div>
+
+
+<!--[cdkDragDisabled]="item.disabled"-->
+<!--*ngIf='item.type === "user"; else elseBlock' cdkDrag >-->

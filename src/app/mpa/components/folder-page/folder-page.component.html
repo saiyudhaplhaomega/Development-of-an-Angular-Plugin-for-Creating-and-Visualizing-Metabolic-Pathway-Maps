@@ -1,13 +1,45 @@
-<mat-form-field>
-  <input matInput type="text" placeholder="folder name" [(ngModel)]="name">
-  <button mat-button matSuffix mat-icon-button aria-label="Accept" (click)="onAccept()">
-    <mat-icon>done</mat-icon>
-  </button>
-  <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
-    <mat-icon>close</mat-icon>
-  </button>
-</mat-form-field>
-<button matButton (click)='onAddFolder()'>Add folder!</button>
-<button matButton (click)='onAddExperiment()'>Add experiment!</button>
-<button matButton (click)='onAddProteinDatabase()'>Add Protein Database!</button>
-<button matButton (click)='onRemoveFolder()'>Remove this folder!</button>
+<!--<input class="form-control ng-untouched ng-pristine ng-valid" type="text" ng-reflect-ng-style="[object Object]"-->
+<!--       ng-reflect-model="Taxonomic Annotation Task 1" style="background-color: white;">-->
+
+
+<div class="d-flex justify-content-between">
+  <div class="jobCards" style="width: 100%; flex-basis: auto; flex-shrink: 1">
+    <div class="card min-w-600" >
+      <div class="card-header">
+        <h5>Manage Folder</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="input-group mb-3 ng-star-inserted">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Folder Name</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="name">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary w-sbtn icon-button"
+                    aria-label="Accept" (click)="onAccept()">
+              <mat-icon class="icon-button-icon">done</mat-icon>
+            </button>
+            <button class="btn btn-outline-secondary w-sbtn icon-button"
+                    *ngIf="name" aria-label="Clear" (click)="name=''">
+              <mat-icon class="icon-button-icon">close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="input-group mb-3 ng-star-inserted">
+            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddFolder()'>Add Folder</button>
+        </div>
+        <div  class="input-group mb-3 ng-star-inserted">
+            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddExperiment()'>Add Experiment</button>
+        </div>
+        <div class="input-group mb-3 ng-star-inserted">
+            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddProteinDatabase()'>Add Protein Database</button>
+        </div>
+        <div class="input-group mb-3 ng-star-inserted">
+            <button class="btn btn-primary float-right btn-danger" (click)='onRemoveFolder()'>Remove this Folder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

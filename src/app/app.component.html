@@ -1,11 +1,14 @@
-<div class="content-container">
-<div class="menu-container sticky-top mb-5">
-  <app-navigation-bar></app-navigation-bar>
-  <app-privacy-consent-banner></app-privacy-consent-banner>
-</div>
-  <router-outlet></router-outlet>
-</div>
-<div class="footer-container">
+<div class="page-content">
+  <div class="header">
+    <app-navigation-bar></app-navigation-bar>
+    <app-privacy-consent-banner></app-privacy-consent-banner>
+  </div>
+  <div class="content" >
+<!--    <cdk-virtual-scroll-viewport itemSize="" class="content" >-->
+    <div style="margin-bottom: 3rem"></div>
+      <router-outlet></router-outlet>
+<!--    </cdk-virtual-scroll-viewport>-->
+  </div>
   <app-page-footer class="footer"></app-page-footer>
 </div>
 
