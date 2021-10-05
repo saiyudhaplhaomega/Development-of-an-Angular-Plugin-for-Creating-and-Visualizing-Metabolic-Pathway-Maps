@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <p> {{dialogPrompt}} </p>
+  <mat-form-field
+    appearance="fill"
+    [formGroup]="folderNameForm">
+    <mat-label>{{this.textFieldLabel}}</mat-label>
+    <input
+      type="text"
+      formControlName="folderName"
+      matInput>
+    <mat-error *ngIf="folderNameForm.get('folderName').errors && folderNameForm.get('folderName').touched">
+      {{getErrorMessage()}}
+    </mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="btn btn-primary float-right rki-blue-bg" (click)="onSubmitName()" [disabled]="folderNameForm.invalid">Ok</button>
+  <button class="btn btn-primary float-right btn-danger" (click)="onCloseDialog()">Cancel</button>
+</div>

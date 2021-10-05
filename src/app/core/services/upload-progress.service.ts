@@ -19,7 +19,6 @@ export class UploadProgressService {
     this.jobUuid = id;
   }
 
-
   public getUUID() {
     return this.jobUuid;
   }

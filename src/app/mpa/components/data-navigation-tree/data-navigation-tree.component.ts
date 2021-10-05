@@ -26,16 +26,24 @@ export class DataNavigationTreeComponent implements OnInit {
     this.navService.treeNodes.subscribe(nodes => {
       this._treeNodes = nodes;
     });
+
+    this._treeNodes.map(node => {
+      if (node.expanded === true) {
+        this._expandedNodes.push(node.uuid);
+      }
+    });
   }
 
   onExpand(event, treeNode) {
     const index = this._expandedNodes.indexOf(treeNode.uuid);
     if (index > -1) {
+      // deletes node from array at index
       this._expandedNodes.splice(index, 1);
     } else {
       this._expandedNodes.push(treeNode.uuid);
     }
     this.navService.expandedNodes.next(this._expandedNodes);
+    console.log(this._expandedNodes);
     console.log(this._treeNodes);
   }
 

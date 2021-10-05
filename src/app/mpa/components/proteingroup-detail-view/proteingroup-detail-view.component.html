@@ -1,18 +1,18 @@
 <div class="protein-details-tabs">
   <mat-tab-group [(selectedIndex)]='tabSelectionState' class="protein-detail-window left">
-    <mat-tab label="Proteins">
-      <app-protein-table [data]='proteins' (selectedProtein)="selectProtein($event)">
-      </app-protein-table>
-    </mat-tab>
-    <mat-tab label="Peptides">
-      <app-peptide-table [data]='peptides'>
-      </app-peptide-table>
-    </mat-tab>
-    <mat-tab label="PSM">
-      <app-psm-table>
-      </app-psm-table>
-    </mat-tab>
-    <mat-tab label="Extras"> 🧬 </mat-tab>
+      <mat-tab label="Proteins">
+        <app-protein-table style="display: flex; flex-direction: column; justify-content: space-between" [data]='proteins' (selectedProtein)="selectProtein($event)" >
+        </app-protein-table>
+      </mat-tab>
+      <mat-tab label="Peptides">
+        <app-peptide-table [data]='peptides'>
+        </app-peptide-table>
+      </mat-tab>
+      <mat-tab label="PSM">
+        <app-psm-table>
+        </app-psm-table>
+      </mat-tab>
+      <mat-tab label="Extras"> 🧬 </mat-tab>
   </mat-tab-group>
 
   <mat-tab-group class="protein-detail-window right">

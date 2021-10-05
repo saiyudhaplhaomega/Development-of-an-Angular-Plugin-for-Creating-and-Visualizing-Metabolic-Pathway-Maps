@@ -16,13 +16,13 @@
           </div>
           <input type="text" class="form-control" [(ngModel)]="name">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary w-sbtn icon-button"
+            <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                     aria-label="Accept" (click)="onAccept()">
-              <mat-icon class="icon-button-icon">done</mat-icon>
+              <mat-icon>done</mat-icon>
             </button>
-            <button class="btn btn-outline-secondary w-sbtn icon-button"
+            <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                     *ngIf="name" aria-label="Clear" (click)="name=''">
-              <mat-icon class="icon-button-icon">close</mat-icon>
+              <mat-icon>close</mat-icon>
             </button>
           </div>
         </div>

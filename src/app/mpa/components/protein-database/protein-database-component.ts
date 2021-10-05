@@ -39,7 +39,7 @@ export class ProteinDatabaseComponent implements OnInit {
 
   onAddExperiment() {
     console.log('add experiment');
-    this.dataService.addExperiment(this.uuid);
+    // this.dataService.addExperiment(this.uuid);
   }
 
   onAddProteinDatabase() {

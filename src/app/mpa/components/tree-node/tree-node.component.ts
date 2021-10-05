@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ComponentFactoryResolver, ViewContainerRef, OnInit} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TreeNode } from '../data-navigation-tree/objects/tree-node';
 import { NavService } from '../data-navigation-tree/services/nav.service';
@@ -33,6 +33,9 @@ export class TreeNodeComponent {
 
   onNavigate() {
     this.navService.navigateOutlet(this.node.displayName, this.node.uuid, this.node.type);
+    console.log(this.navService);
     console.log(this.node);
   }
+
+
 }

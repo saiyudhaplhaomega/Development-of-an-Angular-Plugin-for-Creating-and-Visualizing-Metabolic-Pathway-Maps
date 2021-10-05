@@ -1,12 +1,12 @@
 
-  <div>
+  <div style="flex: 0 0 auto">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
 
 <!--  <div style="height: 100%; width: 100%; overflow-y: auto">-->
-  <div>
+  <div style="overflow-y: auto; flex: 1 1 auto">
     <mat-table [dataSource]="dataSource" matSort>
 
       <!-- Empty Column -->

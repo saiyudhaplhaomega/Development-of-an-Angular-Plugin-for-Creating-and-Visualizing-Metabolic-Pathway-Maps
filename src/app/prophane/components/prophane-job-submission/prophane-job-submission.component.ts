@@ -74,10 +74,14 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
 
   // constructor and init
-  constructor(public dialog: MatDialog, private uploaderService: FileUploaderService,
+  constructor(public dialog: MatDialog,
+              private uploaderService: FileUploaderService,
               private jobService: JobService,
-              tooltipConfig: NgbTooltipConfig, private router: Router,
-              private modalService: NgbModal, private _uploadProgressService: UploadProgressService, private authGuard: AuthGuard) {
+              tooltipConfig: NgbTooltipConfig,
+              private router: Router,
+              private modalService: NgbModal,
+              private _uploadProgressService: UploadProgressService,
+              private authGuard: AuthGuard) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -85,8 +89,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     tooltipConfig.placement = 'top';
     tooltipConfig.triggers = 'hover';
   }
-
-  //
 
   ngOnInit(): void {
     // TODO: more inits?
@@ -455,8 +457,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
     if (algoSel.avoid != undefined && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -465,8 +466,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     if (value === undefined || !String(value).match('^[0-9]+(\[.\][0-9]*)?$')) {
       this.addFormInputErr(elemid);
       return false;
-    }
-    else {
+    } else {
       this.removeFormInputErr(elemid);
       return true;
     }

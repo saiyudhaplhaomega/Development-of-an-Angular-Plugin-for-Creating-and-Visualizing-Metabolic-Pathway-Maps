@@ -5,4 +5,6 @@ export interface DataItem {
     parent?: string;
     uuid: string;
     type: string;
+    creation_date?: string;
+    description?: string;
 }

@@ -5,6 +5,8 @@ import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/s
 import v1 from 'uuid/v1';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {HttpHeaders} from '@angular/common/http';
+import {GetDateService} from '../../../../core/services/get-date.service';
+import {ExperimentJSONObject} from '../../../objects/experimentjson';
 // import {type} from 'os';
 
 
@@ -30,82 +32,144 @@ export class DataService {
  // private _dataItems: DataItem[];
   private _dataItemMap: Map<string, DataItem>;
 
-  constructor(private authGuard: AuthGuard,
-    private jsonUploader: AuthenticatedSerializableObjectUploaderService) {
-      if (this.authGuard.loggedIn()) {
-        this.jsonUploader.postObj<DataItem[]>([], 'mpacloud/v1/getUserData').subscribe(res => {
-          const newMap = new Map();
-          res.forEach(obj => {
-            newMap.set(obj.uuid, obj);
-          });
-          this.dataMap.next(newMap);
-        });
-        // test data from server
-        // newMap.set(key, {
-        //   displayName: 'a user',
-        //   icon: 'account_circle',
-        //   children: [],
-        //   uuid: key,
-        //   type: 'user',
-        // });
+  // constructor(private authGuard: AuthGuard,
+  //             private jsonUploader: AuthenticatedSerializableObjectUploaderService,
+  //             private getDateService: GetDateService) {
+  //     if (this.authGuard.loggedIn()) {
+  //       this.jsonUploader.postObj<DataItem[]>([], 'mpacloud/v1/getUserData').subscribe(res => {
+  //         const newMap = new Map();
+  //         res.forEach(obj => {
+  //           newMap.set(obj.uuid, obj);
+  //         });
+  //         this.dataMap.next(newMap);
+  //       });
+  //       // test data from server
+  //       // newMap.set(key, {
+  //       //   displayName: 'a user',
+  //       //   icon: 'account_circle',
+  //       //   children: [],
+  //       //   uuid: key,
+  //       //   type: 'user',
+  //       // });
+  //
+  //     } else {
+  //       const key = v1();
+  //       const newMap = new Map();
+  //       newMap.set(key, {
+  //         displayName: 'no user',
+  //         icon: 'account_circle',
+  //         children: [],
+  //         uuid: key,
+  //         type: 'user'
+  //       });
+  //       this.dataMap.next(newMap);
+  //     }
+  //
+  //   // '/mpacloud/v1/getuserdata'
+  //   this.dataMap.subscribe(value => {
+  //     this._dataItemMap = value;
+  //     const list = [];
+  //     if (value !== undefined) {
+  //       if (value.size !== 0) {
+  //         value.forEach(val => {
+  //           list.push(val);
+  //         });
+  //         this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
+  //           if (result != null) {
+  //             console.log(list);
+  //             // value = result;
+  //           }
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
 
-      } else {
-        const key = v1();
-        const newMap = new Map();
-        newMap.set(key, {
-          displayName: 'no user',
-          icon: 'account_circle',
-          children: [],
-          uuid: key,
-          type: 'user'
-        });
-        this.dataMap.next(newMap);
-      }
+  // Following lines added due to server error. Delete if server is working.
+  constructor(private authGuard: AuthGuard,
+              private jsonUploader: AuthenticatedSerializableObjectUploaderService,
+              private getDateService: GetDateService) {
+
+    if (this.authGuard.loggedIn()) {
+      const key = v1();
+      const newMap = new Map();
+      newMap.set(key, {
+        displayName: 'a user',
+        icon: 'account_circle',
+        children: [],
+        uuid: key,
+        type: 'user',
+      });
+      this.dataMap.next(newMap);
+    } else {
+      const key = v1();
+      const newMap = new Map();
+      newMap.set(key, {
+        displayName: 'no user',
+        icon: 'account_circle',
+        children: [],
+        uuid: key,
+        type: 'user'
+      });
+      this.dataMap.next(newMap);
+    }
 
     // '/mpacloud/v1/getuserdata'
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
-      const list = [];
-      if (value !== undefined) {
-        if (value.size !== 0) {
-          value.forEach(val => {
-            list.push(val);
-          });
-          this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
-            if (result != null) {
-              console.log(list);
-              // value = result;
-            }
-          });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': authGuard.getUserAuthorization().toString()});
+      this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
+        if (result != null) {
+          value = result;
         }
-      }
+      });
     });
   }
-  addExperiment(parentUuid) {
+  // remove till here
+
+  addExperiment(parentUuid: string,
+                experimentName: string) {
     const newExperimentUUID = v1();
     const newExperiment = {
-      displayName: 'New Experiment',
+      displayName: experimentName,
       icon: 'computer',
       children: [],
       uuid: newExperimentUUID,
       type: 'experiment',
       parent: parentUuid,
+      creation_date: this.getDateService.getDate().toString()
     };
+
+    // TODO: set data from input
+    const dbExperiment = new ExperimentJSONObject();
+    dbExperiment.exp_id = newExperimentUUID;
+    dbExperiment.name = newExperiment.displayName;
+    dbExperiment.description = 'from_html';
+    dbExperiment.creationDate = newExperiment.creation_date;
+
+    this.jsonUploader.postObj(dbExperiment, 'mpacloud/v1/createExperiment').subscribe(result => {
+      if (result != null) {
+        console.log(result);
+        // value = result;
+      }
+    });
 
     const item = this._dataItemMap.get(parentUuid);
     item.children.push(newExperimentUUID);
     this._dataItemMap.set(parentUuid, item);
 
     this._dataItemMap.set(newExperimentUUID, newExperiment);
-    console.log(this._dataItemMap);
+    // console.log(this._dataItemMap);
     this.updateDataItems();
     this.dataChange.next('addExperiment');
   }
 
-  addProteinDatabase(parentUuid) {
+  addProteinDatabase(parentUuid: string, dbName: string) {
     const newProtDBUUID = v1();
     const newProtDB = {
-      displayName: 'New Protein Database',
+      displayName: dbName,
       icon: 'fingerprint',
       children: [],
       uuid: newProtDBUUID,
@@ -123,10 +187,11 @@ export class DataService {
     this.dataChange.next('addProteinDB');
   }
 
-  addFolder(parentUuid: string) {
+  addFolder(parentUuid: string,
+            folderName: string) {
     const newFolderUUID = v1();
     const newFolder = {
-      displayName: 'New Folder',
+      displayName: folderName,
       icon: 'folder',
       children: [],
       uuid: newFolderUUID,
@@ -177,6 +242,50 @@ export class DataService {
 
   private updateDataItems() {
     this.dataMap.next(this._dataItemMap);
+  }
+
+  addPeaklist(parentUuid: string) {
+    const newPeaklistUUID = v1();
+    const newPeaklist = {
+      displayName: 'Peaklist',
+      icon: 'folder',
+      children: [],
+      uuid: newPeaklistUUID,
+      type: 'peaklist',
+      parent: parentUuid,
+    };
+    const item = this._dataItemMap.get(parentUuid);
+    item.children.push(newPeaklistUUID);
+    this._dataItemMap.set(parentUuid, item);
+
+    this._dataItemMap.set(newPeaklistUUID, newPeaklist);
+    this.updateDataItems();
+    this.dataChange.next('addPeaklist');
+
+    console.log(this.dataMap);
+    console.log(this._dataItemMap);
+  }
+
+  addSearch(parentUuid: string) {
+    const newSearchUUID = v1();
+    const newSearch = {
+      displayName: 'Search Result',
+      icon: 'folder',
+      children: [],
+      uuid: newSearchUUID,
+      type: 'searchresult',
+      parent: parentUuid,
+    };
+    const item = this._dataItemMap.get(parentUuid);
+    item.children.push(newSearchUUID);
+    this._dataItemMap.set(parentUuid, item);
+
+    this._dataItemMap.set(newSearchUUID, newSearch);
+    this.updateDataItems();
+    this.dataChange.next('addSearch');
+
+    console.log(this.dataMap);
+    console.log(this._dataItemMap);
   }
 
   moveDataItem(newParentID: string, movedUUID: string) {

@@ -7,6 +7,8 @@ import { DataItem } from '../objects/data-item';
 import { UserPageComponent } from '../../user-page/user-page.component';
 import { FolderPageComponent } from '../../folder-page/folder-page.component';
 import { ExperimentPageComponent } from '../../experiment-page/experiment-page.component';
+import { PeaklistPageComponent } from '../../peaklist-page/peaklist-page.component';
+import { SearchResultPageComponent } from '../../search-result-page/search-result-page.component';
 
 export interface ContentComponent {
   uuid: string;
@@ -59,8 +61,8 @@ export class NavService {
   }
 
   private processData(data: Map<string, DataItem>, expandedNodes: string[]) {
-    let tree: TreeNode[] = new Array();
-    let processedUUID = new Map();
+    const tree: TreeNode[] = new Array();
+    const processedUUID = new Map();
 
     console.log(this._dataMap.size);
 
@@ -105,7 +107,7 @@ export class NavService {
             }
             processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
           } else if (expandedNodes.indexOf(item.parent) <= -1) {
-            //HIDDEN
+            // HIDDEN
             console.log('HIDDEN');
             processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
           }
@@ -125,12 +127,19 @@ export class NavService {
         break;
       }
       case 'folder': {
-        console.log('folder');
         componentFactory = this.componentFactoryResolver.resolveComponentFactory(FolderPageComponent);
         break;
       }
       case 'experiment': {
         componentFactory = this.componentFactoryResolver.resolveComponentFactory(ExperimentPageComponent);
+        break;
+      }
+      case 'peaklist': {
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(PeaklistPageComponent);
+        break;
+      }
+      case 'searchresult': {
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(SearchResultPageComponent);
         break;
       }
       default: {

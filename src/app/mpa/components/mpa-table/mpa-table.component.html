@@ -1,13 +1,5 @@
-<div style="
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  position: relative;
-  ">
-
 <!--  Table  -->
-  <div style="display: flex; flex-direction: column; overflow-y: auto; height: 30rem">
+  <div class="flexbox-column protein-table">
     <mat-form-field style="width: 20%">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
@@ -55,16 +47,8 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100, 1000]" showFirstLastButtons></mat-paginator>
   </div>
 
-<!-- Detailed Information -->
-<!--  <ng-template #tpl let-element style="flex: 0 0 auto">-->
-<!--    <div class="detail-row" [@detailExpand]>-->
-<!--      <app-proteingroup-detail-view [proteinGroupUUID]='element.proteingroup_uuid'-->
-<!--                                    [experimentUUID]='experimentUUID'></app-proteingroup-detail-view>-->
-<!--    </div>-->
-<!--  </ng-template>-->
-
-  <div style="display: flex; flex-direction: column">
-    <cdk-accordion style="height: 100%">
+  <div class="flexbox-column">
+    <cdk-accordion >
       <cdk-accordion-item
         #accordionItem="cdkAccordionItem"
         role="button"
@@ -89,12 +73,10 @@
             <p style="flex: 1 1 auto">Rep. Accession: {{repAccession}}</p>
             <p style="flex: 1 1 auto">Rep. Description: {{repDescription}}</p>
           </div>
-          <app-proteingroup-detail-view [proteinGroupUUID]=proteinGroupUUID
-                                        [experimentUUID]='experimentUUID'
-                                        style="flex: 1 1 auto; width: 100%; min-height: 0; min-width: 0; overflow-y: auto">
+          <app-proteingroup-detail-view [proteinGroupUUID]=proteinGroupUUID [experimentUUID]='experimentUUID'
+                                        style="height: 30rem; width: 100%; min-height: 0; min-width: 0; display: flex; flex-direction: column">
           </app-proteingroup-detail-view>
         </div>
       </cdk-accordion-item>
     </cdk-accordion>
   </div>
-</div>

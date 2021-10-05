@@ -1,0 +1,14 @@
+<div mat-dialog-content >
+  <p> {{dialogPrompt}} </p>
+  <mat-form-field appearance="fill">
+    <mat-label>description</mat-label>
+    <textarea matInput cdkTextareaAutosize
+              [(ngModel)]="description">
+    </textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+          [disabled]="nameFormControl.hasError('pattern')"
+          (click)="onSubmitDescription()">Ok</button>
+</div>

@@ -1,4 +1,4 @@
-<div class="jobCards" style="width: 100%; flex-basis: auto; flex-shrink: 1">
+<div class="jobCards responsive-job-card">
     <div class="card min-w-600" >
       <div class="card-header">
         <h5>User</h5>
@@ -17,11 +17,14 @@
               Folders:
             </th>
             <td>
-              <mat-list dense>
-                <mat-list-item> Folder 1 </mat-list-item>
-                <mat-list-item> Folder 2 </mat-list-item>
-                <mat-list-item> Folder 3 </mat-list-item>
-              </mat-list>
+              <ng-container *ngIf="folders.length !== 0">
+                <mat-list *ngFor="let name of folders" dense>
+                  <mat-list-item > {{name}} </mat-list-item>
+                </mat-list>
+              </ng-container>
+              <ng-container *ngIf="folders.length === 0">
+                <p>No Folders</p>
+              </ng-container>
             </td>
           </tr>
           <tr>
@@ -29,20 +32,14 @@
               Experiments:
             </th>
             <td>
-              List of Experiments <br>
-              <mat-list dense>
-                <mat-list-item> Exp 1 </mat-list-item>
-                <mat-list-item> Exp 2 </mat-list-item>
-                <mat-list-item> Exp 3 </mat-list-item>
-              </mat-list>
-              Uploaded Data Sets <br>
-              <mat-list dense>
-                <mat-list-item> Data Set 1 </mat-list-item>
-                <mat-list-item> Data Set 2 </mat-list-item>
-                <mat-list-item> Data Set 3 </mat-list-item>
-                <mat-list-item> Data Set 4 </mat-list-item>
-              </mat-list>
-              <p>Storage Space: 4/5 GB <p>
+              <ng-container *ngIf="experiments.length !== 0">
+                <mat-list *ngFor="let name of experiments" dense>
+                  <mat-list-item> {{name}} </mat-list-item>
+                </mat-list>
+              </ng-container>
+              <ng-container *ngIf="experiments.length === 0">
+                <p>No Experiments</p>
+              </ng-container>
             </td>
           </tr>
           <tr>
@@ -50,11 +47,14 @@
               Protein Data Bases:
             </th>
             <td>
-              <mat-list dense>
-                <mat-list-item> Database 1 </mat-list-item>
-                <mat-list-item> Database 2 </mat-list-item>
-                <mat-list-item> Database 3 </mat-list-item>
-              </mat-list>
+              <ng-container *ngIf="proteinDB.length !== 0">
+                <mat-list *ngFor="let name of proteinDB" dense>
+                  <mat-list-item > {{name}} </mat-list-item>
+                </mat-list>
+              </ng-container>
+              <ng-container *ngIf="proteinDB.length === 0">
+                <p>No Protein Databases</p>
+              </ng-container>
             </td>
           </tr>
           </tbody>

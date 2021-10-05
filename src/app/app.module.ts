@@ -31,9 +31,7 @@ import {NavService} from './mpa/components/data-navigation-tree/services/nav.ser
 import {ProphaneModule} from './prophane/prophane.module';
 import {MpaModule} from './mpa/mpa.module';
 
-
 import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
-
 
 @NgModule({
   declarations: [
@@ -77,6 +75,8 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
       useClass: GlobalHttpInterceptorService,
       multi: true
     }
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

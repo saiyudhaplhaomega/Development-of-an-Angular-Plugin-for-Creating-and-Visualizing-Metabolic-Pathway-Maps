@@ -1,11 +1,11 @@
+@import "src/styles/global/_responsive-job-card.css";
+
 .custom-tab-box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 1em;
   padding: 1em;
-  max-height: 100%;
-  /*overflow: auto;*/
 }
 
 .custom-tab-box-centered {
@@ -14,14 +14,6 @@
 
 .custom-tab-box-left-justified {
   justify-content: flex-start;
-}
-
-.icon-button {
-  padding: 0.1rem 0.1rem
-}
-
-.icon-button-icon {
-  vertical-align: middle;
 }
 
 .custom-tabs .mat-tab-body-content {
@@ -33,4 +25,26 @@
   height: 100%;
 }
 
+.mpa-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+}
 
+.details-accordion-item {
+  position:relative;
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-direction:column;
+  flex-direction:column;
+  width: 100%;
+  min-width:0;
+  word-wrap:break-word;
+  background-color:#fff;
+  background-clip:border-box;
+  border:1px solid rgba(0,0,0,.125);
+  height: 100%;
+  padding: 1rem;
+}
