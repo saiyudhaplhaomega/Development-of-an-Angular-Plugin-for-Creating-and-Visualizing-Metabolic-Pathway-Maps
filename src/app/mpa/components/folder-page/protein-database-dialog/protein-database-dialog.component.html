@@ -1,0 +1,43 @@
+<div class="name-dialog-content-container" mat-dialog-content>
+  <p> Create a Protein Data Base </p>
+  <form [formGroup]="this.proteinDBForm">
+    <div class="input-group mb-3 ng-star-inserted">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Database Name</span>
+      </div>
+      <label for="proteindbname"> </label>
+      <input type="text" class="form-control" id="proteindbname" formControlName="dbName">
+    </div>
+
+    <div class="input-group mb-3 ng-star-inserted">
+      <div class="input-group-prepend">
+        <span class="input-group-text">MZML File</span>
+      </div>
+      <div class="custom-file">
+        <label *ngIf="!this.dbFile" class="custom-file-label" for="proteindbfile">Choose File (.fasta, .faa)</label>
+        <label *ngIf="this.dbFile" class="custom-file-label" for="proteindbfile">{{this.dbFile.name}}</label>
+        <input type="file" accept=".fasta, .faa" class="custom-file-input" id="proteindbfile" formControlName="dbFile"
+               #selectedDBFiles (change)="onDBFileSelect(selectedDBFiles.files)">
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="btn btn-primary float-right rki-blue-bg" (click)="onSubmitName()" [disabled]="proteinDBForm.invalid">
+    Ok
+  </button>
+  <button class="btn btn-primary float-right btn-danger" (click)="onCloseDialog()">Cancel</button>
+</div>
+
+<!--<mat-form-field-->
+<!--  appearance="fill"-->
+<!--  [formGroup]="folderNameForm">-->
+<!--  <mat-label> test </mat-label>-->
+<!--  <input-->
+<!--    type="text"-->
+<!--    formControlName="folderName"-->
+<!--    matInput>-->
+<!--  <mat-error *ngIf="folderNameForm.get('folderName').errors && folderNameForm.get('folderName').touched">-->
+<!--    {{getErrorMessage()}}-->
+<!--  </mat-error>-->
+<!--</mat-form-field>-->
