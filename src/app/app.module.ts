@@ -16,6 +16,7 @@ import {LoginPageComponent} from './core/components/login-page/login-page.compon
 import {WebserveraddressService} from './core/services/webserveraddress.service';
 import {FileUploaderService} from './core/services/file-uploader.service';
 import {UploadProgressService} from './core/services/upload-progress.service';
+import {UploadDialogComponent} from './core/components/dialog/upload-dialog.component';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
 import {FooterComponent} from './core/components/footer/page-footer';
 import {AuthGuard} from './core/services/auth-guard.service';
@@ -34,6 +35,7 @@ import {MpaModule} from './mpa/mpa.module';
 import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
 
 @NgModule({
+  // components
   declarations: [
     AppComponent,
     LoginPageComponent,
@@ -44,7 +46,9 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
     ImpressumPageComponent,
     PrivacyConsentBannerComponent,
     ProphaneAboutComponent,
+    UploadDialogComponent,
   ],
+  // modules - functionally bundled components, directives, services, etc.
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -61,6 +65,7 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
     ProphaneModule,
     MaterialModule,
   ],
+  // services
   providers: [
     HttpClient,
     AuthGuard,
@@ -76,8 +81,11 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
       multi: true
     }
   ],
+  // imperatively loaded components - compiles a factory for dynamically loaded components
+  entryComponents: [UploadDialogComponent],
   exports: [
   ],
+  // components loaded during bootstrapping
   bootstrap: [AppComponent]
 })
 

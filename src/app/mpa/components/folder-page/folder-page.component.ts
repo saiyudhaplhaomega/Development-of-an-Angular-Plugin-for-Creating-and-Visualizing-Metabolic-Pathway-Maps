@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {DialogComponent} from '../../../core/components/dialog/dialog.component';
+import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
+import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
 
 
 @Component({
@@ -13,6 +14,7 @@ import {DialogComponent} from '../../../core/components/dialog/dialog.component'
 export class FolderPageComponent implements OnInit {
 
   uuid: string;
+  parentUuid: string;
   name: string;
   existingNodeNames = [];
 
@@ -26,6 +28,8 @@ export class FolderPageComponent implements OnInit {
     this.dataService.dataMap.subscribe( items => {
       this._dataMap = items;
     });
+
+    this.parentUuid = this._dataMap.get(this.uuid).parent;
     }
 
   onAccept() {
@@ -43,7 +47,7 @@ export class FolderPageComponent implements OnInit {
   }
 
   onAddExperiment() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
     // gets instance of the dialog component...
@@ -61,23 +65,20 @@ export class FolderPageComponent implements OnInit {
   }
 
   onAddProteinDatabase() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(ProteinDatabaseDialogComponent, {
       disableClose: true,
     });
-    const dialogInstance = dialogRef.componentInstance;
-    dialogInstance.dialogPrompt = 'Please set a database name!';
-    dialogInstance.textFieldLabel = 'Database Name';
 
-    dialogRef.afterClosed().subscribe(folderName => {
-      if (folderName) {
+    dialogRef.afterClosed().subscribe(dbName => {
+      if (dbName) {
         console.log('add proteindb');
-        this.dataService.addProteinDatabase(this.uuid, folderName);
+        this.dataService.addProteinDatabase(this.uuid, dbName);
       }
     });
   }
 
   onAddFolder() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
     const dialogInstance = dialogRef.componentInstance;
@@ -92,9 +93,6 @@ export class FolderPageComponent implements OnInit {
   }
 
   onRemoveFolder() {
-    const snackBarRef = this._snackBar.open('Delete folder', 'Confirm', {duration: 5000});
-    snackBarRef.onAction().subscribe(() => {
-      this.dataService.removeFolder(this.uuid);
-    });
+      this.dataService.removeNode(this.uuid, this.uuid, this.parentUuid);
   }
 }

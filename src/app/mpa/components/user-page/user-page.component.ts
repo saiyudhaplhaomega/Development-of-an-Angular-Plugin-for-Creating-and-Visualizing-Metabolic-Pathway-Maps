@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import { DataService } from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
-import {DialogComponent} from '../../../core/components/dialog/dialog.component';
+import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {MatDialog} from '@angular/material';
 
 @Component({
@@ -47,7 +47,7 @@ export class UserPageComponent implements OnInit {
   }
 
   onAddFolder() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
     const dialogInstance = dialogRef.componentInstance;

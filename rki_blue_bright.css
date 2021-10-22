@@ -2550,7 +2550,7 @@ a.mat-tab-link:hover{
   color: #009300 !important;
   font-size: 30px !important;
   text-align: center !important;
-  justify-content: center !important;
+  justify-content: center;
 }
 
 .table-warning {

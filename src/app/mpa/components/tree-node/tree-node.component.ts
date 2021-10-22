@@ -19,9 +19,12 @@ import { NavService } from '../data-navigation-tree/services/nav.service';
 })
 export class TreeNodeComponent {
 
+  selected: boolean;
+
   @Input() node: TreeNode;
 
   @Output() expandChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() selectEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private navService: NavService) { }
@@ -33,9 +36,12 @@ export class TreeNodeComponent {
 
   onNavigate() {
     this.navService.navigateOutlet(this.node.displayName, this.node.uuid, this.node.type);
-    console.log(this.navService);
-    console.log(this.node);
+    this.selectEvent.emit(true);
+    this.selected = true;
   }
 
+  getBackgroundColor() {
+    return this.selected ? 'blue' : '';
+  }
 
 }

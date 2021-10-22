@@ -10,6 +10,7 @@ export class PeaklistPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  //  TODO: request peaklist file metadata from server
   }
 
 }

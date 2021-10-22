@@ -32,7 +32,7 @@
               <tbody>
               <tr>
                 <th scope="row" class="ml-summary-col">Creation Date:</th>
-                <td>
+                <td >
                   {{this.creationDate}}
                 </td>
               </tr>
@@ -43,15 +43,19 @@
                 </td>
               </tr>
               <tr>
-                <th [ngClass]="!fileSelected[0] ? 'table-warning' : '' " scope="row" class="ml-summary-col">Peaklist File:</th>
-                <td [ngClass]="!fileSelected[0] ? 'table-warning' : ''">
-                  <ng-container *ngIf="fileSelected[0]; then peaklistExist; else noFiles"></ng-container>
+                <th [ngClass]="!peaklistFileNode ? 'table-warning' : ''" scope="row" class="ml-summary-col">
+                  Peaklist File:
+                </th>
+                <td [ngClass]="!peaklistFileNode ? 'table-warning' : ''">
+                  <ng-container *ngIf="peaklistFileNode; then peaklistExist; else noFiles"></ng-container>
                 </td>
               </tr>
               <tr>
-                <th [ngClass]="!fileSelected[1] ? 'table-warning' : '' " scope="row" class="ml-summary-col">Search Result File:</th>
-                <td [ngClass]="!fileSelected[1] ? 'table-warning' : ''">
-                  <ng-container *ngIf="fileSelected[1]; then searchExist; else noFiles"></ng-container>
+                <th [ngClass]="!searchFileNode ? 'table-warning' : ''" scope="row" class="ml-summary-col">
+                  Search Result File:
+                </th>
+                <td [ngClass]="!searchFileNode ? 'table-warning' : ''">
+                  <ng-container *ngIf="searchFileNode; then searchExist; else noFiles"></ng-container>
                 </td>
               </tr>
               <tr>
@@ -65,140 +69,160 @@
               </tr>
               </tbody>
             </table>
+            <div class="input-group mb-3 ng-star-inserted">
+              <button class="btn btn-primary float-right btn-danger" (click)='onRemoveExperiment()'>Delete this Experiment</button>
+            </div>
           </div>
         </mat-tab>
 
         <!--          Tab 2: Data -->
-        <mat-tab label="Files">
+        <mat-tab label="File Upload">
           <div class="custom-tab-box">
 
-            <div class="input-group mb-3 ng-star-inserted">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Data Selection</span>
-              </div>
-              <mat-select class="custom-select" [(value)]="this.dataUploadSelection"
-                          (selectionChange)="onUploadSelectionChange($event.value)">
-                <mat-option *ngFor="let fileType of dataUploadOptions"
-                            [value]="fileType">
-                  {{ fileType}}</mat-option>
-              </mat-select>
-            </div>
-
-            <!--            Peaklist            -->
-            <ng-container *ngIf="this.dataUploadSelection == 'Peaklist' ||
-              this.dataUploadSelection == 'Peaklist + Search Result'">
-              <div class="divider-line"> Peaklist</div>
-
+            <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
               <div class="input-group mb-3 ng-star-inserted">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Peaklist Data Type</span>
+                  <span class="input-group-text">Data Selection</span>
                 </div>
-                <mat-select class="custom-select" [(value)]="this.peaklistSelection"
-                            (selectionChange)="onFileTypeSelectionChange()">
-                  <mat-option *ngFor="let fileType of uploadFileTypePeaklist"
-                              [value]="fileType">{{ fileType}}</mat-option>
+                <mat-select class="custom-select" [(value)]="this.dataUploadSelection"
+                            (selectionChange)="onUploadSelectionChange($event.value)">
+                  <mat-option *ngFor="let fileType of dataUploadOptions"
+                              [value]="fileType">
+                    {{ fileType}}</mat-option>
                 </mat-select>
               </div>
 
-              <div class="input-group mb-3 ng-star-inserted">
-                <ng-container *ngIf="this.peaklistSelection == 'MZML'">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">MZML File</span>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" accept=".mzml" class="custom-file-input" id="mzml" #selectedFileSpectra
-                           (change)="onPeaklistFileChange(selectedFileSpectra.files)">
-                    <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mzml">Choose MZML file
-                      (.mzml)</label>
-                    <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
-                           for="mzml">{{this.selectedPeaklistFile.name}}</label>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="this.peaklistSelection == 'MGF'">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Mascot Generic File</span>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
-                           (change)="onPeaklistFileChange(selectedFileSpectra.files)">
-                    <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mgf">Choose MGF file
-                      (.mgf)</label>
-                    <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
-                           for="mgf">{{this.selectedPeaklistFile.name}}</label>
-                  </div>
-                </ng-container>
-              </div>
-            </ng-container>
-
-            <!--            Search            -->
-<!--            TODO: bei Dat noch upload für fasta -->
-            <ng-container
-              *ngIf="this.dataUploadSelection == 'Search Result' ||
+              <!--            Peaklist            -->
+              <ng-container *ngIf="this.dataUploadSelection == 'Peaklist' ||
               this.dataUploadSelection == 'Peaklist + Search Result'">
-              <div class="divider-line"> Search Result</div>
+                <div class="divider-line"> Peaklist</div>
 
-              <div class="input-group mb-3 ng-star-inserted">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Search Result Data Type</span>
-                </div>
-                <mat-select class="custom-select" [(value)]="this.searchFileSelection"
-                            (selectionChange)="onFileTypeSelectionChange()">
-                  <mat-option *ngFor="let fileType of uploadFileTypeSearch"
-                              [value]="fileType">{{ fileType}}</mat-option>
-                </mat-select>
-              </div>
-
-              <div class="input-group mb-3 ng-star-inserted">
-                <ng-container *ngIf="this.searchFileSelection == 'MZIdentML'">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">MZIdentML File</span>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" accept=".mzid" class="custom-file-input" id="mzid" #selectedFileSpectra
-                           (change)="onSearchFileChange(selectedFileSpectra.files)">
-                    <label *ngIf="!this.selectedSearchFile" class="custom-file-label" for="mzid">Choose MZIdentML
-                      file (.mzid, .mzidentml)</label>
-                    <label *ngIf="this.selectedSearchFile" class="custom-file-label"
-                           for="mzid">{{this.selectedSearchFile.name}}</label>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Mascot Dat File</span>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" accept=".dat" class="custom-file-input" id="dat" #selectedFileSpectra
-                           (change)="onSearchFileChange(selectedFileSpectra.files)">
-                    <label *ngIf="!this.selectedSearchFile" class="custom-file-label" for="dat">Choose Mascot Dat
-                      file (.dat)</label>
-                    <label *ngIf="this.selectedSearchFile" class="custom-file-label"
-                           for="dat">{{this.selectedSearchFile.name}}</label>
-                  </div>
-                </ng-container>
-              </div>
-
-              <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
                 <div class="input-group mb-3 ng-star-inserted">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Fasta File</span>
+                    <span class="input-group-text">Peaklist Data Type</span>
                   </div>
-                  <div class="custom-file">
-                    <input type="file" accept=".fasta, .faa, .fa" class="custom-file-input" id="fasta" #selectedFastaFile
-                           (change)="onFastaFileChange(selectedFastaFile.files)">
-                    <label *ngIf="!this.selectedFasta" class="custom-file-label" for="fasta">Choose Fasta
-                      file (.fasta, .faa, .fa)</label>
-                    <label *ngIf="this.selectedFasta" class="custom-file-label"
-                           for="fasta">{{this.selectedFasta.name}}</label>
-                  </div>
+                  <mat-select class="custom-select" [(value)]="this.peaklistSelection"
+                              (selectionChange)="onFileTypeSelectionChange()">
+                    <mat-option *ngFor="let fileType of uploadFileTypePeaklist"
+                                [value]="fileType">{{ fileType}}</mat-option>
+                  </mat-select>
+                </div>
+
+                <div class="input-group mb-3 ng-star-inserted">
+                  <ng-container *ngIf="this.peaklistSelection == 'MZML'">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">MZML File</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" accept=".mzml" class="custom-file-input" id="mzml" #selectedFileSpectra
+                             (change)="onPeaklistFileChange(selectedFileSpectra.files)">
+                      <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mzml">Choose MZML file
+                        (.mzml)</label>
+                      <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
+                             for="mzml">{{this.selectedPeaklistFile.name}}</label>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="this.peaklistSelection == 'MGF'">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Mascot Generic File</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
+                             (change)="onPeaklistFileChange(selectedFileSpectra.files)">
+                      <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mgf">Choose MGF file
+                        (.mgf)</label>
+                      <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
+                             for="mgf">{{this.selectedPeaklistFile.name}}</label>
+                    </div>
+                  </ng-container>
                 </div>
               </ng-container>
 
-            </ng-container>
+              <!--            Search            -->
+              <ng-container
+                *ngIf="this.dataUploadSelection == 'Search Result' ||
+              this.dataUploadSelection == 'Peaklist + Search Result'">
+                <div class="divider-line"> Search Result</div>
 
-<!--            Submit Button           -->
-            <ng-container *ngIf="this.dataUploadSelection === 'Peaklist + Search Result'; then twoFiles; else singleFile">
+                <div class="input-group mb-3 ng-star-inserted">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search Result Data Type</span>
+                  </div>
+                  <mat-select class="custom-select" [(value)]="this.searchFileSelection"
+                              (selectionChange)="onFileTypeSelectionChange()">
+                    <mat-option *ngFor="let fileType of uploadFileTypeSearch"
+                                [value]="fileType">{{ fileType}}</mat-option>
+                  </mat-select>
+                </div>
+
+                <div class="input-group mb-3 ng-star-inserted">
+                  <ng-container *ngIf="this.searchFileSelection == 'MZIdentML'">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">MZIdentML File</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" accept=".mzid" class="custom-file-input" id="mzid" #selectedFileSpectra
+                             (change)="onSearchFileChange(selectedFileSpectra.files)">
+                      <label *ngIf="!this.selectedSearchFile" class="custom-file-label" for="mzid">Choose MZIdentML
+                        file (.mzid, .mzidentml)</label>
+                      <label *ngIf="this.selectedSearchFile" class="custom-file-label"
+                             for="mzid">{{this.selectedSearchFile.name}}</label>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Mascot Dat File</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" accept=".dat" class="custom-file-input" id="dat" #selectedFileSpectra
+                             (change)="onSearchFileChange(selectedFileSpectra.files)">
+                      <label *ngIf="!this.selectedSearchFile" class="custom-file-label" for="dat">Choose Mascot Dat
+                        file (.dat)</label>
+                      <label *ngIf="this.selectedSearchFile" class="custom-file-label"
+                             for="dat">{{this.selectedSearchFile.name}}</label>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
+                  <div class="input-group mb-3 ng-star-inserted">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Fasta File</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" accept=".fasta, .faa, .fa" class="custom-file-input" id="fasta"
+                             #selectedFastaFile
+                             (change)="onFastaFileChange(selectedFastaFile.files)">
+                      <label *ngIf="!this.selectedFasta" class="custom-file-label" for="fasta">Choose Fasta
+                        file (.fasta, .faa, .fa)</label>
+                      <label *ngIf="this.selectedFasta" class="custom-file-label"
+                             for="fasta">{{this.selectedFasta.name}}</label>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+
+              <!--            Submit Button           -->
+              <div style="display: flex; justify-content: flex-start; width: 100%">
+                <button
+                  class="btn btn-primary float-right rki-blue-bg"
+                  [disabled]="(this.buttonDisabled)"
+                  (click)="onSubmit()">Submit
+                </button>
+              </div>
+            </ng-container>
+              <!--     If experiment has file nodes       -->
+            <ng-container *ngIf="peaklistFileNode || searchFileNode">
+              <div class="tab-default-content">
+                <div style="padding: 0.5em">
+                  <mat-icon class="icon-box"> cloud_queue </mat-icon>
+                </div>
+                <span class="tab-text-center">
+                  Something is uploaded already. Please create a new experiment to
+                  upload new data or delete the uploaded data if you would like to re-upload them.</span>
+              </div>
             </ng-container>
           </div>
 
@@ -228,30 +252,20 @@
 
 <!-- Table Content -->
 <ng-template #peaklistExist>
-  {{ selectedPeaklistFile.name }}
+    {{ this.peaklistFileNode.displayName }}
+    <button (click)="onDelete('peaklist')" style="background: none; border: none">
+      <mat-icon style="vertical-align: middle; font-size: 1.3rem;">delete</mat-icon>
+    </button>
 </ng-template>
 
 <ng-template #searchExist>
-  {{ selectedSearchFile.name }}
+    {{ this.searchFileNode.displayName }}
+    <button (click)="onDelete('searchFile')" style="background: none; border: none">
+      <mat-icon style="vertical-align: middle; font-size: 1.3rem;">delete</mat-icon>
+    </button>
 </ng-template>
 
 <ng-template #noFiles>
   no File uploaded
 </ng-template>
 
-<!-- Submit Button -->
-<ng-template #singleFile>
-  <button
-    class="btn btn-primary float-right rki-blue-bg"
-    [disabled]="(!fileSelected[0] && !fileSelected[1] || !fastaFileSelected)"
-    (click)="onSubmit()">Submit
-  </button>
-</ng-template>
-
-<ng-template #twoFiles>
-  <button
-    class="btn btn-primary float-right rki-blue-bg"
-    [disabled]="(!fileSelected[0] || !fileSelected[1] || !fastaFileSelected)"
-    (click)="onSubmit()">Submit
-  </button>
-</ng-template>

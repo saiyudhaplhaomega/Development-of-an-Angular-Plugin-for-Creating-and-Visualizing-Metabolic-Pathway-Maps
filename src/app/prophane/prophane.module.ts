@@ -12,7 +12,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {prophaneReportStyles} from './objects/prophaneFormData';
-import {ProphaneJobSubmissionDialogComponent} from './components/prophane-job-submission/prophane-job-submission-dialog';
+// import {ProphaneJobSubmissionDialogComponent} from '../core/services/prophane-job-submission-dialog';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 import { SafePipe } from './safe.pipe';
 import { SideBarResultsComponent } from './components/side-bar-results/side-bar-results.component';
@@ -22,7 +22,7 @@ import { SideBarResultsComponent } from './components/side-bar-results/side-bar-
     ProphaneJobSubmissionComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
-    ProphaneJobSubmissionDialogComponent,
+    // ProphaneJobSubmissionDialogComponent,
     ProphaneResultViewComponent,
     SafePipe,
     SideBarResultsComponent,
@@ -37,7 +37,7 @@ import { SideBarResultsComponent } from './components/side-bar-results/side-bar-
     // material module last
     MaterialModule,
   ],
-  entryComponents: [ProphaneJobSubmissionDialogComponent],
+  // entryComponents: [ProphaneJobSubmissionDialogComponent],
   exports: []
 })
 

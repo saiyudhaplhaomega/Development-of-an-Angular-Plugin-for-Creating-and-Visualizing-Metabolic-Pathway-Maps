@@ -15,11 +15,16 @@ import { MatSnackBar } from '@angular/material';
 export class DataNavigationTreeComponent implements OnInit {
   uuid: string;
   name: string;
+  selectedNode: string;
 
   _treeNodes: TreeNode[];
   private _expandedNodes: string[] = [];
 
-  constructor(private _snackBar: MatSnackBar, public navService: NavService, public dataService: DataService, public router: Router) {
+  constructor(private _snackBar: MatSnackBar,
+              public navService: NavService,
+              public dataService: DataService,
+              public router: Router) {
+
   }
 
   ngOnInit() {
@@ -32,22 +37,26 @@ export class DataNavigationTreeComponent implements OnInit {
         this._expandedNodes.push(node.uuid);
       }
     });
+
   }
 
   onExpand(event, treeNode) {
     const index = this._expandedNodes.indexOf(treeNode.uuid);
     if (index > -1) {
-      // deletes node from array at index
       this._expandedNodes.splice(index, 1);
     } else {
       this._expandedNodes.push(treeNode.uuid);
     }
     this.navService.expandedNodes.next(this._expandedNodes);
-    console.log(this._expandedNodes);
-    console.log(this._treeNodes);
+  }
+
+  onSelected(event, treeNode) {
+    this.selectedNode = treeNode;
+    console.log(treeNode);
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(this._treeNodes);
     if ( event.previousIndex === 0 || event.currentIndex === event.previousIndex) {
       this._snackBar.open('The user can not be moved!', '', {duration: 2000});
       return;
@@ -59,5 +68,9 @@ export class DataNavigationTreeComponent implements OnInit {
       return;
     }
     this.dataService.moveDataItem(targetNode.uuid, movedNode.uuid);
+  }
+
+  getBackgroundColor(treeNode) {
+    return treeNode === this.selectedNode ? 'gold' : '';
   }
 }

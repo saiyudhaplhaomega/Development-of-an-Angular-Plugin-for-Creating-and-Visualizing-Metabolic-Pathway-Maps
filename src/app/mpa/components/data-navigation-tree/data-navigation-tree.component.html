@@ -1,7 +1,11 @@
 <div style="margin-top: 1rem"> </div>
 <div cdkDropList (cdkDropListDropped)="drop($event)">
   <div *ngFor='let item of _treeNodes' cdkDrag>
-    <app-tree-node (expandChange)="onExpand($event, item)" [node]='item' ></app-tree-node>
+    <app-tree-node
+      [node]='item'
+      (expandChange)="onExpand($event, item)"
+      (selectEvent)="onSelected($event, item)">
+    </app-tree-node>
   </div>
 </div>
 

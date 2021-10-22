@@ -6,11 +6,11 @@ import {DataItem} from '../../../mpa/components/data-navigation-tree/objects/dat
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  templateUrl: './name-edit-dialog.component.html',
+  styleUrls: ['./name-edit-dialog.component.css']
 })
 
-  export class DialogComponent implements OnInit {
+  export class NameEditDialogComponent implements OnInit {
 
   @Input() dialogPrompt: string;
 
@@ -20,7 +20,7 @@ import {DataItem} from '../../../mpa/components/data-navigation-tree/objects/dat
   textFieldLabel: string;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
+    public dialogRef: MatDialogRef<NameEditDialogComponent>,
     private fb: FormBuilder,
     private dataService: DataService,
   ) {}
@@ -66,7 +66,7 @@ import {DataItem} from '../../../mpa/components/data-navigation-tree/objects/dat
 
 }
 
-function folderNameValidator(existingNames: string[]): ValidatorFn {
+export function folderNameValidator(existingNames: string[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let forbidden = false;
     for (const name of existingNames) {

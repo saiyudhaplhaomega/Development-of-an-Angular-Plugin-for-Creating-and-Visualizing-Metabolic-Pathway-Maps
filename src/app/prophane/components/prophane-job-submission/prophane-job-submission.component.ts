@@ -19,7 +19,7 @@ import {
   prophaneReportStyles,
   quantdata
 } from '../../objects/prophaneFormData';
-import {ProphaneJobSubmissionDialogComponent} from './prophane-job-submission-dialog';
+import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {MatDialog} from '@angular/material';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
@@ -150,12 +150,10 @@ export class ProphaneJobSubmissionComponent implements OnInit {
 
   openUploadDialog(): void {
     this._uploadProgressService.setUUID(this.currentProphaneJob.prophaneJobUUID);
-    const dialogRef = this.dialog.open(ProphaneJobSubmissionDialogComponent, {
+    const dialogRef = this.dialog.open(UploadDialogComponent, {
       disableClose: true,
-      data: {
-        proteinreportfilename: this.proteinReportFile.name,
-        fastafilename: this.fastaFile.name, fastaprogress: this.fastaProgress, csvprogress: this.proteinReportProgress
-      }
+      data: {noRedirect: false, successMessage: 'Job successfully submitted.'},
+      id: 'prophaneUpload'
     });
   }
 
@@ -176,8 +174,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
         error => {
           if (error.status === 500) {
             // handle failed upload
-            if (this.dialog instanceof ProphaneJobSubmissionDialogComponent) {
-              this.dialog.setUploadFailed();
+            if (this.dialog.getDialogById('prophaneUpload')) {
+              this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
             }
           } else {
             throw error;
@@ -204,8 +202,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
           error => {
             if (error.status === 500) {
               // handle failed upload
-              if (this.dialog instanceof ProphaneJobSubmissionDialogComponent) {
-                this.dialog.setUploadFailed();
+              if (this.dialog.getDialogById('prophaneUpload')) {
+                this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
               }
             }
         }

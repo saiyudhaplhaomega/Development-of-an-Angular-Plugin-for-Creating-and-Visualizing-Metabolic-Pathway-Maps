@@ -4,9 +4,9 @@ import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'app-folder-page',
-  templateUrl: './folder-page.component.html',
-  styleUrls: ['./folder-page.component.css']
+  selector: 'app-protein-database-component',
+  templateUrl: './protein-database-component.html',
+  styleUrls: ['./protein-database-component.css']
 })
 export class ProteinDatabaseComponent implements OnInit {
 
@@ -15,9 +15,11 @@ export class ProteinDatabaseComponent implements OnInit {
 
   private _dataMap: Map<string, DataItem>;
 
-  constructor(private _snackBar: MatSnackBar, private dataService: DataService) { }
+  constructor(private _snackBar: MatSnackBar,
+              private dataService: DataService) { }
 
   ngOnInit() {
+    //  TODO: request db metadata from server
     this.dataService.dataMap.subscribe( items => {
       this._dataMap = items;
     });
@@ -35,28 +37,6 @@ export class ProteinDatabaseComponent implements OnInit {
       this._dataMap.set(this.uuid, item);
       this.dataService.dataMap.next(this._dataMap);
     }
-  }
-
-  onAddExperiment() {
-    console.log('add experiment');
-    // this.dataService.addExperiment(this.uuid);
-  }
-
-  onAddProteinDatabase() {
-    console.log('add proteindb');
-    this.dataService.addProteinDatabase(this.uuid);
-  }
-
-  onAddFolder() {
-    console.log('add folder');
-    this.dataService.addFolder(this.uuid);
-  }
-
-  onRemoveFolder() {
-    const snackBarRef = this._snackBar.open('Delete folder', 'Confirm', {duration: 5000});
-    snackBarRef.onAction().subscribe(() => {
-      this.dataService.removeFolder(this.uuid);
-    });
   }
 
 }

@@ -20,13 +20,13 @@ import { PsmTableComponent } from './components/psm-table/psm-table.component';
 import { DescriptionDetailsComponent } from './components/description-details/description-details.component';
 import {ResultTableComponent} from './components/result-table/result-table.component';
 import {DatabaseSearchPageComponent} from './components/database-search-page/database-search-page.component';
-import {DataService} from './components/data-navigation-tree/services/data.service';
 import { PeaklistPageComponent } from './components/peaklist-page/peaklist-page.component';
 import { SearchResultPageComponent } from './components/search-result-page/search-result-page.component';
-import {DialogComponent} from '../core/components/dialog/dialog.component';
+import {NameEditDialogComponent} from '../core/components/dialog/name-edit-dialog.component';
 import {TextfieldDialogComponent} from '../core/components/textfield-dialog/textfield-dialog.component';
-
-// import {ProteinDatabaseComponent} from './components/protein-database/protein-database-component';
+import {DeleteWarningDialogComponent} from '../core/components/dialog/delete-warning-dialog.component';
+import { ProteinDatabaseDialogComponent } from './components/folder-page/protein-database-dialog/protein-database-dialog.component';
+import {ProteinDatabaseComponent} from './components/protein-database/protein-database-component';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import {TextfieldDialogComponent} from '../core/components/textfield-dialog/text
     ExperimentPageComponent,
     MPAComponent,
     DataNavigationTreeComponent,
-    DialogComponent,
+    NameEditDialogComponent,
     MpaTableComponent,
     PeptideTableComponent,
     CdkDetailRowDirective,
@@ -49,7 +49,9 @@ import {TextfieldDialogComponent} from '../core/components/textfield-dialog/text
     PeaklistPageComponent,
     SearchResultPageComponent,
     TextfieldDialogComponent,
-    // ProteinDatabaseComponent,
+    DeleteWarningDialogComponent,
+    ProteinDatabaseDialogComponent,
+    ProteinDatabaseComponent,
   ],
   imports: [
     CommonModule,
@@ -67,9 +69,11 @@ import {TextfieldDialogComponent} from '../core/components/textfield-dialog/text
     ExperimentPageComponent,
     PeaklistPageComponent,
     SearchResultPageComponent,
-    DialogComponent,
+    NameEditDialogComponent,
     TextfieldDialogComponent,
-    // ProteinDatabaseComponent,
+    DeleteWarningDialogComponent,
+    ProteinDatabaseDialogComponent,
+    ProteinDatabaseComponent,
   ],
   exports: [
     MPAComponent,

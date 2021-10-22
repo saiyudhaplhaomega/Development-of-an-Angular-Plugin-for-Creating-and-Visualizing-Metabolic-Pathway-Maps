@@ -2,13 +2,14 @@ import { Injectable, ComponentFactoryResolver, ViewContainerRef } from '@angular
 import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { TreeNode } from './../objects/tree-node';
-import { DataService } from './data.service';
+import {DataChangeObj, DataService} from './data.service';
 import { DataItem } from '../objects/data-item';
 import { UserPageComponent } from '../../user-page/user-page.component';
 import { FolderPageComponent } from '../../folder-page/folder-page.component';
 import { ExperimentPageComponent } from '../../experiment-page/experiment-page.component';
 import { PeaklistPageComponent } from '../../peaklist-page/peaklist-page.component';
 import { SearchResultPageComponent } from '../../search-result-page/search-result-page.component';
+import {ProteinDatabaseComponent} from '../../protein-database/protein-database-component';
 
 export interface ContentComponent {
   uuid: string;
@@ -22,6 +23,7 @@ export class NavService {
 
   public treeContentRef = new BehaviorSubject<ViewContainerRef>(undefined);
   private _contentRef: ViewContainerRef;
+  public selectedNode: string;
 
   public currentUrl = new BehaviorSubject<string>(undefined);
   public treeNodes = new BehaviorSubject<TreeNode[]>(undefined);
@@ -54,8 +56,13 @@ export class NavService {
       this._contentRef = val;
     });
     this.dataService.dataChange.subscribe((change) => {
-      if (change === 'removeFolder') {
-        this.clearOutlet();
+      switch (change.event) {
+        case 'removeNode':
+          this.onDelete(change);
+          break;
+        case 'add':
+          this.onCreation(change);
+          break;
       }
     });
   }
@@ -63,8 +70,6 @@ export class NavService {
   private processData(data: Map<string, DataItem>, expandedNodes: string[]) {
     const tree: TreeNode[] = new Array();
     const processedUUID = new Map();
-
-    console.log(this._dataMap.size);
 
     while (processedUUID.size < this._dataMap.size) {
       for (const item of this._dataMap.values()) {
@@ -134,6 +139,10 @@ export class NavService {
         componentFactory = this.componentFactoryResolver.resolveComponentFactory(ExperimentPageComponent);
         break;
       }
+      case 'proteindb': {
+        componentFactory = this.componentFactoryResolver.resolveComponentFactory(ProteinDatabaseComponent);
+        break;
+      }
       case 'peaklist': {
         componentFactory = this.componentFactoryResolver.resolveComponentFactory(PeaklistPageComponent);
         break;
@@ -151,10 +160,18 @@ export class NavService {
     (<ContentComponent>componentRef.instance).name = name;
   }
 
-  clearOutlet() {
-    if (this._contentRef) {
+  onDelete(node: DataChangeObj) {
+    if (this._contentRef && node.currentNodeUuid !== node.finalNodeUuid) {
+      const finalObj = this._dataMap.get(node.finalNodeUuid);
+      this.navigateOutlet(finalObj.displayName, node.finalNodeUuid, finalObj.type);
+    } else if (this._contentRef && node.currentNodeUuid === node.targetNodeUuid || node.finalNodeUuid === node.targetNodeUuid) {
       this._contentRef.clear();
     }
+  }
+
+  onCreation(node: DataChangeObj) {
+    const newObj = this._dataMap.get(node.finalNodeUuid);
+    this.navigateOutlet(newObj.displayName, node.finalNodeUuid, newObj.type);
   }
 
 }

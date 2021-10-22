@@ -10,6 +10,7 @@ export class SearchResultPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    //  TODO: request search result file metadata from server
   }
 
 }

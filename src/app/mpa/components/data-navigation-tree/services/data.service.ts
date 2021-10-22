@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { DataItem } from '../objects/data-item';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
 import v1 from 'uuid/v1';
@@ -7,8 +7,17 @@ import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {HttpHeaders} from '@angular/common/http';
 import {GetDateService} from '../../../../core/services/get-date.service';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';
+import {NameEditDialogComponent} from '../../../../core/components/dialog/name-edit-dialog.component';
+import {MatDialog} from '@angular/material';
+import {DeleteWarningDialogComponent} from '../../../../core/components/dialog/delete-warning-dialog.component';
 // import {type} from 'os';
 
+export interface DataChangeObj {
+  event: String;
+  currentNodeUuid: string; // node whose ViewRef is currently displayed
+  targetNodeUuid: string; // node which is deleted/created
+  finalNodeUuid: string; // node whose viewRef will be rendered after change
+}
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +36,22 @@ export class DataService {
     ]
   ); */
 
+  private initDataChange = {
+    event: undefined,
+    currentNodeUuid: undefined,
+    targetNodeUuid: undefined,
+    finalNodeUuid: undefined};
+
   public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
-  public dataChange = new BehaviorSubject<String>(undefined);
+  public dataChange = new BehaviorSubject<DataChangeObj>(this.initDataChange);
  // private _dataItems: DataItem[];
   private _dataItemMap: Map<string, DataItem>;
 
+  // uncomment when server is running properly
   // constructor(private authGuard: AuthGuard,
   //             private jsonUploader: AuthenticatedSerializableObjectUploaderService,
-  //             private getDateService: GetDateService) {
+  //             private getDateService: GetDateService,
+  //             private dialog: MatDialog) {
   //     if (this.authGuard.loggedIn()) {
   //       this.jsonUploader.postObj<DataItem[]>([], 'mpacloud/v1/getUserData').subscribe(res => {
   //         const newMap = new Map();
@@ -84,11 +101,13 @@ export class DataService {
   //     }
   //   });
   // }
+  // uncomment till here
 
-  // Following lines added due to server error. Delete if server is working.
+  // Following lines added due to server error. Delete if server is running properly.
   constructor(private authGuard: AuthGuard,
               private jsonUploader: AuthenticatedSerializableObjectUploaderService,
-              private getDateService: GetDateService) {
+              private getDateService: GetDateService,
+              private dialog: MatDialog) {
 
     if (this.authGuard.loggedIn()) {
       const key = v1();
@@ -129,8 +148,13 @@ export class DataService {
   }
   // remove till here
 
-  addExperiment(parentUuid: string,
-                experimentName: string) {
+  addExperiment(parentUuid: string, experimentName: string) {
+
+    /**
+     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
+     * experimentName - name that is displayed to the user
+     */
+
     const newExperimentUUID = v1();
     const newExperiment = {
       displayName: experimentName,
@@ -163,10 +187,21 @@ export class DataService {
     this._dataItemMap.set(newExperimentUUID, newExperiment);
     // console.log(this._dataItemMap);
     this.updateDataItems();
-    this.dataChange.next('addExperiment');
+    this.dataChange.next({
+      event: 'add',
+      currentNodeUuid: parentUuid,
+      targetNodeUuid: newExperimentUUID, // 'modified' node
+      finalNodeUuid: newExperimentUUID // node whose content should be rendered after creation
+    });
   }
 
   addProteinDatabase(parentUuid: string, dbName: string) {
+
+    /**
+     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
+     * dbName - name that is displayed to the user
+     */
+
     const newProtDBUUID = v1();
     const newProtDB = {
       displayName: dbName,
@@ -182,13 +217,21 @@ export class DataService {
     this._dataItemMap.set(parentUuid, item);
 
     this._dataItemMap.set(newProtDBUUID, newProtDB);
-    console.log(this._dataItemMap);
     this.updateDataItems();
-    this.dataChange.next('addProteinDB');
+    this.dataChange.next({
+      event: 'addDB',
+      currentNodeUuid: parentUuid,
+      targetNodeUuid: newProtDBUUID,
+      finalNodeUuid: newProtDBUUID});
   }
 
-  addFolder(parentUuid: string,
-            folderName: string) {
+  addFolder(parentUuid: string, folderName: string) {
+
+    /**
+     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
+     * folderName - name that is displayed to the user
+     */
+
     const newFolderUUID = v1();
     const newFolder = {
       displayName: folderName,
@@ -204,22 +247,54 @@ export class DataService {
 
     this._dataItemMap.set(newFolderUUID, newFolder);
     this.updateDataItems();
-    this.dataChange.next('addFolder');
-
-    console.log(this.dataMap);
-    console.log(this._dataItemMap);
+    this.dataChange.next( {
+      event: 'add',
+      currentNodeUuid: parentUuid,
+      targetNodeUuid: newFolderUUID,
+      finalNodeUuid: newFolderUUID
+    });
   }
 
-  removeFolder(folderUuid: string) {
-    const item = this._dataItemMap.get(folderUuid);
+  removeNode(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string): Observable<boolean> {
+    const nodeName = this._dataItemMap.get(targetNodeUuid).displayName;
+    const result = new Subject<boolean>();
+
+    const dialogRef = this.dialog.open(DeleteWarningDialogComponent, {
+      disableClose: true,
+      data: {
+        dialogPrompt: 'Are you sure you want to delete',
+        nodeName: nodeName
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(event => {
+      if (event === 'delete') {
+        this.executeDelete(targetNodeUuid, currentNodeUuid, finalNodeUuid);
+        result.next(true);
+      } else {
+        result.next(false);
+      }
+    });
+    return result.asObservable();
+  }
+
+  executeDelete(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string) {
+
+    /**
+     * targetNodeUuid - node that will be deleted
+     * currentNodeUuid - node where this functions is invoked from (node to be deleted or a 'master node')
+     * finalNodeUuid (optional) - node whose content will be rendered after deletion
+     */
+
+    const item = this._dataItemMap.get(targetNodeUuid);
     const parent = item.parent;
 
     const parentItem = this._dataItemMap.get(parent);
-    parentItem.children.splice(parentItem.children.indexOf(folderUuid), 1);
+    parentItem.children.splice(parentItem.children.indexOf(targetNodeUuid), 1);
 
     let children = item.children;
     let newchildren = [];
-    let family = [folderUuid];
+    let family = [targetNodeUuid];
     while (children.length > 0) {
       for (const child_item of this._dataItemMap.values()) {
         if (children.indexOf(child_item.uuid) > -1) {
@@ -235,19 +310,23 @@ export class DataService {
       this._dataItemMap.delete(id);
     });
 
-    console.log(family);
     this.updateDataItems();
-    this.dataChange.next('removeFolder');
+    this.dataChange.next({
+      event: 'removeNode',
+      currentNodeUuid: currentNodeUuid,
+      targetNodeUuid: targetNodeUuid,
+      finalNodeUuid: finalNodeUuid
+    });
   }
 
   private updateDataItems() {
     this.dataMap.next(this._dataItemMap);
   }
 
-  addPeaklist(parentUuid: string) {
+  addPeaklist(parentUuid: string, displayName: string) {
     const newPeaklistUUID = v1();
     const newPeaklist = {
-      displayName: 'Peaklist',
+      displayName: displayName,
       icon: 'folder',
       children: [],
       uuid: newPeaklistUUID,
@@ -260,16 +339,18 @@ export class DataService {
 
     this._dataItemMap.set(newPeaklistUUID, newPeaklist);
     this.updateDataItems();
-    this.dataChange.next('addPeaklist');
-
-    console.log(this.dataMap);
-    console.log(this._dataItemMap);
+    this.dataChange.next({
+      event: 'addPeaklist',
+      currentNodeUuid: parentUuid,
+      targetNodeUuid: newPeaklistUUID,
+      finalNodeUuid: parentUuid
+    });
   }
 
-  addSearch(parentUuid: string) {
+  addSearch(parentUuid: string, displayName: string) {
     const newSearchUUID = v1();
     const newSearch = {
-      displayName: 'Search Result',
+      displayName: displayName,
       icon: 'folder',
       children: [],
       uuid: newSearchUUID,
@@ -282,10 +363,12 @@ export class DataService {
 
     this._dataItemMap.set(newSearchUUID, newSearch);
     this.updateDataItems();
-    this.dataChange.next('addSearch');
-
-    console.log(this.dataMap);
-    console.log(this._dataItemMap);
+    this.dataChange.next({
+      event: 'addSearch',
+      currentNodeUuid: parentUuid,
+      targetNodeUuid: newSearchUUID,
+      finalNodeUuid: parentUuid
+    });
   }
 
   moveDataItem(newParentID: string, movedUUID: string) {
@@ -306,7 +389,6 @@ export class DataService {
       newchildren = [];
     }
 
-    console.log(family);
     if (family.indexOf(newParentID) > - 1) {
       return;
     }

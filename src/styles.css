@@ -39,3 +39,7 @@ body {
   flex-grow: 1;
   margin-left: 0.2rem;
 }
+
+custom-table-warning {
+  background-color: #f8d7da;
+}
