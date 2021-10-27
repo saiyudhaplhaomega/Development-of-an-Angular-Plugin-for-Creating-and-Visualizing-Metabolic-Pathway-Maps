@@ -1,4 +1,3 @@
-import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
 
 export interface MPAFile {
   file_UUID: string;

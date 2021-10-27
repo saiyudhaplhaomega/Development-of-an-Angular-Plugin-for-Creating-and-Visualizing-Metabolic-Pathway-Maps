@@ -9,5 +9,5 @@ export const authConfigGoogle: AuthConfig = {
   strictDiscoveryDocumentValidation: false,
   showDebugInformation: true,
 
-}
+};
 

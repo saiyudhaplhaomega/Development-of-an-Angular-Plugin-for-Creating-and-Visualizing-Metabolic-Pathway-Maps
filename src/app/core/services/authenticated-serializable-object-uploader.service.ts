@@ -41,7 +41,11 @@ export class AuthenticatedSerializableObjectUploaderService {
   }
 
   getObj<T>(api: string): Observable<T> {
-    return this.http.get<T>(this.webserver.getwebserverurl() + api);
+    const authorization: string = this.authGuard.getUserAuthorization().toString();
+    httpOptions.headers = new HttpHeaders({
+      'Authorization': authorization,
+    });
+    return this.http.get<T>(this.webserver.getwebserverurl() + api, httpOptions);
   }
 
 }

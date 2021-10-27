@@ -1,5 +1,4 @@
 import {RouterModule, Routes} from '@angular/router';
-import {HomeDashboardPageComponent} from './home/components/home-dashboard-page/home-dashboard-page.component';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 
 import {AuthGuard} from './core/services/auth-guard.service';
@@ -16,7 +15,6 @@ import {DatabaseSearchPageComponent} from './mpa/components/database-search-page
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent},
-  { path: 'home', component: HomeDashboardPageComponent},
   { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full'},
   { path: 'prophaneabout', component: ProphaneAboutComponent },
   { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard] },

@@ -118,11 +118,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
       // TODO: obsolete? --> rework
-      if (res.status === 'JOB_REJECTED') {
-        this.jobUnavailable = true;
-      } else {
-        this.jobUnavailable = false;
-      }
+      this.jobUnavailable = res.status === 'JOB_REJECTED';
     });
   }
 
@@ -339,25 +335,25 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
-    //console.log(task.optionstring);
-    //console.log(option)
+    // console.log(task.optionstring);
+    // console.log(option)
     if (optionstring.filter(i => i.param == option.param).length > 0) {
       return true;
     }
     return false;
-    //taskOptionStrings.forEach(opt1 => {
+    // taskOptionStrings.forEach(opt1 => {
     //  if (opt1 === dropDownItem) {
     //    return true;
     //  }
-    //});
-    //return false;
+    // });
+    // return false;
     // TODO: this is a override until the above implementation works
   }
 
   addTaxTask() {
     this.taxtasks++;
     this.taskCounter++;
-    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0])); //Important: copy object instead of linking!
+    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0])); // Important: copy object instead of linking!
     task['tasklabel'] = 'Taxonomic Annotation Task ' + this.taxtasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
@@ -365,7 +361,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   addFuncTask() {
     this.functasks++;
     this.taskCounter++;
-    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); //Important: copy object instead of linking!
+    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); // Important: copy object instead of linking!
     task['tasklabel'] = 'Functional Annotation Task ' + this.functasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }

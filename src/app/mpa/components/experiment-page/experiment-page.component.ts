@@ -198,44 +198,44 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.uploadProgressService.reset();
     this.multiFileUpload.clearUploadFiles();
-    this.openUploadDialog();
+    // this.openUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
         if (this.peaklistSelection === 'MGF') {
-          this.addMGFtoUploadData();
+          // this.addMGFtoUploadData();
         } else if (this.peaklistSelection === 'MZML') {
-          this.addMZMLtoUploadData();
+          // this.addMZMLtoUploadData();
         }
         this.hasPeaklistFile = true;
-        this.multiFileUpload.performUpload();
+        // this.multiFileUpload.performUpload();
         break;
 
       case 'Search Result':
         if (this.searchFileSelection === 'MZIdentML') {
-          this.addMZIdentToUploadData();
+          // this.addMZIdentToUploadData();
         } else if (this.peaklistSelection === 'Mascot-DAT') {
-          this.addDatToUploadData();
+          // this.addDatToUploadData();
         }
         this.hasSearchFile = true;
-        this.multiFileUpload.performUpload();
+        // this.multiFileUpload.performUpload();
         break;
 
       case 'Peaklist + Search Result':
         if (this.peaklistSelection === 'MGF') {
-          this.addMGFtoUploadData();
+          // this.addMGFtoUploadData();
         } else if (this.peaklistSelection === 'MZML') {
-          this.addMZMLtoUploadData();
+          // this.addMZMLtoUploadData();
         }
         this.hasPeaklistFile = true;
 
         if (this.searchFileSelection === 'MZIdentML') {
-          this.addMZIdentToUploadData();
+          // this.addMZIdentToUploadData();
         } else if (this.peaklistSelection === 'Mascot-DAT') {
-          this.addDatToUploadData();
+          // this.addDatToUploadData();
         }
         this.hasSearchFile = true;
-        this.multiFileUpload.performUpload();
+        // this.multiFileUpload.performUpload();
         break;
     }
 
@@ -244,14 +244,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     if (this.selectedPeaklistFile && this.selectedSearchFile) {
       this.dataService.addPeaklist(this.dbExperiment.exp_id, this.selectedPeaklistFile.name);
       this.dataService.addSearch(this.dbExperiment.exp_id, this.selectedSearchFile.name);
-      // this.peaklistFileName = this.selectedPeaklistFile.name;
-      // this.searchFileName = this.selectedSearchFile.name;
     } else if (this.selectedPeaklistFile) {
       this.dataService.addPeaklist(this.dbExperiment.exp_id, this.selectedPeaklistFile.name);
-      // this.peaklistFileName = this.selectedPeaklistFile.name;
     } else if (this.selectedSearchFile) {
       this.dataService.addSearch(this.dbExperiment.exp_id, this.selectedSearchFile.name);
-      // this.searchFileName = this.selectedSearchFile.name;
     }
 
     this.getChildNodes();

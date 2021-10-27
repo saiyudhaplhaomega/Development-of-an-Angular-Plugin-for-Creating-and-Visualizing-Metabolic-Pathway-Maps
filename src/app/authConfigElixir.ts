@@ -9,4 +9,4 @@ export const authConfigElixir: AuthConfig = {
   strictDiscoveryDocumentValidation: false,
   showDebugInformation: true,
 
-}
+};

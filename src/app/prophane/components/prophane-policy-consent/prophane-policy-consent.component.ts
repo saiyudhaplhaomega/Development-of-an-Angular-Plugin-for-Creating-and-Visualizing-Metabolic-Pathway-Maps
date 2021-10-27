@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-//import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import {Component, OnDestroy} from '@angular/core';
+// import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { Subscription } from 'rxjs';
 
 
 @Component({
   selector: 'app-prophane-policy-consent',
   templateUrl: './prophane-policy-consent.component.html',
-  //styleUrls: ['./prophane-about.component.css']
+  styleUrls: ['./prophane-policy-consent.component.css']
 })
-export class ProphaneAboutComponent implements OnInit {
+export class ProphaneAboutComponent implements OnDestroy {
 
   private popupOpenSubscription: Subscription;
   private popupCloseSubscription: Subscription;
@@ -18,9 +18,6 @@ export class ProphaneAboutComponent implements OnInit {
   private noCookieLawSubscription: Subscription;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   ngOnDestroy() {
     // unsubscribe to cookieconsent observables to prevent memory leaks

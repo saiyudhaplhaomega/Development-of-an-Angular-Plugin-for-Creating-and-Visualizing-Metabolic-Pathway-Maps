@@ -9,7 +9,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {HomeModule} from './home/home.module';
 
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
@@ -60,7 +59,6 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
     CommonModule,
     FlexLayoutModule,
     HttpClientModule,
-    HomeModule,
     MpaModule,
     ProphaneModule,
     MaterialModule,

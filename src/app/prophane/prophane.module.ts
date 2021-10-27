@@ -6,12 +6,10 @@ import {ProphaneAboutComponent} from './components/prophane-about/prophane-about
 import {ProphaneJobSubmissionComponent} from './components/prophane-job-submission/prophane-job-submission.component';
 import {MaterialModule} from '../material-module';
 import {FormsModule} from '@angular/forms';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {Routing} from '../app.routing';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
-import {prophaneReportStyles} from './objects/prophaneFormData';
 // import {ProphaneJobSubmissionDialogComponent} from '../core/services/prophane-job-submission-dialog';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 import { SafePipe } from './safe.pipe';

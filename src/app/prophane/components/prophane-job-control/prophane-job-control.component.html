@@ -3,7 +3,8 @@
     <thead>
     <tr>
       <th scope="col">
-        <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+        <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"
+              *ngIf="isUpdating"></span>
         <span *ngIf="!isUpdating">#</span>
       </th>
       <th scope="col">job label</th>
@@ -17,7 +18,7 @@
     <tr *ngIf="jobs == undefined">
       <td colspan="6">
         <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"></span>
-          Loading...
+        Loading...
       </td>
     </tr>
     <tr *ngIf="jobs != undefined && jobs.length < 1">

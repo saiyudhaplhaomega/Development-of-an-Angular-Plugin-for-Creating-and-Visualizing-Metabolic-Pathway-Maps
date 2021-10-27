@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import {ProphaneJobObject} from '../../objects/prophanejobjson';
 import {JobService} from '../../job.service';
 
@@ -8,10 +8,11 @@ import {JobService} from '../../job.service';
   styleUrls: ['./prophane-job-control.component.css']
 })
 
-export class ProphaneJobControlComponent implements OnInit {
+export class ProphaneJobControlComponent implements OnInit, OnDestroy {
 
   jobs: ProphaneJobObject[];
   isUpdating = false;
+  intervalId = setInterval(() => this.update(), 60000);
 
   constructor(private jobService: JobService) {
   }
@@ -32,8 +33,6 @@ export class ProphaneJobControlComponent implements OnInit {
     this.isUpdating = false;
   }
 
-  intervalId = setInterval(() => this.update(), 60000);
-
   confirmDelete(jobno: number, jobUuid: string) {
     if (confirm('Are you sure to delete job #' + jobno + ' (' + jobUuid + ')' )) {
       this.deleteJob(jobUuid);
@@ -46,10 +45,9 @@ export class ProphaneJobControlComponent implements OnInit {
     this.jobService.deleteJob(jobToDelete);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearInterval(this.intervalId);
   }
-
 }
 
 

@@ -48,104 +48,104 @@ export class DataService {
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
-  // constructor(private authGuard: AuthGuard,
-  //             private jsonUploader: AuthenticatedSerializableObjectUploaderService,
-  //             private getDateService: GetDateService,
-  //             private dialog: MatDialog) {
-  //     if (this.authGuard.loggedIn()) {
-  //       this.jsonUploader.postObj<DataItem[]>([], 'mpacloud/v1/getUserData').subscribe(res => {
-  //         const newMap = new Map();
-  //         res.forEach(obj => {
-  //           newMap.set(obj.uuid, obj);
-  //         });
-  //         this.dataMap.next(newMap);
-  //       });
-  //       // test data from server
-  //       // newMap.set(key, {
-  //       //   displayName: 'a user',
-  //       //   icon: 'account_circle',
-  //       //   children: [],
-  //       //   uuid: key,
-  //       //   type: 'user',
-  //       // });
-  //
-  //     } else {
-  //       const key = v1();
-  //       const newMap = new Map();
-  //       newMap.set(key, {
-  //         displayName: 'no user',
-  //         icon: 'account_circle',
-  //         children: [],
-  //         uuid: key,
-  //         type: 'user'
-  //       });
-  //       this.dataMap.next(newMap);
-  //     }
-  //
-  //   // '/mpacloud/v1/getuserdata'
-  //   this.dataMap.subscribe(value => {
-  //     this._dataItemMap = value;
-  //     const list = [];
-  //     if (value !== undefined) {
-  //       if (value.size !== 0) {
-  //         value.forEach(val => {
-  //           list.push(val);
-  //         });
-  //         this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
-  //           if (result != null) {
-  //             console.log(list);
-  //             // value = result;
-  //           }
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
-  // uncomment till here
-
-  // Following lines added due to server error. Delete if server is running properly.
   constructor(private authGuard: AuthGuard,
               private jsonUploader: AuthenticatedSerializableObjectUploaderService,
               private getDateService: GetDateService,
               private dialog: MatDialog) {
+      if (this.authGuard.loggedIn()) {
+        this.jsonUploader.getObj<DataItem[]>( 'mpacloud/getuserdata').subscribe(res => {
+          const newMap = new Map();
+          res.forEach(obj => {
+            newMap.set(obj.uuid, obj);
+          });
+          this.dataMap.next(newMap);
+        });
+        // test data from server
+        // newMap.set(key, {
+        //   displayName: 'a user',
+        //   icon: 'account_circle',
+        //   children: [],
+        //   uuid: key,
+        //   type: 'user',
+        // });
 
-    if (this.authGuard.loggedIn()) {
-      const key = v1();
-      const newMap = new Map();
-      newMap.set(key, {
-        displayName: 'a user',
-        icon: 'account_circle',
-        children: [],
-        uuid: key,
-        type: 'user',
-      });
-      this.dataMap.next(newMap);
-    } else {
-      const key = v1();
-      const newMap = new Map();
-      newMap.set(key, {
-        displayName: 'no user',
-        icon: 'account_circle',
-        children: [],
-        uuid: key,
-        type: 'user'
-      });
-      this.dataMap.next(newMap);
-    }
+      } else {
+        const key = v1();
+        const newMap = new Map();
+        newMap.set(key, {
+          displayName: 'no user',
+          icon: 'account_circle',
+          children: [],
+          uuid: key,
+          type: 'user'
+        });
+        this.dataMap.next(newMap);
+      }
 
     // '/mpacloud/v1/getuserdata'
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': authGuard.getUserAuthorization().toString()});
-      this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
-        if (result != null) {
-          value = result;
+      const list = [];
+      if (value !== undefined) {
+        if (value.size !== 0) {
+          value.forEach(val => {
+            list.push(val);
+          });
+          this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
+            if (result != null) {
+              console.log(list);
+              // value = result;
+            }
+          });
         }
-      });
+      }
     });
   }
+  // uncomment till here
+
+  // Following lines added due to server error. Delete if server is running properly.
+  // constructor(private authGuard: AuthGuard,
+  //             private jsonUploader: AuthenticatedSerializableObjectUploaderService,
+  //             private getDateService: GetDateService,
+  //             private dialog: MatDialog) {
+  //
+  //   if (this.authGuard.loggedIn()) {
+  //     const key = v1();
+  //     const newMap = new Map();
+  //     newMap.set(key, {
+  //       displayName: 'a user',
+  //       icon: 'account_circle',
+  //       children: [],
+  //       uuid: key,
+  //       type: 'user',
+  //     });
+  //     this.dataMap.next(newMap);
+  //   } else {
+  //     const key = v1();
+  //     const newMap = new Map();
+  //     newMap.set(key, {
+  //       displayName: 'no user',
+  //       icon: 'account_circle',
+  //       children: [],
+  //       uuid: key,
+  //       type: 'user'
+  //     });
+  //     this.dataMap.next(newMap);
+  //   }
+  //
+  //   // '/mpacloud/v1/getuserdata'
+  //   this.dataMap.subscribe(value => {
+  //     this._dataItemMap = value;
+  //     const headers = new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Authorization': authGuard.getUserAuthorization().toString()});
+  //     this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
+  //       if (result != null) {
+  //         value = result;
+  //       }
+  //     });
+  //   });
+  // }
   // remove till here
 
   addExperiment(parentUuid: string, experimentName: string) {

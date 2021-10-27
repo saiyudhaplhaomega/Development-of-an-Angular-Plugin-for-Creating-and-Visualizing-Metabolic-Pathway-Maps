@@ -43,3 +43,9 @@ body {
 custom-table-warning {
   background-color: #f8d7da;
 }
+
+.responsive-job-card {
+  width: 100%;
+  flex-shrink: 1;
+  flex-grow: 1;
+}

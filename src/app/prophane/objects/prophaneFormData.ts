@@ -3,7 +3,6 @@ import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
 import {sortBy} from 'lodash';
-import {ProphaneTaskOptionString} from './prophanetaskoptionstring';
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MPA (single experiment)', valueString: 'mpa'},
