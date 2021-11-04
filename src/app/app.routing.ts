@@ -2,7 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 
 import {AuthGuard} from './core/services/auth-guard.service';
-import {ProphaneJobSubmissionComponent} from './prophane/components/prophane-job-submission/prophane-job-submission.component';
+import {ProphaneJobSubmissionMainComponent} from './prophane/components/prophane-job-submission-main/prophane-job-submission-main.component';
 import {ProphaneJobControlComponent} from './prophane/components/prophane-job-control/prophane-job-control.component';
 import {ProphaneAboutComponent} from './prophane/components/prophane-about/prophane-about.component';
 import {ProphaneResultViewComponent} from './prophane/components/prophane-result-view/prophane-result-view.component';
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: 'prophanejobs', redirectTo: '/prophane/(prophaneContent:jobs)', pathMatch: 'full'},
   { path: 'prophaneabout', component: ProphaneAboutComponent },
-  { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard] },
+  { path: 'prophane', component: ProphaneJobSubmissionMainComponent, canActivate: [AuthGuard] },
   { path: 'prophanejobcontrol', component: ProphaneJobControlComponent, canActivate: [AuthGuard] },
   { path: 'results/:job_uuid', component: ProphaneResultViewComponent},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
     { path: 'dbsearch', component: DatabaseSearchPageComponent, canActivate: [AuthGuard]},
     { path: 'proteinloader', component: ProteinDatabasePageComponent, canActivate: [AuthGuard]},
     { path: 'modeltrainer', component: ModelDatabasePageComponent, canActivate: [AuthGuard]},
-    { path: 'prophane', component: ProphaneJobSubmissionComponent, canActivate: [AuthGuard]},
+    { path: 'prophane', component: REFACTORING_prophaneJobSubmissionComponent, canActivate: [AuthGuard]},
     { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},*/
 ];
 export const Routing = RouterModule.forRoot(appRoutes);
