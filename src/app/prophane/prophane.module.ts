@@ -15,6 +15,8 @@ import { ProphaneResultViewComponent } from './components/prophane-result-view/p
 import { SafePipe } from './safe.pipe';
 import { SideBarResultsComponent } from './components/side-bar-results/side-bar-results.component';
 import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-submission-main/prophane-job-submission-main.component';
+import { JobStepperComponent } from './components/job-stepper/job-stepper.component';
+import { JobInputComponent } from './components/job-input/job-input.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-su
     SafePipe,
     SideBarResultsComponent,
     ProphaneJobSubmissionMainComponent,
+    JobStepperComponent,
+    JobInputComponent,
   ],
   imports: [
     CommonModule,

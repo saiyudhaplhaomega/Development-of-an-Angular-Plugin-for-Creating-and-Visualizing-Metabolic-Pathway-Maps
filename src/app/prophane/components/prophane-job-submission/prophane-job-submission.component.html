@@ -54,7 +54,7 @@
 
           <!-- MPA Single Experiment-->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 0"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 0"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -71,7 +71,7 @@
 
           <!-- MPA Multiexperiment-->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 1"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 1"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -88,7 +88,7 @@
 
           <!-- Scaffold -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 2"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 2"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -106,7 +106,7 @@
 
           <!-- Generic -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 3"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 3"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -124,7 +124,7 @@
 
           <!-- mzTab -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 4"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 4"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -142,7 +142,7 @@
 
           <!-- mzIdent -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 5"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 5"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -160,7 +160,7 @@
 
           <!-- proteome discoverer -->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 6"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 6"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
@@ -204,21 +204,21 @@
             </mat-select>
             <div class="input-group-append">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 1"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
                 placeholder="text"
                 (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 2"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
                 placeholder="text"
                 (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 3"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"

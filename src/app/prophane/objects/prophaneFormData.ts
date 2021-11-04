@@ -4,6 +4,33 @@ import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
 import {sortBy} from 'lodash';
 
+export const jobLabelData = [
+  {
+    label: 'Input',
+    expertsOnly: false,
+  },
+  {
+    label: 'Sample Groups',
+    expertsOnly: true,
+  },
+  {
+    label: 'Quantification',
+    expertsOnly: true,
+  },
+  {
+    label: 'Taxonomy',
+    expertsOnly: true,
+  },
+  {
+    label: 'Function',
+    expertsOnly: true,
+  },
+  {
+    label: 'Submit',
+    expertsOnly: false,
+  },
+];
+
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MPA (single experiment)', valueString: 'mpa'},
   {id: 1, name: 'MPA (multiple experiments)', valueString: 'mpa_multisample'},
