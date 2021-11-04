@@ -72,6 +72,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   functasks = 1;
   taskCounter = 3;
 
+  @ViewChild('jobStepper') stepper: MatStepper;
 
   // constructor and init
   constructor(public dialog: MatDialog,
@@ -81,7 +82,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
               private router: Router,
               private modalService: NgbModal,
               private _uploadProgressService: UploadProgressService,
-              private authGuard: AuthGuard) {
+              public authGuard: AuthGuard) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -310,11 +311,12 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     }
   }
 
-  setSampleName(groupid, sampleid) {
-    this.currentProphaneJob.parameters.sampleGroups.forEach(function iter(group) {
-      if (group.id === groupid) {
+  setSampleName(groupId, sampleId) {
+    this.currentProphaneJob.parameters.sampleGroups.forEach(
+      function iter(group) {
+      if (group.id === groupId) {
         group.groupmembersGUI.forEach(sample => {
-          if (sample.id === sampleid) {
+          if (sample.id === sampleId) {
             sample.name = sample.biocat.trim() + '::' + sample.bioname.trim();
           }
         });
@@ -337,10 +339,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
     // console.log(task.optionstring);
     // console.log(option)
-    if (optionstring.filter(i => i.param == option.param).length > 0) {
-      return true;
-    }
-    return false;
+    return optionstring.filter(i => i.param === option.param).length > 0;
     // taskOptionStrings.forEach(opt1 => {
     //  if (opt1 === dropDownItem) {
     //    return true;
@@ -353,7 +352,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   addTaxTask() {
     this.taxtasks++;
     this.taskCounter++;
-    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0])); // Important: copy object instead of linking!
+    const task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Taxonomy')[0])); // Important: copy object instead of linking!
     task['tasklabel'] = 'Taxonomic Annotation Task ' + this.taxtasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
@@ -361,7 +360,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   addFuncTask() {
     this.functasks++;
     this.taskCounter++;
-    var task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); // Important: copy object instead of linking!
+    const task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(i => i['scope'] === 'Function')[0])); // Important: copy object instead of linking!
     task['tasklabel'] = 'Functional Annotation Task ' + this.functasks;
     this.currentProphaneJob.parameters.annotationTasks.push(task);
   }
@@ -372,16 +371,18 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   resetOptstr(task) {
-    task.optionstring = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1');
-    task.formOptionStringSelection = optionStrings.filter(i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
+    task.optionstring = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
+        i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
   }
 
   removeAnnotationTask(removeTask) {
-    this.currentProphaneJob.parameters.annotationTasks = this.currentProphaneJob.parameters.annotationTasks.filter(obj => obj !== removeTask);
+    this.currentProphaneJob.parameters.annotationTasks = this.currentProphaneJob.parameters.annotationTasks.filter(
+      obj => obj !== removeTask);
     this.taskCounter--;
   }
-
-  @ViewChild('jobStepper') stepper: MatStepper;
 
   onViewChange(view) {
     if (view === false) {
@@ -415,7 +416,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.jobCard = step;
   }
 
-
   showJobCard() {
     this.jobCard = this.stepper.selectedIndex;
   }
@@ -423,7 +423,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   moveStepperToLast() {
     this.stepper.selectedIndex = 5;
   }
-
 
   onFastaChange(files: FileList) {
     this.fastaFile = files[0];
@@ -449,7 +448,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
-    if (algoSel.avoid != undefined && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
+    if (algoSel.avoid && task.optionstring.filter(
+      e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
       return false;
     } else {
       return true;
@@ -457,7 +457,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isEvalue(value, elemid) {
-    if (value === undefined || !String(value).match('^[0-9]+(\[.\][0-9]*)?$')) {
+    if (!value || !String(value).match('^[0-9]+(\[.\][0-9]*)?$')) {
       this.addFormInputErr(elemid);
       return false;
     } else {
@@ -467,33 +467,30 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   isNumber(value, min, max, elemid) {
-    if (value === undefined || !String(value).match('^-?[0-9]+(\[.\][0-9]*)?$') || (min !== undefined && min > value) || (max !== undefined && max < value)) {
+    if (!value || !String(value).match('^-?[0-9]+(\[.\][0-9]*)?$') || (min && min > value) || (max && max < value)) {
       this.addFormInputErr(elemid);
       return false;
-    }
-    else {
+    } else {
       this.removeFormInputErr(elemid);
       return true;
     }
   }
 
   isInt(value, min, max, elemid) {
-    if (value === undefined || !String(value).match('^-?[0-9]+$') || (min !== undefined && min > value) || (max !== undefined && max < value)) {
+    if (!value || !String(value).match('^-?[0-9]+$') || (min && min > value) || (max && max < value)) {
       this.addFormInputErr(elemid);
       return false;
-    }
-    else {
+    } else {
       this.removeFormInputErr(elemid);
       return true;
     }
   }
 
   isString(value, elemid) {
-    if (value === undefined || value.length === 0) {
+    if (!value || value.length === 0) {
       this.addFormInputErr(elemid);
       return false;
-    }
-    else {
+    } else {
       this.removeFormInputErr(elemid);
       return true;
     }
@@ -503,7 +500,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     if (!this.isString(label, elemid)) {
       return false;
     }
-    var n = 0;
+    let n = 0;
     this.currentProphaneJob.parameters.annotationTasks.forEach(
       task => {
         if (task.tasklabel === label) {
@@ -513,8 +510,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     if (n > 1) {
       this.addFormInputErr(elemid);
       return false;
-    }
-    else {
+    } else {
       this.removeFormInputErr(elemid);
       return true;
     }
@@ -532,16 +528,15 @@ export class ProphaneJobSubmissionComponent implements OnInit {
   }
 
   optionstringToString(optstr) {
-    var s = [];
-    var i;
+    const s = [];
+    let i;
     if (optstr.length === 1) {
       return '-';
     }
     for (i = 0; i < optstr.length; i++) {
       if (optstr[i].valueType === 'none') {
         s.push(optstr[i].param);
-      }
-      else if (optstr[i].param !== 'evalue') {
+      } else if (optstr[i].param !== 'evalue') {
         s.push(optstr[i].param + '=' + optstr[i].defaultValue);
       }
     }
@@ -553,7 +548,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.currentProphaneJob.parameters.annotationTasks.forEach(
       function (task) {
         console.log(task.optionstring);
-        if (task.optionstring.filter(i => i.isDefault == '0').length > 0) {
+        if (task.optionstring.filter(
+          i => i.isDefault == '0').length > 0) {
           advanced = true;
         }
       }

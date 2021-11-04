@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import {AuthenticatedSerializableObjectUploaderService} from './authenticated-serializable-object-uploader.service';
 import {MPAFile} from '../../prophane/objects/mpafile';
 import {HttpEventType} from '@angular/common/http';
-import {UploadDialogComponent} from '../components/dialog/upload-dialog.component';
 import {MatDialog} from '@angular/material';
 import {UploadProgressService} from './upload-progress.service';
 import {FileUploaderService} from './file-uploader.service';

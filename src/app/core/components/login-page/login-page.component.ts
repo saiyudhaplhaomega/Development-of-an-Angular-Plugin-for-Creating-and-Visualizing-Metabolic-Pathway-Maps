@@ -18,9 +18,9 @@ export class LoginPageComponent {
   public user: UserToken;
   guestlogin = false;
   showGuestLogin = false;
-  private guestEmail = '';
+  guestEmail = '';
 
-  constructor(private _router: Router, private oauthService: OAuthService,  private authGuard: AuthGuard) {
+  constructor(private _router: Router, private oauthService: OAuthService, public authGuard: AuthGuard) {
     this.authGuard.user.subscribe(usert => {
       this.user = usert;
     });
@@ -57,7 +57,7 @@ export class LoginPageComponent {
   }
 
   async loginElixir() {
-    this.authGuard.logout()
+    this.authGuard.logout();
     this.oauthService.configure(authConfigElixir);
     await this.oauthService.loadDiscoveryDocument();
     sessionStorage.setItem('login_provider', 'elixir');

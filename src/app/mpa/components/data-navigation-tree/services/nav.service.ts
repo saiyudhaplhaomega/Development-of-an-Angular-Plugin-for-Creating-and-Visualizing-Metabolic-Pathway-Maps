@@ -1,7 +1,7 @@
 import { Injectable, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
-import { TreeNode } from './../objects/tree-node';
+import { TreeNode } from '../objects/tree-node';
 import {DataChangeObj, DataService} from './data.service';
 import { DataItem } from '../objects/data-item';
 import { UserPageComponent } from '../../user-page/user-page.component';
@@ -68,7 +68,7 @@ export class NavService {
   }
 
   private processData(data: Map<string, DataItem>, expandedNodes: string[]) {
-    const tree: TreeNode[] = new Array();
+    const tree: TreeNode[] = [];
     const processedUUID = new Map();
 
     while (processedUUID.size < this._dataMap.size) {

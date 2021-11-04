@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -22,12 +22,18 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])]
 })
 
-export class PrivacyConsentBannerComponent {
+export class PrivacyConsentBannerComponent implements AfterViewInit {
 
   consentDialogStatus = 'initial';
   expiryDays = 30;
 
   constructor () {
+  }
+
+  ngAfterViewInit() {
+    if (!this.hasConsented() && this.consentDialogStatus === 'initial') {
+      this.showBanner();
+    }
   }
 
   showBanner() {
@@ -45,18 +51,16 @@ export class PrivacyConsentBannerComponent {
   isExpired(timestamp) {
     if (this.getCurrentTimestamp() - timestamp >= this.expiryDays * 86400000) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
 
   hasConsented() {
-    let value = localStorage.getItem("prophane_mpa_policy_consent");
+    const value = localStorage.getItem('prophane_mpa_policy_consent');
     if (value === null || this.isExpired(parseInt(value))) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -68,14 +72,5 @@ export class PrivacyConsentBannerComponent {
 
   setConsent() {
     localStorage.setItem('prophane_mpa_policy_consent', this.getCurrentTimestamp().toString());
-  }
-
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    if (!this.hasConsented() && this.consentDialogStatus === 'initial') {
-      this.showBanner();
-    }
   }
 }

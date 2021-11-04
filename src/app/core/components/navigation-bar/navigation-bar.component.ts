@@ -14,19 +14,7 @@ export class NavigationBarComponent implements OnInit {
   user: UserToken;
   guest: boolean;
 
-  constructor(private router: Router, private authGuard: AuthGuard) { }
-
-  isProphane() {
-    // if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
-    if (window.location.hostname === 'prophane.de' || window.location.hostname === 'www.prophane.de' ) {
-      return true;
-    }
-    return false;
-  }
-
-  goto(route: string) {
-      this.router.navigateByUrl(route);
-  }
+  constructor(private router: Router, public authGuard: AuthGuard) { }
 
   ngOnInit(): void {
     this.authGuard.user.subscribe(res => {
@@ -35,6 +23,15 @@ export class NavigationBarComponent implements OnInit {
     this.authGuard.guest.subscribe(res => {
       this.guest = res;
     });
+  }
+
+  isProphane() {
+    // if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
+    return window.location.hostname === 'prophane.de' || window.location.hostname === 'www.prophane.de';
+  }
+
+  goto(route: string) {
+      this.router.navigateByUrl(route);
   }
 
 }

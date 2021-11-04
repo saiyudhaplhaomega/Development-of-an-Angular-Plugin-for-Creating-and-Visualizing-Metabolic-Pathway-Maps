@@ -9,10 +9,10 @@
     <div class="jobStepper pl-5">
       <mat-vertical-stepper [@.disabled]="true" (animationDone)="showJobCard()" #jobStepper>
         <mat-step label="Input"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Sample Groups"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Quantification"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Taxonomy"></mat-step>
-        <mat-step *ngIf="expertView == true" label="Function"></mat-step>
+        <mat-step *ngIf="expertView" label="Sample Groups"></mat-step>
+        <mat-step *ngIf="expertView" label="Quantification"></mat-step>
+        <mat-step *ngIf="expertView" label="Taxonomy"></mat-step>
+        <mat-step *ngIf="expertView" label="Function"></mat-step>
         <mat-step label="Submit"></mat-step>
       </mat-vertical-stepper>
     </div>
@@ -54,30 +54,29 @@
 
           <!-- MPA Single Experiment-->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 0"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 0"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".csv" class="custom-file-input" id="mpa" #proteinreportfile
-                     (change)="onCSVChange(proteinreportfile.files)"
-                     class="custom-file-input">
+              <input type="file" accept=".csv" class="custom-file-input" id="mpaSingle" #proteinreportfile
+                     (change)="onCSVChange(proteinreportfile.files)">
               <!---(click)="proteinreportfile.click()"-->
-              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpa">Choose MPA file (.csv)</label>
-              <label *ngIf="proteinReportFile" class="custom-file-label" for="mpa">{{proteinReportFile.name}}</label>
+              <label *ngIf="!proteinReportFile" class="custom-file-label" for="mpaSingle">Choose MPA file (.csv)</label>
+              <label *ngIf="proteinReportFile" class="custom-file-label" for="mpaSingle">{{proteinReportFile.name}}</label>
             </div>
           </div>
 
           <!-- MPA Multiexperiment-->
           <div
-            *ngIf="currentProphaneJob.parameters.reportStyle.valueString != undefined && currentProphaneJob.parameters.reportStyle.id == 1"
+            *ngIf="currentProphaneJob.parameters.reportStyle.valueString && currentProphaneJob.parameters.reportStyle.id == 1"
             class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".csv" lass="custom-file-input" id="mpa" #proteinreportfile
+              <input type="file" accept=".csv" id="mpa" #proteinreportfile
                      (change)="onCSVChange(proteinreportfile.files)"
                      class="custom-file-input">
               <!---(click)="proteinreportfile.click()"-->
@@ -95,12 +94,14 @@
             </div>
             <div class="custom-file">
               <input type="file" accept=".xls" class="custom-file-input" id="scaffold" #proteinreportfile
-                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+                     (change)="onCSVChange(proteinreportfile.files)">
               <!--(click)="proteinreportfile.click()"-->
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="scaffold">Choose Scaffold file
-                (.xls)</label>
+                (.xls)
+              </label>
               <label *ngIf="proteinReportFile" class="custom-file-label"
-                     for="scaffold">{{proteinReportFile.name}}</label>
+                     for="scaffold">{{proteinReportFile.name}}
+              </label>
             </div>
           </div>
 
@@ -112,7 +113,7 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".tsv,.txt" lass="custom-file-input" id="generic" #proteinreportfile
+              <input type="file" accept=".tsv,.txt" id="generic" #proteinreportfile
                      class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
               <!--(click)="proteinreportfile.click()"-->
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="generic">Choose Generic Report file
@@ -131,7 +132,7 @@
             </div>
             <div class="custom-file">
               <input type="file" accept=".mztab" class="custom-file-input" id="mztab" #proteinreportfile
-                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+                     (change)="onCSVChange(proteinreportfile.files)">
               <!--(click)="proteinreportfile.click()"-->
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="mztab">Choose MzTab file
                 (.mztab)</label>
@@ -149,7 +150,7 @@
             </div>
             <div class="custom-file">
               <input type="file" accept=".mzid" class="custom-file-input" id="mzident" #proteinreportfile
-                     class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
+                     (change)="onCSVChange(proteinreportfile.files)">
               <!--(click)="proteinreportfile.click()"-->
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="mzident">Choose MzIdent2.0 file
                 (.mzid)</label>
@@ -166,7 +167,7 @@
               <span class="input-group-text">Report file</span>
             </div>
             <div class="custom-file">
-              <input type="file" accept=".xlsx" class="custom-file-input" id="pd_xlsx" #proteinreportfile
+              <input type="file" accept=".xlsx" id="pd_xlsx" #proteinreportfile
                      class="custom-file-input" (change)="onCSVChange(proteinreportfile.files)">
               <!--(click)="proteinreportfile.click()"-->
               <label *ngIf="!proteinReportFile" class="custom-file-label" for="pd_xlsx">Choose Proteome Discoverer protein group excel file
@@ -204,21 +205,21 @@
             </mat-select>
             <div class="input-group-append">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 1"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 1"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
                 placeholder="text"
                 (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 2"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 2"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
                 placeholder="text"
                 (change)="setContaminationLabel(currentProphaneJob.parameters.contaminationOption.label)">
               <input
-                *ngIf="currentProphaneJob.parameters.contaminationOption != undefined && currentProphaneJob.parameters.contaminationOption.id == 3"
+                *ngIf="currentProphaneJob.parameters.contaminationOption && currentProphaneJob.parameters.contaminationOption.id == 3"
                 [ngStyle]="{'background-color': isString(currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : formErrorColor }"
                 type="text"
                 class="form-control" [(ngModel)]="currentProphaneJob.parameters.contaminationOption.label"
@@ -263,7 +264,7 @@
                 <span class="input-group-text">Sample Name</span>
               </div>
               <input
-                *ngIf="currentProphaneJob.parameters.reportStyle == undefined || currentProphaneJob.parameters.reportStyle.id != 2"
+                *ngIf="!currentProphaneJob.parameters.reportStyle || currentProphaneJob.parameters.reportStyle.id != 2"
                 type="text" class="form-control" [(ngModel)]="sample.name">
               <input *ngIf="showScaffoldSampleInput(false, false)" type="text" class="form-control"
                      [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
@@ -288,7 +289,7 @@
       </div>
 
       <!-- Quantification -->
-      <div *ngIf="jobCard == 2 && expertView == true" class="card w-50 ml-job-form min-w-600">
+      <div *ngIf="jobCard == 2 && expertView" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Quantification method
@@ -312,7 +313,7 @@
       </div>
 
       <!-- Taxonomic Annotation Task -->
-      <div *ngIf="jobCard == 3 && expertView == true" class="card w-50 ml-job-form min-w-600">
+      <div *ngIf="jobCard == 3 && expertView" class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
             Taxonomic Annotation
@@ -930,7 +931,7 @@
       </div>
       <div class="w-50 pl-4 mt-1 mb-5 min-w-600">
         <button mat-button (click)="saveForm()" class="float-left">save input</button>
-        <button mat-button *ngIf="(jobCard != 5 && expertView == true) || (jobCard != 1 && expertView == false)" (click)="nextStep()" class="float-right">next &#187;</button>
+        <button mat-button *ngIf="(jobCard != 5 && expertView) || (jobCard != 1 && !expertView)" (click)="nextStep()" class="float-right">next &#187;</button>
         <button mat-button *ngIf="jobCard != 0" (click)="prevStep()" class="float-right">&#171; back</button>
       </div>
     </div>

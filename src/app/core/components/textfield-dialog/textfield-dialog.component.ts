@@ -1,6 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -15,7 +14,6 @@ export class TextfieldDialogComponent {
   nameFormControl = new FormControl('', [
     Validators.pattern('\w*'),
   ]);
-  matcher = new ErrorStateMatcher();
 
   constructor(
     public dialogRef: MatDialogRef<TextfieldDialogComponent>

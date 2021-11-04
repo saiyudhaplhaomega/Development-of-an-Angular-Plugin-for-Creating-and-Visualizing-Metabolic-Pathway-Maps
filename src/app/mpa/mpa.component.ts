@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { NavService } from './components/data-navigation-tree/services/nav.service';
 
 @Component({

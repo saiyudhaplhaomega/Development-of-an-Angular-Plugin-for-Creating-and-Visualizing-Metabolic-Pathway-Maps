@@ -29,21 +29,11 @@ export class AuthGuard implements CanActivate {
   }
 
   loggedIn() {
-    if (this._user || this._guest) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return !! (this._user || this._guest);
   }
 
   allowExpert() {
-    if (this._user) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return !! this._user;
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
