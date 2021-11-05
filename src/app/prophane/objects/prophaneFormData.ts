@@ -1,4 +1,4 @@
-import {ProphaneReportStyle} from '../components/prophane-job-submission/prophane-job-submission-formdata';
+import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../components/prophane-job-submission/prophane-job-submission-formdata';
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
@@ -41,6 +41,16 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 6, name: 'Proteome Discoverer protein group excel file', valueString: 'pd_xlsx'},
 ];
 
+export const prophaneReportStyleLabels: ProphaneReportStyleLabel[] = [
+  {id: 0, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)'},
+  {id: 1, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)'},
+  {id: 2, prependLabel: 'Report file', htmlInputLabel: 'Choose Scaffold file (.xls)'},
+  {id: 3, prependLabel: 'Report file', htmlInputLabel: 'Choose Generic Report file (.tsv, .txt)'},
+  {id: 4, prependLabel: 'Report file', htmlInputLabel: 'Choose MzTab file (.mztab)'},
+  {id: 5, prependLabel: 'Report file', htmlInputLabel: 'Choose MzIdent2.0 file (.mzid)'},
+  {id: 6, prependLabel: 'Report file', htmlInputLabel: 'Choose Proteome Discoverer protein group excel file (.xlsx)'},
+];
+
 export const quantdata: ProphaneQuantDataObject[] = [
   {id: 0, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
   {id: 1, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
@@ -77,9 +87,9 @@ export const evalueOptions: object[] = [
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
-  {id: 1, name: 'accessions starting with', valueString: '', label: '', regex: ''},
-  {id: 2, name: 'accessions ending with', valueString: '', label: '', regex: ''},
-  {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: ''},
+  {id: 1, name: 'accessions starting with', valueString: '', label: '', regex: '', formLabel: 'Enter some text'},
+  {id: 2, name: 'accessions ending with', valueString: '', label: '', regex: '', formLabel: 'Enter some text'},
+  {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: '', formLabel: 'Enter a regular expression (PCRE)'},
 ];
 
 export const algparams = {

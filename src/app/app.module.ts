@@ -81,8 +81,7 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
   ],
   // imperatively loaded components - compiles a factory for dynamically loaded components
   entryComponents: [UploadDialogComponent],
-  exports: [
-  ],
+    exports: [],
   // components loaded during bootstrapping
   bootstrap: [AppComponent]
 })

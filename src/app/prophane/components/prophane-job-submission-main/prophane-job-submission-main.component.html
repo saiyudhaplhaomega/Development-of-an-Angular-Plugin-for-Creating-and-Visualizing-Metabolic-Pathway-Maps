@@ -1,7 +1,7 @@
 <div fxFlex class="bg-white">
 
-  <div *ngIf="jobUnavailable" class="align-content-center mb-2 alert-danger">
-    {{this.jobUnavailableMessage}}
+  <div *ngIf="this.prophaneJobState.jobUnavailable" class="align-content-center mb-2 alert-danger">
+    {{this.prophaneJobState.jobUnavailableMessage}}
   </div>
 
   <div class="d-flex justify-content-between">
@@ -24,10 +24,7 @@
         </div>
 
         <div class="card-body">
-          <app-job-input
-            *ngIf="currentStepLabel === 'Input'"
-            [prophaneJob]="prophaneJobState.currentProphaneJob"
-            (sourceChangeEvent)="onSourceChange()">
+          <app-job-input *ngIf="currentStepLabel === 'Input'">
           </app-job-input>
         </div>
 

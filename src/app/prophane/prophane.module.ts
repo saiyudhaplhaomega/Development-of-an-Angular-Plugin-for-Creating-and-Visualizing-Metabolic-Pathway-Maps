@@ -17,6 +17,7 @@ import { SideBarResultsComponent } from './components/side-bar-results/side-bar-
 import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-submission-main/prophane-job-submission-main.component';
 import { JobStepperComponent } from './components/job-stepper/job-stepper.component';
 import { JobInputComponent } from './components/job-input/job-input.component';
+import {FileInputComponent} from '../core/components/file-input/file-input.component';
 
 @NgModule({
   declarations: [
@@ -30,17 +31,18 @@ import { JobInputComponent } from './components/job-input/job-input.component';
     ProphaneJobSubmissionMainComponent,
     JobStepperComponent,
     JobInputComponent,
+    FileInputComponent,
   ],
-  imports: [
-    CommonModule,
-    Routing,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    NgbModule,
-    // material module last
-    MaterialModule,
-  ],
+    imports: [
+        CommonModule,
+        Routing,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        NgbModule,
+        // material module last
+        MaterialModule,
+    ],
   // entryComponents: [ProphaneJobSubmissionDialogComponent],
   exports: []
 })

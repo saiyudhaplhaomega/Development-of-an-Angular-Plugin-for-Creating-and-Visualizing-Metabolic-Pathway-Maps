@@ -424,7 +424,6 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     this.stepper.selectedIndex = 5;
   }
 
-
   onFastaChange(files: FileList) {
     this.fastaFile = files[0];
   }
