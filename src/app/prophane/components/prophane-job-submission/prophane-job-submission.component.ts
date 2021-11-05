@@ -247,7 +247,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     return true;
   }
 
-  escapeRegExp(text) {
+  escapeRegExp(text: string) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }
 

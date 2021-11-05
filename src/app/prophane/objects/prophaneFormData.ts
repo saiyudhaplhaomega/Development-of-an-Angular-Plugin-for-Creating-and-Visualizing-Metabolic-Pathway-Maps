@@ -87,9 +87,9 @@ export const evalueOptions: object[] = [
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
-  {id: 1, name: 'accessions starting with', valueString: '', label: '', regex: '', formLabel: 'Enter some text'},
-  {id: 2, name: 'accessions ending with', valueString: '', label: '', regex: '', formLabel: 'Enter some text'},
-  {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: '', formLabel: 'Enter a regular expression (PCRE)'},
+  {id: 1, name: 'accessions starting with', valueString: 'start', label: '', regex: '', formLabel: 'Exclude accessions starting with...'},
+  {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: '', formLabel: 'Exclude accessions ending with...'},
+  {id: 3, name: 'accessions matching with', valueString: 'regex', label: '', regex: '', formLabel: 'Exclude accessions matching with... (regular expression; PCRE)'},
 ];
 
 export const algparams = {

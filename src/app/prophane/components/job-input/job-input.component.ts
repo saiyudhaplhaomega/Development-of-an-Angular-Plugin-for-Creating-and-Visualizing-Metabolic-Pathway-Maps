@@ -12,6 +12,8 @@ import {FileInputComponent} from '../../../core/components/file-input/file-input
 })
 export class JobInputComponent implements OnInit {
 
+  inputExcludePlaceholder: string;
+
   readonly reportStyles = prophaneReportStyles;
   readonly reportOptions = prophaneReportStyleLabels;
 
@@ -19,7 +21,7 @@ export class JobInputComponent implements OnInit {
     public prophaneJobState: ProphaneJobStateService) { }
 
   ngOnInit() {
-    console.log(this.prophaneJobState.currentProphaneJob.parameters.reportStyle.valueString);
+    console.log(this.prophaneJobState);
   }
 
   // methods for website functionality
@@ -43,27 +45,64 @@ export class JobInputComponent implements OnInit {
     this.prophaneJobState.proteinReportFile = files[0];
   }
 
+  onExcludeAccessionChange() {
+    if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
+      this.prophaneJobState.formInputValid = true;
+    } else {
+      this.prophaneJobState.formInputValid = false;
+    }
+  }
+
   escapeRegExp(text: string) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }
 
-  setContaminationLabel(val) {
-    console.log(val);
-    if (val === false) {
-      val = this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString;
+  // setContaminationLabel(val) {
+  //   if (val === false) {
+  //     val = this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString;
+  //   }
+  //   if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'start') {
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '^' + this.escapeRegExp(val);
+  //   } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'end') {
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = this.escapeRegExp(val) + '$';
+  //   } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'regex') {
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = val;
+  //   } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = '';
+  //     this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '';
+  //   }
+  //   console.log(this.prophaneJobState);
+  // }
+
+  setContaminationRegEx() {
+    const label = this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label;
+    switch (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString) {
+      case 'start':
+        this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '^' + this.escapeRegExp(label);
+        break;
+      case 'end':
+        this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = this.escapeRegExp(label) + '$';
+        break;
+      case 'regex':
+        // TODO: shouldn't this be escaped as well?
+        this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = label;
+        break;
+      case 'none':
+        this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '';
+        break;
     }
-    if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'start') {
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '^' + this.escapeRegExp(val);
-    } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'end') {
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = this.escapeRegExp(val) + '$';
-    } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'regex') {
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = val;
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = val;
-    } else if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.label = '';
-      this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.regex = '';
+    console.log(this.prophaneJobState);
+  }
+
+  isFormInputValid(input: string) {
+    if (input) {
+      this.prophaneJobState.formInputValid = true;
+    } else {
+      this.prophaneJobState.formInputValid = false;
     }
   }
+
 }

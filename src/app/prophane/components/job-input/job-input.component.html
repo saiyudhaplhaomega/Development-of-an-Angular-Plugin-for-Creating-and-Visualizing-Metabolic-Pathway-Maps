@@ -43,47 +43,27 @@
   <div class="input-group-prepend">
     <span class="input-group-text">Exclude</span>
   </div>
-  <mat-select class="custom-select" [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption"
+  <mat-select class="custom-select"
+              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption"
               [compareWith]="compareByID"
-              (change)="setContaminationLabel(prophaneJobState.currentProphaneJob.parameters.contaminationOption)">
+              (change)="onExcludeAccessionChange()">
     <mat-option *ngFor="let contitem of this.prophaneJobState.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
   </mat-select>
-<!--  <div class="input-group-append">-->
-<!--    <input-->
-<!--      *ngIf="prophaneJobState.currentProphaneJob.parameters.contaminationOption && prophaneJobState.currentProphaneJob.parameters.contaminationOption.id == 1"-->
-<!--      [ngStyle]="{'background-color': prophaneJobState.isString(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, 'cont_1') ? 'white' : prophaneJobState.formErrorColor }"-->
-<!--      type="text"-->
-<!--      class="form-control" [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"-->
-<!--      placeholder="text"-->
-<!--      (change)="setContaminationLabel(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)">-->
-<!--    <input-->
-<!--      *ngIf="prophaneJobState.currentProphaneJob.parameters.contaminationOption && prophaneJobState.currentProphaneJob.parameters.contaminationOption.id == 2"-->
-<!--      [ngStyle]="{'background-color': prophaneJobState.isString(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, 'cont_2') ? 'white' : prophaneJobState.formErrorColor }"-->
-<!--      type="text"-->
-<!--      class="form-control" [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"-->
-<!--      placeholder="text"-->
-<!--      (change)="setContaminationLabel(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)">-->
-<!--    <input-->
-<!--      *ngIf="prophaneJobState.currentProphaneJob.parameters.contaminationOption && prophaneJobState.currentProphaneJob.parameters.contaminationOption.id == 3"-->
-<!--      [ngStyle]="{'background-color': prophaneJobState.isString(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, 'cont_3') ? 'white' : prophaneJobState.formErrorColor }"-->
-<!--      type="text"-->
-<!--      class="form-control" [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"-->
-<!--      placeholder="regular expression (PCRE)"-->
-<!--      (change)="setContaminationLabel(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)">-->
-<!--  </div>-->
 </div>
 
 <ng-container *ngIf="prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString !== 'none'">
   <div class="input-group mb-3">
-    <ng-container *ngFor="let contOption of this.prophaneJobState.contoptions">
-      <input *ngIf="contOption.id === prophaneJobState.currentProphaneJob.parameters.contaminationOption.id"
+      <input
              type="text" class="form-control"
+             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
              placeholder="{{prophaneJobState.currentProphaneJob.parameters.contaminationOption.formLabel}}"
-             [ngStyle]="{'background-color':
-             prophaneJobState.isString(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, 'elemid_' + contOption.id) ?
-              'none' : prophaneJobState.formErrorColor }"
-             (change)="setContaminationLabel(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)">
-    </ng-container>
+             [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"
+             (input)="isFormInputValid(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)"
+             (change)="setContaminationRegEx()"
+             [ngClass]="{'is-invalid': !prophaneJobState.formInputValid}">
+    <div class="invalid-feedback">
+      Please enter something
+    </div>
   </div>
 </ng-container>
 

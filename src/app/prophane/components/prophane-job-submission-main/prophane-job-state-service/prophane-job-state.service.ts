@@ -30,7 +30,7 @@ export class ProphaneJobStateService {
   formErrorColor = '#f8d7da';
 
   // job data is tracked in this variable
-  formInputError = [];
+  formInputValid = false;
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -80,26 +80,6 @@ export class ProphaneJobStateService {
       // TODO: obsolete? --> rework
       this.jobUnavailable = res.status === 'JOB_REJECTED';
     });
-  }
-
-  addFormInputErr(elemid) {
-    if (this.formInputError.indexOf(elemid) === -1) {
-      this.formInputError.push(elemid);
-    }
-  }
-
-  removeFormInputErr(elemid) {
-    this.formInputError = this.formInputError.filter(id => id !== elemid);
-  }
-
-  isString(value, elemid) {
-    if (!value) {
-      this.addFormInputErr(elemid);
-      return false;
-    } else {
-      this.removeFormInputErr(elemid);
-      return true;
-    }
   }
 
 }
