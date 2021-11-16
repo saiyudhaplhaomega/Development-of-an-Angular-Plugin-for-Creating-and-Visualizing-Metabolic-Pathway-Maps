@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ProphaneJobControlComponent} from './components/prophane-job-control/prophane-job-control.component';
 import {ProphaneAboutComponent} from './components/prophane-about/prophane-about.component';
-import {REFACTORING_prophaneJobSubmissionComponent} from './components/REFACTORING_prophane_job_submission/REFACTORING_prophane-job-submission.component';
 import {MaterialModule} from '../material-module';
 import {FormsModule} from '@angular/forms';
 import {Routing} from '../app.routing';
@@ -18,10 +17,14 @@ import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-su
 import { JobStepperComponent } from './components/job-stepper/job-stepper.component';
 import { JobInputComponent } from './components/job-input/job-input.component';
 import {FileInputComponent} from '../core/components/file-input/file-input.component';
+import { JobSampleGroupsComponent } from './components/job-sample-groups/job-sample-groups.component';
+import { JobQuantificationComponent } from './components/job-quantification/job-quantification.component';
+import { JobTaxonomyComponent } from './components/job-taxonomy/job-taxonomy.component';
+import { JobFunctionComponent } from './components/job-function/job-function.component';
+import { JobSubmitComponent } from './components/job-submit/job-submit.component';
 
 @NgModule({
   declarations: [
-    REFACTORING_prophaneJobSubmissionComponent,
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
     // ProphaneJobSubmissionDialogComponent,
@@ -32,6 +35,11 @@ import {FileInputComponent} from '../core/components/file-input/file-input.compo
     JobStepperComponent,
     JobInputComponent,
     FileInputComponent,
+    JobSampleGroupsComponent,
+    JobQuantificationComponent,
+    JobTaxonomyComponent,
+    JobFunctionComponent,
+    JobSubmitComponent,
   ],
     imports: [
         CommonModule,

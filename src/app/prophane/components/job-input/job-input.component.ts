@@ -1,18 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {prophaneReportStyleLabels, prophaneReportStyles} from '../../objects/prophaneFormData';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
 import {ProphaneReportStyle} from '../prophane-job-submission-main/prophane-job-submission-formdata';
-import {FileInputComponent} from '../../../core/components/file-input/file-input.component';
 
 @Component({
   selector: 'app-job-input',
   templateUrl: './job-input.component.html',
   styleUrls: ['./job-input.component.css']
 })
-export class JobInputComponent implements OnInit {
-
-  inputExcludePlaceholder: string;
+export class JobInputComponent {
 
   readonly reportStyles = prophaneReportStyles;
   readonly reportOptions = prophaneReportStyleLabels;
@@ -20,14 +17,6 @@ export class JobInputComponent implements OnInit {
   constructor(
     public prophaneJobState: ProphaneJobStateService) { }
 
-  ngOnInit() {
-    console.log(this.prophaneJobState);
-  }
-
-  // methods for website functionality
-  compareByID(o1: ProphaneReportStyle, o2: ProphaneReportStyle) {
-    return o1.id === o2.id;
-  }
 
   onSourceChange() {
     this.prophaneJobState.proteinReportFile = undefined;
@@ -45,13 +34,13 @@ export class JobInputComponent implements OnInit {
     this.prophaneJobState.proteinReportFile = files[0];
   }
 
-  onExcludeAccessionChange() {
-    if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
-      this.prophaneJobState.formInputValid = true;
-    } else {
-      this.prophaneJobState.formInputValid = false;
-    }
-  }
+  // onExcludeAccessionChange() {
+  //   if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
+  //     this.prophaneJobState.jobInputExcludeRegExValid = true;
+  //   } else {
+  //     this.prophaneJobState.jobInputExcludeRegExValid = false;
+  //   }
+  // }
 
   escapeRegExp(text: string) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -95,14 +84,6 @@ export class JobInputComponent implements OnInit {
         break;
     }
     console.log(this.prophaneJobState);
-  }
-
-  isFormInputValid(input: string) {
-    if (input) {
-      this.prophaneJobState.formInputValid = true;
-    } else {
-      this.prophaneJobState.formInputValid = false;
-    }
   }
 
 }

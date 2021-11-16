@@ -242,6 +242,7 @@
         </div>
         <div class="card-body">
           <div *ngIf="currentProphaneJob.parameters.sampleGroups.length == 0">no group defined yet</div>
+
           <ng-container *ngFor="let groupitem of currentProphaneJob.parameters.sampleGroups">
             <!-- Group name -->
             <div class="input-group mb-3">
@@ -282,6 +283,7 @@
             </div>
             <mat-divider class="mb-3"></mat-divider>
           </ng-container>
+
           <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>Add Group
           </button>
         </div>

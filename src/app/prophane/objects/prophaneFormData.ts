@@ -6,27 +6,33 @@ import {sortBy} from 'lodash';
 
 export const jobLabelData = [
   {
-    label: 'Input',
+    stepperLabel: 'Input',
+    cardHeader: 'Input',
     expertsOnly: false,
   },
   {
-    label: 'Sample Groups',
+    stepperLabel: 'Sample Grouping',
+    cardHeader: 'Sample Grouping',
     expertsOnly: true,
   },
   {
-    label: 'Quantification',
+    stepperLabel: 'Quantification',
+    cardHeader: 'Quantification Method',
     expertsOnly: true,
   },
   {
-    label: 'Taxonomy',
+    stepperLabel: 'Taxonomy',
+    cardHeader: 'Taxonomic Annotation',
     expertsOnly: true,
   },
   {
-    label: 'Function',
+    stepperLabel: 'Function',
+    cardHeader: 'Functional Annotation',
     expertsOnly: true,
   },
   {
-    label: 'Submit',
+    stepperLabel: 'Submit',
+    cardHeader: 'Summary',
     expertsOnly: false,
   },
 ];

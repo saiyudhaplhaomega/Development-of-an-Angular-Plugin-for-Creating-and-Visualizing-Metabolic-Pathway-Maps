@@ -1,3 +1,4 @@
+<!-- Job Label -->
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
@@ -12,13 +13,13 @@
   </div>
   <mat-select class="no-arrow custom-select"
               [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.reportStyle"
-              [compareWith]="compareByID"
+              [compareWith]="prophaneJobState.compareByID"
               (selectionChange)="onSourceChange()">
     <mat-option *ngFor="let typeItem of this.reportStyles" [value]="typeItem">{{typeItem.name}}</mat-option>
   </mat-select>
 </div>
 
-<!--Report Styles-->
+<!-- Report Styles & File Input -->
 <ng-container *ngFor="let reportOption of this.reportOptions">
   <ng-container
     *ngIf="prophaneJobState.currentProphaneJob.parameters.reportStyle.valueString &&
@@ -45,7 +46,7 @@
   </div>
   <mat-select class="custom-select"
               [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption"
-              [compareWith]="compareByID"
+              [compareWith]="prophaneJobState.compareByID"
               (change)="onExcludeAccessionChange()">
     <mat-option *ngFor="let contitem of this.prophaneJobState.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
   </mat-select>
@@ -58,11 +59,12 @@
              style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
              placeholder="{{prophaneJobState.currentProphaneJob.parameters.contaminationOption.formLabel}}"
              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"
-             (input)="isFormInputValid(prophaneJobState.currentProphaneJob.parameters.contaminationOption.label)"
              (change)="setContaminationRegEx()"
-             [ngClass]="{'is-invalid': !prophaneJobState.formInputValid}">
+             [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, true).isValid}">
     <div class="invalid-feedback">
-      Please enter something
+      {{prophaneJobState.isFormInputValid(
+          prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, true).errorPrompt}}
     </div>
   </div>
 </ng-container>

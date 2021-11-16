@@ -91,7 +91,7 @@ export class DataService {
           value.forEach(val => {
             list.push(val);
           });
-          this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
+          this.jsonUploader.postObj(list, 'mpacloud/updateuserdata').subscribe(result => {
             if (result != null) {
               console.log(list);
               // value = result;
@@ -156,6 +156,8 @@ export class DataService {
      */
 
     const newExperimentUUID = v1();
+
+    // object for data map
     const newExperiment = {
       displayName: experimentName,
       icon: 'computer',
@@ -163,17 +165,19 @@ export class DataService {
       uuid: newExperimentUUID,
       type: 'experiment',
       parent: parentUuid,
-      creation_date: this.getDateService.getDate().toString()
+      creation_date: this.getDateService.getDate().toString(),
+      description: '',
     };
 
+    // object for server
     // TODO: set data from input
     const dbExperiment = new ExperimentJSONObject();
     dbExperiment.exp_id = newExperimentUUID;
     dbExperiment.name = newExperiment.displayName;
-    dbExperiment.description = 'from_html';
+    dbExperiment.description = newExperiment.description;
     dbExperiment.creationDate = newExperiment.creation_date;
 
-    this.jsonUploader.postObj(dbExperiment, 'mpacloud/v1/createExperiment').subscribe(result => {
+    this.jsonUploader.postObj(dbExperiment, 'mpacloud/createexperiment').subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;
@@ -223,6 +227,8 @@ export class DataService {
       currentNodeUuid: parentUuid,
       targetNodeUuid: newProtDBUUID,
       finalNodeUuid: newProtDBUUID});
+
+
   }
 
   addFolder(parentUuid: string, folderName: string) {

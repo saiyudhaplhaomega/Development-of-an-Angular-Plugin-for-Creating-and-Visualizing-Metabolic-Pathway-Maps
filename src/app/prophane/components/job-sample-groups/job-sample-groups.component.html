@@ -1,0 +1,55 @@
+
+<div *ngIf="prophaneJobState.currentProphaneJob.parameters.sampleGroups.length === 0">
+  no group defined yet
+  <mat-divider class="mb-3"></mat-divider>
+</div>
+
+<ng-container *ngFor="let groupitem of prophaneJobState.currentProphaneJob.parameters.sampleGroups">
+  <!-- Group name -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text rki-blue-input">Sample Group</span>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="groupitem.groupname"
+           value="{{ groupitem.groupname }}">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary w-sbtn" type="button"
+              (click)='removeSampleGroup(groupitem)'>
+        —
+      </button>
+    </div>
+  </div>
+
+  <!-- group member -->
+  <div *ngFor="let sample of groupitem.groupmembersGUI" class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Sample Name</span>
+    </div>
+    <input
+      *ngIf="!prophaneJobState.currentProphaneJob.parameters.reportStyle ||
+      prophaneJobState.currentProphaneJob.parameters.reportStyle.id != 2"
+      type="text" class="form-control" [(ngModel)]="sample.name">
+    <input *ngIf="showScaffoldSampleInput()" type="text" class="form-control"
+           [(ngModel)]="sample.biocat" (change)='setSampleName(groupitem.id, sample.id)'>
+    <input
+      *ngIf="showScaffoldSampleInput(groupitem.id, sample.id)" type="text" class="form-control"
+      [(ngModel)]="sample.bioname" (change)='setSampleName(groupitem.id, sample.id)'>
+    <div class="input-group-append">
+
+      <button *ngIf="groupitem.groupmembersGUI.length > 1" class="btn btn-outline-secondary w-sbtn"
+              type="button"
+              (click)='removeSample(sample.id, groupitem)'>
+        —
+      </button>
+      <button class="btn btn-outline-secondary w-sbtn" type="button"
+              (click)='addNewSample(groupitem)'>
+        +
+      </button>
+    </div>
+  </div>
+  <mat-divider class="mb-3"></mat-divider>
+</ng-container>
+
+<button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addSampleGroup()'>
+  Add Group
+</button>

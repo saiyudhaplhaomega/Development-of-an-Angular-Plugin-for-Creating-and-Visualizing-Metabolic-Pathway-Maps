@@ -2,7 +2,7 @@
   <div class="jobStepper pl-5">
     <mat-vertical-stepper [@.disabled]="false" (animationDone)="setCurrentStep()" #jobStepper>
       <ng-container *ngFor="let step of this.jobLabelData">
-        <mat-step *ngIf="!step.expertsOnly || expertView"  [label]="step.label" ></mat-step>
+        <mat-step *ngIf="!step.expertsOnly || expertView"  [label]="step.stepperLabel" ></mat-step>
       </ng-container>
     </mat-vertical-stepper>
   </div>

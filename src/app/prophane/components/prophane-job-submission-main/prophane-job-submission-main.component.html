@@ -7,7 +7,7 @@
   <div class="d-flex justify-content-between">
     <app-job-stepper
       [expertView]="expertView"
-      [jobLabelData]="stepperLabels"
+      [jobLabelData]="stepperAndCardLabels"
       [resetStepper]="resetStepper.asObservable()"
       (currentStepLabel)="setCurrentStep($event)">
     </app-job-stepper>
@@ -16,7 +16,7 @@
       <div class="card w-50 ml-job-form min-w-600">
         <div class="card-header">
           <h5>
-            {{currentStepLabel}}
+            {{currentCardHeader}}
             <span class="card-title-button-wrapper" *ngIf="authGuard.allowExpert()">
               <mat-slide-toggle color (change)="onViewChange()">expert</mat-slide-toggle>
             </span>
@@ -24,8 +24,12 @@
         </div>
 
         <div class="card-body">
-          <app-job-input *ngIf="currentStepLabel === 'Input'">
-          </app-job-input>
+          <app-job-input *ngIf="currentCardHeader === 'Input'"></app-job-input>
+          <app-job-sample-groups *ngIf="currentCardHeader === 'Sample Grouping'"></app-job-sample-groups>
+          <app-job-quantification *ngIf="currentCardHeader === 'Quantification Method'"></app-job-quantification>
+          <app-job-taxonomy *ngIf="currentCardHeader === 'Taxonomic Annotation'"></app-job-taxonomy>
+          <app-job-function *ngIf="currentCardHeader === 'Functional Annotation'"></app-job-function>
+          <app-job-submit *ngIf="currentCardHeader === 'Summary'"></app-job-submit>
         </div>
 
       </div>

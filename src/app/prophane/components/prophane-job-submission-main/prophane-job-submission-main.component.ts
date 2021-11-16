@@ -1,14 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {JobStepperComponent} from '../job-stepper/job-stepper.component';
-
-import {
-  jobLabelData
-} from '../../objects/prophaneFormData';
+import {Component, OnInit} from '@angular/core';
+import {jobLabelData} from '../../objects/prophaneFormData';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Subject} from 'rxjs';
-import {ProphaneJobObject} from '../../objects/prophanejobjson';
-import {ProphaneParamObject} from '../../objects/prophaneparamjson';
-import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {MatDialog} from '@angular/material';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {JobService} from '../../job.service';
@@ -18,7 +11,8 @@ import {UploadProgressService} from '../../../core/services/upload-progress.serv
 import {ProphaneJobStateService} from './prophane-job-state-service/prophane-job-state.service';
 
 export interface JobLabel {
-  label: string;
+  stepperLabel: string;
+  cardHeader: string;
   expertsOnly: boolean;
 }
 
@@ -33,8 +27,8 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
   // Observable passed to child stepper component
   resetStepper: Subject<void> = new Subject<void>();
 
-  currentStepLabel: string;
-  stepperLabels: JobLabel[];
+  currentCardHeader: string;
+  stepperAndCardLabels: JobLabel[];
   expertView = false;
 
   constructor(
@@ -50,13 +44,14 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.stepperLabels = jobLabelData;
-
+    this.stepperAndCardLabels = jobLabelData;
     this.prophaneJobState.initializeProphaneJobState();
+    console.log(this.prophaneJobState);
   }
 
   setCurrentStep(stepLabel: string) {
-    this.currentStepLabel = stepLabel;
+    const labelObj = jobLabelData.find(label => label.stepperLabel === stepLabel);
+    this.currentCardHeader = labelObj.cardHeader;
   }
 
   onViewChange() {
@@ -64,4 +59,4 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
     // each time expert prop is changed, reset event is emitted to child
     this.resetStepper.next();
   }
-  }
+}

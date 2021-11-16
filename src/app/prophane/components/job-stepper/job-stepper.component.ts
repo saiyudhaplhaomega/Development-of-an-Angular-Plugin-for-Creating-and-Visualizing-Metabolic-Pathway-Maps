@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatStepper} from '@angular/material/stepper';
-
 import {JobLabel} from '../prophane-job-submission-main/prophane-job-submission-main.component';
 import {Observable, Subscription} from 'rxjs';
 

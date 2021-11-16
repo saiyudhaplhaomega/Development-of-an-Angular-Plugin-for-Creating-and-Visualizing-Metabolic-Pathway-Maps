@@ -4,6 +4,8 @@ import { DataItem } from '../data-navigation-tree/objects/data-item';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
+import {FileUploaderService} from '../../../core/services/file-uploader.service';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class FolderPageComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar,
               private dataService: DataService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private uploaderService: AuthenticatedSerializableObjectUploaderService) { }
 
   ngOnInit() {
     this.dataService.dataMap.subscribe( items => {
@@ -65,6 +68,7 @@ export class FolderPageComponent implements OnInit {
   }
 
   onAddProteinDatabase() {
+    // const fileMetaData = {filename: string, experimentuuid: string};
     const dialogRef = this.dialog.open(ProteinDatabaseDialogComponent, {
       disableClose: true,
     });
@@ -73,8 +77,16 @@ export class FolderPageComponent implements OnInit {
       if (dbName) {
         console.log('add proteindb');
         this.dataService.addProteinDatabase(this.uuid, dbName);
+        // fileMetaData.filename = dbName;
+        // fileMetaData.experimentuuid = this.uuid;
       }
     });
+
+    // this.uploaderService.postObjDifferentReturnValue(fileMetaData, file.metaDataAdress).subscribe(
+    //   result => {
+    //     console.log(result);
+    //   }
+    // )
   }
 
   onAddFolder() {
