@@ -3,7 +3,16 @@
   <div class="input-group-prepend">
     <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
   </div>
-  <input type="text" class="form-control" [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.jobLabel">
+  <input
+    style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+    type="text" class="form-control"
+    [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+    prophaneJobState.currentProphaneJob.parameters.jobLabel, '',true).isValid}"
+    [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.jobLabel">
+  <div class="invalid-feedback">
+    {{prophaneJobState.isFormInputValid(
+    prophaneJobState.currentProphaneJob.parameters.jobLabel, '',true).errorPrompt}}
+  </div>
 </div>
 
 <!-- Source selection -->

@@ -25,9 +25,11 @@ export class ProphaneJobStateService {
   // Website related variables
   proteinReportFile: File;
   fastaFile: File;
+  expertView = false;
 
   // TODO: better solution for this? --> popup message?
   jobUnavailableMessage = 'Service unavailable';
+
   // global variable that should be able to disable the website (because no server connection or server busy)
   jobUnavailable = false;
 
@@ -161,10 +163,6 @@ export class ProphaneJobStateService {
 
     this.formsAreValid = isValid;
     return {isValid, errorPrompt};
-  }
-
-  getAnnotationTasks() {
-    return this.currentProphaneJob.parameters.annotationTasks;
   }
 
   setDefaultAlgorithm(task) {

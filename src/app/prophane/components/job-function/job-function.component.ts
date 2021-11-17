@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
+import {
+  defaultAnnotationTasks,
+} from '../../objects/prophaneFormData';
 
 @Component({
   selector: 'app-job-function',
   templateUrl: './job-function.component.html',
   styleUrls: ['./job-function.component.css']
 })
-export class JobFunctionComponent implements OnInit {
+export class JobFunctionComponent {
 
-  constructor() { }
+  constructor(
+    public prophaneJobState: ProphaneJobStateService
+  ) { }
 
-  ngOnInit() {
+  addFuncTask() {
+    this.prophaneJobState.functasks++;
+    this.prophaneJobState.taskCounter++;
+    const task = JSON.parse(JSON.stringify(defaultAnnotationTasks.filter(
+      i => i['scope'] === 'Function')[0])); // Important: copy object instead of linking!
+    task['tasklabel'] = 'Functional Annotation Task ' + this.prophaneJobState.functasks;
+    this.prophaneJobState.currentProphaneJob.parameters.annotationTasks.push(task);
   }
-
 }

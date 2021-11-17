@@ -29,7 +29,6 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
 
   currentCardHeader: string;
   stepperAndCardLabels: JobLabel[];
-  expertView = false;
 
   constructor(
     public dialog: MatDialog,
@@ -55,7 +54,7 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
   }
 
   onViewChange() {
-    this.expertView = !this.expertView;
+    this.prophaneJobState.expertView = !this.prophaneJobState.expertView;
     // each time expert prop is changed, reset event is emitted to child
     this.resetStepper.next();
   }

@@ -22,25 +22,27 @@ import { JobQuantificationComponent } from './components/job-quantification/job-
 import { JobTaxonomyComponent } from './components/job-taxonomy/job-taxonomy.component';
 import { JobFunctionComponent } from './components/job-function/job-function.component';
 import { JobSubmitComponent } from './components/job-submit/job-submit.component';
+import {JobAnnotationComponent} from './components/job-annotation/job-annotation.component';
 
 @NgModule({
-  declarations: [
-    ProphaneJobControlComponent,
-    ProphaneAboutComponent,
-    // ProphaneJobSubmissionDialogComponent,
-    ProphaneResultViewComponent,
-    SafePipe,
-    SideBarResultsComponent,
-    ProphaneJobSubmissionMainComponent,
-    JobStepperComponent,
-    JobInputComponent,
-    FileInputComponent,
-    JobSampleGroupsComponent,
-    JobQuantificationComponent,
-    JobTaxonomyComponent,
-    JobFunctionComponent,
-    JobSubmitComponent,
-  ],
+    declarations: [
+        ProphaneJobControlComponent,
+        ProphaneAboutComponent,
+        // ProphaneJobSubmissionDialogComponent,
+        ProphaneResultViewComponent,
+        SafePipe,
+        SideBarResultsComponent,
+        ProphaneJobSubmissionMainComponent,
+        JobStepperComponent,
+        JobInputComponent,
+        FileInputComponent,
+        JobSampleGroupsComponent,
+        JobQuantificationComponent,
+        JobTaxonomyComponent,
+        JobFunctionComponent,
+        JobSubmitComponent,
+        JobAnnotationComponent,
+    ],
     imports: [
         CommonModule,
         Routing,

@@ -6,7 +6,7 @@
 
   <div class="d-flex justify-content-between">
     <app-job-stepper
-      [expertView]="expertView"
+      [expertView]="prophaneJobState.expertView"
       [jobLabelData]="stepperAndCardLabels"
       [resetStepper]="resetStepper.asObservable()"
       (currentStepLabel)="setCurrentStep($event)">
