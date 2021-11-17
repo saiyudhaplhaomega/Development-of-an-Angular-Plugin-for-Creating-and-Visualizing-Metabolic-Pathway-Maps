@@ -12,6 +12,8 @@ import {
   optionStrings} from '../../../objects/prophaneFormData';
 import {JobService} from '../../../job.service';
 import {ProphaneReportStyle} from '../prophane-job-submission-formdata';
+import {ProphaneTaskOptionString} from '../../../objects/prophanetaskoptionstring';
+import {ProphaneAnnotationTaskObject} from '../../../objects/prophaneannotationtaskjson';
 
 @Injectable({
   providedIn: 'root'
@@ -86,68 +88,130 @@ export class ProphaneJobStateService {
     return o1.id === o2.id;
   }
 
+  compare(o1, o2) {
+    return o1 === o2;
+  }
+
   filterAnnotationTasks(scope: any): any[] {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
   }
 
-  isFormInputValid(input: string, required: boolean, objArray?: any[], prop?: string) {
-    console.log(input);
+  isFormInputValid(input: string|number, type: string, required: boolean, objArray?: any[], prop?: string, min?: number, max?: number) {
     let isValid = true;
     let errorPrompt: string;
 
     while (isValid) {
+      // check 1: are required inputs provided?
       if (required) {
-        console.log(!!input);
-        // check 1: are required inputs provided?
-        const firstCheck = !!input;
-        if (!firstCheck) {
-          isValid = firstCheck;
+        const inputCheck = !!input;
+        if (!inputCheck) {
+          isValid = inputCheck;
           errorPrompt = 'Please enter something!';
           break;
         }
       }
+
+      // check 2: input type correct?
+      if (type) {
+        let regEx = null;
+
+        switch (type) {
+          case 'string':
+            regEx = /^[a-zA-Z]+$/;
+            break;
+          case 'evalue':
+            regEx = /^[0-9]+([.][0-9]*)?$/;
+            break;
+          case 'number':
+            regEx = /^-?[0-9]+([.][0-9]*)?$/;
+            break;
+          case 'int':
+            regEx = /^-?[0-9]+$/;
+            break;
+        }
+        if (!regEx.test(input)) {
+          isValid = false;
+          errorPrompt = 'One or more entered characters are not allowed.';
+          break;
+        }
+      }
+
+      // check 3: is input unique?
       if (objArray && prop) {
-        // check 2: is there any object with the same prop value as input?
-        const secondCheck = !(objArray.filter(obj => obj[prop] === input).length > 1);
-        if (!secondCheck) {
-          isValid = secondCheck;
+        const uniquenessCheck = !(objArray.filter(obj => obj[prop] === input).length > 1);
+        if (!uniquenessCheck) {
+          isValid = uniquenessCheck;
           errorPrompt = 'Please enter a unique value!';
           break;
         }
       }
+
+      // check 4: input in bounds?
+      if (type === 'int' || type === 'number' && min || max) {
+        const minMaxCheck = input >= min || input <= max;
+        if (!minMaxCheck) {
+          isValid = minMaxCheck;
+          errorPrompt = 'The provided value is out of bounds!';
+          break;
+        }
+      }
+
       break;
     }
 
     this.formsAreValid = isValid;
-    // console.log(objArray.filter(obj => obj[prop] === input));
-    // console.log(isValid);
-
     return {isValid, errorPrompt};
   }
 
-  // isUniqueTaskLabel(label, elemid) {
-  //   if (!this.isString(label, elemid)) {
-  //     return false;
-  //   }
-  //   var n = 0;
-  //   this.currentProphaneJob.parameters.annotationTasks.forEach(
-  //     task => {
-  //       if (task.tasklabel === label) {
-  //         n += 1;
-  //       }
-  //     });
-  //   if (n > 1) {
-  //     this.addFormInputErr(elemid);
-  //     return false;
-  //   }
-  //   else {
-  //     this.removeFormInputErr(elemid);
-  //     return true;
-  //   }
-  // }
-
   getAnnotationTasks() {
     return this.currentProphaneJob.parameters.annotationTasks;
+  }
+
+  setDefaultAlgorithm(task) {
+    task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
+    this.resetOptstr(task);
+  }
+
+  resetOptstr(task) {
+    task.optionstring = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
+        i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
+  }
+
+  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
+  }
+
+  showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    if (algoSel.avoid && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
+    // console.log(task.optionstring);
+    // console.log(option)
+    if (optionstring.filter(i => i.param === option.param).length > 0) {
+      return true;
+    }
+    return false;
+    // taskOptionStrings.forEach(opt1 => {
+    //  if (opt1 === dropDownItem) {
+    //    return true;
+    //  }
+    // });
+    // return false;
+    // TODO: this is a override until the above implementation works
+  }
+
+  addOptionString(task) {
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+      task.optionstring.push(task.formOptionStringSelection);
+    }
   }
 
 }

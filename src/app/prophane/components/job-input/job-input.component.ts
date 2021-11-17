@@ -34,14 +34,6 @@ export class JobInputComponent {
     this.prophaneJobState.proteinReportFile = files[0];
   }
 
-  // onExcludeAccessionChange() {
-  //   if (this.prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString === 'none') {
-  //     this.prophaneJobState.jobInputExcludeRegExValid = true;
-  //   } else {
-  //     this.prophaneJobState.jobInputExcludeRegExValid = false;
-  //   }
-  // }
-
   escapeRegExp(text: string) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }

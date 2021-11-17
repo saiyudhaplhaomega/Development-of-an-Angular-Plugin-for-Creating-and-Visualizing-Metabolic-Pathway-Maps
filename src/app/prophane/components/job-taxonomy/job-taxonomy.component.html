@@ -1,0 +1,259 @@
+<div *ngIf="prophaneJobState.filterAnnotationTasks('Taxonomy').length === 0">
+  no taxonomic annotation task defined yet
+  <mat-divider class="mb-3"> </mat-divider>
+</div>
+
+<ng-container *ngFor="let task of prophaneJobState.filterAnnotationTasks('Taxonomy'); let i = index">
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text rki-blue-input">Task Label</span>
+    </div>
+    <input
+      type="text" class="form-control"
+      [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(task.tasklabel, '',true,
+           prophaneJobState.filterAnnotationTasks('Taxonomy'),'tasklabel').isValid}"
+      [(ngModel)]="task.tasklabel">
+    <div class="input-group-append">
+      <button
+        style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+        class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+        —
+      </button>
+    </div>
+    <div class="invalid-feedback">
+      {{prophaneJobState.isFormInputValid(task.tasklabel, '',true,
+      prophaneJobState.filterAnnotationTasks('Taxonomy'), 'tasklabel').errorPrompt}}
+    </div>
+  </div>
+
+  <!-- Database & Version -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Reference Database</span>
+    </div>
+    <mat-select class="custom-select" [(value)]="task.database"
+                [compareWith]="prophaneJobState.compare"
+                (valueChange)="prophaneJobState.setDefaultAlgorithm(task)">
+      <ng-container *ngFor="let dbitem of databaseOptions">
+        <mat-option *ngIf="dbitem.scope === task.scope"
+                    [value]="dbitem.database">
+          {{dbitem.name}}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+    <div class="input-group-append custom-select">
+      <mat-select [(value)]="task.databaseversion" [disabled]="true" [compareWith]="prophaneJobState.compare">
+        <mat-option value="latest">latest</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <!-- Algorithm -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Search Algorithm</span>
+    </div>
+    <mat-select class="custom-select"
+                [(value)]="task.algorithm"
+                [compareWith]="prophaneJobState.compare"
+                (valueChange)="prophaneJobState.resetOptstr(task)">
+      <ng-container *ngFor="let dbitem of databaseOptions">
+        <ng-container *ngIf="dbitem.scope === task.scope && dbitem.database === task.database">
+          <ng-container *ngFor="let algo of dbitem.algorithm">
+            <mat-option [value]="algo">
+              {{ algo }}
+            </mat-option>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </mat-select>
+  </div>
+
+  <!-- The List of already added optionstrings -->
+  <ng-container *ngFor="let algoSel of task.optionstring">
+    <ng-container *ngIf="algoSel.valueType === 'none'">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            {{algoSel.param}}
+          </span>
+        </div>
+        <div class="input-group-append">
+          <button
+            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+            class="btn btn-outline-secondary w-sbtn" type="button"
+            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            —
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="algoSel.valueType === 'int'">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            {{algoSel.param}}
+          </span>
+        </div>
+        <input type="text" class="form-control"
+               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                    algoSel.defaultValue, 'int',true, [],'', algoSel.min, algoSel.max).isValid}"
+               [(ngModel)]="algoSel.defaultValue">
+        <div class="input-group-append">
+          <button
+            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+            class="btn btn-outline-secondary w-sbtn" type="button"
+            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            —
+          </button>
+        </div>
+        <div class="invalid-feedback">
+          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'int',true, [],'', algoSel.min, algoSel.max).errorPrompt}}
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="algoSel.valueType === 'string'">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            {{algoSel.param}}
+          </span>
+        </div>
+        <input class="form-control"
+               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                    algoSel.defaultValue, '',true, [],'').isValid}"
+               [(ngModel)]="algoSel.defaultValue">
+        <div class="input-group-append">
+          <button
+            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+            class="btn btn-outline-secondary w-sbtn" type="button"
+            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            —
+          </button>
+        </div>
+        <div class="invalid-feedback">
+          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, '',true, [],'').errorPrompt}}
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="algoSel.valueType === 'evalue' && prophaneJobState.showOption(algoSel, task)">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            evalue
+          </span>
+        </div>
+        <input class="form-control"
+               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                    algoSel.defaultValue, 'evalue',true, [],'').isValid}"
+               [(ngModel)]="algoSel.defaultValue">
+        <div
+          style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+          class="input-group-append custom-select">
+          <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
+            <mat-option *ngFor="let evalueRange of prophaneJobState.evalueOptions"
+                        [value]="evalueRange.numerical">
+              {{ evalueRange.text}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="invalid-feedback">
+          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'evalue',true, [],'').errorPrompt}}
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="algoSel.valueType === 'enum'">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            {{algoSel.param}}
+          </span>
+        </div>
+        <div class="input-group-append custom-select">
+          <mat-select [(value)]="algoSel.defaultValue" [compareWith]="prophaneJobState.compare">
+            <ng-container *ngFor="let enumVal of algoSel.values">
+              <mat-option [value]="enumVal">
+                {{enumVal}}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary w-sbtn" type="button"
+                  (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            —
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="algoSel.valueType === 'number'">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            {{algoSel.param}}
+          </span>
+        </div>
+        <input
+          type="text" class="form-control"
+          [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                    algoSel.defaultValue, 'number',true, [],'', algoSel.min, algoSel.max).isValid}"
+          [(ngModel)]="algoSel.defaultValue">
+        <div class="input-group-append">
+          <button
+            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+            class="btn btn-outline-secondary w-sbtn" type="button"
+            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            —
+          </button>
+        </div>
+        <div class="invalid-feedback">
+          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'number',true, [],'').errorPrompt}}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- Advanced Option -->
+  <div class="input-group mb-3">
+    <!-- The Dropbox that displays optionstrings that can be added -->
+    <div class="input-group-prepend">
+      <span class="input-group-text">Add Advanced Options</span>
+    </div>
+    <ng-container *ngFor="let db of prophaneJobState.optionStrings">
+      <ng-container *ngIf="db.database === task.database">
+        <ng-container *ngFor="let algo of db.algs">
+          <ng-container *ngIf="algo.name == task.algorithm">
+            <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
+                        [(value)]="task.formOptionStringSelection" [compareWith]="prophaneJobState.compare"
+                        placeholder="Choose Option">
+              <ng-container *ngFor="let option of algo.options">
+                <ng-container *ngIf="!prophaneJobState.isAlreadyInTask(task.optionstring, option)">
+                  <mat-option [value]="option">
+                    {{option.param}}
+                  </mat-option>
+                </ng-container>
+              </ng-container>
+            </mat-select>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="prophaneJobState.addOptionString(task)">
+                +
+              </button>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <mat-divider class="mb-3"> </mat-divider>
+</ng-container>
+
+<button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addTaxTask()'>
+  Add Task
+</button>

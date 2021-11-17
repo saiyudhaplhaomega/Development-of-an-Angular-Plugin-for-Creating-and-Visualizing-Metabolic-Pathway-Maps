@@ -46,8 +46,7 @@
   </div>
   <mat-select class="custom-select"
               [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption"
-              [compareWith]="prophaneJobState.compareByID"
-              (change)="onExcludeAccessionChange()">
+              [compareWith]="prophaneJobState.compareByID">
     <mat-option *ngFor="let contitem of this.prophaneJobState.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
   </mat-select>
 </div>
@@ -61,10 +60,10 @@
              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"
              (change)="setContaminationRegEx()"
              [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, true).isValid}">
+                prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, '',true).isValid}">
     <div class="invalid-feedback">
       {{prophaneJobState.isFormInputValid(
-          prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, true).errorPrompt}}
+          prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, '',true).errorPrompt}}
     </div>
   </div>
 </ng-container>
