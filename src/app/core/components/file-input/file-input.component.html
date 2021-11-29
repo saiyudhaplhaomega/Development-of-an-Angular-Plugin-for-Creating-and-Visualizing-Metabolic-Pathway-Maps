@@ -3,7 +3,7 @@
     <span class="input-group-text">{{labels.inputGroupLabel}}</span>
   </div>
   <div class="custom-file">
-    <input type="file" accept=".csv" class="custom-file-input" id="mpa" #selection
+    <input type="file" [accept]="inputType" class="custom-file-input" id="mpa" #selection
            (change)="onFileChange(selection.files)"
            class="custom-file-input">
     <label *ngIf="!selectedFile"

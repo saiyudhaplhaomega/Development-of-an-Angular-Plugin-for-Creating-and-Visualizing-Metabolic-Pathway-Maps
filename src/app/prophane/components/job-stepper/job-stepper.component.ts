@@ -31,8 +31,16 @@ export class JobStepperComponent implements OnInit, OnDestroy {
     this.resetStepperSubscription.unsubscribe();
   }
 
-  setCurrentStep() {
+  onStepSelection() {
     this.currentStepLabel.emit(this.stepper.selected.label);
+  }
+
+  nextStep() {
+    this.stepper.selectedIndex++;
+  }
+
+  prevStep() {
+    this.stepper.selectedIndex--;
   }
 
 }

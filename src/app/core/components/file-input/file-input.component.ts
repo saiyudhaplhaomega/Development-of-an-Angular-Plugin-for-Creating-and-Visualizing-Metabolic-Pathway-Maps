@@ -1,20 +1,26 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.css']
 })
-export class FileInputComponent {
+export class FileInputComponent implements OnChanges {
 
-  @Input() onFileChangeMethod: (files: FileList) => void;
   @Input() selectedFile: File;
   @Input() labels: {inputGroupLabel: string, inputLabel: string};
+  @Input() inputType: string;
 
-  constructor() { }
+  @Output() fileSelected = new EventEmitter<FileList>();
 
-  onFileChange(selection: FileList) {
-    this.onFileChangeMethod(selection);
+  constructor( ) { }
+
+  ngOnChanges() {
+    console.log(this.selectedFile);
+  }
+
+  onFileChange(files: FileList) {
+    this.fileSelected.emit(files);
   }
 
 }

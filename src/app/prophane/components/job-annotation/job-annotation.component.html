@@ -224,7 +224,7 @@
     <ng-container *ngFor="let db of prophaneJobState.optionStrings">
       <ng-container *ngIf="db.database === task.database">
         <ng-container *ngFor="let algo of db.algs">
-          <ng-container *ngIf="algo.name == task.algorithm">
+          <ng-container *ngIf="algo.name === task.algorithm">
             <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
                         [(value)]="task.formOptionStringSelection" [compareWith]="prophaneJobState.compare"
                         placeholder="Choose Option">

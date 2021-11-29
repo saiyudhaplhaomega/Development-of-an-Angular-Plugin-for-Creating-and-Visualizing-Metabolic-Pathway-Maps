@@ -15,8 +15,8 @@ export class JobInputComponent {
   readonly reportOptions = prophaneReportStyleLabels;
 
   constructor(
-    public prophaneJobState: ProphaneJobStateService) { }
-
+    public prophaneJobState: ProphaneJobStateService
+  ) { }
 
   onSourceChange() {
     this.prophaneJobState.proteinReportFile = undefined;
@@ -26,12 +26,12 @@ export class JobInputComponent {
     this.prophaneJobState.groupCount = 0;
   }
 
-  onFastaChange(files: FileList) {
-    this.prophaneJobState.fastaFile = files[0];
-  }
-
   onCSVChange(files: FileList) {
     this.prophaneJobState.proteinReportFile = files[0];
+  }
+
+  onFastaChange(files: FileList) {
+    this.prophaneJobState.fastaFile = files[0];
   }
 
   escapeRegExp(text: string) {

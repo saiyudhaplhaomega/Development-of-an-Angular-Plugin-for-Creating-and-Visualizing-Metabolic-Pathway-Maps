@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {jobLabelData} from '../../objects/prophaneFormData';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Subject} from 'rxjs';
@@ -9,6 +9,7 @@ import {NgbModal, NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {ProphaneJobStateService} from './prophane-job-state-service/prophane-job-state.service';
+import {JobStepperComponent} from '../job-stepper/job-stepper.component';
 
 export interface JobLabel {
   stepperLabel: string;
@@ -29,6 +30,8 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
 
   currentCardHeader: string;
   stepperAndCardLabels: JobLabel[];
+
+  @ViewChild('prophaneJobStepper') jobStepper: JobStepperComponent;
 
   constructor(
     public dialog: MatDialog,
@@ -57,5 +60,13 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
     this.prophaneJobState.expertView = !this.prophaneJobState.expertView;
     // each time expert prop is changed, reset event is emitted to child
     this.resetStepper.next();
+  }
+
+  nextStep() {
+    this.jobStepper.nextStep();
+  }
+
+  prevStep() {
+    this.jobStepper.prevStep();
   }
 }

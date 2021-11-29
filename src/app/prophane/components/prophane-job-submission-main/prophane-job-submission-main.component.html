@@ -1,39 +1,62 @@
-<div fxFlex class="bg-white">
+<div fxFlex class="bg-white" style="height: 100%">
 
   <div *ngIf="this.prophaneJobState.jobUnavailable" class="align-content-center mb-2 alert-danger">
     {{this.prophaneJobState.jobUnavailableMessage}}
   </div>
 
-  <div class="d-flex justify-content-between">
+  <div class="content-grid-container">
     <app-job-stepper
+      class="min-w-100"
+      #prophaneJobStepper
       [expertView]="prophaneJobState.expertView"
       [jobLabelData]="stepperAndCardLabels"
       [resetStepper]="resetStepper.asObservable()"
       (currentStepLabel)="setCurrentStep($event)">
     </app-job-stepper>
 
-    <div class="jobCards">
-      <div class="card w-50 ml-job-form min-w-600">
-        <div class="card-header">
-          <h5>
-            {{currentCardHeader}}
-            <span class="card-title-button-wrapper" *ngIf="authGuard.allowExpert()">
+    <div style="min-height: 0; display: flex; flex-direction: column">
+      <div class="jobCards responsive-job-card">
+        <div class="card ml-job-form min-w-600" style="min-height: 0">
+          <div class="card-header">
+            <h5>
+              {{currentCardHeader}}
+              <span class="card-title-button-wrapper" *ngIf="authGuard.allowExpert()">
               <mat-slide-toggle color (change)="onViewChange()">expert</mat-slide-toggle>
             </span>
-          </h5>
-        </div>
+            </h5>
+          </div>
 
-        <div class="card-body">
-          <app-job-input *ngIf="currentCardHeader === 'Input'"></app-job-input>
-          <app-job-sample-groups *ngIf="currentCardHeader === 'Sample Grouping'"></app-job-sample-groups>
-          <app-job-quantification *ngIf="currentCardHeader === 'Quantification Method'"></app-job-quantification>
-          <app-job-taxonomy *ngIf="currentCardHeader === 'Taxonomic Annotation'"></app-job-taxonomy>
-          <app-job-function *ngIf="currentCardHeader === 'Functional Annotation'"></app-job-function>
-          <app-job-submit *ngIf="currentCardHeader === 'Summary'"></app-job-submit>
-        </div>
+          <div class="card-body" style="overflow-y: auto">
+            <div style="display: flex; flex-direction: column; padding-top: 1rem; padding-bottom: 1rem">
+            <app-job-input *ngIf="currentCardHeader === 'Input'"></app-job-input>
+            <app-job-sample-groups *ngIf="currentCardHeader === 'Sample Grouping'"></app-job-sample-groups>
+            <app-job-quantification *ngIf="currentCardHeader === 'Quantification Method'"></app-job-quantification>
+            <app-job-taxonomy *ngIf="currentCardHeader === 'Taxonomic Annotation'"></app-job-taxonomy>
+            <app-job-function *ngIf="currentCardHeader === 'Functional Annotation'"></app-job-function>
+            <app-job-submit *ngIf="currentCardHeader === 'Summary'"></app-job-submit>
+            </div>
+          </div>
 
+        </div>
+      </div>
+
+      <div class="pl-4 mt-1 mb-5 min-w-600">
+        <button mat-button (click)="prophaneJobState.saveForm()" class="float-left">save input</button>
+        <button
+          mat-button
+          *ngIf="currentCardHeader !== 'Summary' "
+          (click)="nextStep()" class="float-right">
+          next &#187;
+        </button>
+        <button
+          mat-button *ngIf="currentCardHeader !== 'Input'"
+          (click)="prevStep()"
+          class="float-right">
+          &#171; back
+        </button>
       </div>
     </div>
+
   </div>
 
 </div>

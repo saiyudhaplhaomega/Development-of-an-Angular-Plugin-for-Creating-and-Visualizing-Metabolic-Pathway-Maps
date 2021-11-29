@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ProphaneJobObject} from '../../../objects/prophanejobjson';
 import {ProphaneParamObject} from '../../../objects/prophaneparamjson';
 import {ProphaneSampleGroupObject} from '../../../objects/prophanesamplegroupjson';
@@ -14,6 +14,11 @@ import {JobService} from '../../../job.service';
 import {ProphaneReportStyle} from '../prophane-job-submission-formdata';
 import {ProphaneTaskOptionString} from '../../../objects/prophanetaskoptionstring';
 import {ProphaneAnnotationTaskObject} from '../../../objects/prophaneannotationtaskjson';
+import {UploadProgressService} from '../../../../core/services/upload-progress.service';
+import {UploadDialogComponent} from '../../../../core/components/dialog/upload-dialog.component';
+import {MatDialog} from '@angular/material';
+import {HttpEventType} from '@angular/common/http';
+import {FileUploaderService} from '../../../../core/services/file-uploader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +59,15 @@ export class ProphaneJobStateService {
   readonly databaseOptions = databaseOptions;
   readonly optionStrings = optionStrings;
 
-  constructor(private jobService: JobService) { }
+  proteinReportProgress: number;
+  fastaProgress: number;
+
+  constructor(
+    private jobService: JobService,
+    private _uploadProgressService: UploadProgressService,
+    public dialog: MatDialog,
+    private uploaderService: FileUploaderService,
+  ) { }
 
   initializeProphaneJobState() {
     this.currentProphaneJob = new ProphaneJobObject();
@@ -94,8 +107,55 @@ export class ProphaneJobStateService {
     return o1 === o2;
   }
 
-  filterAnnotationTasks(scope: any): any[] {
+  filterAnnotationTasks(scope: string): any[] {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
+  }
+
+  setDefaultAlgorithm(task: ProphaneAnnotationTaskObject) {
+    task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
+    this.resetOptstr(task);
+  }
+
+  resetOptstr(task: ProphaneAnnotationTaskObject) {
+    task.optionstring = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
+        i => i['isDefault'] === '1');
+    task.formOptionStringSelection = optionStrings.filter(
+      i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
+  }
+
+  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
+  }
+
+  showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+    if (algoSel.avoid && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
+    // console.log(task.optionstring);
+    // console.log(option)
+    if (optionstring.filter(i => i.param === option.param).length > 0) {
+      return true;
+    }
+    return false;
+    // taskOptionStrings.forEach(opt1 => {
+    //  if (opt1 === dropDownItem) {
+    //    return true;
+    //  }
+    // });
+    // return false;
+    // TODO: this is a override until the above implementation works
+  }
+
+  addOptionString(task: ProphaneAnnotationTaskObject) {
+    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
+      task.optionstring.push(task.formOptionStringSelection);
+    }
   }
 
   isFormInputValid(input: string|number, type: string, required: boolean, objArray?: any[], prop?: string, min?: number, max?: number) {
@@ -165,51 +225,115 @@ export class ProphaneJobStateService {
     return {isValid, errorPrompt};
   }
 
-  setDefaultAlgorithm(task) {
-    task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
-    this.resetOptstr(task);
+  openUploadDialog(): void {
+    this._uploadProgressService.setUUID(this.currentProphaneJob.prophaneJobUUID);
+    const dialogRef = this.dialog.open(UploadDialogComponent, {
+      disableClose: true,
+      data: {noRedirect: false, successMessage: 'Job successfully submitted.'},
+      id: 'prophaneUpload'
+    });
   }
 
-  resetOptstr(task) {
-    task.optionstring = optionStrings.filter(
-      i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
-        i => i['isDefault'] === '1');
-    task.formOptionStringSelection = optionStrings.filter(
-      i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
-  }
-
-  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
-    task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
-  }
-
-  showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
-    if (algoSel.avoid && task.optionstring.filter(e => algoSel.avoid.indexOf(e.param) >= 0).length > 0) {
-      return false;
-    } else {
-      return true;
+  uploadCSV(): void {
+    if (this.proteinReportFile) {
+      this._uploadProgressService.addToTotal(this.proteinReportFile.size);
+      this.uploaderService.postFile(this.proteinReportFile,
+        'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this._uploadProgressService.changeReportLoaded(event.loaded);
+          } else if (event.type === HttpEventType.Response) {
+            let response: any;
+            response = event.body;
+            this.proteinReportProgress = 0;
+          }
+        },
+        error => {
+          if (error.status === 500) {
+            // handle failed upload
+            if (this.dialog.getDialogById('prophaneUpload')) {
+              this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
+            }
+          }
+        }
+      );
     }
   }
 
-  isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
-    // console.log(task.optionstring);
-    // console.log(option)
-    if (optionstring.filter(i => i.param === option.param).length > 0) {
-      return true;
+  uploadFasta(): void {
+    if (this.fastaFile) {
+      this._uploadProgressService.addToTotal(this.fastaFile.size);
+      this.uploaderService.postFile(this.fastaFile,
+        'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this._uploadProgressService.changeFastaLoaded(event.loaded);
+          } else if (event.type === HttpEventType.Response) {
+            let response: any;
+            response = event.body;
+            this.fastaProgress = 0;
+          }
+        },
+        error => {
+          if (error.status === 500) {
+            // handle failed upload
+            if (this.dialog.getDialogById('prophaneUpload')) {
+              this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
+            }
+          } else {
+            throw error;
+          }
+        }
+      );
     }
-    return false;
-    // taskOptionStrings.forEach(opt1 => {
-    //  if (opt1 === dropDownItem) {
-    //    return true;
-    //  }
-    // });
-    // return false;
-    // TODO: this is a override until the above implementation works
   }
 
-  addOptionString(task) {
-    if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
-      task.optionstring.push(task.formOptionStringSelection);
-    }
+  setEmapperEvalue(): void {
+    this.currentProphaneJob.parameters.annotationTasks.forEach(
+      task => {
+        if (task.database === 'eggnog') {
+          const m = task.optionstring.filter(i => i['param'] === 'm')[0]['defaultValue'];
+          task.optionstring.forEach(
+            parameter => {
+              if (parameter.param === 'evalue') {
+                if (m === 'diamond') {
+                  parameter.param = 'seed_ortholog_evalue';
+                } else {
+                  parameter.param = 'hmm_evalue';
+                }
+                return;
+              }
+            });
+        }
+      });
+  }
+
+  startProphaneJob(): void {
+    this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
+    this.currentProphaneJob.fastaFilename = this.fastaFile.name;
+    this.setEmapperEvalue();
+    this.jobService.addJob(this.currentProphaneJob).subscribe();
+  }
+
+  submitJob(): void {
+    this._uploadProgressService.reset();
+    this.openUploadDialog();
+    this.uploadCSV();
+    this.uploadFasta();
+    this.startProphaneJob();
+  }
+
+  saveForm(): void {
+    // save current job to server
+    this.jobService.saveJob(this.currentProphaneJob).subscribe(res => {
+      this.currentProphaneJob = res;
+      // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+      if (res.status === 'JOB_REJECTED') {
+        this.jobUnavailable = true;
+      } else {
+        this.jobUnavailable = false;
+      }
+    });
   }
 
 }

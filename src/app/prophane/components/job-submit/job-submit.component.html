@@ -61,18 +61,17 @@
   <thead>
   </thead>
   <tbody>
-  <tr *ngIf="prophaneJobState.currentProphaneJob.parameters.sampleGroups.length == 0">
+  <tr *ngIf="prophaneJobState.currentProphaneJob.parameters.sampleGroups.length === 0">
     <th scope="row" class="ml-summary-col" class="ml-summary-col">Sample Groups:</th>
     <td>
       not defined (expert option)
     </td>
   </tr>
   <tr *ngFor="let group of prophaneJobState.currentProphaneJob.parameters.sampleGroups">
-    <th scope="row" class="ml-summary-col">
-      Sample Group:
-    </th>
+    <th scope="row" class="ml-summary-col"> Sample Groups: </th>
     <td>
-      {{ group.groupname }}<br>
+      {{ group.groupname }}
+      <br>
       <mat-list dense>
         <mat-list-item *ngFor="let member of group.groupmembersGUI"> {{ member.name }} </mat-list-item>
       </mat-list>
@@ -109,7 +108,7 @@
   </thead>
   <tbody>
   <tr *ngIf="prophaneJobState.filterAnnotationTasks('Taxonomy').length === 0">
-    <th scope="row" class="ml-summary-col">Taxonomic Annotation</th>
+    <th scope="row" class="ml-summary-col">Taxonomic Annotation:</th>
     <td>
       not defined
     </td>
@@ -171,7 +170,7 @@
   </tbody>
 </table>
 
-<div *ngIf="prophaneJobState.hasAdvancedOpts()" class="alert">
+<div *ngIf="hasAdvancedOpts()" class="alert">
   You have used advanced options in one or more annotation tasks. Please make sure that the options used do not conflict
   with each other and are supported by the selected database, otherwise the analysis will be terminated abnormally.
 </div>
@@ -179,8 +178,11 @@
         (click)="prophaneJobState.requestNewJob()" class="float-left"> Reset
 </button>
 <button mat-raised-button color="primary" class="float-right"
-        [disabled]="(formInputError.length > 0 || jobUnavailable || !proteinReportFile || !fastaFile || currentProphaneJob.parameters.annotationTasks.length === 0)"
-        (click)="startButton()">Submit
+        [disabled]="(
+        !prophaneJobState.formsAreValid ||
+         prophaneJobState.jobUnavailable ||
+          !prophaneJobState.proteinReportFile ||
+           !prophaneJobState.fastaFile ||
+            prophaneJobState.currentProphaneJob.parameters.annotationTasks.length === 0)"
+        (click)=" prophaneJobState.submitJob()">Submit
 </button>
-
-

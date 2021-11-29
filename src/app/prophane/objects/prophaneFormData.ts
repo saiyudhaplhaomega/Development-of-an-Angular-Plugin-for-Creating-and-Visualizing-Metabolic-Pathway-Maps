@@ -1,4 +1,4 @@
-import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../components/prophane-job-submission/prophane-job-submission-formdata';
+import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../components/prophane-job-submission-main/prophane-job-submission-formdata';
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
@@ -9,31 +9,37 @@ import {TaxonomyAdvandedOptionsJson} from './taxonomyAdvandedOptions';
 
 export const jobLabelData = [
   {
+    index: 0,
     stepperLabel: 'Input',
     cardHeader: 'Input',
     expertsOnly: false,
   },
   {
+    index: 1,
     stepperLabel: 'Sample Grouping',
     cardHeader: 'Sample Grouping',
     expertsOnly: true,
   },
   {
+    index: 2,
     stepperLabel: 'Quantification',
     cardHeader: 'Quantification Method',
     expertsOnly: true,
   },
   {
+    index: 3,
     stepperLabel: 'Taxonomy',
     cardHeader: 'Taxonomic Annotation',
     expertsOnly: true,
   },
   {
+    index: 4,
     stepperLabel: 'Function',
     cardHeader: 'Functional Annotation',
     expertsOnly: true,
   },
   {
+    index: 5,
     stepperLabel: 'Submit',
     cardHeader: 'Summary',
     expertsOnly: false,
@@ -51,13 +57,13 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
 ];
 
 export const prophaneReportStyleLabels: ProphaneReportStyleLabel[] = [
-  {id: 0, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)'},
-  {id: 1, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)'},
-  {id: 2, prependLabel: 'Report file', htmlInputLabel: 'Choose Scaffold file (.xls)'},
-  {id: 3, prependLabel: 'Report file', htmlInputLabel: 'Choose Generic Report file (.tsv, .txt)'},
-  {id: 4, prependLabel: 'Report file', htmlInputLabel: 'Choose MzTab file (.mztab)'},
-  {id: 5, prependLabel: 'Report file', htmlInputLabel: 'Choose MzIdent2.0 file (.mzid)'},
-  {id: 6, prependLabel: 'Report file', htmlInputLabel: 'Choose Proteome Discoverer protein group excel file (.xlsx)'},
+  {id: 0, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)', inputType: '.csv'},
+  {id: 1, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)', inputType: '.csv'},
+  {id: 2, prependLabel: 'Report file', htmlInputLabel: 'Choose Scaffold file (.xls)', inputType: '.xls'},
+  {id: 3, prependLabel: 'Report file', htmlInputLabel: 'Choose Generic Report file (.tsv, .txt)', inputType: '.tsv,.txt'},
+  {id: 4, prependLabel: 'Report file', htmlInputLabel: 'Choose MzTab file (.mztab)', inputType: '.mztab'},
+  {id: 5, prependLabel: 'Report file', htmlInputLabel: 'Choose MzIdent2.0 file (.mzid)', inputType: '.mzid'},
+  {id: 6, prependLabel: 'Report file', htmlInputLabel: 'Choose Proteome Discoverer protein group excel file (.xlsx)', inputType: '.xlsx'},
 ];
 
 export const quantdata: ProphaneQuantDataObject[] = [

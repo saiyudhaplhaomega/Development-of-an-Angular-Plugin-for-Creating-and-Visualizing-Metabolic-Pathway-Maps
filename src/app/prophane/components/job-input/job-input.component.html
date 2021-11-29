@@ -34,18 +34,22 @@
     *ngIf="prophaneJobState.currentProphaneJob.parameters.reportStyle.valueString &&
     prophaneJobState.currentProphaneJob.parameters.reportStyle.id === reportOption.id">
     <app-file-input
-      [onFileChangeMethod]="onCSVChange"
+      (fileSelected)="onCSVChange($event)"
       [selectedFile]="prophaneJobState.proteinReportFile"
-      [labels]="{inputGroupLabel: reportOption.prependLabel, inputLabel: reportOption.htmlInputLabel}">
+      [labels]="{inputGroupLabel: reportOption.prependLabel, inputLabel: reportOption.htmlInputLabel}"
+      [inputType]="reportOption.inputType"
+    >
     </app-file-input>
   </ng-container>
 </ng-container>
 
 <!-- Fasta -->
 <app-file-input
-  [onFileChangeMethod]="onFastaChange"
-  [selectedFile]="prophaneJobState.proteinReportFile"
-  [labels]="{inputGroupLabel: 'FASTA file', inputLabel: 'Choose file (.fasta, .faa, .fa)'}">
+  (fileSelected)="onFastaChange($event)"
+  [selectedFile]="prophaneJobState.fastaFile"
+  [labels]="{inputGroupLabel: 'FASTA file', inputLabel: 'Choose file (.fasta, .faa, .fa)'}"
+  [inputType]="'.fasta, .faa, .fa'"
+>
 </app-file-input>
 
 <!-- Exclude -->

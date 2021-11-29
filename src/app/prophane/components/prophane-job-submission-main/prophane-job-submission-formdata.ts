@@ -4,3 +4,9 @@ export interface ProphaneReportStyle {
   valueString: string;
 }
 
+export interface ProphaneReportStyleLabel {
+  id: number;
+  prependLabel: string;
+  htmlInputLabel: string;
+  inputType: string;
+}

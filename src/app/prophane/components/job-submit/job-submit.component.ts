@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
 
 @Component({
@@ -6,7 +6,7 @@ import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-
   templateUrl: './job-submit.component.html',
   styleUrls: ['./job-submit.component.css']
 })
-export class JobSubmitComponent {
+export class JobSubmitComponent implements OnInit{
 
   constructor(
     public prophaneJobState: ProphaneJobStateService
@@ -17,7 +17,7 @@ export class JobSubmitComponent {
   }
 
   optionstringToString(optstr) {
-    let s = [];
+    const s = [];
     let i;
     if (optstr.length === 1) {
       return '-';
@@ -32,4 +32,20 @@ export class JobSubmitComponent {
     return s.sort().join('; ');
   }
 
+  ngOnInit(): void {
+    console.log(this.prophaneJobState);
+  }
+
+  hasAdvancedOpts() {
+    let advanced = false;
+    this.prophaneJobState.currentProphaneJob.parameters.annotationTasks.forEach(
+      task => {
+        console.log(task.optionstring);
+        if (task.optionstring.filter(i => i.isDefault === '0').length > 0) {
+          advanced = true;
+        }
+      }
+    );
+    return advanced;
+  }
 }
