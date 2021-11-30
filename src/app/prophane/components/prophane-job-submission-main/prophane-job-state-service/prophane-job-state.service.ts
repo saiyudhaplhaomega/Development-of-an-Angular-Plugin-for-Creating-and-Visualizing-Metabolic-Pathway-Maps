@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnChanges} from '@angular/core';
 import {ProphaneJobObject} from '../../../objects/prophanejobjson';
 import {ProphaneParamObject} from '../../../objects/prophaneparamjson';
 import {ProphaneSampleGroupObject} from '../../../objects/prophanesamplegroupjson';
@@ -23,7 +23,7 @@ import {FileUploaderService} from '../../../../core/services/file-uploader.servi
 @Injectable({
   providedIn: 'root'
 })
-export class ProphaneJobStateService {
+export class ProphaneJobStateService implements OnChanges {
 
   currentProphaneJob: ProphaneJobObject;
 
@@ -40,6 +40,7 @@ export class ProphaneJobStateService {
 
   // job data is tracked in this variable
   formsAreValid = true;
+  formErrors = new Map();
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -69,7 +70,7 @@ export class ProphaneJobStateService {
     private uploaderService: FileUploaderService,
   ) { }
 
-  initializeProphaneJobState() {
+  async initializeProphaneJobState() {
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.contaminationOption = this.contoptions[0];
@@ -83,7 +84,8 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-    this.requestNewJob();
+    const job = this.requestNewJob();
+    console.log(job);
   }
 
   // Server job related methods
@@ -91,12 +93,16 @@ export class ProphaneJobStateService {
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    this.jobService.requestJob(this.currentProphaneJob).subscribe(res => {
-      this.currentProphaneJob = res;
-      // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
-      // TODO: obsolete? --> rework
-      this.jobUnavailable = res.status === 'JOB_REJECTED';
-    });
+      this.jobService.requestJob(this.currentProphaneJob).subscribe(res => {
+        this.currentProphaneJob = res;
+        // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
+        // TODO: obsolete? --> rework
+        this.jobUnavailable = res.status === 'JOB_REJECTED';
+
+      }, (error) => {
+        console.log('==============================');
+        console.log(error);
+      });
   }
 
   compareByID(o1: ProphaneReportStyle, o2: ProphaneReportStyle) {
@@ -158,14 +164,29 @@ export class ProphaneJobStateService {
     }
   }
 
-  isFormInputValid(input: string|number, type: string, required: boolean, objArray?: any[], prop?: string, min?: number, max?: number) {
+  isFormInputValid(input: any, checkProperty: string, required: boolean, objArray?: any[]) {
+    /**
+     * Validates form Inputs
+     * @param {string} formInputId - id to assign form input errors
+     * @param {any} input - object containing a property that needs to be validated
+     * @param {string} checkProperty - property to be validated
+     * @param {boolean} required - true if form value needs to be set
+     * @param {any[]} [objArray] - Array containing objects of the input type; Used to validte uniqueness of input. If more than two
+     * instances of input.checkProperty are found validator returns false
+     * @return {boolean, string} {isValid, errorPrompt} - isValid defines status of formfield for css styling, errorPrompt contains hint for
+     * users
+     */
+    console.log(input);
     let isValid = true;
     let errorPrompt: string;
+    const type = input.hasOwnProperty('valueType') ? input.valueType : 'string';
+    const min = input.min;
+    const max = input.max;
 
-    while (isValid) {
+    while (true) {
       // check 1: are required inputs provided?
       if (required) {
-        const inputCheck = !!input;
+        const inputCheck = !!input[checkProperty];
         if (!inputCheck) {
           isValid = inputCheck;
           errorPrompt = 'Please enter something!';
@@ -179,7 +200,7 @@ export class ProphaneJobStateService {
 
         switch (type) {
           case 'string':
-            regEx = /^[a-zA-Z]+$/;
+            regEx = /^[a-zA-Z0-9_ ]+$/;
             break;
           case 'evalue':
             regEx = /^[0-9]+([.][0-9]*)?$/;
@@ -191,7 +212,7 @@ export class ProphaneJobStateService {
             regEx = /^-?[0-9]+$/;
             break;
         }
-        if (!regEx.test(input)) {
+        if (!regEx.test(input[checkProperty])) {
           isValid = false;
           errorPrompt = 'One or more entered characters are not allowed.';
           break;
@@ -199,8 +220,8 @@ export class ProphaneJobStateService {
       }
 
       // check 3: is input unique?
-      if (objArray && prop) {
-        const uniquenessCheck = !(objArray.filter(obj => obj[prop] === input).length > 1);
+      if (objArray && checkProperty) {
+        const uniquenessCheck = !(objArray.filter(obj => obj[checkProperty] === input[checkProperty]).length > 1);
         if (!uniquenessCheck) {
           isValid = uniquenessCheck;
           errorPrompt = 'Please enter a unique value!';
@@ -209,18 +230,18 @@ export class ProphaneJobStateService {
       }
 
       // check 4: input in bounds?
-      if (type === 'int' || type === 'number' && min || max) {
-        const minMaxCheck = input >= min || input <= max;
+      if ((type === 'int' || type === 'number') && (min || max)) {
+        const minMaxCheck = input[checkProperty] >= min || input[checkProperty] <= max;
         if (!minMaxCheck) {
           isValid = minMaxCheck;
           errorPrompt = 'The provided value is out of bounds!';
           break;
         }
       }
-
       break;
     }
 
+    console.log(isValid);
     this.formsAreValid = isValid;
     return {isValid, errorPrompt};
   }
@@ -334,6 +355,10 @@ export class ProphaneJobStateService {
         this.jobUnavailable = false;
       }
     });
+  }
+
+  ngOnChanges(): void {
+    console.log(this.formsAreValid);
   }
 
 }

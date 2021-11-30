@@ -59,7 +59,8 @@ custom-table-warning {
   padding-top: 3rem;
   padding-bottom: 3rem;
   display: grid;
-  grid-template-columns: minmax(200px, 1fr) 50% 1fr;
+  grid-template-columns: minmax(250px, 1fr) minmax(600px, 2fr) 1fr;
+  grid-gap: 1rem;
   justify-items: stretch;
 }
 

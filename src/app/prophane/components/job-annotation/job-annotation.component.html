@@ -7,8 +7,8 @@
     </div>
     <input
       type="text" class="form-control"
-      [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(task.tasklabel, '',true,
-           prophaneJobState.filterAnnotationTasks('Taxonomy'),'tasklabel').isValid}"
+      [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(task, 'tasklabel',true,
+           prophaneJobState.filterAnnotationTasks('Taxonomy')).isValid}"
       [(ngModel)]="task.tasklabel">
     <div class="input-group-append">
       <button
@@ -18,8 +18,8 @@
       </button>
     </div>
     <div class="invalid-feedback">
-      {{prophaneJobState.isFormInputValid(task.tasklabel, '',true,
-      prophaneJobState.filterAnnotationTasks('Taxonomy'), 'tasklabel').errorPrompt}}
+      {{prophaneJobState.isFormInputValid(task, 'tasklabel',true,
+      prophaneJobState.filterAnnotationTasks('Taxonomy')).errorPrompt}}
     </div>
   </div>
 
@@ -67,7 +67,7 @@
   </div>
 
   <!-- The List of already added optionstrings -->
-  <ng-container *ngFor="let algoSel of task.optionstring">
+  <ng-container *ngFor="let algoSel of task.optionstring; let i = index" >
     <ng-container *ngIf="algoSel.valueType === 'none'">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -95,7 +95,7 @@
         </div>
         <input type="text" class="form-control"
                [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel.defaultValue, 'int',true, [],'', algoSel.min, algoSel.max).isValid}"
+                    algoSel, 'defaultValue',true).isValid}"
                [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
@@ -106,7 +106,7 @@
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'int',true, [],'', algoSel.min, algoSel.max).errorPrompt}}
+          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
         </div>
       </div>
     </ng-container>
@@ -120,7 +120,7 @@
         </div>
         <input class="form-control"
                [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel.defaultValue, '',true, [],'').isValid}"
+                    algoSel, 'defaultValue',true).isValid}"
                [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
@@ -131,7 +131,7 @@
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, '',true, [],'').errorPrompt}}
+          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
         </div>
       </div>
     </ng-container>
@@ -144,8 +144,7 @@
           </span>
         </div>
         <input class="form-control"
-               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel.defaultValue, 'evalue',true, [],'').isValid}"
+               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).isValid}"
                [(ngModel)]="algoSel.defaultValue">
         <div
           style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
@@ -158,7 +157,7 @@
           </mat-select>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'evalue',true, [],'').errorPrompt}}
+          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
         </div>
       </div>
     </ng-container>
@@ -198,7 +197,7 @@
         <input
           type="text" class="form-control"
           [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel.defaultValue, 'number',true, [],'', algoSel.min, algoSel.max).isValid}"
+                    algoSel, 'defaultValue',true).isValid}"
           [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
@@ -209,7 +208,7 @@
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel.defaultValue, 'number',true, [],'').errorPrompt}}
+          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
         </div>
       </div>
     </ng-container>

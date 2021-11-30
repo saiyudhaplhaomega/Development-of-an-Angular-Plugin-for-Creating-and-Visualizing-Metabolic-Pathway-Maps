@@ -7,11 +7,11 @@
     style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
     type="text" class="form-control"
     [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-    prophaneJobState.currentProphaneJob.parameters.jobLabel, '',true).isValid}"
+    prophaneJobState.currentProphaneJob.parameters, 'jobLabel',true).isValid}"
     [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.jobLabel">
   <div class="invalid-feedback">
     {{prophaneJobState.isFormInputValid(
-    prophaneJobState.currentProphaneJob.parameters.jobLabel, '',true).errorPrompt}}
+    prophaneJobState.currentProphaneJob.parameters, 'jobLabel',true).errorPrompt}}
   </div>
 </div>
 
@@ -73,10 +73,10 @@
              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"
              (change)="setContaminationRegEx()"
              [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, '',true).isValid}">
+                prophaneJobState.currentProphaneJob.parameters.contaminationOption, 'label',true).isValid}">
     <div class="invalid-feedback">
       {{prophaneJobState.isFormInputValid(
-          prophaneJobState.currentProphaneJob.parameters.contaminationOption.label, '',true).errorPrompt}}
+          prophaneJobState.currentProphaneJob.parameters.contaminationOption, 'label',true).errorPrompt}}
     </div>
   </div>
 </ng-container>
