@@ -1,7 +1,7 @@
-import {Injectable, OnChanges} from '@angular/core';
-import {ProphaneJobObject} from '../../../objects/prophanejobjson';
-import {ProphaneParamObject} from '../../../objects/prophaneparamjson';
-import {ProphaneSampleGroupObject} from '../../../objects/prophanesamplegroupjson';
+import {Injectable} from '@angular/core';
+import {ProphaneJobObject} from '../../objects/prophanejobjson';
+import {ProphaneParamObject} from '../../objects/prophaneparamjson';
+import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {
   contaminationdata,
   defaultAnnotationTasks,
@@ -9,21 +9,21 @@ import {
   quantdata,
   evalueOptions,
   databaseOptions,
-  optionStrings} from '../../../objects/prophaneFormData';
-import {JobService} from '../../../job.service';
-import {ProphaneReportStyle} from '../prophane-job-submission-formdata';
-import {ProphaneTaskOptionString} from '../../../objects/prophanetaskoptionstring';
-import {ProphaneAnnotationTaskObject} from '../../../objects/prophaneannotationtaskjson';
-import {UploadProgressService} from '../../../../core/services/upload-progress.service';
-import {UploadDialogComponent} from '../../../../core/components/dialog/upload-dialog.component';
+  optionStrings} from '../../objects/prophaneFormData';
+import {JobService} from '../../job.service';
+import {ProphaneReportStyle} from '../../components/prophane-job-submission-main/prophane-job-submission-formdata';
+import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
+import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
+import {UploadProgressService} from '../../../core/services/upload-progress.service';
+import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {MatDialog} from '@angular/material';
 import {HttpEventType} from '@angular/common/http';
-import {FileUploaderService} from '../../../../core/services/file-uploader.service';
+import {FileUploaderService} from '../../../core/services/file-uploader.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProphaneJobStateService implements OnChanges {
+export class ProphaneJobStateService {
 
   currentProphaneJob: ProphaneJobObject;
 
@@ -40,7 +40,7 @@ export class ProphaneJobStateService implements OnChanges {
 
   // job data is tracked in this variable
   formsAreValid = true;
-  formErrors = new Map();
+  formErrors = new Map<string, string>();
 
   // prophane parameters related variables
   // TODO: check if we can get around these counters ...
@@ -117,21 +117,33 @@ export class ProphaneJobStateService implements OnChanges {
     return this.currentProphaneJob.parameters.annotationTasks.filter(i => i.scope === scope);
   }
 
-  setDefaultAlgorithm(task: ProphaneAnnotationTaskObject) {
+  setDefaultAlgorithm(task: ProphaneAnnotationTaskObject, taskIndex: number) {
     task.algorithm = databaseOptions.filter(i => i['database'] === task.database)[0]['algorithm'][0];
-    this.resetOptstr(task);
+    this.resetOptstr(task, taskIndex);
   }
 
-  resetOptstr(task: ProphaneAnnotationTaskObject) {
+  resetOptstr(task: ProphaneAnnotationTaskObject, taskIndex: number) {
     task.optionstring = optionStrings.filter(
       i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
         i => i['isDefault'] === '1');
     task.formOptionStringSelection = optionStrings.filter(
       i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
+
+    for (const key of this.formErrors.keys()) {
+      if (key.startsWith(`${task.scope}_task_${taskIndex}`)) {
+        this.formErrors.delete(key);
+      }
+    }
   }
 
-  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
+  removeOptionString(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject, taskIndex, optionIndex) {
     task.optionstring = task.optionstring.filter(obj => obj !== algoSel);
+
+    for (const key of this.formErrors.keys()) {
+      if (key === `${task.scope}_task_${taskIndex}_option_${optionIndex}`) {
+        this.formErrors.delete(key);
+      }
+    }
   }
 
   showOption(algoSel: ProphaneTaskOptionString, task: ProphaneAnnotationTaskObject) {
@@ -164,19 +176,19 @@ export class ProphaneJobStateService implements OnChanges {
     }
   }
 
-  isFormInputValid(input: any, checkProperty: string, required: boolean, objArray?: any[]) {
+  isFormInputValid(formElementId: string, input: any, checkProperty: string, required: boolean, objArray?: any[]) {
     /**
-     * Validates form Inputs
-     * @param {string} formInputId - id to assign form input errors
+     * Validates form Inputs and adds non valid inputs to form error map
+     * @param {string} formElementId - id to assign form input errors
      * @param {any} input - object containing a property that needs to be validated
      * @param {string} checkProperty - property to be validated
      * @param {boolean} required - true if form value needs to be set
      * @param {any[]} [objArray] - Array containing objects of the input type; Used to validte uniqueness of input. If more than two
      * instances of input.checkProperty are found validator returns false
-     * @return {boolean, string} {isValid, errorPrompt} - isValid defines status of formfield for css styling, errorPrompt contains hint for
+     * @return {boolean} isValid - isValid defines status of formfield for css styling
      * users
      */
-    console.log(input);
+
     let isValid = true;
     let errorPrompt: string;
     const type = input.hasOwnProperty('valueType') ? input.valueType : 'string';
@@ -241,9 +253,13 @@ export class ProphaneJobStateService implements OnChanges {
       break;
     }
 
-    console.log(isValid);
-    this.formsAreValid = isValid;
-    return {isValid, errorPrompt};
+    if (isValid && this.formErrors.has(formElementId)) {
+      this.formErrors.delete(formElementId);
+    } else if (!isValid && !this.formErrors.has(formElementId)) {
+      this.formErrors.set(formElementId, errorPrompt);
+    }
+
+    return isValid;
   }
 
   openUploadDialog(): void {
@@ -337,11 +353,13 @@ export class ProphaneJobStateService implements OnChanges {
   }
 
   submitJob(): void {
-    this._uploadProgressService.reset();
-    this.openUploadDialog();
-    this.uploadCSV();
-    this.uploadFasta();
-    this.startProphaneJob();
+    if (this.formErrors.size === 0) {
+      this._uploadProgressService.reset();
+      this.openUploadDialog();
+      this.uploadCSV();
+      this.uploadFasta();
+      this.startProphaneJob();
+    }
   }
 
   saveForm(): void {
@@ -355,10 +373,6 @@ export class ProphaneJobStateService implements OnChanges {
         this.jobUnavailable = false;
       }
     });
-  }
-
-  ngOnChanges(): void {
-    console.log(this.formsAreValid);
   }
 
 }

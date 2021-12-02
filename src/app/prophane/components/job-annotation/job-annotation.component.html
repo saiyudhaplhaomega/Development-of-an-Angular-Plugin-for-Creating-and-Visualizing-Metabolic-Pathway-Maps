@@ -1,5 +1,5 @@
 
-<ng-container *ngFor="let task of prophaneJobState.filterAnnotationTasks(this.scope); let i = index">
+<ng-container *ngFor="let task of prophaneJobState.filterAnnotationTasks(this.scope); let taskIndex = index">
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -7,19 +7,19 @@
     </div>
     <input
       type="text" class="form-control"
-      [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(task, 'tasklabel',true,
-           prophaneJobState.filterAnnotationTasks('Taxonomy')).isValid}"
+      [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+      this.scope + '_task_' + taskIndex, task, 'tasklabel',true,
+           prophaneJobState.filterAnnotationTasks('Taxonomy'))}"
       [(ngModel)]="task.tasklabel">
     <div class="input-group-append">
       <button
         style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-        class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task)'>
+        class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task, taskIndex)'>
         —
       </button>
     </div>
     <div class="invalid-feedback">
-      {{prophaneJobState.isFormInputValid(task, 'tasklabel',true,
-      prophaneJobState.filterAnnotationTasks('Taxonomy')).errorPrompt}}
+      {{prophaneJobState.formErrors.get(this.scope + '_task_' + taskIndex)}}
     </div>
   </div>
 
@@ -30,7 +30,7 @@
     </div>
     <mat-select class="custom-select" [(value)]="task.database"
                 [compareWith]="prophaneJobState.compare"
-                (valueChange)="prophaneJobState.setDefaultAlgorithm(task)">
+                (valueChange)="prophaneJobState.setDefaultAlgorithm(task, taskIndex)">
       <ng-container *ngFor="let dbitem of databaseOptions">
         <mat-option *ngIf="dbitem.scope === task.scope"
                     [value]="dbitem.database">
@@ -53,7 +53,7 @@
     <mat-select class="custom-select"
                 [(value)]="task.algorithm"
                 [compareWith]="prophaneJobState.compare"
-                (valueChange)="prophaneJobState.resetOptstr(task)">
+                (valueChange)="prophaneJobState.resetOptstr(task, taskIndex)">
       <ng-container *ngFor="let dbitem of databaseOptions">
         <ng-container *ngIf="dbitem.scope === task.scope && dbitem.database === task.database">
           <ng-container *ngFor="let algo of dbitem.algorithm">
@@ -67,7 +67,7 @@
   </div>
 
   <!-- The List of already added optionstrings -->
-  <ng-container *ngFor="let algoSel of task.optionstring; let i = index" >
+  <ng-container *ngFor="let algoSel of task.optionstring; let optionIndex = index" >
     <ng-container *ngIf="algoSel.valueType === 'none'">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -79,7 +79,7 @@
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
             class="btn btn-outline-secondary w-sbtn" type="button"
-            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
         </div>
@@ -95,18 +95,19 @@
         </div>
         <input type="text" class="form-control"
                [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel, 'defaultValue',true).isValid}"
+               this.scope + '_task_' + taskIndex + '_option_' + optionIndex,
+               algoSel, 'defaultValue', true)}"
                [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
             class="btn btn-outline-secondary w-sbtn" type="button"
-            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
+          {{prophaneJobState.formErrors.get(this.scope + '_task_' + taskIndex + '_option_' + optionIndex)}}
         </div>
       </div>
     </ng-container>
@@ -120,18 +121,19 @@
         </div>
         <input class="form-control"
                [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel, 'defaultValue',true).isValid}"
+               this.scope + '_task_' + taskIndex + '_option_' + optionIndex,
+               algoSel, 'defaultValue',true)}"
                [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
             class="btn btn-outline-secondary w-sbtn" type="button"
-            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
+          {{prophaneJobState.formErrors.get(this.scope + '_task_' + taskIndex + '_option_' + optionIndex)}}
         </div>
       </div>
     </ng-container>
@@ -144,7 +146,9 @@
           </span>
         </div>
         <input class="form-control"
-               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).isValid}"
+               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+               this.scope + '_task_' + taskIndex + '_option_' + optionIndex,
+               algoSel, 'defaultValue',true)}"
                [(ngModel)]="algoSel.defaultValue">
         <div
           style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
@@ -157,7 +161,7 @@
           </mat-select>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
+          {{prophaneJobState.formErrors.get(this.scope + '_task_' + taskIndex + '_option_' + optionIndex)}}
         </div>
       </div>
     </ng-container>
@@ -180,7 +184,7 @@
         </div>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary w-sbtn" type="button"
-                  (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+                  (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
         </div>
@@ -197,18 +201,19 @@
         <input
           type="text" class="form-control"
           [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-                    algoSel, 'defaultValue',true).isValid}"
+               this.scope + '_task_' + taskIndex + '_option_' + optionIndex,
+               algoSel, 'defaultValue',true)}"
           [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
             class="btn btn-outline-secondary w-sbtn" type="button"
-            (click)='prophaneJobState.removeOptionString(algoSel, task)'>
+            (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
         </div>
         <div class="invalid-feedback">
-          {{prophaneJobState.isFormInputValid(algoSel, 'defaultValue',true).errorPrompt}}
+          {{prophaneJobState.formErrors.get(this.scope + '_task_' + taskIndex + '_option_' + optionIndex)}}
         </div>
       </div>
     </ng-container>

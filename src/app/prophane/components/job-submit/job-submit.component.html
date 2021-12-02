@@ -179,7 +179,7 @@
 </button>
 <button mat-raised-button color="primary" class="float-right"
         [disabled]="(
-        !prophaneJobState.formsAreValid ||
+        prophaneJobState.formErrors.size > 0 ||
          prophaneJobState.jobUnavailable ||
           !prophaneJobState.proteinReportFile ||
            !prophaneJobState.fastaFile ||

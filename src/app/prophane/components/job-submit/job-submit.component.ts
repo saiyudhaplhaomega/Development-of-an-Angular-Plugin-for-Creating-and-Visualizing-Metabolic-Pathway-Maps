@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
+import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 
 @Component({
   selector: 'app-job-submit',
   templateUrl: './job-submit.component.html',
   styleUrls: ['./job-submit.component.css']
 })
-export class JobSubmitComponent implements OnInit{
+export class JobSubmitComponent implements OnInit {
 
   constructor(
     public prophaneJobState: ProphaneJobStateService

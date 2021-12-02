@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
+import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {
   defaultAnnotationTasks,
   databaseOptions,
   evalueOptions
 } from '../../objects/prophaneFormData';
+import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 
 @Component({
   selector: 'app-job-annotation',
@@ -20,10 +21,17 @@ export class JobAnnotationComponent {
     public prophaneJobState: ProphaneJobStateService
   ) { }
 
-  removeAnnotationTask(removeTask) {
+  removeAnnotationTask(removeTask: ProphaneAnnotationTaskObject, taskIndex: number) {
     this.prophaneJobState.currentProphaneJob.parameters.annotationTasks =
       this.prophaneJobState.currentProphaneJob.parameters.annotationTasks.filter(obj => obj !== removeTask);
     this.prophaneJobState.taskCounter--;
+
+    // delete all errors associated with an annotation task
+    for (const key of this.prophaneJobState.formErrors.keys()) {
+      if (key.startsWith(`${removeTask.scope}_task_${taskIndex}`)) {
+        this.prophaneJobState.formErrors.delete(key);
+      }
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {prophaneReportStyleLabels, prophaneReportStyles} from '../../objects/prophaneFormData';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
-import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
+import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {ProphaneReportStyle} from '../prophane-job-submission-main/prophane-job-submission-formdata';
 
 @Component({
@@ -76,6 +76,10 @@ export class JobInputComponent {
         break;
     }
     console.log(this.prophaneJobState);
+  }
+
+  handleExcludeChange(elementId: string) {
+    this.prophaneJobState.formErrors.delete(elementId);
   }
 
 }

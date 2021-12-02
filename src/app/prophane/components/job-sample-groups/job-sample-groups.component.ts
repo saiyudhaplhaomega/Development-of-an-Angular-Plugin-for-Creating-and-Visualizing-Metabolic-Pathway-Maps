@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProphaneJobStateService} from '../prophane-job-submission-main/prophane-job-state-service/prophane-job-state.service';
+import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 
 @Component({
