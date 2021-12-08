@@ -19,6 +19,7 @@ import {UploadDialogComponent} from '../../../core/components/dialog/upload-dial
 import {MatDialog} from '@angular/material';
 import {HttpEventType} from '@angular/common/http';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
+import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,7 @@ export class ProphaneJobStateService {
     private _uploadProgressService: UploadProgressService,
     public dialog: MatDialog,
     private uploaderService: FileUploaderService,
+    private webserver: WebserveraddressService
   ) { }
 
   async initializeProphaneJobState() {
@@ -275,7 +277,7 @@ export class ProphaneJobStateService {
     if (this.proteinReportFile) {
       this._uploadProgressService.addToTotal(this.proteinReportFile.size);
       this.uploaderService.postFile(this.proteinReportFile,
-        'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_CSV, this.currentProphaneJob.prophaneJobUUID)).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeReportLoaded(event.loaded);
@@ -301,7 +303,7 @@ export class ProphaneJobStateService {
     if (this.fastaFile) {
       this._uploadProgressService.addToTotal(this.fastaFile.size);
       this.uploaderService.postFile(this.fastaFile,
-        'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_CSV,  this.currentProphaneJob.prophaneJobUUID)).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeFastaLoaded(event.loaded);

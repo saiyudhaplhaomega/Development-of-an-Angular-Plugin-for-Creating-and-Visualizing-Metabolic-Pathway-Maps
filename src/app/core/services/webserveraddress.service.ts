@@ -56,8 +56,8 @@ export class WebserveraddressService {
     return WebserverUrls.TEST + endpoint + '?fileid=' + fileUuid + '&experimentid=' + experimentUuid;
   }
 
-  public getProphaneUploaderEndpoint(endpoint: string, fileName: string) {
-    return WebserverUrls.TEST + endpoint + '?name=' + fileName;
+  public getProphaneUploaderEndpoint(endpoint: string, jobName: string) {
+    return WebserverUrls.TEST + endpoint + '?name=' + jobName;
   }
 
 }
