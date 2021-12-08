@@ -10,7 +10,6 @@ import {Router} from '@angular/router';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {JobStepperComponent} from '../job-stepper/job-stepper.component';
-import {state, transition, trigger, style, animate, query} from '@angular/animations';
 
 export interface JobLabel {
   stepperLabel: string;
@@ -22,18 +21,7 @@ export interface JobLabel {
   selector: 'app-prophane-job-submission-main',
   templateUrl: './prophane-job-submission-main.component.html',
   styleUrls: ['./prophane-job-submission-main.component.css'],
-  providers: [ProphaneJobStateService],
-  animations: [
-    // the fade-in/fade-out animation.
-    trigger('fadeAnimation', [
-      // the "in" style determines the "resting" state of the element when it is visible.
-      state('in', style({opacity: 1})),
-      // fade in when crated. this could also be written as transition('void => *')
-      transition(':enter', [style({opacity: 0, position: 'absolute'}), animate(1000)]),
-      // fade out when destroyed. this could also be written as transition('void => *')
-      transition(':leave', animate(1000, style({opacity: 0, position: 'absolute'}))),
-    ])
-  ]
+  providers: [ProphaneJobStateService]
 })
 export class ProphaneJobSubmissionMainComponent implements OnInit {
 
@@ -49,7 +37,7 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
     public dialog: MatDialog,
     private uploaderService: FileUploaderService,
     private jobService: JobService,
-    tooltipConfig: NgbTooltipConfig, // Tooltips are not used!
+    tooltipConfig: NgbTooltipConfig, // TODO: Tooltips are not used!
     private router: Router,
     private modalService: NgbModal,
     private _uploadProgressService: UploadProgressService,
