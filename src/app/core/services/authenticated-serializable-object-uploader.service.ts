@@ -17,7 +17,9 @@ const httpOptions = {
 export class AuthenticatedSerializableObjectUploaderService {
 
   constructor(
-    private http: HttpClient, private webserver: WebserveraddressService, private authGuard: AuthGuard) {
+    private http: HttpClient,
+    private webserver: WebserveraddressService,
+    private authGuard: AuthGuard) {
   }
 
   postObj<T>(obj: T, api: string): Observable<T> {
@@ -27,7 +29,7 @@ export class AuthenticatedSerializableObjectUploaderService {
       'Content-Type': 'application/json',
       'Authorization': authorization,
     });
-    return this.http.post<T>(this.webserver.getwebserverurl() + api, obj, httpOptions);
+    return this.http.post<T>(this.webserver.getEndpoint(api), obj, httpOptions);
   }
 
   postObjDifferentReturnValue<T>(obj: T, api: string): Observable<any> {
@@ -37,7 +39,7 @@ export class AuthenticatedSerializableObjectUploaderService {
       'Content-Type': 'application/json',
       'Authorization': authorization,
     });
-    return this.http.post<T>(this.webserver.getwebserverurl() + api, obj, httpOptions);
+    return this.http.post<T>(this.webserver.getEndpoint(api), obj, httpOptions);
   }
 
   getObj<T>(api: string): Observable<T> {
@@ -45,7 +47,7 @@ export class AuthenticatedSerializableObjectUploaderService {
     httpOptions.headers = new HttpHeaders({
       'Authorization': authorization,
     });
-    return this.http.get<T>(this.webserver.getwebserverurl() + api, httpOptions);
+    return this.http.get<T>(this.webserver.getEndpoint(api), httpOptions);
   }
 
 }

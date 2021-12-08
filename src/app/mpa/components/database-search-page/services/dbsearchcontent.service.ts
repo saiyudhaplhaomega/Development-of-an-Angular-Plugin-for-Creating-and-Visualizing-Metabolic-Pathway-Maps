@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {StreamJSON} from '../../../objects/streamjson';
 import {ExperimentJSON} from '../../../objects/experimentjson';
-import {WebserveraddressService} from '../../../../core/services/webserveraddress.service';
+import {Endpoints, WebserveraddressService} from '../../../../core/services/webserveraddress.service';
 import { AuthGuard } from '../../../../core/services/auth-guard.service';
 
 const httpOptions = {
@@ -23,7 +23,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<string>( this.webserver.getwebserverurl() + 'mpacloud/v1/addexperiment', value, httpOptions);
+    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.ADD_DB_EXPERIMENT), value, httpOptions);
   }
 
   newStream(value: string): Observable<string> {
@@ -31,7 +31,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<string>(this.webserver.getwebserverurl() + 'mpacloud/v1/addstreamingsession', value, httpOptions);
+    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.ADD_STREAMING_SESSION), value, httpOptions);
   }
 
   getExperiments(): Observable<ExperimentJSON[]> {
@@ -39,7 +39,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<ExperimentJSON[]>(this.webserver.getwebserverurl() + 'mpacloud/v1/listexperiments', 'body', httpOptions);
+    return this.http.post<ExperimentJSON[]>(this.webserver.getEndpoint(Endpoints.LIST_DB_EXPERIMENTS), 'body', httpOptions);
   }
 
   getStreams(): Observable<StreamJSON[]> {
@@ -47,7 +47,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<StreamJSON[]>(this.webserver.getwebserverurl() + 'mpacloud/v1/liststreamingsessions', 'body', httpOptions);
+    return this.http.post<StreamJSON[]>(this.webserver.getEndpoint(Endpoints.LIST_STREAMINGSESSIONS), 'body', httpOptions);
   }
 
 }

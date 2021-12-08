@@ -8,6 +8,8 @@ import {GetDateService} from '../../../../core/services/get-date.service';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';
 import {MatDialog} from '@angular/material';
 import {DeleteWarningDialogComponent} from '../../../../core/components/dialog/delete-warning-dialog.component';
+import {error} from 'util';
+import {Endpoints} from '../../../../core/services/webserveraddress.service';
 // import {type} from 'os';
 
 export interface DataChangeObj {
@@ -51,7 +53,7 @@ export class DataService {
               private getDateService: GetDateService,
               private dialog: MatDialog) {
       if (this.authGuard.loggedIn()) {
-        this.jsonUploader.getObj<DataItem[]>( 'mpacloud/getuserdata').subscribe(res => {
+        this.jsonUploader.getObj<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
           const newMap = new Map();
           res.forEach(obj => {
             newMap.set(obj.uuid, obj);
@@ -80,7 +82,7 @@ export class DataService {
         this.dataMap.next(newMap);
       }
 
-    // '/mpacloud/v1/getuserdata'
+    // updates userdata when data Map is changed
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
       const list = [];
@@ -89,11 +91,13 @@ export class DataService {
           value.forEach(val => {
             list.push(val);
           });
-          this.jsonUploader.postObj(list, 'mpacloud/v1/updateUserData').subscribe(result => {
+          this.jsonUploader.postObj(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
             if (result != null) {
               console.log(list);
               // value = result;
             }
+          }), error(error => {
+            //TODO: dont update!
           });
         }
       }
@@ -171,7 +175,7 @@ export class DataService {
     dbExperiment.description = 'from_html';
     dbExperiment.creationDate = newExperiment.creation_date;
 
-    this.jsonUploader.postObj(dbExperiment, 'mpacloud/v1/createExperiment').subscribe(result => {
+    this.jsonUploader.postObj(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;

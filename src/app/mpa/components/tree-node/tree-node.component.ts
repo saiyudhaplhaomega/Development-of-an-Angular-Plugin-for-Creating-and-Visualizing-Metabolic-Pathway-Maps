@@ -40,8 +40,4 @@ export class TreeNodeComponent {
     this.selected = true;
   }
 
-  getBackgroundColor() {
-    return this.selected ? 'blue' : '';
-  }
-
 }

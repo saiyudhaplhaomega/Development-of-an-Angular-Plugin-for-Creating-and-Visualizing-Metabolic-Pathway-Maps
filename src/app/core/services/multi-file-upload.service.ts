@@ -5,6 +5,7 @@ import {HttpEventType} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {UploadProgressService} from './upload-progress.service';
 import {FileUploaderService} from './file-uploader.service';
+import {Endpoints, WebserveraddressService} from './webserveraddress.service';
 
 export interface FileUploadData {
   uploadFile: File;
@@ -26,6 +27,7 @@ export class MultiFileUploadService {
     private dialog: MatDialog,
     private uploadProgressService: UploadProgressService,
     private fileUploaderService: FileUploaderService,
+    private webserver: WebserveraddressService,
   ) {
     this.fileArray = [];
   }
@@ -53,8 +55,7 @@ export class MultiFileUploadService {
         this.uploadProgressService.addToTotal(file.uploadFile.size + fastaFileSize);
 
         this.fileUploaderService.postFile(file.uploadFile,
-          file.fileUploadAdress + '?fileid=' + response.file_UUID + '&experimentid=' + response.experiment_UUID
-        ).subscribe(
+          this.webserver.getFileUploaderEndpoint(file.fileUploadAdress, response.file_UUID, response.experiment_UUID)).subscribe(
           event => {
             if (event.type === HttpEventType.UploadProgress) {
               this.uploadProgressService.changeReportLoaded(event.loaded);
@@ -78,9 +79,8 @@ export class MultiFileUploadService {
 
         // Upload of FASTA if present
         if (file.uploadFasta) {
-          this.fileUploaderService.postFile(file.uploadFasta, 'mpacloud/v1/postuploadFasta'	 + '?fileid=' + response.file_UUID +
-            '&experimentid=' + response.experiment_UUID
-          ).subscribe(
+          this.fileUploaderService.postFile(file.uploadFasta,
+            this.webserver.getFileUploaderEndpoint(Endpoints.UPLOAD_FASTA, response.file_UUID, response.experiment_UUID)).subscribe(
             event => {
               if (event.type === HttpEventType.UploadProgress) {
                 this.uploadProgressService.changeFastaLoaded(event.loaded);

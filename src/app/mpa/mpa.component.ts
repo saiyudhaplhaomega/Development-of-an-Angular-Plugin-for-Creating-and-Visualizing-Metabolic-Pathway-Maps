@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { NavService } from './components/data-navigation-tree/services/nav.service';
+import {Endpoints, WebserveraddressService, WebserverUrls} from '../core/services/webserveraddress.service';
 
 @Component({
   selector: 'app-mpa',
@@ -18,11 +19,14 @@ export class MPAComponent implements OnInit {
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
 
-  constructor(private navService: NavService) {
+  constructor(
+    private navService: NavService,
+    private httpUrlBuilder: WebserveraddressService) {
   }
 
 
   ngOnInit() {
+    console.log(this.httpUrlBuilder.getEndpoint(Endpoints.GET_USER_DATA));
     this.navService.treeContentRef.next(this.viewContainerRef);
     const userNode = this.navService.treeNodes.value.find(node => node.type === 'user');
     this.navService.navigateOutlet(userNode.displayName, userNode.uuid, 'user');

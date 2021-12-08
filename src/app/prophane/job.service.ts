@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import {ProphaneJobObject} from './objects/prophanejobjson';
 import {AuthenticatedSerializableObjectUploaderService} from '../core/services/authenticated-serializable-object-uploader.service';
 import {HttpHeaders} from '@angular/common/http';
+import {Endpoints} from '../core/services/webserveraddress.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,12 @@ export class JobService {
 
   }
 
-  private apiUrl = 'mpacloud/v1';
-
   getJobs(): Observable<ProphaneJobObject[]> {
-    return this.jsonUpload.postObj<ProphaneJobObject[]>([], this.apiUrl + '/prophaneJobList');
+    return this.jsonUpload.postObj<ProphaneJobObject[]>([], Endpoints.GET_PROPHANE_JOBS);
   }
 
   getJob(uuid: string): Observable<ProphaneJobObject> {
-     return this.jsonUpload.getObj<ProphaneJobObject>(this.apiUrl + '/getJob/' + uuid);
+     return this.jsonUpload.getObj<ProphaneJobObject>(Endpoints.GET_PROPHANE_JOB + uuid);
   }
 
   // getWithName<T>(name: string, api: string): Observable<T> {
@@ -34,20 +33,20 @@ export class JobService {
 
 
   requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneRequestJob');
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, Endpoints.PROPHANE_REQUEST_JOB);
   }
 
   saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneSaveJobForm');
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, Endpoints.PROPHANE_SAVE_JOB_FORM);
   }
 
   addJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObj<ProphaneJobObject>(job, this.apiUrl + '/prophaneStartJob');
+    return this.jsonUpload.postObj<ProphaneJobObject>(job, Endpoints.PROPHANE_START_JOB);
   }
 
   /** DELETE: delete the job from the server */
   deleteJob(jobToDelete: ProphaneJobObject) {
-    this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, this.apiUrl + '/prophaneDeleteJob').subscribe(res => {
+    this.jsonUpload.postObj<ProphaneJobObject>(jobToDelete, Endpoints.PROPHANE_DELETE_JOB).subscribe(res => {
       console.log('job deleted: ' + jobToDelete.prophaneJobUUID);
     });
   }

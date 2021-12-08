@@ -26,6 +26,7 @@ import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtask
 import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {JobService} from '../../job.service';
+import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class ProphaneJobSubmissionComponent implements OnInit {
               private router: Router,
               private modalService: NgbModal,
               private _uploadProgressService: UploadProgressService,
-              public authGuard: AuthGuard) {
+              public authGuard: AuthGuard,
+              private webserver: WebserveraddressService) {
 
     this.jobUnavailable = false;
     this.proteinReportProgress = 0;
@@ -158,7 +160,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     if (this.fastaFile) {
       this._uploadProgressService.addToTotal(this.fastaFile.size);
       this.uploaderService.postFile(this.fastaFile,
-        'mpacloud/v1/prophaneFasta' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_FASTA, this.currentProphaneJob.prophaneJobUUID)).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeFastaLoaded(event.loaded);
@@ -186,7 +188,7 @@ export class ProphaneJobSubmissionComponent implements OnInit {
     if (this.proteinReportFile) {
       this._uploadProgressService.addToTotal(this.proteinReportFile.size);
       this.uploaderService.postFile(this.proteinReportFile,
-        'mpacloud/v1/prophaneCSV' + '?name=' + this.currentProphaneJob.prophaneJobUUID).subscribe(
+        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_CSV, this.currentProphaneJob.prophaneJobUUID)).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeReportLoaded(event.loaded);

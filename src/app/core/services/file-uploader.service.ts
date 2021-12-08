@@ -21,7 +21,7 @@ export class FileUploaderService {
     // TODO: this seems to be wrong, should go into header, or should it?
     fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', file);
-    return this.http.post(this.webserver.getwebserverurl() + api, fd, {headers,
+    return this.http.post(api, fd, {headers,
       reportProgress: true,
       observe: 'events'
     });

@@ -3,17 +3,15 @@ import {DataService} from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
-import {createNewProteinGroup} from '../mpa-table/mpa-table.component';
-import {HttpErrorResponse, HttpEventType} from '@angular/common/http';
 import {ProteinGroupList} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
-import {MPAFile} from '../../../prophane/objects/mpafile';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {FileUploadData, MultiFileUploadService} from '../../../core/services/multi-file-upload.service';
+import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 
 @Component({
   selector: 'app-experiment-page',
@@ -111,7 +109,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     this.dbExperiment.exp_id = this.uuid;
 
-    this.uploaderService.postObj<ExperimentJSONObject>(this.dbExperiment, 'mpacloud/v1/getExperiment').subscribe(result => {
+    this.uploaderService.postObj<ExperimentJSONObject>(
+      this.dbExperiment, Endpoints.GET_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         this.dbExperiment = result;
@@ -122,9 +121,6 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateExperiment();
-  }
-
-  errorHandler(error: HttpErrorResponse) {
   }
 
   getChildNodes() {
@@ -267,8 +263,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     const MGFData: FileUploadData = {
       uploadFile: this.selectedPeaklistFile,
       fileMetaData: {filename: this.selectedPeaklistFile.name, experimentuuid: this.dbExperiment.exp_id},
-      metaDataAdress: 'mpacloud/v1/postMGFMetadata',
-      fileUploadAdress: 'mpacloud/v1/postuploadMGF',
+      metaDataAdress: Endpoints.POST_MGF_METADATA,
+      fileUploadAdress: Endpoints.UPLOAD_MGF,
     };
 
     this.multiFileUpload.addSingleUploadFile(MGFData);
@@ -278,8 +274,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     const MZMLData: FileUploadData = {
       uploadFile: this.selectedPeaklistFile,
       fileMetaData: {filename: this.selectedPeaklistFile.name, experimentuuid: this.dbExperiment.exp_id},
-      metaDataAdress: 'mpacloud/v1/postMZmlMetadata',
-      fileUploadAdress: 'mpacloud/v1/postuploadMZml',
+      metaDataAdress: Endpoints.POST_MZML_METADATA,
+      fileUploadAdress: Endpoints.UPLOAD_MZML,
     };
 
     this.multiFileUpload.addSingleUploadFile(MZMLData);
@@ -289,8 +285,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     const DatData: FileUploadData = {
       uploadFile: this.selectedSearchFile,
       fileMetaData: {filename: this.selectedSearchFile.name, experimentuuid: this.dbExperiment.exp_id},
-      metaDataAdress: 'mpacloud/v1/postuploadDat',
-      fileUploadAdress: 'mpacloud/v1/postuploadDat',
+      metaDataAdress: Endpoints.POST_DAT_METADATA,
+      fileUploadAdress: Endpoints.UPLOAD_DAT,
       uploadFasta: this.selectedFasta
     };
 
@@ -301,8 +297,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     const MZIdent: FileUploadData = {
       uploadFile: this.selectedSearchFile,
       fileMetaData: {filename: this.selectedSearchFile.name, experimentuuid: this.dbExperiment.exp_id},
-      metaDataAdress: 'mpacloud/v1/postmzidentMetadata',
-      fileUploadAdress: 'mpacloud/v1/postuploadmzident'
+      metaDataAdress: Endpoints.POST_MZIDENT_METADATA,
+      fileUploadAdress: Endpoints.UPLOAD_MZIDENT
     };
 
     this.multiFileUpload.addSingleUploadFile(MZIdent);
@@ -380,7 +376,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     /**
      * updates server when the experiment page is left
      */
-    this.uploaderService.postObj(this.dbExperiment, 'mpacloud/v1/updateExperiment').subscribe(result => {
+    this.uploaderService.postObj(
+      this.dbExperiment, Endpoints.UPDATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;
