@@ -8,7 +8,7 @@ import {JobService} from '../../job.service';
 import {NgbModal, NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
-import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
+import {NoJobCardHeaders, ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {JobStepperComponent} from '../job-stepper/job-stepper.component';
 
 export interface JobLabel {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 
 @Component({
@@ -6,7 +6,7 @@ import {ProphaneJobStateService} from '../../services/prophane-job-state-service
   templateUrl: './job-submit.component.html',
   styleUrls: ['./job-submit.component.css']
 })
-export class JobSubmitComponent implements OnInit {
+export class JobSubmitComponent {
 
   constructor(
     public prophaneJobState: ProphaneJobStateService
@@ -32,15 +32,10 @@ export class JobSubmitComponent implements OnInit {
     return s.sort().join('; ');
   }
 
-  ngOnInit(): void {
-    console.log(this.prophaneJobState);
-  }
-
   hasAdvancedOpts() {
     let advanced = false;
     this.prophaneJobState.currentProphaneJob.parameters.annotationTasks.forEach(
       task => {
-        console.log(task.optionstring);
         if (task.optionstring.filter(i => i.isDefault === '0').length > 0) {
           advanced = true;
         }

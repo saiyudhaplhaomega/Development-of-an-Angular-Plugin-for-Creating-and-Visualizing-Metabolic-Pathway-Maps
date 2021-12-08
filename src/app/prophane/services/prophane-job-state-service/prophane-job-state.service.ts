@@ -20,6 +20,19 @@ import {MatDialog} from '@angular/material';
 import {HttpEventType} from '@angular/common/http';
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
+import {finalize} from 'rxjs/operators';
+
+export enum NoJobCardHeaders {
+  REQUESTING_JOB = 'Requesting new Prophane Job',
+  JOB_UNAVAILABLE = 'No Job available',
+  ERROR = 'Request Error'
+}
+
+export enum NoJobCardInfo {
+  JOB_UNAVAILABLE_MESSAGE = 'Service is not available.',
+  WAITING_FOR_RESPONSE = 'Waiting for a job.',
+  ERROR = 'An Error occurred'
+}
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +47,12 @@ export class ProphaneJobStateService {
   expertView = false;
 
   // TODO: better solution for this? --> popup message?
-  jobUnavailableMessage = 'Service unavailable';
+  noJobCardHeader: string;
+  jobUnavailableMessage: string;
+  loading = false;
 
   // global variable that should be able to disable the website (because no server connection or server busy)
-  jobUnavailable = false;
+  jobUnavailable = true;
 
   // job data is tracked in this variable
   formsAreValid = true;
@@ -73,6 +88,7 @@ export class ProphaneJobStateService {
   ) { }
 
   async initializeProphaneJobState() {
+    this.noJobCardHeader = NoJobCardHeaders.REQUESTING_JOB;
     this.currentProphaneJob = new ProphaneJobObject();
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.contaminationOption = this.contoptions[0];
@@ -86,25 +102,34 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.csvFilename = '';
     this.currentProphaneJob.fastaFilename = '';
     this.currentProphaneJob.downloadURL = '';
-    const job = this.requestNewJob();
-    console.log(job);
+    this.requestNewJob();
   }
 
   // Server job related methods
 
   // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
+    this.loading = true;
+    this.jobUnavailableMessage = NoJobCardInfo.WAITING_FOR_RESPONSE;
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-      this.jobService.requestJob(this.currentProphaneJob).subscribe(res => {
-        this.currentProphaneJob = res;
-        // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
-        // TODO: obsolete? --> rework
-        this.jobUnavailable = res.status === 'JOB_REJECTED';
+    this.jobService.requestJob(this.currentProphaneJob
+    ).pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe(res => {
+      this.currentProphaneJob = res;
 
-      }, (error) => {
-        console.log('==============================');
-        console.log(error);
-      });
+      this.jobUnavailable = res.status === 'JOB_REJECTED';
+      if (res.status === 'JOB_REJECTED') {
+        this.noJobCardHeader = NoJobCardHeaders.JOB_UNAVAILABLE;
+        this.jobUnavailableMessage = NoJobCardInfo.JOB_UNAVAILABLE_MESSAGE;
+      }
+    }, (error) => {
+      this.noJobCardHeader = NoJobCardHeaders.ERROR;
+      this.jobUnavailableMessage = NoJobCardInfo.ERROR;
+      console.log(error);
+    });
   }
 
   compareByID(o1: ProphaneReportStyle, o2: ProphaneReportStyle) {
