@@ -1,0 +1,83 @@
+<!-- Job Label -->
+<div class="input-group mb-3" >
+  <div class="input-group-prepend">
+    <span class="input-group-text rki-blue-input" id="job_label">Job label</span>
+  </div>
+  <input
+    style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+    type="text" class="form-control"
+    [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid('jobLabel',
+    prophaneJobState.currentProphaneJob.parameters, 'jobLabel',true)}"
+    [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.jobLabel">
+  <div class="invalid-feedback">
+    {{prophaneJobState.formErrors.get('jobLabel')}}
+  </div>
+</div>
+
+<!-- Source selection -->
+<div class="input-group mb-3" style="color: #495057 !important">
+  <div class="input-group-prepend">
+    <label class="input-group-text">Source</label>
+  </div>
+  <mat-select class="no-arrow custom-select"
+              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.reportStyle"
+              [compareWith]="prophaneJobState.compareByID"
+              (selectionChange)="onSourceChange()">
+    <mat-option *ngFor="let typeItem of this.reportStyles" [value]="typeItem">{{typeItem.name}}</mat-option>
+  </mat-select>
+</div>
+
+<!-- Report Styles & File Input -->
+<ng-container *ngFor="let reportOption of this.reportOptions">
+  <ng-container
+    *ngIf="prophaneJobState.currentProphaneJob.parameters.reportStyle.valueString &&
+    prophaneJobState.currentProphaneJob.parameters.reportStyle.id === reportOption.id">
+    <app-file-input
+      (fileSelected)="onCSVChange($event)"
+      [selectedFile]="prophaneJobState.proteinReportFile"
+      [labels]="{inputGroupLabel: reportOption.prependLabel, inputLabel: reportOption.htmlInputLabel}"
+      [inputType]="reportOption.inputType"
+    >
+    </app-file-input>
+  </ng-container>
+</ng-container>
+
+<!-- Fasta -->
+<app-file-input
+  (fileSelected)="onFastaChange($event)"
+  [selectedFile]="prophaneJobState.fastaFile"
+  [labels]="{inputGroupLabel: 'FASTA file', inputLabel: 'Choose file (.fasta, .faa, .fa)'}"
+  [inputType]="'.fasta, .faa, .fa'"
+>
+</app-file-input>
+
+<!-- Exclude -->
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Exclude</span>
+  </div>
+  <mat-select class="custom-select"
+              [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption"
+              [compareWith]="prophaneJobState.compareByID"
+              (selectionChange)="handleExcludeChange('exclude')"
+  >
+    <mat-option *ngFor="let contitem of this.prophaneJobState.contoptions" [value]="contitem">{{contitem.name}}</mat-option>
+  </mat-select>
+</div>
+
+<ng-container *ngIf="prophaneJobState.currentProphaneJob.parameters.contaminationOption.valueString !== 'none'">
+  <div class="input-group mb-3">
+      <input
+             type="text" class="form-control"
+             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+             placeholder="{{prophaneJobState.currentProphaneJob.parameters.contaminationOption.formLabel}}"
+             [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.contaminationOption.label"
+             (change)="setContaminationRegEx()"
+             [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid('exclude',
+                prophaneJobState.currentProphaneJob.parameters.contaminationOption, 'label',true)}">
+    <div class="invalid-feedback">
+      {{prophaneJobState.formErrors.get('exclude')}}
+    </div>
+  </div>
+</ng-container>
+

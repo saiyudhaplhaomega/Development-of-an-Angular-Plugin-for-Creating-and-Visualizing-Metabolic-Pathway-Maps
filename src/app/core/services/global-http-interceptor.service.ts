@@ -32,6 +32,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
                 this.authGuard.logout();
                 this.router.navigateByUrl('/login');
                 break;
+              //  TODO: 400, 404 -> not Found, 500er -> internal server error
               default:
                 // handle other errors
                 break;

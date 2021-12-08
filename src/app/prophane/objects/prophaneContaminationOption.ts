@@ -13,4 +13,5 @@ export class ProphaneContaminationOptionObject implements ProphaneContaminationO
   valueString: string;
   label: string;
   regex: string;
+  formLabel?: string;
 }

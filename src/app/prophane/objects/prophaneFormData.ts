@@ -1,8 +1,50 @@
-import {ProphaneReportStyle} from '../components/prophane-job-submission/prophane-job-submission-formdata';
+import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../components/prophane-job-submission-main/prophane-job-submission-formdata';
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';
 import {sortBy} from 'lodash';
+import {ProphaneDataBaseOption} from './databaseoptions';
+import {ProphaneEvalueOptions} from './prophaneEvalueOptionsJson';
+import {TaxonomyAdvandedOptionsJson} from './taxonomyAdvandedOptions';
+
+export const jobLabelData = [
+  {
+    index: 0,
+    stepperLabel: 'Input',
+    cardHeader: 'Input',
+    expertsOnly: false,
+  },
+  {
+    index: 1,
+    stepperLabel: 'Sample Grouping',
+    cardHeader: 'Sample Grouping',
+    expertsOnly: true,
+  },
+  {
+    index: 2,
+    stepperLabel: 'Quantification',
+    cardHeader: 'Quantification Method',
+    expertsOnly: true,
+  },
+  {
+    index: 3,
+    stepperLabel: 'Taxonomy',
+    cardHeader: 'Taxonomic Annotation',
+    expertsOnly: true,
+  },
+  {
+    index: 4,
+    stepperLabel: 'Function',
+    cardHeader: 'Functional Annotation',
+    expertsOnly: true,
+  },
+  {
+    index: 5,
+    stepperLabel: 'Submit',
+    cardHeader: 'Summary',
+    expertsOnly: false,
+  },
+];
 
 export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 0, name: 'MPA (single experiment)', valueString: 'mpa'},
@@ -14,6 +56,16 @@ export const prophaneReportStyles: ProphaneReportStyle[] = [
   {id: 6, name: 'Proteome Discoverer protein group excel file', valueString: 'pd_xlsx'},
 ];
 
+export const prophaneReportStyleLabels: ProphaneReportStyleLabel[] = [
+  {id: 0, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)', inputType: '.csv'},
+  {id: 1, prependLabel: 'Report file', htmlInputLabel: 'Choose MPA file (.csv)', inputType: '.csv'},
+  {id: 2, prependLabel: 'Report file', htmlInputLabel: 'Choose Scaffold file (.xls)', inputType: '.xls'},
+  {id: 3, prependLabel: 'Report file', htmlInputLabel: 'Choose Generic Report file (.tsv, .txt)', inputType: '.tsv,.txt'},
+  {id: 4, prependLabel: 'Report file', htmlInputLabel: 'Choose MzTab file (.mztab)', inputType: '.mztab'},
+  {id: 5, prependLabel: 'Report file', htmlInputLabel: 'Choose MzIdent2.0 file (.mzid)', inputType: '.mzid'},
+  {id: 6, prependLabel: 'Report file', htmlInputLabel: 'Choose Proteome Discoverer protein group excel file (.xlsx)', inputType: '.xlsx'},
+];
+
 export const quantdata: ProphaneQuantDataObject[] = [
   {id: 0, name: 'NSAF (normalized to longest metaprotein sequence)', valueString: 'max_nsaf'},
   {id: 1, name: 'NSAF (normalized to shortest metaprotein sequence)', valueString: 'min_nsaf'},
@@ -21,7 +73,7 @@ export const quantdata: ProphaneQuantDataObject[] = [
   {id: 3, name: 'Raw value (no normalization)', valueString: 'raw'},
 ];
 
-export const databaseOptions: object[] = [
+export const databaseOptions: ProphaneDataBaseOption[] = [
   {id: 0, scope: 'Function', database: 'eggnog', name: 'EggNog', algorithm: ['emapper']},
   {id: 1, scope: 'Function', database: 'pfams', name: 'PFAMs', algorithm: ['hmmscan', 'hmmsearch']},
   {id: 2, scope: 'Function', database: 'tigrfams', name: 'TIGRFAMs', algorithm: ['hmmscan', 'hmmsearch']},
@@ -42,7 +94,7 @@ export const defaultOptionString = [
 ];
 
 
-export const evalueOptions: object[] = [
+export const evalueOptions: ProphaneEvalueOptions[] = [
   {id: 0, numerical: '0.01', text: 'Relaxed'},
   {id: 1, numerical: '0.001', text: 'Mid-Range'},
   {id: 2, numerical: '0.0005', text: 'Strict'}
@@ -50,9 +102,9 @@ export const evalueOptions: object[] = [
 
 export const contaminationdata: ProphaneContaminationOptionObject[] = [
   {id: 0, name: 'none', valueString: 'none', label: '', regex: ''},
-  {id: 1, name: 'accessions starting with', valueString: '', label: '', regex: ''},
-  {id: 2, name: 'accessions ending with', valueString: '', label: '', regex: ''},
-  {id: 3, name: 'accessions matching to', valueString: '', label: '', regex: ''},
+  {id: 1, name: 'accessions starting with', valueString: 'start', label: '', regex: '', formLabel: 'Exclude accessions starting with...'},
+  {id: 2, name: 'accessions ending with', valueString: 'end', label: '', regex: '', formLabel: 'Exclude accessions ending with...'},
+  {id: 3, name: 'accessions matching with', valueString: 'regex', label: '', regex: '', formLabel: 'Exclude accessions matching with... (regular expression; PCRE)'},
 ];
 
 export const algparams = {
@@ -61,14 +113,10 @@ export const algparams = {
     options: sortBy([
       {param: 'guessdb', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
       {param: 'tax_scope', valueType: 'int', defaultValue: '131567', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {
-        param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: undefined, max: undefined, isDefault: '0',
-        values: ['one2one', 'many2one', 'one2many', 'many2many', 'all'], avoid: []
-      },
-      {
-        param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: undefined, max: undefined, isDefault: '0',
-        values: ['experimental', 'non-electronic'], avoid: []
-      },
+      {param: 'target_orthologs', valueType: 'enum', defaultValue: 'one2one', min: undefined, max: undefined, isDefault: '0',
+        values: ['one2one', 'many2one', 'one2many', 'many2many', 'all'], avoid: []},
+      {param: 'go_evidence', valueType: 'enum', defaultValue: 'experimental', min: undefined, max: undefined, isDefault: '0',
+        values: ['experimental', 'non-electronic'], avoid: []},
       {param: 'hmm_maxhits', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
       {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0.0', max: undefined, values: [], isDefault: '1', avoid: []},
       {param: 'hmm_score', valueType: 'number', defaultValue: '20.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
@@ -80,16 +128,7 @@ export const algparams = {
       {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
       //{param: 'seed_ortholog_evalue', valueType: 'number', defaultValue: '0.001', min: 0, max: undefined, values: [], isDefault: 0, avoid: []},
       {param: 'seed_ortholog_score', valueType: 'number', defaultValue: '60.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {
-        param: 'm',
-        valueType: 'enum',
-        defaultValue: 'diamond',
-        min: undefined,
-        max: undefined,
-        values: ['diamond', 'hmmer'],
-        isDefault: '1',
-        avoid: []
-      },
+      {param: 'm', valueType: 'enum', defaultValue: 'diamond', min: undefined, max: undefined, values: ['diamond', 'hmmer'], isDefault: '1', avoid: []},
       {param: 'Z', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
     ], function (option) {
       return option.param.toLowerCase();
@@ -228,14 +267,14 @@ export const algparams = {
 };
 
 function getAlgoData(algo, excluded_options) {
-  let algodata = {...algparams[algo]};
+  const algodata = {...algparams[algo]};
   if (excluded_options.length > 0) {
     algodata['options'] = algodata['options'].filter(i => excluded_options.indexOf(i['param']) < 0);
   }
   return algodata;
 };
 
-export const optionStrings: object[] = [
+export const optionStrings: TaxonomyAdvandedOptionsJson[] = [
   {database: 'ncbi_nr', algs: [getAlgoData('diamond_blastp', [])]},
   {database: 'uniprot_complete', algs: [getAlgoData('diamond_blastp', [])]},
   {database: 'uniprot_sp', algs: [getAlgoData('diamond_blastp', [])]},

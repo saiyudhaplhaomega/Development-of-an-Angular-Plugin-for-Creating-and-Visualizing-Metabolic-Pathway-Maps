@@ -158,6 +158,8 @@ export class DataService {
      */
 
     const newExperimentUUID = v1();
+
+    // object for data map
     const newExperiment = {
       displayName: experimentName,
       icon: 'computer',
@@ -165,14 +167,16 @@ export class DataService {
       uuid: newExperimentUUID,
       type: 'experiment',
       parent: parentUuid,
-      creation_date: this.getDateService.getDate().toString()
+      creation_date: this.getDateService.getDate().toString(),
+      description: '',
     };
 
+    // object for server
     // TODO: set data from input
     const dbExperiment = new ExperimentJSONObject();
     dbExperiment.exp_id = newExperimentUUID;
     dbExperiment.name = newExperiment.displayName;
-    dbExperiment.description = 'from_html';
+    dbExperiment.description = newExperiment.description;
     dbExperiment.creationDate = newExperiment.creation_date;
 
     this.jsonUploader.postObj(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {

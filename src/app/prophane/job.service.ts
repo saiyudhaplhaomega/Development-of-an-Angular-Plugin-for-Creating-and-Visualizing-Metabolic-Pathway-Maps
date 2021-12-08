@@ -33,7 +33,13 @@ export class JobService {
 
 
   requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObj<ProphaneJobObject>(job, Endpoints.PROPHANE_REQUEST_JOB);
+    try {
+      const observeMe = this.jsonUpload.postObj<ProphaneJobObject>(job, Endpoints.PROPHANE_REQUEST_JOB);
+      console.log(observeMe);
+      return observeMe;
+    } catch (e) {
+      console.log('FAIL');
+    }
   }
 
   saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {

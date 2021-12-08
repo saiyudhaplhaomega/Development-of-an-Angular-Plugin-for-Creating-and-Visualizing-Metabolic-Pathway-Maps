@@ -1,0 +1,11 @@
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text rki-blue-input">Quantification method</span>
+  </div>
+  <mat-select class="custom-select" [(value)]="prophaneJobState.currentProphaneJob.parameters.quantification"
+              [compareWith]="prophaneJobState.compareByID">
+    <mat-option *ngFor="let quantitem of prophaneJobState.quantdata" [value]="quantitem">
+      {{quantitem.name}}
+    </mat-option>
+  </mat-select>
+</div>
