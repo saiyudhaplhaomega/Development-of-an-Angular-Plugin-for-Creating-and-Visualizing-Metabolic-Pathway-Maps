@@ -18,6 +18,7 @@ export enum Endpoints {
   GET_USER_DATA = 'mpauser/getuserdata',
   LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
   LIST_STREAMINGSESSIONS = 'mpacloud/v1/liststreamingsessions',
+  POST_FASTA_METADATA = 'proteinloader/fastametadata',
   POST_DAT_METADATA = 'mpacloud/v1/postuploadDatMetadata',  // TODO: check if this is correct
   POST_MGF_METADATA = 'mpacloud/v1/postMGFMetadata',
   POST_MZIDENT_METADATA = 'mpacloud/v1/postmzidentMetadata',

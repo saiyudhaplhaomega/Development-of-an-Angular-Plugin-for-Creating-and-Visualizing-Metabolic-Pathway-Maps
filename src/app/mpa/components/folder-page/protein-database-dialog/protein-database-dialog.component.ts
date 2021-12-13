@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService} from '../../data-navigation-tree/services/data.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
+import {FileUploadData, MultiFileUploadService} from '../../../../core/services/multi-file-upload.service';
+import {Endpoints} from '../../../../core/services/webserveraddress.service';
 
 @Component({
   selector: 'app-protein-database-dialog',
@@ -60,6 +62,7 @@ export class ProteinDatabaseDialogComponent implements OnInit {
 
   onSubmitName(): void {
     this.dialogRef.close(this.proteinDBForm.value.dbName);
+
     //  TODO: send file to server
   }
 

@@ -106,8 +106,6 @@ export class ProphaneJobStateService {
   }
 
   // Server job related methods
-
-  // method is called on init, checks server connection and if server is full
   requestNewJob(): void {
     this.loading = true;
     this.jobUnavailableMessage = NoJobCardInfo.WAITING_FOR_RESPONSE;
@@ -128,7 +126,6 @@ export class ProphaneJobStateService {
     }, (error) => {
       this.noJobCardHeader = NoJobCardHeaders.ERROR;
       this.jobUnavailableMessage = NoJobCardInfo.ERROR;
-      console.log(error);
     });
   }
 
@@ -201,92 +198,6 @@ export class ProphaneJobStateService {
     if (task.optionstring.filter(e => e.param === task.formOptionStringSelection.param).length === 0) {
       task.optionstring.push(task.formOptionStringSelection);
     }
-  }
-
-  isFormInputValid(formElementId: string, input: any, checkProperty: string, required: boolean, objArray?: any[]) {
-    /**
-     * Validates form Inputs and adds non valid inputs to form error map
-     * @param {string} formElementId - id to assign form input errors
-     * @param {any} input - object containing a property that needs to be validated
-     * @param {string} checkProperty - property to be validated
-     * @param {boolean} required - true if form value needs to be set
-     * @param {any[]} [objArray] - Array containing objects of the input type; Used to validte uniqueness of input. If more than two
-     * instances of input.checkProperty are found validator returns false
-     * @return {boolean} isValid - isValid defines status of formfield for css styling
-     * users
-     */
-
-    let isValid = true;
-    let errorPrompt: string;
-    const type = input.hasOwnProperty('valueType') ? input.valueType : 'string';
-    const min = input.min;
-    const max = input.max;
-
-    while (true) {
-      // check 1: are required inputs provided?
-      if (required) {
-        const inputCheck = !!input[checkProperty];
-        if (!inputCheck) {
-          isValid = inputCheck;
-          errorPrompt = 'Please enter something!';
-          break;
-        }
-      }
-
-      // check 2: input type correct?
-      if (type) {
-        let regEx = null;
-
-        switch (type) {
-          case 'string':
-            regEx = /^[a-zA-Z0-9_ ]+$/;
-            break;
-          case 'evalue':
-            regEx = /^[0-9]+([.][0-9]*)?$/;
-            break;
-          case 'number':
-            regEx = /^-?[0-9]+([.][0-9]*)?$/;
-            break;
-          case 'int':
-            regEx = /^-?[0-9]+$/;
-            break;
-        }
-        if (!regEx.test(input[checkProperty])) {
-          isValid = false;
-          errorPrompt = 'One or more entered characters are not allowed.';
-          break;
-        }
-      }
-
-      // check 3: is input unique?
-      if (objArray && checkProperty) {
-        const uniquenessCheck = !(objArray.filter(obj => obj[checkProperty] === input[checkProperty]).length > 1);
-        if (!uniquenessCheck) {
-          isValid = uniquenessCheck;
-          errorPrompt = 'Please enter a unique value!';
-          break;
-        }
-      }
-
-      // check 4: input in bounds?
-      if ((type === 'int' || type === 'number') && (min || max)) {
-        const minMaxCheck = input[checkProperty] >= min || input[checkProperty] <= max;
-        if (!minMaxCheck) {
-          isValid = minMaxCheck;
-          errorPrompt = 'The provided value is out of bounds!';
-          break;
-        }
-      }
-      break;
-    }
-
-    if (isValid && this.formErrors.has(formElementId)) {
-      this.formErrors.delete(formElementId);
-    } else if (!isValid && !this.formErrors.has(formElementId)) {
-      this.formErrors.set(formElementId, errorPrompt);
-    }
-
-    return isValid;
   }
 
   openUploadDialog(): void {
@@ -402,5 +313,89 @@ export class ProphaneJobStateService {
     });
   }
 
-}
+  isFormInputValid(formElementId: string, input: any, checkProperty: string, required: boolean, objArray?: any[]) {
+    /**
+     * Validates form Inputs and adds non valid inputs to form error map
+     * @param {string} formElementId - id to assign form input errors
+     * @param {any} input - object containing a property that needs to be validated
+     * @param {string} checkProperty - property to be validated
+     * @param {boolean} required - true if form value needs to be set
+     * @param {any[]} [objArray] - Array containing objects of the input type; Used to validte uniqueness of input. If more than two
+     * instances of input.checkProperty are found validator returns false
+     * @return {boolean} isValid - isValid defines status of formfield for css styling
+     * users
+     */
 
+    let isValid = true;
+    let errorPrompt: string;
+    const type = input.hasOwnProperty('valueType') ? input.valueType : 'string';
+    const min = input.min;
+    const max = input.max;
+
+    while (true) {
+      // check 1: are required inputs provided?
+      if (required) {
+        const inputCheck = !!input[checkProperty];
+        if (!inputCheck) {
+          isValid = inputCheck;
+          errorPrompt = 'Please enter something!';
+          break;
+        }
+      }
+
+      // check 2: input type correct?
+      if (type) {
+        let regEx = null;
+
+        switch (type) {
+          case 'string':
+            regEx = /^[a-zA-Z0-9_ ]+$/;
+            break;
+          case 'evalue':
+            regEx = /^[0-9]+([.][0-9]*)?$/;
+            break;
+          case 'number':
+            regEx = /^-?[0-9]+([.][0-9]*)?$/;
+            break;
+          case 'int':
+            regEx = /^-?[0-9]+$/;
+            break;
+        }
+        if (!regEx.test(input[checkProperty])) {
+          isValid = false;
+          errorPrompt = 'One or more entered characters are not allowed.';
+          break;
+        }
+      }
+
+      // check 3: is input unique?
+      if (objArray && checkProperty) {
+        const uniquenessCheck = !(objArray.filter(obj => obj[checkProperty] === input[checkProperty]).length > 1);
+        if (!uniquenessCheck) {
+          isValid = uniquenessCheck;
+          errorPrompt = 'Please enter a unique value!';
+          break;
+        }
+      }
+
+      // check 4: input in bounds?
+      if ((type === 'int' || type === 'number') && (min || max)) {
+        const minMaxCheck = input[checkProperty] >= min || input[checkProperty] <= max;
+        if (!minMaxCheck) {
+          isValid = minMaxCheck;
+          errorPrompt = 'The provided value is out of bounds!';
+          break;
+        }
+      }
+      break;
+    }
+
+    if (isValid && this.formErrors.has(formElementId)) {
+      this.formErrors.delete(formElementId);
+    } else if (!isValid && !this.formErrors.has(formElementId)) {
+      this.formErrors.set(formElementId, errorPrompt);
+    }
+
+    return isValid;
+  }
+}

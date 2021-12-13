@@ -32,11 +32,11 @@ export class DataNavigationTreeComponent implements OnInit {
       this._treeNodes = nodes;
     });
 
-    this._treeNodes.map(node => {
-      if (node.expanded === true) {
-        this._expandedNodes.push(node.uuid);
-      }
-    });
+    // this._treeNodes.map(node => {
+    //   if (node.expanded === true) {
+    //     this._expandedNodes.push(node.uuid);
+    //   }
+    // });
 
   }
 

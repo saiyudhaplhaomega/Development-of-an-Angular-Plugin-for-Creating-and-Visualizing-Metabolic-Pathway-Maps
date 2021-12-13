@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { DataItem } from '../objects/data-item';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
-import v1 from 'uuid/v1';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {GetDateService} from '../../../../core/services/get-date.service';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';
 import {MatDialog} from '@angular/material';
 import {DeleteWarningDialogComponent} from '../../../../core/components/dialog/delete-warning-dialog.component';
-import {error} from 'util';
 import {Endpoints} from '../../../../core/services/webserveraddress.service';
+import {HttpHeaders} from '@angular/common/http';
+import {dataNodeIdGenerator} from './dataNodeIdGenerator';
 // import {type} from 'os';
 
 export interface DataChangeObj {
@@ -48,106 +48,106 @@ export class DataService {
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
-  constructor(private authGuard: AuthGuard,
-              private jsonUploader: AuthenticatedSerializableObjectUploaderService,
-              private getDateService: GetDateService,
-              private dialog: MatDialog) {
-      if (this.authGuard.loggedIn()) {
-        this.jsonUploader.getObj<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
-          const newMap = new Map();
-          res.forEach(obj => {
-            newMap.set(obj.uuid, obj);
-          });
-          this.dataMap.next(newMap);
-        });
-        // test data from server
-        // newMap.set(key, {
-        //   displayName: 'a user',
-        //   icon: 'account_circle',
-        //   children: [],
-        //   uuid: key,
-        //   type: 'user',
-        // });
-
-      } else {
-        const key = v1();
-        const newMap = new Map();
-        newMap.set(key, {
-          displayName: 'no user',
-          icon: 'account_circle',
-          children: [],
-          uuid: key,
-          type: 'user'
-        });
-        this.dataMap.next(newMap);
-      }
-
-    // updates userdata when data Map is changed
-    this.dataMap.subscribe(value => {
-      this._dataItemMap = value;
-      const list = [];
-      if (value !== undefined) {
-        if (value.size !== 0) {
-          value.forEach(val => {
-            list.push(val);
-          });
-          this.jsonUploader.postObj(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-            if (result != null) {
-              console.log(list);
-              // value = result;
-            }
-          }), error(error => {
-            //TODO: dont update!
-          });
-        }
-      }
-    });
-  }
-  // uncomment till here
-
-  // Following lines added due to server error. Delete if server is running properly.
   // constructor(private authGuard: AuthGuard,
   //             private jsonUploader: AuthenticatedSerializableObjectUploaderService,
   //             private getDateService: GetDateService,
   //             private dialog: MatDialog) {
   //
-  //   if (this.authGuard.loggedIn()) {
-  //     const key = v1();
-  //     const newMap = new Map();
-  //     newMap.set(key, {
-  //       displayName: 'a user',
-  //       icon: 'account_circle',
-  //       children: [],
-  //       uuid: key,
-  //       type: 'user',
-  //     });
-  //     this.dataMap.next(newMap);
-  //   } else {
-  //     const key = v1();
-  //     const newMap = new Map();
-  //     newMap.set(key, {
-  //       displayName: 'no user',
-  //       icon: 'account_circle',
-  //       children: [],
-  //       uuid: key,
-  //       type: 'user'
-  //     });
-  //     this.dataMap.next(newMap);
-  //   }
+  //     if (this.authGuard.loggedIn()) {
+  //       this.jsonUploader.getObj<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
+  //         const newMap = new Map();
+  //         res.forEach(obj => {
+  //           newMap.set(obj.uuid, obj);
+  //         });
+  //         this.dataMap.next(newMap);
+  //       });
+  //       // test data from server
+  //       // newMap.set(key, {
+  //       //   displayName: 'a user',
+  //       //   icon: 'account_circle',
+  //       //   children: [],
+  //       //   uuid: key,
+  //       //   type: 'user',
+  //       // });
   //
-  //   // '/mpacloud/v1/getuserdata'
-  //   this.dataMap.subscribe(value => {
-  //     this._dataItemMap = value;
-  //     const headers = new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': authGuard.getUserAuthorization().toString()});
-  //     this.jsonUploader.postObj(value, '/mpacloud/v1/updateuserdata').subscribe(result => {
-  //       if (result != null) {
-  //         value = result;
-  //       }
-  //     });
-  //   });
+  //     } else {
+  //       const key = dataNodeIdGenerator(this._dataItemMap);
+  //       const newMap = new Map();
+  //       newMap.set(key, {
+  //         displayName: 'no user',
+  //         icon: 'account_circle',
+  //         children: [],
+  //         uuid: key,
+  //         type: 'user'
+  //       });
+  //       this.dataMap.next(newMap);
+  //     }
+  //
+  //   // updates userdata when data Map is changed
+  //   this.dataMap.subscribe(
+  //     data => {
+  //       console.log(data);
+  //       this._dataItemMap = data;
+  //       const list = [];
+  //       if (data !== undefined && data.size !== 0) {
+  //           data.forEach(val => list.push(val));
+  //
+  //           this.jsonUploader.postObj(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+  //               if (result != null) {
+  //                 console.log(result);
+  //                 console.log(list);
+  //                 // data = result;
+  //               }
+  //             }, err => console.log(err)
+  //             // TODO: dont update!
+  //           );
+  //         }
+  //     }
+  //   );
   // }
+  // uncomment till here
+
+  // Following lines added due to server error. Delete if server is running properly.
+  constructor(private authGuard: AuthGuard,
+              private jsonUploader: AuthenticatedSerializableObjectUploaderService,
+              private getDateService: GetDateService,
+              private dialog: MatDialog) {
+
+    if (this.authGuard.loggedIn()) {
+      const key = dataNodeIdGenerator(this._dataItemMap);
+      const newMap = new Map();
+      newMap.set(key, {
+        displayName: 'a user',
+        icon: 'account_circle',
+        children: [],
+        uuid: key,
+        type: 'user',
+      });
+      this.dataMap.next(newMap);
+    } else {
+      const key = dataNodeIdGenerator(this._dataItemMap);;
+      const newMap = new Map();
+      newMap.set(key, {
+        displayName: 'no user',
+        icon: 'account_circle',
+        children: [],
+        uuid: key,
+        type: 'user'
+      });
+      this.dataMap.next(newMap);
+    }
+
+    // '/mpacloud/v1/getuserdata'
+    this.dataMap.subscribe(value => {
+      this._dataItemMap = value;
+      console.log(value);
+      this.jsonUploader.postObj(value, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+        if (result != null) {
+          value = result;
+        }
+      });
+    });
+  }
   // remove till here
 
   addExperiment(parentUuid: string, experimentName: string) {
@@ -157,7 +157,7 @@ export class DataService {
      * experimentName - name that is displayed to the user
      */
 
-    const newExperimentUUID = v1();
+    const newExperimentUUID = dataNodeIdGenerator(this._dataItemMap);
 
     // object for data map
     const newExperiment = {
@@ -208,7 +208,7 @@ export class DataService {
      * dbName - name that is displayed to the user
      */
 
-    const newProtDBUUID = v1();
+    const newProtDBUUID = dataNodeIdGenerator(this._dataItemMap);;
     const newProtDB = {
       displayName: dbName,
       icon: 'fingerprint',
@@ -238,7 +238,8 @@ export class DataService {
      * folderName - name that is displayed to the user
      */
 
-    const newFolderUUID = v1();
+    // const newFolderUUID = v1();
+    const newFolderUUID = dataNodeIdGenerator(this._dataItemMap);
     const newFolder = {
       displayName: folderName,
       icon: 'folder',
@@ -330,7 +331,7 @@ export class DataService {
   }
 
   addPeaklist(parentUuid: string, displayName: string) {
-    const newPeaklistUUID = v1();
+    const newPeaklistUUID = dataNodeIdGenerator(this._dataItemMap);;
     const newPeaklist = {
       displayName: displayName,
       icon: 'folder',
@@ -354,7 +355,7 @@ export class DataService {
   }
 
   addSearch(parentUuid: string, displayName: string) {
-    const newSearchUUID = v1();
+    const newSearchUUID = dataNodeIdGenerator(this._dataItemMap);;
     const newSearch = {
       displayName: displayName,
       icon: 'folder',

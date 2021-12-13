@@ -4,7 +4,6 @@ import { DataItem } from '../data-navigation-tree/objects/data-item';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
-import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
 
 

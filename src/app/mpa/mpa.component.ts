@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { NavService } from './components/data-navigation-tree/services/nav.service';
-import {Endpoints, WebserveraddressService, WebserverUrls} from '../core/services/webserveraddress.service';
+import {first, takeUntil, takeWhile} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-mpa',
@@ -14,22 +15,29 @@ export class MPAComponent implements OnInit {
   // ViewChild can grab references to the DOM element with the variable #treeoutlet
   // with read: ViewContainerRef it grabs component views - views are display elements
 
-
   @ViewChild('treeoutlet', {
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
 
+  notifier = new Subject();
+
   constructor(
-    private navService: NavService,
-    private httpUrlBuilder: WebserveraddressService) {
+    private navService: NavService) {
   }
 
-
   ngOnInit() {
-    console.log(this.httpUrlBuilder.getEndpoint(Endpoints.GET_USER_DATA));
     this.navService.treeContentRef.next(this.viewContainerRef);
-    const userNode = this.navService.treeNodes.value.find(node => node.type === 'user');
-    this.navService.navigateOutlet(userNode.displayName, userNode.uuid, 'user');
+
+    this.navService.treeNodes.pipe( // TODO: check if this is working
+      takeWhile(value => typeof value === 'undefined')).subscribe(event => {
+      if (this.navService.treeNodes.value) {
+        console.log(this.navService.treeNodes.value);
+        this.notifier.next();
+        const userNode = this.navService.treeNodes.value.find(node => node.type === 'user');
+        this.navService.navigateOutlet(userNode.displayName, userNode.uuid, 'user');
+      }
+    }
+    );
   }
 }
 

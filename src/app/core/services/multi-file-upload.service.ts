@@ -77,6 +77,7 @@ export class MultiFileUploadService {
           }
         );
 
+        // TODO: file type isn't important
         // Upload of FASTA if present
         if (file.uploadFasta) {
           this.fileUploaderService.postFile(file.uploadFasta,

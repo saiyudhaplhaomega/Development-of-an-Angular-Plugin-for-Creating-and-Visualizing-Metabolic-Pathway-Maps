@@ -32,6 +32,7 @@ import {ProphaneModule} from './prophane/prophane.module';
 import {MpaModule} from './mpa/mpa.module';
 
 import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
+import { ErrorPageComponent } from './error-page/error-page-component/error-page.component';
 
 @NgModule({
   // components
@@ -46,6 +47,7 @@ import {ProphaneAboutComponent} from './prophane/components/prophane-policy-cons
     PrivacyConsentBannerComponent,
     ProphaneAboutComponent,
     UploadDialogComponent,
+    ErrorPageComponent,
   ],
   // modules - functionally bundled components, directives, services, etc.
   imports: [
