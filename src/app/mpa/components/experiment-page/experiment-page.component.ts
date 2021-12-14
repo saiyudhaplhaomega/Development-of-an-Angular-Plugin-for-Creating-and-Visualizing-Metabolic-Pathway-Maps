@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {DataService} from '../data-navigation-tree/services/data.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
@@ -11,7 +11,7 @@ import {UploadDialogComponent} from '../../../core/components/dialog/upload-dial
 import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {FileUploadData, MultiFileUploadService} from '../../../core/services/multi-file-upload.service';
-import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
+import {Endpoints} from '../../../core/services/webserveraddress.service';
 
 @Component({
   selector: 'app-experiment-page',
@@ -238,12 +238,12 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     // TODO: Add promise; nodes should only be added if upload was succesful
 
     if (this.selectedPeaklistFile && this.selectedSearchFile) {
-      this.dataService.addPeaklist(this.dbExperiment.exp_id, this.selectedPeaklistFile.name);
-      this.dataService.addSearch(this.dbExperiment.exp_id, this.selectedSearchFile.name);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.PeakList);
     } else if (this.selectedPeaklistFile) {
-      this.dataService.addPeaklist(this.dbExperiment.exp_id, this.selectedPeaklistFile.name);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
     } else if (this.selectedSearchFile) {
-      this.dataService.addSearch(this.dbExperiment.exp_id, this.selectedSearchFile.name);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.PeakList);
     }
 
     this.getChildNodes();

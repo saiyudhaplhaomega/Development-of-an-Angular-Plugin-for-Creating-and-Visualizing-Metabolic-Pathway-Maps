@@ -23,7 +23,6 @@ export class NavService {
 
   public treeContentRef = new BehaviorSubject<ViewContainerRef>(undefined);
   private _contentRef: ViewContainerRef;
-  public selectedNode: string;
 
   public currentUrl = new BehaviorSubject<string>(undefined);
   public treeNodes = new BehaviorSubject<TreeNode[]>(undefined);
@@ -32,35 +31,42 @@ export class NavService {
   private _dataMap: Map<string, DataItem>;
   private _expandedNodes: string[] = [];
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private dataService: DataService,
     private componentFactoryResolver: ComponentFactoryResolver) {
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl.next(event.urlAfterRedirects);
       }
     });
+
     this.dataService.dataMap.subscribe(items => {
       if (items) {
         this._dataMap = items;
         this.treeNodes.next(this.processData(items, this._expandedNodes));
       }
     });
+
     this.expandedNodes.subscribe(expandedNodes => {
       if (expandedNodes) {
         this._expandedNodes = expandedNodes;
         this.treeNodes.next(this.processData(this._dataMap, expandedNodes));
       }
     });
+
     this.treeContentRef.subscribe((val) => {
       this._contentRef = val;
     });
+
     this.dataService.dataChange.subscribe((change) => {
       switch (change.event) {
         case 'removeNode':
           this.onDelete(change);
           break;
         case 'add':
+          console.log(change);
           this.onCreation(change);
           break;
       }
@@ -77,7 +83,6 @@ export class NavService {
           if (!item.parent) {
             // No Parent
             console.log('No Parent');
-            console.log(item);
             tree.push(
               {
                 displayName: item.displayName,
@@ -116,6 +121,8 @@ export class NavService {
             console.log('HIDDEN');
             processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
           }
+        } else {
+          console.log('Hellloooooooo');
         }
       }
       }
@@ -171,6 +178,7 @@ export class NavService {
 
   onCreation(node: DataChangeObj) {
     const newObj = this._dataMap.get(node.finalNodeUuid);
+    console.log(newObj);
     this.navigateOutlet(newObj.displayName, node.finalNodeUuid, newObj.type);
   }
 

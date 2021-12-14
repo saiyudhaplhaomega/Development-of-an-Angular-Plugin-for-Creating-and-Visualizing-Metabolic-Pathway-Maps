@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import { DataService } from '../data-navigation-tree/services/data.service';
+import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {MatDialog} from '@angular/material';
@@ -57,7 +57,7 @@ export class UserPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add folder');
-        this.dataService.addFolder(this.uuid, folderName);
+        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Folder);
       }
     });
   }

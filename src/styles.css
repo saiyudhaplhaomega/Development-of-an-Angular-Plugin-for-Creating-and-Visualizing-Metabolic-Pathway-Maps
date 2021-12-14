@@ -64,7 +64,25 @@ custom-table-warning {
   justify-items: stretch;
 }
 
+.centerd-grid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: [left] 1fr [center-left] minmax(600px, 2fr) [center-right] 1fr [right];
+  grid-template-rows: [top] 1fr [upper-center] minmax(200px, 2fr) [lower-center] 1fr [bottom];
+}
+
 .centered-item {
+  grid-column-start: center-left;
+  grid-row-start: upper-center;
+}
+
+.center-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horizontally-centered-item {
   grid-column-start: center-left;
 }
 

@@ -11,6 +11,7 @@ import {TermsOfServicePageComponent} from './core/components/terms-of-service-pa
 import {ImpressumPageComponent} from './core/components/impressum-page/impressum-page.component';
 import {PrivacyPolicyPageComponent} from './core/components/privacy-policy-page/privacy-policy-page.component';
 import {DatabaseSearchPageComponent} from './mpa/components/database-search-page/database-search-page.component';
+import {ErrorPageComponent} from './error-page/error-page-component/error-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: 'prophanejobcontrol', component: ProphaneJobControlComponent, canActivate: [AuthGuard] },
   { path: 'results/:job_uuid', component: ProphaneResultViewComponent},
   { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard]},
+  { path: 'error', component: ErrorPageComponent },
 
   { path: 'termsofservice', component: TermsOfServicePageComponent},
   { path: 'privacypolicy', component: PrivacyPolicyPageComponent},
