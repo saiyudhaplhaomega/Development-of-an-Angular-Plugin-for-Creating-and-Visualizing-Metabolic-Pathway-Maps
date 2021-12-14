@@ -66,6 +66,7 @@ export class NavService {
           this.onDelete(change);
           break;
         case 'add':
+          console.log(change);
           this.onCreation(change);
           break;
       }
@@ -177,6 +178,7 @@ export class NavService {
 
   onCreation(node: DataChangeObj) {
     const newObj = this._dataMap.get(node.finalNodeUuid);
+    console.log(newObj);
     this.navigateOutlet(newObj.displayName, node.finalNodeUuid, newObj.type);
   }
 

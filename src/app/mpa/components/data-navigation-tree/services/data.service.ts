@@ -19,22 +19,18 @@ export interface DataChangeObj {
   finalNodeUuid: string; // node whose viewRef will be rendered after change
 }
 
+export enum NodeType {
+  Experiment = 'experiment',
+  ProteinDB = 'proteindb',
+  PeakList = 'peaklist',
+  SearchResult = 'searchresult',
+  Folder = 'folder',
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
- /* public dataItems = new BehaviorSubject<DataItem[]>(
-    [
-      {
-        displayName: 'unknown user',
-        icon: 'account_circle',
-        children: [],
-        uuid: v1(),
-        type: 'user'
-      }
-    ]
-  ); */
 
   private initDataChange = {
     event: undefined,
@@ -44,7 +40,6 @@ export class DataService {
 
   public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   public dataChange = new BehaviorSubject<DataChangeObj>(this.initDataChange);
- // private _dataItems: DataItem[];
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
@@ -125,7 +120,7 @@ export class DataService {
       });
       this.dataMap.next(newMap);
     } else {
-      const key = dataNodeIdGenerator(this._dataItemMap);;
+      const key = dataNodeIdGenerator(this._dataItemMap);
       const newMap = new Map();
       newMap.set(key, {
         displayName: 'no user',
@@ -150,115 +145,75 @@ export class DataService {
   }
   // remove till here
 
-  addExperiment(parentUuid: string, experimentName: string) {
+  addNodeObj(parentId: string, nodeName: string, nodeType: NodeType) {
 
-    /**
-     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
-     * experimentName - name that is displayed to the user
-     */
+    const newNodeId = dataNodeIdGenerator(this._dataItemMap);
 
-    const newExperimentUUID = dataNodeIdGenerator(this._dataItemMap);
-
-    // object for data map
-    const newExperiment = {
-      displayName: experimentName,
-      icon: 'computer',
-      children: [],
-      uuid: newExperimentUUID,
-      type: 'experiment',
-      parent: parentUuid,
-      creation_date: this.getDateService.getDate().toString(),
-      description: '',
+    const dataChangeObj = {
+      event: 'add',
+      currentNodeUuid: parentId,
+      targetNodeUuid: newNodeId,
+      finalNodeUuid: newNodeId
     };
 
-    // object for server
-    // TODO: set data from input
+    const nodeObj: DataItem = {
+      displayName: nodeName,
+      children: [],
+      uuid: newNodeId,
+      type: nodeType,
+      parent: parentId,
+      icon: undefined
+    };
+
+    switch (nodeType) {
+      case 'experiment':
+        nodeObj.icon = 'computer';
+        nodeObj.creation_date = this.getDateService.getDate().toString();
+        nodeObj.description = '';
+
+        this.updateExperiment(nodeObj);
+        break;
+      case 'proteindb':
+        nodeObj.icon = 'fingerprint';
+        dataChangeObj.event = 'addDB';
+        break;
+      case 'folder':
+        nodeObj.icon = 'folder';
+        break;
+      case 'peaklist':
+        nodeObj.icon = 'folder';
+        dataChangeObj.event = 'addPeaklist';
+        dataChangeObj.finalNodeUuid = parentId;
+        break;
+      case 'searchresult':
+        nodeObj.icon = 'folder';
+        dataChangeObj.event = 'addSearch';
+        dataChangeObj.finalNodeUuid = parentId;
+        break;
+    }
+
+    const item = this._dataItemMap.get(parentId);
+    item.children.push(newNodeId);
+    this._dataItemMap.set(parentId, item);
+
+    this._dataItemMap.set(newNodeId, nodeObj);
+    this.updateDataItems();
+    this.dataChange.next(dataChangeObj);
+  }
+
+  updateExperiment(nodeObj) {
+    // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
-    dbExperiment.exp_id = newExperimentUUID;
-    dbExperiment.name = newExperiment.displayName;
-    dbExperiment.description = newExperiment.description;
-    dbExperiment.creationDate = newExperiment.creation_date;
+    dbExperiment.exp_id = nodeObj.uuid;
+    dbExperiment.name = nodeObj.displayName;
+    dbExperiment.description = nodeObj.description;
+    dbExperiment.creationDate = nodeObj.creation_date;
 
     this.jsonUploader.postObj(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;
       }
-    });
-
-    const item = this._dataItemMap.get(parentUuid);
-    item.children.push(newExperimentUUID);
-    this._dataItemMap.set(parentUuid, item);
-
-    this._dataItemMap.set(newExperimentUUID, newExperiment);
-    // console.log(this._dataItemMap);
-    this.updateDataItems();
-    this.dataChange.next({
-      event: 'add',
-      currentNodeUuid: parentUuid,
-      targetNodeUuid: newExperimentUUID, // 'modified' node
-      finalNodeUuid: newExperimentUUID // node whose content should be rendered after creation
-    });
-  }
-
-  addProteinDatabase(parentUuid: string, dbName: string) {
-
-    /**
-     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
-     * dbName - name that is displayed to the user
-     */
-
-    const newProtDBUUID = dataNodeIdGenerator(this._dataItemMap);;
-    const newProtDB = {
-      displayName: dbName,
-      icon: 'fingerprint',
-      children: [],
-      uuid: newProtDBUUID,
-      type: 'proteindb',
-      parent: parentUuid,
-    };
-
-    const item = this._dataItemMap.get(parentUuid);
-    item.children.push(newProtDBUUID);
-    this._dataItemMap.set(parentUuid, item);
-
-    this._dataItemMap.set(newProtDBUUID, newProtDB);
-    this.updateDataItems();
-    this.dataChange.next({
-      event: 'addDB',
-      currentNodeUuid: parentUuid,
-      targetNodeUuid: newProtDBUUID,
-      finalNodeUuid: newProtDBUUID});
-  }
-
-  addFolder(parentUuid: string, folderName: string) {
-
-    /**
-     * parentUuid - uuid of parent node element, i.e. element where this function was invoked from
-     * folderName - name that is displayed to the user
-     */
-
-    // const newFolderUUID = v1();
-    const newFolderUUID = dataNodeIdGenerator(this._dataItemMap);
-    const newFolder = {
-      displayName: folderName,
-      icon: 'folder',
-      children: [],
-      uuid: newFolderUUID,
-      type: 'folder',
-      parent: parentUuid,
-    };
-    const item = this._dataItemMap.get(parentUuid);
-    item.children.push(newFolderUUID);
-    this._dataItemMap.set(parentUuid, item);
-
-    this._dataItemMap.set(newFolderUUID, newFolder);
-    this.updateDataItems();
-    this.dataChange.next( {
-      event: 'add',
-      currentNodeUuid: parentUuid,
-      targetNodeUuid: newFolderUUID,
-      finalNodeUuid: newFolderUUID
     });
   }
 
@@ -328,54 +283,6 @@ export class DataService {
 
   private updateDataItems() {
     this.dataMap.next(this._dataItemMap);
-  }
-
-  addPeaklist(parentUuid: string, displayName: string) {
-    const newPeaklistUUID = dataNodeIdGenerator(this._dataItemMap);;
-    const newPeaklist = {
-      displayName: displayName,
-      icon: 'folder',
-      children: [],
-      uuid: newPeaklistUUID,
-      type: 'peaklist',
-      parent: parentUuid,
-    };
-    const item = this._dataItemMap.get(parentUuid);
-    item.children.push(newPeaklistUUID);
-    this._dataItemMap.set(parentUuid, item);
-
-    this._dataItemMap.set(newPeaklistUUID, newPeaklist);
-    this.updateDataItems();
-    this.dataChange.next({
-      event: 'addPeaklist',
-      currentNodeUuid: parentUuid,
-      targetNodeUuid: newPeaklistUUID,
-      finalNodeUuid: parentUuid
-    });
-  }
-
-  addSearch(parentUuid: string, displayName: string) {
-    const newSearchUUID = dataNodeIdGenerator(this._dataItemMap);;
-    const newSearch = {
-      displayName: displayName,
-      icon: 'folder',
-      children: [],
-      uuid: newSearchUUID,
-      type: 'searchresult',
-      parent: parentUuid,
-    };
-    const item = this._dataItemMap.get(parentUuid);
-    item.children.push(newSearchUUID);
-    this._dataItemMap.set(parentUuid, item);
-
-    this._dataItemMap.set(newSearchUUID, newSearch);
-    this.updateDataItems();
-    this.dataChange.next({
-      event: 'addSearch',
-      currentNodeUuid: parentUuid,
-      targetNodeUuid: newSearchUUID,
-      finalNodeUuid: parentUuid
-    });
   }
 
   moveDataItem(newParentID: string, movedUUID: string) {

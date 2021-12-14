@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data-navigation-tree/services/data.service';
-import { DataItem } from '../data-navigation-tree/objects/data-item';
+import {Component, OnInit} from '@angular/core';
+import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
+import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
@@ -61,7 +61,7 @@ export class FolderPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add experiment');
-        this.dataService.addExperiment(this.uuid, folderName);
+        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Experiment);
       }
     });
   }
@@ -75,7 +75,7 @@ export class FolderPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dbName => {
       if (dbName) {
         console.log('add proteindb');
-        this.dataService.addProteinDatabase(this.uuid, dbName);
+        this.dataService.addNodeObj(this.uuid, dbName, NodeType.ProteinDB);
         // fileMetaData.filename = dbName;
         // fileMetaData.experimentuuid = this.uuid;
       }
@@ -99,7 +99,8 @@ export class FolderPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add folder');
-        this.dataService.addFolder(this.uuid, folderName); }
+        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Folder);
+      }
     });
   }
 
