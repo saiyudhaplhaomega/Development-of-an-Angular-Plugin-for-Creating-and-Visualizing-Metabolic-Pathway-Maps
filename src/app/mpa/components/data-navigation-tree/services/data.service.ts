@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { DataItem } from '../objects/data-item';
 import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
-import v1 from 'uuid/v1';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {GetDateService} from '../../../../core/services/get-date.service';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';

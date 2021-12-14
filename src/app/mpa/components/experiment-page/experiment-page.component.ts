@@ -239,11 +239,11 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     if (this.selectedPeaklistFile && this.selectedSearchFile) {
       this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.PeakList);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
     } else if (this.selectedPeaklistFile) {
       this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
     } else if (this.selectedSearchFile) {
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.PeakList);
+      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
     }
 
     this.getChildNodes();
