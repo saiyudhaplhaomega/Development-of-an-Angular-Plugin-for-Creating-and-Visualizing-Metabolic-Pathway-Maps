@@ -4,6 +4,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService} from '../../data-navigation-tree/services/data.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
+import {UploadProgressService} from '../../../../core/services/upload-progress.service';
+import {FileUploaderService} from '../../../../core/services/file-uploader.service';
+import {Endpoints, WebserveraddressService} from '../../../../core/services/webserveraddress.service';
+import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
+import {FileUploadData, MultiFileUploadService} from '../../../../core/services/multi-file-upload.service';
+import {FileMetaData} from '../../../objects/FileMetaData';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-protein-database-dialog',
@@ -23,6 +30,10 @@ export class ProteinDatabaseDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ProteinDatabaseDialogComponent>,
     private fb: FormBuilder,
     private dataService: DataService,
+    private uploaderService: AuthenticatedSerializableObjectUploaderService,
+    private fileUploaderService: FileUploaderService,
+    private uploadProgressService: UploadProgressService,
+    private multiFileUpload: MultiFileUploadService
     ) { }
 
   ngOnInit() {
@@ -60,7 +71,30 @@ export class ProteinDatabaseDialogComponent implements OnInit {
 
   onSubmitName(): void {
     this.dialogRef.close(this.proteinDBForm.value.dbName);
-    //  TODO: send file to server
+
+    const fileData: FileMetaData = {
+      filename: this.dbFile.toString(),
+      fileType: 'fasta',
+      fileUUID: null,
+    };
+
+    // metadata endpoint, wait for File ID
+    this.uploaderService.postObj<FileMetaData>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
+      if (result != null) {
+        console.log(result.fileUUID);
+        // upload fasta/xml file
+        const params: HttpParams = new HttpParams();
+        params.set('name', fileData.filename);
+        params.set('jobid', result.fileUUID);
+        this.fileUploaderService.postFileWithParams(this.dbFile, Endpoints.PROTEINLOADER_FILEUPLOAD, params).subscribe(result2 => {
+          if (result2 != null) {
+            console.log(result2);
+            // value = result;
+          }
+        });
+      }
+    });
+
   }
 
   onCloseDialog(): void {

@@ -23,7 +23,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.ADD_DB_EXPERIMENT), value, httpOptions);
+    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.UNIMPLEMENTED), value, httpOptions);
   }
 
   newStream(value: string): Observable<string> {
@@ -31,7 +31,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.ADD_STREAMING_SESSION), value, httpOptions);
+    return this.http.post<string>(this.webserver.getEndpoint(Endpoints.UNIMPLEMENTED), value, httpOptions);
   }
 
   getExperiments(): Observable<ExperimentJSON[]> {
@@ -39,7 +39,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<ExperimentJSON[]>(this.webserver.getEndpoint(Endpoints.LIST_DB_EXPERIMENTS), 'body', httpOptions);
+    return this.http.post<ExperimentJSON[]>(this.webserver.getEndpoint(Endpoints.UNIMPLEMENTED), 'body', httpOptions);
   }
 
   getStreams(): Observable<StreamJSON[]> {
@@ -47,7 +47,7 @@ export class DbsearchcontentService {
       'Content-Type':  'application/json',
       'Authorization': this.authService.getUserAuthorization()
     });
-    return this.http.post<StreamJSON[]>(this.webserver.getEndpoint(Endpoints.LIST_STREAMINGSESSIONS), 'body', httpOptions);
+    return this.http.post<StreamJSON[]>(this.webserver.getEndpoint(Endpoints.UNIMPLEMENTED), 'body', httpOptions);
   }
 
 }

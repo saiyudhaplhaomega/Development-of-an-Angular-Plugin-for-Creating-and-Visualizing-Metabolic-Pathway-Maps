@@ -110,7 +110,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.dbExperiment.exp_id = this.uuid;
 
     this.uploaderService.postObj<ExperimentJSONObject>(
-      this.dbExperiment, Endpoints.GET_EXPERIMENT).subscribe(result => {
+      this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
       if (result != null) {
         console.log(result);
         this.dbExperiment = result;
@@ -377,7 +377,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
      * updates server when the experiment page is left
      */
     this.uploaderService.postObj(
-      this.dbExperiment, Endpoints.UPDATE_EXPERIMENT).subscribe(result => {
+      this.dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;

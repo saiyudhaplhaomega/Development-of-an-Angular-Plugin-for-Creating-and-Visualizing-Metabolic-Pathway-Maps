@@ -85,19 +85,17 @@ export class DataService {
     // updates userdata when data Map is changed
     this.dataMap.subscribe(value => {
       this._dataItemMap = value;
-      const list = [];
+      const list: DataItem[] = [];
       if (value !== undefined) {
         if (value.size !== 0) {
           value.forEach(val => {
             list.push(val);
           });
-          this.jsonUploader.postObj(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+          this.jsonUploader.postObj<DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
             if (result != null) {
               console.log(list);
               // value = result;
             }
-          }), error(error => {
-            //TODO: dont update!
           });
         }
       }
