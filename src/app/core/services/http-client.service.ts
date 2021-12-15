@@ -60,4 +60,8 @@ export class HttpClientService {
     });
   }
 
+  postMultiFile(files: File[], api: string, params?: HttpParams) {
+    // TODO: multiFileUpload
+  }
+
 }
