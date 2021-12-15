@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { DataItem } from '../objects/data-item';
-import {AuthenticatedSerializableObjectUploaderService} from '../../../../core/services/authenticated-serializable-object-uploader.service';
+import {HttpClientService} from '../../../../core/services/http-client.service';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {GetDateService} from '../../../../core/services/get-date.service';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';
@@ -44,11 +44,11 @@ export class DataService {
 
   // uncomment when server is running properly
   constructor(private authGuard: AuthGuard,
-              private jsonUploader: AuthenticatedSerializableObjectUploaderService,
+              private jsonUploader: HttpClientService,
               private getDateService: GetDateService,
               private dialog: MatDialog) {
       if (this.authGuard.loggedIn()) {
-        this.jsonUploader.getObj<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
+        this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
           const newMap = new Map();
           res.forEach(obj => {
             newMap.set(obj.uuid, obj);
@@ -86,7 +86,7 @@ export class DataService {
           value.forEach(val => {
             list.push(val);
           });
-          this.jsonUploader.postObj<DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+          this.jsonUploader.postObject<DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
             if (result != null) {
               console.log(list);
               // value = result;
@@ -207,7 +207,7 @@ export class DataService {
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationDate = nodeObj.creation_date;
 
-    this.jsonUploader.postObj(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
+    this.jsonUploader.postObject(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;

@@ -4,7 +4,7 @@ import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
-import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
+import {HttpClientService} from '../../../core/services/http-client.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class FolderPageComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar,
               private dataService: DataService,
               public dialog: MatDialog,
-              private uploaderService: AuthenticatedSerializableObjectUploaderService) { }
+              private uploaderService: HttpClientService) { }
 
   ngOnInit() {
     this.dataService.dataMap.subscribe( items => {

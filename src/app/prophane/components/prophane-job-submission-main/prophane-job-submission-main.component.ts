@@ -3,13 +3,13 @@ import {jobLabelData} from '../../objects/prophaneFormData';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Subject} from 'rxjs';
 import {MatDialog} from '@angular/material';
-import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {JobService} from '../../job.service';
 import {NgbModal, NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {NoJobCardHeaders, ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
 import {JobStepperComponent} from '../job-stepper/job-stepper.component';
+import {HttpClientService} from '../../../core/services/http-client.service';
 
 export interface JobLabel {
   stepperLabel: string;
@@ -35,7 +35,7 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private uploaderService: FileUploaderService,
+    private uploaderService: HttpClientService,
     private jobService: JobService,
     tooltipConfig: NgbTooltipConfig, // TODO: Tooltips are not used!
     private router: Router,

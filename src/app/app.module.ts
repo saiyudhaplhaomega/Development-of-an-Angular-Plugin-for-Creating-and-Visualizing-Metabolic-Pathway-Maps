@@ -13,7 +13,6 @@ import {AppComponent} from './app.component';
 import {CommonModule} from '@angular/common';
 import {LoginPageComponent} from './core/components/login-page/login-page.component';
 import {WebserveraddressService} from './core/services/webserveraddress.service';
-import {FileUploaderService} from './core/services/file-uploader.service';
 import {UploadProgressService} from './core/services/upload-progress.service';
 import {UploadDialogComponent} from './core/components/dialog/upload-dialog.component';
 import {NavigationBarComponent} from './core/components/navigation-bar/navigation-bar.component';
@@ -70,7 +69,6 @@ import { ErrorPageComponent } from './error-page/error-page-component/error-page
     HttpClient,
     AuthGuard,
     WebserveraddressService,
-    FileUploaderService,
     UploadProgressService,
     DbsearchcontentService,
     NavService,

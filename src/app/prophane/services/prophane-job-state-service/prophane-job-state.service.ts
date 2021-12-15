@@ -4,12 +4,13 @@ import {ProphaneParamObject} from '../../objects/prophaneparamjson';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {
   contaminationdata,
-  defaultAnnotationTasks,
-  prophaneReportStyles,
-  quantdata,
-  evalueOptions,
   databaseOptions,
-  optionStrings} from '../../objects/prophaneFormData';
+  defaultAnnotationTasks,
+  evalueOptions,
+  optionStrings,
+  prophaneReportStyles,
+  quantdata
+} from '../../objects/prophaneFormData';
 import {JobService} from '../../job.service';
 import {ProphaneReportStyle} from '../../components/prophane-job-submission-main/prophane-job-submission-formdata';
 import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
@@ -17,10 +18,10 @@ import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtask
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {MatDialog} from '@angular/material';
-import {HttpEventType} from '@angular/common/http';
-import {FileUploaderService} from '../../../core/services/file-uploader.service';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 import {finalize} from 'rxjs/operators';
+import {HttpClientService} from '../../../core/services/http-client.service';
 
 export enum NoJobCardHeaders {
   REQUESTING_JOB = 'Requesting new Prophane Job',
@@ -83,9 +84,10 @@ export class ProphaneJobStateService {
     private jobService: JobService,
     private _uploadProgressService: UploadProgressService,
     public dialog: MatDialog,
-    private uploaderService: FileUploaderService,
+    private uploaderService: HttpClientService,
     private webserver: WebserveraddressService
-  ) { }
+  ) {
+  }
 
   async initializeProphaneJobState() {
     this.noJobCardHeader = NoJobCardHeaders.REQUESTING_JOB;
@@ -149,7 +151,7 @@ export class ProphaneJobStateService {
   resetOptstr(task: ProphaneAnnotationTaskObject, taskIndex: number) {
     task.optionstring = optionStrings.filter(
       i => i['database'] === task.database)[0]['algs'][0]['options'].filter(
-        i => i['isDefault'] === '1');
+      i => i['isDefault'] === '1');
     task.formOptionStringSelection = optionStrings.filter(
       i => i['database'] === task.database)[0]['algs'][0]['defaultOptionStringSelection'];
 
@@ -212,8 +214,9 @@ export class ProphaneJobStateService {
   uploadCSV(): void {
     if (this.proteinReportFile) {
       this._uploadProgressService.addToTotal(this.proteinReportFile.size);
+      const params: HttpParams = new HttpParams({fromObject: {'name': this.currentProphaneJob.prophaneJobUUID}});
       this.uploaderService.postFile(this.proteinReportFile,
-        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_CSV, this.currentProphaneJob.prophaneJobUUID)).subscribe(
+        this.webserver.getEndpoint(Endpoints.UPLOAD_PROPHANE_CSV), params).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeReportLoaded(event.loaded);
@@ -238,8 +241,9 @@ export class ProphaneJobStateService {
   uploadFasta(): void {
     if (this.fastaFile) {
       this._uploadProgressService.addToTotal(this.fastaFile.size);
+      const params: HttpParams = new HttpParams({fromObject: {'name': this.currentProphaneJob.prophaneJobUUID}});
       this.uploaderService.postFile(this.fastaFile,
-        this.webserver.getProphaneUploaderEndpoint(Endpoints.UPLOAD_PROPHANE_CSV,  this.currentProphaneJob.prophaneJobUUID)).subscribe(
+        this.webserver.getEndpoint(Endpoints.UPLOAD_PROPHANE_CSV), params).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this._uploadProgressService.changeFastaLoaded(event.loaded);

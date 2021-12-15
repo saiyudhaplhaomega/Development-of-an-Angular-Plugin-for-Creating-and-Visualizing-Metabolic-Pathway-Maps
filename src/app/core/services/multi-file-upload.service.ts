@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import {AuthenticatedSerializableObjectUploaderService} from './authenticated-serializable-object-uploader.service';
+import {Injectable} from '@angular/core';
+import {HttpClientService} from './http-client.service';
 import {MPAFile} from '../../prophane/objects/mpafile';
-import {HttpEventType} from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {UploadProgressService} from './upload-progress.service';
-import {FileUploaderService} from './file-uploader.service';
 import {Endpoints, WebserveraddressService} from './webserveraddress.service';
 
 export interface FileUploadData {
   uploadFile: File;
-  fileMetaData: {filename: string, experimentuuid: string};
+  fileMetaData: MPAFile;
   metaDataAdress: string;
   fileUploadAdress: string;
   uploadFasta?: File;
@@ -18,15 +17,15 @@ export interface FileUploadData {
 @Injectable({
   providedIn: 'root',
 })
+
 export class MultiFileUploadService {
 
   fileArray: FileUploadData[];
 
   constructor(
-    private uploaderService: AuthenticatedSerializableObjectUploaderService,
+    private uploaderService: HttpClientService,
     private dialog: MatDialog,
     private uploadProgressService: UploadProgressService,
-    private fileUploaderService: FileUploaderService,
     private webserver: WebserveraddressService,
   ) {
     this.fileArray = [];
@@ -46,16 +45,16 @@ export class MultiFileUploadService {
 
   performUpload() {
     for (const file of this.fileArray) {
-      this.uploaderService.postObjDifferentReturnValue(file.fileMetaData, file.metaDataAdress).subscribe(result => {
+      this.uploaderService.postObject<MPAFile, MPAFile>(file.fileMetaData, file.metaDataAdress, new HttpParams()).subscribe(result => {
         const response: MPAFile = result;
         console.log(result);
 
         // Upload of Peaklist/Search result files
         const fastaFileSize = file.uploadFasta ? file.uploadFasta.size : 0;
         this.uploadProgressService.addToTotal(file.uploadFile.size + fastaFileSize);
-
-        this.fileUploaderService.postFile(file.uploadFile,
-          this.webserver.getFileUploaderEndpoint(file.fileUploadAdress, response.file_UUID, response.experiment_UUID)).subscribe(
+        const params: HttpParams = new HttpParams({fromObject: {'fileid': response.file_UUID, 'experimentid': response.experiment_UUID}});
+        this.uploaderService.postFile(file.uploadFile,
+          this.webserver.getEndpoint(file.fileUploadAdress), params).subscribe(
           event => {
             if (event.type === HttpEventType.UploadProgress) {
               this.uploadProgressService.changeReportLoaded(event.loaded);
@@ -80,8 +79,11 @@ export class MultiFileUploadService {
         // TODO: file type isn't important
         // Upload of FASTA if present
         if (file.uploadFasta) {
-          this.fileUploaderService.postFile(file.uploadFasta,
-            this.webserver.getFileUploaderEndpoint(Endpoints.UPLOAD_FASTA, response.file_UUID, response.experiment_UUID)).subscribe(
+          const queryParams: HttpParams = new HttpParams({
+            fromObject: {'fileid': response.file_UUID, 'experimentid': response.experiment_UUID}
+          });
+          this.uploaderService.postFile(file.uploadFasta,
+            this.webserver.getEndpoint(Endpoints.UPLOAD_FASTA), queryParams).subscribe(
             event => {
               if (event.type === HttpEventType.UploadProgress) {
                 this.uploadProgressService.changeFastaLoaded(event.loaded);
@@ -102,6 +104,6 @@ export class MultiFileUploadService {
         }
       });
     }
-    }
+  }
 
 }

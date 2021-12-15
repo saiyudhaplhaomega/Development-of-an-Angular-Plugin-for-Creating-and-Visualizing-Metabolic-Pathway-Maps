@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PeptideData, ProteinData, ProteinList, PGPeptideList, ProtPeptideList } from '../../objects/tableobjects';
-import { AuthenticatedSerializableObjectUploaderService } from 'src/app/core/services/authenticated-serializable-object-uploader.service';
+import { HttpClientService } from 'src/app/core/services/http-client.service';
 import {Endpoints} from '../../../core/services/webserveraddress.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class ProteingroupDetailViewComponent implements OnInit {
   selectedProtein: ProteinData;
   selectedPeptides: PeptideData[];
 
-  constructor(private _uploaderService: AuthenticatedSerializableObjectUploaderService) {
+  constructor(private _uploaderService: HttpClientService) {
     this.peptides = [];
     this.proteins = [];
     this.selectedPeptides = [];
@@ -31,7 +31,7 @@ export class ProteingroupDetailViewComponent implements OnInit {
 
   selectProtein(protein: ProteinData) {
     this.selectedProtein = protein;
-    this._uploaderService.postObj<ProtPeptideList>(
+    this._uploaderService.postObject<ProtPeptideList>(
       {protein_uuid: protein.protein_uuid, experiment_uuid: this.experimentUUID,
           peptides: []}, Endpoints.FETCH_PEPTIDES_PROTEIN).subscribe(data => {
         console.log(data);
@@ -41,12 +41,12 @@ export class ProteingroupDetailViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._uploaderService.postObj<ProteinList>(
+    this._uploaderService.postObject<ProteinList>(
       {proteingroup_uuid: this.proteinGroupUUID, proteins: []}, Endpoints.FETCH_PROTEINS).subscribe(data => {
         this.proteins = data.proteins;
       }
     );
-    this._uploaderService.postObj<PGPeptideList>(
+    this._uploaderService.postObject<PGPeptideList>(
       {proteingroup_uuid: this.proteinGroupUUID, experiment_uuid: this.experimentUUID,
          peptides: []}, Endpoints.FETCH_PEPTIDES_PROTEIN_GROUP).subscribe(data => {
         console.log(data);

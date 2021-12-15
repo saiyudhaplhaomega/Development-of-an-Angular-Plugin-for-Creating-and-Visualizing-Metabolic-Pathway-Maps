@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {first} from 'rxjs/operators';
 
 export enum WebserverUrls {
   TEST = 'https://www.prophane.de:9091/test/',
@@ -65,14 +67,6 @@ export class WebserveraddressService {
 
   public getEndpoint(endpoint: string): string {
     return WebserverUrls.TEST + endpoint;
-  }
-
-  public getFileUploaderEndpoint(endpoint: string, fileUuid: string, experimentUuid: string): string {
-    return WebserverUrls.TEST + endpoint + '?fileid=' + fileUuid + '&experimentid=' + experimentUuid;
-  }
-
-  public getProphaneUploaderEndpoint(endpoint: string, jobName: string) {
-    return WebserverUrls.TEST + endpoint + '?name=' + jobName;
   }
 
 }

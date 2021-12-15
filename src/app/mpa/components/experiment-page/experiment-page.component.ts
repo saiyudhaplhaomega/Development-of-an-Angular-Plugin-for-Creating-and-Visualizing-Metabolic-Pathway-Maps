@@ -2,13 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AuthenticatedSerializableObjectUploaderService} from '../../../core/services/authenticated-serializable-object-uploader.service';
+import {HttpClientService} from '../../../core/services/http-client.service';
 import {ProteinGroupList} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
-import {FileUploaderService} from '../../../core/services/file-uploader.service';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {FileUploadData, MultiFileUploadService} from '../../../core/services/multi-file-upload.service';
 import {Endpoints} from '../../../core/services/webserveraddress.service';
@@ -56,16 +55,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   uploadFileTypeSearch: string[] = ['MZIdentML', 'Mascot-DAT'];
 
   buttonDisabled = true;
-
-  private _dataMap: Map<string, DataItem>;
   proteinList: ProteinGroupList = {experiment_uuid: this.dbExperiment.exp_id, protein_groups: []};
-
+  private _dataMap: Map<string, DataItem>;
   private children: string[];
 
   constructor(private _snackBar: MatSnackBar,
               private dataService: DataService,
-              private uploaderService: AuthenticatedSerializableObjectUploaderService,
-              private fileUploaderService: FileUploaderService,
+              private uploaderService: HttpClientService,
               private uploadProgressService: UploadProgressService,
               private dialog: MatDialog,
               private multiFileUpload: MultiFileUploadService) {
@@ -109,7 +105,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     this.dbExperiment.exp_id = this.uuid;
 
-    this.uploaderService.postObj<ExperimentJSONObject>(
+    this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
       this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
       if (result != null) {
         console.log(result);
@@ -235,7 +231,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         break;
     }
 
-    // TODO: Add promise; nodes should only be added if upload was succesful
+    // TODO: Add promise; nodes should only be added if upload was successful
 
     if (this.selectedPeaklistFile && this.selectedSearchFile) {
       this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
@@ -262,7 +258,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   addMGFtoUploadData() {
     const MGFData: FileUploadData = {
       uploadFile: this.selectedPeaklistFile,
-      fileMetaData: {filename: this.selectedPeaklistFile.name, experimentuuid: this.dbExperiment.exp_id},
+      fileMetaData: {
+        filename: this.selectedPeaklistFile.name,
+        experiment_UUID: this.dbExperiment.exp_id,
+        file_UUID: '',
+        filetype: 'MGF',
+        status: ''
+      },
       metaDataAdress: Endpoints.POST_MGF_METADATA,
       fileUploadAdress: Endpoints.UPLOAD_MGF,
     };
@@ -273,7 +275,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   addMZMLtoUploadData() {
     const MZMLData: FileUploadData = {
       uploadFile: this.selectedPeaklistFile,
-      fileMetaData: {filename: this.selectedPeaklistFile.name, experimentuuid: this.dbExperiment.exp_id},
+      fileMetaData: {
+        filename: this.selectedPeaklistFile.name,
+        experiment_UUID: this.dbExperiment.exp_id,
+        file_UUID: '',
+        filetype: 'MZML',
+        status: ''
+      },
       metaDataAdress: Endpoints.POST_MZML_METADATA,
       fileUploadAdress: Endpoints.UPLOAD_MZML,
     };
@@ -284,7 +292,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   addDatToUploadData() {
     const DatData: FileUploadData = {
       uploadFile: this.selectedSearchFile,
-      fileMetaData: {filename: this.selectedSearchFile.name, experimentuuid: this.dbExperiment.exp_id},
+      fileMetaData: {
+        filename: this.selectedPeaklistFile.name,
+        experiment_UUID: this.dbExperiment.exp_id,
+        file_UUID: '',
+        filetype: 'DAT',
+        status: ''
+      },
       metaDataAdress: Endpoints.POST_DAT_METADATA,
       fileUploadAdress: Endpoints.UPLOAD_DAT,
       uploadFasta: this.selectedFasta
@@ -296,7 +310,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   addMZIdentToUploadData() {
     const MZIdent: FileUploadData = {
       uploadFile: this.selectedSearchFile,
-      fileMetaData: {filename: this.selectedSearchFile.name, experimentuuid: this.dbExperiment.exp_id},
+      fileMetaData: {
+        filename: this.selectedPeaklistFile.name,
+        experiment_UUID: this.dbExperiment.exp_id,
+        file_UUID: '',
+        filetype: 'MZIDENT',
+        status: ''
+      },
       metaDataAdress: Endpoints.POST_MZIDENT_METADATA,
       fileUploadAdress: Endpoints.UPLOAD_MZIDENT
     };
@@ -349,13 +369,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     if (type === 'peaklist' && this.hasPeaklistFile) {
       this.dataService.removeNode(
         this.peaklistFileNode.uuid, this.uuid, this.uuid).subscribe(
-          del => {
-            if (del) {
-              this.hasPeaklistFile = false;
-              this.peaklistFileNode = undefined;
-              this.selectedPeaklistFile = undefined;
-            }
-    });
+        del => {
+          if (del) {
+            this.hasPeaklistFile = false;
+            this.peaklistFileNode = undefined;
+            this.selectedPeaklistFile = undefined;
+          }
+        });
 
     } else if (type === 'searchFile' && this.hasSearchFile) {
       this.dataService.removeNode(
@@ -376,7 +396,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     /**
      * updates server when the experiment page is left
      */
-    this.uploaderService.postObj(
+    this.uploaderService.postObject(
       this.dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
