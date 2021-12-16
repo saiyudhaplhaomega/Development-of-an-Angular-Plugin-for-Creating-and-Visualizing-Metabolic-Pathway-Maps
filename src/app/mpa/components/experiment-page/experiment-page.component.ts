@@ -396,7 +396,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     /**
      * updates server when the experiment page is left
      */
-    this.uploaderService.postObject(
+    this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
       this.dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);

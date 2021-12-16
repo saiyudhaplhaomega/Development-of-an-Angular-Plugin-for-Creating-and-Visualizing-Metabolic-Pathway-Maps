@@ -15,7 +15,7 @@ export class JobService {
   }
 
   getJobs(): Observable<ProphaneJobObject[]> {
-    return this.jsonUpload.postObject<ProphaneJobObject[]>([], Endpoints.GET_PROPHANE_JOBS);
+    return this.jsonUpload.postObject<ProphaneJobObject[], ProphaneJobObject[]>([], Endpoints.GET_PROPHANE_JOBS);
   }
 
   getJob(uuid: string): Observable<ProphaneJobObject> {
@@ -34,7 +34,7 @@ export class JobService {
 
   requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
     try {
-      const observeMe = this.jsonUpload.postObject<ProphaneJobObject>(job, Endpoints.PROPHANE_REQUEST_JOB);
+      const observeMe = this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(job, Endpoints.PROPHANE_REQUEST_JOB);
       console.log(observeMe);
       return observeMe;
     } catch (e) {
@@ -43,16 +43,16 @@ export class JobService {
   }
 
   saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObject<ProphaneJobObject>(job, Endpoints.PROPHANE_SAVE_JOB_FORM);
+    return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(job, Endpoints.PROPHANE_SAVE_JOB_FORM);
   }
 
   addJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObject<ProphaneJobObject>(job, Endpoints.PROPHANE_START_JOB);
+    return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(job, Endpoints.PROPHANE_START_JOB);
   }
 
   /** DELETE: delete the job from the server */
   deleteJob(jobToDelete: ProphaneJobObject) {
-    this.jsonUpload.postObject<ProphaneJobObject>(jobToDelete, Endpoints.PROPHANE_DELETE_JOB).subscribe(res => {
+    this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(jobToDelete, Endpoints.PROPHANE_DELETE_JOB).subscribe(res => {
       console.log('job deleted: ' + jobToDelete.prophaneJobUUID);
     });
   }

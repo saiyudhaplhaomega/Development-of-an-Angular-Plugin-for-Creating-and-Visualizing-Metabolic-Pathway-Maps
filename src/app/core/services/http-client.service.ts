@@ -47,7 +47,7 @@ export class HttpClientService {
 
   postFile(file: File, api: string, params?: HttpParams) {
     const fd = new FormData();
-    // fd.set('Content-Type', 'multipart/form-data');
+    fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', file);
     return this.http.post(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({

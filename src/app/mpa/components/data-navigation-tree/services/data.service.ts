@@ -86,7 +86,7 @@ export class DataService {
           value.forEach(val => {
             list.push(val);
           });
-          this.jsonUploader.postObject<DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+          this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
             if (result != null) {
               console.log(list);
               // value = result;
@@ -207,7 +207,7 @@ export class DataService {
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationDate = nodeObj.creation_date;
 
-    this.jsonUploader.postObject(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
+    this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
       if (result != null) {
         console.log(result);
         // value = result;

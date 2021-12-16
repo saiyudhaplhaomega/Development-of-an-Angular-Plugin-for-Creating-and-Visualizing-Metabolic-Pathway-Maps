@@ -31,7 +31,7 @@ export class ProteingroupDetailViewComponent implements OnInit {
 
   selectProtein(protein: ProteinData) {
     this.selectedProtein = protein;
-    this._uploaderService.postObject<ProtPeptideList>(
+    this._uploaderService.postObject<ProtPeptideList, ProtPeptideList>(
       {protein_uuid: protein.protein_uuid, experiment_uuid: this.experimentUUID,
           peptides: []}, Endpoints.FETCH_PEPTIDES_PROTEIN).subscribe(data => {
         console.log(data);
@@ -41,12 +41,12 @@ export class ProteingroupDetailViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._uploaderService.postObject<ProteinList>(
+    this._uploaderService.postObject<ProteinList, ProteinList>(
       {proteingroup_uuid: this.proteinGroupUUID, proteins: []}, Endpoints.FETCH_PROTEINS).subscribe(data => {
         this.proteins = data.proteins;
       }
     );
-    this._uploaderService.postObject<PGPeptideList>(
+    this._uploaderService.postObject<PGPeptideList, PGPeptideList>(
       {proteingroup_uuid: this.proteinGroupUUID, experiment_uuid: this.experimentUUID,
          peptides: []}, Endpoints.FETCH_PEPTIDES_PROTEIN_GROUP).subscribe(data => {
         console.log(data);
