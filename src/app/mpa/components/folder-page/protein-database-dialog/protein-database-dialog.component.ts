@@ -4,10 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService} from '../../data-navigation-tree/services/data.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
-import {UploadProgressService} from '../../../../core/services/upload-progress.service';
 import {Endpoints} from '../../../../core/services/webserveraddress.service';
 import {HttpClientService} from '../../../../core/services/http-client.service';
-import {MultiFileUploadService} from '../../../../core/services/multi-file-upload.service';
 import {FileMetaData} from '../../../objects/FileMetaData';
 import {HttpParams} from '@angular/common/http';
 
@@ -29,8 +27,6 @@ export class ProteinDatabaseDialogComponent implements OnInit {
     private fb: FormBuilder,
     private dataService: DataService,
     private uploaderService: HttpClientService,
-    private uploadProgressService: UploadProgressService,
-    private multiFileUpload: MultiFileUploadService
   ) {
   }
 
