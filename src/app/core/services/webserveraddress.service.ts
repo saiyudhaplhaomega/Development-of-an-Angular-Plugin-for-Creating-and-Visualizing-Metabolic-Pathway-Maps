@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
-import {first} from 'rxjs/operators';
 
 export enum WebserverUrls {
   TEST = 'https://www.prophane.de:9091/test/',
@@ -39,6 +37,7 @@ export enum Endpoints {
   // experiment
   CREATE_EXPERIMENT = 'mpacloud/v1/createExperiment',
   POST_DAT_METADATA = 'mpacloud/v1/postuploadDatMetadata',  // TODO: check if this is correct
+  POST_FASTA_METADATA = '', // TODO: add Enpoint
   POST_MGF_METADATA = 'mpacloud/v1/postMGFMetadata',
   POST_MZIDENT_METADATA = 'mpacloud/v1/postmzidentMetadata',
   POST_MZML_METADATA = 'mpacloud/v1/postMZmlMetadata',
@@ -60,7 +59,6 @@ export enum Endpoints {
 export class WebserveraddressService {
 
   // TODO: should go to environment variables ... but thats not so easy --> during deployment as parameters
-  webserverurl = 'https://www.prophane.de:9091/test/';
 
   constructor() {
   }

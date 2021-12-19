@@ -1,9 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams} from '@angular/common/http';
 import {WebserveraddressService} from './webserveraddress.service';
 import {Observable} from 'rxjs';
 import {AuthGuard} from 'src/app/core/services/auth-guard.service';
+import {UploadProgressService} from './upload-progress.service';
+import {MatDialog} from '@angular/material';
 
+export interface FileUploadData {
+  uploadFile: File;
+  experiment_UUID: string;
+  file_UUID: string;
+  fileUploadAdress: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +19,15 @@ import {AuthGuard} from 'src/app/core/services/auth-guard.service';
 
 export class HttpClientService {
 
+  uploadFileArray: FileUploadData[];
+
   constructor(
     private http: HttpClient,
     private webserver: WebserveraddressService,
-    private authGuard: AuthGuard) {
+    private authGuard: AuthGuard,
+    private uploadProgressService: UploadProgressService,
+    private dialog: MatDialog
+    ) {
   }
 
   // postJsonObject<T>(obj: T, api: string): Observable<T> {
@@ -60,8 +73,48 @@ export class HttpClientService {
     });
   }
 
-  postMultiFile(files: File[], api: string, params?: HttpParams) {
-    // TODO: multiFileUpload
+  addUploadFiles(files: FileUploadData[]) {
+    this.uploadFileArray.push(...files);
+  }
+
+  clearUploadFiles() {
+    this.uploadFileArray = [];
+  }
+
+  performUpload() {
+    for (const fileUploadData of this.uploadFileArray) {
+      this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
+
+      const params: HttpParams = new HttpParams({
+        fromObject: {
+          'fileid': fileUploadData.file_UUID,
+          'experimentid': fileUploadData.experiment_UUID
+        }
+      });
+
+      this.postFile(fileUploadData.uploadFile,
+        this.webserver.getEndpoint(fileUploadData.fileUploadAdress), params).subscribe(
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.uploadProgressService.changeReportLoaded(event.loaded);
+            console.log(event);
+          } else if (event.type === HttpEventType.Response) {
+            console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
+          }
+        },
+        error => {
+          if (error.status === 500) {
+            // handle failed upload
+            if (this.dialog.getDialogById('uploadDialog')) {
+              this.dialog.getDialogById('uploadDialog').componentInstance.setUploadFailed();
+              this.dialog.getDialogById('uploadDialog').componentInstance.data.message = error;
+            }
+          } else {
+            throw error;
+          }
+        }
+      );
+    }
   }
 
 }

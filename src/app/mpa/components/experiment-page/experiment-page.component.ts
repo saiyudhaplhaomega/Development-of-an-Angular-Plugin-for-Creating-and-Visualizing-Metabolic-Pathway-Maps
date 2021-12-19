@@ -2,15 +2,17 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {HttpClientService} from '../../../core/services/http-client.service';
+import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
 import {ProteinGroupList} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
-import {FileUploadData, MultiFileUploadService} from '../../../core/services/multi-file-upload.service';
 import {Endpoints} from '../../../core/services/webserveraddress.service';
+import {MPAFile} from '../../../prophane/objects/mpafile';
+import {HttpParams} from '@angular/common/http';
+import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
 
 @Component({
   selector: 'app-experiment-page',
@@ -27,7 +29,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   description: string;
   creationDate: string;
 
-  // selection of upload options
+  // available upload options
   dataUploadSelection = 'Peaklist';
   dataUploadOptions: string[] = [
     'Peaklist', 'Search Result', 'Peaklist + Search Result'
@@ -49,10 +51,12 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   // to handle displayed options upon File selection
   fastaFileSelected = true;
 
-  peaklistSelection = 'MZML';
-  searchFileSelection = 'MZIdentML';
-  uploadFileTypePeaklist: string[] = ['MZML', 'MGF'];
-  uploadFileTypeSearch: string[] = ['MZIdentML', 'Mascot-DAT'];
+  peaklistSelection = UploadFileTypes.MZML;
+  searchFileSelection = UploadFileTypes.MZIDENT;
+
+  // available options
+  uploadFileTypePeaklist: string[] = [UploadFileTypes.MZML, UploadFileTypes.MGF];
+  uploadFileTypeSearch: string[] = [UploadFileTypes.MZIDENT, UploadFileTypes.DAT];
 
   buttonDisabled = true;
   proteinList: ProteinGroupList = {experiment_uuid: this.dbExperiment.exp_id, protein_groups: []};
@@ -63,13 +67,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
               private dataService: DataService,
               private uploaderService: HttpClientService,
               private uploadProgressService: UploadProgressService,
-              private dialog: MatDialog,
-              private multiFileUpload: MultiFileUploadService) {
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
-    console.log('initialized');
-
     this.dataService.dataMap.subscribe(items => {
       this._dataMap = items;
     });
@@ -140,7 +141,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected = this.searchFileSelection !== 'Mascot-DAT';
+    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.DAT;
     this.dataUploadSelection = option;
     this.disableButton();
   }
@@ -152,7 +153,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected = this.searchFileSelection !== 'Mascot-DAT';
+    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.DAT;
     this.disableButton();
   }
 
@@ -189,49 +190,68 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.uploadProgressService.reset();
-    this.multiFileUpload.clearUploadFiles();
+    this.uploaderService.clearUploadFiles();
     // this.openUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
-        if (this.peaklistSelection === 'MGF') {
-          // this.addMGFtoUploadData();
-        } else if (this.peaklistSelection === 'MZML') {
-          // this.addMZMLtoUploadData();
-        }
+        this.addFileToUploadData(
+          this.selectedPeaklistFile,
+          this.peaklistSelection,
+          this.dbExperiment.exp_id
+        );
+
         this.hasPeaklistFile = true;
         // this.multiFileUpload.performUpload();
         break;
 
       case 'Search Result':
-        if (this.searchFileSelection === 'MZIdentML') {
-          // this.addMZIdentToUploadData();
-        } else if (this.peaklistSelection === 'Mascot-DAT') {
-          // this.addDatToUploadData();
+        this.addFileToUploadData(
+          this.selectedSearchFile,
+          this.searchFileSelection,
+          this.dbExperiment.exp_id
+        );
+
+        if (this.selectedFasta) {
+          this.addFileToUploadData(
+            this.selectedFasta,
+            UploadFileTypes.FASTA,
+            this.dbExperiment.exp_id
+          );
         }
+
         this.hasSearchFile = true;
         // this.multiFileUpload.performUpload();
         break;
 
       case 'Peaklist + Search Result':
-        if (this.peaklistSelection === 'MGF') {
-          // this.addMGFtoUploadData();
-        } else if (this.peaklistSelection === 'MZML') {
-          // this.addMZMLtoUploadData();
-        }
+        this.addFileToUploadData(
+          this.selectedPeaklistFile,
+          this.peaklistSelection,
+          this.dbExperiment.exp_id
+        );
         this.hasPeaklistFile = true;
 
-        if (this.searchFileSelection === 'MZIdentML') {
-          // this.addMZIdentToUploadData();
-        } else if (this.peaklistSelection === 'Mascot-DAT') {
-          // this.addDatToUploadData();
-        }
+        this.addFileToUploadData(
+          this.selectedSearchFile,
+          this.searchFileSelection,
+          this.dbExperiment.exp_id
+        );
         this.hasSearchFile = true;
+
+        if (this.selectedFasta) {
+          this.addFileToUploadData(
+            this.selectedFasta,
+            UploadFileTypes.FASTA,
+            this.dbExperiment.exp_id
+          );
+        }
+
         // this.multiFileUpload.performUpload();
         break;
     }
 
-    // TODO: Add promise; nodes should only be added if upload was successful
+    // TODO: nodes should only be added if upload was successful
 
     if (this.selectedPeaklistFile && this.selectedSearchFile) {
       this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
@@ -254,77 +274,40 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  // functions to add file and metadata to upload list
-  addMGFtoUploadData() {
-    const MGFData: FileUploadData = {
-      uploadFile: this.selectedPeaklistFile,
-      fileMetaData: {
-        filename: this.selectedPeaklistFile.name,
-        experiment_UUID: this.dbExperiment.exp_id,
-        file_UUID: '',
-        filetype: 'MGF',
-        status: ''
-      },
-      metaDataAdress: Endpoints.POST_MGF_METADATA,
-      fileUploadAdress: Endpoints.UPLOAD_MGF,
+  addFileToUploadData(file: File, fileType: UploadFileTypes, experimentId: string) {
+    // TODO: implement use of endpoint for file upload independent from type
+
+    const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
+
+    const metaDataForServer: MPAFile = {
+      filename: file.name,
+      experiment_UUID: experimentId,
+      file_UUID: '',
+      filetype: fileType,
+      status: ''
     };
 
-    this.multiFileUpload.addSingleUploadFile(MGFData);
-  }
-
-  addMZMLtoUploadData() {
-    const MZMLData: FileUploadData = {
-      uploadFile: this.selectedPeaklistFile,
-      fileMetaData: {
-        filename: this.selectedPeaklistFile.name,
-        experiment_UUID: this.dbExperiment.exp_id,
-        file_UUID: '',
-        filetype: 'MZML',
-        status: ''
-      },
-      metaDataAdress: Endpoints.POST_MZML_METADATA,
-      fileUploadAdress: Endpoints.UPLOAD_MZML,
+    const uploadDataForServer: FileUploadData = {
+      uploadFile: file,
+      fileUploadAdress: uploadEndpoint,
+      experiment_UUID: experimentId,
+      file_UUID: ''
     };
 
-    this.multiFileUpload.addSingleUploadFile(MZMLData);
-  }
-
-  addDatToUploadData() {
-    const DatData: FileUploadData = {
-      uploadFile: this.selectedSearchFile,
-      fileMetaData: {
-        filename: this.selectedPeaklistFile.name,
-        experiment_UUID: this.dbExperiment.exp_id,
-        file_UUID: '',
-        filetype: 'DAT',
-        status: ''
-      },
-      metaDataAdress: Endpoints.POST_DAT_METADATA,
-      fileUploadAdress: Endpoints.UPLOAD_DAT,
-      uploadFasta: this.selectedFasta
-    };
-
-    this.multiFileUpload.addSingleUploadFile(DatData);
-  }
-
-  addMZIdentToUploadData() {
-    const MZIdent: FileUploadData = {
-      uploadFile: this.selectedSearchFile,
-      fileMetaData: {
-        filename: this.selectedPeaklistFile.name,
-        experiment_UUID: this.dbExperiment.exp_id,
-        file_UUID: '',
-        filetype: 'MZIDENT',
-        status: ''
-      },
-      metaDataAdress: Endpoints.POST_MZIDENT_METADATA,
-      fileUploadAdress: Endpoints.UPLOAD_MZIDENT
-    };
-
-    this.multiFileUpload.addSingleUploadFile(MZIdent);
+    // send meta data to server
+    this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint, new HttpParams()).subscribe(
+      result => {
+        if (result !== null) {
+          uploadDataForServer.file_UUID = result.file_UUID;
+          this.uploaderService.addUploadFiles([uploadDataForServer]);
+        } else {
+          //  TODO: Show Notification, "File could not be created:"
+        }
+      });
   }
 
   onAccept() {
+    // TODO: Use form validation
     /**
      * handles change of the experiment name
      */
