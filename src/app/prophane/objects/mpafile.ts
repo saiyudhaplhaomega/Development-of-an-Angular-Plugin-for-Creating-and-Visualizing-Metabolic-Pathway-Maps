@@ -1,16 +1,16 @@
 
 export interface MPAFile {
-  file_UUID: string;
-  experiment_UUID: string;
-  status: string;
-  filename: string;
-  filetype: string;
+  fileID: string;
+  experimentID: string;
+  fileStatus: string;
+  fileMetaData: string;
+  fileType: string;
 }
 
 export class MPAFileObject implements MPAFile {
-  file_UUID: string;
-  experiment_UUID: string;
-  status: string;
-  filename: string;
-  filetype: string;
+  fileID: string;
+  experimentID: string;
+  fileStatus: string;
+  fileMetaData: string;
+  fileType: string;
 }

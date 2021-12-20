@@ -81,6 +81,7 @@ export class HttpClientService {
   }
 
   performUpload(dialogId) {
+    console.log('perform upload method');
     for (const fileUploadData of this.uploadFileArray) {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 

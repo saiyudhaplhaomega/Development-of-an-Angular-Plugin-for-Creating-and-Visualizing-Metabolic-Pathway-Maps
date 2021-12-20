@@ -57,7 +57,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   // available options
   uploadFileTypePeaklist: string[] = [UploadFileTypes.MZML, UploadFileTypes.MGF];
-  uploadFileTypeSearch: string[] = [UploadFileTypes.MZIDENT, UploadFileTypes.DAT];
+  uploadFileTypeSearch: string[] = [UploadFileTypes.MZIDENT, UploadFileTypes.MASCOT_DAT];
 
   buttonDisabled = true;
   proteinList: ProteinGroupList = {experiment_uuid: this.dbExperiment.exp_id, protein_groups: []};
@@ -144,7 +144,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.DAT;
+    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
     this.dataUploadSelection = option;
     this.disableButton();
   }
@@ -156,7 +156,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.DAT;
+    this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
     this.disableButton();
   }
 
@@ -217,7 +217,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         if (this.selectedFasta) {
           this.addFileToUploadData(
             this.selectedFasta,
-            UploadFileTypes.FASTA,
+            UploadFileTypes.MASCOT_FASTA,
             this.dbExperiment.exp_id
           );
         }
@@ -243,7 +243,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         if (this.selectedFasta) {
           this.addFileToUploadData(
             this.selectedFasta,
-            UploadFileTypes.FASTA,
+            UploadFileTypes.MASCOT_FASTA,
             this.dbExperiment.exp_id
           );
         }
@@ -284,11 +284,11 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
     const metaDataForServer: MPAFile = {
-      filename: file.name,
-      experiment_UUID: experimentId,
-      file_UUID: '',
-      filetype: fileType,
-      status: ''
+      fileID: '',
+      fileMetaData: {fileName: file.name}.toString(), // TODO: Does this work??
+      experimentID: experimentId,
+      fileType: fileType,
+      fileStatus: ''
     };
 
     const uploadDataForServer: FileUploadData = {
@@ -301,7 +301,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint, new HttpParams()).subscribe(
       result => {
         if (result !== null) {
-          uploadDataForServer.httpParameters.fileId = result.file_UUID;
+          uploadDataForServer.httpParameters.fileId = result.fileID;
           this.uploaderService.addUploadFiles([uploadDataForServer]);
         } else {
           //  TODO: Show Notification, "File could not be created:"
