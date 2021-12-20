@@ -22,6 +22,9 @@ import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 import {finalize} from 'rxjs/operators';
 import {HttpClientService} from '../../../core/services/http-client.service';
+import {Router} from '@angular/router';
+import {AuthGuard} from '../../../core/services/auth-guard.service';
+import {Observable} from 'rxjs';
 
 export enum NoJobCardHeaders {
   REQUESTING_JOB = 'Requesting new Prophane Job',
@@ -85,7 +88,9 @@ export class ProphaneJobStateService {
     private _uploadProgressService: UploadProgressService,
     public dialog: MatDialog,
     private uploaderService: HttpClientService,
-    private webserver: WebserveraddressService
+    private webserver: WebserveraddressService,
+    private router: Router,
+    private authGuard: AuthGuard,
   ) {
   }
 
@@ -183,10 +188,8 @@ export class ProphaneJobStateService {
   isAlreadyInTask(optionstring: ProphaneTaskOptionString[], option): boolean {
     // console.log(task.optionstring);
     // console.log(option)
-    if (optionstring.filter(i => i.param === option.param).length > 0) {
-      return true;
-    }
-    return false;
+    return optionstring.filter(i => i.param === option.param).length > 0;
+
     // taskOptionStrings.forEach(opt1 => {
     //  if (opt1 === dropDownItem) {
     //    return true;
@@ -202,13 +205,15 @@ export class ProphaneJobStateService {
     }
   }
 
-  openUploadDialog(): void {
+  invokeUploadDialog(): Observable<boolean> {
     this._uploadProgressService.setUUID(this.currentProphaneJob.prophaneJobUUID);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       disableClose: true,
-      data: {noRedirect: false, successMessage: 'Job successfully submitted.'},
+      data: {successMessage: 'Job successfully submitted.'},
       id: 'prophaneUpload'
     });
+
+    return dialogRef.afterClosed();
   }
 
   uploadCSV(): void {
@@ -297,10 +302,22 @@ export class ProphaneJobStateService {
   submitJob(): void {
     if (this.formErrors.size === 0) {
       this._uploadProgressService.reset();
-      this.openUploadDialog();
+      const dialogObservable = this.invokeUploadDialog();
       this.uploadCSV();
       this.uploadFasta();
+      // TODO: start prophane job only if upload was successful?
       this.startProphaneJob();
+
+      dialogObservable.subscribe(uploadFailed => {
+        // redirect to prophane results
+        if (!uploadFailed) {
+          if (this.authGuard.allowExpert()) {
+            this.router.navigate(['./prophanejobcontrol']);
+          } else {
+            this.router.navigate(['./results/' + this.currentProphaneJob.prophaneJobUUID]);
+          }
+        }
+      });
     }
   }
 
@@ -309,11 +326,7 @@ export class ProphaneJobStateService {
     this.jobService.saveJob(this.currentProphaneJob).subscribe(res => {
       this.currentProphaneJob = res;
       // this.prophaneJobIDReady = !(this.currentProphaneJob.prophaneJobUUID === '');
-      if (res.status === 'JOB_REJECTED') {
-        this.jobUnavailable = true;
-      } else {
-        this.jobUnavailable = false;
-      }
+      this.jobUnavailable = res.status === 'JOB_REJECTED';
     });
   }
 

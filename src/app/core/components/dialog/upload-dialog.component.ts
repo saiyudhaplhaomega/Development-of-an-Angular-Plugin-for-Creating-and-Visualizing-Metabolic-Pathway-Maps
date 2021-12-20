@@ -1,9 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UploadProgressService} from '../../services/upload-progress.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Router} from '@angular/router';
-import {AuthGuard} from '../../services/auth-guard.service';
-
 
 export interface DialogData {
   proteinreportfilename: string;
@@ -24,17 +21,13 @@ export class UploadDialogComponent implements OnInit {
   progress: number;
   uploadFailedBoolean = false;
   jobUuid: string;
-  noRedirect: boolean;
   successMessage: string;
   uploadFailedMessage: string;
 
   constructor(private _uploadProgressService: UploadProgressService,
-              private router: Router,
               public dialogRef: MatDialogRef<UploadDialogComponent>,
-              private authGuard: AuthGuard,
-              @Inject(MAT_DIALOG_DATA) public data: {noRedirect: boolean; successMessage: string; uploadFailedMessage: string}) {
+              @Inject(MAT_DIALOG_DATA) public data: {successMessage: string; uploadFailedMessage: string}) {
 
-    data.noRedirect ? this.noRedirect = data.noRedirect : this.noRedirect = false;
     data.successMessage ? this.successMessage = data.successMessage : this.successMessage = 'Upload successful!';
     data.uploadFailedMessage ? this.uploadFailedMessage = data.uploadFailedMessage : this.uploadFailedMessage = 'Upload failed';
 
@@ -50,19 +43,7 @@ export class UploadDialogComponent implements OnInit {
   }
 
   closeDialog() {
-    this.dialogRef.close();
-  }
-
-  closeAndRedirect() {
-    this.dialogRef.close();
-    if (!this.noRedirect) {
-      // option to redirect to prophane results
-      if (this.authGuard.allowExpert()) {
-        this.router.navigate(['./prophanejobcontrol']);
-      } else {
-        this.router.navigate(['./results/' + this.jobUuid]);
-      }
-    }
+    this.dialogRef.close(this.uploadFailedBoolean);
   }
 
   retryUpload() {

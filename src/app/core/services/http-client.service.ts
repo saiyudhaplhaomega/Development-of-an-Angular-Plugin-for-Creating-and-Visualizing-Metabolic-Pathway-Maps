@@ -8,8 +8,7 @@ import {MatDialog} from '@angular/material';
 
 export interface FileUploadData {
   uploadFile: File;
-  experiment_UUID: string;
-  file_UUID: string;
+  httpParameters: Record<string, any>;
   fileUploadAdress: string;
 }
 
@@ -86,10 +85,7 @@ export class HttpClientService {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 
       const params: HttpParams = new HttpParams({
-        fromObject: {
-          'fileid': fileUploadData.file_UUID,
-          'experimentid': fileUploadData.experiment_UUID
-        }
+        fromObject: fileUploadData.httpParameters
       });
 
       this.postFile(fileUploadData.uploadFile,

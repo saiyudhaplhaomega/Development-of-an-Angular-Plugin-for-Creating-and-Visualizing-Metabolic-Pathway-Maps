@@ -13,6 +13,7 @@ import {Endpoints} from '../../../core/services/webserveraddress.service';
 import {MPAFile} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
 import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-experiment-page',
@@ -124,10 +125,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.children = this._dataMap.get(this.uuid).children;
 
     this.children.map(child => {
-      if (this._dataMap.get(child).type === 'searchresult') {
+      if (this._dataMap.get(child).type === NodeType.SearchResult) {
         this.hasSearchFile = true;
         this.searchFileNode = this._dataMap.get(child);
-      } else if (this._dataMap.get(child).type === 'peaklist') {
+      } else if (this._dataMap.get(child).type === NodeType.PeakList) {
         this.hasPeaklistFile = true;
         this.peaklistFileNode = this._dataMap.get(child);
       }
@@ -191,7 +192,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.uploadProgressService.reset();
     this.uploaderService.clearUploadFiles();
-    // this.openUploadDialog();
+    const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
@@ -202,7 +203,6 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         );
 
         this.hasPeaklistFile = true;
-        // this.multiFileUpload.performUpload();
         break;
 
       case 'Search Result':
@@ -221,7 +221,6 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         }
 
         this.hasSearchFile = true;
-        // this.multiFileUpload.performUpload();
         break;
 
       case 'Peaklist + Search Result':
@@ -246,32 +245,33 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
             this.dbExperiment.exp_id
           );
         }
-
-        // this.multiFileUpload.performUpload();
         break;
     }
 
-    // TODO: nodes should only be added if upload was successful
+    this.uploaderService.performUpload();
 
-    if (this.selectedPeaklistFile && this.selectedSearchFile) {
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
-    } else if (this.selectedPeaklistFile) {
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
-    } else if (this.selectedSearchFile) {
-      this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
-    }
+    onDialogClosingObservable.subscribe((uploadFailed) => {
+      if (!uploadFailed) {
+        if (this.selectedPeaklistFile) {
+          this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
+        }
+        if (this.selectedSearchFile) {
+          this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
+        }
+      }
+    });
 
     this.getChildNodes();
   }
 
-  openUploadDialog(): void {
+  invokeUploadDialog(): Observable<boolean> {
     this.uploadProgressService.setUUID(this.uuid);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: 'uploadDialog',
-      disableClose: true,
-      data: {noRedirect: true}
+      disableClose: true
     });
+
+    return dialogRef.afterClosed();
   }
 
   addFileToUploadData(file: File, fileType: UploadFileTypes, experimentId: string) {
@@ -289,16 +289,15 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     const uploadDataForServer: FileUploadData = {
       uploadFile: file,
+      httpParameters: {fileId: '', experimentId: experimentId},
       fileUploadAdress: uploadEndpoint,
-      experiment_UUID: experimentId,
-      file_UUID: ''
     };
 
     // send meta data to server
     this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint, new HttpParams()).subscribe(
       result => {
         if (result !== null) {
-          uploadDataForServer.file_UUID = result.file_UUID;
+          uploadDataForServer.httpParameters.fileId = result.file_UUID;
           this.uploaderService.addUploadFiles([uploadDataForServer]);
         } else {
           //  TODO: Show Notification, "File could not be created:"

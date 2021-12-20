@@ -58,8 +58,6 @@ export enum Endpoints {
 })
 export class WebserveraddressService {
 
-  // TODO: should go to environment variables ... but thats not so easy --> during deployment as parameters
-
   constructor() {
   }
 
