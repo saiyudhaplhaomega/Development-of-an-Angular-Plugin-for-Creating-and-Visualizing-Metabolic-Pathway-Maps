@@ -61,7 +61,6 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
               //   break;
               default:
                 // this.router.navigateByUrl('/error');
-                console.error('Error');
                 // handle other errors
                 break;
             }

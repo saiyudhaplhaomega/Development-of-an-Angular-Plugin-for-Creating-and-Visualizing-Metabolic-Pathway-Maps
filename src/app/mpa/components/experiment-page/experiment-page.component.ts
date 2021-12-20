@@ -64,6 +64,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   private _dataMap: Map<string, DataItem>;
   private children: string[];
 
+  uploadDialogId = 'uploadDialog';
+
   constructor(private _snackBar: MatSnackBar,
               private dataService: DataService,
               private uploaderService: HttpClientService,
@@ -248,8 +250,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         break;
     }
 
-    this.uploaderService.performUpload();
+    this.uploaderService.performUpload(this.uploadDialogId);
 
+    // invoked if upload dialog is closed
     onDialogClosingObservable.subscribe((uploadFailed) => {
       if (!uploadFailed) {
         if (this.selectedPeaklistFile) {
@@ -267,8 +270,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   invokeUploadDialog(): Observable<boolean> {
     this.uploadProgressService.setUUID(this.uuid);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
-      id: 'uploadDialog',
-      disableClose: true
+      id: this.uploadDialogId,
+      disableClose: true,
+      data: {}
     });
 
     return dialogRef.afterClosed();

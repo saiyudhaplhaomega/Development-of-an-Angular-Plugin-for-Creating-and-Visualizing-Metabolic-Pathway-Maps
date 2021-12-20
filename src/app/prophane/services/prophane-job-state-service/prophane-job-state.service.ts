@@ -18,10 +18,9 @@ import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtask
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {MatDialog} from '@angular/material';
-import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 import {finalize} from 'rxjs/operators';
-import {HttpClientService} from '../../../core/services/http-client.service';
+import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
 import {Router} from '@angular/router';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Observable} from 'rxjs';
@@ -80,8 +79,7 @@ export class ProphaneJobStateService {
   readonly databaseOptions = databaseOptions;
   readonly optionStrings = optionStrings;
 
-  proteinReportProgress: number;
-  fastaProgress: number;
+  uploadDialogId = 'prophaneUpload';
 
   constructor(
     private jobService: JobService,
@@ -210,65 +208,28 @@ export class ProphaneJobStateService {
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       disableClose: true,
       data: {successMessage: 'Job successfully submitted.'},
-      id: 'prophaneUpload'
+      id: this.uploadDialogId
     });
 
     return dialogRef.afterClosed();
   }
 
-  uploadCSV(): void {
-    if (this.proteinReportFile) {
-      this._uploadProgressService.addToTotal(this.proteinReportFile.size);
-      const params: HttpParams = new HttpParams({fromObject: {'name': this.currentProphaneJob.prophaneJobUUID}});
-      this.uploaderService.postFile(this.proteinReportFile,
-        this.webserver.getEndpoint(Endpoints.UPLOAD_PROPHANE_CSV), params).subscribe(
-        event => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this._uploadProgressService.changeReportLoaded(event.loaded);
-          } else if (event.type === HttpEventType.Response) {
-            let response: any;
-            response = event.body;
-            this.proteinReportProgress = 0;
-          }
+  addFilesToUploadData() {
+    if (this.proteinReportFile && this.fastaFile) {
+      const uploadDataForServer: FileUploadData[] = [
+        {
+          uploadFile: this.proteinReportFile,
+          httpParameters: {name: this.currentProphaneJob.prophaneJobUUID},
+          fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
         },
-        error => {
-          if (error.status === 500) {
-            // handle failed upload
-            if (this.dialog.getDialogById('prophaneUpload')) {
-              this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
-            }
-          }
+        {
+          uploadFile: this.fastaFile,
+          httpParameters: {name: this.currentProphaneJob.prophaneJobUUID},
+          fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
         }
-      );
-    }
-  }
+      ];
 
-  uploadFasta(): void {
-    if (this.fastaFile) {
-      this._uploadProgressService.addToTotal(this.fastaFile.size);
-      const params: HttpParams = new HttpParams({fromObject: {'name': this.currentProphaneJob.prophaneJobUUID}});
-      this.uploaderService.postFile(this.fastaFile,
-        this.webserver.getEndpoint(Endpoints.UPLOAD_PROPHANE_CSV), params).subscribe(
-        event => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this._uploadProgressService.changeFastaLoaded(event.loaded);
-          } else if (event.type === HttpEventType.Response) {
-            let response: any;
-            response = event.body;
-            this.fastaProgress = 0;
-          }
-        },
-        error => {
-          if (error.status === 500) {
-            // handle failed upload
-            if (this.dialog.getDialogById('prophaneUpload')) {
-              this.dialog.getDialogById('prophaneUpload').componentInstance.setUploadFailed();
-            }
-          } else {
-            throw error;
-          }
-        }
-      );
+      this.uploaderService.addUploadFiles(uploadDataForServer);
     }
   }
 
@@ -303,8 +264,10 @@ export class ProphaneJobStateService {
     if (this.formErrors.size === 0) {
       this._uploadProgressService.reset();
       const dialogObservable = this.invokeUploadDialog();
-      this.uploadCSV();
-      this.uploadFasta();
+
+      this.addFilesToUploadData();
+      this.uploaderService.performUpload(this.uploadDialogId);
+
       // TODO: start prophane job only if upload was successful?
       this.startProphaneJob();
 

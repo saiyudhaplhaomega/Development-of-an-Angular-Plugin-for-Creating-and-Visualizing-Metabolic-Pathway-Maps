@@ -26,7 +26,7 @@ export class UploadDialogComponent implements OnInit {
 
   constructor(private _uploadProgressService: UploadProgressService,
               public dialogRef: MatDialogRef<UploadDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {successMessage: string; uploadFailedMessage: string}) {
+              @Inject(MAT_DIALOG_DATA) public data: {successMessage?: string; uploadFailedMessage?: string}) {
 
     data.successMessage ? this.successMessage = data.successMessage : this.successMessage = 'Upload successful!';
     data.uploadFailedMessage ? this.uploadFailedMessage = data.uploadFailedMessage : this.uploadFailedMessage = 'Upload failed';

@@ -80,7 +80,7 @@ export class HttpClientService {
     this.uploadFileArray = [];
   }
 
-  performUpload() {
+  performUpload(dialogId) {
     for (const fileUploadData of this.uploadFileArray) {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 
@@ -101,9 +101,9 @@ export class HttpClientService {
         error => {
           if (error.status === 500) {
             // handle failed upload
-            if (this.dialog.getDialogById('uploadDialog')) {
-              this.dialog.getDialogById('uploadDialog').componentInstance.setUploadFailed();
-              this.dialog.getDialogById('uploadDialog').componentInstance.data.message = error;
+            if (this.dialog.getDialogById(dialogId)) {
+              this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
+              this.dialog.getDialogById(dialogId).componentInstance.data.message = error;
             }
           } else {
             throw error;
