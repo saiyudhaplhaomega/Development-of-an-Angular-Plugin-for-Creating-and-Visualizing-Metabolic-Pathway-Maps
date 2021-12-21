@@ -285,7 +285,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     const metaDataForServer: MPAFile = {
       fileID: '',
-      fileMetaData: {fileName: file.name}.toString(), // TODO: Does this work?? nope
+      fileMetaData: JSON.stringify({fileName: file.name}),
       experimentID: experimentId,
       fileType: fileType,
       fileStatus: ''
@@ -293,7 +293,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     const uploadDataForServer: FileUploadData = {
       uploadFile: file,
-      httpParameters: {jobid: ''}, // TODO: initialize HttpParams here
+      httpParameters: new HttpParams({fromObject: {jobid: ''}}),
       fileUploadAdress: uploadEndpoint,
     };
 
@@ -303,14 +303,16 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         metaDataForServer, metaDataEndpoint, new HttpParams()).toPromise();
 
       if (metaDataResponse !== null) {
-        uploadDataForServer.httpParameters.fileId = metaDataResponse.fileID;
+        // TODO: evaluate status instead of just checking for null?
+        // TODO: jobid = fileID ?
+        uploadDataForServer.httpParameters.set('jobid', metaDataResponse.fileID);
         this.uploaderService.addUploadFiles([uploadDataForServer]);
       } else {
         throw new Error('File could not be created');
-        // TODO: Handle rejection message, server errors,...
-        // TODO: Show Notification, "File could not be created:"
       }
     } catch (e) {
+      this.dialog.getDialogById(this.uploadDialogId).componentInstance.setUploadFailed();
+      this.dialog.getDialogById(this.uploadDialogId).componentInstance.uploadFailedMessage = e.message;
       console.error(e);
     }
   }

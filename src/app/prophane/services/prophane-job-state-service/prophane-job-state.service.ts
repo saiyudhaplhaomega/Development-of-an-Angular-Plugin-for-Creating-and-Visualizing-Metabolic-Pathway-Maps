@@ -24,6 +24,7 @@ import {FileUploadData, HttpClientService} from '../../../core/services/http-cli
 import {Router} from '@angular/router';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Observable} from 'rxjs';
+import {HttpParams} from '@angular/common/http';
 
 export enum NoJobCardHeaders {
   REQUESTING_JOB = 'Requesting new Prophane Job',
@@ -219,12 +220,12 @@ export class ProphaneJobStateService {
       const uploadDataForServer: FileUploadData[] = [
         {
           uploadFile: this.proteinReportFile,
-          httpParameters: {name: this.currentProphaneJob.prophaneJobUUID},
+          httpParameters: new HttpParams({fromObject: {name: this.currentProphaneJob.prophaneJobUUID}}),
           fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
         },
         {
           uploadFile: this.fastaFile,
-          httpParameters: {name: this.currentProphaneJob.prophaneJobUUID},
+          httpParameters: new HttpParams({fromObject: {name: this.currentProphaneJob.prophaneJobUUID}}),
           fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
         }
       ];

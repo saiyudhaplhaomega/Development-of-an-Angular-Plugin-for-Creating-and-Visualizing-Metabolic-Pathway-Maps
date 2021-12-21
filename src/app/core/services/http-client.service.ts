@@ -8,7 +8,7 @@ import {MatDialog} from '@angular/material';
 
 export interface FileUploadData {
   uploadFile: File;
-  httpParameters: Record<string, any>;
+  httpParameters: HttpParams;
   fileUploadAdress: string;
 }
 
@@ -83,12 +83,8 @@ export class HttpClientService {
     for (const fileUploadData of this.uploadFileArray) {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 
-      const params: HttpParams = new HttpParams({
-        fromObject: fileUploadData.httpParameters
-      });
-
       this.postFile(fileUploadData.uploadFile,
-        this.webserver.getEndpoint(fileUploadData.fileUploadAdress), params).subscribe(
+        this.webserver.getEndpoint(fileUploadData.fileUploadAdress), fileUploadData.httpParameters).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this.uploadProgressService.changeReportLoaded(event.loaded);
@@ -102,7 +98,7 @@ export class HttpClientService {
             // handle failed upload
             if (this.dialog.getDialogById(dialogId)) {
               this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
-              this.dialog.getDialogById(dialogId).componentInstance.data.message = error;
+              this.dialog.getDialogById(dialogId).componentInstance.uploadFailedMessage = error.statusText;
             }
           } else {
             throw error;
