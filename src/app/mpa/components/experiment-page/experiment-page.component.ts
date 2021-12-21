@@ -191,14 +191,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.uploadProgressService.reset();
     this.uploaderService.clearUploadFiles();
     const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
-        this.addFileToUploadData(
+        await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
           this.dbExperiment.exp_id
@@ -208,14 +208,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         break;
 
       case 'Search Result':
-        this.addFileToUploadData(
+        await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
           this.dbExperiment.exp_id
         );
 
         if (this.selectedFasta) {
-          this.addFileToUploadData(
+          await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
             this.dbExperiment.exp_id
@@ -226,14 +226,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         break;
 
       case 'Peaklist + Search Result':
-        this.addFileToUploadData(
+        await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
           this.dbExperiment.exp_id
         );
         this.hasPeaklistFile = true;
 
-        this.addFileToUploadData(
+        await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
           this.dbExperiment.exp_id
@@ -241,7 +241,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
-          this.addFileToUploadData(
+          await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
             this.dbExperiment.exp_id
@@ -278,14 +278,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     return dialogRef.afterClosed();
   }
 
-  addFileToUploadData(file: File, fileType: UploadFileTypes, experimentId: string) {
+  async addFileToUploadData(file: File, fileType: UploadFileTypes, experimentId: string) {
     // TODO: implement use of endpoint for file upload independent from type
 
     const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
     const metaDataForServer: MPAFile = {
       fileID: '',
-      fileMetaData: {fileName: file.name}.toString(), // TODO: Does this work??
+      fileMetaData: {fileName: file.name}.toString(), // TODO: Does this work?? nope
       experimentID: experimentId,
       fileType: fileType,
       fileStatus: ''
@@ -293,20 +293,26 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     const uploadDataForServer: FileUploadData = {
       uploadFile: file,
-      httpParameters: {fileId: '', experimentId: experimentId},
+      httpParameters: {jobid: ''}, // TODO: initialize HttpParams here
       fileUploadAdress: uploadEndpoint,
     };
 
-    // send meta data to server
-    this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint, new HttpParams()).subscribe(
-      result => {
-        if (result !== null) {
-          uploadDataForServer.httpParameters.fileId = result.fileID;
-          this.uploaderService.addUploadFiles([uploadDataForServer]);
-        } else {
-          //  TODO: Show Notification, "File could not be created:"
-        }
-      });
+    // send meta data, receive fileuuid
+    try {
+      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(
+        metaDataForServer, metaDataEndpoint, new HttpParams()).toPromise();
+
+      if (metaDataResponse !== null) {
+        uploadDataForServer.httpParameters.fileId = metaDataResponse.fileID;
+        this.uploaderService.addUploadFiles([uploadDataForServer]);
+      } else {
+        throw new Error('File could not be created');
+        // TODO: Handle rejection message, server errors,...
+        // TODO: Show Notification, "File could not be created:"
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   onAccept() {

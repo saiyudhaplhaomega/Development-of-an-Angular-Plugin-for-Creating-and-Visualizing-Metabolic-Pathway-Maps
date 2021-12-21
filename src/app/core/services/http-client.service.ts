@@ -63,7 +63,6 @@ export class HttpClientService {
     fd.append('uploaded_file', file);
     return this.http.post(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data',
         'Authorization': this.authGuard.getUserAuthorization().toString(),
       }),
       observe: 'events',
@@ -81,7 +80,6 @@ export class HttpClientService {
   }
 
   performUpload(dialogId) {
-    console.log('perform upload method');
     for (const fileUploadData of this.uploadFileArray) {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 

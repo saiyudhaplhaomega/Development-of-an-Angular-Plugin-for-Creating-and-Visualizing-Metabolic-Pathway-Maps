@@ -122,7 +122,7 @@ export class NavService {
             processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
           }
         } else {
-          console.log('Hellloooooooo');
+          console.log('Hello');
         }
       }
       }

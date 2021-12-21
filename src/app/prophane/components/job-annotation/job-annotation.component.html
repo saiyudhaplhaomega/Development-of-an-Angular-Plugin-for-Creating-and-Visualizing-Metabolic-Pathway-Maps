@@ -31,7 +31,7 @@
     <mat-select class="custom-select" [(value)]="task.database"
                 [compareWith]="prophaneJobState.compare"
                 (valueChange)="prophaneJobState.setDefaultAlgorithm(task, taskIndex)">
-      <ng-container *ngFor="let dbitem of databaseOptions">
+      <ng-container *ngFor="let dbitem of prophaneJobState.databaseOptions">
         <mat-option *ngIf="dbitem.scope === task.scope"
                     [value]="dbitem.database">
           {{dbitem.name}}
@@ -46,7 +46,7 @@
   </div>
 
   <!-- Algorithm -->
-  <div class="input-group mb-3">
+  <div class="input-group mb-3" >
     <div class="input-group-prepend">
       <span class="input-group-text">Search Algorithm</span>
     </div>
@@ -54,7 +54,7 @@
                 [(value)]="task.algorithm"
                 [compareWith]="prophaneJobState.compare"
                 (valueChange)="prophaneJobState.resetOptstr(task, taskIndex)">
-      <ng-container *ngFor="let dbitem of databaseOptions">
+      <ng-container *ngFor="let dbitem of prophaneJobState.databaseOptions">
         <ng-container *ngIf="dbitem.scope === task.scope && dbitem.database === task.database">
           <ng-container *ngFor="let algo of dbitem.algorithm">
             <mat-option [value]="algo">

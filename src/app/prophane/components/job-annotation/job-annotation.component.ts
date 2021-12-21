@@ -1,10 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
-import {
-  defaultAnnotationTasks,
-  databaseOptions,
-  evalueOptions
-} from '../../objects/prophaneFormData';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 
 @Component({
@@ -15,7 +10,6 @@ import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtask
 export class JobAnnotationComponent {
 
   @Input() scope: string;
-  readonly databaseOptions = databaseOptions;
 
   constructor(
     public prophaneJobState: ProphaneJobStateService
