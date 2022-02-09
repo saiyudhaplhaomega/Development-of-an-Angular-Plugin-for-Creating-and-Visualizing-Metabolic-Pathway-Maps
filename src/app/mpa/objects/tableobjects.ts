@@ -1,48 +1,77 @@
-export interface ProteinData {
-    protein_uuid: string;
-    protein_accession: string;
-  }
 
-  export interface ProteinList {
-    proteingroup_uuid: string;
-    proteins: ProteinData[];
-  }
+export interface ProteinGroupJSON {
+  proteinGroupID: string;
+  representativeAccession?: string;
+  representativeDescription?: string;
+  experimentID: string;
 
-  export interface PeptideData {
-    peptide_spectrum_matches: PSM[];
-    peptide_sequence: string;
-  }
+  proteinList: ProteinJSON[];
+  peptideList: PeptideJSON[];
+  psmList: PsmJSON[];
+  spectrumIDs: string[];
+}
 
-  export interface ProteinGroup {
-    proteingroup_uuid: string;
-    representative_accession: string;
-    representative_description: string;
-  }
+export interface ProteinJSON {
+  proteinID: string;
+  name: string;  // TODO: what should be the name?
+  description?: string; // TODO: missing
+  peptideNodes: string[];
+}
 
-  export interface ProteinGroupList {
-    experiment_uuid: string;
-    protein_groups: ProteinGroup[];
-  }
+export interface PeptideNode {
+  peptideID: string;
+}
 
-  export interface PGPeptideList {
-    proteingroup_uuid: string;
-    experiment_uuid: string;
-    peptides: PeptideData[];
-  }
+export interface PeptideJSON {
+  id: string;
+}
 
-  export interface ProtPeptideList {
-    protein_uuid: string;
-    experiment_uuid: string;
-    peptides: PeptideData[];
-  }
+export interface PsmJSON {
+  psmID: string;
+  peptideID: string;
+  spectrumID: string;
+  searchEngine?: string; // TODO: missing
+  qValue?: number;  // TODO: missing
+}
 
-  export interface PSM {
-    peptide: PeptideData;
-    spectrum: Spectrum;
-    search_engine: string;
-    q_value: number;
-  }
+export interface Spectrum {
+  spectrumID: string; // TODO: Spectrum xml?
+}
 
-  export interface Spectrum {
-    uuid: string;
-  }
+export class ProteinGroupObject implements ProteinGroupJSON {
+  experimentID: string;
+  peptideList: PeptideJSON[];
+  proteinGroupID: string;
+  proteinList: ProteinJSON[];
+  psmList: PsmJSON[];
+  representativeAccession?: string;
+  representativeDescription?: string;
+  spectrumIDs: string[];
+}
+
+export class ProteinObject implements ProteinJSON {
+  description: string;
+  name: string;
+  peptideNodes: string[];
+  proteinID: string;
+}
+
+export class PeptideNodeObject implements PeptideNode {
+  peptideID: string;
+}
+
+export class PeptideObject implements PeptideJSON {
+  id: string;
+}
+
+export class PsmObject implements PsmJSON {
+  peptideID: string;
+  psmID: string;
+  qValue: number;
+  searchEngine: string;
+  spectrumID: string;
+}
+
+export class SpectrumObject implements Spectrum {
+  spectrumID: string;
+}

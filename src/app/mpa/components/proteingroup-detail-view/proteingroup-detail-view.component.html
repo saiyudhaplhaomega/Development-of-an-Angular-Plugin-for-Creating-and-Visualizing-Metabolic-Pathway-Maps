@@ -1,11 +1,11 @@
 <div class="protein-details-tabs">
   <mat-tab-group [(selectedIndex)]='tabSelectionState' class="protein-detail-window left">
       <mat-tab label="Proteins">
-        <app-protein-table style="display: flex; flex-direction: column; justify-content: space-between" [data]='proteins' (selectedProtein)="selectProtein($event)" >
+        <app-protein-table>
         </app-protein-table>
       </mat-tab>
       <mat-tab label="Peptides">
-        <app-peptide-table [data]='peptides'>
+        <app-peptide-table >
         </app-peptide-table>
       </mat-tab>
       <mat-tab label="PSM">
@@ -16,19 +16,19 @@
   </mat-tab-group>
 
   <mat-tab-group class="protein-detail-window right">
-    <mat-tab *ngIf='tabSelectionState==0' label="Description">
-      <app-description-details [selectedProtein]='selectedProtein'>
-      </app-description-details>
-    </mat-tab>
-    <mat-tab *ngIf='tabSelectionState==0' label="Peptides">
-      <app-peptide-table [data]='selectedPeptides'>
-      </app-peptide-table>
-    </mat-tab>
-    <mat-tab *ngIf='tabSelectionState==1' label="PSM">
-      <app-psm-table>
-      </app-psm-table>
-    </mat-tab>
-    <mat-tab *ngIf='tabSelectionState==0' label="Sequence"> 🧬 </mat-tab>
-    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"> 🧬 </mat-tab>
+<!--    <mat-tab *ngIf='tabSelectionState==0' label="Description">-->
+<!--      <app-description-details [selectedProtein]='selectedProtein'>-->
+<!--      </app-description-details>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab *ngIf='tabSelectionState==0' label="Peptides">-->
+<!--      <app-peptide-table [data]='peptidesOfSelectedProtein' >-->
+<!--      </app-peptide-table>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab *ngIf='tabSelectionState==1' label="PSM">-->
+<!--      <app-psm-table [data]="psmsOfSelectedPeptide">-->
+<!--      </app-psm-table>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab *ngIf='tabSelectionState==0' label="Sequence"> 🧬 </mat-tab>-->
+<!--    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"> 🧬 </mat-tab>-->
   </mat-tab-group>
 </div>

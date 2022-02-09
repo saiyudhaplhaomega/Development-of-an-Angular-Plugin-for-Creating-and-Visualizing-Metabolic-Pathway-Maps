@@ -1,30 +1,31 @@
-import { Component, AfterViewInit, Input, ViewChild } from '@angular/core';
+import {Component, AfterViewInit, Input, ViewChild, OnInit} from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { PSM } from '../../objects/tableobjects';
+import {PsmJSON, PsmObject} from '../../objects/tableobjects';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-psm-table',
   templateUrl: './psm-table.component.html',
   styleUrls: ['./psm-table.component.css']
 })
-export class PsmTableComponent implements AfterViewInit {
+export class PsmTableComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['peptide', 'spectrum', 'search_engine', 'q_value'];
-  dataSource: MatTableDataSource<PSM>;
+  displayedColumns = ['psmID', 'peptideID', 'spectrumID'];
+  dataSource: MatTableDataSource<PsmJSON>;
 
-  @Input() set data(value: PSM[]) {
-    console.log(value);
-    this.dataSource.data = value;
-  }
-  get data(): PSM[] {
-    return this.dataSource.data;
-  }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private mpaTableDataService: MpaTableDataService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource([]);
+  }
+
+  ngOnInit() {
+    this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
+      console.log(proteinGroup.psmList);
+      this.dataSource.data = proteinGroup.psmList;
+    });
   }
 
   /**
@@ -40,6 +41,10 @@ export class PsmTableComponent implements AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  selectPsm(row: PsmObject) {
+    this.mpaTableDataService.selectedPsm.next(row);
   }
 }
 

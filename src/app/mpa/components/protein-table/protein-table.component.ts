@@ -1,29 +1,22 @@
-import { Component, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ProteinData } from '../../objects/tableobjects';
+import {Component, AfterViewInit, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import {ProteinJSON, ProteinObject} from '../../objects/tableobjects';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-protein-table',
   templateUrl: './protein-table.component.html',
   styleUrls: ['./protein-table.component.css']
 })
-export class ProteinTableComponent implements AfterViewInit {
+export class ProteinTableComponent implements OnInit, AfterViewInit, OnChanges {
 
-  displayedColumns = ['empty', 'accession'];
-  dataSource: MatTableDataSource<ProteinData>;
+  displayedColumns = ['proteinID', 'name'];
+  dataSource: MatTableDataSource<ProteinJSON>;
 
-  @Input() set data(value: ProteinData[]) {
-    console.log(value);
-    this.dataSource.data = value;
-  }
-  get data(): ProteinData[] {
-    return this.dataSource.data;
-  }
-  @Output() selectedProtein = new EventEmitter<ProteinData>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private mpaTableDataService: MpaTableDataService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource([]);
   }
@@ -32,18 +25,28 @@ export class ProteinTableComponent implements AfterViewInit {
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
+  ngOnInit() {
+    this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
+      this.dataSource.data = proteinGroup.proteinList;
+    });
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    console.log(typeof filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource);
   }
 
-  setProtein(protein: ProteinData) {
-    this.selectedProtein.emit(protein);
+  setProtein(row: ProteinObject) {
+    this.mpaTableDataService.selectedProtein.next(row);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.dataSource);
   }
 }

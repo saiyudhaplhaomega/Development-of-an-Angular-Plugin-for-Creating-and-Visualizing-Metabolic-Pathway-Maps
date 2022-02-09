@@ -5,23 +5,17 @@
 </div>
 
 <div>
-
   <mat-table [dataSource]="dataSource" matSort>
 
-    <!-- Empty Column -->
-    <ng-container matColumnDef="empty">
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell *matCellDef="let row"></mat-cell>
-    </ng-container>
-
     <!-- Peptide Count Column -->
-    <ng-container matColumnDef="sequence">
+    <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Sequence </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.peptide_sequence}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="log(row)">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="setPeptide(row)"
+             [ngClass]="{'table-highlight-row': mpaTableDataService.highlightIfSelected(row)}">
     </mat-row>
   </mat-table>
 

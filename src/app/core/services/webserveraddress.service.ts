@@ -20,6 +20,8 @@ export enum Endpoints {
   FETCH_PEPTIDES_PROTEIN_GROUP = 'mpacloud/v1/fetchProteins',
   FETCH_PROTEINS = 'mpacloud/v1/fetchPeptidesProteinGroup',
 
+  GET_PROTEIN_GROUPS = 'mparesults/getproteingroups',
+
   // LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
 
   // prophane

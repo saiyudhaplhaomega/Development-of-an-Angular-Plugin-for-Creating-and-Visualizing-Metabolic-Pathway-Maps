@@ -89,3 +89,7 @@ custom-table-warning {
 .min-width-25 {
   min-width: 25%;
 }
+
+.table-highlight-row {
+  background: #FFDBD6;
+}

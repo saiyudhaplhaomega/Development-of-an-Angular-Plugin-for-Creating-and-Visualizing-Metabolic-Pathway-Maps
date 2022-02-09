@@ -3,7 +3,7 @@ import {DataService, NodeType} from '../data-navigation-tree/services/data.servi
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
-import {ProteinGroupList} from '../../objects/tableobjects';
+import {ProteinGroupJSON, ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
@@ -14,12 +14,20 @@ import {MPAFile} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
 import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
 import {Observable} from 'rxjs';
+import {createNewProteinGroup} from '../../services/dummyProteinData';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
+
+export interface ProteinGroupRequest {
+  userID: string;
+  experimentID: string;
+}
 
 @Component({
   selector: 'app-experiment-page',
   templateUrl: './experiment-page.component.html',
   styleUrls: ['./experiment-page.component.css'],
 })
+
 export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   // generated in nav service
@@ -60,7 +68,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   uploadFileTypeSearch: string[] = [UploadFileTypes.MZIDENT, UploadFileTypes.MASCOT_DAT];
 
   buttonDisabled = true;
-  proteinList: ProteinGroupList = {experiment_uuid: this.dbExperiment.exp_id, protein_groups: []};
+
   private _dataMap: Map<string, DataItem>;
   private children: string[];
 
@@ -70,7 +78,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
               private dataService: DataService,
               private uploaderService: HttpClientService,
               private uploadProgressService: UploadProgressService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private mpaTableDataService: MpaTableDataService) {
   }
 
   ngOnInit() {
@@ -97,15 +106,27 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    // // get protein lists from server
-    // this.uploaderService.postObj<ProteinGroupList>({experiment_uuid: this.uuid, protein_groups: []},
-    //   'mpacloud/v1/fetchProteinGroups').subscribe( data => {
-    //   this.proteinList = data;
-    // }, err => {
+    // get protein lists from server
+    // this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
+    //   {userID: 'sample.mgf', experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003'}, // TODO: for testing
+    //   Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
+    //   this.mpaTableDataService.mpaData = data;
+    //   console.log(data);
+    // }
+    // , err => {
     //   const protein_groups = [];
-    //   for (let i = 1; i <= 100; i++) { protein_groups.push(createNewProteinGroup(i)); }
-    //   this.proteinList = {experiment_uuid: this.uuid, protein_groups: protein_groups};
-    // });
+    //   for (let i = 1; i <= 100; i++) {
+    //     protein_groups.push(createNewProteinGroup(this.uuid));
+    //   }
+    //   this.mpaTableDataService.mpaData = protein_groups;
+    // }
+    // );
+
+    const protein_groups = [];
+    for (let i = 1; i <= 100; i++) {
+      protein_groups.push(createNewProteinGroup(this.uuid));
+    }
+    this.mpaTableDataService.mpaData = protein_groups;
 
     this.dbExperiment.exp_id = this.uuid;
 
@@ -300,7 +321,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     // send meta data, receive fileuuid
     try {
       const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(
-        metaDataForServer, metaDataEndpoint, new HttpParams()).toPromise();
+        metaDataForServer, metaDataEndpoint).toPromise();
 
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?

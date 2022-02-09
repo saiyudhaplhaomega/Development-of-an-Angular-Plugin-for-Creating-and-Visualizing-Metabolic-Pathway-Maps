@@ -1,50 +1,33 @@
-import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ProteinGroup, PeptideData, ProteinData } from '../../objects/tableobjects';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ProteinGroupJSON, ProteinJSON} from '../../objects/tableobjects';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-mpa-table',
   templateUrl: './mpa-table.component.html',
-  styleUrls: ['./mpa-table.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('void', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('*', style({ height: '*', visibility: 'visible' })),
-      transition('void <=> *', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./mpa-table.component.css']
 })
-export class MpaTableComponent implements AfterViewInit {
+export class MpaTableComponent implements OnInit, AfterViewInit {
 
-  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
-  expandedIndex = 0;
-
-  displayedColumns = ['select', 'representative_accession', 'representative_description'];
-  dataSource: MatTableDataSource<ProteinGroup>;
-  selection: SelectionModel<ProteinGroup>;
-
-  private rowClicked = false;
-  proteinGroupUUID: string;
-  repAccession: string;
-  repDescription: string;
+  displayedColumns = ['proteinGroupID', 'representativeAccession', 'representativeDescription'];
+  dataSource: MatTableDataSource<ProteinGroupJSON>;
+  // selection: SelectionModel<ProteinGroupJSON>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() set data(value: ProteinGroup[]) {
-    this.dataSource.data = value;
-  }
-  get data(): ProteinGroup[] {
-    return this.dataSource.data;
-  }
+
   @Input() experimentUUID: string;
 
-  isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
-
-  constructor() {
+  constructor(private mpaTableDataService: MpaTableDataService) {
     this.dataSource = new MatTableDataSource([]);
-    this.selection = new SelectionModel<ProteinGroup>(true, []);
+    // this.selection = new SelectionModel<ProteinGroupJSON>(true, []);
+  }
+
+  ngOnInit() {
+    this.dataSource.data = this.mpaTableDataService.mpaData;
   }
 
   /**
@@ -63,55 +46,26 @@ export class MpaTableComponent implements AfterViewInit {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
+  // isAllSelected() {
+  //   const numSelected = this.selection.selected.length;
+  //   const numRows = this.dataSource.data.length;
+  //   return numSelected === numRows;
+  // }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  toggleRow(row) {
-    this.selection.toggle(row);
-  }
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //       this.selection.clear() :
+  //       this.dataSource.data.forEach(row => this.selection.select(row));
+  // }
+  //
+  // toggleRow(row) {
+  //   this.selection.toggle(row);
+  // }
 
   onClick(row) {
-    this.proteinGroupUUID = row.proteingroup_uuid;
-    this.repAccession = row.representative_accession;
-    this.repDescription = row.representative_description;
-    console.log(row);
+    this.mpaTableDataService.resetSelection();
+    this.mpaTableDataService.selectedProteinGroup.next(row);
   }
 }
 
-export function createNewProtein(id: number): ProteinData {
-
-  const peptides: PeptideData[] = [];
-
-  for (let i = 1; i <= 100; i++) { peptides.push(createNewPeptide(i)); }
-
-  return {
-    protein_uuid: id.toString(),
-    protein_accession: Math.random().toString(36).substring(7),
-  };
-}
-
-function createNewPeptide(id: number): PeptideData {
-
-  return {
-    peptide_spectrum_matches: [],
-    peptide_sequence: Math.random().toString(36).substring(7),
-  };
-}
-
-export function createNewProteinGroup(id: number): ProteinGroup {
-  return {
-    proteingroup_uuid: Math.random().toString(36).substring(7),
-    representative_accession: Math.random().toString(36).substring(7),
-    representative_description: Math.random().toString(36).substring(7),
-  };
-}

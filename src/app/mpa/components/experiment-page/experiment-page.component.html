@@ -64,7 +64,6 @@
                 </th>
                 <td >
                   {{this.dbExperiment.description}}
-                  <!--                  <ng-container></ng-container>-->
                 </td>
               </tr>
               </tbody>
@@ -231,10 +230,21 @@
         <!--          Tab 3: Protein Groups         -->
 
         <mat-tab label="Protein Groups">
-          <!--            <div class="custom-tab-box custom-tab-box-centered" >-->
-          <app-mpa-table class="mpa-table" [data]='proteinList.protein_groups' [experimentUUID]='this.dbExperiment.exp_id'>
-          </app-mpa-table>
-          <!--            </div>-->
+          <ng-container *ngIf="mpaTableDataService.mpaData && mpaTableDataService.mpaData.length > 0">
+            <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.exp_id'>
+            </app-mpa-table>
+          </ng-container>
+
+          <ng-container *ngIf="!mpaTableDataService.mpaData || mpaTableDataService.mpaData.length === 0">
+            <div class="tab-default-content">
+              <div style="padding: 0.5em">
+                <mat-icon class="icon-box"> search </mat-icon>
+              </div>
+              <span class="tab-text-center">
+                  Waiting for Data...
+            </span>
+            </div>
+          </ng-container>
         </mat-tab>
 
         <!--          Tab 4: Streaming              -->

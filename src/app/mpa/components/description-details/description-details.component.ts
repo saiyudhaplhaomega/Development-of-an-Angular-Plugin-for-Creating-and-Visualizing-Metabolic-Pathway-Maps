@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProteinData } from '../../objects/tableobjects';
+import {ProteinJSON} from '../../objects/tableobjects';
 
 @Component({
   selector: 'app-description-details',
@@ -8,7 +8,7 @@ import { ProteinData } from '../../objects/tableobjects';
 })
 export class DescriptionDetailsComponent implements OnInit {
 
-  @Input() selectedProtein: ProteinData;
+  @Input() selectedProtein: ProteinJSON;
 
   constructor() { }
 

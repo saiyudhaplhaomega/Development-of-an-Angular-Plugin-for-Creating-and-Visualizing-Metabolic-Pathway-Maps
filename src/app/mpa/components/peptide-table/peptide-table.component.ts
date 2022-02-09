@@ -1,29 +1,31 @@
-import {Component, ViewChild, AfterViewInit, Input} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, Input, EventEmitter, Output, OnInit} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { PeptideData } from '../../objects/tableobjects';
+import {PeptideJSON, ProteinJSON} from '../../objects/tableobjects';
+import {MpaTableComponent} from '../mpa-table/mpa-table.component';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-peptide-table',
   templateUrl: './peptide-table.component.html',
   styleUrls: ['./peptide-table.component.css']
 })
-export class PeptideTableComponent implements AfterViewInit {
+export class PeptideTableComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['empty', 'sequence'];
-  dataSource: MatTableDataSource<PeptideData>;
+  displayedColumns = ['id'];
+  dataSource: MatTableDataSource<PeptideJSON>;
 
-  @Input() set data(value: PeptideData[]) {
-    this.dataSource.data = value;
-  }
-  get data(): PeptideData[] {
-    return this.dataSource.data;
-  }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private mpaTableDataService: MpaTableDataService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource([]);
+  }
+
+  ngOnInit() {
+    this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
+      this.dataSource.data = proteinGroup.peptideList;
+    });
   }
 
   /**
@@ -41,7 +43,7 @@ export class PeptideTableComponent implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  log(event) {
-    console.log(event);
+  setPeptide(peptide: PeptideJSON) {
+    this.mpaTableDataService.selectedPeptide.next(peptide);
   }
 }

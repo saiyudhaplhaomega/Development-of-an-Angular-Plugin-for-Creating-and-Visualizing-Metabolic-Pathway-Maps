@@ -6,7 +6,7 @@ import {DataService} from '../../data-navigation-tree/services/data.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
 import {Endpoints} from '../../../../core/services/webserveraddress.service';
 import {HttpClientService} from '../../../../core/services/http-client.service';
-import {FileMetaData} from '../../../objects/FileMetaData';
+import {Filemetadata} from '../../../objects/FileMetaData';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
@@ -66,14 +66,14 @@ export class ProteinDatabaseDialogComponent implements OnInit {
   onSubmitName(): void {
     this.dialogRef.close(this.proteinDBForm.value.dbName);
 
-    const fileData: FileMetaData = {
+    const fileData: Filemetadata = {
       filename: this.dbFile.name,
       fileType: 'fasta',
       fileUUID: null,
     };
 
     // metadata endpoint, wait for File ID
-    this.uploaderService.postObject<FileMetaData, FileMetaData>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
+    this.uploaderService.postObject<Filemetadata, Filemetadata>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
       if (result != null) {
         console.log(result.fileUUID);
         // upload fasta/xml file
