@@ -36,6 +36,11 @@ export class MpaTableDataService {
     });
   }
 
+  setMpaData(mpaData: ProteinGroupObject[]) {
+    this.mpaData = mpaData;
+    this.selectedProteinGroup.next(mpaData[0]);
+  }
+
   setPeptidesForSelectedProtein() {
     this.peptidesForSelectedProtein.next(this.selectedProteinGroup.value.peptideList.filter(
       peptide => this.selectedProtein.value.peptideNodes.includes(peptide.id)));

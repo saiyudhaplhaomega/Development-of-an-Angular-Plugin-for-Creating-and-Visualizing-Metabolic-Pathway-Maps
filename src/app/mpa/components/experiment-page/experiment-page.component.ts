@@ -110,14 +110,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
       {userID: 'sample.mgf', experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003'}, // TODO: for testing
       Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
-      this.mpaTableDataService.mpaData = data;
+        this.mpaTableDataService.setMpaData(data);
     }
     , err => {
       const protein_groups = [];
       for (let i = 1; i <= 50; i++) {
         protein_groups.push(createNewProteinGroup(this.uuid));
       }
-      this.mpaTableDataService.mpaData = protein_groups;
+      this.mpaTableDataService.setMpaData(protein_groups);
     }
     );
 

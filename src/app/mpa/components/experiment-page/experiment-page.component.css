@@ -25,11 +25,13 @@
 }
 
 .mpa-table {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-row-gap: 1rem;
+  /*flex-direction: column;*/
+  /*justify-content: space-between;*/
   height: 100%;
-  position: relative;
+  /*position: relative;*/
 }
 
 .details-accordion-item {

@@ -12,6 +12,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['proteinGroupID', 'representativeAccession', 'representativeDescription'];
   dataSource: MatTableDataSource<ProteinGroupJSON>;
+  private showDetails = false;
   // selection: SelectionModel<ProteinGroupJSON>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,6 +27,12 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource.data = this.mpaTableDataService.mpaData;
+
+    this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
+      if (typeof proteinGroup !== 'undefined') {
+        this.showDetails = true;
+      }
+    });
   }
 
   /**

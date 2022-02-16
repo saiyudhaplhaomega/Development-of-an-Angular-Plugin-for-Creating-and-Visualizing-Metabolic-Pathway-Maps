@@ -90,6 +90,19 @@ custom-table-warning {
   min-width: 25%;
 }
 
+.table-element-row {
+  cursor: pointer;
+}
+
+.table-element-row:hover {
+  background: #f5f5f5;
+}
+
 .table-highlight-row {
   background: #FFDBD6;
+}
+
+.table-highlight-row:hover {
+  background: #f5d3d3;
+  cursor: pointer;
 }

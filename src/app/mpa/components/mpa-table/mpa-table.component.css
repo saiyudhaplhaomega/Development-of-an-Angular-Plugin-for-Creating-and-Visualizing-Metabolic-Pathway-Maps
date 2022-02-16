@@ -4,7 +4,17 @@
 }
 
 .protein-table {
-  height: 30rem
+  /*height: calc(100vh - 64px - 2rem - 1.5rem - 0.5rem - 1.25rem - 1.25rem - 48px - 140px);*/
+  margin-top: 1rem;
+  height: 30rem;
+  padding: 1rem;
+  border:1px solid rgba(0,0,0,.125);
+  border-radius: 4px;
+  background: #003f9703;
+}
+
+.table-border {
+  border:1px solid rgba(0,0,0,.125);
 }
 
 .detail-table {
@@ -20,7 +30,7 @@
 }
 
 .element-row:not(.expanded):hover {
-  background: #f5f5f5;
+  background: rgba(245, 245, 245, 0.8);
 }
 
 .element-row.expanded {
@@ -58,15 +68,18 @@
   align-content: center;
   justify-content: space-between;
   min-height: 0;
+  background: #003f9703
 }
 
 .details-accordion-item-body {
+  border-top: 1px solid rgba(0,0,0,.125);;
   padding: 1rem;
   flex: 1 1 auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   height: 30rem;
+  background: #003f9703;
 }
 
 .details-accordion-item-header:hover {
