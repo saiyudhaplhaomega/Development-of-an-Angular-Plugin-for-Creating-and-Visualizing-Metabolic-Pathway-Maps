@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {ProteinGroupJSON, ProteinJSON} from '../../objects/tableobjects';
+import {ProteinGroupJSON } from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
@@ -64,7 +62,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   // }
 
   onClick(row) {
-    this.mpaTableDataService.resetSelection();
+    this.mpaTableDataService.resetCompleteSelection();
     this.mpaTableDataService.selectedProteinGroup.next(row);
   }
 }

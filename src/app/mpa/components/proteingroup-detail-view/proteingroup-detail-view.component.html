@@ -5,30 +5,30 @@
         </app-protein-table>
       </mat-tab>
       <mat-tab label="Peptides">
-        <app-peptide-table >
+        <app-peptide-table [scope]="peptideScopes.proteinGroup">
         </app-peptide-table>
       </mat-tab>
       <mat-tab label="PSM">
-        <app-psm-table>
+        <app-psm-table [scope]="psmScopes.proteinGroup">
         </app-psm-table>
       </mat-tab>
       <mat-tab label="Extras"> 🧬 </mat-tab>
   </mat-tab-group>
 
   <mat-tab-group class="protein-detail-window right">
-<!--    <mat-tab *ngIf='tabSelectionState==0' label="Description">-->
-<!--      <app-description-details [selectedProtein]='selectedProtein'>-->
-<!--      </app-description-details>-->
-<!--    </mat-tab>-->
-<!--    <mat-tab *ngIf='tabSelectionState==0' label="Peptides">-->
-<!--      <app-peptide-table [data]='peptidesOfSelectedProtein' >-->
-<!--      </app-peptide-table>-->
-<!--    </mat-tab>-->
-<!--    <mat-tab *ngIf='tabSelectionState==1' label="PSM">-->
-<!--      <app-psm-table [data]="psmsOfSelectedPeptide">-->
-<!--      </app-psm-table>-->
-<!--    </mat-tab>-->
-<!--    <mat-tab *ngIf='tabSelectionState==0' label="Sequence"> 🧬 </mat-tab>-->
-<!--    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"> 🧬 </mat-tab>-->
+    <mat-tab *ngIf='tabSelectionState==0' label="Description">
+      <app-description-details>
+      </app-description-details>
+    </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==0' label="Peptides">
+      <app-peptide-table [scope]="peptideScopes.singleProtein">
+      </app-peptide-table>
+    </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==1' label="PSM">
+      <app-psm-table [scope]="psmScopes.singlePeptide">
+      </app-psm-table>
+    </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==0' label="Sequence"> 🧬 </mat-tab>
+    <mat-tab *ngIf='tabSelectionState==2' label="Spectrum"> 🧬 </mat-tab>
   </mat-tab-group>
 </div>

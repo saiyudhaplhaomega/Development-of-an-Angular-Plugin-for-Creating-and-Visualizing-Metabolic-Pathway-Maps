@@ -2,6 +2,7 @@ import {Component, AfterViewInit, Input, ViewChild, OnInit} from '@angular/core'
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import {PsmJSON, PsmObject} from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
+import {PeptideScope, PsmScope} from '../proteingroup-detail-view/proteingroup-detail-view.component';
 
 @Component({
   selector: 'app-psm-table',
@@ -16,16 +17,23 @@ export class PsmTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  @Input() scope: PsmScope;
+
   constructor(private mpaTableDataService: MpaTableDataService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
-    this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
-      console.log(proteinGroup.psmList);
-      this.dataSource.data = proteinGroup.psmList;
-    });
+    if (this.scope === 0) {
+      this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
+        this.dataSource.data = proteinGroup.psmList;
+      });
+    } else if (this.scope === 1) {
+      this.mpaTableDataService.psmsForSelectedPeptide.subscribe(psms => {
+        this.dataSource.data = psms;
+      });
+    }
   }
 
   /**
@@ -43,8 +51,9 @@ export class PsmTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  selectPsm(row: PsmObject) {
+  setPsm(row: PsmObject) {
     this.mpaTableDataService.selectedPsm.next(row);
   }
+
 }
 

@@ -1,46 +1,33 @@
-<div style="flex: 0 0 auto">
+<div>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
 
-<div style="overflow-y: auto; flex: 1 1 auto">
+<div>
   <mat-table [dataSource]="dataSource" matSort>
 
+    <!-- Peptide Count Column -->
     <ng-container matColumnDef="psmID">
       <mat-header-cell *matHeaderCellDef mat-sort-header> PSM id </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.psmID}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="peptideID">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Peptide </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> peptide id </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.peptideID}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="spectrumID">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Spectrum </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> spectrum id </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.spectrumID}} </mat-cell>
     </ng-container>
 
-<!--    <ng-container matColumnDef="search_engine">-->
-<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> Search Engine </mat-header-cell>-->
-<!--      <mat-cell *matCellDef="let row"> {{row.searchEngine}} </mat-cell>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container matColumnDef="q_value">-->
-<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> Q-Value </mat-header-cell>-->
-<!--      <mat-cell *matCellDef="let row"> {{row.qValue}} </mat-cell>-->
-<!--    </ng-container>-->
-
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"
-             (click)="selectPsm(row)"
-             [ngClass]="{'table-highlight-row': mpaTableDataService.highlightIfSelected(row)}"
-    >
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="setPsm(row)"
+             [ngClass]="{'table-highlight-row': mpaTableDataService.highlightIfSelected(row)}">
     </mat-row>
   </mat-table>
-</div>
 
-<div style="flex: 0 0 auto">
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
 </div>

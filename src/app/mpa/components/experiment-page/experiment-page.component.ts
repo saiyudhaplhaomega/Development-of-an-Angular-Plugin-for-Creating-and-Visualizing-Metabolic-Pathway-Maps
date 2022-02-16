@@ -3,7 +3,7 @@ import {DataService, NodeType} from '../data-navigation-tree/services/data.servi
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
-import {ProteinGroupJSON, ProteinGroupObject} from '../../objects/tableobjects';
+import {ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
@@ -107,26 +107,25 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     // });
 
     // get protein lists from server
-    // this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
-    //   {userID: 'sample.mgf', experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003'}, // TODO: for testing
-    //   Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
-    //   this.mpaTableDataService.mpaData = data;
-    //   console.log(data);
-    // }
-    // , err => {
-    //   const protein_groups = [];
-    //   for (let i = 1; i <= 100; i++) {
-    //     protein_groups.push(createNewProteinGroup(this.uuid));
-    //   }
-    //   this.mpaTableDataService.mpaData = protein_groups;
-    // }
-    // );
-
-    const protein_groups = [];
-    for (let i = 1; i <= 100; i++) {
-      protein_groups.push(createNewProteinGroup(this.uuid));
+    this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
+      {userID: 'sample.mgf', experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003'}, // TODO: for testing
+      Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
+      this.mpaTableDataService.mpaData = data;
     }
-    this.mpaTableDataService.mpaData = protein_groups;
+    , err => {
+      const protein_groups = [];
+      for (let i = 1; i <= 50; i++) {
+        protein_groups.push(createNewProteinGroup(this.uuid));
+      }
+      this.mpaTableDataService.mpaData = protein_groups;
+    }
+    );
+
+    // const protein_groups = [];
+    // for (let i = 1; i <= 100; i++) {
+    //   protein_groups.push(createNewProteinGroup(this.uuid));
+    // }
+    // this.mpaTableDataService.mpaData = protein_groups;
 
     this.dbExperiment.exp_id = this.uuid;
 

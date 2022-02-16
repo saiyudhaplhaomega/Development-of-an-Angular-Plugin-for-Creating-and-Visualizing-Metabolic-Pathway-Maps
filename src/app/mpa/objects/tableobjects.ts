@@ -40,10 +40,10 @@ export interface Spectrum {
 
 export class ProteinGroupObject implements ProteinGroupJSON {
   experimentID: string;
-  peptideList: PeptideJSON[];
+  peptideList: PeptideObject[];
   proteinGroupID: string;
-  proteinList: ProteinJSON[];
-  psmList: PsmJSON[];
+  proteinList: ProteinObject[];
+  psmList: PsmObject[];
   representativeAccession?: string;
   representativeDescription?: string;
   spectrumIDs: string[];

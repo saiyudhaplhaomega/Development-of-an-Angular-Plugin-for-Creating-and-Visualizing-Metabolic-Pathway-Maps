@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ProteinJSON} from '../../objects/tableobjects';
+import { Component, OnInit } from '@angular/core';
+import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-description-details',
@@ -8,11 +8,16 @@ import {ProteinJSON} from '../../objects/tableobjects';
 })
 export class DescriptionDetailsComponent implements OnInit {
 
-  @Input() selectedProtein: ProteinJSON;
+  selectedProteinName: string;
 
-  constructor() { }
+  constructor(private mpaTableDataService: MpaTableDataService) {
+
+  }
 
   ngOnInit() {
+    this.mpaTableDataService.selectedProtein.subscribe(protein => {
+      this.selectedProteinName = protein ? protein.name : '';
+    });
   }
 
 }

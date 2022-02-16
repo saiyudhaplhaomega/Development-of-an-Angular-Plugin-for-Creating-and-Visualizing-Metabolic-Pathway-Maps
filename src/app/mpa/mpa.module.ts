@@ -16,7 +16,6 @@ import { PeptideTableComponent } from './components/peptide-table/peptide-table.
 import {CdkDetailRowDirective} from './components/mpa-table/cdk-detail-row.directive';
 import { ProteingroupDetailViewComponent } from './components/proteingroup-detail-view/proteingroup-detail-view.component';
 import { ProteinTableComponent } from './components/protein-table/protein-table.component';
-import { PsmTableComponent } from './components/psm-table/psm-table.component';
 import { DescriptionDetailsComponent } from './components/description-details/description-details.component';
 import {ResultTableComponent} from './components/result-table/result-table.component';
 import {DatabaseSearchPageComponent} from './components/database-search-page/database-search-page.component';
@@ -27,6 +26,7 @@ import {TextfieldDialogComponent} from '../core/components/textfield-dialog/text
 import {DeleteWarningDialogComponent} from '../core/components/dialog/delete-warning-dialog.component';
 import { ProteinDatabaseDialogComponent } from './components/folder-page/protein-database-dialog/protein-database-dialog.component';
 import {ProteinDatabaseComponent} from './components/protein-database/protein-database-component';
+import {PsmTableComponent} from './components/psm-table/psm-table.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,6 @@ import {ProteinDatabaseComponent} from './components/protein-database/protein-da
     CdkDetailRowDirective,
     ProteingroupDetailViewComponent,
     ProteinTableComponent,
-    PsmTableComponent,
     DescriptionDetailsComponent,
     ResultTableComponent,
     DatabaseSearchPageComponent,
@@ -52,6 +51,7 @@ import {ProteinDatabaseComponent} from './components/protein-database/protein-da
     DeleteWarningDialogComponent,
     ProteinDatabaseDialogComponent,
     ProteinDatabaseComponent,
+    PsmTableComponent,
   ],
   imports: [
     CommonModule,
