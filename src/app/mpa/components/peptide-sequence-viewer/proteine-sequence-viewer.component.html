@@ -1,0 +1,10 @@
+<div>
+  <ng-container *ngIf="this.mpaTableDataService.requestingProteinSequence">
+    Requesting Protein Sequence...
+    <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"></span>
+  </ng-container>
+
+  <ng-container *ngIf="!this.mpaTableDataService.requestingProteinSequence && this.proteinSequenceData">
+    {{this.proteinSequenceData}}
+  </ng-container>
+</div>

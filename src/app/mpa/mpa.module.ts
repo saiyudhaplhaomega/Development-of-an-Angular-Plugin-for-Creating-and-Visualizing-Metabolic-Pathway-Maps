@@ -27,6 +27,8 @@ import {DeleteWarningDialogComponent} from '../core/components/dialog/delete-war
 import { ProteinDatabaseDialogComponent } from './components/folder-page/protein-database-dialog/protein-database-dialog.component';
 import {ProteinDatabaseComponent} from './components/protein-database/protein-database-component';
 import {PsmTableComponent} from './components/psm-table/psm-table.component';
+import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-viewer.component';
+import { ProteineSequenceViewerComponent } from './components/peptide-sequence-viewer/proteine-sequence-viewer.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import {PsmTableComponent} from './components/psm-table/psm-table.component';
     ProteinDatabaseDialogComponent,
     ProteinDatabaseComponent,
     PsmTableComponent,
+    SpectrumViewerComponent,
+    ProteineSequenceViewerComponent,
   ],
   imports: [
     CommonModule,

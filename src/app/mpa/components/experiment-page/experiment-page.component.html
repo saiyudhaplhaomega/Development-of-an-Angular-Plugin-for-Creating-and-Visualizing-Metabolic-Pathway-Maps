@@ -66,6 +66,23 @@
                   {{this.dbExperiment.description}}
                 </td>
               </tr>
+              <tr>
+                <th scope="row" class="ml-summary-col">Data Summary:</th>
+                <td >
+                  <ng-container *ngIf="this.hasMpaData">
+                    <mat-list dense>
+                      <mat-list-item > # Protein Groups: {{this.datStats.totalNoProteinGroups}} </mat-list-item>
+                      <mat-list-item > # Proteins: {{this.datStats.totalNoProteins}} </mat-list-item>
+                      <mat-list-item > # Peptides: {{this.datStats.totalNoPeptides}} </mat-list-item>
+                      <mat-list-item > # PSMs: {{this.datStats.totalNoPsms}} </mat-list-item>
+                      <mat-list-item > # Spectra: {{this.datStats.totalNoSpectra}} </mat-list-item>
+                    </mat-list>
+                  </ng-container>
+                  <ng-container *ngIf="!this.hasMpaData">
+                    no data received yet
+                  </ng-container>
+                </td>
+              </tr>
               </tbody>
             </table>
             <div class="input-group mb-3 ng-star-inserted">
@@ -230,12 +247,12 @@
         <!--          Tab 3: Protein Groups         -->
 
         <mat-tab label="Protein Groups">
-          <ng-container *ngIf="mpaTableDataService.mpaData && mpaTableDataService.mpaData.length > 0">
+          <ng-container *ngIf="hasMpaData">
             <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.exp_id'>
             </app-mpa-table>
           </ng-container>
 
-          <ng-container *ngIf="!mpaTableDataService.mpaData || mpaTableDataService.mpaData.length === 0">
+          <ng-container *ngIf="!hasMpaData">
             <div class="tab-default-content">
               <div style="padding: 0.5em">
                 <mat-icon class="icon-box"> search </mat-icon>

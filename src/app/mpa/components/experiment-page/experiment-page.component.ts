@@ -17,6 +17,14 @@ import {Observable} from 'rxjs';
 import {createNewProteinGroup} from '../../services/dummyProteinData';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
+interface Datstats {
+  totalNoProteinGroups: number;
+  totalNoProteins: number;
+  totalNoPeptides: number;
+  totalNoPsms: number;
+  totalNoSpectra: number;
+}
+
 export interface ProteinGroupRequest {
   userID: string;
   experimentID: string;
@@ -69,6 +77,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   buttonDisabled = true;
 
+  hasMpaData = false;
+  datStats: Datstats;
+
   private _dataMap: Map<string, DataItem>;
   private children: string[];
 
@@ -105,6 +116,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     //     this.peaklistFileNode = this._dataMap.get(child);
     //   }
     // });
+
+    this.mpaTableDataService.mpaData.subscribe(mpaData => {
+      this.hasMpaData = mpaData.length > 0;
+      if (mpaData.length > 0) {
+        this.datStats = this.calculateDataStats(mpaData);
+      }
+    });
 
     // get protein lists from server
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
@@ -421,5 +439,27 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   onRemoveExperiment() {
     this.dataService.removeNode(this.uuid, this.uuid, this.parentUuid);
+  }
+
+  calculateDataStats(mpaData: ProteinGroupObject[]): Datstats {
+    let proteinCount = 0;
+    let peptideCount = 0;
+    let psmCount = 0;
+    let spectrumCount = 0;
+
+    for (const group of mpaData) {
+      proteinCount += group.proteinList.length;
+      peptideCount += group.peptideList.length;
+      psmCount += group.psmList.length;
+      spectrumCount += group.spectrumIDs.length;
+    }
+
+    return {
+      totalNoProteinGroups: mpaData.length,
+      totalNoProteins: proteinCount,
+      totalNoPeptides: peptideCount,
+      totalNoPsms: psmCount,
+      totalNoSpectra: spectrumCount
+    };
   }
 }

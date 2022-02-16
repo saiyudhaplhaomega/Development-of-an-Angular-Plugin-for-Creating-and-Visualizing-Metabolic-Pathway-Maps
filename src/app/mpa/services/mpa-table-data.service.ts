@@ -6,13 +6,16 @@ import {
   PsmObject
 } from '../objects/tableobjects';
 import {BehaviorSubject} from 'rxjs';
+import {HttpClientService} from '../../core/services/http-client.service';
+import {Endpoints} from '../../core/services/webserveraddress.service';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MpaTableDataService {
 
-  public mpaData: ProteinGroupObject[];
+  public mpaData = new BehaviorSubject<ProteinGroupObject[]>([]);
 
   public selectedProteinGroup = new BehaviorSubject<ProteinGroupObject>(undefined);
   public selectedProtein = new BehaviorSubject<ProteinObject>(undefined);
@@ -22,10 +25,17 @@ export class MpaTableDataService {
   public selectedPeptide = new BehaviorSubject<PeptideObject>(undefined);
   public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
 
-  constructor() {
+  public spectrumData = new BehaviorSubject<string>(undefined);
+  public requestingSpectrum = false;
+
+  public proteinSequenceData = new BehaviorSubject<string>(undefined);
+  public requestingProteinSequence = false;
+
+  constructor(httpClientService: HttpClientService) {
     this.selectedProtein.subscribe(protein => {
       if (typeof protein !== 'undefined') {
         this.setPeptidesForSelectedProtein();
+        this.requestSequence(httpClientService);
       }
     });
 
@@ -34,10 +44,58 @@ export class MpaTableDataService {
         this.setPsmsForSelectedPeptide();
       }
     });
+
+    this.selectedPsm.subscribe(psm => {
+      if (typeof psm !== 'undefined') {
+        this.requestSpectrum(httpClientService);
+      }
+    });
+  }
+
+  private requestSequence(httpClientService: HttpClientService) {
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          userID: 'sample.mgf',
+          experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003',
+          peptideID: this.selectedProtein.value.proteinID
+        }
+      });
+    this.requestingProteinSequence = true;
+    httpClientService.getObject<string>(Endpoints.UNIMPLEMENTED, params).subscribe(proteinSequence => {
+        this.proteinSequenceData.next(proteinSequence);
+        this.requestingProteinSequence = false;
+      },
+      error => {
+        this.proteinSequenceData.next(Math.random().toString(36).substring(7));
+        console.log('ERRRORR...');
+        this.requestingProteinSequence = false;
+      });
+  }
+
+  private requestSpectrum(httpClientService: HttpClientService) {
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          userID: 'sample.mgf',
+          experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003',
+          spectrumID: this.selectedPsm.value.spectrumID
+        }
+      });
+    this.requestingSpectrum = true;
+    httpClientService.getObject<string>(Endpoints.UNIMPLEMENTED, params).subscribe(spectrumData => {
+        this.spectrumData.next(spectrumData);
+        this.requestingSpectrum = false;
+      },
+      error => {
+        this.spectrumData.next(Math.random().toString(36).substring(7));
+        console.log('ERRRORR...');
+        this.requestingSpectrum = false;
+      });
   }
 
   setMpaData(mpaData: ProteinGroupObject[]) {
-    this.mpaData = mpaData;
+    this.mpaData.next(mpaData);
     this.selectedProteinGroup.next(mpaData[0]);
   }
 
