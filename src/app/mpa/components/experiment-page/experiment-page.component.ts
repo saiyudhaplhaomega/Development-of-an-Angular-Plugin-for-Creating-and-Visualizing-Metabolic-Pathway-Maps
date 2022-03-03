@@ -3,7 +3,7 @@ import {DataService, NodeType} from '../data-navigation-tree/services/data.servi
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
-import {ProteinGroupObject} from '../../objects/tableobjects';
+import {GroupingOptions, ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
@@ -14,7 +14,7 @@ import {MPAFile} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
 import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
 import {Observable} from 'rxjs';
-import {createNewProteinGroup} from '../../services/dummyProteinData';
+import {createProteinGroupData} from '../../services/dummyProteinData';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 interface Datstats {
@@ -142,11 +142,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         this.mpaTableDataService.setMpaData(data);
     }
     , err => {
-      const protein_groups = [];
-      for (let i = 1; i <= 50; i++) {
-        protein_groups.push(createNewProteinGroup(this.id));
-      }
-      this.mpaTableDataService.setMpaData(protein_groups);
+      const proteinGroups = createProteinGroupData(
+        this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
+      console.log(proteinGroups);
+      this.mpaTableDataService.setMpaData(proteinGroups);
     }
     );
 

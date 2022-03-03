@@ -1,4 +1,27 @@
-import {PeptideJSON, ProteinGroupJSON, ProteinJSON, PsmJSON} from '../objects/tableobjects';
+import {
+  Group,
+  GroupingOptions,
+  PeptideJSON,
+  PeptideObject,
+  ProteinGroupJSON, ProteinGroupObject,
+  ProteinJSON,
+  PsmJSON,
+  Spectrum
+} from '../objects/tableobjects';
+
+export interface DistributionParams {
+  numberOfMainGroups: number;
+  subGroupsPerMainGroup: number;
+}
+
+
+interface InputLists {
+  peptideList: PeptideJSON[];
+  proteinList: ProteinJSON[];
+  psmList: PsmJSON[];
+  spectrumIDs: string[];
+}
+
 
 function createNewPeptide(): PeptideJSON {
 
@@ -6,6 +29,7 @@ function createNewPeptide(): PeptideJSON {
     id: Math.random().toString(36).substring(7),
   };
 }
+
 
 function createPeptideList(length: number): PeptideJSON[] {
 
@@ -17,9 +41,11 @@ function createPeptideList(length: number): PeptideJSON[] {
   return(peptideList);
 }
 
+
 function createNewSpectrum(): string {
   return Math.random().toString(36).substring(7);
 }
+
 
 function createSpectrumList(length: number): string[] {
   const spectrumList = [];
@@ -29,13 +55,15 @@ function createSpectrumList(length: number): string[] {
   return spectrumList;
 }
 
-export function createNewPsm(peptideID: string, spectrumID: string): PsmJSON {
+
+function createNewPsm(peptideID: string, spectrumID: string): PsmJSON {
   return {
     psmID: Math.random().toString(36).substring(7),
     peptideID: peptideID,
     spectrumID: spectrumID
   };
 }
+
 
 function createPsmList(peptideList: PeptideJSON[], spectrumList: string[]): PsmJSON[] {
 
@@ -54,7 +82,8 @@ function createPsmList(peptideList: PeptideJSON[], spectrumList: string[]): PsmJ
   return psmList;
 }
 
-export function createNewProtein(peptideNodes: string[]): ProteinJSON {
+
+function createNewProtein(peptideNodes: string[]): ProteinJSON {
 
   return {
     proteinID: Math.random().toString(36).substring(7),
@@ -63,7 +92,8 @@ export function createNewProtein(peptideNodes: string[]): ProteinJSON {
   };
 }
 
-export function createProteinList(peptideList: PeptideJSON[], length: number): ProteinJSON[] {
+
+function createProteinList(peptideList: PeptideJSON[], length: number): ProteinJSON[] {
 
   const proteinList = [];
   const peptidesPerProtein = Math.floor(peptideList.length / length);
@@ -88,22 +118,115 @@ export function createProteinList(peptideList: PeptideJSON[], length: number): P
   return proteinList;
 }
 
-export function createNewProteinGroup(experimentID: string): ProteinGroupJSON {
 
-  const spectrumList = createSpectrumList(400);
-  const peptideList = createPeptideList(200);
-  const psmList = createPsmList(peptideList, spectrumList);
-  const proteinList = createProteinList(peptideList, 100);
+function createProteinGroupFromInputLists(groupId: string,
+                                          groupingOption: Group,
+                                          experimentId: string,
+                                          inputLists: InputLists,
+                                          parent: string,
+                                          children?: string[]): ProteinGroupJSON {
 
-  return {
-    proteinGroupID: Math.random().toString(36).substring(7),
-    experimentID: experimentID,
-    peptideList: peptideList,
-    proteinList: proteinList,
-    psmList: psmList,
-    spectrumIDs: spectrumList,
+  const proteinGroupObject: ProteinGroupJSON = {
+    grouptype: groupingOption,
+
+    proteinGroupID: groupId,
+    experimentID: experimentId,
+    peptideList: inputLists.peptideList,
+    proteinList: inputLists.proteinList,
+    psmList: inputLists.psmList,
+    spectrumIDs: inputLists.spectrumIDs,
 
     // representativeAccession: Math.random().toString(36).substring(7),
     // representativeDescription: Math.random().toString(36).substring(7)
   };
+
+  if (parent !== '') {
+    proteinGroupObject.parentProteinGroupID = '';
+    return proteinGroupObject;
+  }
+
+  proteinGroupObject.childProteinGroupIDs = children;
+  return proteinGroupObject;
+}
+
+
+function createNewProteinSubGroup(groupId: string,
+                                  parentId: string,
+                                  experimentID: string,
+                                  groupingOption: GroupingOptions): ProteinGroupJSON {
+
+  const subGroupOption = groupingOption === GroupingOptions.OCCAM ? Group.OCCAMSUBGROUP : Group.ANTIOCCAMSUBGROUP;
+
+  const spectrumList = createSpectrumList(400);
+  const peptideList = createPeptideList(200);
+
+  const inputLists: InputLists = {
+    spectrumIDs: spectrumList,
+    peptideList: peptideList,
+    psmList: createPsmList(peptideList, spectrumList),
+    proteinList: createProteinList(peptideList, 100),
+  };
+
+  return createProteinGroupFromInputLists(groupId, subGroupOption, experimentID, inputLists, parentId);
+}
+
+
+function createMainFromSubGroups(groupId: string,
+                                 childGroups: ProteinGroupJSON[],
+                                 experimentID: string,
+                                 groupingOption: GroupingOptions): ProteinGroupJSON {
+
+  const mainGroupOption = groupingOption === GroupingOptions.OCCAM ? Group.OCCAMGROUP : Group.ANTIOCCAMGROUP;
+
+  const inputLists: InputLists = {
+    spectrumIDs: [],
+    peptideList: [],
+    psmList: [],
+    proteinList: [],
+  };
+
+  const children = [];
+
+  childGroups.forEach(childGroup => {
+    children.push(childGroup.proteinGroupID);
+
+    inputLists.spectrumIDs.push(...childGroup.spectrumIDs);
+    inputLists.peptideList.push(...childGroup.peptideList);
+    inputLists.psmList.push(...childGroup.psmList);
+    inputLists.proteinList.push(...childGroup.proteinList);
+  });
+
+  return createProteinGroupFromInputLists(groupId, mainGroupOption, experimentID, inputLists, '', children);
+}
+
+
+export function createProteinGroupData(
+  experimentID: string,
+  groupingOption: GroupingOptions,
+  distribution: DistributionParams): ProteinGroupObject[] {
+
+  const {numberOfMainGroups, subGroupsPerMainGroup} = distribution;
+  const proteinGroups = [];
+  const subGroups = [];
+
+  for (let subGroupIndex = 0; subGroupIndex < numberOfMainGroups * subGroupsPerMainGroup; subGroupIndex++) {
+    const groupId = Math.random().toString(36).substring(7);
+    subGroups.push(createNewProteinSubGroup(groupId, 'noParent', experimentID, groupingOption));
+  }
+
+  for (let mainGroupIndex = 0; mainGroupIndex < numberOfMainGroups; mainGroupIndex++) {
+    const groupId = Math.random().toString(36).substring(7);
+    const children = [];
+
+    for (let subGroupIterator = 0; subGroupIterator < subGroupsPerMainGroup; subGroupIterator++) {
+      const subGroup = subGroups[mainGroupIndex * subGroupsPerMainGroup + subGroupIterator];
+      subGroup.parent = groupId;
+
+      children.push(subGroup);
+    }
+
+    proteinGroups.push(createMainFromSubGroups(groupId, children, experimentID, groupingOption), ...children);
+  }
+
+  return proteinGroups;
 }

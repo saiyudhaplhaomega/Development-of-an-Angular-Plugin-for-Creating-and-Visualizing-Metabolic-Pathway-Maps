@@ -31,6 +31,7 @@ export class UserPageComponent implements OnInit {
       const newFolders = [];
       const newExperiments = [];
       const newDataBases = [];
+
       for (const [key, value] of items.entries()) {
         if (value.type === 'folder') {
           newFolders.push(value.displayName);

@@ -42,109 +42,100 @@ export class DataService {
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
-  constructor(private authGuard: AuthGuard,
-              private jsonUploader: HttpClientService,
-              private getDateService: GetDateService,
-              private dialog: MatDialog) {
-      if (this.authGuard.loggedIn()) {
-        this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
-          const newMap = new Map();
-          res.forEach(obj => {
-            newMap.set(obj.id, obj);
-          });
-          this.dataMap.next(newMap);
-        });
-        // test data from server
-        // newMap.set(key, {
-        //   displayName: 'a user',
-        //   icon: 'account_circle',
-        //   children: [],
-        //   uuid: key,
-        //   type: 'user',
-        // });
-
-      } else {
-        const key = dataNodeIdGenerator(this._dataItemMap);
-        const newMap = new Map();
-        newMap.set(key, {
-          displayName: 'no user',
-          icon: 'account_circle',
-          children: [],
-          id: key,
-          type: 'user'
-        });
-        this.dataMap.next(newMap);
-      }
-
-    // updates userdata when data Map is changed
-    this.dataMap.subscribe(value => {
-      this._dataItemMap = value;
-      const list: DataItem[] = [];
-      if (value !== undefined) {
-        if (value.size !== 0) {
-          value.forEach(val => {
-            list.push(val);
-          });
-          this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-            if (result != null) {
-              console.log(list);
-              // value = result;
-            }
-          });
-        }
-      }
-    });
-  }
-  // // uncomment till here
-
-  // Following lines added due to server error. Delete if server is running properly.
   // constructor(private authGuard: AuthGuard,
   //             private jsonUploader: HttpClientService,
   //             private getDateService: GetDateService,
   //             private dialog: MatDialog) {
   //
-  //   if (this.authGuard.loggedIn()) {
-  //     const key = dataNodeIdGenerator(this._dataItemMap);
-  //     const newMap = new Map();
-  //     newMap.set(key, {
-  //       displayName: 'a user',
-  //       icon: 'account_circle',
-  //       children: [],
-  //       uuid: key,
-  //       type: 'user',
-  //     });
-  //     this.dataMap.next(newMap);
-  //   } else {
-  //     const key = dataNodeIdGenerator(this._dataItemMap);
-  //     const newMap = new Map();
-  //     newMap.set(key, {
-  //       displayName: 'no user',
-  //       icon: 'account_circle',
-  //       children: [],
-  //       uuid: key,
-  //       type: 'user'
-  //     });
-  //     this.dataMap.next(newMap);
-  //   }
+  //     if (this.authGuard.loggedIn()) {
+  //       this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
+  //         const newMap = new Map<string, DataItem>();
+  //         res.forEach(obj => {
+  //           newMap.set(obj.id, obj);
+  //         });
+  //         this.dataMap.next(newMap);
+  //       });
+  //     } else {
+  //       const key = dataNodeIdGenerator(this._dataItemMap);
+  //       const newMap = new Map<string, DataItem>();
+  //       newMap.set(key, {
+  //         displayName: 'no user',
+  //         icon: 'account_circle',
+  //         children: [],
+  //         id: key,
+  //         type: 'user'
+  //       });
+  //       this.dataMap.next(newMap);
+  //     }
   //
-  //   // '/mpacloud/v1/getuserdata'
-  //     this.dataMap.subscribe(value => {
-  //       this._dataItemMap = value;
-  //       const list: DataItem[] = [];
-  //       if (value !== undefined) {
-  //         if (value.size !== 0) {
-  //           value.forEach(val => {
-  //             list.push(val);
-  //           });
-  //           this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-  //             if (result != null) {
-  //               console.log(list);
-  //             }
-  //           });
-  //         }
+  //   // updates userdata when data Map is changed
+  //   this.dataMap.subscribe(value => {
+  //     this._dataItemMap = value;
+  //     const list: DataItem[] = [];
+  //     if (value !== undefined) {
+  //       if (value.size !== 0) {
+  //         value.forEach(val => {
+  //           list.push(val);
+  //         });
+  //         this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+  //           if (result != null) {
+  //             console.log(list);
+  //             // value = result;
+  //           }
+  //         });
   //       }
-  //     });
+  //     }
+  //   });
   // }
+  // // uncomment till here
+
+  // Following lines added due to server error. Delete if server is running properly.
+  constructor(private authGuard: AuthGuard,
+              private jsonUploader: HttpClientService,
+              private getDateService: GetDateService,
+              private dialog: MatDialog) {
+
+    if (this.authGuard.loggedIn()) {
+      const key = dataNodeIdGenerator(this._dataItemMap);
+      const newMap = new Map<string, DataItem>();
+      newMap.set(key, {
+        displayName: 'a user',
+        icon: 'account_circle',
+        children: [],
+        id: key,
+        type: 'user',
+      });
+      this.dataMap.next(newMap);
+    } else {
+      const key = dataNodeIdGenerator(this._dataItemMap);
+      const newMap = new Map<string, DataItem>();
+      newMap.set(key, {
+        displayName: 'no user',
+        icon: 'account_circle',
+        children: [],
+        id: key,
+        type: 'user'
+      });
+      this.dataMap.next(newMap);
+    }
+
+    this.dataMap.subscribe(value => {
+      this._dataItemMap = value;
+      // const list: DataItem[] = [];
+
+    //   if (value !== undefined && value.size !== 0) {
+    //     value.forEach(val => {
+    //       list.push(val);
+    //     });
+    //     this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+    //       if (result != null) {
+    //         console.log(list);
+    //         // value = result;
+    //       }
+    //     });
+    //   }
+    });
+  }
   // remove till here
 
   getProteinDatabases(): DataItem[] {
@@ -192,7 +183,6 @@ export class DataService {
           nodeObj.icon = 'computer';
           nodeObj.creation_date = this.getDateService.getDate().toString();
           nodeObj.description = '';
-
           await this.updateExperiment(nodeObj);
           break;
         case 'proteindb':
@@ -216,6 +206,8 @@ export class DataService {
       }
 
       const item = this._dataItemMap.get(parentId);
+      console.log(parentId);
+      console.log(this._dataItemMap);
       item.children.push(newNodeId);
       this._dataItemMap.set(parentId, item);
 
@@ -233,10 +225,16 @@ export class DataService {
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationDate = nodeObj.creation_date;
 
-    const response = await this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT)
-      .toPromise();
-    if (response != null) {
-      nodeObj.realUUID = response.expid;
+    try {
+      const response = await this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(
+        dbExperiment, Endpoints.CREATE_EXPERIMENT).toPromise();
+
+      if (response !== null) {
+        nodeObj.realUUID = response.expid;
+        return;
+      }
+    } catch (e) {
+      nodeObj.realUUID = Math.random().toString(36).substring(7);
     }
   }
 

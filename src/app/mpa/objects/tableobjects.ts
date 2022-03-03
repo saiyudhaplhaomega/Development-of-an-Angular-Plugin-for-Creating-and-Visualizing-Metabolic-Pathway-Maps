@@ -1,5 +1,21 @@
+export enum GroupingOptions {
+  OCCAM = 'OCCAMSRAZOR',
+  ANTIOCCAM = 'ANTIOCCAMSRAZOR'
+}
+
+export enum Group {
+  OCCAMGROUP,
+  ANTIOCCAMGROUP,
+  OCCAMSUBGROUP,
+  ANTIOCCAMSUBGROUP
+}
 
 export interface ProteinGroupJSON {
+
+  grouptype: Group;
+  parentProteinGroupID?: string;
+  childProteinGroupIDs?: string[];
+
   proteinGroupID: string;
   representativeAccession?: string;
   representativeDescription?: string;
@@ -39,6 +55,11 @@ export interface Spectrum {
 }
 
 export class ProteinGroupObject implements ProteinGroupJSON {
+
+  grouptype: Group;
+  parentProteinGroupID?: string;
+  childProteinGroupIDs?: string[];
+
   experimentID: string;
   peptideList: PeptideObject[];
   proteinGroupID: string;
