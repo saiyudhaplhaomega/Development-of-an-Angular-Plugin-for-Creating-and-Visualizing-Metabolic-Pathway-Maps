@@ -3,8 +3,9 @@ export interface DataItem {
     displayName: string;
     icon: string;
     parent?: string;
-    uuid: string;
+    id: string;
     type: string;
     creation_date?: string;
     description?: string;
+    realUUID?: string;
 }

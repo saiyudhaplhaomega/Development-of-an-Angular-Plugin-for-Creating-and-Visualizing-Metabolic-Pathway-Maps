@@ -34,7 +34,7 @@ export class MPAComponent implements OnInit {
         console.log(this.navService.treeNodes.value);
         this.notifier.next();
         const userNode = this.navService.treeNodes.value.find(node => node.type === 'user');
-        this.navService.navigateOutlet(userNode.displayName, userNode.uuid, 'user');
+        this.navService.navigateOutlet(userNode.displayName, userNode.id, 'user');
       }
     }
     );

@@ -108,6 +108,21 @@
                 </mat-select>
               </div>
 
+              <!-- ProteinDatabase -->
+              <ng-container *ngIf="this.dataUploadSelection == 'Peaklist'">
+                <div class="input-group mb-3 ng-star-inserted">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Data Selection</span>
+                  </div>
+                  <mat-select class="custom-select" [(value)]="this.proteinDBselection"
+                              (selectionChange)="onProteinDBChange($event.value)">
+                    <mat-option *ngFor="let protDB of proteinDatabases"
+                                [value]="protDB">
+                      {{ protDB.displayName}}</mat-option>
+                  </mat-select>
+                </div>
+              </ng-container>
+
               <!--            Peaklist            -->
               <ng-container *ngIf="this.dataUploadSelection == 'Peaklist' ||
               this.dataUploadSelection == 'Peaklist + Search Result'">
@@ -155,7 +170,7 @@
                 </div>
               </ng-container>
 
-              <!--            Search            -->
+              <!--            Search Result           -->
               <ng-container
                 *ngIf="this.dataUploadSelection == 'Search Result' ||
               this.dataUploadSelection == 'Peaklist + Search Result'">
@@ -248,7 +263,7 @@
 
         <mat-tab label="Protein Groups">
           <ng-container *ngIf="hasMpaData">
-            <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.exp_id'>
+            <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.expid'>
             </app-mpa-table>
           </ng-container>
 

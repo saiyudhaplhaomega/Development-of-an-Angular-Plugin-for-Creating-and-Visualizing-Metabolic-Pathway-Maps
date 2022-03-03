@@ -9,6 +9,11 @@ import {HttpClientService} from '../../../../core/services/http-client.service';
 import {Filemetadata} from '../../../objects/FileMetaData';
 import {HttpParams} from '@angular/common/http';
 
+export class ProteinDBDialogData {
+  dbName: string;
+  dbFile: File;
+}
+
 @Component({
   selector: 'app-protein-database-dialog',
   templateUrl: './protein-database-dialog.component.html',
@@ -18,15 +23,15 @@ export class ProteinDatabaseDialogComponent implements OnInit {
 
   proteinDBForm: FormGroup;
   existingNodeNames: string[];
-  dbName: string;
-  dbFile: File;
+  formData: ProteinDBDialogData = new ProteinDBDialogData();
+
   private _dataMap: Map<string, DataItem>;
 
   constructor(
     public dialogRef: MatDialogRef<ProteinDatabaseDialogComponent>,
     private fb: FormBuilder,
     private dataService: DataService,
-    private uploaderService: HttpClientService,
+    // private uploaderService: HttpClientService,
   ) {
   }
 
@@ -64,28 +69,11 @@ export class ProteinDatabaseDialogComponent implements OnInit {
   }
 
   onSubmitName(): void {
-    this.dialogRef.close(this.proteinDBForm.value.dbName);
-
-    const fileData: Filemetadata = {
-      filename: this.dbFile.name,
-      fileType: 'fasta',
-      fileUUID: null,
-    };
-
-    // metadata endpoint, wait for File ID
-    this.uploaderService.postObject<Filemetadata, Filemetadata>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
-      if (result != null) {
-        console.log(result.fileUUID);
-        // upload fasta/xml file
-        const params: HttpParams = new HttpParams({fromObject: {'jobid': result.fileUUID, 'name': fileData.filename}});
-        this.uploaderService.postFile(this.dbFile, Endpoints.PROTEINLOADER_FILEUPLOAD, params).subscribe(result2 => {
-          if (result2 != null) {
-            // TODO: evaluate response --> upload successful?
-          }
-        });
-      }
-    });
-
+    // TODO: how does THIS help? After 6 hours of debugging i added this line and it fixes the problems
+    this.formData.dbName = this.proteinDBForm.value.dbName;
+    console.log('Closing ' + this.formData.dbFile.name);
+    console.log('Closing ' + this.formData.dbName);
+    this.dialogRef.close(this.formData);
   }
 
   onCloseDialog(): void {
@@ -93,6 +81,7 @@ export class ProteinDatabaseDialogComponent implements OnInit {
   }
 
   onDBFileSelect(files: FileList) {
-    this.dbFile = files[0];
+    this.formData.dbFile = files[0];
   }
+
 }

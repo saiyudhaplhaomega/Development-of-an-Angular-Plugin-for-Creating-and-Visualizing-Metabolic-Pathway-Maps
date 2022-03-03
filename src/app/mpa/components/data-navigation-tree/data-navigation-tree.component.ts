@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./data-navigation-tree.component.css']
 })
 export class DataNavigationTreeComponent implements OnInit {
-  uuid: string;
+  id: string;
   name: string;
   selectedNode: string;
 
@@ -34,18 +34,18 @@ export class DataNavigationTreeComponent implements OnInit {
 
     // this._treeNodes.map(node => {
     //   if (node.expanded === true) {
-    //     this._expandedNodes.push(node.uuid);
+    //     this._expandedNodes.push(node.id);
     //   }
     // });
 
   }
 
   onExpand(event, treeNode) {
-    const index = this._expandedNodes.indexOf(treeNode.uuid);
+    const index = this._expandedNodes.indexOf(treeNode.id);
     if (index > -1) {
       this._expandedNodes.splice(index, 1);
     } else {
-      this._expandedNodes.push(treeNode.uuid);
+      this._expandedNodes.push(treeNode.id);
     }
     this.navService.expandedNodes.next(this._expandedNodes);
   }
@@ -67,7 +67,7 @@ export class DataNavigationTreeComponent implements OnInit {
       this._snackBar.open('Experiment can not have children!', '', {duration: 2000});
       return;
     }
-    this.dataService.moveDataItem(targetNode.uuid, movedNode.uuid);
+    this.dataService.moveDataItem(targetNode.id, movedNode.id);
   }
 
   getBackgroundColor(treeNode) {

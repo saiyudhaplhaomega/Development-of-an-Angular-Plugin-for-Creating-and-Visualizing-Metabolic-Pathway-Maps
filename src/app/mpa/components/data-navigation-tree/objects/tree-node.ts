@@ -4,6 +4,6 @@ export interface TreeNode {
     expanded: boolean;
     hasChildren: boolean;
     icon: string;
-    uuid: string;
+    id: string;
     type: string;
 }

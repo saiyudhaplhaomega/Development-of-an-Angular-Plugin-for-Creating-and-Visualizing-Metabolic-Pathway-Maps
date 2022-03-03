@@ -5,6 +5,9 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
 import {HttpClientService} from '../../../core/services/http-client.service';
+import {Filemetadata} from '../../objects/filemetadata';
+import {Endpoints} from '../../../core/services/webserveraddress.service';
+import {HttpParams} from '@angular/common/http';
 
 
 @Component({
@@ -14,7 +17,7 @@ import {HttpClientService} from '../../../core/services/http-client.service';
 })
 export class FolderPageComponent implements OnInit {
 
-  uuid: string;
+  id: string;
   parentUuid: string;
   name: string;
   existingNodeNames = [];
@@ -24,15 +27,15 @@ export class FolderPageComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar,
               private dataService: DataService,
               public dialog: MatDialog,
-              private uploaderService: HttpClientService) { }
+              private uploaderService: HttpClientService) {}
 
   ngOnInit() {
     this.dataService.dataMap.subscribe( items => {
       this._dataMap = items;
     });
 
-    this.parentUuid = this._dataMap.get(this.uuid).parent;
-    }
+    this.parentUuid = this._dataMap.get(this.id).parent;
+  }
 
   onAccept() {
     if (this.name.length > 24) {
@@ -41,9 +44,9 @@ export class FolderPageComponent implements OnInit {
     } else if (this.name.length <= 0) {
       this._snackBar.open('Empty names are not allowed!');
     } else {
-      const item = this._dataMap.get(this.uuid);
+      const item = this._dataMap.get(this.id);
       item.displayName = this.name;
-      this._dataMap.set(this.uuid, item);
+      this._dataMap.set(this.id, item);
       this.dataService.dataMap.next(this._dataMap);
     }
   }
@@ -61,7 +64,7 @@ export class FolderPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add experiment');
-        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Experiment);
+        this.dataService.addNodeObj(this.id, folderName, NodeType.Experiment, null);
       }
     });
   }
@@ -72,10 +75,33 @@ export class FolderPageComponent implements OnInit {
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(dbName => {
-      if (dbName) {
-        console.log('add proteindb');
-        this.dataService.addNodeObj(this.uuid, dbName, NodeType.ProteinDB);
+    dialogRef.afterClosed().subscribe(dialog  => {
+      console.log('dialog?: ' + dialog.dbName);
+      console.log('dialog?: ' + dialog.dbFile.name);
+      if (dialog.dbName) {
+        console.log('add proteindb: ' + dialog.dbName);
+
+        const fileData: Filemetadata = {
+          filename: dialog.dbFile.name,
+          fileType: 'fasta',
+          fileUUID: null,
+        };
+
+        // metadata endpoint, wait for File ID
+        this.uploaderService.postObject<Filemetadata, Filemetadata>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
+          if (result != null) {
+            console.log(result.fileUUID);
+            // upload fasta/xml file
+            const params: HttpParams = new HttpParams({fromObject: {'jobid': result.fileUUID, 'name': fileData.filename}});
+            this.uploaderService.postFile(dialog.dbFile, Endpoints.PROTEINLOADER_FILEUPLOAD, params).subscribe(result2 => {
+              if (result2 != null) {
+                // TODO: executes multiple times, fixed for now on dataservice side
+                this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
+              }
+            });
+          }
+        });
+
         // fileMetaData.filename = dbName;
         // fileMetaData.experimentuuid = this.uuid;
       }
@@ -89,6 +115,7 @@ export class FolderPageComponent implements OnInit {
   }
 
   onAddFolder() {
+
     const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
@@ -99,12 +126,12 @@ export class FolderPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add folder');
-        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Folder);
+        this.dataService.addNodeObj(this.id, folderName, NodeType.Folder, null);
       }
     });
   }
 
   onRemoveFolder() {
-      this.dataService.removeNode(this.uuid, this.uuid, this.parentUuid);
+      this.dataService.removeNode(this.id, this.id, this.parentUuid);
   }
 }

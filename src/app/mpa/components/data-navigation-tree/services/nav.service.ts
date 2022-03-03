@@ -2,7 +2,7 @@ import { Injectable, ComponentFactoryResolver, ViewContainerRef } from '@angular
 import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { TreeNode } from '../objects/tree-node';
-import {DataChangeObj, DataService} from './data.service';
+import { DataChangeObj, DataService} from './data.service';
 import { DataItem } from '../objects/data-item';
 import { UserPageComponent } from '../../user-page/user-page.component';
 import { FolderPageComponent } from '../../folder-page/folder-page.component';
@@ -12,7 +12,7 @@ import { SearchResultPageComponent } from '../../search-result-page/search-resul
 import {ProteinDatabaseComponent} from '../../protein-database/protein-database-component';
 
 export interface ContentComponent {
-  uuid: string;
+  id: string;
   name: string;
 }
 
@@ -75,10 +75,10 @@ export class NavService {
   private processData(data: Map<string, DataItem>, expandedNodes: string[]) {
     const tree: TreeNode[] = [];
     const processedUUID = new Map();
-
+    console.log('DATA: ' + data);
     while (processedUUID.size < this._dataMap.size) {
       for (const item of this._dataMap.values()) {
-        if (!processedUUID.has(item.uuid)) {
+        if (!processedUUID.has(item.id)) {
           if (!item.parent) {
             // No Parent
             console.log('No Parent');
@@ -88,37 +88,37 @@ export class NavService {
                 icon: item.icon,
                 hasChildren: item.children && item.children.length > 0,
                 depth: 0,
-                expanded: expandedNodes ? expandedNodes.indexOf(item.uuid) > -1 : false,
-                uuid: item.uuid,
+                expanded: expandedNodes ? expandedNodes.indexOf(item.id) > -1 : false,
+                id: item.id,
                 type: item.type,
               }
             );
 
-            processedUUID.set(item.uuid, 0);
+            processedUUID.set(item.id, 0);
           } else if (item.parent && processedUUID.has(item.parent) && expandedNodes.indexOf(item.parent) > -1) {
             // UNHIDDEN and PROCESSED Parent
             console.log('UNHIDDEN and PROCESSED Parent');
             for (let index = 0; index < tree.length; index++) {
-              if (tree[index].uuid === item.parent) {
+              if (tree[index].id === item.parent) {
                 tree.splice(index + 1, 0,
                   {
                     displayName: item.displayName,
                     icon: item.icon,
                     hasChildren: item.children && item.children.length > 0,
                     depth: processedUUID.get(item.parent) + 1,
-                    expanded: expandedNodes ? expandedNodes.indexOf(item.uuid) > -1 : false,
-                    uuid: item.uuid,
+                    expanded: expandedNodes ? expandedNodes.indexOf(item.id) > -1 : false,
+                    id: item.id,
                     type: item.type,
                   }
                 );
                 break;
               }
             }
-            processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
+            processedUUID.set(item.id, processedUUID.get(item.parent) + 1);
           } else if (expandedNodes.indexOf(item.parent) <= -1) {
             // HIDDEN
             console.log('HIDDEN');
-            processedUUID.set(item.uuid, processedUUID.get(item.parent) + 1);
+            processedUUID.set(item.id, processedUUID.get(item.parent) + 1);
           }
         }
       }
@@ -126,7 +126,7 @@ export class NavService {
     return tree;
   }
 
-  navigateOutlet(name: string, uuid: string, type: string) {
+  navigateOutlet(name: string, id: string, type: string) {
     this._contentRef.clear();
     // Resolve a factory
     let componentFactory;
@@ -160,7 +160,7 @@ export class NavService {
     }
     // Create a component
     const componentRef = this._contentRef.createComponent(componentFactory);
-    (<ContentComponent>componentRef.instance).uuid = uuid;
+    (<ContentComponent>componentRef.instance).id = id;
     (<ContentComponent>componentRef.instance).name = name;
   }
 

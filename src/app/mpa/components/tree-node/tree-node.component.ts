@@ -35,7 +35,7 @@ export class TreeNodeComponent {
   }
 
   onNavigate() {
-    this.navService.navigateOutlet(this.node.displayName, this.node.uuid, this.node.type);
+    this.navService.navigateOutlet(this.node.displayName, this.node.id, this.node.type);
     this.selectEvent.emit(true);
     this.selected = true;
   }

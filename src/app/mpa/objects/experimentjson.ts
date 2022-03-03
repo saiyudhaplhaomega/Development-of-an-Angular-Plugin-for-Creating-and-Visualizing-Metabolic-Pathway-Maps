@@ -1,5 +1,5 @@
 export interface ExperimentJSON {
-  exp_id: string;
+  expid: string;
   description: string;
   experiment_data: string;
   name: string;
@@ -7,7 +7,7 @@ export interface ExperimentJSON {
 }
 
 export class ExperimentJSONObject implements ExperimentJSON {
-  exp_id: string;
+  expid: string;
   description: string;
   experiment_data: string;
   name: string;

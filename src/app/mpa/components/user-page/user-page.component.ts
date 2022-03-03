@@ -11,7 +11,7 @@ import {MatDialog} from '@angular/material';
 })
 export class UserPageComponent implements OnInit {
 
-  uuid: string;
+  id: string;
   name: string;
 
   // contains folder names for overview
@@ -57,7 +57,7 @@ export class UserPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
         console.log('add folder');
-        this.dataService.addNodeObj(this.uuid, folderName, NodeType.Folder);
+        this.dataService.addNodeObj(this.id, folderName, NodeType.Folder, null);
       }
     });
   }

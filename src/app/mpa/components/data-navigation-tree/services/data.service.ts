@@ -34,189 +34,210 @@ export class DataService {
     event: undefined,
     currentNodeUuid: undefined,
     targetNodeUuid: undefined,
-    finalNodeUuid: undefined};
+    finalNodeUuid: undefined
+  };
 
   public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   public dataChange = new BehaviorSubject<DataChangeObj>(this.initDataChange);
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
-  // constructor(private authGuard: AuthGuard,
-  //             private jsonUploader: HttpClientService,
-  //             private getDateService: GetDateService,
-  //             private dialog: MatDialog) {
-  //     if (this.authGuard.loggedIn()) {
-  //       this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
-  //         const newMap = new Map();
-  //         res.forEach(obj => {
-  //           newMap.set(obj.uuid, obj);
-  //         });
-  //         this.dataMap.next(newMap);
-  //       });
-  //       // test data from server
-  //       // newMap.set(key, {
-  //       //   displayName: 'a user',
-  //       //   icon: 'account_circle',
-  //       //   children: [],
-  //       //   uuid: key,
-  //       //   type: 'user',
-  //       // });
-  //
-  //     } else {
-  //       const key = dataNodeIdGenerator(this._dataItemMap);
-  //       const newMap = new Map();
-  //       newMap.set(key, {
-  //         displayName: 'no user',
-  //         icon: 'account_circle',
-  //         children: [],
-  //         uuid: key,
-  //         type: 'user'
-  //       });
-  //       this.dataMap.next(newMap);
-  //     }
-  //
-  //   // updates userdata when data Map is changed
-  //   this.dataMap.subscribe(value => {
-  //     this._dataItemMap = value;
-  //     const list: DataItem[] = [];
-  //     if (value !== undefined) {
-  //       if (value.size !== 0) {
-  //         value.forEach(val => {
-  //           list.push(val);
-  //         });
-  //         this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-  //           if (result != null) {
-  //             console.log(list);
-  //             // value = result;
-  //           }
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
-  // // uncomment till here
-
-  // Following lines added due to server error. Delete if server is running properly.
   constructor(private authGuard: AuthGuard,
               private jsonUploader: HttpClientService,
               private getDateService: GetDateService,
               private dialog: MatDialog) {
+      if (this.authGuard.loggedIn()) {
+        this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
+          const newMap = new Map();
+          res.forEach(obj => {
+            newMap.set(obj.id, obj);
+          });
+          this.dataMap.next(newMap);
+        });
+        // test data from server
+        // newMap.set(key, {
+        //   displayName: 'a user',
+        //   icon: 'account_circle',
+        //   children: [],
+        //   uuid: key,
+        //   type: 'user',
+        // });
 
-    if (this.authGuard.loggedIn()) {
-      const key = dataNodeIdGenerator(this._dataItemMap);
-      const newMap = new Map();
-      newMap.set(key, {
-        displayName: 'a user',
-        icon: 'account_circle',
-        children: [],
-        uuid: key,
-        type: 'user',
-      });
-      this.dataMap.next(newMap);
-    } else {
-      const key = dataNodeIdGenerator(this._dataItemMap);
-      const newMap = new Map();
-      newMap.set(key, {
-        displayName: 'no user',
-        icon: 'account_circle',
-        children: [],
-        uuid: key,
-        type: 'user'
-      });
-      this.dataMap.next(newMap);
-    }
+      } else {
+        const key = dataNodeIdGenerator(this._dataItemMap);
+        const newMap = new Map();
+        newMap.set(key, {
+          displayName: 'no user',
+          icon: 'account_circle',
+          children: [],
+          id: key,
+          type: 'user'
+        });
+        this.dataMap.next(newMap);
+      }
 
-    // '/mpacloud/v1/getuserdata'
-      this.dataMap.subscribe(value => {
-        this._dataItemMap = value;
-        const list: DataItem[] = [];
-        if (value !== undefined) {
-          if (value.size !== 0) {
-            value.forEach(val => {
-              list.push(val);
-            });
-            this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-              if (result != null) {
-                console.log(list);
-              }
-            });
-          }
+    // updates userdata when data Map is changed
+    this.dataMap.subscribe(value => {
+      this._dataItemMap = value;
+      const list: DataItem[] = [];
+      if (value !== undefined) {
+        if (value.size !== 0) {
+          value.forEach(val => {
+            list.push(val);
+          });
+          this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+            if (result != null) {
+              console.log(list);
+              // value = result;
+            }
+          });
         }
-      });
+      }
+    });
   }
+  // // uncomment till here
+
+  // Following lines added due to server error. Delete if server is running properly.
+  // constructor(private authGuard: AuthGuard,
+  //             private jsonUploader: HttpClientService,
+  //             private getDateService: GetDateService,
+  //             private dialog: MatDialog) {
+  //
+  //   if (this.authGuard.loggedIn()) {
+  //     const key = dataNodeIdGenerator(this._dataItemMap);
+  //     const newMap = new Map();
+  //     newMap.set(key, {
+  //       displayName: 'a user',
+  //       icon: 'account_circle',
+  //       children: [],
+  //       uuid: key,
+  //       type: 'user',
+  //     });
+  //     this.dataMap.next(newMap);
+  //   } else {
+  //     const key = dataNodeIdGenerator(this._dataItemMap);
+  //     const newMap = new Map();
+  //     newMap.set(key, {
+  //       displayName: 'no user',
+  //       icon: 'account_circle',
+  //       children: [],
+  //       uuid: key,
+  //       type: 'user'
+  //     });
+  //     this.dataMap.next(newMap);
+  //   }
+  //
+  //   // '/mpacloud/v1/getuserdata'
+  //     this.dataMap.subscribe(value => {
+  //       this._dataItemMap = value;
+  //       const list: DataItem[] = [];
+  //       if (value !== undefined) {
+  //         if (value.size !== 0) {
+  //           value.forEach(val => {
+  //             list.push(val);
+  //           });
+  //           this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+  //             if (result != null) {
+  //               console.log(list);
+  //             }
+  //           });
+  //         }
+  //       }
+  //     });
+  // }
   // remove till here
 
-  addNodeObj(parentId: string, nodeName: string, nodeType: NodeType) {
+  getProteinDatabases(): DataItem[] {
+    const proteinDatabases = [];
+    this._dataItemMap.forEach(function(value, key) {
+      if (value.type === 'proteindb') {
 
-    const newNodeId = dataNodeIdGenerator(this._dataItemMap);
-
-    const dataChangeObj = {
-      event: 'add',
-      currentNodeUuid: parentId,
-      targetNodeUuid: newNodeId,
-      finalNodeUuid: newNodeId
-    };
-
-    const nodeObj: DataItem = {
-      displayName: nodeName,
-      children: [],
-      uuid: newNodeId,
-      type: nodeType,
-      parent: parentId,
-      icon: undefined
-    };
-
-    switch (nodeType) {
-      case 'experiment':
-        nodeObj.icon = 'computer';
-        nodeObj.creation_date = this.getDateService.getDate().toString();
-        nodeObj.description = '';
-
-        this.updateExperiment(nodeObj);
-        break;
-      case 'proteindb':
-        nodeObj.icon = 'fingerprint';
-        dataChangeObj.event = 'addDB';
-        break;
-      case 'folder':
-        nodeObj.icon = 'folder';
-        break;
-      case 'peaklist':
-        nodeObj.icon = 'folder';
-        dataChangeObj.event = 'addPeaklist';
-        dataChangeObj.finalNodeUuid = parentId;
-        break;
-      case 'searchresult':
-        nodeObj.icon = 'folder';
-        dataChangeObj.event = 'addSearch';
-        dataChangeObj.finalNodeUuid = parentId;
-        break;
-    }
-
-    const item = this._dataItemMap.get(parentId);
-    item.children.push(newNodeId);
-    this._dataItemMap.set(parentId, item);
-
-    this._dataItemMap.set(newNodeId, nodeObj);
-    this.updateDataItems();
-    this.dataChange.next(dataChangeObj);
+        proteinDatabases.push(value);
+      }
+    });
+    return proteinDatabases;
   }
 
-  updateExperiment(nodeObj) {
+  async addNodeObj(parentId: string, nodeName: string, nodeType: NodeType, realUUID: string) {
+
+    // TODO: workaround ... check if a node like this already exists
+    let existsAlready = false;
+    this._dataItemMap.forEach(item => {
+      if (parentId === item.parent && nodeName === item.displayName) {
+        existsAlready = true;
+      }
+    });
+
+    if (!existsAlready) {
+      const newNodeId = dataNodeIdGenerator(this._dataItemMap);
+
+      const dataChangeObj = {
+        event: 'add',
+        currentNodeUuid: parentId,
+        targetNodeUuid: newNodeId,
+        finalNodeUuid: newNodeId
+      };
+
+      const nodeObj: DataItem = {
+        displayName: nodeName,
+        children: [],
+        id: newNodeId,
+        type: nodeType,
+        parent: parentId,
+        icon: undefined
+      };
+
+      switch (nodeType) {
+        case 'experiment':
+          nodeObj.icon = 'computer';
+          nodeObj.creation_date = this.getDateService.getDate().toString();
+          nodeObj.description = '';
+
+          await this.updateExperiment(nodeObj);
+          break;
+        case 'proteindb':
+          nodeObj.icon = 'fingerprint';
+          dataChangeObj.event = 'addDB';
+          nodeObj.realUUID = realUUID;
+          break;
+        case 'folder':
+          nodeObj.icon = 'folder';
+          break;
+        case 'peaklist':
+          nodeObj.icon = 'folder';
+          dataChangeObj.event = 'addPeaklist';
+          dataChangeObj.finalNodeUuid = parentId;
+          break;
+        case 'searchresult':
+          nodeObj.icon = 'folder';
+          dataChangeObj.event = 'addSearch';
+          dataChangeObj.finalNodeUuid = parentId;
+          break;
+      }
+
+      const item = this._dataItemMap.get(parentId);
+      item.children.push(newNodeId);
+      this._dataItemMap.set(parentId, item);
+
+      this._dataItemMap.set(newNodeId, nodeObj);
+      this.updateDataItems();
+      this.dataChange.next(dataChangeObj);
+    }
+  }
+
+  async updateExperiment(nodeObj) {
     // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
-    dbExperiment.exp_id = nodeObj.uuid;
+    dbExperiment.expid = nodeObj.uuid;
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationDate = nodeObj.creation_date;
 
-    this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(
-      result => {
-      if (result != null) {
-        console.log(result);
-        // value = result;
-      }
-    });
+    const response = await this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT)
+      .toPromise();
+    if (response != null) {
+      nodeObj.realUUID = response.expid;
+    }
   }
 
   removeNode(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string): Observable<boolean> {
@@ -261,7 +282,7 @@ export class DataService {
     let family = [targetNodeUuid];
     while (children.length > 0) {
       for (const child_item of this._dataItemMap.values()) {
-        if (children.indexOf(child_item.uuid) > -1) {
+        if (children.indexOf(child_item.id) > -1) {
           newchildren = newchildren.concat(child_item.children);
         }
       }
@@ -296,7 +317,7 @@ export class DataService {
     let newchildren = [];
     while (children.length > 0) {
       for (const child_item of this._dataItemMap.values()) {
-        if (children.indexOf(child_item.uuid) > -1) {
+        if (children.indexOf(child_item.id) > -1) {
           newchildren = newchildren.concat(child_item.children);
         }
       }

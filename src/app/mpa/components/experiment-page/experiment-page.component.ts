@@ -26,7 +26,7 @@ interface Datstats {
 }
 
 export interface ProteinGroupRequest {
-  userID: string;
+  filename: string;
   experimentID: string;
 }
 
@@ -39,18 +39,22 @@ export interface ProteinGroupRequest {
 export class ExperimentPageComponent implements OnInit, OnDestroy {
 
   // generated in nav service
-  uuid: string;
+  id: string;
   parentUuid: string;
   name: string;
   dbExperiment = new ExperimentJSONObject();
   description: string;
   creationDate: string;
+  realUUID: string;
 
   // available upload options
   dataUploadSelection = 'Peaklist';
   dataUploadOptions: string[] = [
     'Peaklist', 'Search Result', 'Peaklist + Search Result'
   ];
+
+  proteinDatabases = [];
+  proteinDBselection = null;
 
   // files selected via input field
   selectedPeaklistFile: File;
@@ -80,6 +84,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   hasMpaData = false;
   datStats: Datstats;
 
+
+
+
   private _dataMap: Map<string, DataItem>;
   private children: string[];
 
@@ -98,10 +105,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
       this._dataMap = items;
     });
 
-    this.parentUuid = this._dataMap.get(this.uuid).parent;
+    this.parentUuid = this._dataMap.get(this.id).parent;
+    this.realUUID = this._dataMap.get(this.id).realUUID;
 
-    this.creationDate = this._dataMap.get(this.uuid).creation_date;
-    this.description = this._dataMap.get(this.uuid).description;
+    this.creationDate = this._dataMap.get(this.id).creation_date;
+    this.description = this._dataMap.get(this.id).description;
+
+    this.proteinDatabases = this.dataService.getProteinDatabases();
+    this.proteinDBselection = this.proteinDatabases[0];
 
     this.getChildNodes();
 
@@ -126,14 +137,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     // get protein lists from server
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
-      {userID: 'sample.mgf', experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003'}, // TODO: for testing
+      {filename: 'sample.mgf', experimentID: this.realUUID}, // TODO: for testing '67ede406-4b7c-11ec-81d3-0242ac130003'
       Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
         this.mpaTableDataService.setMpaData(data);
     }
     , err => {
       const protein_groups = [];
       for (let i = 1; i <= 50; i++) {
-        protein_groups.push(createNewProteinGroup(this.uuid));
+        protein_groups.push(createNewProteinGroup(this.id));
       }
       this.mpaTableDataService.setMpaData(protein_groups);
     }
@@ -145,7 +156,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     // }
     // this.mpaTableDataService.mpaData = protein_groups;
 
-    this.dbExperiment.exp_id = this.uuid;
+    this.dbExperiment.expid = this.id;
 
     this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
       this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
@@ -162,7 +173,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   }
 
   getChildNodes() {
-    this.children = this._dataMap.get(this.uuid).children;
+    this.children = this._dataMap.get(this.id).children;
 
     this.children.map(child => {
       if (this._dataMap.get(child).type === NodeType.SearchResult) {
@@ -173,6 +184,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         this.peaklistFileNode = this._dataMap.get(child);
       }
     });
+  }
+
+  onProteinDBChange(item: DataItem) {
+    console.log(this.proteinDBselection.displayName);
   }
 
   onUploadSelectionChange(option: string) {
@@ -223,7 +238,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
       this.buttonDisabled = this.hasSearchFile || this.hasPeaklistFile || !this.selectedPeaklistFile || !this.selectedSearchFile ||
         !this.fastaFileSelected;
     } else if (this.dataUploadSelection === 'Peaklist') {
-      this.buttonDisabled = this.hasPeaklistFile || !this.selectedPeaklistFile;
+      this.buttonDisabled = this.hasPeaklistFile || !this.proteinDBselection || !this.selectedPeaklistFile;
     } else if (this.dataUploadSelection === 'Search Result') {
       this.buttonDisabled = this.hasSearchFile || !this.selectedSearchFile || !this.fastaFileSelected;
     }
@@ -239,7 +254,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
-          this.dbExperiment.exp_id
+          this.dbExperiment.expid
         );
 
         this.hasPeaklistFile = true;
@@ -249,14 +264,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
-          this.dbExperiment.exp_id
+          this.dbExperiment.expid
         );
 
         if (this.selectedFasta) {
           await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
-            this.dbExperiment.exp_id
+            this.dbExperiment.expid
           );
         }
 
@@ -267,14 +282,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
-          this.dbExperiment.exp_id
+          this.dbExperiment.expid
         );
         this.hasPeaklistFile = true;
 
         await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
-          this.dbExperiment.exp_id
+          this.dbExperiment.expid
         );
         this.hasSearchFile = true;
 
@@ -282,7 +297,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
           await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
-            this.dbExperiment.exp_id
+            this.dbExperiment.expid
           );
         }
         break;
@@ -294,10 +309,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     onDialogClosingObservable.subscribe((uploadFailed) => {
       if (!uploadFailed) {
         if (this.selectedPeaklistFile) {
-          this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedPeaklistFile.name, NodeType.PeakList);
+          this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
         }
         if (this.selectedSearchFile) {
-          this.dataService.addNodeObj(this.dbExperiment.exp_id, this.selectedSearchFile.name, NodeType.SearchResult);
+          this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
         }
       }
     });
@@ -306,7 +321,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   }
 
   invokeUploadDialog(): Observable<boolean> {
-    this.uploadProgressService.setUUID(this.uuid);
+    this.uploadProgressService.setUUID(this.id);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: true,
@@ -366,9 +381,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     } else if (this.dbExperiment.name.length <= 0) {
       this._snackBar.open('Empty names are not allowed!');
     } else {
-      const item = this._dataMap.get(this.dbExperiment.exp_id);
+      const item = this._dataMap.get(this.dbExperiment.expid);
       item.displayName = this.dbExperiment.name;
-      this._dataMap.set(this.dbExperiment.exp_id, item);
+      this._dataMap.set(this.dbExperiment.expid, item);
       this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     }
@@ -389,9 +404,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(expDescription => {
       console.log('add description');
       this.dbExperiment.description = expDescription;
-      const item = this._dataMap.get(this.dbExperiment.exp_id);
+      const item = this._dataMap.get(this.dbExperiment.expid);
       item.description = expDescription;
-      this._dataMap.set(this.dbExperiment.exp_id, item);
+      this._dataMap.set(this.dbExperiment.expid, item);
       this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     });
@@ -400,7 +415,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   onDelete(type: string) {
     if (type === 'peaklist' && this.hasPeaklistFile) {
       this.dataService.removeNode(
-        this.peaklistFileNode.uuid, this.uuid, this.uuid).subscribe(
+        this.peaklistFileNode.id, this.id, this.id).subscribe(
         del => {
           if (del) {
             this.hasPeaklistFile = false;
@@ -411,7 +426,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     } else if (type === 'searchFile' && this.hasSearchFile) {
       this.dataService.removeNode(
-        this.searchFileNode.uuid, this.uuid, this.uuid).subscribe(
+        this.searchFileNode.id, this.id, this.id).subscribe(
         del => {
           if (del) {
             this.hasSearchFile = false;
@@ -438,7 +453,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   }
 
   onRemoveExperiment() {
-    this.dataService.removeNode(this.uuid, this.uuid, this.parentUuid);
+    this.dataService.removeNode(this.id, this.id, this.parentUuid);
   }
 
   calculateDataStats(mpaData: ProteinGroupObject[]): Datstats {

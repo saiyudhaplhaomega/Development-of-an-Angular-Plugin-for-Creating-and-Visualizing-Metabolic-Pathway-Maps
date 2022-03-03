@@ -14,8 +14,8 @@
         <span class="input-group-text">Protein Database File</span>
       </div>
       <div class="custom-file">
-        <label *ngIf="!this.dbFile" class="custom-file-label" for="proteindbfile">Choose File (.fasta, .faa, .xml)</label>
-        <label *ngIf="this.dbFile" class="custom-file-label" for="proteindbfile">{{this.dbFile.name}}</label>
+        <label *ngIf="!this.formData.dbFile" class="custom-file-label" for="proteindbfile">Choose File (.fasta, .faa, .xml)</label>
+        <label *ngIf="this.formData.dbFile" class="custom-file-label" for="proteindbfile">{{this.formData.dbFile.name}}</label>
         <input type="file" accept=".fasta, .faa, .xml" class="custom-file-input" id="proteindbfile" formControlName="dbFile"
                #selectedDBFiles (change)="onDBFileSelect(selectedDBFiles.files)">
       </div>

@@ -6,7 +6,7 @@
     <button mat-raised-button color="primary" (click)="getExperiments()">View List of Experiments</button>
     <ul class="experiments">
       <li *ngFor="let exp of experimentList">
-          <span class="badge">{{ exp.exp_id }}</span>
+          <span class="badge">{{ exp.expid }}</span>
       </li>
     </ul>
   </div>

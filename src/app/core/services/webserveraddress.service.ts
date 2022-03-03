@@ -37,21 +37,14 @@ export enum Endpoints {
   UPDATE_USER_DATA = 'mpauser/updateuserdata',
   GET_USER_DATA = 'mpauser/getuserdata',
   // experiment
-  CREATE_EXPERIMENT = 'mpacloud/v1/createExperiment',
+  CREATE_EXPERIMENT = 'mpasearch/createexperiment',
+  GET_EXPERIMENT_DATA = 'mpasearch/createexperiment',
   SEARCH_METADATA = 'mpasearch/searchmetadata',
-  // POST_FASTA_METADATA = '',
-  // POST_MGF_METADATA = 'mpacloud/v1/postMGFMetadata',
-  // POST_MZIDENT_METADATA = 'mpacloud/v1/postmzidentMetadata',
-  // POST_MZML_METADATA = 'mpacloud/v1/postMZmlMetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',
-  // UPLOAD_FASTA = 'mpacloud/v1/postuploadFasta',
-  // UPLOAD_MGF = 'mpacloud/v1/postuploadMGF',
-  // UPLOAD_MZIDENT = 'mpacloud/v1/postuploadmzident',
-  // UPLOAD_MZML = 'mpacloud/v1/postuploadMZml',
-  // proteindb
+  // proteinloader
   PROTEINLOADER_METADATA = 'proteinloader/fastametadata',
   PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadfasta',
-  PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
+  // PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
 
 }
 
