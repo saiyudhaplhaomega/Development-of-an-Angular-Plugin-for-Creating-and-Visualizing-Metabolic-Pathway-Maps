@@ -5,6 +5,16 @@
   </ng-container>
 
   <ng-container *ngIf="!this.mpaTableDataService.requestingSpectrum && this.spectrumData">
-    {{this.spectrumData}}
+    <div class="chart" class="scatter-plot">
+      <button type="button" (click)="onClick()">Test</button>
+      <button type="button" (click)="resetChart()">ResetChart</button>
+      <p>Scatter-Plot</p>
+      <canvas baseChart
+      [data]="scatterChartData"
+      [type]="scatterChartType"
+      [options]="scatterChartOptions"
+      >
+      </canvas>
+  </div>
   </ng-container>
 </div>
