@@ -46,9 +46,10 @@ export class DataService {
               private jsonUploader: HttpClientService,
               private getDateService: GetDateService,
               private dialog: MatDialog) {
+
       if (this.authGuard.loggedIn()) {
         this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
-          const newMap = new Map();
+          const newMap = new Map<string, DataItem>();
           res.forEach(obj => {
             newMap.set(obj.id, obj);
           });
@@ -65,7 +66,7 @@ export class DataService {
 
       } else {
         const key = dataNodeIdGenerator(this._dataItemMap);
-        const newMap = new Map();
+        const newMap = new Map<string, DataItem>();
         newMap.set(key, {
           displayName: 'no user',
           icon: 'account_circle',
@@ -78,6 +79,7 @@ export class DataService {
 
     // updates userdata when data Map is changed
     this.dataMap.subscribe(value => {
+      console.log(value);
       this._dataItemMap = value;
       const list: DataItem[] = [];
       if (value !== undefined) {
@@ -162,8 +164,8 @@ export class DataService {
 
     // TODO: workaround ... check if a node like this already exists
     let existsAlready = false;
-    this._dataItemMap.forEach(item => {
-      if (parentId === item.parent && nodeName === item.displayName) {
+    this._dataItemMap.forEach((item: DataItem) => {
+      if (nodeName === item.displayName) {
         existsAlready = true;
       }
     });
@@ -346,4 +348,5 @@ export class DataService {
     // normal move
     this.updateDataItems();
   }
+
 }

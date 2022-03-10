@@ -13,11 +13,12 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./data-navigation-tree.component.css']
 })
 export class DataNavigationTreeComponent implements OnInit {
+
   id: string;
   name: string;
   selectedNode: string;
 
-  _treeNodes: TreeNode[];
+  _treeNodes: TreeNode[]; // TODO: only has TreeNodeComponents
   private _expandedNodes: string[] = [];
 
   constructor(private _snackBar: MatSnackBar,
@@ -73,4 +74,5 @@ export class DataNavigationTreeComponent implements OnInit {
   getBackgroundColor(treeNode) {
     return treeNode === this.selectedNode ? 'gold' : '';
   }
+
 }

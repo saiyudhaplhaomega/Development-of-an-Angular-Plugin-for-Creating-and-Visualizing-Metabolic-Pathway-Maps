@@ -9,7 +9,7 @@ import { FolderPageComponent } from '../../folder-page/folder-page.component';
 import { ExperimentPageComponent } from '../../experiment-page/experiment-page.component';
 import { PeaklistPageComponent } from '../../peaklist-page/peaklist-page.component';
 import { SearchResultPageComponent } from '../../search-result-page/search-result-page.component';
-import {ProteinDatabaseComponent} from '../../protein-database/protein-database-component';
+import { ProteinDatabaseComponent } from '../../protein-database/protein-database-component';
 
 export interface ContentComponent {
   id: string;
