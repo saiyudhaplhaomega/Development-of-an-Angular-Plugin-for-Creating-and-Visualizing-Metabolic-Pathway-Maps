@@ -217,10 +217,9 @@ export class DataService {
     }
   }
 
-  async updateExperiment(nodeObj) {
+  async updateExperiment(nodeObj: DataItem) {
     // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
-    dbExperiment.expid = nodeObj.uuid;
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationDate = nodeObj.creation_date;
@@ -231,7 +230,6 @@ export class DataService {
 
       if (response !== null) {
         nodeObj.realUUID = response.expid;
-        return;
       }
     } catch (e) {
       nodeObj.realUUID = Math.random().toString(36).substring(7);

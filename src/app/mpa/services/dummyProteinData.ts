@@ -220,7 +220,7 @@ export function createProteinGroupData(
 
     for (let subGroupIterator = 0; subGroupIterator < subGroupsPerMainGroup; subGroupIterator++) {
       const subGroup = subGroups[mainGroupIndex * subGroupsPerMainGroup + subGroupIterator];
-      subGroup.parent = groupId;
+      subGroup.parentProteinGroupID = groupId;
 
       children.push(subGroup);
     }

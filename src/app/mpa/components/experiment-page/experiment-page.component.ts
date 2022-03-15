@@ -84,9 +84,6 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   hasMpaData = false;
   datStats: Datstats;
 
-
-
-
   private _dataMap: Map<string, DataItem>;
   private children: string[];
 
@@ -116,44 +113,29 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
 
     this.getChildNodes();
 
-    // this.children = this._dataMap.get(this.uuid).children;
-    //
-    // this.children.map(child => {
-    //   if (this._dataMap.get(child).type === 'searchresult') {
-    //     this.hasSearchFile = true;
-    //     this.searchFileNode = this._dataMap.get(child);
-    //   } else if (this._dataMap.get(child).type === 'peaklist') {
-    //     this.hasPeaklistFile = true;
-    //     this.peaklistFileNode = this._dataMap.get(child);
-    //   }
-    // });
-
-    this.mpaTableDataService.mpaData.subscribe(mpaData => {
-      this.hasMpaData = mpaData.length > 0;
-      if (mpaData.length > 0) {
-        this.datStats = this.calculateDataStats(mpaData);
+    this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
+      console.log(mpaTableData)
+      this.hasMpaData = mpaTableData.length > 0;
+      if (mpaTableData.length > 0) {
+        this.datStats = this.calculateDataStats(mpaTableData);
       }
     });
 
-    // get protein lists from server
+    // get protein groups from server
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
       {filename: 'sample.mgf', experimentID: this.realUUID}, // TODO: for testing '67ede406-4b7c-11ec-81d3-0242ac130003'
       Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
-        this.mpaTableDataService.setMpaData(data);
+        const proteinGroups = createProteinGroupData(
+          this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
+        // this.mpaTableDataService.setMpaData(data);
+        this.mpaTableDataService.setMpaData(proteinGroups);
     }
     , err => {
       const proteinGroups = createProteinGroupData(
         this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
-      console.log(proteinGroups);
       this.mpaTableDataService.setMpaData(proteinGroups);
     }
     );
-
-    // const protein_groups = [];
-    // for (let i = 1; i <= 100; i++) {
-    //   protein_groups.push(createNewProteinGroup(this.uuid));
-    // }
-    // this.mpaTableDataService.mpaData = protein_groups;
 
     this.dbExperiment.expid = this.id;
 

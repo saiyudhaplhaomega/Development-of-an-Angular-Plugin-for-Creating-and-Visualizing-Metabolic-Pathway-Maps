@@ -1,61 +1,80 @@
 <!--  Table  -->
 <div class="flexbox-column protein-table">
-  <div style="display: flex; justify-content: space-between">
+  <div style="display: flex; display: flex; justify-content: space-between">
     <p style="font-weight: 400; margin: auto 0 auto 0">Protein Groups</p>
+    <mat-button-toggle-group
+      [(ngModel)]="mpaTableDataService.groupSelection"
+      (change)="onGroupSelection()"
+      style="height: fit-content; margin: auto" name="groupSelection" aria-label="Protein Group Selection">
+      <mat-button-toggle style="font-size: 0.9rem" value="maingroups">main-groups</mat-button-toggle>
+      <mat-button-toggle style="font-size: 0.9rem" value="subgroups">subgroups</mat-button-toggle>
+      <mat-button-toggle style="font-size: 0.9rem" value="hierarchical">hierarchical</mat-button-toggle>
+    </mat-button-toggle-group>
     <mat-form-field style="width: 20%">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
   <div style="overflow-y: auto; height: 100%" class="table-border">
-    <mat-table style="width: 100%" [dataSource]="dataSource" matSort>
+    <table mat-table
+           style="width: 100%"
+           [dataSource]="dataSource"
+           multiTemplateDataRows
+    >
 
-<!--      <ng-container matColumnDef="select">-->
-<!--        <th mat-header-cell *matHeaderCellDef>-->
-<!--          <mat-checkbox color="primary"-->
-<!--                        (change)="$event ? masterToggle() : null"-->
-<!--                        [checked]="selection.hasValue() && isAllSelected()"-->
-<!--                        [indeterminate]="selection.hasValue() && !isAllSelected()">-->
-<!--          </mat-checkbox>-->
-<!--        </th>-->
-<!--        <td mat-cell *matCellDef="let row">-->
-<!--          <mat-checkbox color="primary"-->
-<!--                        (click)="$event.stopPropagation()"-->
-<!--                        (change)="$event ? toggleRow(row) : null"-->
-<!--                        [checked]="selection.isSelected(row)">-->
-<!--          </mat-checkbox>-->
-<!--        </td>-->
-<!--      </ng-container>-->
+      <ng-container matColumnDef="expandButton">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <ng-container *ngIf="this.mpaTableDataService.groupSelection === 'hierarchical' && this.getRowtype(row) === 'maingroup'">
+            <button mat-icon-button (click)="onExpand(row)">
+              <mat-icon [@indicatorRotate]="row.proteinGroupID == expandedElement ? 'expanded': 'collapsed'">
+                expand_more
+              </mat-icon>
+            </button>
+          </ng-container>
+        </td>
+      </ng-container>
 
-      <!-- Protein ID -->
       <ng-container matColumnDef="proteinGroupID">
-        <mat-header-cell mat-sort-header *matHeaderCellDef >Protein Group ID</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.proteinGroupID}} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Protein Group ID</th>
+        <td mat-cell *matCellDef="let row">{{row.proteinGroupID}}</td>
       </ng-container>
 
-      <!-- Accession Column -->
+      <ng-container matColumnDef="groupType">
+        <th mat-header-cell *matHeaderCellDef>Group Type</th>
+        <td mat-cell *matCellDef="let row">{{this.getRowtype(row)}}</td>
+      </ng-container>
+
       <ng-container matColumnDef="representativeAccession">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Accession</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.representativeAccession}} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Accession</th>
+        <td mat-cell *matCellDef="let row">{{row.proteinGroupID}}</td>
       </ng-container>
 
-      <!-- Description Column -->
       <ng-container matColumnDef="representativeDescription">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.representativeDescription}} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let row">{{row.proteinGroupID}}</td>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
           (click)="onClick(row)"
+          [hidden]="mpaTableDataService.groupSelection === 'hierarchical' &&
+           row.parentProteinGroupID &&
+           row.parentProteinGroupID !== expandedElement"
           [ngClass]="{
-          'table-highlight-row': mpaTableDataService.highlightIfSelected(row),
-          'table-element-row': !mpaTableDataService.highlightIfSelected(row)
-          }">
-      </mat-row>
+               'table-highlight-row': mpaTableDataService.highlightIfSelected(row),
+               'table-element-row': !mpaTableDataService.highlightIfSelected(row),
+               'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && row.parentProteinGroupID
+               }"
+          >
+      </tr>
+    </table>
 
-    </mat-table>
+<!--    [@detailExpand]="row.parentProteinGroupID == expandedElement.proteinGroupID ? 'expanded' : 'collapsed'"-->
+<!--    [class.example-expanded-row]="expandedElement === row"-->
+<!--    [ngClass]="{'table-hidden-row': true}"-->
+<!--    (click)="expandedElement = expandedElement === row ? null : row"-->
   </div>
-  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 25, 100, 1000]" showFirstLastButtons></mat-paginator>
+  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
 </div>
 
 <div class="flexbox-column">

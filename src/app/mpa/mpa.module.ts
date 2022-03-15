@@ -29,6 +29,7 @@ import {ProteinDatabaseComponent} from './components/protein-database/protein-da
 import {PsmTableComponent} from './components/psm-table/psm-table.component';
 import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-viewer.component';
 import { ProteineSequenceViewerComponent } from './components/peptide-sequence-viewer/proteine-sequence-viewer.component';
+import { TestTableComponent } from './components/test-table/test-table.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ProteineSequenceViewerComponent } from './components/peptide-sequence-v
     PsmTableComponent,
     SpectrumViewerComponent,
     ProteineSequenceViewerComponent,
+    TestTableComponent,
   ],
   imports: [
     CommonModule,

@@ -10,12 +10,20 @@ import {HttpClientService} from '../../core/services/http-client.service';
 import {Endpoints} from '../../core/services/webserveraddress.service';
 import {HttpParams} from '@angular/common/http';
 
+export enum GroupSelection {
+  MAINGROUPS = 'maingroups',
+  SUBGROUPS = 'subgroups',
+  HIERARCHICAL = 'hierarchical'
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class MpaTableDataService {
 
-  public mpaData = new BehaviorSubject<ProteinGroupObject[]>([]);
+  private mpaData: ProteinGroupObject[];
+
+  public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
 
   public selectedProteinGroup = new BehaviorSubject<ProteinGroupObject>(undefined);
   public selectedProtein = new BehaviorSubject<ProteinObject>(undefined);
@@ -30,6 +38,8 @@ export class MpaTableDataService {
 
   public proteinSequenceData = new BehaviorSubject<string>(undefined);
   public requestingProteinSequence = false;
+
+  public groupSelection = 'maingroups';
 
   constructor(httpClientService: HttpClientService) {
     this.selectedProtein.subscribe(protein => {
@@ -95,8 +105,8 @@ export class MpaTableDataService {
   }
 
   setMpaData(mpaData: ProteinGroupObject[]) {
-    this.mpaData.next(mpaData);
-    this.selectedProteinGroup.next(mpaData[0]);
+    this.mpaData = mpaData;
+    this.setMpaTabledata(this.groupSelection);
   }
 
   setPeptidesForSelectedProtein() {
@@ -136,5 +146,26 @@ export class MpaTableDataService {
   this.selectedPsm.next(undefined);
   this.peptidesForSelectedProtein.next([]);
   this.psmsForSelectedPeptide.next([]);
+  }
+
+  setMpaTabledata(groupSelection: string) {
+    let newtableData: ProteinGroupObject[];
+    switch (groupSelection) {
+      case GroupSelection.MAINGROUPS:
+        newtableData = this.mpaData.filter(group => 'childProteinGroupIDs' in group);
+        break;
+      case GroupSelection.SUBGROUPS:
+        newtableData = this.mpaData.filter(group => 'parentProteinGroupID' in group);
+        break;
+      case GroupSelection.HIERARCHICAL:
+        newtableData = this.mpaData;
+    }
+
+    this.mpaTableData.next(newtableData);
+    this.selectedProteinGroup.next(newtableData[0]);
+  }
+
+  onGroupSelection() {
+    this.setMpaTabledata(this.groupSelection);
   }
 }

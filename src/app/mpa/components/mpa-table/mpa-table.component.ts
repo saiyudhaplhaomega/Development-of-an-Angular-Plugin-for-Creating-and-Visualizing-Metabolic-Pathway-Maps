@@ -1,19 +1,35 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {ProteinGroupJSON } from '../../objects/tableobjects';
-import {MpaTableDataService} from '../../services/mpa-table-data.service';
+import {ProteinGroupJSON, ProteinGroupObject} from '../../objects/tableobjects';
+import {GroupSelection, MpaTableDataService} from '../../services/mpa-table-data.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-mpa-table',
   templateUrl: './mpa-table.component.html',
-  styleUrls: ['./mpa-table.component.css']
+  styleUrls: ['./mpa-table.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({visibility: 'hidden'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+    trigger('indicatorRotate', [
+      state('collapsed', style({ transform: 'rotate(0deg)' })),
+      state('expanded', style({ transform: 'rotate(180deg)' })),
+      transition('expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
+      ),
+    ])
+  ]
 })
 export class MpaTableComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['proteinGroupID', 'representativeAccession', 'representativeDescription'];
+  displayedColumns = ['expandButton', 'proteinGroupID', 'groupType', 'representativeAccession', 'representativeDescription'];
   dataSource: MatTableDataSource<ProteinGroupJSON>;
   private showDetails = false;
-  // selection: SelectionModel<ProteinGroupJSON>;
+
+  expandedElement: string | null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -22,12 +38,11 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   constructor(private mpaTableDataService: MpaTableDataService) {
     this.dataSource = new MatTableDataSource([]);
-    // this.selection = new SelectionModel<ProteinGroupJSON>(true, []);
   }
 
   ngOnInit() {
-    this.mpaTableDataService.mpaData.subscribe(mpaData => {
-      this.dataSource.data = mpaData;
+    this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
+      this.dataSource.data = mpaTableData;
     });
 
     this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
@@ -70,9 +85,25 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   //   this.selection.toggle(row);
   // }
 
-  onClick(row) {
+  onExpand(row: ProteinGroupObject) {
+    if (this.expandedElement === row.proteinGroupID) {
+      this.expandedElement = null;
+      return;
+    }
+    this.expandedElement = row.proteinGroupID;
+  }
+
+  onClick(row: ProteinGroupObject) {
     this.mpaTableDataService.resetCompleteSelection();
     this.mpaTableDataService.selectedProteinGroup.next(row);
+  }
+
+  onGroupSelection() {
+    this.mpaTableDataService.onGroupSelection();
+  }
+
+  getRowtype(row: ProteinGroupObject) {
+    return 'parentProteinGroupID' in row ? 'subgroup' : 'maingroup';
   }
 }
 
