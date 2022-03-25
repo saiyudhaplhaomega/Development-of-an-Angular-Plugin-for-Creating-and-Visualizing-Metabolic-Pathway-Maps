@@ -2,11 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService2} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
-import {GroupingOptions, ProteinGroupObject} from '../../objects/tableobjects';
-import {MatDialog} from '@angular/material';
 import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
-import {ProteinGroupObject} from '../../objects/tableobjects';
+import {GroupingOptions, ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material/dialog';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
@@ -35,9 +32,7 @@ export interface ProteinGroupRequest {
 }
 
 @Component({
-  selector: 'app-experiment-page',
-  templateUrl: './experiment-page.component.html',
-  styleUrls: ['./experiment-page.component.css'],
+  selector: 'app-experiment-page', templateUrl: './experiment-page.component.html', styleUrls: ['./experiment-page.component.css'],
 })
 
 export class ExperimentPageComponent implements OnInit, OnDestroy, ContentComponent {
@@ -51,9 +46,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
   // available upload options
   dataUploadSelection = 'Peaklist';
-  dataUploadOptions: string[] = [
-    'Peaklist', 'Search Result', 'Peaklist + Search Result'
-  ];
+  dataUploadOptions: string[] = ['Peaklist', 'Search Result', 'Peaklist + Search Result'];
 
   displayNameEditing: string;
 
@@ -88,19 +81,12 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   hasMpaData = false;
   datStats: Datstats;
 
-  private _dataMap: Map<string, DataItem>;
-  private children: string[];
+  // private _dataMap: Map<string, DataItem>;
+  // private children: string[];
 
   uploadDialogId = 'uploadDialog';
-  private _dataMap: Map<number, DataItem>;
-  private children: string[];
 
-  constructor(private _snackBar: MatSnackBar,
-              private dataService: DataService2,
-              private uploaderService: HttpClientService,
-              private uploadProgressService: UploadProgressService,
-              private dialog: MatDialog,
-              private mpaTableDataService: MpaTableDataService) {
+  constructor(private _snackBar: MatSnackBar, private dataService: DataService2, private uploaderService: HttpClientService, private uploadProgressService: UploadProgressService, private dialog: MatDialog, private mpaTableDataService: MpaTableDataService) {
   }
 
   ngOnInit() {
@@ -119,7 +105,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     //TODO: this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
 
-    this.getChildNodes();
+    // this.getChildNodes();
 
     // this.children = this._dataMap.get(this.uuid).children;
     //
@@ -133,7 +119,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     //   }
     // });
 
-    this.mpaTableDataService.mpaData.subscribe(mpaData => {
+    this.mpaTableDataService.mpaTableData.subscribe(mpaData => {
       this.hasMpaData = mpaData.length > 0;
       if (mpaData.length > 0) {
         this.datStats = this.calculateDataStats(mpaData);
@@ -141,47 +127,41 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     });
 
     // get protein lists from server
-    this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
-      {filename: 'sample.mgf', experimentID: this.dataItemOfThisComponent.uuid}, // TODO: for testing '67ede406-4b7c-11ec-81d3-0242ac130003'
-      Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
-        const proteinGroups = createProteinGroupData(
-          this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
-        // this.mpaTableDataService.setMpaData(data);
-        this.mpaTableDataService.setMpaData(proteinGroups);
-    }
-    , err => {
-      const proteinGroups = createProteinGroupData(
-        this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
+    this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
+      filename: 'sample.mgf', experimentID: this.dataItemOfThisComponent.uuid
+    }, Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
+      const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
+        numberOfMainGroups: 100, subGroupsPerMainGroup: 2
+      });
+      // this.mpaTableDataService.setMpaData(data);
       this.mpaTableDataService.setMpaData(proteinGroups);
-    }
-        this.mpaTableDataService.setMpaData(data);
-      }
-      , err => {
-        const protein_groups = [];
-        for (let i = 1; i <= 50; i++) {
-          //protein_groups.push(createNewProteinGroup(this.id));
-        }
-        this.mpaTableDataService.setMpaData(protein_groups);
-      }
-    );
+    }, err => {
+      const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
+        numberOfMainGroups: 100, subGroupsPerMainGroup: 2
+      });
+      this.mpaTableDataService.setMpaData(proteinGroups);
+    });
 
-    // const protein_groups = [];
-    // for (let i = 1; i <= 100; i++) {
-    //   protein_groups.push(createNewProteinGroup(this.uuid));
-    // }
-    // this.mpaTableDataService.mpaData = protein_groups;
 
-    //TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
-
-    // this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
-    //   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
-    //   if (result != null) {
-    //     console.log(result);
-    //     this.dbExperiment = result;
-    //     // value = result;
-    //   }
-    // });
   }
+
+// const protein_groups = [];
+// for (let i = 1; i <= 100; i++) {
+//   protein_groups.push(createNewProteinGroup(this.uuid));
+// }
+// this.mpaTableDataService.mpaData = protein_groups;
+
+//TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
+
+// this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
+//   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
+//   if (result != null) {
+//     console.log(result);
+//     this.dbExperiment = result;
+//     // value = result;
+//   }
+// });
+
 
   ngOnDestroy() {
     //this.updateExperiment();
@@ -214,7 +194,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     this.disableButton();
   }
 
-  // functions to handle selection of upload files
+// functions to handle selection of upload files
   onPeaklistFileChange(files: FileList) {
     this.selectedPeaklistFile = files[0];
     this.disableButton();
@@ -236,8 +216,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
      * checks if files are selected or uploaded already and disables the submit button
      */
     if (this.dataUploadSelection === 'Peaklist + Search Result') {
-      this.buttonDisabled = this.hasSearchFile || this.hasPeaklistFile || !this.selectedPeaklistFile || !this.selectedSearchFile ||
-        !this.fastaFileSelected;
+      this.buttonDisabled = this.hasSearchFile || this.hasPeaklistFile || !this.selectedPeaklistFile || !this.selectedSearchFile || !this.fastaFileSelected;
     } else if (this.dataUploadSelection === 'Peaklist') {
       this.buttonDisabled = this.hasPeaklistFile || !this.proteinDBselection || !this.selectedPeaklistFile;
     } else if (this.dataUploadSelection === 'Search Result') {
@@ -252,54 +231,30 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
-        await this.addFileToUploadData(
-          this.selectedPeaklistFile,
-          this.peaklistSelection,
-          this.dbExperiment.expid
-        );
+        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
 
         this.hasPeaklistFile = true;
         break;
 
       case 'Search Result':
-        await this.addFileToUploadData(
-          this.selectedSearchFile,
-          this.searchFileSelection,
-          this.dbExperiment.expid
-        );
+        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
 
         if (this.selectedFasta) {
-          await this.addFileToUploadData(
-            this.selectedFasta,
-            UploadFileTypes.MASCOT_FASTA,
-            this.dbExperiment.expid
-          );
+          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
         }
 
         this.hasSearchFile = true;
         break;
 
       case 'Peaklist + Search Result':
-        await this.addFileToUploadData(
-          this.selectedPeaklistFile,
-          this.peaklistSelection,
-          this.dbExperiment.expid
-        );
+        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
         this.hasPeaklistFile = true;
 
-        await this.addFileToUploadData(
-          this.selectedSearchFile,
-          this.searchFileSelection,
-          this.dbExperiment.expid
-        );
+        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
-          await this.addFileToUploadData(
-            this.selectedFasta,
-            UploadFileTypes.MASCOT_FASTA,
-            this.dbExperiment.expid
-          );
+          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
         }
         break;
     }
@@ -324,9 +279,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   invokeUploadDialog(): Observable<boolean> {
     this.uploadProgressService.setUUID(this.dataItemOfThisComponent.id);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
-      id: this.uploadDialogId,
-      disableClose: true,
-      data: {}
+      id: this.uploadDialogId, disableClose: true, data: {}
     });
 
     return dialogRef.afterClosed();
@@ -338,23 +291,16 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
     const metaDataForServer: MPAFile = {
-      fileID: '',
-      fileMetaData: JSON.stringify({fileName: file.name}),
-      experimentID: experimentId,
-      fileType: fileType,
-      fileStatus: ''
+      fileID: '', fileMetaData: JSON.stringify({fileName: file.name}), experimentID: experimentId, fileType: fileType, fileStatus: ''
     };
 
     const uploadDataForServer: FileUploadData = {
-      uploadFile: file,
-      httpParameters: new HttpParams({fromObject: {jobid: ''}}),
-      fileUploadAdress: uploadEndpoint,
+      uploadFile: file, httpParameters: new HttpParams({fromObject: {jobid: ''}}), fileUploadAdress: uploadEndpoint,
     };
 
     // send meta data, receive fileuuid
     try {
-      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(
-        metaDataForServer, metaDataEndpoint).toPromise();
+      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
 
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?
