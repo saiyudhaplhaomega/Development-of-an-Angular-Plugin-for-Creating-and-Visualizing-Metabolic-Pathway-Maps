@@ -25,13 +25,14 @@ import {PrivacyConsentBannerComponent} from './core/components/privacy-consent-b
 import {GlobalHttpInterceptorService} from './core/services/global-http-interceptor.service';
 
 import {DbsearchcontentService} from './mpa/components/database-search-page/services/dbsearchcontent.service';
-import {DataService} from './mpa/components/data-navigation-tree/services/data.service';
-import {NavService} from './mpa/components/data-navigation-tree/services/nav.service';
+import {DataService2} from './mpa/components/data-navigation-tree/services/data2.service';
+import {NavService2} from './mpa/components/data-navigation-tree/services/nav2.service';
 import {ProphaneModule} from './prophane/prophane.module';
 import {MpaModule} from './mpa/mpa.module';
 
 import {ProphaneAboutComponent} from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
-import { ErrorPageComponent } from './error-page/error-page-component/error-page.component';
+import {ErrorPageComponent} from './error-page/error-page-component/error-page.component';
+import {NgChartsModule} from 'ng2-charts';
 
 @NgModule({
   // components
@@ -63,6 +64,7 @@ import { ErrorPageComponent } from './error-page/error-page-component/error-page
     MpaModule,
     ProphaneModule,
     MaterialModule,
+    NgChartsModule
   ],
   // services
   providers: [
@@ -71,8 +73,8 @@ import { ErrorPageComponent } from './error-page/error-page-component/error-page
     WebserveraddressService,
     UploadProgressService,
     DbsearchcontentService,
-    NavService,
-    DataService,
+    NavService2,
+    DataService2,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GlobalHttpInterceptorService,
@@ -81,7 +83,7 @@ import { ErrorPageComponent } from './error-page/error-page-component/error-page
   ],
   // imperatively loaded components - compiles a factory for dynamically loaded components
   entryComponents: [UploadDialogComponent],
-    exports: [],
+  exports: [],
   // components loaded during bootstrapping
   bootstrap: [AppComponent]
 })

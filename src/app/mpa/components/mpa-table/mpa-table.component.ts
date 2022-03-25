@@ -1,5 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {ProteinGroupJSON } from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
@@ -12,7 +14,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['proteinGroupID', 'representativeAccession', 'representativeDescription'];
   dataSource: MatTableDataSource<ProteinGroupJSON>;
-  private showDetails = false;
+  showDetails = false;
   // selection: SelectionModel<ProteinGroupJSON>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -20,7 +22,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   @Input() experimentUUID: string;
 
-  constructor(private mpaTableDataService: MpaTableDataService) {
+  constructor(public mpaTableDataService: MpaTableDataService) {
     this.dataSource = new MatTableDataSource([]);
     // this.selection = new SelectionModel<ProteinGroupJSON>(true, []);
   }

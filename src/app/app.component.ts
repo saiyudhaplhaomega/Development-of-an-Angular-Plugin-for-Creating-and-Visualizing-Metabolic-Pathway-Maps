@@ -53,7 +53,7 @@ export class AppComponent {
         console.log('token expired');
       }
     } else {
-      console.log('oh nein');
+      console.log('oh nein: savedItem !== null && savedItem !== \'\'');
     }
   }
 }

@@ -14,14 +14,14 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Folder Name</span>
           </div>
-          <input type="text" class="form-control" [(ngModel)]="name">
+          <input type="text" class="form-control" [(ngModel)]="this.dataItemOfThisComponent.displayName">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
-                    aria-label="Accept" (click)="onAccept()">
+                    aria-label="Accept" (click)="onAcceptNameChange()">
               <mat-icon>done</mat-icon>
             </button>
             <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
-                    *ngIf="name" aria-label="Clear" (click)="name=''">
+                    *ngIf="this.dataItemOfThisComponent.displayName" aria-label="Clear" (click)="this.dataItemOfThisComponent.displayName=''">
               <mat-icon>close</mat-icon>
             </button>
           </div>

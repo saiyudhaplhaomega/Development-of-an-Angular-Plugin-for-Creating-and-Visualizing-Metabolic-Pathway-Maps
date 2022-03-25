@@ -10,7 +10,7 @@ export class ProteineSequenceViewerComponent implements OnInit {
 
   proteinSequenceData: string;
 
-  constructor(private mpaTableDataService: MpaTableDataService) { }
+  constructor(public mpaTableDataService: MpaTableDataService) { }
 
   ngOnInit() {
     this.mpaTableDataService.proteinSequenceData.subscribe(peptideSequence => {

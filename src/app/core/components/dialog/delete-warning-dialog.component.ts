@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -8,15 +8,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class DeleteWarningDialogComponent {
 
-  private prompt: string;
-  private nodeName: string;
+  prompt: string;
+  nodeNames: string[];
 
-  constructor(
-    public dialogRef: MatDialogRef<DeleteWarningDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {dialogPrompt: string, nodeName: string }) {
-
+  constructor(public dialogRef: MatDialogRef<DeleteWarningDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: { dialogPrompt: string, nodeNames: string[] }) {
     this.prompt = data.dialogPrompt;
-    this.nodeName = data.nodeName;
+    this.nodeNames = data.nodeNames;
   }
 
   onDelete(command: string): void {

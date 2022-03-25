@@ -1,12 +1,13 @@
-<div style="margin-top: 1rem"> </div>
+<div style="margin-top: 1rem"></div>
 <div cdkDropList (cdkDropListDropped)="drop($event)">
-  <div *ngFor='let item of _treeNodes' cdkDrag>
-    <app-tree-node
-      [node]='item'
-      (expandChange)="onExpand($event, item)"
-      (selectEvent)="onSelected($event, item)">
-    </app-tree-node>
-  </div>
+  <ng-container *ngIf="this.treeNodes !== null">
+    <ng-container *ngFor='let treeNode of treeNodes'>
+      <ng-container *ngIf="isVisible(treeNode)">
+        <app-tree-node cdkDrag [node]='treeNode'>
+        </app-tree-node>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 </div>
 
 <!--[cdkDragDisabled]="item.disabled"-->

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data-navigation-tree/services/data.service';
+import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-protein-database-component',
@@ -10,18 +10,18 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ProteinDatabaseComponent implements OnInit {
 
-  id: string;
+  id: number;
   name: string;
 
-  private _dataMap: Map<string, DataItem>;
+  private _dataMap: Map<number, DataItem>;
 
   constructor(private _snackBar: MatSnackBar,
-              private dataService: DataService) { }
+              private dataService: DataService2) { }
 
   ngOnInit() {
     //  TODO: request db metadata from server
     this.dataService.dataMap.subscribe( items => {
-      this._dataMap = items;
+      // TODO: this._dataMap = items;
     });
   }
 
@@ -35,7 +35,7 @@ export class ProteinDatabaseComponent implements OnInit {
       const item = this._dataMap.get(this.id);
       item.displayName = this.name;
       this._dataMap.set(this.id, item);
-      this.dataService.dataMap.next(this._dataMap);
+      // TODO: this.dataService.dataMap.next(this._dataMap);
     }
   }
 

@@ -4,7 +4,7 @@ import {MaterialModule} from '../material-module';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {Routing} from '../app.routing';
 import {FolderPageComponent} from './components/folder-page/folder-page.component';
-import {TreeNodeComponent} from './components/tree-node/tree-node.component';
+import {TreeNodeComponent} from './components/data-navigation-tree/tree-node/tree-node.component';
 import {UserPageComponent} from './components/user-page/user-page.component';
 import {ExperimentPageComponent} from './components/experiment-page/experiment-page.component';
 import {DataNavigationTreeComponent} from './components/data-navigation-tree/data-navigation-tree.component';

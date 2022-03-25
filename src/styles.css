@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~rki_blue_bright.css';
-@import '~node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../rki_blue_bright.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 html, body {
   width: 100%;
@@ -106,3 +106,6 @@ custom-table-warning {
   background: #f5d3d3;
   cursor: pointer;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

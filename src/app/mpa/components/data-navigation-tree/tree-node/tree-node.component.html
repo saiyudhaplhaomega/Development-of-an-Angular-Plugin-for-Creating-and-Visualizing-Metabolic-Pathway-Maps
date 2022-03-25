@@ -1,8 +1,8 @@
 <a mat-list-item class="custom-list-item-content"
-   [ngStyle]="{'padding-left': node.hasChildren ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}"
+   [ngStyle]="{'padding-left': node.children.length !== 0 ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}"
    (click)="onNavigate()">
   <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
-    <div *ngIf="node.hasChildren">
+    <div *ngIf="node.children.length !== 0 && node.type !== 'user'">
       <button mat-icon-button (click)="onExpand()">
           <mat-icon [@indicatorRotate]="node.expanded ? 'expanded': 'collapsed'">
           expand_more

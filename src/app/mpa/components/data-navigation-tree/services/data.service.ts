@@ -1,13 +1,10 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import { DataItem } from '../objects/data-item';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {DataItem} from '../objects/data-item';
 import {HttpClientService} from '../../../../core/services/http-client.service';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {GetDateService} from '../../../../core/services/get-date.service';
-import {ExperimentJSONObject} from '../../../objects/experimentjson';
-import {MatDialog} from '@angular/material';
-import {DeleteWarningDialogComponent} from '../../../../core/components/dialog/delete-warning-dialog.component';
-import {Endpoints} from '../../../../core/services/webserveraddress.service';
+import {MatDialog} from '@angular/material/dialog';
 import {dataNodeIdGenerator} from './dataNodeIdGenerator';
 
 export enum NodeType {
@@ -30,14 +27,13 @@ export interface DataChangeObj {
 })
 export class DataService {
 
+  public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   private initDataChange = {
     event: undefined,
     currentNodeUuid: undefined,
     targetNodeUuid: undefined,
     finalNodeUuid: undefined
   };
-
-  public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   public dataChange = new BehaviorSubject<DataChangeObj>(this.initDataChange);
   private _dataItemMap: Map<string, DataItem>;
 
@@ -47,56 +43,57 @@ export class DataService {
               private getDateService: GetDateService,
               private dialog: MatDialog) {
 
-      if (this.authGuard.loggedIn()) {
-        this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
-          const newMap = new Map<string, DataItem>();
-          res.forEach(obj => {
-            newMap.set(obj.id, obj);
-          });
-          this.dataMap.next(newMap);
-        });
-        // test data from server
-        // newMap.set(key, {
-        //   displayName: 'a user',
-        //   icon: 'account_circle',
-        //   children: [],
-        //   uuid: key,
-        //   type: 'user',
-        // });
-
-      } else {
-        const key = dataNodeIdGenerator(this._dataItemMap);
-        const newMap = new Map<string, DataItem>();
-        newMap.set(key, {
-          displayName: 'no user',
-          icon: 'account_circle',
-          children: [],
-          id: key,
-          type: 'user'
-        });
-        this.dataMap.next(newMap);
-      }
-
-    // updates userdata when data Map is changed
-    this.dataMap.subscribe(value => {
-      console.log(value);
-      this._dataItemMap = value;
-      const list: DataItem[] = [];
-      if (value !== undefined) {
-        if (value.size !== 0) {
-          value.forEach(val => {
-            list.push(val);
-          });
-          this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
-            if (result != null) {
-              console.log(list);
-              // value = result;
-            }
-          });
-        }
-      }
-    });
+    //   if (this.authGuard.loggedIn()) {
+    //     this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
+    //       const newMap = new Map<string, DataItem>();
+    //       res.forEach(obj => {
+    //         newMap.set(obj.id, obj);
+    //       });
+    //       this.dataMap.next(newMap);
+    //     });
+    //     // test data from server
+    //     // newMap.set(key, {
+    //     //   displayName: 'a user',
+    //     //   icon: 'account_circle',
+    //     //   children: [],
+    //     //   uuid: key,
+    //     //   type: 'user',
+    //     // });
+    //
+    //   } else {
+    //     const key = dataNodeIdGenerator(this._dataItemMap);
+    //     const newMap = new Map<string, DataItem>();
+    //     newMap.set(key, {
+    //       displayName: 'no user',
+    //       icon: 'account_circle',
+    //       children: [],
+    //       id: key,
+    //       type: 'user'
+    //     });
+    //     this.dataMap.next(newMap);
+    //   }
+    //
+    // // updates userdata when data Map is changed
+    // this.dataMap.subscribe(value => {
+    //   console.log(value);
+    //   this._dataItemMap = value;
+    //   const list: DataItem[] = [];
+    //   if (value !== undefined) {
+    //     if (value.size !== 0) {
+    //       value.forEach(val => {
+    //         list.push(val);
+    //       });
+    //       this.jsonUploader.postObject<DataItem[], DataItem[]>(list, Endpoints.UPDATE_USER_DATA).subscribe(result => {
+    //         if (result != null) {
+    //           console.log(list);
+    //           // value = result;
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
   }
+
   // // uncomment till here
 
   // Following lines added due to server error. Delete if server is running properly.
@@ -151,7 +148,7 @@ export class DataService {
 
   getProteinDatabases(): DataItem[] {
     const proteinDatabases = [];
-    this._dataItemMap.forEach(function(value, key) {
+    this._dataItemMap.forEach(function (value, key) {
       if (value.type === 'proteindb') {
 
         proteinDatabases.push(value);
@@ -180,173 +177,175 @@ export class DataService {
         finalNodeUuid: newNodeId
       };
 
-      const nodeObj: DataItem = {
-        displayName: nodeName,
-        children: [],
-        id: newNodeId,
-        type: nodeType,
-        parent: parentId,
-        icon: undefined
-      };
+      // const nodeObj: DataItem = {
+      //   depth: 0, expanded: false,
+      //   displayName: nodeName,
+      //   children: [],
+      //   id: newNodeId,
+      //   type: nodeType,
+      //   parent: parentId,
+      //   icon: undefined
+      // };
 
-      switch (nodeType) {
-        case 'experiment':
-          nodeObj.icon = 'computer';
-          nodeObj.creation_date = this.getDateService.getDate().toString();
-          nodeObj.description = '';
-
-          await this.updateExperiment(nodeObj);
-          break;
-        case 'proteindb':
-          nodeObj.icon = 'fingerprint';
-          dataChangeObj.event = 'addDB';
-          nodeObj.realUUID = realUUID;
-          break;
-        case 'folder':
-          nodeObj.icon = 'folder';
-          break;
-        case 'peaklist':
-          nodeObj.icon = 'folder';
-          dataChangeObj.event = 'addPeaklist';
-          dataChangeObj.finalNodeUuid = parentId;
-          break;
-        case 'searchresult':
-          nodeObj.icon = 'folder';
-          dataChangeObj.event = 'addSearch';
-          dataChangeObj.finalNodeUuid = parentId;
-          break;
-      }
-
-      const item = this._dataItemMap.get(parentId);
-      item.children.push(newNodeId);
-      this._dataItemMap.set(parentId, item);
-
-      this._dataItemMap.set(newNodeId, nodeObj);
-      this.updateDataItems();
-      this.dataChange.next(dataChangeObj);
-    }
-  }
-
-  async updateExperiment(nodeObj) {
-    // TODO: Set data from input
-    const dbExperiment = new ExperimentJSONObject();
-    dbExperiment.expid = nodeObj.uuid;
-    dbExperiment.name = nodeObj.displayName;
-    dbExperiment.description = nodeObj.description;
-    dbExperiment.creationDate = nodeObj.creation_date;
-
-    const response = await this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT)
-      .toPromise();
-    if (response != null) {
-      nodeObj.realUUID = response.expid;
-    }
-  }
-
-  removeNode(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string): Observable<boolean> {
-    const nodeName = this._dataItemMap.get(targetNodeUuid).displayName;
-    const result = new Subject<boolean>();
-
-    const dialogRef = this.dialog.open(DeleteWarningDialogComponent, {
-      disableClose: true,
-      data: {
-        dialogPrompt: 'Are you sure you want to delete',
-        nodeName: nodeName
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(event => {
-      if (event === 'delete') {
-        this.executeDelete(targetNodeUuid, currentNodeUuid, finalNodeUuid);
-        result.next(true);
-      } else {
-        result.next(false);
-      }
-    });
-    return result.asObservable();
-  }
-
-  executeDelete(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string) {
-
-    /**
-     * targetNodeUuid - node that will be deleted
-     * currentNodeUuid - node where this functions is invoked from (node to be deleted or a 'master node')
-     * finalNodeUuid (optional) - node whose content will be rendered after deletion
-     */
-
-    const item = this._dataItemMap.get(targetNodeUuid);
-    const parent = item.parent;
-
-    const parentItem = this._dataItemMap.get(parent);
-    parentItem.children.splice(parentItem.children.indexOf(targetNodeUuid), 1);
-
-    let children = item.children;
-    let newchildren = [];
-    let family = [targetNodeUuid];
-    while (children.length > 0) {
-      for (const child_item of this._dataItemMap.values()) {
-        if (children.indexOf(child_item.id) > -1) {
-          newchildren = newchildren.concat(child_item.children);
-        }
-      }
-      family = family.concat(children);
-      children = newchildren;
-      newchildren = [];
+      //     switch (nodeType) {
+      //       case 'experiment':
+      //         nodeObj.icon = 'computer';
+      //         nodeObj.creation_date = this.getDateService.getDate().toString();
+      //         nodeObj.description = '';
+      //
+      //         await this.updateExperiment(nodeObj);
+      //         break;
+      //       case 'proteindb':
+      //         nodeObj.icon = 'fingerprint';
+      //         dataChangeObj.event = 'addDB';
+      //         nodeObj.realUUID = realUUID;
+      //         break;
+      //       case 'folder':
+      //         nodeObj.icon = 'folder';
+      //         break;
+      //       case 'peaklist':
+      //         nodeObj.icon = 'folder';
+      //         dataChangeObj.event = 'addPeaklist';
+      //         dataChangeObj.finalNodeUuid = parentId;
+      //         break;
+      //       case 'searchresult':
+      //         nodeObj.icon = 'folder';
+      //         dataChangeObj.event = 'addSearch';
+      //         dataChangeObj.finalNodeUuid = parentId;
+      //         break;
+      //     }
+      //
+      //     const item = this._dataItemMap.get(parentId);
+      //     item.children.push(newNodeId);
+      //     this._dataItemMap.set(parentId, item);
+      //
+      //     this._dataItemMap.set(newNodeId, nodeObj);
+      //     this.updateDataItems();
+      //     this.dataChange.next(dataChangeObj);
+      //   }
     }
 
-    family.forEach(id => {
-      this._dataItemMap.delete(id);
-    });
+    // async updateExperiment(nodeObj) {
+    //   // TODO: Set data from input
+    //   const dbExperiment = new ExperimentJSONObject();
+    //   dbExperiment.expid = nodeObj.uuid;
+    //   dbExperiment.name = nodeObj.displayName;
+    //   dbExperiment.description = nodeObj.description;
+    //   dbExperiment.creationDate = nodeObj.creation_date;
+    //
+    //   const response = await this.jsonUploader.postObject<ExperimentJSONObject, ExperimentJSONObject>(dbExperiment, Endpoints.CREATE_EXPERIMENT)
+    //     .toPromise();
+    //   if (response != null) {
+    //     nodeObj.realUUID = response.expid;
+    //   }
+    // }
 
-    this.updateDataItems();
-    this.dataChange.next({
-      event: 'removeNode',
-      currentNodeUuid: currentNodeUuid,
-      targetNodeUuid: targetNodeUuid,
-      finalNodeUuid: finalNodeUuid
-    });
+    // removeNode(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string): Observable<boolean> {
+    //   const nodeName = this._dataItemMap.get(targetNodeUuid).displayName;
+    //   const result = new Subject<boolean>();
+    //
+    //   const dialogRef = this.dialog.open(DeleteWarningDialogComponent, {
+    //     disableClose: true,
+    //     data: {
+    //       dialogPrompt: 'Are you sure you want to delete',
+    //       nodeName: nodeName
+    //     }
+    //   });
+    //
+    //   dialogRef.afterClosed().subscribe(event => {
+    //     if (event === 'delete') {
+    //       this.executeDelete(targetNodeUuid, currentNodeUuid, finalNodeUuid);
+    //       result.next(true);
+    //     } else {
+    //       result.next(false);
+    //     }
+    //   });
+    //   return result.asObservable();
+    // }
+    //
+    // executeDelete(targetNodeUuid: string, currentNodeUuid: string, finalNodeUuid: string) {
+    //
+    //   /**
+    //    * targetNodeUuid - node that will be deleted
+    //    * currentNodeUuid - node where this functions is invoked from (node to be deleted or a 'master node')
+    //    * finalNodeUuid (optional) - node whose content will be rendered after deletion
+    //    */
+    //
+    //   const item = this._dataItemMap.get(targetNodeUuid);
+    //   const parent = item.parent;
+    //
+    //   const parentItem = this._dataItemMap.get(parent);
+    //   parentItem.children.splice(parentItem.children.indexOf(targetNodeUuid), 1);
+    //
+    //   let children = item.children;
+    //   let newchildren = [];
+    //   let family = [targetNodeUuid];
+    //   while (children.length > 0) {
+    //     for (const child_item of this._dataItemMap.values()) {
+    //       if (children.indexOf(child_item.id) > -1) {
+    //         newchildren = newchildren.concat(child_item.children);
+    //       }
+    //     }
+    //     family = family.concat(children);
+    //     children = newchildren;
+    //     newchildren = [];
+    //   }
+    //
+    //   family.forEach(id => {
+    //     this._dataItemMap.delete(id);
+    //   });
+    //
+    //   this.updateDataItems();
+    //   this.dataChange.next({
+    //     event: 'removeNode',
+    //     currentNodeUuid: currentNodeUuid,
+    //     targetNodeUuid: targetNodeUuid,
+    //     finalNodeUuid: finalNodeUuid
+    //   });
+    // }
+    //
+    // moveDataItem(newParentID: string, movedUUID: string) {
+    //   // check if the newparentid is the child of the current movedid
+    //   // TODO cleanup
+    //   let family = [];
+    //   const item = this._dataItemMap.get(movedUUID);
+    //   let children = item.children;
+    //   let newchildren = [];
+    //   while (children.length > 0) {
+    //     for (const child_item of this._dataItemMap.values()) {
+    //       if (children.indexOf(child_item.id) > -1) {
+    //         newchildren = newchildren.concat(child_item.children);
+    //       }
+    //     }
+    //     family = family.concat(children);
+    //     children = newchildren;
+    //     newchildren = [];
+    //   }
+    //
+    //   if (family.indexOf(newParentID) > -1) {
+    //     return;
+    //   }
+    //
+    //   const parentItem = this._dataItemMap.get(newParentID);
+    //   parentItem.children.push(movedUUID);
+    //   this._dataItemMap.set(newParentID, parentItem);
+    //
+    //   const movedItem = this._dataItemMap.get(movedUUID);
+    //   const oldParentID = movedItem.parent;
+    //   movedItem.parent = newParentID;
+    //   this._dataItemMap.set(movedUUID, movedItem);
+    //
+    //   const oldParentItem = this._dataItemMap.get(oldParentID);
+    //   oldParentItem.children.splice(oldParentItem.children.indexOf(movedUUID), 1);
+    //   this._dataItemMap.set(oldParentID, oldParentItem);
+    //
+    //   // normal move
+    //   this.updateDataItems();
+    // }
+    //
+    // private updateDataItems() {
+    //   this.dataMap.next(this._dataItemMap);
+    // }
+
   }
-
-  private updateDataItems() {
-    this.dataMap.next(this._dataItemMap);
-  }
-
-  moveDataItem(newParentID: string, movedUUID: string) {
-    // check if the newparentid is the child of the current movedid
-    // TODO cleanup
-    let family = [];
-    const item = this._dataItemMap.get(movedUUID);
-    let children = item.children;
-    let newchildren = [];
-    while (children.length > 0) {
-      for (const child_item of this._dataItemMap.values()) {
-        if (children.indexOf(child_item.id) > -1) {
-          newchildren = newchildren.concat(child_item.children);
-        }
-      }
-      family = family.concat(children);
-      children = newchildren;
-      newchildren = [];
-    }
-
-    if (family.indexOf(newParentID) > - 1) {
-      return;
-    }
-
-    const parentItem = this._dataItemMap.get(newParentID);
-    parentItem.children.push(movedUUID);
-    this._dataItemMap.set(newParentID, parentItem);
-
-    const movedItem = this._dataItemMap.get(movedUUID);
-    const oldParentID = movedItem.parent;
-    movedItem.parent = newParentID;
-    this._dataItemMap.set(movedUUID, movedItem);
-
-    const oldParentItem = this._dataItemMap.get(oldParentID);
-    oldParentItem.children.splice(oldParentItem.children.indexOf(movedUUID), 1);
-    this._dataItemMap.set(oldParentID, oldParentItem);
-
-    // normal move
-    this.updateDataItems();
-  }
-
 }
