@@ -1,10 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
+import {DataService2} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClientService, FileUploadData} from '../../../core/services/http-client.service';
 import {GroupingOptions, ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material';
+import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
+import {ProteinGroupObject} from '../../objects/tableobjects';
+import {MatDialog} from '@angular/material/dialog';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
@@ -16,6 +19,7 @@ import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experime
 import {Observable} from 'rxjs';
 import {createProteinGroupData} from '../../services/dummyProteinData';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
+import {ContentComponent} from '../../mpa.component';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -36,12 +40,10 @@ export interface ProteinGroupRequest {
   styleUrls: ['./experiment-page.component.css'],
 })
 
-export class ExperimentPageComponent implements OnInit, OnDestroy {
+export class ExperimentPageComponent implements OnInit, OnDestroy, ContentComponent {
 
-  // generated in nav service
-  id: string;
-  parentUuid: string;
-  name: string;
+  dataItemOfThisComponent: DataItem;
+
   dbExperiment = new ExperimentJSONObject();
   description: string;
   creationDate: string;
@@ -52,6 +54,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   dataUploadOptions: string[] = [
     'Peaklist', 'Search Result', 'Peaklist + Search Result'
   ];
+
+  displayNameEditing: string;
 
   proteinDatabases = [];
   proteinDBselection = null;
@@ -88,9 +92,11 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   private children: string[];
 
   uploadDialogId = 'uploadDialog';
+  private _dataMap: Map<number, DataItem>;
+  private children: string[];
 
   constructor(private _snackBar: MatSnackBar,
-              private dataService: DataService,
+              private dataService: DataService2,
               private uploaderService: HttpClientService,
               private uploadProgressService: UploadProgressService,
               private dialog: MatDialog,
@@ -98,32 +104,45 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataService.dataMap.subscribe(items => {
-      this._dataMap = items;
-    });
+    // this.dataService.dataMap.subscribe(items => {
+    //   // TODO: this._dataMap = items;
+    // });
 
-    this.parentUuid = this._dataMap.get(this.id).parent;
-    this.realUUID = this._dataMap.get(this.id).realUUID;
+    // this.parentUuid = this._dataMap.get(this.id).parent;
 
-    this.creationDate = this._dataMap.get(this.id).creation_date;
-    this.description = this._dataMap.get(this.id).description;
+    // this.realUUID = this._dataMap.get(this.id).uuid;
 
-    this.proteinDatabases = this.dataService.getProteinDatabases();
+    this.creationDate = this.dataItemOfThisComponent.creation_date;
+    this.description = this.dataItemOfThisComponent.description;
+    this.displayNameEditing = this.dataItemOfThisComponent.displayName;
+
+    //TODO: this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
 
     this.getChildNodes();
 
-    this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
-      console.log(mpaTableData)
-      this.hasMpaData = mpaTableData.length > 0;
-      if (mpaTableData.length > 0) {
-        this.datStats = this.calculateDataStats(mpaTableData);
+    // this.children = this._dataMap.get(this.uuid).children;
+    //
+    // this.children.map(child => {
+    //   if (this._dataMap.get(child).type === 'searchresult') {
+    //     this.hasSearchFile = true;
+    //     this.searchFileNode = this._dataMap.get(child);
+    //   } else if (this._dataMap.get(child).type === 'peaklist') {
+    //     this.hasPeaklistFile = true;
+    //     this.peaklistFileNode = this._dataMap.get(child);
+    //   }
+    // });
+
+    this.mpaTableDataService.mpaData.subscribe(mpaData => {
+      this.hasMpaData = mpaData.length > 0;
+      if (mpaData.length > 0) {
+        this.datStats = this.calculateDataStats(mpaData);
       }
     });
 
-    // get protein groups from server
+    // get protein lists from server
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>(
-      {filename: 'sample.mgf', experimentID: this.realUUID}, // TODO: for testing '67ede406-4b7c-11ec-81d3-0242ac130003'
+      {filename: 'sample.mgf', experimentID: this.dataItemOfThisComponent.uuid}, // TODO: for testing '67ede406-4b7c-11ec-81d3-0242ac130003'
       Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
         const proteinGroups = createProteinGroupData(
           this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
@@ -135,36 +154,37 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
         this.realUUID, GroupingOptions.OCCAM, {numberOfMainGroups: 100, subGroupsPerMainGroup: 2});
       this.mpaTableDataService.setMpaData(proteinGroups);
     }
+        this.mpaTableDataService.setMpaData(data);
+      }
+      , err => {
+        const protein_groups = [];
+        for (let i = 1; i <= 50; i++) {
+          //protein_groups.push(createNewProteinGroup(this.id));
+        }
+        this.mpaTableDataService.setMpaData(protein_groups);
+      }
     );
 
-    this.dbExperiment.expid = this.id;
+    // const protein_groups = [];
+    // for (let i = 1; i <= 100; i++) {
+    //   protein_groups.push(createNewProteinGroup(this.uuid));
+    // }
+    // this.mpaTableDataService.mpaData = protein_groups;
 
-    this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
-      this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
-      if (result != null) {
-        console.log(result);
-        this.dbExperiment = result;
-        // value = result;
-      }
-    });
+    //TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
+
+    // this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
+    //   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
+    //   if (result != null) {
+    //     console.log(result);
+    //     this.dbExperiment = result;
+    //     // value = result;
+    //   }
+    // });
   }
 
   ngOnDestroy() {
-    this.updateExperiment();
-  }
-
-  getChildNodes() {
-    this.children = this._dataMap.get(this.id).children;
-
-    this.children.map(child => {
-      if (this._dataMap.get(child).type === NodeType.SearchResult) {
-        this.hasSearchFile = true;
-        this.searchFileNode = this._dataMap.get(child);
-      } else if (this._dataMap.get(child).type === NodeType.PeakList) {
-        this.hasPeaklistFile = true;
-        this.peaklistFileNode = this._dataMap.get(child);
-      }
-    });
+    //this.updateExperiment();
   }
 
   onProteinDBChange(item: DataItem) {
@@ -290,19 +310,19 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     onDialogClosingObservable.subscribe((uploadFailed) => {
       if (!uploadFailed) {
         if (this.selectedPeaklistFile) {
-          this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
         }
         if (this.selectedSearchFile) {
-          this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
         }
       }
     });
 
-    this.getChildNodes();
+    //this.getChildNodes();
   }
 
   invokeUploadDialog(): Observable<boolean> {
-    this.uploadProgressService.setUUID(this.id);
+    this.uploadProgressService.setUUID(this.dataItemOfThisComponent.id);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: true,
@@ -352,20 +372,12 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
   }
 
   onAccept() {
-    // TODO: Use form validation
-    /**
-     * handles change of the experiment name
-     */
-    if (this.dbExperiment.name.length > 24) {
+    if (this.displayNameEditing.length > 24) {
       this._snackBar.open('Names longer than 24 characters are not allowed!');
-      this.dbExperiment.name = '';
-    } else if (this.dbExperiment.name.length <= 0) {
+      this.displayNameEditing = '';
+    } else if (this.displayNameEditing.length <= 0) {
       this._snackBar.open('Empty names are not allowed!');
     } else {
-      const item = this._dataMap.get(this.dbExperiment.expid);
-      item.displayName = this.dbExperiment.name;
-      this._dataMap.set(this.dbExperiment.expid, item);
-      this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     }
   }
@@ -385,56 +397,48 @@ export class ExperimentPageComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(expDescription => {
       console.log('add description');
       this.dbExperiment.description = expDescription;
-      const item = this._dataMap.get(this.dbExperiment.expid);
-      item.description = expDescription;
-      this._dataMap.set(this.dbExperiment.expid, item);
-      this.dataService.dataMap.next(this._dataMap);
+      //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
+      //item.description = expDescription;
+      //TODO: this._dataMap.set(this.dbExperiment.expid, item);
+      // TODO: this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     });
   }
 
   onDelete(type: string) {
     if (type === 'peaklist' && this.hasPeaklistFile) {
-      this.dataService.removeNode(
-        this.peaklistFileNode.id, this.id, this.id).subscribe(
-        del => {
-          if (del) {
-            this.hasPeaklistFile = false;
-            this.peaklistFileNode = undefined;
-            this.selectedPeaklistFile = undefined;
-          }
-        });
+      // TODO: this.dataService.removeNode(
+      //   this.peaklistFileNode.id, this.id, this.id).subscribe(
+      //   del => {
+      //     if (del) {
+      //       this.hasPeaklistFile = false;
+      //       this.peaklistFileNode = undefined;
+      //       this.selectedPeaklistFile = undefined;
+      //     }
+      //   });
 
     } else if (type === 'searchFile' && this.hasSearchFile) {
-      this.dataService.removeNode(
-        this.searchFileNode.id, this.id, this.id).subscribe(
-        del => {
-          if (del) {
-            this.hasSearchFile = false;
-            this.searchFileNode = undefined;
-            this.selectedSearchFile = undefined;
-          }
-        });
+      //TODO this.dataService.removeNode(
+      //   this.searchFileNode.id, this.id, this.id).subscribe(
+      //   del => {
+      //     if (del) {
+      //       this.hasSearchFile = false;
+      //       this.searchFileNode = undefined;
+      //       this.selectedSearchFile = undefined;
+      //     }
+      //   });
     }
     this.disableButton();
-    this.getChildNodes();
+    //this.getChildNodes();
   }
 
   updateExperiment(): void {
-    /**
-     * updates server when the experiment page is left
-     */
-    this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
-      this.dbExperiment, Endpoints.CREATE_EXPERIMENT).subscribe(result => {
-      if (result != null) {
-        console.log(result);
-        // value = result;
-      }
-    });
+    this.dataItemOfThisComponent.displayName = this.displayNameEditing;
+    this.dataService.updateNode(this.dataItemOfThisComponent);
   }
 
   onRemoveExperiment() {
-    this.dataService.removeNode(this.id, this.id, this.parentUuid);
+    this.dataService.removeDataItem(this.dataItemOfThisComponent);
   }
 
   calculateDataStats(mpaData: ProteinGroupObject[]): Datstats {

@@ -1,5 +1,7 @@
 import {Component, AfterViewInit, Input, ViewChild, OnInit} from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource} from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import {PsmJSON, PsmObject} from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 import {PeptideScope, PsmScope} from '../proteingroup-detail-view/proteingroup-detail-view.component';

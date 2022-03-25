@@ -1,7 +1,7 @@
 <div class="jobCards responsive-job-card">
   <div class="card min-w-600">
     <div class="card-header">
-      <h5>Experiment: {{this.name}}</h5>
+      <h5>Experiment: {{this.dataItemOfThisComponent.displayName}}</h5>
     </div>
     <div class="card-body">
       <mat-tab-group mat-align-tabs="center">
@@ -13,7 +13,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Experiment Name</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="this.dbExperiment.name">
+              <input type="text" class="form-control" [(ngModel)]="this.displayNameEditing">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                         aria-label="Accept" (click)="onAccept()">

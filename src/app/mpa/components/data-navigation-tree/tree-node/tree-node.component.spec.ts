@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataNavigationTreeComponent } from './data-navigation-tree.component';
+import { TreeNodeComponent } from './tree-node.component';
 
-// describe('DataNavigationTreeComponent', () => {
-//   let component: DataNavigationTreeComponent;
-//   let fixture: ComponentFixture<DataNavigationTreeComponent>;
+// describe('TreeNodeComponent', () => {
+//   let component: TreeNodeComponent;
+//   let fixture: ComponentFixture<TreeNodeComponent>;
 //
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ DataNavigationTreeComponent ]
+//       declarations: [ TreeNodeComponent ]
 //     })
 //     .compileComponents();
 //   }));
 //
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(DataNavigationTreeComponent);
+//     fixture = TestBed.createComponent(TreeNodeComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

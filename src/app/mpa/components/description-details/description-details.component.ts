@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MpaTableDataService} from '../../services/mpa-table-data.service';
+import { MpaTableDataService } from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-description-details',

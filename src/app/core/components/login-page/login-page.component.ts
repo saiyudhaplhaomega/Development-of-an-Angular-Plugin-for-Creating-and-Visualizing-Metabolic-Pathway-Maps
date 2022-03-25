@@ -42,7 +42,7 @@ export class LoginPageComponent {
 
   navigateProphane() {
     setTimeout(() => {
-        this._router.navigateByUrl('prophane');
+        this._router.navigateByUrl('mpa');
       }, 1000);
   }
 

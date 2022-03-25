@@ -1,25 +1,27 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
-import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
-import {DataItem} from '../data-navigation-tree/objects/data-item';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DataService2, NodeType} from '../data-navigation-tree/services/data2.service';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+import {ContentComponent} from '../../mpa.component';
+import {DataItem} from '../data-navigation-tree/objects/data-item';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent implements OnInit, OnDestroy, ContentComponent {
 
-  id: string;
-  name: string;
+  dataItemOfThisComponent: DataItem;
 
   // contains folder names for overview
-  private folders: string[];
-  private experiments: string[];
-  private proteinDB: string[];
+  folders: string[];
+  experiments: string[];
+  proteinDB: string[];
 
-  constructor(private dataService: DataService,
+  private dataServiceSubscription;
+
+  constructor(private dataService: DataService2,
               public dialog: MatDialog) {
     this.folders = [];
     this.experiments = [];
@@ -27,39 +29,41 @@ export class UserPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.dataMap.subscribe(items => {
+    this.dataServiceSubscription = this.dataService.dataMap.subscribe(dataItemMap => {
       const newFolders = [];
       const newExperiments = [];
       const newDataBases = [];
-
-      for (const [key, value] of items.entries()) {
-        if (value.type === 'folder') {
+      dataItemMap.getDataItemList().forEach(value => {
+        if (value.type === NodeType.Folder) {
           newFolders.push(value.displayName);
-          this.folders = newFolders;
-        } else if (value.type === 'experiment') {
+        } else if (value.type === NodeType.Experiment) {
           newExperiments.push(value.displayName);
-          this.experiments = newExperiments;
-        } else if (value.type === 'proteindb') {
-          this.proteinDB = newDataBases;
+        } else if (value.type === NodeType.ProteinDB) {
+          newDataBases.push(value.displayName);
         }
-      }
-    }
-    );
+      });
+      this.folders = newFolders;
+      this.experiments = newExperiments;
+      this.proteinDB = newDataBases;
+    });
   }
 
-  onAddFolder() {
+  ngOnDestroy(): void {
+    this.dataServiceSubscription.unsubscribe();
+  }
+
+  onAddFolder(): void {
     const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Please set a folder name!';
     dialogInstance.textFieldLabel = 'Folder Name';
-
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
-        console.log('add folder');
-        this.dataService.addNodeObj(this.id, folderName, NodeType.Folder, null);
+        this.dataService.createNewDataItem(this.dataItemOfThisComponent, folderName, NodeType.Folder);
       }
     });
   }
+
 }

@@ -1,11 +1,16 @@
 export interface DataItem {
-    children?: string[];
-    displayName: string;
-    icon: string;
-    parent?: string;
-    id: string;
-    type: string;
-    creation_date?: string;
-    description?: string;
-    realUUID?: string;
+
+  id: number;
+  parent: number;
+  children: DataItem[];
+  depth: number;
+  type: string;
+
+  icon: string;
+  displayName: string;
+  expanded: boolean;
+  creation_date: string;
+  uuid: string;
+  description: string;
+
 }

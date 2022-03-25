@@ -1,57 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {DataService, NodeType} from '../data-navigation-tree/services/data.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DataService2, NodeType} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
 import {ProteinDatabaseDialogComponent} from './protein-database-dialog/protein-database-dialog.component';
 import {HttpClientService} from '../../../core/services/http-client.service';
 import {Filemetadata} from '../../objects/filemetadata';
 import {Endpoints} from '../../../core/services/webserveraddress.service';
 import {HttpParams} from '@angular/common/http';
-
+import {ContentComponent} from '../../mpa.component';
 
 @Component({
   selector: 'app-folder-page',
   templateUrl: './folder-page.component.html',
   styleUrls: ['./folder-page.component.css']
 })
-export class FolderPageComponent implements OnInit {
+export class FolderPageComponent implements OnInit, OnDestroy, ContentComponent {
 
-  id: string;
-  parentUuid: string;
-  name: string;
+  dataItemOfThisComponent: DataItem;
   existingNodeNames = [];
 
-  private _dataMap: Map<string, DataItem>;
-
   constructor(private _snackBar: MatSnackBar,
-              private dataService: DataService,
               public dialog: MatDialog,
-              private uploaderService: HttpClientService) {}
-
-  ngOnInit() {
-    this.dataService.dataMap.subscribe( items => {
-      this._dataMap = items;
-    });
-
-    this.parentUuid = this._dataMap.get(this.id).parent;
+              private dataService: DataService2,
+              private uploaderService: HttpClientService) {
   }
 
-  onAccept() {
-    if (this.name.length > 24) {
+  ngOnInit(): void {
+    //this.parentUuid = this._dataMap.get(this.id).parent;
+  }
+
+  ngOnDestroy(): void {
+
+  }
+
+  onAcceptNameChange(): void {
+    if (this.dataItemOfThisComponent.displayName.length > 24) {
       this._snackBar.open('Names longer than 24 characters are not allowed!');
-      this.name = '';
-    } else if (this.name.length <= 0) {
+      this.dataItemOfThisComponent.displayName = '';
+    } else if (this.dataItemOfThisComponent.displayName.length <= 0) {
       this._snackBar.open('Empty names are not allowed!');
     } else {
-      const item = this._dataMap.get(this.id);
-      item.displayName = this.name;
-      this._dataMap.set(this.id, item);
-      this.dataService.dataMap.next(this._dataMap);
+      this.dataItemOfThisComponent.displayName = this.dataItemOfThisComponent.displayName;
+      this.dataService.updateNode(this.dataItemOfThisComponent);
     }
   }
 
-  onAddExperiment() {
+  onAddExperiment(): void {
     const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
@@ -61,10 +57,10 @@ export class FolderPageComponent implements OnInit {
     dialogInstance.dialogPrompt = 'Please set an experiment name!';
     dialogInstance.textFieldLabel = 'Experiment Name';
 
-    dialogRef.afterClosed().subscribe(folderName => {
-      if (folderName) {
+    dialogRef.afterClosed().subscribe(experimentName => {
+      if (experimentName) {
         console.log('add experiment');
-        this.dataService.addNodeObj(this.id, folderName, NodeType.Experiment, null);
+        this.dataService.createNewDataItem(this.dataItemOfThisComponent, experimentName, NodeType.Experiment);
       }
     });
   }
@@ -75,7 +71,7 @@ export class FolderPageComponent implements OnInit {
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(dialog  => {
+    dialogRef.afterClosed().subscribe(dialog => {
       console.log('dialog?: ' + dialog.dbName);
       console.log('dialog?: ' + dialog.dbFile.name);
       if (dialog.dbName) {
@@ -96,7 +92,8 @@ export class FolderPageComponent implements OnInit {
             this.uploaderService.postFile(dialog.dbFile, Endpoints.PROTEINLOADER_FILEUPLOAD, params).subscribe(result2 => {
               if (result2 != null) {
                 // TODO: executes multiple times, fixed for now on dataservice side
-                this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
+                //this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
+                this.dataService.createNewDataItem(this.dataItemOfThisComponent, dialog.dbName, NodeType.ProteinDB);
               }
             });
           }
@@ -115,7 +112,6 @@ export class FolderPageComponent implements OnInit {
   }
 
   onAddFolder() {
-
     const dialogRef = this.dialog.open(NameEditDialogComponent, {
       disableClose: true,
     });
@@ -125,13 +121,13 @@ export class FolderPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(folderName => {
       if (folderName) {
-        console.log('add folder');
-        this.dataService.addNodeObj(this.id, folderName, NodeType.Folder, null);
+        this.dataService.createNewDataItem(this.dataItemOfThisComponent, folderName, NodeType.Folder);
       }
     });
   }
 
   onRemoveFolder() {
-      this.dataService.removeNode(this.id, this.id, this.parentUuid);
+    this.dataService.removeDataItem(this.dataItemOfThisComponent);
   }
+
 }

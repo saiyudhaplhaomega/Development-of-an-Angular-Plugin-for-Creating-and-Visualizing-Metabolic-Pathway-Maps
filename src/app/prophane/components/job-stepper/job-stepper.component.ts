@@ -36,11 +36,11 @@ export class JobStepperComponent implements OnInit, OnDestroy {
   }
 
   nextStep() {
-    this.stepper.selectedIndex++;
+    this.stepper.selectedIndex = this.stepper.selectedIndex + 1;
   }
 
   prevStep() {
-    this.stepper.selectedIndex--;
+    this.stepper.selectedIndex = this.stepper.selectedIndex - 1;
   }
 
 }

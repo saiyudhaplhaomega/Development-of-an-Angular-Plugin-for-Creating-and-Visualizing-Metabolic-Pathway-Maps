@@ -1,4 +1,4 @@
-///<reference path="../../../node_modules/@angular/platform-browser/src/browser.d.ts"/>
+//<reference path="../../../node_modules/@angular/platform-browser/src/browser.d.ts"/>
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ProphaneJobControlComponent} from './components/prophane-job-control/prophane-job-control.component';

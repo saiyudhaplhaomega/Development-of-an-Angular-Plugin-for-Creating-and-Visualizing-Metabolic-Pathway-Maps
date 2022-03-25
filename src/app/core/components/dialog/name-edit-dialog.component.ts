@@ -1,51 +1,31 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {DataService} from '../../../mpa/components/data-navigation-tree/services/data.service';
-import {DataItem} from '../../../mpa/components/data-navigation-tree/objects/data-item';
+import {DataService2} from '../../../mpa/components/data-navigation-tree/services/data2.service';
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './name-edit-dialog.component.html',
-  styleUrls: ['./name-edit-dialog.component.css']
+  selector: 'app-dialog', templateUrl: './name-edit-dialog.component.html', styleUrls: ['./name-edit-dialog.component.css']
 })
 
-  export class NameEditDialogComponent implements OnInit {
+export class NameEditDialogComponent implements OnInit {
 
   @Input() dialogPrompt: string;
 
   folderNameForm: FormGroup;
   existingNodeNames: string[];
-  private _dataMap: Map<string, DataItem>;
   textFieldLabel: string;
 
-  constructor(
-    public dialogRef: MatDialogRef<NameEditDialogComponent>,
-    private fb: FormBuilder,
-    private dataService: DataService,
-  ) {}
+  constructor(public dialogRef: MatDialogRef<NameEditDialogComponent>, private fb: FormBuilder, private dataService: DataService2) {
+  }
 
   ngOnInit(): void {
-    this.dataService.dataMap.subscribe( items => {
-      this._dataMap = items;
-    });
-
-    this.existingNodeNames = [];
-
-    for (const [key, value] of this._dataMap.entries()) {
-      this.existingNodeNames.push(value.displayName);
-    }
-
+    this.existingNodeNames = this.dataService.getExistingNodeNames();
     this.folderNameForm = this.fb.group({
-      folderName: ['', [
-        Validators.required,
-        Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
-        folderNameValidator(this.existingNodeNames)
-      ]]
+      folderName: ['', [Validators.required, Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'), folderNameValidator(this.existingNodeNames)]]
     });
   }
 
-  getErrorMessage() {
+  getErrorMessage(): string {
     if (this.folderNameForm.get('folderName').hasError('required')) {
       return 'Please enter a name';
     } else if (this.folderNameForm.get('folderName').hasError('pattern')) {
@@ -56,7 +36,6 @@ import {DataItem} from '../../../mpa/components/data-navigation-tree/objects/dat
   }
 
   onSubmitName(): void {
-    // console.log(this.folderNameForm.value, this.folderNameForm.valid);
     this.dialogRef.close(this.folderNameForm.value.folderName);
   }
 
@@ -70,7 +49,6 @@ export function folderNameValidator(existingNames: string[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let forbidden = false;
     for (const name of existingNames) {
-      // console.log(existingNames);
       if (control.value === name) {
         forbidden = true;
       }

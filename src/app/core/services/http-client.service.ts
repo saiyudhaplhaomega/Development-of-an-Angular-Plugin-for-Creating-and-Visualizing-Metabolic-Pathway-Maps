@@ -4,7 +4,7 @@ import {WebserveraddressService} from './webserveraddress.service';
 import {Observable} from 'rxjs';
 import {AuthGuard} from 'src/app/core/services/auth-guard.service';
 import {UploadProgressService} from './upload-progress.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 
 export interface FileUploadData {
   uploadFile: File;
