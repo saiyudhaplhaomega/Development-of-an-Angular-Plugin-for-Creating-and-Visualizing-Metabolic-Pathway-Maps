@@ -211,7 +211,7 @@
   width: 133.33333%
 }
 
-.mat-form-field-can-float .mat-input-server[label]:not(:label-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
+.mat-form-field-can-float .mat-input-server[label]:not(:placeholder-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
   transform: translateY(-1.34374em) scale(.75);
   width: 133.33334%
 }
@@ -255,7 +255,7 @@
   width: 133.33334%
 }
 
-.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server[label]:not(:label-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server[label]:not(:placeholder-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
   transform: translateY(-1.28125em) scale(.75) perspective(100px) translateZ(.00102px);
   -ms-transform: translateY(-1.28123em) scale(.75);
   width: 133.33335%
@@ -283,7 +283,7 @@
     transform: translateY(-1.28121em) scale(.75)
   }
 
-  .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server[label]:not(:label-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
+  .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server[label]:not(:placeholder-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
     transform: translateY(-1.2812em) scale(.75)
   }
 }
@@ -302,7 +302,7 @@
   width: 133.33333%
 }
 
-.mat-form-field-appearance-fill.mat-form-field-can-float .mat-input-server[label]:not(:label-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
+.mat-form-field-appearance-fill.mat-form-field-can-float .mat-input-server[label]:not(:placeholder-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
   transform: translateY(-.59374em) scale(.75);
   width: 133.33334%
 }
@@ -321,7 +321,7 @@
   width: 133.33333%
 }
 
-.mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server[label]:not(:label-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
+.mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server[label]:not(:placeholder-shown) + .mat-form-field-label-wrapper .mat-form-field-label {
   transform: translateY(-1.59374em) scale(.75);
   width: 133.33334%
 }
