@@ -1,5 +1,7 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {ProteinGroupJSON, ProteinGroupObject} from '../../objects/tableobjects';
 import {GroupSelection, MpaTableDataService} from '../../services/mpa-table-data.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -27,7 +29,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['expandButton', 'proteinGroupID', 'groupType', 'representativeAccession', 'representativeDescription'];
   dataSource: MatTableDataSource<ProteinGroupJSON>;
-  private showDetails = false;
+  showDetails = false;
 
   expandedElement: string | null;
 
@@ -36,7 +38,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   @Input() experimentUUID: string;
 
-  constructor(private mpaTableDataService: MpaTableDataService) {
+  constructor(public mpaTableDataService: MpaTableDataService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -61,10 +63,12 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+  applyFilter(event: Event) {
+    // TODO: figure out how to do this with or without the event
+    // event.target.value;
+    // filterValue = filterValue.trim(); // Remove whitespace
+    // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    // this.dataSource.filter = filterValue;
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

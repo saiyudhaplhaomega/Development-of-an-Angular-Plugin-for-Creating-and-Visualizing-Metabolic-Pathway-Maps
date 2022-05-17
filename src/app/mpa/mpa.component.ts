@@ -60,7 +60,8 @@ export class MPAComponent implements OnInit, OnDestroy {
     this.treeOutlet.clear();
     let componentRef: ComponentRef<any>;
     switch (dataItem.type) {
-      case NodeType.User: {
+      case 'user': {
+        console.log('inside user');
         componentRef = this.treeOutlet.createComponent(UserPageComponent);
         break;
       }

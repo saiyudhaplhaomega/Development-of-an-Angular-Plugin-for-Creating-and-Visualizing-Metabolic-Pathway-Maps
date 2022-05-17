@@ -1,6 +1,4 @@
 import {DataItem} from './data-item';
-import {NodeType} from '../services/data2.service';
-import {Data} from '@angular/router';
 
 export class DataItemMap {
 

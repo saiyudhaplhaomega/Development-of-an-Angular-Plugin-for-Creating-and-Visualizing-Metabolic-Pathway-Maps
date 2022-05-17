@@ -1,8 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ChartType, ChartData, ChartEvent, ChartConfiguration, LinearScale} from 'chart.js';
+import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
-import {rawData, DataPoint} from './mockData';
+import {SpectrumDataObject} from './spectrum-data-object';
+
+export type DataPoint = {
+  x: number,
+  y: number,
+};
 
 @Component({
   selector: 'app-spectrum-viewer',
@@ -11,30 +16,81 @@ import {rawData, DataPoint} from './mockData';
 })
 export class SpectrumViewerComponent implements OnInit {
 
-  spectrumData: string;
+
+  // showIon states
+  showY1 = false;
+  showY2 = false;
+  showB1 = false;
+  showB2 = false;
+
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  xAxisLength = 9000;
-  standardDataSet: DataPoint[] = this.prepareData(rawData);
+  xAxisLength = 1000;
+  yAxisLength = 101000;
   public scatterChartType: ChartType = 'scatter';
   public scatterChartData: ChartData<'scatter'> = {
     datasets: [
       {
-        data: this.standardDataSet,  // implementation under class
-        label: '',
+        data: [],
+        label: 'noise',
         pointStyle: 'line',
-        pointRadius: 4,
-        backgroundColor: '#25383c',
-        borderColor: '#000000',
+        pointRadius: 3,
+        backgroundColor: '#999999',
+        borderColor: '#999999',
+        borderWidth: 1,
+        showLine: true,
+      },
+      {
+        data: [],
+        label: 'y1',
+        pointStyle: 'line',
+        pointRadius: 3,
+        backgroundColor: '#999999',
+        borderColor: '#999999',
+        borderWidth: 1,
+        showLine: true
+      },
+      {
+        data: [],
+        label: 'y2',
+        pointStyle: 'line',
+        pointRadius: 3,
+        backgroundColor: '#999999',
+        borderColor: '#999999',
+        borderWidth: 1,
+        showLine: true,
+      },
+      {
+        data: [],
+        label: 'b1',
+        pointStyle: 'line',
+        pointRadius: 3,
+        backgroundColor: '#999999',
+        borderColor: '#999999',
+        borderWidth: 1,
+        showLine: true,
+      },
+      {
+        data: [],
+        label: 'b2',
+        pointStyle: 'line',
+        pointRadius: 3,
+        backgroundColor: '#999999',
+        borderColor: '#999999',
+        borderWidth: 1,
         showLine: true,
       }
     ]
   };
   public scatterChartOptions: ChartConfiguration['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
     animation: false,
     scales: {
       x: {
+        title: {
+          display: true,
+          text: 'm/z',
+        },
         min: 0,
         max: this.xAxisLength,
         grid: {
@@ -42,8 +98,12 @@ export class SpectrumViewerComponent implements OnInit {
         }
       },
       y: {
+        title: {
+          display: true,
+          text: 'Relative Abundance',
+        },
         min: 0,
-        max: 1000
+        max: this.yAxisLength,
       }
     },
     plugins: {
@@ -53,85 +113,105 @@ export class SpectrumViewerComponent implements OnInit {
     },
   };
 
-  constructor(public mpaTableDataService: MpaTableDataService) {
-  }
+  public requestingSpectrum = true;
 
-  ngOnInit() {
-    this.mpaTableDataService.spectrumData.subscribe(spectrumData => {
-      this.spectrumData = spectrumData;
+  constructor(public mpaTableDataService: MpaTableDataService) {
+    this.mpaTableDataService.requestingSpectrum.subscribe(val => {
+      this.requestingSpectrum = val;
     });
   }
 
-  // automatisiert erstellung nullpunkte direkt vor und nach jedem Datenpunkt im eingereichten Array
-  prepareData(localRawData: DataPoint[]) {
-    const preparedData: DataPoint[] = [];    // nullpunkte nötig um linie von x-Achse zu Datenpunkt und wieder zurück ziehen zu können
-    if (localRawData[0].x !== 0) {
-      preparedData.push({x: 0, y: 0});
-      // push startpunkt bei 0 falls dort kein Wert vorhanden ist
-    }
-
-    for (const localRawDatum of localRawData) {
-      preparedData.push({
-        x: (localRawDatum.x - 0.01),
-        y: 0
-      });
-
-      preparedData.push({
-          x: localRawDatum.x,
-          y: localRawDatum.y
-        }
-      );
-
-      preparedData.push({
-        x: (localRawDatum.x + 0.01),
-        y: 0
-      });
-    }
-    preparedData.push({x: this.xAxisLength, y: 0});  // push endpunkt -> schwarze Linie durchgängig auf xAchse vorhanden
-
-    return preparedData;
+  ngOnInit() {
+    /*this.mpaTableDataService.spectrumData.subscribe(spectrumData => {
+      this.spectrumData = spectrumData;
+    }); */
+    this.mpaTableDataService.spectrumDataObject$.subscribe({
+      next: dataObject => this.handleSpectrumServiceData(dataObject),
+      complete: () => console.log('complete notification')
+    });
   }
 
-  onClick() {
-    const localRawData = rawData;
-    const preparedData: DataPoint[] = [];
-    if (localRawData[0].x !== 0) {
-      // push startpunkt bei 0 falls dort kein Wert vorhanden ist
-      preparedData.push({x: 0, y: 0});
-    }
+  handleSpectrumServiceData(dataObject: SpectrumDataObject) {
+    this.scatterChartData.datasets[0].data = this.prepareData(dataObject.rest);
+    this.scatterChartData.datasets[1].data = this.prepareData(dataObject.ySingle);
+    this.scatterChartData.datasets[2].data = this.prepareData(dataObject.yDouble);
+    this.scatterChartData.datasets[3].data = this.prepareData(dataObject.bSingle);
+    this.scatterChartData.datasets[4].data = this.prepareData(dataObject.bDouble);
 
+    this.chart?.update();
+  }
 
-    for (const i in localRawData) {
-      if ((localRawData[i].x) === 12 || (rawData[i].x) === 432 || (rawData[i].x) === 6666) {
+  prepareData(localRawData: DataPoint[]) {    // creates 2 dataPoints for every dataPoint in the rawData -> 1 in front, 1 behind on the x-Axis
+    const preparedData: DataPoint[] = [];       // these are needed to plot the line from y=0 to y=dataPointY and back to y=0 -> creates a line
+    if (localRawData.length > 0) {
+      if (localRawData[0].x !== 0) {
+        preparedData.push({x: 0, y: 0});          //push starting point at x=0, if there is no value there
+      }
+
+      for (let i in localRawData) {
         preparedData.push({
           x: (localRawData[i].x - 0.01),
-          y: 0
+          y: 0,
         });
 
         preparedData.push({
             x: localRawData[i].x,
-            y: localRawData[i].y
+            y: localRawData[i].y,
           }
         );
 
         preparedData.push({
           x: (localRawData[i].x + 0.01),
-          y: 0
+          y: 0,
         });
       }
+      preparedData.push({x: this.xAxisLength, y: 0});  // push endpoint -> so the plotted line doesn't stop and goes all the way to the end of the x-Axis
     }
-    preparedData.push({x: this.xAxisLength, y: 0});  // push endpunkt -> schwarze Linie durchgängig auf xAchse vorhanden
+    return preparedData;
+  }
 
-    this.scatterChartData.datasets[0].data = preparedData;
-    this.scatterChartData.datasets[0].borderColor = '#c05851';
-    this.chart.update();
+  toggleY1() {   // sets border and backgroundColor so that when datapoint is hovered over the correct color is displayed
+    this.showY1 = !this.showY1;
+    this.scatterChartData.datasets[1].borderColor = ((this.showY1 === false) ? '#999999' : '#a9d93c');
+    this.scatterChartData.datasets[1].backgroundColor = ((this.showY1 === false) ? '#999999' : '#a9d93c');
+    this.chart?.update();
+  }
+
+  toggleY2() {
+    this.showY2 = !this.showY2;
+    this.scatterChartData.datasets[2].borderColor = ((this.showY2 === false) ? '#999999' : '#60720f');
+    this.scatterChartData.datasets[2].backgroundColor = ((this.showY2 === false) ? '#999999' : '#60720f');
+    this.chart?.update();
+  }
+
+  toggleB1() {
+    this.showB1 = !this.showB1;
+    this.scatterChartData.datasets[3].borderColor = ((this.showB1 === false) ? '#999999' : '#ff6f69');
+    this.scatterChartData.datasets[3].backgroundColor = ((this.showB1 === false) ? '#999999' : '#ff6f69');
+    this.chart?.update();
+  }
+
+  toggleB2() {
+    this.showB2 = !this.showB2;
+    this.scatterChartData.datasets[4].borderColor = ((this.showB2 === false) ? '#999999' : '#e3528c');
+    this.scatterChartData.datasets[4].backgroundColor = ((this.showB2 === false) ? '#999999' : '#e3528c');
+    this.chart?.update();
   }
 
   resetChart() {
-    const preparedData = this.prepareData(rawData);
-    this.scatterChartData.datasets[0].data = preparedData;
-    this.scatterChartData.datasets[0].borderColor = '#000000';
-    this.chart.update();
+    this.scatterChartData.datasets[1].borderColor = '#999999';
+    this.scatterChartData.datasets[1].backgroundColor = '#999999';
+    this.scatterChartData.datasets[2].borderColor = '#999999';
+    this.scatterChartData.datasets[2].backgroundColor = '#999999';
+    this.scatterChartData.datasets[3].borderColor = '#999999';
+    this.scatterChartData.datasets[3].backgroundColor = '#999999';
+    this.scatterChartData.datasets[4].borderColor = '#999999';
+    this.scatterChartData.datasets[4].backgroundColor = '#999999';
+    this.showY1 = false;
+    this.showY2 = false;
+    this.showB1 = false;
+    this.showB2 = false;
+    this.chart?.update();
   }
 
 }

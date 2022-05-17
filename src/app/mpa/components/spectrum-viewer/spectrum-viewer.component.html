@@ -1,20 +1,35 @@
 <div>
-  <ng-container *ngIf="this.mpaTableDataService.requestingSpectrum">
+  <ng-container *ngIf="this.requestingSpectrum">
     Requesting Spectrum...
     <span class="spinner-border spinner-border-sm ml-2 bg-white" role="status" aria-hidden="true"></span>
   </ng-container>
 
-  <ng-container *ngIf="!this.mpaTableDataService.requestingSpectrum && this.spectrumData">
-    <div class="chart" class="scatter-plot">
-      <button type="button" (click)="onClick()">Test</button>
-      <button type="button" (click)="resetChart()">ResetChart</button>
-      <p>Scatter-Plot</p>
-      <!--canvas baseChart
-      [data]="scatterChartData"
-      [type]="scatterChartType"
-      [options]="scatterChartOptions"
-      >
-      </canvas-->
-  </div>
+  <ng-container *ngIf="!this.requestingSpectrum">
+    <div class="scatter-plot">
+      <div class="chart">
+        <canvas baseChart
+                [data]="scatterChartData"
+                [type]="scatterChartType"
+                [options]="scatterChartOptions"
+        >
+        </canvas>
+      </div>
+      <div class="chart-buttons">
+        <div class="ion-button-group">
+          <button type="button" (click)="toggleY1()" [ngClass]="{'ion-button' : !showY1,'active-button' : showY1}">Y+
+          </button>
+          <button type="button" (click)="toggleY2()" [ngClass]="{'ion-button' : !showY2,'active-button' : showY2}">Y++
+          </button>
+        </div>
+        <div class="ion-button-group">
+          <button type="button" (click)="toggleB1()" [ngClass]="{'ion-button' : !showB1,'active-button' : showB1}">B+
+          </button>
+          <button type="button" (click)="toggleB2()" [ngClass]="{'ion-button' : !showB2,'active-button' : showB2}">B++
+          </button>
+        </div>
+        <button type="button" (click)="resetChart()">ResetChart</button>
+      </div>
+    </div>
   </ng-container>
 </div>
+

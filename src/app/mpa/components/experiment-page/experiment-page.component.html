@@ -109,10 +109,10 @@
               </div>
 
               <!-- ProteinDatabase -->
-              <ng-container *ngIf="this.dataUploadSelection == 'Peaklist'">
+              <ng-container *ngIf="this.dataUploadSelection == 'Search Result'">
                 <div class="input-group mb-3 ng-star-inserted">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Data Selection</span>
+                    <span class="input-group-text">Protein Database</span>
                   </div>
                   <mat-select class="custom-select" [(value)]="this.proteinDBselection"
                               (selectionChange)="onProteinDBChange($event.value)">
@@ -161,8 +161,7 @@
                     <div class="custom-file">
                       <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
                              (change)="onPeaklistFileChange(selectedFileSpectra.files)">
-                      <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mgf">Choose MGF file
-                        (.mgf)</label>
+                      <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mgf">Choose MGF file (.mgf)</label>
                       <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
                              for="mgf">{{this.selectedPeaklistFile.name}}</label>
                     </div>

@@ -50,7 +50,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
   displayNameEditing: string;
 
-  proteinDatabases = [];
+  proteinDatabases: DataItem[] = [];
   proteinDBselection = null;
 
   // files selected via input field
@@ -102,7 +102,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     this.description = this.dataItemOfThisComponent.description;
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
 
-    //TODO: this.proteinDatabases = this.dataService.getProteinDatabases();
+    this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
 
     // this.getChildNodes();
@@ -237,10 +237,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
         break;
 
       case 'Search Result':
-        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
+        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dataItemOfThisComponent.uuid);
 
         if (this.selectedFasta) {
-          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
+          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dataItemOfThisComponent.uuid);
         }
 
         this.hasSearchFile = true;
@@ -291,7 +291,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
     const metaDataForServer: MPAFile = {
-      fileID: '', fileMetaData: JSON.stringify({fileName: file.name}), experimentID: experimentId, fileType: fileType, fileStatus: ''
+      fileID: '', fileMetaData: JSON.stringify({fileName: file.name}), protdbID: this.proteinDBselection.uuid, experimentID: experimentId, fileType: fileType, fileStatus: ''
     };
 
     const uploadDataForServer: FileUploadData = {
@@ -301,11 +301,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     // send meta data, receive fileuuid
     try {
       const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
-
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?
         // TODO: jobid = fileID ?
-        uploadDataForServer.httpParameters.set('jobid', metaDataResponse.fileID);
+        uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('jobid', metaDataResponse.fileID);
         this.uploaderService.addUploadFiles([uploadDataForServer]);
       } else {
         throw new Error('File could not be created');

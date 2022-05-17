@@ -1,6 +1,7 @@
 
 export interface MPAFile {
   fileID: string;
+  protdbID: string;
   experimentID: string;
   fileStatus: string;
   fileMetaData: string;
@@ -9,6 +10,7 @@ export interface MPAFile {
 
 export class MPAFileObject implements MPAFile {
   fileID: string;
+  protdbID: string;
   experimentID: string;
   fileStatus: string;
   fileMetaData: string;

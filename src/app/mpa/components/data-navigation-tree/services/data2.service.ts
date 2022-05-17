@@ -42,7 +42,7 @@ export class DataService2 {
       this.jsonUploader.getObject<DataItem>(Endpoints.GET_USER_DATA).subscribe(rootNode => {
         // from the json response that contains a list of data-items, we create a map and extract the user object
         const newMap = new DataItemMap();
-        const user = newMap.initializeAndReturnUser(rootNode);
+        const user: DataItem = newMap.initializeAndReturnUser(rootNode);
         // once the dataMap object is initialized it is put into the dataMap BehaviourSubject
         this.dataMap.next(newMap);
         // once the data is available through the data map we will navigate to the user page
@@ -72,49 +72,62 @@ export class DataService2 {
     this.dataMap.next(mapCopy);
   }
 
-  createNewDataItem(parentNode: DataItem, nodeName: string, nodeType: NodeType): void {
-    const newNodeObj: DataItem = {
-      id: -1,
-      parent: parentNode.id,
-      children: [],
-      depth: parentNode.depth + 1,
-      type: nodeType,
-      icon: undefined,
-      displayName: nodeName,
-      expanded: true,
-      creation_date: this.getDate(),
-      uuid: null,
-      description: ''
-    };
-    // handle node-type specific data
-    switch (nodeType) {
-      case NodeType.Experiment:
-        newNodeObj.icon = 'computer';
-        newNodeObj.description = '';
-        this.updateExperiment(newNodeObj);
-        break;
-      case NodeType.ProteinDB:
-        newNodeObj.icon = 'fingerprint';
-        //newNodeObj.realUUID = realUUID;
-        break;
-      case NodeType.Folder:
-        newNodeObj.icon = 'folder';
-        break;
-      case NodeType.PeakList:
-        newNodeObj.icon = 'folder';
-        break;
-      case NodeType.SearchResult:
-        newNodeObj.icon = 'folder';
-        break;
+  createNewDataItem(parentNode: DataItem, nodeName: string, nodeType: NodeType): DataItem {
+
+    // TODO: this is a temporary fix for multiple calls of this method from addProteinDatabase
+    let shouldAddNode = true;
+    this.dataMap.value.getAllDisplayNames().forEach(name => {
+      if (name === nodeName) {
+        shouldAddNode = false;
+      }
+    });
+    if (shouldAddNode) {
+
+      const newNodeObj: DataItem = {
+        id: -1,
+        parent: parentNode.id,
+        children: [],
+        depth: parentNode.depth + 1,
+        type: nodeType,
+        icon: undefined,
+        displayName: nodeName,
+        expanded: true,
+        creation_date: this.getDate(),
+        uuid: null,
+        description: ''
+      };
+      // handle node-type specific data
+      switch (nodeType) {
+        case NodeType.Experiment:
+          newNodeObj.icon = 'computer';
+          this.updateExperiment(newNodeObj);
+          break;
+        case NodeType.ProteinDB:
+          newNodeObj.icon = 'fingerprint';
+          //newNodeObj.realUUID = realUUID;
+          break;
+        case NodeType.Folder:
+          newNodeObj.icon = 'folder';
+          break;
+        case NodeType.PeakList:
+          newNodeObj.icon = 'folder';
+          break;
+        case NodeType.SearchResult:
+          newNodeObj.icon = 'folder';
+          break;
+      }
+      // update the data map
+      let mapCopy: DataItemMap = new DataItemMap();
+      mapCopy.initializeAndReturnUser(this.dataMap.value.rootNode);
+      mapCopy.addNewItemFromParent(newNodeObj, parentNode);
+      // actual update that triggers a server call
+      this.dataMap.next(mapCopy);
+      // navigate to newly created node
+      this.navService.navigateOutlet(newNodeObj);
+      return newNodeObj;
+    } else {
+      return null;
     }
-    // update the data map
-    let mapCopy: DataItemMap = new DataItemMap();
-    mapCopy.initializeAndReturnUser(this.dataMap.value.rootNode);
-    mapCopy.addNewItemFromParent(newNodeObj, parentNode);
-    // actual update that triggers a server call
-    this.dataMap.next(mapCopy);
-    // navigate to newly created node
-    this.navService.navigateOutlet(newNodeObj);
   }
 
   updateExperiment(nodeObj) {
@@ -132,7 +145,6 @@ export class DataService2 {
   }
 
   removeDataItem(dataItem: DataItem) {
-    console.log('remove data item');
     let mapCopy: DataItemMap = new DataItemMap();
     mapCopy.initializeAndReturnUser(this.dataMap.value.rootNode);
     const allEffectedNodesNames = [];
@@ -176,4 +188,13 @@ export class DataService2 {
     return (`${currentDate.toISOString().split('T')[0]} ${currentHour}:${currentMinute}:${currentSecond}`);
   }
 
+  getProteinDatabases(): DataItem[] {
+    const protDBlist: DataItem[] = [];
+    this.dataMap.value.getDataItemList().forEach(item => {
+      if (item.type === NodeType.ProteinDB) {
+        protDBlist.push(item);
+      }
+    });
+    return protDBlist;
+  }
 }

@@ -1,0 +1,34 @@
+.scatter-plot{
+  display:flex;
+  flex-direction:row;
+}
+
+button{
+  background-color:rgb(249, 249, 249);
+}
+
+.active-button{
+  width:49px;
+  background-color:rgb(2, 172, 115);
+}
+.chart-buttons{
+  margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.ion-button{
+  width:49px;
+}
+
+.ion-button-group{
+  display:flex;
+  flex-direction:row;
+  gap:4px;
+}
+
+.chart{
+  width:1000px;
+  height:500px;
+}

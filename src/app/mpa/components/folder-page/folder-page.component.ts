@@ -72,11 +72,7 @@ export class FolderPageComponent implements OnInit, OnDestroy, ContentComponent 
     });
 
     dialogRef.afterClosed().subscribe(dialog => {
-      console.log('dialog?: ' + dialog.dbName);
-      console.log('dialog?: ' + dialog.dbFile.name);
       if (dialog.dbName) {
-        console.log('add proteindb: ' + dialog.dbName);
-
         const fileData: Filemetadata = {
           filename: dialog.dbFile.name,
           fileType: 'fasta',
@@ -86,14 +82,17 @@ export class FolderPageComponent implements OnInit, OnDestroy, ContentComponent 
         // metadata endpoint, wait for File ID
         this.uploaderService.postObject<Filemetadata, Filemetadata>(fileData, Endpoints.PROTEINLOADER_METADATA).subscribe(result => {
           if (result != null) {
-            console.log(result.fileUUID);
             // upload fasta/xml file
             const params: HttpParams = new HttpParams({fromObject: {'jobid': result.fileUUID, 'name': fileData.filename}});
             this.uploaderService.postFile(dialog.dbFile, Endpoints.PROTEINLOADER_FILEUPLOAD, params).subscribe(result2 => {
               if (result2 != null) {
                 // TODO: executes multiple times, fixed for now on dataservice side
                 //this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
-                this.dataService.createNewDataItem(this.dataItemOfThisComponent, dialog.dbName, NodeType.ProteinDB);
+                let protDBNode = this.dataService.createNewDataItem(this.dataItemOfThisComponent, dialog.dbName, NodeType.ProteinDB);
+                if (protDBNode !== null) {
+                  protDBNode.uuid = result.fileUUID;
+                  this.dataService.updateNode(protDBNode);
+                }
               }
             });
           }

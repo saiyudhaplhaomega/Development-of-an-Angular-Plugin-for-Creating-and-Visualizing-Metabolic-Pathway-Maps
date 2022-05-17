@@ -56,4 +56,5 @@ export class AppComponent {
       console.log('oh nein: savedItem !== null && savedItem !== \'\'');
     }
   }
+
 }

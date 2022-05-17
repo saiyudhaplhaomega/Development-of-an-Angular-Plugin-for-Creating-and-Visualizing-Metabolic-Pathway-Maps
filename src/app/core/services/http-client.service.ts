@@ -61,6 +61,7 @@ export class HttpClientService {
     const fd = new FormData();
     fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', file);
+    this.webserver.getEndpoint(api)
     return this.http.post(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({
         'Authorization': this.authGuard.getUserAuthorization().toString(),
@@ -84,13 +85,13 @@ export class HttpClientService {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
 
       this.postFile(fileUploadData.uploadFile,
-        this.webserver.getEndpoint(fileUploadData.fileUploadAdress), fileUploadData.httpParameters).subscribe(
+        fileUploadData.fileUploadAdress, fileUploadData.httpParameters).subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
             this.uploadProgressService.changeReportLoaded(event.loaded);
-            console.log(event);
+            //console.log(event);
           } else if (event.type === HttpEventType.Response) {
-            console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
+            //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
           }
         },
         error => {

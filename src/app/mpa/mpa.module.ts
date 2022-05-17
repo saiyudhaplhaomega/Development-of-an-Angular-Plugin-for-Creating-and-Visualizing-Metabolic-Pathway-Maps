@@ -29,7 +29,7 @@ import {ProteinDatabaseComponent} from './components/protein-database/protein-da
 import {PsmTableComponent} from './components/psm-table/psm-table.component';
 import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-viewer.component';
 import { ProteineSequenceViewerComponent } from './components/peptide-sequence-viewer/proteine-sequence-viewer.component';
-import { TestTableComponent } from './components/test-table/test-table.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,6 @@ import { TestTableComponent } from './components/test-table/test-table.component
     PsmTableComponent,
     SpectrumViewerComponent,
     ProteineSequenceViewerComponent,
-    TestTableComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +64,7 @@ import { TestTableComponent } from './components/test-table/test-table.component
     DragDropModule,
     FlexLayoutModule,
     FormsModule,
+    NgChartsModule,
     // material module last
     MaterialModule,
     ReactiveFormsModule,

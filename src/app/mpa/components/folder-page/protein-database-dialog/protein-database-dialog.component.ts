@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService2} from '../../data-navigation-tree/services/data2.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
+import {HttpClientService} from '../../../../core/services/http-client.service';
 
 export class ProteinDBDialogData {
   dbName: string;
@@ -21,26 +22,18 @@ export class ProteinDatabaseDialogComponent implements OnInit {
   existingNodeNames: string[];
   formData: ProteinDBDialogData = new ProteinDBDialogData();
 
-  private _dataMap: Map<number, DataItem>;
+  // private _dataMap: Map<number, DataItem>;
 
   constructor(
     public dialogRef: MatDialogRef<ProteinDatabaseDialogComponent>,
     private fb: FormBuilder,
     private dataService: DataService2,
-    // private uploaderService: HttpClientService,
+    private uploaderService: HttpClientService,
   ) {
   }
 
   ngOnInit() {
-    this.dataService.dataMap.subscribe(items => {
-      // TODO: this._dataMap = items;
-    });
-
-    this.existingNodeNames = [];
-
-    for (const [key, value] of this._dataMap.entries()) {
-      this.existingNodeNames.push(value.displayName);
-    }
+    this.existingNodeNames = this.dataService.getExistingNodeNames();
 
     this.proteinDBForm = this.fb.group({
       dbName: ['', [
