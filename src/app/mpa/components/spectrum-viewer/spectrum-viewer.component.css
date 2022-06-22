@@ -7,9 +7,21 @@ button{
   background-color:rgb(249, 249, 249);
 }
 
-.active-button{
+.active-button-Y1{
   width:49px;
-  background-color:rgb(2, 172, 115);
+  background-color: #10FFCB;
+}
+.active-button-Y2{
+  width:49px;
+  background-color: #418700;
+}
+.active-button-B1{
+  width:49px;
+  background-color: #e107ae;
+}
+.active-button-B2{
+  width:49px;
+  background-color: #f5064a;
 }
 .chart-buttons{
   margin-top:40px;

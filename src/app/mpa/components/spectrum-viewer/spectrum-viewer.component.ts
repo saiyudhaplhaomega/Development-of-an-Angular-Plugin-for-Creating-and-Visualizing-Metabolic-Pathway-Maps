@@ -16,13 +16,19 @@ export type DataPoint = {
 })
 export class SpectrumViewerComponent implements OnInit {
 
-
+  // TODO : fix overlapping of same Ions within different sets -> ions within y1 AND y2 currently produce two columns -> one overlaps over the other, hindering visibility 
   // showIon states
-  showY1 = false;
-  showY2 = false;
-  showB1 = false;
-  showB2 = false;
+  private showY1 = false;
+  private showY2 = false;
+  private showB1 = false;
+  private showB2 = false;
 
+  // colors
+  private defaultColor = '#999999';
+  private y1Color = '#10FFCB';
+  private y2Color = '#418700';
+  private b1Color = '#e107ae';
+  private b2Color = '#f5064a';
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -36,8 +42,8 @@ export class SpectrumViewerComponent implements OnInit {
         label: 'noise',
         pointStyle: 'line',
         pointRadius: 3,
-        backgroundColor: '#999999',
-        borderColor: '#999999',
+        backgroundColor: this.defaultColor,
+        borderColor: this.defaultColor,
         borderWidth: 1,
         showLine: true,
       },
@@ -46,8 +52,8 @@ export class SpectrumViewerComponent implements OnInit {
         label: 'y1',
         pointStyle: 'line',
         pointRadius: 3,
-        backgroundColor: '#999999',
-        borderColor: '#999999',
+        backgroundColor: this.defaultColor,
+        borderColor: this.defaultColor,
         borderWidth: 1,
         showLine: true
       },
@@ -56,8 +62,8 @@ export class SpectrumViewerComponent implements OnInit {
         label: 'y2',
         pointStyle: 'line',
         pointRadius: 3,
-        backgroundColor: '#999999',
-        borderColor: '#999999',
+        backgroundColor: this.defaultColor,
+        borderColor: this.defaultColor,
         borderWidth: 1,
         showLine: true,
       },
@@ -66,8 +72,8 @@ export class SpectrumViewerComponent implements OnInit {
         label: 'b1',
         pointStyle: 'line',
         pointRadius: 3,
-        backgroundColor: '#999999',
-        borderColor: '#999999',
+        backgroundColor: this.defaultColor,
+        borderColor: this.defaultColor,
         borderWidth: 1,
         showLine: true,
       },
@@ -76,8 +82,8 @@ export class SpectrumViewerComponent implements OnInit {
         label: 'b2',
         pointStyle: 'line',
         pointRadius: 3,
-        backgroundColor: '#999999',
-        borderColor: '#999999',
+        backgroundColor: this.defaultColor,
+        borderColor: this.defaultColor,
         borderWidth: 1,
         showLine: true,
       }
@@ -172,41 +178,41 @@ export class SpectrumViewerComponent implements OnInit {
 
   toggleY1() {   // sets border and backgroundColor so that when datapoint is hovered over the correct color is displayed
     this.showY1 = !this.showY1;
-    this.scatterChartData.datasets[1].borderColor = ((this.showY1 === false) ? '#999999' : '#a9d93c');
-    this.scatterChartData.datasets[1].backgroundColor = ((this.showY1 === false) ? '#999999' : '#a9d93c');
+    this.scatterChartData.datasets[1].borderColor = ((this.showY1 === false) ? this.defaultColor : this.y1Color);
+    this.scatterChartData.datasets[1].backgroundColor = ((this.showY1 === false) ? this.defaultColor : this.y1Color);
     this.chart?.update();
   }
 
   toggleY2() {
     this.showY2 = !this.showY2;
-    this.scatterChartData.datasets[2].borderColor = ((this.showY2 === false) ? '#999999' : '#60720f');
-    this.scatterChartData.datasets[2].backgroundColor = ((this.showY2 === false) ? '#999999' : '#60720f');
+    this.scatterChartData.datasets[2].borderColor = ((this.showY2 === false) ? this.defaultColor : this.y2Color);
+    this.scatterChartData.datasets[2].backgroundColor = ((this.showY2 === false) ? this.defaultColor : this.y2Color);
     this.chart?.update();
   }
 
   toggleB1() {
     this.showB1 = !this.showB1;
-    this.scatterChartData.datasets[3].borderColor = ((this.showB1 === false) ? '#999999' : '#ff6f69');
-    this.scatterChartData.datasets[3].backgroundColor = ((this.showB1 === false) ? '#999999' : '#ff6f69');
+    this.scatterChartData.datasets[3].borderColor = ((this.showB1 === false) ? this.defaultColor : this.b1Color);
+    this.scatterChartData.datasets[3].backgroundColor = ((this.showB1 === false) ? this.defaultColor : this.b1Color);
     this.chart?.update();
   }
 
   toggleB2() {
     this.showB2 = !this.showB2;
-    this.scatterChartData.datasets[4].borderColor = ((this.showB2 === false) ? '#999999' : '#e3528c');
-    this.scatterChartData.datasets[4].backgroundColor = ((this.showB2 === false) ? '#999999' : '#e3528c');
+    this.scatterChartData.datasets[4].borderColor = ((this.showB2 === false) ? this.defaultColor : this.b2Color);
+    this.scatterChartData.datasets[4].backgroundColor = ((this.showB2 === false) ? this.defaultColor : this.b2Color);
     this.chart?.update();
   }
 
   resetChart() {
-    this.scatterChartData.datasets[1].borderColor = '#999999';
-    this.scatterChartData.datasets[1].backgroundColor = '#999999';
-    this.scatterChartData.datasets[2].borderColor = '#999999';
-    this.scatterChartData.datasets[2].backgroundColor = '#999999';
-    this.scatterChartData.datasets[3].borderColor = '#999999';
-    this.scatterChartData.datasets[3].backgroundColor = '#999999';
-    this.scatterChartData.datasets[4].borderColor = '#999999';
-    this.scatterChartData.datasets[4].backgroundColor = '#999999';
+    this.scatterChartData.datasets[1].borderColor = this.defaultColor;
+    this.scatterChartData.datasets[1].backgroundColor = this.defaultColor;
+    this.scatterChartData.datasets[2].borderColor = this.defaultColor;
+    this.scatterChartData.datasets[2].backgroundColor = this.defaultColor;
+    this.scatterChartData.datasets[3].borderColor = this.defaultColor;
+    this.scatterChartData.datasets[3].backgroundColor = this.defaultColor;
+    this.scatterChartData.datasets[4].borderColor = this.defaultColor;
+    this.scatterChartData.datasets[4].backgroundColor = this.defaultColor;
     this.showY1 = false;
     this.showY2 = false;
     this.showB1 = false;

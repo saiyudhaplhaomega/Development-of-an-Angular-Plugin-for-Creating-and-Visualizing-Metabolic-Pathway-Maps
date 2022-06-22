@@ -5,15 +5,15 @@ export class SpectrumDataObject {
 
     private tolerance = 1
 
-    ySingle: DataPoint[] = []
-    yDouble: DataPoint[] = []
-    //y0: DataPoint[] = []
-    //yStar: DataPoint[] = []
-    bSingle: DataPoint[] = []
-    bDouble: DataPoint[] = []
-    //b0: DataPoint[] = []
-    //bStar: DataPoint[] = []
-    rest: DataPoint[] = []
+    public ySingle: DataPoint[] = []
+    public yDouble: DataPoint[] = []
+    //public y0: DataPoint[] = []
+    //public yStar: DataPoint[] = []
+    public bSingle: DataPoint[] = []
+    public bDouble: DataPoint[] = []
+    //public b0: DataPoint[] = []
+    //public bStar: DataPoint[] = []
+    public rest: DataPoint[] = []
 
     originalArray: DataPoint[] = []
     peptideSequence: String = ""
