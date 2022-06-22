@@ -129,13 +129,16 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     // get protein lists from server
     this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
       filename: 'sample.mgf', experimentID: this.dataItemOfThisComponent.uuid
+      // TODO: deprecated: error
     }, Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
+      // TODO: THIS IS THE DUMMY DATA:
       const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
         numberOfMainGroups: 100, subGroupsPerMainGroup: 2
       });
       // this.mpaTableDataService.setMpaData(data);
       this.mpaTableDataService.setMpaData(proteinGroups);
     }, err => {
+      // TODO: THIS IS THE DUMMY DATA:
       const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
         numberOfMainGroups: 100, subGroupsPerMainGroup: 2
       });
