@@ -26,7 +26,7 @@ interface InputLists {
 function createNewPeptide(): PeptideJSON {
 
   return {
-    id: Math.random().toString(36).substring(7),
+    sequenceID: Math.random().toString(36).substring(7),
   };
 }
 
@@ -76,7 +76,7 @@ function createPsmList(peptideList: PeptideJSON[], spectrumList: string[]): PsmJ
       peptideIndex++;
     }
 
-    psmList.push(createNewPsm(peptideList[peptideIndex].id, spectrumList[i]));
+    psmList.push(createNewPsm(peptideList[peptideIndex].sequenceID, spectrumList[i]));
   }
 
   return psmList;
@@ -87,7 +87,7 @@ function createNewProtein(peptideNodes: string[]): ProteinJSON {
 
   return {
     proteinID: Math.random().toString(36).substring(7),
-    name: Math.random().toString(36).substring(7),
+    accession: Math.random().toString(36).substring(7),
     peptideNodes: peptideNodes,
   };
 }
@@ -108,7 +108,7 @@ function createProteinList(peptideList: PeptideJSON[], length: number): ProteinJ
       proteinIndex++;
     }
 
-    peptideNodes.push(peptideList[i].id);
+    peptideNodes.push(peptideList[i].sequenceID);
   }
 
   if (peptideNodes.length > 0) {

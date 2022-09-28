@@ -132,11 +132,14 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
       // TODO: deprecated: error
     }, Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
       // TODO: THIS IS THE DUMMY DATA:
-      const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
-        numberOfMainGroups: 100, subGroupsPerMainGroup: 2
-      });
+      //const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
+      //  numberOfMainGroups: 100, subGroupsPerMainGroup: 2
+      //});
       // this.mpaTableDataService.setMpaData(data);
-      this.mpaTableDataService.setMpaData(proteinGroups);
+      console.log("original protein lists")
+      console.log(data)
+      this.mpaTableDataService.setMpaData(data.filter(obj => obj !== null));
+      //this.mpaTableDataService.setMpaData(proteinGroups);
     }, err => {
       // TODO: THIS IS THE DUMMY DATA:
       const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {

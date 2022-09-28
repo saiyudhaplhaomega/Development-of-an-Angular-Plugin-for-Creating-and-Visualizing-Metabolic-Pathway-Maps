@@ -18,13 +18,15 @@ export class SpectrumDataObject {
     originalArray: DataPoint[] = []
     peptideSequence: String = ""
 
-    constructor(dataArray: DataPoint[],peptideSequence: String){
-        this.originalArray=dataArray
+    constructor(peakArray: DataPoint[],peptideSequence: String){
+        this.originalArray=peakArray
         this.peptideSequence=peptideSequence
 
-        if(dataArray.length>0 && peptideSequence.length>0){    //make sure the object only gets fully initialised if there is actually any data passed in
+        if(peakArray.length>0 && peptideSequence.length>0){    //make sure the object only gets fully initialised if there is actually any data passed in
         this.initialize()
         }
+
+        //TODO: Erro handling?
     }
 
     initialize(){

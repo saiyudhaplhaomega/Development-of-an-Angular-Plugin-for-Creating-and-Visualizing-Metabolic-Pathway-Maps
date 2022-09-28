@@ -133,7 +133,7 @@ export class SpectrumViewerComponent implements OnInit {
     }); */
     this.mpaTableDataService.spectrumDataObject$.subscribe({
       next: dataObject => this.handleSpectrumServiceData(dataObject),
-      complete: () => console.log('complete notification')
+      complete: () => console.log('handleSpectrumServiceData: complete notification')
     });
   }
 

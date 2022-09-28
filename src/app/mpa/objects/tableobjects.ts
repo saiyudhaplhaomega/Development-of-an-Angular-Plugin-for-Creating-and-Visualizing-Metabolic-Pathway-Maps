@@ -13,14 +13,16 @@ export enum Group {
 export interface ProteinGroupJSON {
 
   grouptype: Group;
-  parentProteinGroupID?: string;
-  childProteinGroupIDs?: string[];
+//  parentProteinGroupID?: string;
+//  childProteinGroupIDs?: string[];
 
   proteinGroupID: string;
+  parentProteinGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
 
+  proteinSubGroupList?: ProteinGroupObject[];
   proteinList: ProteinJSON[];
   peptideList: PeptideJSON[];
   psmList: PsmJSON[];
@@ -29,7 +31,7 @@ export interface ProteinGroupJSON {
 
 export interface ProteinJSON {
   proteinID: string;
-  name: string;  // TODO: what should be the name?
+  accession: string; //TODO: missing?
   description?: string; // TODO: missing
   peptideNodes: string[];
 }
@@ -39,7 +41,7 @@ export interface PeptideNode {
 }
 
 export interface PeptideJSON {
-  id: string;
+  sequenceID: string;
 }
 
 export interface PsmJSON {
@@ -55,26 +57,25 @@ export interface Spectrum {
 }
 
 export class ProteinGroupObject implements ProteinGroupJSON {
-
   grouptype: Group;
-  parentProteinGroupID?: string;
-  childProteinGroupIDs?: string[];
-
-  experimentID: string;
-  peptideList: PeptideObject[];
   proteinGroupID: string;
-  proteinList: ProteinObject[];
-  psmList: PsmObject[];
+  parentProteinGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
+  experimentID: string;
+
+  proteinSubGroupList?: ProteinGroupObject[];
+  proteinList: ProteinObject[];  
+  peptideList: PeptideObject[];
+  psmList: PsmObject[];
   spectrumIDs: string[];
 }
 
 export class ProteinObject implements ProteinJSON {
-  description: string;
-  name: string;
-  peptideNodes: string[];
   proteinID: string;
+  accession: string;
+  description: string;
+  peptideNodes: string[];
 }
 
 export class PeptideNodeObject implements PeptideNode {
@@ -82,7 +83,7 @@ export class PeptideNodeObject implements PeptideNode {
 }
 
 export class PeptideObject implements PeptideJSON {
-  id: string;
+  sequenceID: string;
 }
 
 export class PsmObject implements PsmJSON {
