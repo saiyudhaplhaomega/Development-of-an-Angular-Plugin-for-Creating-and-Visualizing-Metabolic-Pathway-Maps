@@ -16,7 +16,7 @@ export class DescriptionDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.mpaTableDataService.selectedProtein.subscribe(protein => {
-      this.selectedProteinName = protein ? protein.name : '';
+      this.selectedProteinName = protein ? protein.accession: '';
     });
   }
 

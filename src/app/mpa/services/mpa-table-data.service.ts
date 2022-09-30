@@ -132,12 +132,12 @@ export class MpaTableDataService {
 
   setPeptidesForSelectedProtein() {
     this.peptidesForSelectedProtein.next(this.selectedProteinGroup.value.peptideList.filter(
-      peptide => this.selectedProtein.value.peptideNodes.includes(peptide.id)));
+      peptide => this.selectedProtein.value.peptideNodes.includes(peptide.sequenceID)));
   }
 
   setPsmsForSelectedPeptide() {
     this.psmsForSelectedPeptide.next(this.selectedProteinGroup.value.psmList.filter(
-      psm => psm.peptideID === this.selectedPeptide.value.id));
+      psm => psm.peptideID === this.selectedPeptide.value.sequenceID));
   }
 
   highlightIfSelected(row: ProteinGroupObject | ProteinObject | PeptideObject | PsmObject): boolean {
@@ -150,8 +150,8 @@ export class MpaTableDataService {
       return this.selectedProtein.value && row.proteinID === this.selectedProtein.value.proteinID;
     }
 
-    if ('id' in row) {
-      return this.selectedPeptide.value && row.id === this.selectedPeptide.value.id;
+    if ('sequenceID' in row) {
+      return this.selectedPeptide.value && row.sequenceID === this.selectedPeptide.value.sequenceID;
     }
 
     if ('psmID' in row) {
@@ -173,7 +173,7 @@ export class MpaTableDataService {
     let newtableData: ProteinGroupObject[];
     switch (groupSelection) {
       case GroupSelection.MAINGROUPS:
-        newtableData = this.mpaData.filter(group => 'childProteinGroupIDs' in group);
+        newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
         break;
       case GroupSelection.SUBGROUPS:
         newtableData = this.mpaData.filter(group => 'parentProteinGroupID' in group);

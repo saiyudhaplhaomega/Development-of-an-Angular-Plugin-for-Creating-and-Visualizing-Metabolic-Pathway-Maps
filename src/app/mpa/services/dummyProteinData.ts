@@ -124,7 +124,7 @@ function createProteinGroupFromInputLists(groupId: string,
                                           experimentId: string,
                                           inputLists: InputLists,
                                           parent: string,
-                                          children?: string[]): ProteinGroupJSON {
+                                          children?: ProteinGroupObject[]): ProteinGroupJSON {
 
   const proteinGroupObject: ProteinGroupJSON = {
     grouptype: groupingOption,
@@ -145,7 +145,9 @@ function createProteinGroupFromInputLists(groupId: string,
     return proteinGroupObject;
   }
 
-  proteinGroupObject.childProteinGroupIDs = children;
+  proteinGroupObject.proteinSubGroupList = children;
+
+
   return proteinGroupObject;
 }
 
@@ -185,10 +187,10 @@ function createMainFromSubGroups(groupId: string,
     proteinList: [],
   };
 
-  const children = [];
+  const children = childGroups;
 
   childGroups.forEach(childGroup => {
-    children.push(childGroup.proteinGroupID);
+    //children.push(childGroup.proteinGroupID);
 
     inputLists.spectrumIDs.push(...childGroup.spectrumIDs);
     inputLists.peptideList.push(...childGroup.peptideList);
@@ -196,7 +198,7 @@ function createMainFromSubGroups(groupId: string,
     inputLists.proteinList.push(...childGroup.proteinList);
   });
 
-  return createProteinGroupFromInputLists(groupId, mainGroupOption, experimentID, inputLists, '', children);
+  return createProteinGroupFromInputLists(groupId, mainGroupOption, experimentID, inputLists, '', );
 }
 
 

@@ -43,8 +43,11 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log("init table.component")
     this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
       this.dataSource.data = mpaTableData;
+      console.log(this.dataSource.data)
+      console.log(mpaTableData)
     });
 
     this.mpaTableDataService.selectedProteinGroup.subscribe(proteinGroup => {
