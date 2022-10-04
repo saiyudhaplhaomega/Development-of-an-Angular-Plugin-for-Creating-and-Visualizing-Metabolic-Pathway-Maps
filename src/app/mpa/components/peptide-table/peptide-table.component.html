@@ -11,7 +11,7 @@
       <!-- Peptide Count Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Sequence</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.sequenceID}} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
