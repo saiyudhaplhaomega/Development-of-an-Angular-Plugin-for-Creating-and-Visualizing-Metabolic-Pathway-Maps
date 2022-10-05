@@ -34,6 +34,10 @@
   cursor: pointer;
 }
 
+tr.table-detail-row{
+  height: 0;  
+}
+
 /*.table-element-row td {*/
 /*  border-bottom-width: 0;*/
 /*}*/

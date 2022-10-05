@@ -31,7 +31,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<ProteinGroupJSON>;
   showDetails = false;
 
-  expandedElement: string | null;
+  expandedElement: string = 'none';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -43,10 +43,8 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log("init table.component")
     this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
       this.dataSource.data = mpaTableData;
-      console.log(this.dataSource.data)
       console.log(mpaTableData)
     });
 
@@ -94,7 +92,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   onExpand(row: ProteinGroupObject) {
     if (this.expandedElement === row.proteinGroupID) {
-      this.expandedElement = null;
+      this.expandedElement = 'none';
       return;
     }
     this.expandedElement = row.proteinGroupID;

@@ -18,6 +18,7 @@ export interface ProteinGroupJSON {
 
   proteinGroupID: string;
   parentProteinGroupID?: string;
+  proteinSubGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
@@ -60,6 +61,7 @@ export class ProteinGroupObject implements ProteinGroupJSON {
   grouptype: Group;
   proteinGroupID: string;
   parentProteinGroupID?: string;
+  proteinSubGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
