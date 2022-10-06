@@ -140,10 +140,14 @@ export class MpaTableDataService {
       psm => psm.peptideID === this.selectedPeptide.value.sequenceID));
   }
 
-  highlightIfSelected(row: ProteinGroupObject | ProteinObject | PeptideObject | PsmObject): boolean {
+  highlightIfSelected(row: ProteinGroupObject | ProteinGroupObject | ProteinObject | PeptideObject | PsmObject): boolean {
 
     if ('proteinGroupID' in row) {
       return this.selectedProteinGroup.value && row.proteinGroupID === this.selectedProteinGroup.value.proteinGroupID;
+    }
+    
+    if ('proteinSubGroupID' in row) {
+      return this.selectedProteinGroup.value && row.proteinSubGroupID === this.selectedProteinGroup.value.proteinSubGroupID;
     }
 
     if ('proteinID' in row) {
@@ -176,7 +180,10 @@ export class MpaTableDataService {
         newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
         break;
       case GroupSelection.SUBGROUPS:
-        newtableData = this.mpaData.filter(group => 'parentProteinGroupID' in group);
+        //newtableData = this.mpaData.filter(group => 'proteinSubGroupID' in group);
+        let subgroups = [];
+        this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
+        newtableData = subgroups;
         break;
       case GroupSelection.HIERARCHICAL:
         newtableData = this.mpaData;

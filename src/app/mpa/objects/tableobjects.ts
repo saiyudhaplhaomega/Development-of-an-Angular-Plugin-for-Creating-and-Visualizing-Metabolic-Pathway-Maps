@@ -16,7 +16,7 @@ export interface ProteinGroupJSON {
 //  parentProteinGroupID?: string;
 //  childProteinGroupIDs?: string[];
 
-  proteinGroupID: string;
+  proteinGroupID?: string;
   parentProteinGroupID?: string;
   proteinSubGroupID?: string;
   representativeAccession?: string;
@@ -59,7 +59,7 @@ export interface Spectrum {
 
 export class ProteinGroupObject implements ProteinGroupJSON {
   grouptype: Group;
-  proteinGroupID: string;
+  proteinGroupID?: string;
   parentProteinGroupID?: string;
   proteinSubGroupID?: string;
   representativeAccession?: string;

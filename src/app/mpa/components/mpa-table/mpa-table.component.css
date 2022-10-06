@@ -38,6 +38,10 @@ tr.table-detail-row{
   height: 0;  
 }
 
+.table-detail-cell{
+  padding-left:138px;
+}
+
 /*.table-element-row td {*/
 /*  border-bottom-width: 0;*/
 /*}*/

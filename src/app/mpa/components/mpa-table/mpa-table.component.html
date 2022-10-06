@@ -55,14 +55,19 @@
       </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
-        <td [@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+        <td style="padding-left:0px; padding-right:0px;"[@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
           <div *ngIf="this.mpaTableDataService.groupSelection === 'hierarchical' && this.getRowtype(row) === 'maingroup' && row.proteinGroupID === expandedElement">
-            <table style="width: 100%">
-              <tr *ngFor="let subRow of row.proteinSubGroupList" (click)="onClick(subRow)">
-                <td mat-cell [attr.colspan]="1"></td>
-                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
-                <td mat-cell>{{this.getRowtype(subRow)}}</td>
-                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
+            <table style="width: 100%;">
+              <tr *ngFor="let subRow of row.proteinSubGroupList" (click)="onClick(subRow)" class="subroup-row"
+                  [ngClass]="{
+                    'table-highlight-row': mpaTableDataService.highlightIfSelected(subRow),
+                    'table-element-row': !mpaTableDataService.highlightIfSelected(subRow)}"
+                    style="padding-left:200px;"
+                    >
+                <td mat-cell style="width:160px;"></td>
+                <td mat-cell style="width:220px;">{{subRow.proteinSubGroupID}}</td>
+                <td mat-cell style="width:167px;">{{this.getRowtype(subRow)}}</td>
+                <td mat-cell style="width:139px;">{{subRow.proteinSubGroupID}}</td>
                 <td mat-cell>{{subRow.proteinSubGroupID}}</td>
               </tr>
             </table>
@@ -113,9 +118,8 @@
         <div (click)="accordionItem.toggle()" class="details-accordion-item-header">
           <p style="font-weight: 400; margin: 0">
             {{
-            (accordionItem.expanded ? "displaying group " : "show details for group ") +
-            mpaTableDataService.selectedProteinGroup.value.proteinGroupID
-            }}
+            (accordionItem.expanded ? "displaying group " : "show details for group ")
+            }}{{mpaTableDataService.selectedProteinGroup.value.proteinGroupID || mpaTableDataService.selectedProteinGroup.value.proteinSubGroupID}}
           </p>
         </div>
 
