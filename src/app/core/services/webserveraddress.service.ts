@@ -16,11 +16,10 @@ export enum Endpoints {
   // LIST_STREAMINGSESSIONS = 'mpacloud/v1/liststreamingsessions',
 
   // results
-  FETCH_PEPTIDES_PROTEIN = 'mpacloud/v1/fetchPeptidesProtein',
-  FETCH_PEPTIDES_PROTEIN_GROUP = 'mpacloud/v1/fetchProteins',
-  FETCH_PROTEINS = 'mpacloud/v1/fetchPeptidesProteinGroup',
-
   GET_PROTEIN_GROUPS = 'mparesults/getproteingroups',
+  //TODO: implement in back-end
+  GET_PROTEIN_SEQUENCE = 'mparesults/getproteinsequence',
+  GET_SPECTRUM = 'mparesults/getspectrum',
 
   // LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
 

@@ -28,7 +28,7 @@ import { ProteinDatabaseDialogComponent } from './components/folder-page/protein
 import {ProteinDatabaseComponent} from './components/protein-database/protein-database-component';
 import {PsmTableComponent} from './components/psm-table/psm-table.component';
 import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-viewer.component';
-import { ProteineSequenceViewerComponent } from './components/peptide-sequence-viewer/proteine-sequence-viewer.component';
+import { ProteineSequenceViewerComponent } from './components/protein-sequence-viewer/proteine-sequence-viewer.component';
 import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({

@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {PeptideObject, ProteinGroupObject, ProteinObject, PsmObject} from '../objects/tableobjects';
+import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, PsmObject} from '../objects/tableobjects';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpClientService} from '../../core/services/http-client.service';
 import {Endpoints} from '../../core/services/webserveraddress.service';
 import {HttpParams} from '@angular/common/http';
 import {spectraMockData1, spectraMockData2} from '../components/spectrum-viewer/mockData';
 import {SpectrumDataObject} from '../components/spectrum-viewer/spectrum-data-object';
+import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
+import { createProteinGroupData } from './dummyProteinData';
 
 export enum GroupSelection {
   MAINGROUPS = 'maingroups',
@@ -31,6 +33,7 @@ export class MpaTableDataService {
   public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
 
   public spectrumData = new BehaviorSubject<string>(undefined);
+  public expID = new BehaviorSubject<string>(undefined)
 
   public requestingSpectrum = new Subject<boolean>();
 
@@ -42,12 +45,12 @@ export class MpaTableDataService {
   // initialize BehaviorSubject with new, empty SpectrumDataObject
   public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
 
-  constructor(httpClientService: HttpClientService) {
+  constructor(private httpClientService: HttpClientService) {
     this.requestingSpectrum.next(true);
     this.selectedProtein.subscribe(protein => {
       if (typeof protein !== 'undefined') {
         this.setPeptidesForSelectedProtein();
-        this.requestSequence(httpClientService);
+        this.requestSequence();
       }
     });
 
@@ -59,47 +62,58 @@ export class MpaTableDataService {
 
     this.selectedPsm.subscribe(psm => {
       if (typeof psm !== 'undefined') {
-        this.requestSpectrum(httpClientService);
+        this.requestSpectrum();
       }
     });
     this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([],''));
   }
 
-  private requestSequence(httpClientService: HttpClientService) {
+  public requestProteinGroups(){
+    this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
+      filename: 'sample.mgf', //sinnlos?
+      experimentID: this.expID.value
+    }, Endpoints.GET_PROTEIN_GROUPS).subscribe({
+      next: (proteinGroups) => {
+        this.setMpaData(proteinGroups);
+      },
+      error: () => {
+        // TODO: THIS IS THE DUMMY DATA:
+        const proteinGroups = createProteinGroupData('', GroupingOptions.OCCAM, {
+          numberOfMainGroups: 100, subGroupsPerMainGroup: 2
+        });
+        console.log('ERROR: mpa-table-data.service.requestProteinGroups')
+        this.setMpaData(proteinGroups);
+      }
+    });
+  }
+
+  private requestSequence() {
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
-          userID: 'sample.mgf',
+          userID: 'sample.mgf', //userID sinnlos
           experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003',
           peptideID: this.selectedProtein.value.proteinID
         }
       });
     this.requestingProteinSequence = true;
-    httpClientService.getObject<string>(Endpoints.UNIMPLEMENTED, params).subscribe(proteinSequence => {
+    this.httpClientService.getObject<string>(Endpoints.GET_PROTEIN_SEQUENCE, params).subscribe({
+      next: (proteinSequence) => {
         this.proteinSequenceData.next(proteinSequence);
         this.requestingProteinSequence = false;
       },
-      error => {
+      error: () => {
         this.proteinSequenceData.next(Math.random().toString(36).substring(7));
         console.log('ERRRORR...');
         this.requestingProteinSequence = false;
-      });
+      }
+    });
   }
 
   private i = 0;
 
-  private requestSpectrum(httpClientService: HttpClientService) {
-
-    // TODO: just using mock data, remove once endpoint works
-    this.requestingSpectrum.next(false);
-    if ((this.i % 2) == 0) {
-      this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints,spectraMockData1.peptideSequence));
-    } else if ((this.i % 2) != 0) {
-      this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints,spectraMockData2.peptideSequence));
-    }
-    this.i++;
-    // actual spectrum request
-/*    const params: HttpParams = new HttpParams(
+  private requestSpectrum() {  
+    const params: HttpParams = new HttpParams(
       {
         fromObject: {
           userID: 'sample.mgf',
@@ -108,15 +122,22 @@ export class MpaTableDataService {
         }
       });
 
-    httpClientService.getObject<string>(Endpoints.UNIMPLEMENTED, params).subscribe(spectrumData => {
+    this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUM, params).subscribe({
+      next: (spectrumData) => {
         this.spectrumData.next(spectrumData);
-        this.requestingSpectrum = false;
+        this.requestingSpectrum.next(false);
       },
-      error => {
-        this.spectrumData.next(Math.random().toString(36).substring(7));
-        console.log('ERRRORR...');
-        this.requestingSpectrum = false;
-      });*/
+      error: () => {
+        // TODO: just using mock data, remove once endpoint works
+        this.requestingSpectrum.next(false);
+        if ((this.i % 2) == 0) {
+          this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
+        } else if ((this.i % 2) != 0) {
+          this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
+        }
+        this.i++;
+      }
+    })
   }
 
   // TODO: this method might be reusable?
@@ -191,6 +212,10 @@ export class MpaTableDataService {
 
     this.mpaTableData.next(newtableData);
     this.selectedProteinGroup.next(newtableData[0]);
+  }
+
+  sortMpaTableData(groupData: ProteinGroupObject[]){
+    
   }
 
   onGroupSelection() {

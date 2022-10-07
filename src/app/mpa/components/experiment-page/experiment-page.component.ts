@@ -3,18 +3,16 @@ import {DataService2} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
-import {GroupingOptions, ProteinGroupObject} from '../../objects/tableobjects';
+import {ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material/dialog';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
-import {Endpoints} from '../../../core/services/webserveraddress.service';
 import {MPAFile} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
 import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
 import {Observable} from 'rxjs';
-import {createProteinGroupData} from '../../services/dummyProteinData';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 import {ContentComponent} from '../../mpa.component';
 
@@ -84,9 +82,10 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   // private _dataMap: Map<string, DataItem>;
   // private children: string[];
 
-  uploadDialogId = 'uploadDialog';
+  uploadDialogId: string;
 
   constructor(private _snackBar: MatSnackBar, private dataService: DataService2, private uploaderService: HttpClientService, private uploadProgressService: UploadProgressService, private dialog: MatDialog, private mpaTableDataService: MpaTableDataService) {
+    this.uploadDialogId = 'uploadDialog';
   }
 
   ngOnInit() {
@@ -98,6 +97,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
     // this.realUUID = this._dataMap.get(this.id).uuid;
 
+    //this.mpaTableDataService.currentExperimentID.next(this.dataItemOfThisComponent.uuid);
+    this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid)
     this.creationDate = this.dataItemOfThisComponent.creation_date;
     this.description = this.dataItemOfThisComponent.description;
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
@@ -105,6 +106,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
 
+    this.mpaTableDataService.requestProteinGroups();
     // this.getChildNodes();
 
     // this.children = this._dataMap.get(this.uuid).children;
@@ -119,28 +121,13 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     //   }
     // });
 
+    //dataStats, calculate if there is any
     this.mpaTableDataService.mpaTableData.subscribe(mpaData => {
       this.hasMpaData = mpaData.length > 0;
       if (mpaData.length > 0) {
         this.datStats = this.calculateDataStats(mpaData);
       }
     });
-
-    // get protein lists from server
-    this.uploaderService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
-      filename: 'sample.mgf', experimentID: this.dataItemOfThisComponent.uuid
-      // TODO: deprecated: error
-    }, Endpoints.GET_PROTEIN_GROUPS).subscribe(data => {
-      this.mpaTableDataService.setMpaData(data);
-    }, err => {
-      // TODO: THIS IS THE DUMMY DATA:
-      const proteinGroups = createProteinGroupData(this.realUUID, GroupingOptions.OCCAM, {
-        numberOfMainGroups: 100, subGroupsPerMainGroup: 2
-      });
-      this.mpaTableDataService.setMpaData(proteinGroups);
-    });
-
-
   }
 
 // const protein_groups = [];
