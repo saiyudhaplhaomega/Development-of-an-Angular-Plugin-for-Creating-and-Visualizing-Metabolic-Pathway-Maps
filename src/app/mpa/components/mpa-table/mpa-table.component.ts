@@ -44,6 +44,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.mpaTableDataService.mpaTableData.subscribe(mpaTableData => {
+      //TODO sort IDs -> integer sort, then pass to dataSource.data
       this.dataSource.data = mpaTableData;
     });
 

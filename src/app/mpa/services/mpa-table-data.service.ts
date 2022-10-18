@@ -199,15 +199,18 @@ export class MpaTableDataService {
     switch (groupSelection) {
       case GroupSelection.MAINGROUPS:
         newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
+        newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
         break;
       case GroupSelection.SUBGROUPS:
         //newtableData = this.mpaData.filter(group => 'proteinSubGroupID' in group);
         let subgroups = [];
         this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
         newtableData = subgroups;
+        newtableData.sort((a, b) =>{return parseInt(a.proteinSubGroupID) - parseInt(b.proteinSubGroupID);})
         break;
       case GroupSelection.HIERARCHICAL:
         newtableData = this.mpaData;
+        newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
     }
 
     this.mpaTableData.next(newtableData);
