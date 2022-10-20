@@ -206,10 +206,34 @@ export class MpaTableDataService {
         let subgroups = [];
         this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
         newtableData = subgroups;
-        newtableData.sort((a, b) =>{return parseInt(a.proteinSubGroupID) - parseInt(b.proteinSubGroupID);})
+        //newtableData.sort((a, b) =>{return parseInt(a.proteinSubGroupID) - parseInt(b.proteinSubGroupID);})
+        newtableData.sort((a, b) => {
+          let aString = a.proteinSubGroupID.split("_");
+          let bString = b.proteinSubGroupID.split("_");
+          let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+          console.log(returnValue)
+          if (returnValue == 0) {
+            returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+          }
+          return returnValue;
+        })
+
         break;
       case GroupSelection.HIERARCHICAL:
         newtableData = this.mpaData;
+        newtableData.forEach(maingroup =>
+          maingroup.proteinSubGroupList.sort((a, b) => {
+            let aString = a.proteinSubGroupID.split("_");
+            let bString = b.proteinSubGroupID.split("_");
+            let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+            console.log(returnValue)
+            if (returnValue == 0) {
+              returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+            }
+            return returnValue;
+          })
+        )
+
         newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
     }
 
