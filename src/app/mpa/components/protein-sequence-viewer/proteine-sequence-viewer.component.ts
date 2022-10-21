@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProteinSequenceObject } from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 
 @Component({
@@ -8,7 +9,7 @@ import {MpaTableDataService} from '../../services/mpa-table-data.service';
 })
 export class ProteineSequenceViewerComponent implements OnInit {
 
-  proteinSequenceData: string;
+  proteinSequenceData: ProteinSequenceObject;
 
   constructor(public mpaTableDataService: MpaTableDataService) { }
 

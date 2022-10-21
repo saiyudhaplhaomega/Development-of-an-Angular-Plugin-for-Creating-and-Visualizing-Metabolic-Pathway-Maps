@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, PsmObject} from '../objects/tableobjects';
+import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject} from '../objects/tableobjects';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpClientService} from '../../core/services/http-client.service';
 import {Endpoints} from '../../core/services/webserveraddress.service';
@@ -37,7 +37,7 @@ export class MpaTableDataService {
 
   public requestingSpectrum = new Subject<boolean>();
 
-  public proteinSequenceData = new BehaviorSubject<string>(undefined);
+  public proteinSequenceData = new BehaviorSubject<ProteinSequenceObject>(undefined);
   public requestingProteinSequence = false;
 
   public groupSelection = 'maingroups';
@@ -92,18 +92,18 @@ export class MpaTableDataService {
       {
         fromObject: {
           userID: 'sample.mgf', //userID sinnlos
-          experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003',
-          peptideID: this.selectedProtein.value.proteinID
+          experimentID: this.expID.value,
+          proteinid: this.selectedProtein.value.proteinID
         }
       });
     this.requestingProteinSequence = true;
-    this.httpClientService.getObject<string>(Endpoints.GET_PROTEIN_SEQUENCE, params).subscribe({
+    this.httpClientService.getObject<ProteinSequenceObject>(Endpoints.GET_PROTEIN_SEQUENCE, params).subscribe({
       next: (proteinSequence) => {
         this.proteinSequenceData.next(proteinSequence);
         this.requestingProteinSequence = false;
       },
       error: () => {
-        this.proteinSequenceData.next(Math.random().toString(36).substring(7));
+        this.proteinSequenceData.next({proteinID: Math.random().toString(36).substring(7), sequence: Math.random().toString(36).substring(7)});
         console.log('ERRRORR...');
         this.requestingProteinSequence = false;
       }

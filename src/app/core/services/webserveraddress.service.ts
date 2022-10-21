@@ -17,9 +17,6 @@ export enum Endpoints {
 
   // results
   GET_PROTEIN_GROUPS = 'mparesults/getproteingroups',
-  //TODO: implement in back-end
-  GET_PROTEIN_SEQUENCE = 'mparesults/getproteinsequence',
-  GET_SPECTRUM = 'mparesults/getspectrum',
 
   // LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
 
@@ -40,6 +37,8 @@ export enum Endpoints {
   GET_EXPERIMENT_DATA = 'mpasearch/createexperiment',
   SEARCH_METADATA = 'mpasearch/searchmetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',
+  GET_PROTEIN_SEQUENCE = 'mpasearch/getproteinsequence',
+  GET_SPECTRUM = 'mpasearch/getspectrum',
   // proteinloader
   PROTEINLOADER_METADATA = 'proteinloader/fastametadata',
   PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadfasta',

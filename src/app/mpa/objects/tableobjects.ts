@@ -53,6 +53,11 @@ export interface PsmJSON {
   qValue?: number;  // TODO: missing
 }
 
+export interface ProteinSequenceJSON {
+  proteinID: string;
+  sequence: string;
+}
+
 export interface Spectrum {
   spectrumID: string; // TODO: Spectrum xml?
 }
@@ -94,6 +99,11 @@ export class PsmObject implements PsmJSON {
   qValue: number;
   searchEngine: string;
   spectrumID: string;
+}
+
+export class ProteinSequenceObject implements ProteinSequenceJSON {
+  proteinID: string;
+  sequence: string;
 }
 
 export class SpectrumObject implements Spectrum {
