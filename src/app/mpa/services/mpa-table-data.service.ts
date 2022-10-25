@@ -148,7 +148,9 @@ export class MpaTableDataService {
 
   setMpaData(mpaData: ProteinGroupObject[]) {
     this.mpaData = mpaData;
+    if(this.mpaData.length>0){
     this.setMpaTabledata(this.groupSelection);
+    };
   }
 
   setPeptidesForSelectedProtein() {
