@@ -49,6 +49,7 @@ export class ProphaneJobStateService {
   proteinReportFile: File;
   fastaFile: File;
   expertView = false;
+  filesToUpload: FileUploadData[];
 
   // TODO: better solution for this? --> popup message?
   noJobCardHeader: string;
@@ -220,17 +221,20 @@ export class ProphaneJobStateService {
       const uploadDataForServer: FileUploadData[] = [
         {
           uploadFile: this.proteinReportFile,
-          httpParameters: new HttpParams({fromObject: {name: this.currentProphaneJob.prophaneJobUUID}}),
-          fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
+          httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
+          //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
         },
         {
           uploadFile: this.fastaFile,
-          httpParameters: new HttpParams({fromObject: {name: this.currentProphaneJob.prophaneJobUUID}}),
-          fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
+          httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
+          //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
         }
       ];
 
-      this.uploaderService.addUploadFiles(uploadDataForServer);
+      //this.uploaderService.addUploadFiles(uploadDataForServer);
+      uploadDataForServer.map(file => {
+        this.filesToUpload.push(file);
+      })
     }
   }
 
@@ -267,7 +271,7 @@ export class ProphaneJobStateService {
       const dialogObservable = this.invokeUploadDialog();
 
       this.addFilesToUploadData();
-      this.uploaderService.performUpload(this.uploadDialogId);
+      this.uploaderService.performUpload(this.uploadDialogId,this.filesToUpload,Endpoints.FILES_UPLOAD);
 
       // TODO: start prophane job only if upload was successful?
       this.startProphaneJob();

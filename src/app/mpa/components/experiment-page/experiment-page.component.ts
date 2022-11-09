@@ -9,12 +9,13 @@ import {TextfieldDialogComponent} from '../../../core/components/textfield-dialo
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
-import {MPAFile} from '../../../prophane/objects/mpafile';
+import {MPAFile, MPAFileObject} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
 import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
 import {Observable} from 'rxjs';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 import {ContentComponent} from '../../mpa.component';
+import { Endpoints } from 'src/app/core/services/webserveraddress.service';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -55,6 +56,9 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   selectedPeaklistFile: File;
   selectedSearchFile: File;
   selectedFasta: File;
+
+  // files to upload to server
+  filesToUpload: FileUploadData[];
 
   // child node elements
   peaklistFileNode: DataItem;
@@ -211,7 +215,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
   async onSubmit() {
     this.uploadProgressService.reset();
-    this.uploaderService.clearUploadFiles();
+    //this.uploaderService.clearUploadFiles();
+    this.filesToUpload = [];
     const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
@@ -244,7 +249,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
         break;
     }
 
-    this.uploaderService.performUpload(this.uploadDialogId);
+    //this.uploaderService.performUpload(this.uploadDialogId);
+    this.uploaderService.performUpload(this.uploadDialogId,this.filesToUpload,Endpoints.FILES_UPLOAD);
 
     // invoked if upload dialog is closed
     onDialogClosingObservable.subscribe((uploadFailed) => {
@@ -280,17 +286,20 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     };
 
     const uploadDataForServer: FileUploadData = {
-      uploadFile: file, httpParameters: new HttpParams({fromObject: {jobid: ''}}), fileUploadAdress: uploadEndpoint,
+      uploadFile: file, httpParameters: new HttpParams({fromObject: {partid: ''}}),
     };
 
     // send meta data, receive fileuuid
     try {
-      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
+      //const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
+      const metaDataResponse = {fileID : Math.random()}
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?
-        // TODO: jobid = fileID ?
-        uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('jobid', metaDataResponse.fileID);
-        this.uploaderService.addUploadFiles([uploadDataForServer]);
+        // TODO: jobid = fileid ?
+        uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
+        
+        //this.uploaderService.addUploadFiles([uploadDataForServer]);
+        this.filesToUpload.push(uploadDataForServer);
       } else {
         throw new Error('File could not be created');
       }

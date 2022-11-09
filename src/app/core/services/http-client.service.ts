@@ -5,11 +5,12 @@ import {Observable} from 'rxjs';
 import {AuthGuard} from 'src/app/core/services/auth-guard.service';
 import {UploadProgressService} from './upload-progress.service';
 import {MatDialog} from '@angular/material/dialog';
+import {Endpoints} from '../../core/services/webserveraddress.service';
 
 export interface FileUploadData {
   uploadFile: File;
   httpParameters: HttpParams;
-  fileUploadAdress: string;
+  fileUploadAdress?: string;
 }
 
 @Injectable({
@@ -18,7 +19,7 @@ export interface FileUploadData {
 
 export class HttpClientService {
 
-  uploadFileArray: FileUploadData[];
+  //uploadFileArray: FileUploadData[];
 
   constructor(
     private http: HttpClient,
@@ -72,41 +73,91 @@ export class HttpClientService {
     });
   }
 
-  addUploadFiles(files: FileUploadData[]) {
-    this.uploadFileArray.push(...files);
+  postFiles(files: FileUploadData[], api: string) {
+    const fd = new FormData();
+    const multipartids: string[] = [];
+
+    fd.set('Content-Type', 'multipart/form-data');
+    files.map(file => {
+      fd.append(file.httpParameters.get('partid'),file.uploadFile);
+      multipartids.push(file.httpParameters.get('partid'));
+    });
+
+    const params = new HttpParams({fromObject: {multipartids: multipartids.toString()}})
+    return this.http.post(this.webserver.getEndpoint(api), fd, {
+       headers: new HttpHeaders({
+         'Authorization': this.authGuard.getUserAuthorization().toString(),
+       }),
+       observe: 'events',
+       params: params,
+       reportProgress: true
+     });
   }
 
-  clearUploadFiles() {
-    this.uploadFileArray = [];
-  }
+  // addUploadFiles(files: FileUploadData[]) {
+  //   this.uploadFileArray.push(...files);
+  // }
 
-  performUpload(dialogId) {
-    for (const fileUploadData of this.uploadFileArray) {
+  // clearUploadFiles() {
+  //   this.uploadFileArray = [];
+  // }
+
+  performUpload(dialogId: string, fileList: FileUploadData[], api: Endpoints) {
+    //TODO: handle big file-sizes -> split upload into multiple uploads
+    fileList.map(fileUploadData => {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
+    });
 
-      this.postFile(fileUploadData.uploadFile,
-        fileUploadData.fileUploadAdress, fileUploadData.httpParameters).subscribe(
-        event => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.uploadProgressService.changeReportLoaded(event.loaded);
-            //console.log(event);
-          } else if (event.type === HttpEventType.Response) {
-            //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
-          }
-        },
-        error => {
-          if (error.status === 500) {
-            // handle failed upload
-            if (this.dialog.getDialogById(dialogId)) {
-              this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
-              this.dialog.getDialogById(dialogId).componentInstance.uploadFailedMessage = error.statusText;
-            }
-          } else {
-            throw error;
-          }
+    this.postFiles(fileList, api).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.uploadProgressService.changeReportLoaded(event.loaded);
+          //console.log(event);
+        } else if (event.type === HttpEventType.Response) {
+          //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
         }
-      );
-    }
+      },
+      error: (error) => {
+        if (error.status === 500) {
+          // handle failed upload
+          if (this.dialog.getDialogById(dialogId)) {
+            this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
+            this.dialog.getDialogById(dialogId).componentInstance.uploadFailedMessage = error.statusText;
+          }
+        } else {
+          throw error;
+        }
+      }
+    })
   }
+
+  // performUpload(dialogId) {
+  //   for (const fileUploadData of this.uploadFileArray) {
+  //     this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
+
+  //     this.postFile(fileUploadData.uploadFile,
+  //       fileUploadData.fileUploadAdress, fileUploadData.httpParameters).subscribe(
+  //       event => {
+  //         if (event.type === HttpEventType.UploadProgress) {
+  //           this.uploadProgressService.changeReportLoaded(event.loaded);
+  //           //console.log(event);
+  //         } else if (event.type === HttpEventType.Response) {
+  //           //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
+  //         }
+  //       },
+  //       error => {
+  //         if (error.status === 500) {
+  //           // handle failed upload
+  //           if (this.dialog.getDialogById(dialogId)) {
+  //             this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
+  //             this.dialog.getDialogById(dialogId).componentInstance.uploadFailedMessage = error.statusText;
+  //           }
+  //         } else {
+  //           throw error;
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 
 }

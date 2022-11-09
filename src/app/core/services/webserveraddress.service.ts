@@ -7,6 +7,9 @@ export enum WebserverUrls {
 
 export enum Endpoints {
 
+  // TODO: split into MPA_SEARCH and PROPHANE
+  FILES_UPLOAD='',
+  
   UNIMPLEMENTED = '',
 
   // GET_EXPERIMENT = 'mpacloud/v1/getExperiment',
