@@ -11,7 +11,7 @@ import {UploadDialogComponent} from '../../../core/components/dialog/upload-dial
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {MPAFile, MPAFileObject} from '../../../prophane/objects/mpafile';
 import {HttpParams} from '@angular/common/http';
-import {UploadFileTypes, UploadFileTypeToEndpoints} from '../../objects/experimentUploadFile';
+import {UploadFileTypes} from '../../objects/experimentUploadFile';
 import {Observable} from 'rxjs';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';
 import {ContentComponent} from '../../mpa.component';
@@ -278,7 +278,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   async addFileToUploadData(file: File, fileType: UploadFileTypes, experimentId: string) {
     // TODO: implement use of endpoint for file upload independent from type
 
-    const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
+    //const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
     const metaDataForServer: MPAFile = {
       fileID: '', fileMetaData: JSON.stringify({fileName: file.name}), protdbID: this.proteinDBselection.uuid, experimentID: experimentId, fileType: fileType, fileStatus: ''
@@ -286,7 +286,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
     // send meta data, receive fileuuid
     try {
-      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
+      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, Endpoints.SEARCH_METADATA).toPromise();
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?
         // TODO: jobid = fileid ?

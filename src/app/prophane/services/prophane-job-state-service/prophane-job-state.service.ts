@@ -219,23 +219,23 @@ export class ProphaneJobStateService {
   addFilesToUploadData() {
     if (this.proteinReportFile && this.fastaFile) {
       // TODO: requires a change in backend or a switch to "postFile()" method
-      const uploadDataForServer: MultiFileUploadData = [
-        {
-          uploadFile: this.proteinReportFile,
-          httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
-          //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
-        },
-        {
-          uploadFile: this.fastaFile,
-          httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
-          //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
-        }
-      ];
+      // const uploadDataForServer: MultiFileUploadData = [
+      //   {
+      //     uploadFile: this.proteinReportFile,
+      //     httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
+      //     //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
+      //   },
+      //   {
+      //     uploadFile: this.fastaFile,
+      //     httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
+      //     //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
+      //   }
+      // ];
 
       //this.uploaderService.addUploadFiles(uploadDataForServer);
-      uploadDataForServer.map(file => {
-        this.filesToUpload.files.push(file);
-      })
+      //uploadDataForServer.map(file => {
+      //  this.filesToUpload.files.push(file);
+      //})
     }
   }
 
