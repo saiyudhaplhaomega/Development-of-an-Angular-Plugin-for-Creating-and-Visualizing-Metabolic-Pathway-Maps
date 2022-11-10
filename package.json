@@ -7,7 +7,7 @@
     "clean": "npm clean",
     "npm install": "npm install",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "ng update": "ng update",
     "test": "ng test",
     "lint": "ng lint",

@@ -8,8 +8,8 @@ export enum WebserverUrls {
 export enum Endpoints {
 
   // TODO: split into MPA_SEARCH and PROPHANE
-  FILES_UPLOAD='',
-  
+  FILES_UPLOAD='mpasearch/searchfilesupload',
+
   UNIMPLEMENTED = '',
 
   // GET_EXPERIMENT = 'mpacloud/v1/getExperiment',

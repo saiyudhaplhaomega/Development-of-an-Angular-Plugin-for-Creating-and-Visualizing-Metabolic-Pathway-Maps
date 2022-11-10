@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService2} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
+import {FileUploadData, HttpClientService, MultiFileUploadData, UploadFile} from '../../../core/services/http-client.service';
 import {ProteinGroupObject} from '../../objects/tableobjects';
 import {MatDialog} from '@angular/material/dialog';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
@@ -58,7 +58,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   selectedFasta: File;
 
   // files to upload to server
-  filesToUpload: FileUploadData[];
+  filesToUpload: MultiFileUploadData;
 
   // child node elements
   peaklistFileNode: DataItem;
@@ -216,13 +216,12 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   async onSubmit() {
     this.uploadProgressService.reset();
     //this.uploaderService.clearUploadFiles();
-    this.filesToUpload = [];
+    this.filesToUpload = {files: [], fileUploadAdress: Endpoints.FILES_UPLOAD, httpParameters: new HttpParams};
     const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
         await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-
         this.hasPeaklistFile = true;
         break;
 
@@ -285,21 +284,16 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
       fileID: '', fileMetaData: JSON.stringify({fileName: file.name}), protdbID: this.proteinDBselection.uuid, experimentID: experimentId, fileType: fileType, fileStatus: ''
     };
 
-    const uploadDataForServer: FileUploadData = {
-      uploadFile: file, httpParameters: new HttpParams({fromObject: {partid: ''}}),
-    };
-
     // send meta data, receive fileuuid
     try {
-      //const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
-      const metaDataResponse = {fileID : Math.random()}
+      const metaDataResponse = await this.uploaderService.postObject<MPAFile, MPAFile>(metaDataForServer, metaDataEndpoint).toPromise();
       if (metaDataResponse !== null) {
         // TODO: evaluate status instead of just checking for null?
         // TODO: jobid = fileid ?
-        uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
-        
+        //uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
+        const uploadDataForServer: UploadFile = {uploadFile: file, fileID: metaDataResponse.fileID};
         //this.uploaderService.addUploadFiles([uploadDataForServer]);
-        this.filesToUpload.push(uploadDataForServer);
+        this.filesToUpload.files.push(uploadDataForServer);
       } else {
         throw new Error('File could not be created');
       }

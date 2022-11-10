@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpEventType, HttpHeaders, HttpParams} from '@angular/common/http';
 import {WebserveraddressService} from './webserveraddress.service';
-import {Observable} from 'rxjs';
+import {Observable, partition} from 'rxjs';
 import {AuthGuard} from 'src/app/core/services/auth-guard.service';
 import {UploadProgressService} from './upload-progress.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -11,6 +11,17 @@ export interface FileUploadData {
   uploadFile: File;
   httpParameters: HttpParams;
   fileUploadAdress?: string;
+}
+
+export interface MultiFileUploadData {
+  files: UploadFile[];
+  fileUploadAdress: string;
+  httpParameters?: HttpParams;
+}
+
+export interface UploadFile {
+  uploadFile: File;
+  fileID: string;
 }
 
 @Injectable({
@@ -73,42 +84,39 @@ export class HttpClientService {
     });
   }
 
-  postFiles(files: FileUploadData[], api: string) {
+  performUpload(dialogId: string, fileList: MultiFileUploadData, api: Endpoints) {
+    //TODO: handle big file-sizes -> split upload into multiple uploads
+    fileList.files.map(fileUploadData => {
+      this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
+      // TODO: this is how we would do chunking: (roughly)
+      // let i = 0
+      // let part: Blob;
+      // do {
+      //     part = fileUploadData.uploadFile.slice(i, (i+1)*1024*1024*100-1)
+      //     i++;
+      // } while (part.size != 0);
+    });
+
     const fd = new FormData();
-    const multipartids: string[] = [];
+    let multipartids: string = '';
+    fileList.files.forEach(file => {
+      multipartids += file.fileID + ";";
+    });
 
     fd.set('Content-Type', 'multipart/form-data');
-    files.map(file => {
-      fd.append(file.httpParameters.get('partid'),file.uploadFile);
-      multipartids.push(file.httpParameters.get('partid'));
+    fd.append('fileIDList', multipartids)
+    fileList.files.map(file => {
+      fd.append(file.fileID, file.uploadFile);
     });
 
-    const params = new HttpParams({fromObject: {multipartids: multipartids.toString()}})
-    return this.http.post(this.webserver.getEndpoint(api), fd, {
-       headers: new HttpHeaders({
-         'Authorization': this.authGuard.getUserAuthorization().toString(),
-       }),
-       observe: 'events',
-       params: params,
-       reportProgress: true
-     });
-  }
-
-  // addUploadFiles(files: FileUploadData[]) {
-  //   this.uploadFileArray.push(...files);
-  // }
-
-  // clearUploadFiles() {
-  //   this.uploadFileArray = [];
-  // }
-
-  performUpload(dialogId: string, fileList: FileUploadData[], api: Endpoints) {
-    //TODO: handle big file-sizes -> split upload into multiple uploads
-    fileList.map(fileUploadData => {
-      this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
-    });
-
-    this.postFiles(fileList, api).subscribe({
+    this.http.post(this.webserver.getEndpoint(api), fd, {
+      headers: new HttpHeaders({
+        'Authorization': this.authGuard.getUserAuthorization().toString(),
+      }),
+      observe: 'events',
+      params: fileList.httpParameters,
+      reportProgress: true
+    }).subscribe({
       next: (event) => {
         if (event.type === HttpEventType.UploadProgress) {
           this.uploadProgressService.changeReportLoaded(event.loaded);
@@ -118,7 +126,7 @@ export class HttpClientService {
         }
       },
       error: (error) => {
-        if (error.status === 500) {
+        if (error.status >= 400) {
           // handle failed upload
           if (this.dialog.getDialogById(dialogId)) {
             this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
@@ -130,34 +138,5 @@ export class HttpClientService {
       }
     })
   }
-
-  // performUpload(dialogId) {
-  //   for (const fileUploadData of this.uploadFileArray) {
-  //     this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
-
-  //     this.postFile(fileUploadData.uploadFile,
-  //       fileUploadData.fileUploadAdress, fileUploadData.httpParameters).subscribe(
-  //       event => {
-  //         if (event.type === HttpEventType.UploadProgress) {
-  //           this.uploadProgressService.changeReportLoaded(event.loaded);
-  //           //console.log(event);
-  //         } else if (event.type === HttpEventType.Response) {
-  //           //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
-  //         }
-  //       },
-  //       error => {
-  //         if (error.status === 500) {
-  //           // handle failed upload
-  //           if (this.dialog.getDialogById(dialogId)) {
-  //             this.dialog.getDialogById(dialogId).componentInstance.setUploadFailed();
-  //             this.dialog.getDialogById(dialogId).componentInstance.uploadFailedMessage = error.statusText;
-  //           }
-  //         } else {
-  //           throw error;
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
 
 }

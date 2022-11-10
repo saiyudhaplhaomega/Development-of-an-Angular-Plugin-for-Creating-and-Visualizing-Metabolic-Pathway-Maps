@@ -20,7 +20,7 @@ import {UploadDialogComponent} from '../../../core/components/dialog/upload-dial
 import {MatDialog} from '@angular/material/dialog';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 import {finalize} from 'rxjs/operators';
-import {FileUploadData, HttpClientService} from '../../../core/services/http-client.service';
+import {FileUploadData, HttpClientService, MultiFileUploadData} from '../../../core/services/http-client.service';
 import {Router} from '@angular/router';
 import {AuthGuard} from '../../../core/services/auth-guard.service';
 import {Observable} from 'rxjs';
@@ -49,7 +49,7 @@ export class ProphaneJobStateService {
   proteinReportFile: File;
   fastaFile: File;
   expertView = false;
-  filesToUpload: FileUploadData[];
+  filesToUpload: MultiFileUploadData;
 
   // TODO: better solution for this? --> popup message?
   noJobCardHeader: string;
@@ -218,7 +218,8 @@ export class ProphaneJobStateService {
 
   addFilesToUploadData() {
     if (this.proteinReportFile && this.fastaFile) {
-      const uploadDataForServer: FileUploadData[] = [
+      // TODO: requires a change in backend or a switch to "postFile()" method
+      const uploadDataForServer: MultiFileUploadData = [
         {
           uploadFile: this.proteinReportFile,
           httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
@@ -233,7 +234,7 @@ export class ProphaneJobStateService {
 
       //this.uploaderService.addUploadFiles(uploadDataForServer);
       uploadDataForServer.map(file => {
-        this.filesToUpload.push(file);
+        this.filesToUpload.files.push(file);
       })
     }
   }
@@ -271,7 +272,7 @@ export class ProphaneJobStateService {
       const dialogObservable = this.invokeUploadDialog();
 
       this.addFilesToUploadData();
-      this.uploaderService.performUpload(this.uploadDialogId,this.filesToUpload,Endpoints.FILES_UPLOAD);
+      this.uploaderService.performUpload(this.uploadDialogId, this.filesToUpload,Endpoints.FILES_UPLOAD);
 
       // TODO: start prophane job only if upload was successful?
       this.startProphaneJob();
