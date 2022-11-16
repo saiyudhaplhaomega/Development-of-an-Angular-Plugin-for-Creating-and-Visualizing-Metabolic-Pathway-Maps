@@ -41,7 +41,7 @@ export enum Endpoints {
   SEARCH_METADATA = 'mpasearch/searchmetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',
   GET_PROTEIN_SEQUENCE = 'mpasearch/getproteinsequence',
-  GET_SPECTRUM = 'mpasearch/getspectrum',
+  GET_SPECTRUMDATA = 'mpasearch/getspectrumdata',
   // proteinloader
   PROTEINLOADER_METADATA = 'proteinloader/fastametadata',
   PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadfasta',

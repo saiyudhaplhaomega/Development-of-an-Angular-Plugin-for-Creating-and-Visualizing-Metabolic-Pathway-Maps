@@ -221,7 +221,8 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
-        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
+        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
+        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dataItemOfThisComponent.uuid);
         this.hasPeaklistFile = true;
         break;
 
@@ -236,14 +237,17 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
         break;
 
       case 'Peaklist + Search Result':
-        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
+        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
+        await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dataItemOfThisComponent.uuid);
         this.hasPeaklistFile = true;
 
-        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
+        //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
+        await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dataItemOfThisComponent.uuid);
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
-          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
+          //await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
+          await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dataItemOfThisComponent.uuid);
         }
         break;
     }

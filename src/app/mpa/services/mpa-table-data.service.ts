@@ -116,16 +116,16 @@ export class MpaTableDataService {
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
-          userID: 'sample.mgf',
-          experimentID: '67ede406-4b7c-11ec-81d3-0242ac130003',
+          fileID: '67ede406-4b7c-11ec-81d3-0242ac130003',
           spectrumID: this.selectedPsm.value.spectrumID
         }
       });
 
-    this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUM, params).subscribe({
+    this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
       next: (spectrumData) => {
         this.spectrumData.next(spectrumData);
         this.requestingSpectrum.next(false);
+        console.log(spectrumData);
       },
       error: () => {
         // TODO: just using mock data, remove once endpoint works
