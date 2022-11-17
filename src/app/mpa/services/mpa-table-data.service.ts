@@ -116,8 +116,9 @@ export class MpaTableDataService {
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
-          fileID: '67ede406-4b7c-11ec-81d3-0242ac130003',
-          spectrumID: this.selectedPsm.value.spectrumID
+          //TODO change to fileid
+          fileid: this.expID.value,
+          spectrumid: this.selectedPsm.value.spectrumID
         }
       });
 
