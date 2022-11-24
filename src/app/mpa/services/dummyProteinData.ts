@@ -6,7 +6,7 @@ import {
   ProteinGroupJSON, ProteinGroupObject,
   ProteinJSON,
   PsmJSON,
-  Spectrum
+  SpectrumJSON
 } from '../objects/tableobjects';
 
 export interface DistributionParams {

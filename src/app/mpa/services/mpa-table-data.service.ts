@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject} from '../objects/tableobjects';
+import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject} from '../objects/tableobjects';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {HttpClientService} from '../../core/services/http-client.service';
 import {Endpoints} from '../../core/services/webserveraddress.service';
@@ -32,7 +32,7 @@ export class MpaTableDataService {
   public selectedPeptide = new BehaviorSubject<PeptideObject>(undefined);
   public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
 
-  public spectrumData = new BehaviorSubject<string>(undefined);
+  public spectrumData = new BehaviorSubject<SpectrumObject>(undefined);
   public expID = new BehaviorSubject<string>(undefined)
 
   public requestingSpectrum = new Subject<boolean>();
@@ -122,20 +122,38 @@ export class MpaTableDataService {
         }
       });
 
-    this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
-      next: (spectrumData) => {
-        this.spectrumData.next(spectrumData);
+    // this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
+    //   next: (spectrumData) => {
+    //     this.spectrumData.next(spectrumData);
+    //     this.requestingSpectrum.next(false);
+    //     console.log(spectrumData);
+    //   },
+    //   error: () => {
+    //     // TODO: just using mock data, remove once endpoint works
+    //     this.requestingSpectrum.next(false);
+    //     if ((this.i % 2) == 0) {
+    //       this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
+    //     } else if ((this.i % 2) != 0) {
+    //       this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
+    //     }
+    //     this.i++;
+    //   }
+    // })
+    this.httpClientService.getObject<SpectrumObject>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
+      next: (spectrumObj) => {
+        let spectrumDataObj = new SpectrumDataObject(spectrumObj.peakArray,spectrumObj.peptideSequence);
+        this.spectrumDataObject$.next(spectrumDataObj);
         this.requestingSpectrum.next(false);
-        console.log(spectrumData);
+        console.log(spectrumObj);
       },
       error: () => {
         // TODO: just using mock data, remove once endpoint works
         this.requestingSpectrum.next(false);
-        if ((this.i % 2) == 0) {
-          this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
-        } else if ((this.i % 2) != 0) {
-          this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
-        }
+        // if ((this.i % 2) == 0) {
+        //   this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
+        // } else if ((this.i % 2) != 0) {
+        //   this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
+        // }
         this.i++;
       }
     })

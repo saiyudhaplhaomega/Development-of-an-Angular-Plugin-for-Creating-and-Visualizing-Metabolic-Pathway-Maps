@@ -5,33 +5,46 @@ export class SpectrumDataObject {
 
     private tolerance = 1
 
-    public ySingle: DataPoint[] = []
-    public yDouble: DataPoint[] = []
-    //public y0: DataPoint[] = []
-    //public yStar: DataPoint[] = []
-    public bSingle: DataPoint[] = []
-    public bDouble: DataPoint[] = []
-    //public b0: DataPoint[] = []
-    //public bStar: DataPoint[] = []
-    public rest: DataPoint[] = []
+    public ySingle: DataPoint[] = [];
+    public yDouble: DataPoint[] = [];
+    //public y0: DataPoint[] = [];
+    //public yStar: DataPoint[] = [];
+    public bSingle: DataPoint[] = [];
+    public bDouble: DataPoint[] = [];
+    //public b0: DataPoint[] = [];
+    //public bStar: DataPoint[] = [];
+    public rest: DataPoint[] = [];
 
-    originalArray: DataPoint[] = []
-    peptideSequence: String = ""
+    spectrumString: string = "";
+    peptideSequence: string = "";
+    peakArray: DataPoint[] = [];
 
-    constructor(peakArray: DataPoint[],peptideSequence: String){
-        this.originalArray=peakArray
-        this.peptideSequence=peptideSequence
+    constructor(peakArray: [],peptideSequence: string,spectrumString?: string){
+        this.peakArray = this.convertArrayToDataPoints(peakArray);
+        this.peptideSequence = peptideSequence;
+        this.spectrumString = spectrumString;
 
         if(peakArray.length>0 && peptideSequence.length>0){    //make sure the object only gets fully initialised if there is actually any data passed in
         this.initialize()
+        console.log(this.rest)
+        console.log(this.bSingle)
+        console.log(this.ySingle);
         }
 
         //TODO: Erro handling?
     }
+    convertArrayToDataPoints(peakArray: []) {
+        var dataPoints: DataPoint[] = [];
+        peakArray.map(peak => {
+            let dataPoint: DataPoint = {x: peak[0], y: peak[1]};
+            dataPoints.push(dataPoint);
+        })
+        return dataPoints;
+    }
 
     initialize(){
         //copy both inputs so they can be safely modified
-       let localDataArray = [...this.originalArray]
+       let localDataArray = [...this.peakArray]
        const localPeptideSequence = this.peptideSequence
 
        //get all possible theoretical Ion Fragments

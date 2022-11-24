@@ -58,8 +58,11 @@ export interface ProteinSequenceJSON {
   sequence: string;
 }
 
-export interface Spectrum {
-  spectrumID: string; // TODO: Spectrum xml?
+export interface SpectrumJSON {
+  //spectrumID: string;
+  spectrumString: string;
+  peptideSequence: string;
+  peakArray;
 }
 
 export class ProteinGroupObject implements ProteinGroupJSON {
@@ -106,6 +109,9 @@ export class ProteinSequenceObject implements ProteinSequenceJSON {
   sequence: string;
 }
 
-export class SpectrumObject implements Spectrum {
-  spectrumID: string;
+export class SpectrumObject implements SpectrumJSON {
+  //spectrumID: string;
+  spectrumString: string;
+  peptideSequence: string;
+  peakArray;
 }

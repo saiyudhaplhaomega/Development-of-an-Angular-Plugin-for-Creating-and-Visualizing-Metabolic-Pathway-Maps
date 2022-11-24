@@ -133,7 +133,6 @@ export class SpectrumViewerComponent implements OnInit {
     }); */
     this.mpaTableDataService.spectrumDataObject$.subscribe({
       next: dataObject => this.handleSpectrumServiceData(dataObject),
-      complete: () => console.log('handleSpectrumServiceData: complete notification')
     });
   }
 
@@ -143,7 +142,7 @@ export class SpectrumViewerComponent implements OnInit {
     this.scatterChartData.datasets[2].data = this.prepareData(dataObject.yDouble);
     this.scatterChartData.datasets[3].data = this.prepareData(dataObject.bSingle);
     this.scatterChartData.datasets[4].data = this.prepareData(dataObject.bDouble);
-
+    
     this.chart?.update();
   }
 
