@@ -96,7 +96,7 @@
           <div class="custom-tab-box">
 
             <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
-              <div class="input-group mb-3 ng-star-inserted">
+              <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Data Selection</span>
                 </div>
@@ -110,7 +110,7 @@
 
               <!-- ProteinDatabase -->
               <ng-container *ngIf="this.dataUploadSelection == 'Search Result'">
-                <div class="input-group mb-3 ng-star-inserted">
+                <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Protein Database</span>
                   </div>
@@ -128,7 +128,7 @@
               this.dataUploadSelection == 'Peaklist + Search Result'">
                 <div class="divider-line"> Peaklist</div>
 
-                <div class="input-group mb-3 ng-star-inserted">
+                <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Peaklist Data Type</span>
                   </div>
@@ -139,7 +139,7 @@
                   </mat-select>
                 </div>
 
-                <div class="input-group mb-3 ng-star-inserted">
+                <div class="input-group mb-3">
                   <ng-container *ngIf="this.peaklistSelection == 'MZML'">
                     <div class="input-group-prepend">
                       <span class="input-group-text">MZML File</span>
@@ -147,10 +147,8 @@
                     <div class="custom-file">
                       <input type="file" accept=".mzml" class="custom-file-input" id="mzml" #selectedFileSpectra
                              (change)="onPeaklistFileChange(selectedFileSpectra.files)">
-                      <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mzml">Choose MZML file
-                        (.mzml)</label>
-                      <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
-                             for="mzml">{{this.selectedPeaklistFile.name}}</label>
+                        <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mzml">Choose MZML file (.mzml)</label>
+                        <label *ngIf="this.selectedPeaklistFile" class="custom-file-label" for="mzml">{{this.selectedPeaklistFile.name}}</label>
                     </div>
                   </ng-container>
 
@@ -159,7 +157,7 @@
                       <span class="input-group-text">Mascot Generic File</span>
                     </div>
                     <div class="custom-file">
-                      <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
+                             <input type="file" accept=".mgf" class="custom-file-input" id="mgf" #selectedFileSpectra
                              (change)="onPeaklistFileChange(selectedFileSpectra.files)">
                       <label *ngIf="!this.selectedPeaklistFile" class="custom-file-label" for="mgf">Choose MGF file (.mgf)</label>
                       <label *ngIf="this.selectedPeaklistFile" class="custom-file-label"
@@ -175,7 +173,7 @@
               this.dataUploadSelection == 'Peaklist + Search Result'">
                 <div class="divider-line"> Search Result</div>
 
-                <div class="input-group mb-3 ng-star-inserted">
+                <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Search Result Data Type</span>
                   </div>
@@ -217,7 +215,7 @@
                 </div>
 
                 <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
-                  <div class="input-group mb-3 ng-star-inserted">
+                  <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Fasta File</span>
                     </div>
