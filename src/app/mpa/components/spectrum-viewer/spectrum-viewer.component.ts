@@ -124,6 +124,7 @@ export class SpectrumViewerComponent implements OnInit {
   constructor(public mpaTableDataService: MpaTableDataService) {
     this.mpaTableDataService.requestingSpectrum.subscribe(val => {
       this.requestingSpectrum = val;
+      console.log("requestingSpectrum: "+val);
     });
   }
 
@@ -142,7 +143,6 @@ export class SpectrumViewerComponent implements OnInit {
     this.scatterChartData.datasets[2].data = this.prepareData(dataObject.yDouble);
     this.scatterChartData.datasets[3].data = this.prepareData(dataObject.bSingle);
     this.scatterChartData.datasets[4].data = this.prepareData(dataObject.bDouble);
-    
     this.chart?.update();
   }
 
@@ -179,28 +179,28 @@ export class SpectrumViewerComponent implements OnInit {
     this.showY1 = !this.showY1;
     this.scatterChartData.datasets[1].borderColor = ((this.showY1 === false) ? this.defaultColor : this.y1Color);
     this.scatterChartData.datasets[1].backgroundColor = ((this.showY1 === false) ? this.defaultColor : this.y1Color);
-    this.chart?.update();
+    this.chart.update();
   }
 
   toggleY2() {
     this.showY2 = !this.showY2;
     this.scatterChartData.datasets[2].borderColor = ((this.showY2 === false) ? this.defaultColor : this.y2Color);
     this.scatterChartData.datasets[2].backgroundColor = ((this.showY2 === false) ? this.defaultColor : this.y2Color);
-    this.chart?.update();
+    this.chart.update();
   }
 
   toggleB1() {
     this.showB1 = !this.showB1;
     this.scatterChartData.datasets[3].borderColor = ((this.showB1 === false) ? this.defaultColor : this.b1Color);
     this.scatterChartData.datasets[3].backgroundColor = ((this.showB1 === false) ? this.defaultColor : this.b1Color);
-    this.chart?.update();
+    this.chart.update();
   }
 
   toggleB2() {
     this.showB2 = !this.showB2;
     this.scatterChartData.datasets[4].borderColor = ((this.showB2 === false) ? this.defaultColor : this.b2Color);
     this.scatterChartData.datasets[4].backgroundColor = ((this.showB2 === false) ? this.defaultColor : this.b2Color);
-    this.chart?.update();
+    this.chart.update();
   }
 
   resetChart() {
@@ -216,7 +216,7 @@ export class SpectrumViewerComponent implements OnInit {
     this.showY2 = false;
     this.showB1 = false;
     this.showB2 = false;
-    this.chart?.update();
+    this.chart.update();
   }
 
 }

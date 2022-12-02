@@ -26,9 +26,6 @@ export class SpectrumDataObject {
 
         if(peakArray.length>0 && peptideSequence.length>0){    //make sure the object only gets fully initialised if there is actually any data passed in
         this.initialize()
-        console.log(this.rest)
-        console.log(this.bSingle)
-        console.log(this.ySingle);
         }
 
         //TODO: Erro handling?

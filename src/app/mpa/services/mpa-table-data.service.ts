@@ -112,7 +112,8 @@ export class MpaTableDataService {
 
   private i = 0;
 
-  private requestSpectrum() {  
+  private requestSpectrum() {
+    this.requestingSpectrum.next(true);  
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
@@ -144,7 +145,6 @@ export class MpaTableDataService {
         let spectrumDataObj = new SpectrumDataObject(spectrumObj.peakArray,spectrumObj.peptideSequence);
         this.spectrumDataObject$.next(spectrumDataObj);
         this.requestingSpectrum.next(false);
-        console.log(spectrumObj);
       },
       error: () => {
         // TODO: just using mock data, remove once endpoint works
