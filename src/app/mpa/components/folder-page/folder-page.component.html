@@ -14,8 +14,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Folder Name</span>
           </div>
-          <input type="text" class="form-control" [(ngModel)]="this.dataItemOfThisComponent.displayName">
-          <div class="input-group-append">
+          <input type="text" class="form-control" [(ngModel)]="this.dataItemOfThisComponent.displayName" style="max-width:50%;">
             <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                     aria-label="Accept" (click)="onAcceptNameChange()">
               <mat-icon>done</mat-icon>
@@ -24,7 +23,6 @@
                     *ngIf="this.dataItemOfThisComponent.displayName" aria-label="Clear" (click)="this.dataItemOfThisComponent.displayName=''">
               <mat-icon>close</mat-icon>
             </button>
-          </div>
         </div>
 
         <div class="input-group mb-3 ng-star-inserted">

@@ -6,14 +6,14 @@
         <span class="input-group-text">Database Name</span>
       </div>
       <label for="proteindbname"> </label>
-      <input type="text" class="form-control" id="proteindbname" formControlName="dbName">
+      <input type="text" class="form-control custom-text-input" id="proteindbname" formControlName="dbName">
     </div>
 
     <div class="input-group mb-3 ng-star-inserted">
       <div class="input-group-prepend">
         <span class="input-group-text">Protein Database File</span>
       </div>
-      <div class="custom-file">
+      <div class="custom-file custom-width">
         <label *ngIf="!this.formData.dbFile" class="custom-file-label" for="proteindbfile">Choose File (.fasta, .faa, .xml)</label>
         <label *ngIf="this.formData.dbFile" class="custom-file-label" for="proteindbfile">{{this.formData.dbFile.name}}</label>
         <input type="file" accept=".fasta, .faa, .xml" class="custom-file-input" id="proteindbfile" formControlName="dbFile"

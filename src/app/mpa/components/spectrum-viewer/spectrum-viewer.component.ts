@@ -124,7 +124,6 @@ export class SpectrumViewerComponent implements OnInit {
   constructor(public mpaTableDataService: MpaTableDataService) {
     this.mpaTableDataService.requestingSpectrum.subscribe(val => {
       this.requestingSpectrum = val;
-      console.log("requestingSpectrum: "+val);
     });
   }
 

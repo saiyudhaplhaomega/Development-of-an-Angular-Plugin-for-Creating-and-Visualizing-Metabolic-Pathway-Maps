@@ -13,7 +13,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Experiment Name</span>
               </div>
-              <input type="text" class="form-control" [(ngModel)]="this.displayNameEditing">
+              <input type="text" class="form-control custom-text-input" [(ngModel)]="this.displayNameEditing">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                         aria-label="Accept" (click)="onAccept()">
@@ -100,7 +100,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">Data Selection</span>
                 </div>
-                <mat-select class="custom-select" [(value)]="this.dataUploadSelection"
+                <mat-select class="form-control custom-select" [(value)]="this.dataUploadSelection"
                             (selectionChange)="onUploadSelectionChange($event.value)">
                   <mat-option *ngFor="let fileType of dataUploadOptions"
                               [value]="fileType">
@@ -114,7 +114,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Protein Database</span>
                   </div>
-                  <mat-select class="custom-select" [(value)]="this.proteinDBselection"
+                  <mat-select class="form-control custom-select" [(value)]="this.proteinDBselection"
                               (selectionChange)="onProteinDBChange($event.value)">
                     <mat-option *ngFor="let protDB of proteinDatabases"
                                 [value]="protDB">
@@ -132,7 +132,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Peaklist Data Type</span>
                   </div>
-                  <mat-select class="custom-select" [(value)]="this.peaklistSelection"
+                  <mat-select class="form-control custom-select" [(value)]="this.peaklistSelection"
                               (selectionChange)="onFileTypeSelectionChange()">
                     <mat-option *ngFor="let fileType of uploadFileTypePeaklist"
                                 [value]="fileType">{{ fileType}}</mat-option>
@@ -177,7 +177,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Search Result Data Type</span>
                   </div>
-                  <mat-select class="custom-select" [(value)]="this.searchFileSelection"
+                  <mat-select class="form-control custom-select" [(value)]="this.searchFileSelection"
                               (selectionChange)="onFileTypeSelectionChange()">
                     <mat-option *ngFor="let fileType of uploadFileTypeSearch"
                                 [value]="fileType">{{ fileType}}</mat-option>
