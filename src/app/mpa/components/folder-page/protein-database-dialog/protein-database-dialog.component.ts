@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService2} from '../../data-navigation-tree/services/data2.service';
 import {folderNameValidator} from '../../../../core/components/dialog/name-edit-dialog.component';
@@ -18,7 +18,7 @@ export class ProteinDBDialogData {
 })
 export class ProteinDatabaseDialogComponent implements OnInit {
 
-  proteinDBForm: FormGroup;
+  proteinDBForm: UntypedFormGroup;
   existingNodeNames: string[];
   formData: ProteinDBDialogData = new ProteinDBDialogData();
 
@@ -26,7 +26,7 @@ export class ProteinDatabaseDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ProteinDatabaseDialogComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dataService: DataService2,
     private uploaderService: HttpClientService,
   ) {

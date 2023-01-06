@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {DataService2} from '../../../mpa/components/data-navigation-tree/services/data2.service';
 
 @Component({
@@ -11,11 +11,11 @@ export class NameEditDialogComponent implements OnInit {
 
   @Input() dialogPrompt: string;
 
-  folderNameForm: FormGroup;
+  folderNameForm: UntypedFormGroup;
   existingNodeNames: string[];
   textFieldLabel: string;
 
-  constructor(public dialogRef: MatDialogRef<NameEditDialogComponent>, private fb: FormBuilder, private dataService: DataService2) {
+  constructor(public dialogRef: MatDialogRef<NameEditDialogComponent>, private fb: UntypedFormBuilder, private dataService: DataService2) {
   }
 
   ngOnInit(): void {

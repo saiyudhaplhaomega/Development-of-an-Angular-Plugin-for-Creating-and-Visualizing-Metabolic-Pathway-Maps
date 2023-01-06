@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {UntypedFormControl, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -11,7 +11,7 @@ export class TextfieldDialogComponent {
 
   @Input() description: string; dialogPrompt: string;
 
-  nameFormControl = new FormControl('', [
+  nameFormControl = new UntypedFormControl('', [
     Validators.pattern('\w*'),
   ]);
 

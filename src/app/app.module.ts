@@ -35,57 +35,55 @@ import {ErrorPageComponent} from './error-page/error-page-component/error-page.c
 import {NgChartsModule} from 'ng2-charts';
 
 @NgModule({
-  // components
-  declarations: [
-    AppComponent,
-    LoginPageComponent,
-    NavigationBarComponent,
-    FooterComponent,
-    TermsOfServicePageComponent,
-    PrivacyPolicyPageComponent,
-    ImpressumPageComponent,
-    PrivacyConsentBannerComponent,
-    ProphaneAboutComponent,
-    UploadDialogComponent,
-    ErrorPageComponent,
-  ],
-  // modules - functionally bundled components, directives, services, etc.
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Routing,
-    HttpClientModule,
-    OAuthModule.forRoot(),
-    CommonModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    MpaModule,
-    ProphaneModule,
-    MaterialModule,
-    NgChartsModule
-  ],
-  // services
-  providers: [
-    HttpClient,
-    AuthGuard,
-    WebserveraddressService,
-    UploadProgressService,
-    DbsearchcontentService,
-    NavService2,
-    DataService2,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GlobalHttpInterceptorService,
-      multi: true
-    }
-  ],
-  // imperatively loaded components - compiles a factory for dynamically loaded components
-  entryComponents: [UploadDialogComponent],
-  exports: [],
-  // components loaded during bootstrapping
-  bootstrap: [AppComponent]
+    // components
+    declarations: [
+        AppComponent,
+        LoginPageComponent,
+        NavigationBarComponent,
+        FooterComponent,
+        TermsOfServicePageComponent,
+        PrivacyPolicyPageComponent,
+        ImpressumPageComponent,
+        PrivacyConsentBannerComponent,
+        ProphaneAboutComponent,
+        UploadDialogComponent,
+        ErrorPageComponent,
+    ],
+    // modules - functionally bundled components, directives, services, etc.
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Routing,
+        HttpClientModule,
+        OAuthModule.forRoot(),
+        CommonModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        MpaModule,
+        ProphaneModule,
+        MaterialModule,
+        NgChartsModule
+    ],
+    // services
+    providers: [
+        HttpClient,
+        AuthGuard,
+        WebserveraddressService,
+        UploadProgressService,
+        DbsearchcontentService,
+        NavService2,
+        DataService2,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: GlobalHttpInterceptorService,
+            multi: true
+        }
+    ],
+    exports: [],
+    // components loaded during bootstrapping
+    bootstrap: [AppComponent]
 })
 
 
