@@ -17,7 +17,7 @@ import {ProphaneTaskOptionString} from '../../objects/prophanetaskoptionstring';
 import {ProphaneAnnotationTaskObject} from '../../objects/prophaneannotationtaskjson';
 import {UploadProgressService} from '../../../core/services/upload-progress.service';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Endpoints, WebserveraddressService} from '../../../core/services/webserveraddress.service';
 import {finalize} from 'rxjs/operators';
 import {FileUploadData, HttpClientService, MultiFileUploadData} from '../../../core/services/http-client.service';

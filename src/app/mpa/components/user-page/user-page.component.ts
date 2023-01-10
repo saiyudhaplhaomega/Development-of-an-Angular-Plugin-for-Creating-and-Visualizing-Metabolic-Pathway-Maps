@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService2, NodeType} from '../data-navigation-tree/services/data2.service';
 import {NameEditDialogComponent} from '../../../core/components/dialog/name-edit-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {ContentComponent} from '../../mpa.component';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
 

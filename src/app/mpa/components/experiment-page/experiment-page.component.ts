@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService2} from '../data-navigation-tree/services/data2.service';
 import {DataItem} from '../data-navigation-tree/objects/data-item';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
 import {FileUploadData, HttpClientService, MultiFileUploadData, UploadFile} from '../../../core/services/http-client.service';
 import {ProteinGroupObject} from '../../objects/tableobjects';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import {ExperimentJSONObject} from '../../objects/experimentjson';
 import {UploadDialogComponent} from '../../../core/components/dialog/upload-dialog.component';

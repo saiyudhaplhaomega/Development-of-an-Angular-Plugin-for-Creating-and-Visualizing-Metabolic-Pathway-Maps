@@ -1,6 +1,6 @@
 import {Component, AfterViewInit, Input, ViewChild, OnInit} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource} from '@angular/material/table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
 import { MatSort } from '@angular/material/sort';
 import {PsmJSON, PsmObject} from '../../objects/tableobjects';
 import {MpaTableDataService} from '../../services/mpa-table-data.service';

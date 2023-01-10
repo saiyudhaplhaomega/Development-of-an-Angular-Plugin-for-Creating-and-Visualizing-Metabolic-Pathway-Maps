@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'app-protein-database-component',

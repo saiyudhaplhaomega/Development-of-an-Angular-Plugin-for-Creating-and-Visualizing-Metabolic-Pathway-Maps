@@ -4,7 +4,7 @@ import {DataItem} from '../objects/data-item';
 import {HttpClientService} from '../../../../core/services/http-client.service';
 import {AuthGuard} from '../../../../core/services/auth-guard.service';
 import {GetDateService} from '../../../../core/services/get-date.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {dataNodeIdGenerator} from './dataNodeIdGenerator';
 
 export enum NodeType {

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatLegacyPaginator as MatPaginator} from '@angular/material/legacy-paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
 import {ProteinGroupJSON, ProteinGroupObject} from '../../objects/tableobjects';
 import {GroupSelection, MpaTableDataService} from '../../services/mpa-table-data.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';

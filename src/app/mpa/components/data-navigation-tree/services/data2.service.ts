@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {NavService2} from './nav2.service';
 import {DataItemMap} from '../objects/data-item-map';
 import {DeleteWarningDialogComponent} from '../../../../core/components/dialog/delete-warning-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {ExperimentJSONObject} from '../../../objects/experimentjson';
 
 // TODO: properly set everywhere

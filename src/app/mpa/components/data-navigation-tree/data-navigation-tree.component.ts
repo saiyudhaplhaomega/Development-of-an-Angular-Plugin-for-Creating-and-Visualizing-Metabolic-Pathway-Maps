@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {NavService2} from './services/nav2.service';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {DataService2} from './services/data2.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
 import {DataItem} from './objects/data-item';
 import {Subscription} from 'rxjs';
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {DataItem} from '../../data-navigation-tree/objects/data-item';
 import {DataService2} from '../../data-navigation-tree/services/data2.service';
