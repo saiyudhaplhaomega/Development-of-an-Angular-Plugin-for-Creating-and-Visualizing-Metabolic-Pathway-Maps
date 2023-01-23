@@ -1,7 +1,8 @@
 <div class="jobCards responsive-job-card">
   <div class="card min-w-600">
-    <div class="card-header">
+    <div class="card-header custom-card-header">
       <h5>Experiment: {{this.dataItemOfThisComponent.displayName}}</h5>
+      <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center" (click)='onRemoveExperiment()'><mat-icon>close</mat-icon></button>
     </div>
     <div class="card-body">
       <mat-tab-group mat-align-tabs="center">
@@ -26,7 +27,7 @@
               </div>
             </div>
 
-            <table class="table table-light table-hover">
+            <table class="table table-light table-hover" style="margin-bottom:0px;">
               <thead>
               </thead>
               <tbody>
@@ -59,14 +60,6 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="ml-summary-col">Description:
-                  <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
-                </th>
-                <td >
-                  {{this.dbExperiment.description}}
-                </td>
-              </tr>
-              <tr>
                 <th scope="row" class="ml-summary-col">Data Summary:</th>
                 <td >
                   <ng-container *ngIf="this.hasMpaData">
@@ -85,9 +78,19 @@
               </tr>
               </tbody>
             </table>
-            <div class="input-group mb-3 ng-star-inserted">
-              <button class="btn btn-primary float-right btn-danger" (click)='onRemoveExperiment()'>Delete this Experiment</button>
-            </div>
+            <table class="table table-light table-hover">
+              <th></th>
+              <tbody>
+                <tr>
+                  <th scope="row" class="ml-summary-col">Description:
+                    <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
+                  </th>
+                  <td >
+                    {{this.dbExperiment.description}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </mat-tab>
 
@@ -278,11 +281,25 @@
 
         <!--          Tab 4: Streaming              -->
 
-        <mat-tab label="Streaming">
+        <!-- <mat-tab label="Streaming">
           <div class="custom-tab-box">
             <p style="font-size: 50px; margin: auto auto">🌊</p>
           </div>
+        </mat-tab> -->
+
+        <!--   Tab 4: Taxonomy -->
+        <mat-tab label="Taxonomy">
+          <div class="custom-tab-box">
+            <h2>no data yet</h2>
+          </div>
         </mat-tab>
+
+          <!--   Tab 6: Function -->
+            <mat-tab label="Function">
+              <div class="custom-tab-box">
+                <h2>no data yet</h2>
+              </div>
+            </mat-tab>
 
       </mat-tab-group>
     </div>

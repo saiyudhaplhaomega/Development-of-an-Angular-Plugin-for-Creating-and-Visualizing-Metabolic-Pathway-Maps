@@ -42,6 +42,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   description: string;
   creationDate: string;
   realUUID: string;
+  files_uploaded: boolean;
 
   // available upload options
   dataUploadSelection = 'Peaklist';
@@ -254,6 +255,7 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
 
     //this.uploaderService.performUpload(this.uploadDialogId);
     this.uploaderService.performUpload(this.uploadDialogId,this.filesToUpload,Endpoints.FILES_UPLOAD);
+    this.files_uploaded = true;
 
     // invoked if upload dialog is closed
     onDialogClosingObservable.subscribe((uploadFailed) => {

@@ -10,6 +10,8 @@ import {Filemetadata} from '../../objects/filemetadata';
 import {Endpoints} from '../../../core/services/webserveraddress.service';
 import {HttpParams} from '@angular/common/http';
 import {ContentComponent} from '../../mpa.component';
+import {TextfieldDialogComponent} from '../../../core/components/textfield-dialog/textfield-dialog.component';
+import { FolderJSONObject } from '../../objects/folderjson';
 
 @Component({
   selector: 'app-folder-page',
@@ -19,20 +21,76 @@ import {ContentComponent} from '../../mpa.component';
 export class FolderPageComponent implements OnInit, OnDestroy, ContentComponent {
 
   dataItemOfThisComponent: DataItem;
+  folder = new FolderJSONObject; 
   existingNodeNames = [];
+  subfolders: string[];
+  experiments: string[];
+  protdbs: string[];
+  description: string;
 
   constructor(private _snackBar: MatSnackBar,
               public dialog: MatDialog,
               private dataService: DataService2,
               private uploaderService: HttpClientService) {
+                this.subfolders = [];
+                this.experiments = [];
+                this.protdbs = [];
+                this.description = "";
   }
 
   ngOnInit(): void {
     //this.parentUuid = this._dataMap.get(this.id).parent;
+    const nexperiments = [];
+    const nprotdbs = [];
+    const nsubfolders = [];
+    this.dataItemOfThisComponent.children.forEach(child =>
+      {
+        if (child.type === NodeType.Folder) {
+          nsubfolders.push(child.displayName);
+        } else if (child.type === NodeType.Experiment) {
+          nexperiments.push(child.displayName);
+        } else if (child.type === NodeType.ProteinDB) {
+          nprotdbs.push(child.displayName);
+        }
+      });
+      this.experiments = nexperiments;
+      this.protdbs = nprotdbs;
+      this.subfolders = nsubfolders;
+
+      this.folder.description = this.dataItemOfThisComponent.description;
   }
 
   ngOnDestroy(): void {
 
+  }
+
+  onSetDescription() {
+    /**
+     * handles description change
+     */
+    const dialogRef = this.dialog.open(TextfieldDialogComponent, {
+      disableClose: true,
+    });
+
+    const dialogInstance = dialogRef.componentInstance;
+    dialogInstance.dialogPrompt = 'Edit folder description';
+    dialogInstance.description = this.folder.description;
+
+    dialogRef.afterClosed().subscribe(folderdescription => {
+      console.log('add description');
+      this.folder.description = folderdescription;
+      //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
+      //item.description = expDescription;
+      //TODO: this._dataMap.set(this.dbExperiment.expid, item);
+      // TODO: this.dataService.dataMap.next(this._dataMap);
+      
+      //TODO: updating description doesn't work as of now
+      this.updateFolder();
+    });
+  }
+
+  updateFolder(): void {
+    this.dataService.updateNode(this.dataItemOfThisComponent);
   }
 
   onAcceptNameChange(): void {

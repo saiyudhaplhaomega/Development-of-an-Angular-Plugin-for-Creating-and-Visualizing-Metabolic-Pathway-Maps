@@ -5,39 +5,97 @@
 <div class="d-flex justify-content-between">
   <div class="jobCards" style="width: 100%; flex-basis: auto; flex-shrink: 1">
     <div class="card min-w-600" >
-      <div class="card-header">
+      <div class="card-header custom-card-header">
         <h5>Manage Folder</h5>
+        <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center" (click)='onRemoveFolder()'><mat-icon>close</mat-icon></button>
       </div>
 
       <div class="card-body">
-        <div class="input-group mb-3 ng-star-inserted">
+        <div class="input-group mb-3 ng-star-inserted" style="max-width:80%;">
           <div class="input-group-prepend">
             <span class="input-group-text">Folder Name</span>
           </div>
-          <input type="text" class="form-control" [(ngModel)]="this.dataItemOfThisComponent.displayName" style="max-width:50%;">
-            <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
+          <input type="text" class="form-control" [(ngModel)]="this.dataItemOfThisComponent.displayName" >
+          <div class="input-group-append">  
+          <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
                     aria-label="Accept" (click)="onAcceptNameChange()">
               <mat-icon>done</mat-icon>
             </button>
-            <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
-                    *ngIf="this.dataItemOfThisComponent.displayName" aria-label="Clear" (click)="this.dataItemOfThisComponent.displayName=''">
-              <mat-icon>close</mat-icon>
-            </button>
+          </div>
         </div>
-
-        <div class="input-group mb-3 ng-star-inserted">
-            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddFolder()'>Add Folder</button>
-        </div>
-        <div  class="input-group mb-3 ng-star-inserted">
-            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddExperiment()'>Add Experiment</button>
-        </div>
-        <div class="input-group mb-3 ng-star-inserted">
-            <button class="btn btn-primary float-right rki-blue-bg" (click)='onAddProteinDatabase()'>Add Protein Database</button>
-        </div>
-        <div class="input-group mb-3 ng-star-inserted">
-            <button class="btn btn-primary float-right btn-danger" (click)='onRemoveFolder()'>Delete this Folder</button>
+        <div style="display:flex; flex-direction:row;">
+        <table class="table table-light table-hover" style="max-width:80%;min-width:70%;margin-bottom:0px;">
+          <thead>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="ml-summary-col">Experiments</th>
+              <td>
+                <ng-container *ngIf="experiments.length !== 0">
+                  <p>{{experiments}}</p>
+                  </ng-container>
+                <ng-container *ngIf="experiments.length === 0">
+                  <p>No Experiments</p>
+                </ng-container>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col">Protein Data Bases</th>
+              <td>
+                <ng-container *ngIf="protdbs.length !== 0">
+                  <p>{{protdbs}}</p>
+                </ng-container>
+                <ng-container *ngIf="protdbs.length === 0">
+                  <p>No Data Bases</p>
+                </ng-container>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="ml-summary-col">Subfolders</th>
+              <td>
+                <ng-container *ngIf="subfolders.length !== 0">
+                  <p>{{subfolders}}</p>
+                </ng-container>
+                <ng-container *ngIf="subfolders.length === 0">
+                  <p>No Subfolders</p>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex; flex-direction:column;margin-bottom:0; justify-content:space-evenly;">
+          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;"  (click)='onAddExperiment()'>Add Experiment</button>
+          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;" (click)='onAddProteinDatabase()'>Add Protein Database</button>
+          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;" (click)='onAddFolder()'>Add Folder</button>
         </div>
       </div>
-    </div>
+      <div>
+        <table class="table table-light table-hover" style="max-width:80%;min-width:70%;margin-bottom:0px;">
+          <thead>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="ml-summary-col">Description:
+                <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
+              </th>
+              <td >
+                {{this.folder.description}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div> 
+      <!-- <div class="jobCards" style="width: 95%; flex-basis: auto; flex-shrink: 1">
+        <div class="card min-w-600">
+          <div class="card-header custom-card-header">
+            <h5>Folder Details</h5>
+          </div>
+          <div class="card-body">
+            <p>asdff</p>
+          </div>
+        </div> 
+    </div> -->
   </div>
+</div>
 </div>
