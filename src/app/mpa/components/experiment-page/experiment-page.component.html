@@ -101,6 +101,17 @@
             <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
+                  <span class="input-group-text">Use Case Selection</span>
+                </div>
+                <mat-select class="form-control custom-select" [(value)]="this.dataUploadModeSelection" (selectionChange)="dataUploadModeSelectionChange($event.value)">
+                  <mat-option *ngFor="let dataMode of dataUploadModeOptions" [value]="dataMode">{{dataMode}}</mat-option>
+                </mat-select>
+              </div>
+              
+              <!-- Data Selection: Result Upload -->
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Result Upload'">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
                   <span class="input-group-text">Data Selection</span>
                 </div>
                 <mat-select class="form-control custom-select" [(value)]="this.dataUploadSelection"
@@ -110,9 +121,11 @@
                     {{ fileType}}</mat-option>
                 </mat-select>
               </div>
+            </ng-container>
 
               <!-- ProteinDatabase -->
-              <ng-container *ngIf="this.dataUploadSelection == 'Search Result'">
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result'">
+                <div class="divider-line">Protein Database</div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Protein Database</span>
@@ -127,10 +140,37 @@
               </ng-container>
 
               <!--            Peaklist            -->
-              <ng-container *ngIf="this.dataUploadSelection == 'Peaklist' ||
-              this.dataUploadSelection == 'Peaklist + Search Result'">
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Search' || this.dataUploadSelection == 'Peaklist + Search Result'">
                 <div class="divider-line"> Peaklist</div>
 
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="fragmentIonTolerance">Fragment Ion Tolerance</span>
+                  </div>
+                  <input type="text" style="max-width:35%;" class="form-control" placeholder="fragment ion tolerance" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonTolerance"/>
+                  <div class="input-group-append" style="min-width:15%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.fragmentIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of fragmentIonToleranceUnitOptions"
+                                  [value]="unit">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="precursorIonTolerance">Precursor Ion Tolerance</span>
+                  </div>
+                  <input type="text" style="max-width:35%;" class="form-control" placeholder="precursor ion tolerance" aria-label="precursorIonTolerance" aria-describedby="precursorIonTolerance"/>
+                  <div class="input-group-append" style="min-width:15%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.precursorIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of precursorIonToleranceUnitOptions"
+                                  [value]="unit">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Peaklist Data Type</span>
@@ -172,8 +212,7 @@
 
               <!--            Search Result           -->
               <ng-container
-                *ngIf="this.dataUploadSelection == 'Search Result' ||
-              this.dataUploadSelection == 'Peaklist + Search Result'">
+                *ngIf="this.dataUploadModeSelection == 'Result Upload'">
                 <div class="divider-line"> Search Result</div>
 
                 <div class="input-group mb-3">

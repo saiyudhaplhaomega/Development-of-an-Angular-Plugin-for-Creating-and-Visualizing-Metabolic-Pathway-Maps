@@ -45,8 +45,18 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
   files_uploaded: boolean;
 
   // available upload options
-  dataUploadSelection = 'Peaklist';
-  dataUploadOptions: string[] = ['Peaklist', 'Search Result', 'Peaklist + Search Result'];
+  dataUploadSelection = 'Search Result';
+  dataUploadOptions: string[] = ['Search Result', 'Peaklist + Search Result'];
+
+  //available interaction modes
+  dataUploadModeSelection = 'Result Upload';
+  dataUploadModeOptions: string[] = ['Result Upload','Search'];
+
+  //search options
+  fragmentIonToleranceUnitSelection = 'ppm';
+  fragmentIonToleranceUnitOptions: string[] = ['ppm','Da'];
+  precursorIonToleranceUnitSelection = 'ppm';
+  precursorIonToleranceUnitOptions: string[] = ['ppm','Da'];
 
   displayNameEditing: string;
 
@@ -170,6 +180,11 @@ export class ExperimentPageComponent implements OnInit, OnDestroy, ContentCompon
     this.selectedFasta = undefined;
     this.fastaFileSelected = this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
     this.dataUploadSelection = option;
+    this.disableButton();
+  }
+
+  dataUploadModeSelectionChange(option: string){
+    this.dataUploadModeSelection = option;
     this.disableButton();
   }
 

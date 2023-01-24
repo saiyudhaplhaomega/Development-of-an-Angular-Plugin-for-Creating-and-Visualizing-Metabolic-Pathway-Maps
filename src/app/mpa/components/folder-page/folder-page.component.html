@@ -38,6 +38,7 @@
                   <p>No Experiments</p>
                 </ng-container>
               </td>
+              <td width="18%"><button class="btn btn-primary rki-blue-bg" style="width:100%;max-height:42px;height:42px;"  (click)='onAddExperiment()'>Add Experiment</button></td>
             </tr>
             <tr>
               <th scope="row" class="ml-summary-col">Protein Data Bases</th>
@@ -49,6 +50,7 @@
                   <p>No Data Bases</p>
                 </ng-container>
               </td>
+              <td width="18%"><button class="btn btn-primary rki-blue-bg" style="width:100%;max-height:42px;height:42px;" (click)='onAddProteinDatabase()'>Add Protein Database</button></td>
             </tr>
             <tr>
               <th scope="row" class="ml-summary-col">Subfolders</th>
@@ -60,14 +62,10 @@
                   <p>No Subfolders</p>
                 </ng-container>
               </td>
+              <td width="18%"><button class="btn btn-primary rki-blue-bg" style="width:100%;max-height:42px;height:42px;" (click)='onAddFolder()'>Add Folder</button></td>
             </tr>
           </tbody>
         </table>
-        <div style="display:flex; flex-direction:column;margin-bottom:0; justify-content:space-evenly;">
-          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;"  (click)='onAddExperiment()'>Add Experiment</button>
-          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;" (click)='onAddProteinDatabase()'>Add Protein Database</button>
-          <button class="btn btn-primary rki-blue-bg" style="margin-left:0.5rem;max-height:42px;height:42px;" (click)='onAddFolder()'>Add Folder</button>
-        </div>
       </div>
       <div>
         <table class="table table-light table-hover" style="max-width:80%;min-width:70%;margin-bottom:0px;">
