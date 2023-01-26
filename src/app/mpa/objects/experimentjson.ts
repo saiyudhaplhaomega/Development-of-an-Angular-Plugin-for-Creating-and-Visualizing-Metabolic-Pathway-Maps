@@ -4,6 +4,7 @@ export interface ExperimentJSON {
   experiment_data: string;
   name: string;
   creationDate: string;
+  files_uploaded: boolean;
 }
 
 export class ExperimentJSONObject implements ExperimentJSON {
@@ -12,4 +13,5 @@ export class ExperimentJSONObject implements ExperimentJSON {
   experiment_data: string;
   name: string;
   creationDate: string;
+  files_uploaded: boolean;
 }

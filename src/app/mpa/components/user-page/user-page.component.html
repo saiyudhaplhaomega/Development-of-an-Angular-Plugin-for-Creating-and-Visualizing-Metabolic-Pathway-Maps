@@ -14,28 +14,14 @@
         <tbody>
         <tr>
           <th scope="row" class="ml-summary-col">
-            Folders:
-          </th>
-          <td>
-            <ng-container *ngIf="folders.length !== 0">
-              <mat-list *ngFor="let name of folders" dense>
-                <mat-list-item> {{name}} </mat-list-item>
-              </mat-list>
-            </ng-container>
-            <ng-container *ngIf="folders.length === 0">
-              <p>No Folders</p>
-            </ng-container>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row" class="ml-summary-col">
             Experiments:
           </th>
           <td>
             <ng-container *ngIf="experiments.length !== 0">
-              <mat-list *ngFor="let name of experiments" dense>
+              <!-- <mat-list *ngFor="let name of experiments" dense>
                 <mat-list-item> {{name}} </mat-list-item>
-              </mat-list>
+              </mat-list> -->
+              <p>{{experiments.length}}</p>
             </ng-container>
             <ng-container *ngIf="experiments.length === 0">
               <p>No Experiments</p>
@@ -48,12 +34,29 @@
           </th>
           <td>
             <ng-container *ngIf="proteinDB.length !== 0">
-              <mat-list *ngFor="let name of proteinDB" dense>
+              <!-- <mat-list *ngFor="let name of proteinDB" dense>
                 <mat-list-item> {{name}} </mat-list-item>
-              </mat-list>
+              </mat-list> -->
+              <p>{{proteinDB.length}}</p>
             </ng-container>
             <ng-container *ngIf="proteinDB.length === 0">
               <p>No Protein Databases</p>
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" class="ml-summary-col">
+            Folders:
+          </th>
+          <td>
+            <ng-container *ngIf="folders.length !== 0">
+              <!-- <mat-list *ngFor="let name of folders" dense>
+                <mat-list-item> {{name}} </mat-list-item>
+              </mat-list> -->
+              <p>{{folders.length}}</p>
+            </ng-container>
+            <ng-container *ngIf="folders.length === 0">
+              <p>No Folders</p>
             </ng-container>
           </td>
         </tr>

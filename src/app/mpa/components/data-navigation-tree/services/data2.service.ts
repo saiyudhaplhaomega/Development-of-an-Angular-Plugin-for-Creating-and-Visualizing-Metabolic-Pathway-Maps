@@ -103,7 +103,7 @@ export class DataService2 {
           this.updateExperiment(newNodeObj);
           break;
         case NodeType.ProteinDB:
-          newNodeObj.icon = 'fingerprint';
+          newNodeObj.icon = 'storage';
           //newNodeObj.realUUID = realUUID;
           break;
         case NodeType.Folder:

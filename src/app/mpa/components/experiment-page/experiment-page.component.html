@@ -1,7 +1,8 @@
 <div class="jobCards responsive-job-card">
   <div class="card min-w-600">
-    <div class="card-header">
+    <div class="card-header custom-card-header">
       <h5>Experiment: {{this.dataItemOfThisComponent.displayName}}</h5>
+      <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center" (click)='onRemoveExperiment()'><mat-icon>close</mat-icon></button>
     </div>
     <div class="card-body">
       <mat-tab-group mat-align-tabs="center">
@@ -26,7 +27,7 @@
               </div>
             </div>
 
-            <table class="table table-light table-hover">
+            <table class="table table-light table-hover" style="margin-bottom:0px;">
               <thead>
               </thead>
               <tbody>
@@ -59,14 +60,6 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="ml-summary-col">Description:
-                  <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
-                </th>
-                <td >
-                  {{this.dbExperiment.description}}
-                </td>
-              </tr>
-              <tr>
                 <th scope="row" class="ml-summary-col">Data Summary:</th>
                 <td >
                   <ng-container *ngIf="this.hasMpaData">
@@ -85,9 +78,19 @@
               </tr>
               </tbody>
             </table>
-            <div class="input-group mb-3 ng-star-inserted">
-              <button class="btn btn-primary float-right btn-danger" (click)='onRemoveExperiment()'>Delete this Experiment</button>
-            </div>
+            <table class="table table-light table-hover">
+              <th></th>
+              <tbody>
+                <tr>
+                  <th scope="row" class="ml-summary-col">Description:
+                    <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
+                  </th>
+                  <td >
+                    {{this.dbExperiment.description}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </mat-tab>
 
@@ -96,6 +99,17 @@
           <div class="custom-tab-box">
 
             <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Use Case Selection</span>
+                </div>
+                <mat-select class="form-control custom-select" [(value)]="this.dataUploadModeSelection" (selectionChange)="dataUploadModeSelectionChange($event.value)">
+                  <mat-option *ngFor="let dataMode of dataUploadModeOptions" [value]="dataMode">{{dataMode}}</mat-option>
+                </mat-select>
+              </div>
+              
+              <!-- Data Selection: Result Upload -->
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Result Upload'">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Data Selection</span>
@@ -107,9 +121,11 @@
                     {{ fileType}}</mat-option>
                 </mat-select>
               </div>
+            </ng-container>
 
               <!-- ProteinDatabase -->
-              <ng-container *ngIf="this.dataUploadSelection == 'Search Result'">
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result'">
+                <div class="divider-line">Protein Database</div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Protein Database</span>
@@ -124,10 +140,37 @@
               </ng-container>
 
               <!--            Peaklist            -->
-              <ng-container *ngIf="this.dataUploadSelection == 'Peaklist' ||
-              this.dataUploadSelection == 'Peaklist + Search Result'">
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Search' || this.dataUploadSelection == 'Peaklist + Search Result'">
                 <div class="divider-line"> Peaklist</div>
 
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="fragmentIonTolerance">Fragment Ion Tolerance</span>
+                  </div>
+                  <input type="text" style="max-width:35%;" class="form-control" placeholder="fragment ion tolerance" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonTolerance"/>
+                  <div class="input-group-append" style="min-width:15%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.fragmentIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of fragmentIonToleranceUnitOptions"
+                                  [value]="unit">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="precursorIonTolerance">Precursor Ion Tolerance</span>
+                  </div>
+                  <input type="text" style="max-width:35%;" class="form-control" placeholder="precursor ion tolerance" aria-label="precursorIonTolerance" aria-describedby="precursorIonTolerance"/>
+                  <div class="input-group-append" style="min-width:15%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.precursorIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of precursorIonToleranceUnitOptions"
+                                  [value]="unit">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Peaklist Data Type</span>
@@ -169,8 +212,7 @@
 
               <!--            Search Result           -->
               <ng-container
-                *ngIf="this.dataUploadSelection == 'Search Result' ||
-              this.dataUploadSelection == 'Peaklist + Search Result'">
+                *ngIf="this.dataUploadModeSelection == 'Result Upload'">
                 <div class="divider-line"> Search Result</div>
 
                 <div class="input-group mb-3">
@@ -278,11 +320,25 @@
 
         <!--          Tab 4: Streaming              -->
 
-        <mat-tab label="Streaming">
+        <!-- <mat-tab label="Streaming">
           <div class="custom-tab-box">
             <p style="font-size: 50px; margin: auto auto">🌊</p>
           </div>
+        </mat-tab> -->
+
+        <!--   Tab 4: Taxonomy -->
+        <mat-tab label="Taxonomy">
+          <div class="custom-tab-box">
+            <h2>no data yet</h2>
+          </div>
         </mat-tab>
+
+          <!--   Tab 6: Function -->
+            <mat-tab label="Function">
+              <div class="custom-tab-box">
+                <h2>no data yet</h2>
+              </div>
+            </mat-tab>
 
       </mat-tab-group>
     </div>

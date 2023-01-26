@@ -62,6 +62,12 @@ custom-table-warning {
   justify-content: flex-start;
 }
 
+.custom-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .custom-tabs .mat-tab-body-content {
   overflow: hidden;
   height: 100%;
