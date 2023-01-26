@@ -18,23 +18,16 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
   {
-    path: 'prophanejobs',
-    redirectTo: '/prophane/(prophaneContent:jobs)',
-    pathMatch: 'full',
-  },
-  { path: 'prophaneabout', component: ProphaneAboutComponent },
-  {
     path: 'prophane',
-    component: ProphaneJobSubmissionMainComponent,
-    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./prophane/prophane.module').then((m) => m.ProphaneModule),
   },
   {
-    path: 'prophanejobcontrol',
-    component: ProphaneJobControlComponent,
+    path: 'mpa',
+    canLoad: [AuthGuard], // loads module only if route guard allows it
     canActivate: [AuthGuard],
+    loadChildren: () => import('./mpa/mpa.module').then((m) => m.MpaModule),
   },
-  { path: 'results/:job_uuid', component: ProphaneResultViewComponent },
-  { path: 'mpa', component: MPAComponent, canActivate: [AuthGuard] },
   { path: 'error', component: ErrorPageComponent },
 
   { path: 'termsofservice', component: TermsOfServicePageComponent },

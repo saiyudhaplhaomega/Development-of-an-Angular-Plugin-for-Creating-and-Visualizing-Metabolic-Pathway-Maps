@@ -1,13 +1,20 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable, BehaviorSubject} from 'rxjs';
-import {UserToken} from '../objects/user-token';
-import {OAuthService} from 'angular-oauth2-oidc';
-
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+  UrlTree,
+} from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { UserToken } from '../objects/user-token';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-
+export class AuthGuard implements CanActivate, CanLoad {
   public user: BehaviorSubject<UserToken> = new BehaviorSubject(undefined);
   public guestemail: BehaviorSubject<string> = new BehaviorSubject(undefined);
   public guest: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -29,11 +36,11 @@ export class AuthGuard implements CanActivate {
   }
 
   loggedIn() {
-    return !! (this._user || this._guest);
+    return !!(this._user || this._guest);
   }
 
   allowExpert() {
-    return !! this._user;
+    return !!this._user;
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -45,6 +52,20 @@ export class AuthGuard implements CanActivate {
     this._router.navigate(['/login']);
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
+  }
+
+  // TODO: canLoad is deprecated, implement canMatch instead (https://github.com/angular/angular/pull/48180)
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ):
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+    if (this._user || this._guest) {
+      return true;
+    }
   }
 
   getUser() {
@@ -84,5 +105,4 @@ export class AuthGuard implements CanActivate {
     this.oauthService.logOut();
     this._router.navigate(['/login']);
   }
-
 }

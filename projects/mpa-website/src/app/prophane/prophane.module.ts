@@ -6,8 +6,6 @@ import { ProphaneAboutComponent } from './components/prophane-about/prophane-abo
 import { MaterialModule } from '../material-module';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 // import {ProphaneJobSubmissionDialogComponent} from '../core/services/prophane-job-submission-dialog';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 import { SafePipe } from './safe.pipe';
@@ -22,6 +20,7 @@ import { JobTaxonomyComponent } from './components/job-taxonomy/job-taxonomy.com
 import { JobFunctionComponent } from './components/job-function/job-function.component';
 import { JobSubmitComponent } from './components/job-submit/job-submit.component';
 import { JobAnnotationComponent } from './components/job-annotation/job-annotation.component';
+import { ProphaneRoutingModule } from './prophane-routing.module';
 
 @NgModule({
   declarations: [
@@ -44,10 +43,9 @@ import { JobAnnotationComponent } from './components/job-annotation/job-annotati
   ],
   imports: [
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     NgbModule,
+    ProphaneRoutingModule,
     // material module last
     MaterialModule,
   ],

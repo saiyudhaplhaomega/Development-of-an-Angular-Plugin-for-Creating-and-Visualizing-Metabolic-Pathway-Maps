@@ -28,6 +28,7 @@ import { PsmTableComponent } from './components/psm-table/psm-table.component';
 import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-viewer.component';
 import { ProteineSequenceViewerComponent } from './components/protein-sequence-viewer/proteine-sequence-viewer.component';
 import { NgChartsModule } from 'ng2-charts';
+import { MpaRoutingModule } from './mpa-routing.module';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { NgChartsModule } from 'ng2-charts';
     // material module last
     MaterialModule,
     ReactiveFormsModule,
+    MpaRoutingModule,
   ],
   exports: [MPAComponent],
 })

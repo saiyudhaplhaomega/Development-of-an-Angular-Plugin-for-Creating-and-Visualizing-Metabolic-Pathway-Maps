@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthGuard } from '../../services/auth-guard.service';
 import { authConfigGoogle } from '../../../authConfigGoogle';
@@ -6,28 +6,31 @@ import { authConfigElixir } from '../../../authConfigElixir';
 import { UserToken } from '../../objects/user-token';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css'],
 })
-
-export class LoginPageComponent {
-
+export class LoginPageComponent implements OnInit {
   public user: UserToken;
   guestlogin = false;
   showGuestLogin = false;
   guestEmail = '';
 
-  constructor(private _router: Router, private oauthService: OAuthService, public authGuard: AuthGuard) {
-    this.authGuard.user.subscribe(usert => {
+  constructor(
+    private _router: Router,
+    private oauthService: OAuthService,
+    public authGuard: AuthGuard
+  ) {}
+
+  ngOnInit(): void {
+    this.authGuard.user.subscribe((usert) => {
       this.user = usert;
     });
-    this.authGuard.guestemail.subscribe(guestEmail => {
+    this.authGuard.guestemail.subscribe((guestEmail) => {
       this.guestEmail = guestEmail;
     });
-    this.authGuard.guest.subscribe(guest => {
+    this.authGuard.guest.subscribe((guest) => {
       this.guestlogin = guest;
     });
   }
@@ -41,19 +44,21 @@ export class LoginPageComponent {
   }
 
   navigateProphane() {
-    setTimeout(() => {
-        this._router.navigateByUrl('mpa');
-      }, 1000);
+    this._router.navigateByUrl('prophane');
+  }
+
+  navigateMpa() {
+    this._router.navigateByUrl('mpa');
   }
 
   loginGuest() {
-      const tempStr = this.guestEmail;
-      this.authGuard.logout();
-      this.guestlogin = true;
-      this.guestEmail = tempStr;
-      this.authGuard.guestemail.next(this.guestEmail);
-      this.authGuard.guest.next(this.guestlogin);
-      this.hideGuestInput();
+    const tempStr = this.guestEmail;
+    this.authGuard.logout();
+    this.guestlogin = true;
+    this.guestEmail = tempStr;
+    this.authGuard.guestemail.next(this.guestEmail);
+    this.authGuard.guest.next(this.guestlogin);
+    this.hideGuestInput();
   }
 
   async loginElixir() {
@@ -73,7 +78,7 @@ export class LoginPageComponent {
   }
 
   isEmail(value) {
-    if (!String(value).match('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')) {
+    if (!String(value).match('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$')) {
       return false;
     } else {
       return true;
