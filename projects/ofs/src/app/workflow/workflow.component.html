@@ -1,0 +1,33 @@
+<mat-card class="m-4">
+  <mat-card-content>
+    <mat-stepper
+      [linear]="false"
+      #stepper
+      (selectionChange)="onStepChange($event)"
+    >
+      <mat-step *ngFor="let step of steps">
+        <ng-template matStepLabel>{{ step.label }}</ng-template>
+      </mat-step>
+    </mat-stepper>
+  </mat-card-content>
+</mat-card>
+
+<div class="max-w-xl mx-auto px-4 mt-2">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        {{ currentStep.label }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <router-outlet></router-outlet>
+      <ofs-stepper-control-buttons
+        [showPrev]
+        [showNext]
+        [disablePrev]
+        [disableNext]
+        (onNavigation)="onButtonNavigate($event)"
+      ></ofs-stepper-control-buttons>
+    </mat-card-content>
+  </mat-card>
+</div>

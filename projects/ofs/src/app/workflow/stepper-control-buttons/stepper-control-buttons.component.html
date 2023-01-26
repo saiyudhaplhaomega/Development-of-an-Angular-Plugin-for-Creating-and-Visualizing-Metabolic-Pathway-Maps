@@ -1,0 +1,15 @@
+<div class="flex flex-row justify-between">
+  <button
+    *ngIf="showPrev"
+    mat-button
+    [disabled]="disablePrev"
+    (click)="onNavigate('previous')"
+  >
+    go back
+  </button>
+  <div *ngIf="showNext" class="ml-auto">
+    <button mat-button [disabled]="disableNext" (click)="onNavigate('next')">
+      next
+    </button>
+  </div>
+</div>

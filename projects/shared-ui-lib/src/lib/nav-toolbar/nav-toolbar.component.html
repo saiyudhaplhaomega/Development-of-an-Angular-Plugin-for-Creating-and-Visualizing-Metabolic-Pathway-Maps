@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    fixedInViewport
+    mode="side"
+    opened="false"
+    class="sidenav"
+  >
+    <mat-toolbar></mat-toolbar>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        *ngFor="let link of routerLinks"
+        [routerLink]="link.route"
+        >{{ link.label }}</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="flex justify-between">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span> {{ applicationName }} </span>
+      <button mat-flat-button color="primary" class="ml-auto">
+        Log in
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <!-- router -->
+    <ng-content> </ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

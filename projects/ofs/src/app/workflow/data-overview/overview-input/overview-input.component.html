@@ -1,0 +1,135 @@
+<form
+  [formGroup]="formModel"
+  class="flex flex-col"
+  (ngSubmit)="submitOverviewConfig()"
+>
+  <mat-form-field appearance="outline">
+    <ngx-mat-file-input
+      placeholder="Select File for Upload"
+      [formControl]="this.dataFileControl"
+    >
+    </ngx-mat-file-input>
+    <mat-error *ngIf="this.formModel.get('data').invalid">{{
+      getErrorMessage(this.formModel.get("data"))
+    }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>group columns</mat-label>
+    <mat-select formControlName="groupSelectionOption">
+      <mat-option *ngFor="let option of groupSelectionOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div formArrayName="groups" class="mb-8">
+    <div *ngFor="let group of groups.controls; index as i; first as isFirst">
+      <div *ngIf="isFirst" [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>control group name</mat-label>
+          <input type="text" matInput formControlName="groupName" />
+          <mat-error *ngIf="group.get('groupName').invalid">{{
+            getErrorMessage(group.get("groupName"))
+          }}</mat-error>
+        </mat-form-field>
+
+        <div
+          *ngIf="groupSelectionOption.value === this.groupSelectionOptions[0]"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>control group prefix *</mat-label>
+            <input type="text" matInput formControlName="groupPrefix" />
+            <mat-error *ngIf="group.get('groupPrefix').invalid">{{
+              getErrorMessage(group.get("groupPrefix"))
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          *ngIf="groupSelectionOption.value !== this.groupSelectionOptions[0]"
+        >
+          <mat-form-field appearance="outline" class="w-16">
+            <mat-label>start *</mat-label>
+            <input type="number" matInput formControlName="groupStart" />
+            <mat-error *ngIf="group.get('groupStart').invalid">{{
+              getErrorMessage(group.get("groupStart"))
+            }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-16">
+            <mat-label>end *</mat-label>
+            <input type="number" matInput formControlName="groupEnd" />
+            <mat-error *ngIf="group.get('groupEnd').invalid">{{
+              getErrorMessage(group.get("groupEnd"))
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div *ngIf="!isFirst" [formGroupName]="i">
+        <div class="mb-4">
+          <mat-divider></mat-divider>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>test group name</mat-label>
+          <input type="text" matInput formControlName="groupName" />
+          <mat-error *ngIf="group.get('groupName').invalid">{{
+            getErrorMessage(group.get("groupName"))
+          }}</mat-error>
+        </mat-form-field>
+
+        <div
+          *ngIf="groupSelectionOption.value === this.groupSelectionOptions[0]"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>test group prefix *</mat-label>
+            <input type="text" matInput formControlName="groupPrefix" />
+            <mat-error *ngIf="group.get('groupPrefix').invalid">{{
+              getErrorMessage(group.get("groupPrefix"))
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          *ngIf="groupSelectionOption.value !== this.groupSelectionOptions[0]"
+        >
+          <mat-form-field appearance="outline" class="w-16">
+            <mat-label>start *</mat-label>
+            <input type="number" matInput formControlName="groupStart" />
+            <mat-error *ngIf="group.get('groupStart').invalid">{{
+              getErrorMessage(group.get("groupStart"))
+            }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-16">
+            <mat-label>end *</mat-label>
+            <input type="number" matInput formControlName="groupEnd" />
+            <mat-error *ngIf="group.get('groupEnd').invalid">{{
+              getErrorMessage(group.get("groupEnd"))
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button
+        *ngIf="i > 1"
+        mat-icon-button
+        color="primary"
+        type="button"
+        (click)="removeGroup(i)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-flat-button color="primary" type="button" (click)="addGroup()">
+      add group
+    </button>
+  </div>
+
+  <button [disabled]="!formModel.valid" mat-flat-button color="primary">
+    submit data
+  </button>
+</form>

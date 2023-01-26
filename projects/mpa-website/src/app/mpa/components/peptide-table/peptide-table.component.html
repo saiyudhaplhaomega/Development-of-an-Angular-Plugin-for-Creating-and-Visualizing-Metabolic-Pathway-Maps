@@ -1,0 +1,37 @@
+<div class="flexbox-column">
+  <div>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter" />
+    </mat-form-field>
+  </div>
+
+  <div style="overflow-y: auto; height: 100%" class="table-border">
+    <mat-table [dataSource]="dataSource" matSort>
+      <!-- Peptide Count Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Sequence</mat-header-cell
+        >
+        <mat-cell *matCellDef="let row"> {{ row.sequenceID }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="setPeptide(row)"
+        [ngClass]="{
+          'table-highlight-row': highlightRow(row),
+          'table-element-row': !highlightRow(row)
+        }"
+      >
+      </mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
