@@ -62,10 +62,10 @@ import { MpaRoutingModule } from './mpa-routing.module';
     DragDropModule,
     FormsModule,
     NgChartsModule,
-    // material module last
-    MaterialModule,
     ReactiveFormsModule,
     MpaRoutingModule,
+    // material module last
+    MaterialModule,
   ],
   exports: [MPAComponent],
 })

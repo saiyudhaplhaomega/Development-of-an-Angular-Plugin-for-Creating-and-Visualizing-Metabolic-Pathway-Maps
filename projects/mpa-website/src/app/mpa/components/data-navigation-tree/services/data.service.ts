@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {DataItem} from '../objects/data-item';
-import {HttpClientService} from '../../../../core/services/http-client.service';
-import {AuthGuard} from '../../../../core/services/auth-guard.service';
-import {GetDateService} from '../../../../core/services/get-date.service';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
-import {dataNodeIdGenerator} from './dataNodeIdGenerator';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { DataItem } from '../objects/data-item';
+import { HttpClientService } from '../../../../core/services/http-client.service';
+import { AuthGuard } from '../../../../core/services/auth-guard.service';
+import { GetDateService } from '../../../../core/services/get-date.service';
+import { MatDialog } from '@angular/material/dialog';
+import { dataNodeIdGenerator } from './dataNodeIdGenerator';
 
 export enum NodeType {
   Experiment = 'experiment',
@@ -23,26 +23,26 @@ export interface DataChangeObj {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-
   public dataMap = new BehaviorSubject<Map<string, DataItem>>(undefined);
   private initDataChange = {
     event: undefined,
     currentNodeUuid: undefined,
     targetNodeUuid: undefined,
-    finalNodeUuid: undefined
+    finalNodeUuid: undefined,
   };
   public dataChange = new BehaviorSubject<DataChangeObj>(this.initDataChange);
   private _dataItemMap: Map<string, DataItem>;
 
   // uncomment when server is running properly
-  constructor(private authGuard: AuthGuard,
-              private jsonUploader: HttpClientService,
-              private getDateService: GetDateService,
-              private dialog: MatDialog) {
-
+  constructor(
+    private authGuard: AuthGuard,
+    private jsonUploader: HttpClientService,
+    private getDateService: GetDateService,
+    private dialog: MatDialog
+  ) {
     //   if (this.authGuard.loggedIn()) {
     //     this.jsonUploader.getObject<DataItem[]>(Endpoints.GET_USER_DATA).subscribe(res => {
     //       const newMap = new Map<string, DataItem>();
@@ -150,15 +150,18 @@ export class DataService {
     const proteinDatabases = [];
     this._dataItemMap.forEach(function (value, key) {
       if (value.type === 'proteindb') {
-
         proteinDatabases.push(value);
       }
     });
     return proteinDatabases;
   }
 
-  async addNodeObj(parentId: string, nodeName: string, nodeType: NodeType, realUUID: string) {
-
+  async addNodeObj(
+    parentId: string,
+    nodeName: string,
+    nodeType: NodeType,
+    realUUID: string
+  ) {
     // TODO: workaround ... check if a node like this already exists
     let existsAlready = false;
     this._dataItemMap.forEach((item: DataItem) => {
@@ -174,7 +177,7 @@ export class DataService {
         event: 'add',
         currentNodeUuid: parentId,
         targetNodeUuid: newNodeId,
-        finalNodeUuid: newNodeId
+        finalNodeUuid: newNodeId,
       };
 
       // const nodeObj: DataItem = {
@@ -346,6 +349,5 @@ export class DataService {
     // private updateDataItems() {
     //   this.dataMap.next(this._dataItemMap);
     // }
-
   }
 }
