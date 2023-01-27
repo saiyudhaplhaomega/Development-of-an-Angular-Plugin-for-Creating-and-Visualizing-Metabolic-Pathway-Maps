@@ -124,28 +124,22 @@ export class ProphaneJobStateService {
     this.loading = true;
     this.jobUnavailableMessage = NoJobCardInfo.WAITING_FOR_RESPONSE;
     // request new job creates a job with status 0 now, status 1 when files are send (start job method)
-    this.jobService
-      .requestJob(this.currentProphaneJob)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-        })
-      )
-      .subscribe(
-        (res) => {
-          this.currentProphaneJob = res;
+    this.jobService.requestJob(this.currentProphaneJob).subscribe({
+      next: (res) => {
+        this.currentProphaneJob = res;
 
-          this.jobUnavailable = res.status === 'JOB_REJECTED';
-          if (res.status === 'JOB_REJECTED') {
-            this.noJobCardHeader = NoJobCardHeaders.JOB_UNAVAILABLE;
-            this.jobUnavailableMessage = NoJobCardInfo.JOB_UNAVAILABLE_MESSAGE;
-          }
-        },
-        (error) => {
-          this.noJobCardHeader = NoJobCardHeaders.ERROR;
-          this.jobUnavailableMessage = NoJobCardInfo.ERROR;
+        this.jobUnavailable = res.status === 'JOB_REJECTED';
+        if (res.status === 'JOB_REJECTED') {
+          this.noJobCardHeader = NoJobCardHeaders.JOB_UNAVAILABLE;
+          this.jobUnavailableMessage = NoJobCardInfo.JOB_UNAVAILABLE_MESSAGE;
         }
-      );
+      },
+      error: (error) => {
+        this.noJobCardHeader = NoJobCardHeaders.ERROR;
+        this.jobUnavailableMessage = NoJobCardInfo.ERROR;
+      },
+      complete: () => (this.loading = false),
+    });
   }
 
   compareByID(o1: ProphaneReportStyle, o2: ProphaneReportStyle) {

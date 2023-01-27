@@ -31,10 +31,19 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.setWorkflowStep(0);
+    this.workflow.getCurrentJob('Käsekuchen');
   }
 
   ngAfterViewInit(): void {
     this.setStepperIndex(0);
+  }
+
+  get job$() {
+    return this.workflow.ofsJob$;
+  }
+
+  isLoading(): Boolean {
+    return this.workflow.loading;
   }
 
   onStepChange(event: StepperSelectionEvent) {

@@ -7,18 +7,12 @@
  */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, Subscription } from 'rxjs';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
-
-export enum RequestState {
-  CREATED = 'created',
-  SUCCESS = 'success',
-  FAIL = 'fail',
-}
 
 export enum OfsJobState {
   NOJOB = 'nojob',
@@ -48,13 +42,12 @@ export interface OfsJob {
 })
 export class WorkflowService {
   ofsJob$: BehaviorSubject<OfsJob>;
+  loading: Boolean;
 
   private overviewConfig: OverviewConfig;
   private preprocessingConfig: PreprocessingConfig;
   private wrapperConfig: WrapperConfig;
   private classifierConfig: ClassifierConfig;
-
-  overviewRequest$: Observable<RequestState>;
 
   constructor(private http: OfsHttpClientService) {
     this.ofsJob$ = new BehaviorSubject({
@@ -68,13 +61,27 @@ export class WorkflowService {
   }
 
   getCurrentJob(jobId: string) {
-    // get job information from server
-    const job = { jobId: jobId, state: OfsJobState.WAITING };
-    this.http.dummyHttpGet('dummy/' + jobId).subscribe();
+    // initially called when workflow is rendered
+    // checks if job is existing
+    this.loading = true;
+    this.http.dummyHttpGet('dummy/' + jobId).subscribe({
+      next: (response) => {
+        this.ofsJob$.next(response);
+      },
+      error: (error) => {
+        this.loading = false;
+        console.log(error);
+      },
+      complete: () => {
+        console.log("I'm complete");
+        this.loading = false;
+      },
+    });
   }
 
-  createOfsJob() {
-    this.ofsJob$.next({ jobId: '', state: OfsJobState.CREATED });
+  createOfsJob(response: OfsJob) {
+    if (this.ofsJob$.value.state === OfsJobState.NOJOB)
+      this.ofsJob$.next({ jobId: '', state: OfsJobState.CREATED });
   }
 
   submitOverviewInput(overviewConfig: OverviewConfig) {

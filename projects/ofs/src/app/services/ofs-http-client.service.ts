@@ -11,8 +11,10 @@ export class OfsHttpClientService {
 
   dummyHttpGet(api: string, params?: HttpParams): Observable<any> {
     return of({ jobId: 'Käsekuchen', state: OfsJobState.CREATED }).pipe(
-      delay(100)
+      delay(1000)
     );
+    // once observable is completed, subscriptions automatically close
+    // > also applys to http requests
   }
 
   dummyHttpPost(api: string, params?: HttpParams): Observable<any> {
