@@ -17,7 +17,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content class="overflow-y-hidden">
     <mat-toolbar color="primary" class="flex justify-between">
       <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
@@ -30,6 +30,8 @@
     </mat-toolbar>
 
     <!-- router -->
-    <ng-content> </ng-content>
+    <div class="overflow-y-auto h-full">
+      <ng-content> </ng-content>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
