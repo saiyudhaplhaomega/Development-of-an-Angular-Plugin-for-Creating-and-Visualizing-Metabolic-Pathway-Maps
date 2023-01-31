@@ -115,6 +115,7 @@
 
       <button
         *ngIf="i > 1"
+        [disabled]="formDisabled$ | async"
         mat-icon-button
         color="primary"
         type="button"
@@ -124,12 +125,22 @@
       </button>
     </div>
 
-    <button mat-flat-button color="primary" type="button" (click)="addGroup()">
+    <button
+      [disabled]="formDisabled$ | async"
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="addGroup()"
+    >
       add group
     </button>
   </div>
 
-  <button [disabled]="!formModel.valid" mat-flat-button color="primary">
+  <button
+    [disabled]="!formModel.valid || (formDisabled$ | async)"
+    mat-flat-button
+    color="primary"
+  >
     submit data
   </button>
 </form>

@@ -5,11 +5,11 @@
     [disabled]="disablePrev"
     (click)="onNavigate('previous')"
   >
-    go back
+    previous step
   </button>
   <div *ngIf="showNext" class="ml-auto">
     <button mat-button [disabled]="disableNext" (click)="onNavigate('next')">
-      next
+      next step
     </button>
   </div>
 </div>

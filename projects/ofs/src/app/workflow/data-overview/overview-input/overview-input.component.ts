@@ -1,10 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { CustomValidators, InputFormComponent } from 'shared-ui-lib';
 import {
   DataGroupForm,
@@ -22,16 +31,24 @@ export class OverviewInputComponent
   extends InputFormComponent
   implements OnInit, OnDestroy
 {
+  @Output() submit = new EventEmitter<any>();
+
   formModel: OverviewInputForm;
+  formDisabled$: BehaviorSubject<Boolean>;
 
   dataFileControl: FormControl<File | null>;
-  dataFile: File | null = null;
+  dataFile: File | null;
 
   groupSelectionOptions = Object.values(GroupSelectionOptions);
   allowedChars = '^[a-zA-Z0-9_.-]*$';
 
+  subscriptions: Subscription[];
+
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
+
+    this.formDisabled$ = new BehaviorSubject<Boolean>(false);
+    this.subscriptions = [];
   }
 
   ngOnInit(): void {
@@ -44,21 +61,33 @@ export class OverviewInputComponent
       {
         data: this.dataFileControl,
         groupSelectionOption: [this.groupSelectionOptions[0]],
-        groups: this.builder.array([this.buildGroup(), this.buildGroup()]),
+        groups: this.builder.array([
+          this.buildGroup('control'),
+          this.buildGroup('test'),
+        ]),
       },
       {
         updateOn: 'blur',
       }
     ) as OverviewInputForm;
 
-    this.validatorSubscription =
+    this.subscriptions.push(
       this.groupSelectionOption.valueChanges.subscribe(() => {
         CustomValidators.updateValidators(this.groups);
-      });
+      })
+    );
+
+    this.subscriptions.push(
+      this.formDisabled$.subscribe((disabled) => {
+        disabled ? this.formModel.disable() : this.formModel.enable();
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.validatorSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   get groupSelectionOption() {
@@ -70,10 +99,10 @@ export class OverviewInputComponent
     return this.formModel?.controls.groups;
   }
 
-  buildGroup(): DataGroupForm {
+  buildGroup(defaultName: string): DataGroupForm {
     return this.builder.group({
       groupName: [
-        'control',
+        defaultName,
         [Validators.required, Validators.pattern(this.allowedChars)],
       ],
       groupPrefix: [
@@ -116,7 +145,7 @@ export class OverviewInputComponent
   }
 
   addGroup(): void {
-    this.groups.push(this.buildGroup());
+    this.groups.push(this.buildGroup(''));
   }
 
   removeGroup(index: number) {
@@ -126,7 +155,21 @@ export class OverviewInputComponent
   }
 
   submitOverviewConfig() {
+    this.disableForm();
     const overViewConfig = this.formModel.getRawValue();
     this.workflow.submitOverviewInput(overViewConfig);
+    this.submit.emit();
+  }
+
+  disableForm() {
+    this.formDisabled$.next(true);
+  }
+
+  enableForm() {
+    this.formDisabled$.next(false);
+  }
+
+  isLoading(): Boolean {
+    return this.workflow.loading;
   }
 }

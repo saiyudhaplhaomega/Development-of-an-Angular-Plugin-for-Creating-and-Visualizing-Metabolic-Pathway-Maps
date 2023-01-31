@@ -5,43 +5,24 @@
  * - handle accessible routes
  *
  */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject, Subscription } from 'rxjs';
+import { OverviewResponse } from '../../models/overview-response.model';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
 import { ClassifierConfig } from '../models/classifier.model';
+import { OfsJob, OfsJobState } from '../models/ofs-job.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
-
-export enum OfsJobState {
-  NOJOB = 'nojob',
-  WAITING = 'waiting',
-  CREATED = 'created',
-  CREATIONFAIL = 'creationfail',
-  OVERVIEW_INPUT = 'overviewinput',
-  OVERVIEW_RESULTS = 'overviewresults',
-  OVERVIEW_FAIL = 'overviewfail',
-  PREPROCESSING_INPUT = 'preprocessinginput',
-  PREPROCESSING_RESULTS = 'preprocessingresults',
-  PREPROCESSING_FAIL = 'preprocessingfail',
-  WRAPPER_INPUT = 'wrapperinput',
-  WRAPPER_RESULTS = 'wrapperresults',
-  WRAPPER_FAIL = 'wrapperfail',
-  RESULTS = 'results',
-  RESULTS_FAIL = 'resultsfail',
-}
-
-export interface OfsJob {
-  jobId: string;
-  state: OfsJobState;
-}
 
 @Injectable({
   providedIn: 'any',
 })
 export class WorkflowService {
-  ofsJob$: BehaviorSubject<OfsJob>;
+  ofsJob: OfsJob;
+  ofsJobs: OfsJob[];
+
+  overviewImages: OverviewResponse;
+
   loading: Boolean;
 
   private overviewConfig: OverviewConfig;
@@ -50,42 +31,104 @@ export class WorkflowService {
   private classifierConfig: ClassifierConfig;
 
   constructor(private http: OfsHttpClientService) {
-    this.ofsJob$ = new BehaviorSubject({
+    this.ofsJob = {
       jobId: '',
       state: OfsJobState.NOJOB,
-    });
+    };
   }
 
-  get ofsJob(): Observable<OfsJob> {
-    return this.ofsJob$;
+  loadJobsFromStorage() {
+    // load ids of created jobs from local storage
   }
 
-  getCurrentJob(jobId: string) {
-    // initially called when workflow is rendered
-    // checks if job is existing
+  writeJobToStorage(job: OfsJob) {
+    // write job to local storage
+  }
+
+  deleteJobsInStorage(jobs: OfsJob[]) {
+    // delete jobs in local storage
+  }
+
+  getJobFromServer(jobId: string) {
+    /**
+     * Retrives job data for the specified job from server and updates job in local storage
+     * @param {OfsJob} jobId id of requested job
+     */
     this.loading = true;
-    this.http.dummyHttpGet('dummy/' + jobId).subscribe({
-      next: (response) => {
-        this.ofsJob$.next(response);
-      },
-      error: (error) => {
-        this.loading = false;
-        console.log(error);
-      },
-      complete: () => {
-        console.log("I'm complete");
-        this.loading = false;
-      },
-    });
+    this.http
+      .dummyHttpRequest('getJob/', {
+        job: this.ofsJob,
+        configData: undefined,
+        responsenData: undefined,
+      })
+      .subscribe({
+        next: (response) => {
+          this.ofsJob = response.job;
+          this.writeJobToStorage(response.job); // update job state in local storage
+        },
+        error: (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
-  createOfsJob(response: OfsJob) {
-    if (this.ofsJob$.value.state === OfsJobState.NOJOB)
-      this.ofsJob$.next({ jobId: '', state: OfsJobState.CREATED });
+  createOfsJob() {
+    /**
+     * Requests new job from server
+     */
+    this.loading = true;
+    this.http
+      .dummyHttpRequest('createjob/', {
+        job: this.ofsJob,
+        configData: undefined,
+        responsenData: undefined,
+      })
+      .subscribe({
+        next: (response) => {
+          this.ofsJob = response.job;
+          this.writeJobToStorage(response.job);
+        },
+        error: (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   submitOverviewInput(overviewConfig: OverviewConfig) {
     this.overviewConfig = overviewConfig;
+
+    this.loading = true;
+    this.http
+      .dummyHttpRequest('overviewinput/', {
+        job: this.ofsJob,
+        configData: overviewConfig,
+        responsenData: undefined,
+      })
+      .subscribe({
+        next: (response) => {
+          this.ofsJob = response.job;
+          this.overviewImages = response.responsenData as OverviewResponse;
+
+          this.writeJobToStorage(response.job);
+
+          console.log(response);
+        },
+        error: (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
     // perform http post and wait until
     // data are validated
     // overview graphics are generated

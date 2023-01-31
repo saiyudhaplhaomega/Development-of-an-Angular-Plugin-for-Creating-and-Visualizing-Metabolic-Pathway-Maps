@@ -1,4 +1,5 @@
-{{ job$ | async | json }}
+{{ job | json }}
+{{ overviewImages | json }}
 
 <mat-card class="m-4">
   <mat-card-content>
@@ -22,10 +23,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <ng-container *ngIf="isLoading()"> Loading... </ng-container>
-      <ng-container *ngIf="!isLoading()"
-        ><router-outlet></router-outlet
-      ></ng-container>
+      <router-outlet></router-outlet>
       <ofs-stepper-control-buttons
         [showPrev]
         [showNext]

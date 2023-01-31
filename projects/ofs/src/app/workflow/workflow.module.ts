@@ -31,6 +31,8 @@ import { PreprocessingResultsInputComponent } from './preprocessing/preprocessin
 import { StepperControlButtonsComponent } from './stepper-control-buttons/stepper-control-buttons.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { WorkflowService } from './services/workflow.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { WorkflowService } from './services/workflow.service';
     MatPaginatorModule,
     MatSortModule,
     MatDividerModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [WorkflowService],
 })

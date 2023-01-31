@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-overview-results',
@@ -6,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overview-results.component.scss'],
 })
 export class OverviewResultsComponent implements OnInit {
-  constructor() {}
+  constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {}
+
+  get overviewImages() {
+    return this.workflow.overviewImages;
+  }
+
+  isLoading() {
+    return this.workflow.loading;
+  }
 }
