@@ -224,20 +224,37 @@
 
               <!--            Advanced Search Parameters           -->
               <ng-container *ngIf="this.dataUploadModeSelection == 'Search' || this.dataUploadSelection == 'Peaklist + Search Result'">
-                <div class="divider-line"> Advanced Search Parameters</div>
-                <div [@detailExpand]="advancedSearchExpanded ? 'expanded' : 'collapsed'" >
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">AdvancedSearchParameter1</span>
-                    </div>
-                    <input type="text" class="form-control custom-text"/>
-                  </div>
-                </div>
-                <button mat-icon-button (click)="expandASP()">
+                <div style="display: flex; align-items:center; width:100%;">
+                <div class="divider-line" style="width:100%;"> Advanced Search Parameters</div>
+                <button style="display: inline-block;" mat-icon-button (click)="expandASP()">
                   <mat-icon [@indicatorRotate]="advancedSearchExpanded ? 'expanded' : 'collapsed'">
                     expand_more
                   </mat-icon>
                 </button>
+              </div>
+          
+                <div [@detailExpand]="advancedSearchExpanded ? 'expanded' : 'collapsed'" style="height:100%; width:100%;">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter1</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter2</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter3</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+                </div>
               </ng-container>
               <!--            Search Result           -->
               <ng-container
