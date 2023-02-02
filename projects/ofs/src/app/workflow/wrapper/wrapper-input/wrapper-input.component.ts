@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { InputFormComponent } from 'shared-ui-lib';
+import { Endpoints } from '../../../models/endpoints.model';
 import { WrapperForm } from '../../models/wrapper.model';
 import { WorkflowService } from '../../services/workflow.service';
 
@@ -41,7 +42,9 @@ export class WrapperInputComponent
   }
 
   setExistingFormInput() {
-    if (this.workflow.wrapperConfig) {
+    const wrapperConfig = this.workflow.wrapperConfig;
+    if (wrapperConfig?.folds && wrapperConfig?.repeats) {
+      this.workflow.wrapperConfig;
       this.formModel.patchValue(this.workflow.wrapperConfig);
       this.disableForm();
     }
@@ -62,7 +65,7 @@ export class WrapperInputComponent
   submitWrapperConfig() {
     this.disableForm();
     const wrapperConfig = this.formModel.getRawValue();
-    this.workflow.submitWrapperInput(wrapperConfig);
+    this.workflow.submitConfig(wrapperConfig, Endpoints.WRAPPER_INPUT);
     this.submit.emit();
   }
 }

@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { InputFormComponent } from 'shared-ui-lib';
+import { Endpoints } from '../../../models/endpoints.model';
 import { PreprocessingConfigForm } from '../../models/preprocessing.model';
 import { WorkflowService } from '../../services/workflow.service';
 
@@ -67,7 +68,10 @@ export class PreprocessingInputComponent
   submitPreprocessingConfig() {
     this.disableForm();
     const preprocessingConfig = this.formModel.getRawValue();
-    this.workflow.submitPreprocessingInput(preprocessingConfig);
+    this.workflow.submitConfig(
+      preprocessingConfig,
+      Endpoints.PREPROCESSING_INPUT
+    );
     this.submit.emit();
   }
 

@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ClassifierResponse } from '../../models/classifier-response.model';
+import { Endpoints } from '../../models/endpoints.model';
 import { OverviewResponse } from '../../models/overview-response.model';
 import { PreprocessingResponse } from '../../models/preprocessing-response.model';
 import { WrapperResponse } from '../../models/wrapper-response.model';
@@ -119,98 +120,6 @@ export class WorkflowService {
       });
   }
 
-  submitOverviewInput(overviewConfig: OverviewConfig) {
-    this.overviewConfig = overviewConfig;
-
-    this.loading = true;
-    this.http
-      .dummyHttpRequest('overviewinput/', {
-        job: this.ofsJob,
-        configData: overviewConfig,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          this.overviewImages = response.responsenData as OverviewResponse;
-
-          this.writeJobToStorage(response.job);
-
-          console.log(response);
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
-    // perform http post and wait until
-    // data are validated
-    // overview graphics are generated
-    // overview result graphics are received
-  }
-
-  submitPreprocessingInput(preprocessingConfig: PreprocessingConfig) {
-    this.preprocessingConfig = preprocessingConfig;
-
-    this.loading = true;
-    this.http
-      .dummyHttpRequest('preprocessinginput/', {
-        job: this.ofsJob,
-        configData: preprocessingConfig,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          this.preprocessingImages =
-            response.responsenData as PreprocessingResponse;
-
-          this.writeJobToStorage(response.job);
-
-          console.log(response);
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
-  }
-
-  submitWrapperInput(wrapperConfig: WrapperConfig) {
-    this.wrapperConfig = wrapperConfig;
-
-    this.loading = true;
-    this.http
-      .dummyHttpRequest('wrapperinput/', {
-        job: this.ofsJob,
-        configData: wrapperConfig,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          this.wrapperImages = response.responsenData as WrapperResponse;
-
-          this.writeJobToStorage(response.job);
-
-          console.log(response);
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
-  }
-
   submitResultsInput(classifierConfig: ClassifierConfig) {
     this.classifierConfig = classifierConfig;
     this.loading = true;
@@ -241,13 +150,59 @@ export class WorkflowService {
       });
   }
 
-  submitConfig(config: InputConfig) {
+  submitConfig(config: InputConfig, api: Endpoints) {
     this.loading = true;
-    let api: ConfigEndpoints;
+    let callback = (response: RequestObject) => {};
 
-    if (config instanceof OverviewConfig) {
-      api = ConfigEndpoints.OVERVIEW_INPUT;
+    switch (api) {
+      case Endpoints.OVERVIEW_INPUT:
+        console.log('hellooooo');
+        callback = (response) => {
+          this.overviewImages = response.responsenData as OverviewResponse;
+        };
+        break;
+      case Endpoints.PREPROCESSING_INPUT:
+        callback = (response) => {
+          this.preprocessingImages =
+            response.responsenData as PreprocessingResponse;
+        };
+        break;
+      case Endpoints.WRAPPER_INPUT:
+        callback = (response) => {
+          console.log(response);
+          this.wrapperImages = response.responsenData as WrapperResponse;
+        };
+        break;
+      case Endpoints.CLASSIFIER_INPUT:
+        callback = (response) => {
+          this.classifierImages = response.responsenData as ClassifierResponse;
+        };
+        break;
     }
+
+    this.http
+      .dummyHttpRequest(api, {
+        job: this.ofsJob,
+        configData: config,
+        responsenData: undefined,
+      })
+      .subscribe({
+        next: (response) => {
+          this.ofsJob = response.job;
+          callback(response);
+
+          this.writeJobToStorage(response.job);
+
+          console.log(response);
+        },
+        error: (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   getDownloadData() {}
