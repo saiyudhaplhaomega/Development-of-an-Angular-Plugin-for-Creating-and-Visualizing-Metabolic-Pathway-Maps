@@ -34,6 +34,8 @@ export interface OverviewConfig {
   groupSelectionOption: GroupSelectionOptions;
 }
 
+export class OverviewConfig implements OverviewConfig {}
+
 export interface OverviewInputForm extends FormGroup {
   value: OverviewConfig;
 

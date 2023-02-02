@@ -1,4 +1,8 @@
-<form [formGroup]="formModel" class="flex flex-col">
+<form
+  [formGroup]="formModel"
+  class="flex flex-col"
+  (ngSubmit)="submitPreprocessingConfig()"
+>
   <mat-form-field appearance="outline">
     <mat-label>control group</mat-label>
     <mat-select formControlName="controlGroup">

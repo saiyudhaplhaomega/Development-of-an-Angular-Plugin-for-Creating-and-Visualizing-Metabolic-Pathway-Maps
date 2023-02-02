@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Feature, FeatureProfile } from '../../models/classifier.model';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-wrapper-results-input',
@@ -56,14 +57,14 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['select', 'featureId'];
   dataSource = new MatTableDataSource<Feature>(this.listOfFeatures);
-  selection = new SelectionModel<Feature>(true, []);
+  selection = new SelectionModel<string>(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   profileSelection: FormControl = new FormControl<FeatureProfile>(null);
 
-  constructor() {}
+  constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {}
 
@@ -93,7 +94,11 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.selection.select(...this.dataSource.data);
+    const profileFeatures = this.dataSource.data.map(
+      (feature) => feature.featureId
+    );
+
+    this.selection.select(...profileFeatures);
   }
 
   applyFeatureProfile() {
@@ -101,9 +106,15 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
       const profileFeatures = this.profileSelection.value.features.map(
         (feature) => feature.featureId
       );
+
       this.selection.select(...profileFeatures);
     }
   }
 
-  generateResults() {}
+  generateResults() {
+    const selectedFeatures = this.dataSource.data.filter((feature) =>
+      this.selection.selected.includes(feature.featureId)
+    );
+    this.workflow.submitResultsInput({ selectedFeatures: selectedFeatures });
+  }
 }

@@ -6,7 +6,7 @@
   <mat-form-field appearance="outline">
     <ngx-mat-file-input
       placeholder="Select File for Upload"
-      [formControl]="this.dataFileControl"
+      [formControl]="this.formModel.controls.data"
     >
     </ngx-mat-file-input>
     <mat-error *ngIf="this.formModel.get('data').invalid">{{
@@ -136,11 +136,23 @@
     </button>
   </div>
 
-  <button
-    [disabled]="!formModel.valid || (formDisabled$ | async)"
-    mat-flat-button
-    color="primary"
-  >
-    submit data
-  </button>
+  <div>
+    <button
+      [disabled]="formDisabled$ | async"
+      (click)="resetForm()"
+      mat-flat-button
+      color="primary"
+      type="button"
+    >
+      reset
+    </button>
+
+    <button
+      [disabled]="!formModel.valid || (formDisabled$ | async)"
+      mat-flat-button
+      color="primary"
+    >
+      submit data
+    </button>
+  </div>
 </form>

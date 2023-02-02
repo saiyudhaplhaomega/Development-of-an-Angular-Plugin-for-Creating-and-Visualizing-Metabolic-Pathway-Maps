@@ -1,19 +1,12 @@
-import { outputAst } from '@angular/compiler';
 import {
-  AfterViewInit,
   Component,
   EventEmitter,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { CustomValidators, InputFormComponent } from 'shared-ui-lib';
 import {
   DataGroupForm,
@@ -31,18 +24,10 @@ export class OverviewInputComponent
   extends InputFormComponent
   implements OnInit, OnDestroy
 {
-  @Output() submit = new EventEmitter<any>();
-
   formModel: OverviewInputForm;
-  formDisabled$: BehaviorSubject<Boolean>;
-
-  dataFileControl: FormControl<File | null>;
-  dataFile: File | null;
 
   groupSelectionOptions = Object.values(GroupSelectionOptions);
   allowedChars = '^[a-zA-Z0-9_.-]*$';
-
-  subscriptions: Subscription[];
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
@@ -52,14 +37,36 @@ export class OverviewInputComponent
   }
 
   ngOnInit(): void {
-    this.dataFileControl = new FormControl(this.dataFile, {
+    this.formModel = this.buildForm();
+    this.setExistingFormInput();
+    this.doSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
+  get groupSelectionOption() {
+    return this.formModel?.controls.groupSelectionOption;
+  }
+
+  get groups() {
+    return this.formModel?.controls.groups;
+  }
+
+  buildForm(): OverviewInputForm {
+    let dataFile: File | null;
+
+    const dataFileControl = new FormControl(dataFile, {
       updateOn: 'change',
       validators: Validators.required,
     });
 
-    this.formModel = this.builder.group(
+    const formModel = this.builder.group(
       {
-        data: this.dataFileControl,
+        data: dataFileControl,
         groupSelectionOption: [this.groupSelectionOptions[0]],
         groups: this.builder.array([
           this.buildGroup('control'),
@@ -71,32 +78,7 @@ export class OverviewInputComponent
       }
     ) as OverviewInputForm;
 
-    this.subscriptions.push(
-      this.groupSelectionOption.valueChanges.subscribe(() => {
-        CustomValidators.updateValidators(this.groups);
-      })
-    );
-
-    this.subscriptions.push(
-      this.formDisabled$.subscribe((disabled) => {
-        disabled ? this.formModel.disable() : this.formModel.enable();
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-
-  get groupSelectionOption() {
-    return this.formModel?.controls.groupSelectionOption;
-    // this.formModel?.get('groupSelectionOption').value;
-  }
-
-  get groups() {
-    return this.formModel?.controls.groups;
+    return formModel;
   }
 
   buildGroup(defaultName: string): DataGroupForm {
@@ -161,12 +143,31 @@ export class OverviewInputComponent
     this.submit.emit();
   }
 
-  disableForm() {
-    this.formDisabled$.next(true);
+  resetForm() {
+    this.formModel.reset({
+      groupSelectionOption: this.groupSelectionOptions[0],
+    });
   }
 
-  enableForm() {
-    this.formDisabled$.next(false);
+  doSubscriptions() {
+    this.subscriptions.push(
+      this.groupSelectionOption.valueChanges.subscribe(() => {
+        CustomValidators.updateValidators(this.groups);
+      })
+    );
+
+    this.subscriptions.push(
+      this.formDisabled$.subscribe((disabled) => {
+        disabled ? this.formModel.disable() : this.formModel.enable();
+      })
+    );
+  }
+
+  setExistingFormInput() {
+    if (this.workflow.overviewConfig) {
+      this.formModel.patchValue(this.workflow.overviewConfig);
+      this.disableForm();
+    }
   }
 
   isLoading(): Boolean {

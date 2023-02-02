@@ -11,7 +11,7 @@ import { OverviewConfig } from '../workflow/models/overview.model';
 import { PreprocessingConfig } from '../workflow/models/preprocessing.model';
 import { WrapperConfig } from '../workflow/models/wrapper.model';
 
-interface RequestObject {
+export interface RequestObject {
   job: OfsJob;
   configData:
     | OverviewConfig
@@ -53,22 +53,30 @@ export class OfsHttpClientService {
 
     if (responseData?.hasOwnProperty('controlGroup')) {
       responseObject.responsenData = {
-        classDistribution: '../../../../assets/dummy-figures/pie.jpg',
-        dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
+        pvaluesMolecules:
+          '../../../../assets/dummy-figures/p_values_molecules.jpg',
+        predictivePerformance:
+          '../../../../assets/dummy-figures/p_values_molecules_accuracy.jpg',
       };
     }
 
-    if (responseData?.hasOwnProperty('pvalCutoff')) {
+    if (
+      responseData?.hasOwnProperty('repeats') &&
+      !responseData?.hasOwnProperty('controlGroup')
+    ) {
       responseObject.responsenData = {
-        classDistribution: '../../../../assets/dummy-figures/pie.jpg',
-        dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
+        featureSelection:
+          '../../../../assets/dummy-figures/individual_profile.jpg',
+        featureSelectionProfiles:
+          '../../../../assets/dummy-figures/mutual_profile.jpg',
       };
     }
 
     if (responseData?.hasOwnProperty('selectedFeatures')) {
       responseObject.responsenData = {
-        classDistribution: '../../../../assets/dummy-figures/pie.jpg',
-        dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
+        pairwiseComparison:
+          '../../../../assets/dummy-figures/molecules_pairwise.jpg',
+        pca: '../../../../assets/dummy-figures/pca.jpg',
       };
     }
 
@@ -88,6 +96,15 @@ export class OfsHttpClientService {
         break;
       case 'overviewinput/':
         job.state = OfsJobState.OVERVIEW_INPUT;
+        break;
+      case 'preprocessinginput/':
+        job.state = OfsJobState.PREPROCESSING_INPUT;
+        break;
+      case 'wrapperinput/':
+        job.state = OfsJobState.WRAPPER_INPUT;
+        break;
+      case 'classifierinput/':
+        job.state = OfsJobState.RESULTS;
         break;
     }
 

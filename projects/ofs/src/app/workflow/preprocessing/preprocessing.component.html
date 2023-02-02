@@ -1,2 +1,19 @@
-<ofs-preprocessing-input></ofs-preprocessing-input>
-<ofs-preprocessing-results-input></ofs-preprocessing-results-input>
+<mat-tab-group
+  #tabs
+  dynamicHeight
+  mat-stretch-tabs="true"
+  mat-align-tabs="center"
+  animationDuration="1000ms"
+>
+  <mat-tab label="input">
+    <ofs-preprocessing-input
+      (submit)="switchToResults()"
+    ></ofs-preprocessing-input>
+  </mat-tab>
+  <mat-tab label="overview">
+    <ofs-preprocessing-results></ofs-preprocessing-results>
+    <div *ngIf="hasResults()">
+      <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
+    </div>
+  </mat-tab>
+</mat-tab-group>

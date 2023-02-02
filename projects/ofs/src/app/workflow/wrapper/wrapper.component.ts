@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OfsJobState } from '../models/ofs-job.model';
+import { WorkflowService } from '../services/workflow.service';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'ofs-wrapper',
@@ -6,7 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wrapper.component.scss'],
 })
 export class WrapperComponent implements OnInit {
-  constructor() {}
+  @ViewChild('tabs') tabs: MatTabGroup;
 
-  ngOnInit(): void {}
+  constructor(private workflow: WorkflowService) {}
+
+  ngOnInit(): void {
+    if (this.workflow.ofsJob.state === OfsJobState.WRAPPER_RESULTS) {
+      this.switchToResults();
+    }
+  }
+
+  switchToResults() {
+    this.tabs.selectedIndex = 1;
+  }
+
+  hasResults() {
+    return this.workflow.wrapperImages !== undefined;
+  }
 }

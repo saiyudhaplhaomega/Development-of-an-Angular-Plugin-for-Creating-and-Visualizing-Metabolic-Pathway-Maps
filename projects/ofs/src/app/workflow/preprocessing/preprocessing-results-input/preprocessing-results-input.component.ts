@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { InputFormComponent } from 'shared-ui-lib';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-preprocessing-results-input',
@@ -9,16 +10,26 @@ import { InputFormComponent } from 'shared-ui-lib';
 })
 export class PreprocessingResultsInputComponent
   extends InputFormComponent
-  implements OnInit
+  implements OnInit, OnDestroy
 {
-  pvalCutoff: FormControl = new FormControl<number>(0.001, [
-    Validators.required,
-    Validators.min(0),
-  ]);
+  pvalCutoff: FormControl;
 
-  constructor(builder: FormBuilder) {
+  constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pvalCutoff = new FormControl<number>(0.001, [
+      Validators.required,
+      Validators.min(0),
+    ]);
+  }
+
+  ngOnDestroy() {
+    this.workflow.wrapperConfig = {
+      folds: undefined,
+      repeats: undefined,
+      pvalCutoff: this.pvalCutoff.value,
+    };
+  }
 }

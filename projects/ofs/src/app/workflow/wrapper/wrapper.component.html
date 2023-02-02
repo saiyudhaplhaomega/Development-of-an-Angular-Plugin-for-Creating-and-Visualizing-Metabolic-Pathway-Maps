@@ -1,2 +1,17 @@
-<ofs-wrapper-input></ofs-wrapper-input>
-<ofs-wrapper-results-input></ofs-wrapper-results-input>
+<mat-tab-group
+  #tabs
+  dynamicHeight
+  mat-stretch-tabs="true"
+  mat-align-tabs="center"
+  animationDuration="1000ms"
+>
+  <mat-tab label="input">
+    <ofs-wrapper-input (submit)="switchToResults()"></ofs-wrapper-input>
+  </mat-tab>
+  <mat-tab label="overview">
+    <ofs-wrapper-results></ofs-wrapper-results>
+    <div *ngIf="hasResults()">
+      <ofs-wrapper-results-input></ofs-wrapper-results-input>
+    </div>
+  </mat-tab>
+</mat-tab-group>

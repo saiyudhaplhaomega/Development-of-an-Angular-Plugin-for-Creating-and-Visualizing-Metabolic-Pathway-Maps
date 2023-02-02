@@ -28,11 +28,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { WrapperResultsInputComponent } from './wrapper/wrapper-results-input/wrapper-results-input.component';
 import { PreprocessingResultsInputComponent } from './preprocessing/preprocessing-results-input/preprocessing-results-input.component';
-import { StepperControlButtonsComponent } from './stepper-control-buttons/stepper-control-buttons.component';
+import { StepperControlButtonsComponent } from './reusable-components/stepper-control-buttons/stepper-control-buttons.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { WorkflowService } from './services/workflow.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ResultDisplayingComponent } from './reusable-components/result-displaying/result-displaying.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     WrapperResultsInputComponent,
     PreprocessingResultsInputComponent,
     StepperControlButtonsComponent,
+    ResultDisplayingComponent,
   ],
   imports: [
     CommonModule,

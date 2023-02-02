@@ -6,8 +6,7 @@ interface Step {
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 import { WorkflowService } from './services/workflow.service';
 
 @Component({
@@ -52,6 +51,14 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
 
   onStepChange(event: StepperSelectionEvent) {
     this.setWorkflowStep(event.selectedIndex);
+  }
+
+  showPrev() {
+    return true;
+  }
+
+  showNext() {
+    return true;
   }
 
   onButtonNavigate(event: string) {

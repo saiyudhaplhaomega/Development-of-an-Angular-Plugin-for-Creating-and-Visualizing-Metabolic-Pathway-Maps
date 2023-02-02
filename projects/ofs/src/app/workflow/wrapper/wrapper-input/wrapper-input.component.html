@@ -1,4 +1,8 @@
-<form [formGroup]="formModel" class="flex flex-col">
+<form
+  [formGroup]="formModel"
+  (ngSubmit)="submitWrapperConfig()"
+  class="flex flex-col"
+>
   <mat-form-field appearance="outline" class="w-16">
     <mat-label>repeats</mat-label>
     <input type="number" matInput formControlName="repeats" />

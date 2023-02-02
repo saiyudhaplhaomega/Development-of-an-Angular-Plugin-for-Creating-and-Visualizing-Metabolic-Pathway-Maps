@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkflowService } from '../services/workflow.service';
 
 @Component({
   selector: 'ofs-results',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./results.component.scss'],
 })
 export class ResultsComponent implements OnInit {
-  activeLink = 'interactions';
-  links = ['interactions', 'pca', 'treeexplore'];
-
-  constructor() {}
+  constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {}
+
+  get classifierImages() {
+    const images = this.workflow.classifierImages;
+    return images ? Object.values(images) : [];
+  }
+
+  isLoading() {
+    return this.workflow.loading;
+  }
 }

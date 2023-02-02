@@ -1,10 +1,4 @@
-<div *ngIf="isLoading()"><mat-spinner></mat-spinner></div>
-<div *ngIf="isLoading()"><mat-spinner></mat-spinner></div>
-<div *ngIf="!overviewImages?.classDistribution && !isLoading()">no data</div>
-<div *ngIf="!overviewImages?.dataSparsity && !isLoading()">no data</div>
-<div *ngIf="overviewImages?.classDistribution">
-  <img [src]="overviewImages?.classDistribution" />
-</div>
-<div *ngIf="overviewImages?.dataSparsity">
-  <img [src]="overviewImages?.dataSparsity" />
-</div>
+<ofs-result-displaying
+  [imageLinks]="overviewImages"
+  [isLoading]="isLoading()"
+></ofs-result-displaying>

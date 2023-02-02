@@ -12,7 +12,8 @@ export class OverviewResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get overviewImages() {
-    return this.workflow.overviewImages;
+    const images = this.workflow.overviewImages;
+    return images ? Object.values(images) : [];
   }
 
   isLoading() {
