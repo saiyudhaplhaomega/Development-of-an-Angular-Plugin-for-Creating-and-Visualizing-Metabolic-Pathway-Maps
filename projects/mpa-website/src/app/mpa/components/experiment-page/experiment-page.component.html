@@ -95,7 +95,7 @@
         </mat-tab>
 
         <!--          Tab 2: Data -->
-        <mat-tab label="File Upload">
+        <mat-tab label="File Upload" disabled="{{hasMpaData}}">
           <div class="custom-tab-box">
 
             <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
@@ -202,10 +202,10 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="fragmentIonTolerance">Fragment Ion Tolerance</span>
                   </div>
-                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'ppm'" style="max-width:35%;width:35%;">
+                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'ppm'" style="max-width:25%;width:25%;">
                     <input type="number" min="0" max="1000" step="1" class="form-control" placeholder="0 to 1000" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonTolerancePPM" (blur)="checkToleranceInput(this.fragmentIonToleranceUnitSelection, this.fragmentIonTolerance, 'fragmentIonTolerance')" [(ngModel)]="fragmentIonTolerance"/>
                   </div>
-                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'Da'" style="max-width:35%;width:35%;">
+                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'Da'" style="max-width:25%;width:25%;">
                     <input type="number" min="0.001" max="1" step="0.001" class="form-control" placeholder="0.001 to 1" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonToleranceDa" (blur)="checkToleranceInput(this.fragmentIonToleranceUnitSelection, this.fragmentIonTolerance, 'fragmentIonTolerance')" [(ngModel)]="fragmentIonTolerance"/>
                   </div>
                   <div class="input-group-append" style="min-width:15%;width:15%;">
@@ -222,13 +222,13 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="precursorIonTolerance">Precursor Ion Tolerance</span>
                   </div>
-                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'ppm'" style="max-width:35%;width:35%;">
+                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'ppm'" style="max-width:25%;width:25%;">
                     <input type="number" min="0" max="1000" step="1" class="form-control" placeholder="0 to 1000" aria-label="precursorIonTolerancePPM" aria-describedby="precursorIonTolerance" (blur)="checkToleranceInput(this.precursorIonToleranceUnitSelection, this.precursorIonTolerance, 'precursorIonTolerance')" [(ngModel)]="precursorIonTolerance"/>
                   </div>
-                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'Da'" style="max-width:35%;width:35%;">
+                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'Da'" style="max-width:25%;width:25%;">
                     <input type="number" min="0.001" max="1" step="0.001" class="form-control" placeholder="0.001 to 1" aria-label="precursorIonToleranceDa" aria-describedby="precursorIonTolerance" (blur)="checkToleranceInput(this.precursorIonToleranceUnitSelection, this.precursorIonTolerance, 'precursorIonTolerance')" [(ngModel)]="precursorIonTolerance"/>
                   </div>
-                  <div class="input-group-append" style="min-width:15%;">
+                  <div class="input-group-append" style="min-width:20%;">
                     <mat-select class="form-control custom-select" [(value)]="this.precursorIonToleranceUnitSelection">
                       <mat-option *ngFor="let unit of precursorIonToleranceUnitOptions"
                                   [value]="unit"
@@ -363,7 +363,7 @@
 
         <!--          Tab 3: Protein Groups         -->
 
-        <mat-tab label="Protein Groups">
+        <mat-tab label="Protein Groups" disabled="{{!hasMpaData}}">
           <ng-container *ngIf="hasMpaData">
             <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.expid'>
             </app-mpa-table>
