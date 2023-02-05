@@ -8,7 +8,11 @@
       #stepper
       (selectionChange)="updateWorkflowStep($event.selectedIndex)"
     >
-      <mat-step *ngFor="let step of steps" [completed]="isCompleted(step)">
+      <mat-step
+        *ngFor="let step of steps"
+        [completed]="isCompleted(step)"
+        [editable]="true"
+      >
         <ng-template matStepLabel>{{ step.label }}</ng-template>
       </mat-step>
     </mat-stepper>

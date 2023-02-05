@@ -55,13 +55,22 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
   }
 
   setStep(selectedIndex: number) {
-    this.stepper.selectedIndex = selectedIndex;
-    this.updateWorkflowStep(selectedIndex);
+    this.updateWorkflowStep(selectedIndex).then((resolved) => {
+      console.log('navigation resolved: ' + resolved);
+      if (resolved) {
+        this.stepper.selectedIndex = selectedIndex;
+      }
+    });
   }
 
-  updateWorkflowStep(selectedIndex: number) {
-    this.currentStep = steps[selectedIndex];
-    this.workflow.setRoute(selectedIndex);
+  async updateWorkflowStep(selectedIndex: number): Promise<Boolean> {
+    const nextStepAllowed = await this.workflow.setRoute(selectedIndex);
+
+    if (nextStepAllowed) {
+      this.currentStep = steps[selectedIndex];
+    }
+
+    return nextStepAllowed;
   }
 
   isCompleted(step: Step) {

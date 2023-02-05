@@ -8,6 +8,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { RouteStateService } from '../services/route-state.service';
 import { WorkflowRoutes } from './models/workflow-routes.model';
 import { WorkflowService } from './services/workflow.service';
 
@@ -15,7 +16,13 @@ import { WorkflowService } from './services/workflow.service';
   providedIn: 'any',
 })
 export class WorkflowGuard implements CanActivate {
-  constructor(private workflow: WorkflowService, private router: Router) {}
+  previousRoute: string;
+
+  constructor(
+    private workflow: WorkflowService,
+    private router: Router,
+    private routeState: RouteStateService
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -24,32 +31,33 @@ export class WorkflowGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return true;
+    const navigationAllowed = this.allowNavigation(
+      route.routeConfig.path,
+      this.workflow
+    );
 
-    switch (route.routeConfig.path) {
+    if (navigationAllowed) {
+      return navigationAllowed;
+    }
+
+    const tree: UrlTree = this.router.parseUrl(
+      this.routeState.currentRoute.value
+    );
+    return tree;
+  }
+
+  allowNavigation(route: string, workflow: WorkflowService) {
+    switch (route) {
       case WorkflowRoutes.OVERVIEW:
         return true;
       case WorkflowRoutes.PREPROCESSING:
-        if (this.workflow.overviewImages !== undefined) {
-          return true;
-        }
-        break;
+        return workflow.overviewImages !== undefined;
       case WorkflowRoutes.WRAPPER:
-        if (this.workflow.preprocessingImages !== undefined) {
-          return true;
-        }
-        break;
+        return workflow.preprocessingImages !== undefined;
       case WorkflowRoutes.RESULTS:
-        if (this.workflow.wrapperImages !== undefined) {
-          return true;
-        }
-        break;
+        return workflow.wrapperImages !== undefined;
     }
 
-    console.log(state);
-
-    const url = 'workflow/overview';
-    const tree: UrlTree = this.router.parseUrl(url);
-    return tree;
+    return false;
   }
 }

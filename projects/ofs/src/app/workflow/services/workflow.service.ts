@@ -6,8 +6,14 @@
  *
  */
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import {
+  BehaviorSubject,
+  filter,
+  Observable,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { ClassifierResponse } from '../../models/classifier-response.model';
 import { Endpoints } from '../../models/endpoints.model';
 import { OverviewResponse } from '../../models/overview-response.model';
@@ -34,6 +40,10 @@ type InputConfig =
   providedIn: 'any',
 })
 export class WorkflowService {
+  loading: Boolean;
+
+  subsriptions: Subscription[];
+
   ofsJob: OfsJob;
   ofsJobs: OfsJob[];
 
@@ -41,8 +51,6 @@ export class WorkflowService {
   preprocessingImages: PreprocessingResponse;
   wrapperImages: WrapperResponse;
   classifierImages: ClassifierResponse;
-
-  loading: Boolean;
 
   overviewConfig: OverviewConfig;
   preprocessingConfig: PreprocessingConfig;
@@ -57,7 +65,7 @@ export class WorkflowService {
   }
 
   setRoute(selectedIndex: number) {
-    this.router.navigate(['workflow', steps[selectedIndex].route]);
+    return this.router.navigate(['workflow', steps[selectedIndex].route]);
   }
 
   loadJobsFromStorage() {
@@ -161,7 +169,6 @@ export class WorkflowService {
 
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
-        console.log('hellooooo');
         callback = (response) => {
           this.overviewImages = response.responsenData as OverviewResponse;
           this.overviewConfig = response.configData as OverviewConfig;
