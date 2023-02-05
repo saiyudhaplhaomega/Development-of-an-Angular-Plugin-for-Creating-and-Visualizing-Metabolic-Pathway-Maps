@@ -7,7 +7,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ClassifierResponse } from '../../models/classifier-response.model';
 import { Endpoints } from '../../models/endpoints.model';
 import { OverviewResponse } from '../../models/overview-response.model';
@@ -21,6 +21,7 @@ import { ClassifierConfig } from '../models/classifier.model';
 import { OfsJob, OfsJobState } from '../models/ofs-job.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
+import { Step, steps } from '../models/workflow-steps.model';
 import { WrapperConfig } from '../models/wrapper.model';
 
 type InputConfig =
@@ -53,6 +54,10 @@ export class WorkflowService {
       jobId: '',
       state: OfsJobState.NOJOB,
     };
+  }
+
+  setRoute(selectedIndex: number) {
+    this.router.navigate(['workflow', steps[selectedIndex].route]);
   }
 
   loadJobsFromStorage() {
@@ -159,23 +164,26 @@ export class WorkflowService {
         console.log('hellooooo');
         callback = (response) => {
           this.overviewImages = response.responsenData as OverviewResponse;
+          this.overviewConfig = response.configData as OverviewConfig;
         };
         break;
       case Endpoints.PREPROCESSING_INPUT:
         callback = (response) => {
           this.preprocessingImages =
             response.responsenData as PreprocessingResponse;
+          this.preprocessingConfig = response.configData as PreprocessingConfig;
         };
         break;
       case Endpoints.WRAPPER_INPUT:
         callback = (response) => {
-          console.log(response);
           this.wrapperImages = response.responsenData as WrapperResponse;
+          this.wrapperConfig = response.configData as WrapperConfig;
         };
         break;
       case Endpoints.CLASSIFIER_INPUT:
         callback = (response) => {
           this.classifierImages = response.responsenData as ClassifierResponse;
+          this.classifierConfig = response.configData as ClassifierConfig;
         };
         break;
     }

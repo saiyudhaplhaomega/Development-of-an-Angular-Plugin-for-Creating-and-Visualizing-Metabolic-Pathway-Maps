@@ -165,6 +165,7 @@ export class OverviewInputComponent
   }
 
   setExistingFormInput() {
+    console.log(this.workflow);
     if (this.workflow.overviewConfig) {
       this.formModel.patchValue(this.workflow.overviewConfig);
       this.disableForm();

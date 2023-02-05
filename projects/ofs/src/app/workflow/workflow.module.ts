@@ -34,6 +34,7 @@ import { WorkflowService } from './services/workflow.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ResultDisplayingComponent } from './reusable-components/result-displaying/result-displaying.component';
+import { WorkflowGuard } from './workflow.guard';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,6 @@ import { ResultDisplayingComponent } from './reusable-components/result-displayi
     MatTabsModule,
     MatProgressSpinnerModule,
   ],
-  providers: [WorkflowService],
+  providers: [WorkflowService, WorkflowGuard],
 })
 export class WorkflowModule {}

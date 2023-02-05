@@ -1,14 +1,14 @@
 {{ job | json }}
-{{ overviewImages | json }}
+{{ steps | json }}
 
 <mat-card class="m-4">
   <mat-card-content>
     <mat-stepper
-      [linear]="false"
+      [linear]="true"
       #stepper
-      (selectionChange)="onStepChange($event)"
+      (selectionChange)="updateWorkflowStep($event.selectedIndex)"
     >
-      <mat-step *ngFor="let step of steps">
+      <mat-step *ngFor="let step of steps" [completed]="isCompleted(step)">
         <ng-template matStepLabel>{{ step.label }}</ng-template>
       </mat-step>
     </mat-stepper>
@@ -19,7 +19,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        {{ currentStep.label }}
+        {{ currentStep?.label }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>

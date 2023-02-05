@@ -1,12 +1,10 @@
-interface Step {
-  label: string;
-  route: string;
-}
-
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, subscribeOn, Subscription } from 'rxjs';
+import { WorkflowRoutes } from './models/workflow-routes.model';
+import { Step, steps } from './models/workflow-steps.model';
 import { WorkflowService } from './services/workflow.service';
 
 @Component({
@@ -17,24 +15,23 @@ import { WorkflowService } from './services/workflow.service';
 export class WorkflowComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
 
-  steps = [
-    { label: 'Data Overview', route: 'overview' },
-    { label: 'Preprocessing', route: 'preprocessing' },
-    { label: 'Wrapper', route: 'wrapper' },
-    { label: 'Results', route: 'results' },
-  ];
+  currentStep: Step;
 
-  currentStep: Step = { label: '', route: '' };
-
-  constructor(private router: Router, private workflow: WorkflowService) {}
+  constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {
-    this.setWorkflowStep(0);
     this.workflow.createOfsJob();
+    this.updateWorkflowStep(0);
   }
 
   ngAfterViewInit(): void {
-    this.setStepperIndex(0);
+    this.stepper.selectedIndex = 0;
+  }
+
+  ngOnDestroy() {}
+
+  get steps() {
+    return steps;
   }
 
   get job() {
@@ -45,12 +42,43 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
     return this.workflow?.overviewImages;
   }
 
-  isLoading(): Boolean {
-    return this.workflow.loading;
+  onButtonNavigate(event: string) {
+    const currentIndex = this.stepper.selectedIndex;
+
+    if (event === 'next' && currentIndex < this.stepper.steps.length) {
+      this.setStep(currentIndex + 1);
+    }
+
+    if (event === 'previous' && currentIndex > 0) {
+      this.setStep(currentIndex - 1);
+    }
   }
 
-  onStepChange(event: StepperSelectionEvent) {
-    this.setWorkflowStep(event.selectedIndex);
+  setStep(selectedIndex: number) {
+    this.stepper.selectedIndex = selectedIndex;
+    this.updateWorkflowStep(selectedIndex);
+  }
+
+  updateWorkflowStep(selectedIndex: number) {
+    this.currentStep = steps[selectedIndex];
+    this.workflow.setRoute(selectedIndex);
+  }
+
+  isCompleted(step: Step) {
+    switch (step.route) {
+      case WorkflowRoutes.OVERVIEW:
+        return this.workflow.overviewImages !== undefined;
+      case WorkflowRoutes.PREPROCESSING:
+        return this.workflow.preprocessingImages !== undefined;
+      case WorkflowRoutes.WRAPPER:
+        return this.workflow.wrapperImages !== undefined;
+      case WorkflowRoutes.RESULTS:
+        return this.workflow.classifierImages !== undefined;
+    }
+  }
+
+  isLoading(): Boolean {
+    return this.workflow.loading;
   }
 
   showPrev() {
@@ -59,30 +87,5 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
 
   showNext() {
     return true;
-  }
-
-  onButtonNavigate(event: string) {
-    let newIndex: number;
-    const currentIndex: number = this.stepper.selectedIndex;
-    if (event === 'next' && currentIndex < this.stepper.steps.length) {
-      newIndex = currentIndex + 1;
-      this.setStepperIndex(newIndex);
-      this.setWorkflowStep(newIndex);
-    }
-
-    if (event === 'previous' && currentIndex > 0) {
-      newIndex = currentIndex - 1;
-      this.setStepperIndex(newIndex);
-      this.setWorkflowStep(newIndex);
-    }
-  }
-
-  setWorkflowStep(selectedIndex: number) {
-    this.router.navigate(['workflow', this.steps[selectedIndex].route]);
-    this.currentStep = this.steps[selectedIndex];
-  }
-
-  setStepperIndex(index: number) {
-    this.stepper.selectedIndex = index;
   }
 }
