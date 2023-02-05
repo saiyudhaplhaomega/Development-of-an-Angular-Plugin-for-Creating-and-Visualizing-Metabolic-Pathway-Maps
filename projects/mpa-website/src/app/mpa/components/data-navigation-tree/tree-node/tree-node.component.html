@@ -1,7 +1,7 @@
 <a mat-list-item class="custom-list-item-content"
    [ngStyle]="{'padding-left': node.children.length !== 0 ? (node.depth * 6) + 'px' : (node.depth * 6 + 42) + 'px'}"
    (click)="onNavigate()">
-  <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
+  <div style="display:flex; flex-direction:row; gap:2px; align-content:center;">
     <div *ngIf="node.children.length !== 0 && node.type !== 'user'">
       <button mat-icon-button (click)="onExpand()">
           <mat-icon [@indicatorRotate]="node.expanded ? 'expanded': 'collapsed'">
@@ -9,7 +9,7 @@
           </mat-icon>
       </button>
     </div>
-    <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center center">
+    <div style="display:flex; flex-direction:row; gap:2px; align-items:center;">
       <mat-icon class="routeIcon">{{node.icon}}</mat-icon>
       {{node.displayName}}
     </div>

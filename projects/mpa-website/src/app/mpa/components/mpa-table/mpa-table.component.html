@@ -55,19 +55,19 @@
       </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
-        <td style="padding-left:0px; padding-right:0px;"[@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+        <td style="width: 100%; padding-left:0; padding-right:0;" [@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
           <div *ngIf="this.mpaTableDataService.groupSelection === 'hierarchical' && this.getRowtype(row) === 'maingroup' && row.proteinGroupID === expandedElement">
-            <table style="width: 100%;">
+            <table style="width: 100%">
               <tr *ngFor="let subRow of row.proteinSubGroupList" (click)="onClick(subRow)" class="subroup-row"
                   [ngClass]="{
                     'table-highlight-row': mpaTableDataService.highlightIfSelected(subRow),
                     'table-element-row': !mpaTableDataService.highlightIfSelected(subRow)}"
-                    style="padding-left:200px;"
+                    style="width: 100%"
                     >
-                <td mat-cell style="width:160px;"></td>
-                <td mat-cell style="width:220px;">{{subRow.proteinSubGroupID}}</td>
-                <td mat-cell style="width:167px;">{{this.getRowtype(subRow)}}</td>
-                <td mat-cell style="width:139px;">{{subRow.proteinSubGroupID}}</td>
+                <td mat-cell></td>
+                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
+                <td mat-cell>{{this.getRowtype(subRow)}}</td>
+                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
                 <td mat-cell>{{subRow.proteinSubGroupID}}</td>
               </tr>
             </table>

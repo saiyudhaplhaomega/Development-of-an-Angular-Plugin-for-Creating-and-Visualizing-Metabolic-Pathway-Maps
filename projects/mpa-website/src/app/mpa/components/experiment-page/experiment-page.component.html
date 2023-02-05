@@ -32,7 +32,7 @@
               </thead>
               <tbody>
               <tr>
-                <th scope="row" class="ml-summary-col">Creation Date:</th>
+                <th scope="row" class="ml-summary-col">Creation Date</th>
                 <td >
                   {{this.creationDate}}
                 </td>
@@ -45,7 +45,7 @@
               </tr>
               <tr>
                 <th [ngClass]="!peaklistFileNode ? 'table-warning' : ''" scope="row" class="ml-summary-col">
-                  Peaklist File:
+                  Peaklist File
                 </th>
                 <td [ngClass]="!peaklistFileNode ? 'table-warning' : ''">
                   <ng-container *ngIf="peaklistFileNode; then peaklistExist; else noFiles"></ng-container>
@@ -53,14 +53,14 @@
               </tr>
               <tr>
                 <th [ngClass]="!searchFileNode ? 'table-warning' : ''" scope="row" class="ml-summary-col">
-                  Search Result File:
+                  Search Result File
                 </th>
                 <td [ngClass]="!searchFileNode ? 'table-warning' : ''">
                   <ng-container *ngIf="searchFileNode; then searchExist; else noFiles"></ng-container>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="ml-summary-col">Data Summary:</th>
+                <th scope="row" class="ml-summary-col">Data Summary</th>
                 <td >
                   <ng-container *ngIf="this.hasMpaData">
                     <mat-list dense>
@@ -82,7 +82,7 @@
               <th></th>
               <tbody>
                 <tr>
-                  <th scope="row" class="ml-summary-col">Description:
+                  <th scope="row" class="ml-summary-col">Description
                     <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
                   </th>
                   <td >
@@ -95,7 +95,7 @@
         </mat-tab>
 
         <!--          Tab 2: Data -->
-        <mat-tab label="File Upload">
+        <mat-tab label="File Upload" disabled="{{hasMpaData}}">
           <div class="custom-tab-box">
 
             <ng-container *ngIf="!this.searchFileNode && !this.peaklistFileNode">
@@ -124,7 +124,7 @@
             </ng-container>
 
               <!-- ProteinDatabase -->
-              <ng-container *ngIf="this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result'">
+              <ng-container *ngIf="(this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result') || (this.dataUploadModeSelection == 'Search')">
                 <div class="divider-line">Protein Database</div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -142,34 +142,6 @@
               <!--            Peaklist            -->
               <ng-container *ngIf="this.dataUploadModeSelection == 'Search' || this.dataUploadSelection == 'Peaklist + Search Result'">
                 <div class="divider-line"> Peaklist</div>
-
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="fragmentIonTolerance">Fragment Ion Tolerance</span>
-                  </div>
-                  <input type="text" style="max-width:35%;" class="form-control" placeholder="fragment ion tolerance" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonTolerance"/>
-                  <div class="input-group-append" style="min-width:15%;">
-                    <mat-select class="form-control custom-select" [(value)]="this.fragmentIonToleranceUnitSelection">
-                      <mat-option *ngFor="let unit of fragmentIonToleranceUnitOptions"
-                                  [value]="unit">
-                                {{unit}}</mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="precursorIonTolerance">Precursor Ion Tolerance</span>
-                  </div>
-                  <input type="text" style="max-width:35%;" class="form-control" placeholder="precursor ion tolerance" aria-label="precursorIonTolerance" aria-describedby="precursorIonTolerance"/>
-                  <div class="input-group-append" style="min-width:15%;">
-                    <mat-select class="form-control custom-select" [(value)]="this.precursorIonToleranceUnitSelection">
-                      <mat-option *ngFor="let unit of precursorIonToleranceUnitOptions"
-                                  [value]="unit">
-                                {{unit}}</mat-option>
-                    </mat-select>
-                  </div>
-                </div>
                 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -178,7 +150,7 @@
                   <mat-select class="form-control custom-select" [(value)]="this.peaklistSelection"
                               (selectionChange)="onFileTypeSelectionChange()">
                     <mat-option *ngFor="let fileType of uploadFileTypePeaklist"
-                                [value]="fileType">{{ fileType}}</mat-option>
+                                [value]="fileType">{{fileType}}</mat-option>
                   </mat-select>
                 </div>
 
@@ -210,6 +182,97 @@
                 </div>
               </ng-container>
 
+              <!--               Search Parameters                 -->
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Search'">
+                <div class="divider-line"> Search Parameters</div>
+                
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Protein Database</span>
+                  </div>
+                  <mat-select class="form-control custom-select" [(value)]="this.proteinDBselection"
+                              (selectionChange)="onProteinDBChange($event.value)">
+                    <mat-option *ngFor="let protDB of proteinDatabases"
+                                [value]="protDB">
+                      {{ protDB.displayName}}</mat-option>
+                  </mat-select>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="fragmentIonTolerance">Fragment Ion Tolerance</span>
+                  </div>
+                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'ppm'" style="max-width:25%;width:25%;">
+                    <input type="number" min="0" max="1000" step="1" class="form-control" placeholder="0 to 1000" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonTolerancePPM" (blur)="checkToleranceInput(this.fragmentIonToleranceUnitSelection, this.fragmentIonTolerance, 'fragmentIonTolerance')" [(ngModel)]="fragmentIonTolerance"/>
+                  </div>
+                  <div *ngIf="this.fragmentIonToleranceUnitSelection == 'Da'" style="max-width:25%;width:25%;">
+                    <input type="number" min="0.001" max="1" step="0.001" class="form-control" placeholder="0.001 to 1" aria-label="fragmentIonTolerance" aria-describedby="fragmentIonToleranceDa" (blur)="checkToleranceInput(this.fragmentIonToleranceUnitSelection, this.fragmentIonTolerance, 'fragmentIonTolerance')" [(ngModel)]="fragmentIonTolerance"/>
+                  </div>
+                  <div class="input-group-append" style="min-width:15%;width:15%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.fragmentIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of fragmentIonToleranceUnitOptions"
+                                  [value]="unit"
+                                  (onSelectionChange)="unitSelectionChange(unit, 'fragmentIonTolerance')">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="precursorIonTolerance">Precursor Ion Tolerance</span>
+                  </div>
+                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'ppm'" style="max-width:25%;width:25%;">
+                    <input type="number" min="0" max="1000" step="1" class="form-control" placeholder="0 to 1000" aria-label="precursorIonTolerancePPM" aria-describedby="precursorIonTolerance" (blur)="checkToleranceInput(this.precursorIonToleranceUnitSelection, this.precursorIonTolerance, 'precursorIonTolerance')" [(ngModel)]="precursorIonTolerance"/>
+                  </div>
+                  <div *ngIf="this.precursorIonToleranceUnitSelection == 'Da'" style="max-width:25%;width:25%;">
+                    <input type="number" min="0.001" max="1" step="0.001" class="form-control" placeholder="0.001 to 1" aria-label="precursorIonToleranceDa" aria-describedby="precursorIonTolerance" (blur)="checkToleranceInput(this.precursorIonToleranceUnitSelection, this.precursorIonTolerance, 'precursorIonTolerance')" [(ngModel)]="precursorIonTolerance"/>
+                  </div>
+                  <div class="input-group-append" style="min-width:20%;">
+                    <mat-select class="form-control custom-select" [(value)]="this.precursorIonToleranceUnitSelection">
+                      <mat-option *ngFor="let unit of precursorIonToleranceUnitOptions"
+                                  [value]="unit"
+                                  (onSelectionChange)="unitSelectionChange(unit, 'precursorIonTolerance')">
+                                {{unit}}</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+              </ng-container>
+              <!--            Advanced Search Parameters           -->
+              <ng-container *ngIf="this.dataUploadModeSelection == 'Search'">
+                <div style="display: flex; align-items:center; width:100%;">
+                <div class="divider-line" style="width:100%;"> Advanced Search Parameters</div>
+                <button style="display: inline-block;" mat-icon-button (click)="expandASP()">
+                  <mat-icon [@indicatorRotate]="advancedSearchExpanded ? 'expanded' : 'collapsed'">
+                    expand_more
+                  </mat-icon>
+                </button>
+              </div>
+          
+                <div [@detailExpand]="advancedSearchExpanded ? 'expanded' : 'collapsed'" style="height:100%; width:100%; overflow: hidden">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter1</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter2</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Parameter3</span>
+                    </div>
+                    <input type="text" class="form-control custom-select" />
+                  </div>
+                </div>
+              </ng-container>
               <!--            Search Result           -->
               <ng-container
                 *ngIf="this.dataUploadModeSelection == 'Result Upload'">
@@ -222,7 +285,7 @@
                   <mat-select class="form-control custom-select" [(value)]="this.searchFileSelection"
                               (selectionChange)="onFileTypeSelectionChange()">
                     <mat-option *ngFor="let fileType of uploadFileTypeSearch"
-                                [value]="fileType">{{ fileType}}</mat-option>
+                                [value]="fileType">{{fileType}}</mat-option>
                   </mat-select>
                 </div>
 
@@ -300,7 +363,7 @@
 
         <!--          Tab 3: Protein Groups         -->
 
-        <mat-tab label="Protein Groups">
+        <mat-tab label="Protein Groups" disabled="{{!hasMpaData}}">
           <ng-container *ngIf="hasMpaData">
             <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.expid'>
             </app-mpa-table>

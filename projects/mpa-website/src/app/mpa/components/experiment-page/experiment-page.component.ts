@@ -21,6 +21,13 @@ import { Observable } from 'rxjs';
 import { MpaTableDataService } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -35,10 +42,33 @@ export interface ProteinGroupRequest {
   experimentID: string;
 }
 
+enum toleranceUnit {
+  Da ='Da',
+  PPM = 'ppm'
+}
+
 @Component({
   selector: 'app-experiment-page',
   templateUrl: './experiment-page.component.html',
   styleUrls: ['./experiment-page.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({visibility: 'hidden', height: 0, })),
+      state('expanded', style({ height: '*', })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+    trigger('indicatorRotate', [
+      state('collapsed', style({ transform: 'rotate(0deg)' })),
+      state('expanded', style({ transform: 'rotate(180deg)' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
+      ),
+    ]),
+  ],
 })
 export class ExperimentPageComponent
   implements OnInit, OnDestroy, ContentComponent
@@ -60,11 +90,16 @@ export class ExperimentPageComponent
   dataUploadModeOptions: string[] = ['Result Upload', 'Search'];
 
   //search options
-  fragmentIonToleranceUnitSelection = 'ppm';
-  fragmentIonToleranceUnitOptions: string[] = ['ppm', 'Da'];
-  precursorIonToleranceUnitSelection = 'ppm';
-  precursorIonToleranceUnitOptions: string[] = ['ppm', 'Da'];
+  fragmentIonToleranceUnitSelection:string = toleranceUnit.PPM;
+  fragmentIonToleranceUnitOptions: string[] = [toleranceUnit.PPM, toleranceUnit.Da];
+  fragmentIonTolerance: number = 10;
+  precursorIonToleranceUnitSelection:string = toleranceUnit.Da;
+  precursorIonToleranceUnitOptions: string[] = [toleranceUnit.PPM, toleranceUnit.Da];
+  precursorIonTolerance: number = 0.1;
 
+  //advanced search parameters
+  advancedSearchExpanded: boolean = false;
+  
   displayNameEditing: string;
 
   proteinDatabases: DataItem[] = [];
@@ -206,6 +241,76 @@ export class ExperimentPageComponent
   dataUploadModeSelectionChange(option: string) {
     this.dataUploadModeSelection = option;
     this.disableButton();
+  }
+
+  unitSelectionChange(unit: string, inputTarget: string){
+    if(inputTarget == 'fragmentIonTolerance'){
+      if(unit != this.fragmentIonToleranceUnitSelection){
+        if(unit == toleranceUnit.PPM){
+          this.fragmentIonTolerance = 10;
+        }
+        else if(unit == toleranceUnit.Da){
+          this.fragmentIonTolerance = 0.1;
+        }
+      }
+    }
+    else if(inputTarget == 'precursorIonTolerance'){
+      if(unit != this.precursorIonToleranceUnitSelection){
+        if(unit == toleranceUnit.PPM){
+          this.precursorIonTolerance = 10;
+        }
+        else if(unit == toleranceUnit.Da){
+          this.precursorIonTolerance = 0.1;
+        }
+      }
+    }
+
+  }
+
+  checkToleranceInput(unit: string, toleranceInput: number, inputTarget: string){
+    var adjustedInput: number;
+    if(unit == toleranceUnit.PPM){
+      if(toleranceInput < 0){
+        adjustedInput = 0;
+      }
+      else if(toleranceInput > 1000){
+        adjustedInput = 1000;
+      }
+      else if(toleranceInput == undefined){
+        adjustedInput = 0;
+      }
+      else {
+        adjustedInput = Math.round(toleranceInput);
+      }
+    }
+    else if(unit == toleranceUnit.Da){
+      if(toleranceInput < 0.001){
+       adjustedInput = 0.001;
+      }
+      else if(toleranceInput > 1){
+        adjustedInput = 1;
+      }
+      else if(toleranceInput == undefined){
+        adjustedInput = 0;
+      }
+      else {
+        adjustedInput = parseFloat(toleranceInput.toPrecision(2));
+      }
+    }
+
+    if(inputTarget === "fragmentIonTolerance"){
+      this.fragmentIonTolerance = adjustedInput;
+    }
+    else if(inputTarget === "precursorIonTolerance"){
+      this.precursorIonTolerance = adjustedInput;
+    }
+  }
+
+  expandASP(){
+    //TODO
+    console.log('before '+this.advancedSearchExpanded)
+    this.advancedSearchExpanded = !this.advancedSearchExpanded;
+    console.log('after '+ this.advancedSearchExpanded)
   }
 
   onFileTypeSelectionChange() {

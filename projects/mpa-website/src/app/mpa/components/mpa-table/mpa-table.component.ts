@@ -32,7 +32,7 @@ import {
   styleUrls: ['./mpa-table.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ visibility: 'hidden' })),
+      state('collapsed', style({ visibility: 'hidden' ,height: 0,})),
       state('expanded', style({ height: '*' })),
       transition(
         'expanded <=> collapsed',
