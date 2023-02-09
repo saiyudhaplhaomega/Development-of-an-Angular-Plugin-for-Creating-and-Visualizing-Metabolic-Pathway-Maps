@@ -1,7 +1,15 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEventType,
+  HttpHeaders,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MultiFileUploadData } from './http-client.service';
+import { UploadProgressService } from './upload-progress.service';
 import { config, delay, Observable, of } from 'rxjs';
 import { ClassifierResponse } from '../models/classifier-response.model';
+import { Endpoints, getAdress } from '../models/endpoints.model';
 import { OverviewResponse } from '../models/overview-response.model';
 import { PreprocessingResponse } from '../models/preprocessing-response.model';
 import { WrapperResponse } from '../models/wrapper-response.model';
@@ -10,14 +18,11 @@ import { OfsJobState, OfsJob } from '../workflow/models/ofs-job.model';
 import { OverviewConfig } from '../workflow/models/overview.model';
 import { PreprocessingConfig } from '../workflow/models/preprocessing.model';
 import { WrapperConfig } from '../workflow/models/wrapper.model';
+import { InputConfig } from '../workflow/services/workflow.service';
 
 export interface RequestObject {
   job: OfsJob;
-  configData:
-    | OverviewConfig
-    | PreprocessingConfig
-    | WrapperConfig
-    | ClassifierConfig;
+  configData: InputConfig;
   responsenData:
     | undefined
     | OverviewResponse
@@ -30,8 +35,94 @@ export interface RequestObject {
   providedIn: 'root',
 })
 export class OfsHttpClientService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private uploadProgressService: UploadProgressService
+  ) {}
 
+  postObject<T1, T2>(
+    obj: T1,
+    api: Endpoints,
+    params?: HttpParams
+  ): Observable<T2> {
+    return this.http.post<T2>(getAdress(api), obj, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: this.authGuard.getUserAuthorization().toString(),
+      }),
+      params: params,
+    });
+  }
+
+  getObject<T>(api: Endpoints, params?: HttpParams): Observable<T> {
+    return this.http.get<T>(getAdress(api), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: this.authGuard.getUserAuthorization().toString(),
+      }),
+      params: params,
+    });
+  }
+
+  performUpload(
+    dialogId: string,
+    fileList: MultiFileUploadData,
+    api: Endpoints
+  ) {
+    //TODO: handle big file-sizes -> split upload into multiple uploads
+    fileList.files.map((fileUploadData) => {
+      this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
+    });
+
+    const fd = new FormData();
+    let multipartids: string = '';
+    fileList.files.forEach((file) => {
+      multipartids += file.fileID + ';';
+    });
+
+    fd.set('Content-Type', 'multipart/form-data');
+    fd.append('fileIDList', multipartids);
+    fileList.files.map((file) => {
+      fd.append(file.fileID, file.uploadFile);
+    });
+
+    this.http
+      .post(getAdress(api), fd, {
+        headers: new HttpHeaders({
+          // Authorization: this.authGuard.getUserAuthorization().toString(),
+        }),
+        observe: 'events',
+        params: fileList.httpParameters,
+        reportProgress: true,
+      })
+      .subscribe({
+        next: (event) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.uploadProgressService.changeReportLoaded(event.loaded);
+            //console.log(event);
+          } else if (event.type === HttpEventType.Response) {
+            //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
+          }
+        },
+        error: (error) => {
+          if (error.status >= 400) {
+            // handle failed upload
+            // if (this.dialog.getDialogById(dialogId)) {
+            //   this.dialog
+            //     .getDialogById(dialogId)
+            //     .componentInstance.setUploadFailed();
+            //   this.dialog.getDialogById(
+            //     dialogId
+            //   ).componentInstance.uploadFailedMessage = error.statusText;
+            // }
+          } else {
+            throw error;
+          }
+        },
+      });
+  }
+
+  // TODO: keep for demo
   dummyHttpRequest(
     api: string,
     object: RequestObject,
@@ -48,6 +139,7 @@ export class OfsHttpClientService {
       responseObject.responsenData = {
         classDistribution: '../../../../assets/dummy-figures/pie.jpg',
         dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
+        testGroups: ['test1', 'test2'],
       };
     }
 

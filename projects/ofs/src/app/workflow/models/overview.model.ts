@@ -7,7 +7,7 @@ import {
 
 export enum GroupSelectionOptions {
   PREFIX = 'select by prefix',
-  COLNUM = 'select by column numbers',
+  COLUMN = 'select by column numbers',
 }
 
 export interface DataGroup {
@@ -30,6 +30,11 @@ export interface DataGroupForm extends FormGroup {
 
 export interface OverviewConfig {
   data: File;
+  groups: DataGroup[];
+  groupSelectionOption: GroupSelectionOptions;
+}
+
+export interface OverviewConfigForRequest {
   groups: DataGroup[];
   groupSelectionOption: GroupSelectionOptions;
 }

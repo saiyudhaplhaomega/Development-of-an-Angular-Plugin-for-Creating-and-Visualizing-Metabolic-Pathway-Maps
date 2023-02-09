@@ -5,6 +5,7 @@
  * - handle accessible routes
  *
  */
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import {
@@ -19,18 +20,25 @@ import { Endpoints } from '../../models/endpoints.model';
 import { OverviewResponse } from '../../models/overview-response.model';
 import { PreprocessingResponse } from '../../models/preprocessing-response.model';
 import { WrapperResponse } from '../../models/wrapper-response.model';
+import { MultiFileUploadData } from '../../services/http-client.service';
 import {
   OfsHttpClientService,
   RequestObject,
 } from '../../services/ofs-http-client.service';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OfsJob, OfsJobState } from '../models/ofs-job.model';
-import { OverviewConfig } from '../models/overview.model';
+import {
+  GroupSelectionOptions,
+  OverviewConfig,
+  OverviewConfigForRequest,
+} from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { Step, steps } from '../models/workflow-steps.model';
 import { WrapperConfig } from '../models/wrapper.model';
 
-type InputConfig =
+export type InputConfig =
+  | File
+  | OverviewConfigForRequest
   | OverviewConfig
   | PreprocessingConfig
   | WrapperConfig
@@ -113,13 +121,15 @@ export class WorkflowService {
      */
     this.loading = true;
     this.http
-      .dummyHttpRequest('createjob/', {
-        job: this.ofsJob,
-        configData: undefined,
-        responsenData: undefined,
-      })
+      .getObject<RequestObject>(Endpoints.CREATE_JOB, new HttpParams())
+      // .dummyHttpRequest('createjob/', {
+      //   job: this.ofsJob,
+      //   configData: undefined,
+      //   responsenData: undefined,
+      // })
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.ofsJob = response.job;
           this.writeJobToStorage(response.job);
         },
@@ -192,6 +202,62 @@ export class WorkflowService {
           this.classifierImages = response.responsenData as ClassifierResponse;
           this.classifierConfig = response.configData as ClassifierConfig;
         };
+        break;
+    }
+
+    switch (api) {
+      case Endpoints.OVERVIEW_INPUT:
+        let filesToUpload: MultiFileUploadData;
+
+        const overviewConfigForRequest: OverviewConfigForRequest = {
+          groups: (config as OverviewConfig).groups,
+          groupSelectionOption: (config as OverviewConfig).groupSelectionOption,
+        };
+        // TODO: request object für alles
+        const configForRequest: RequestObject = {
+          configData: (config as OverviewConfig).data,
+          job: this.ofsJob,
+          responsenData: undefined,
+        };
+
+        const configFile = new File(
+          [JSON.stringify(overviewConfigForRequest)],
+          'config'
+        );
+
+        filesToUpload = {
+          files: [
+            {
+              uploadFile: (config as OverviewConfig).data,
+              fileID: 'inputCSV',
+            },
+            {
+              uploadFile: configFile,
+              fileID: 'inputJSON',
+            },
+          ],
+          httpParameters: new HttpParams(),
+        };
+
+        this.http.performUpload(
+          'TODO: dialog id',
+          filesToUpload,
+          Endpoints.OVERVIEW_INPUT
+        );
+        break;
+      case Endpoints.PREPROCESSING_INPUT:
+      case Endpoints.WRAPPER_INPUT:
+      case Endpoints.CLASSIFIER_INPUT:
+        // TODO post
+        this.http
+          .postObject<RequestObject, RequestObject>(
+            configForRequest,
+            api,
+            new HttpParams()
+          )
+          .subscribe((response) => {
+            console.log(response);
+          });
         break;
     }
 
