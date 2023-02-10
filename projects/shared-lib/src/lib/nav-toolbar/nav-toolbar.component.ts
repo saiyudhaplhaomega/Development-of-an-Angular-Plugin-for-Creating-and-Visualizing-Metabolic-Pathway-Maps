@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavigationRoute } from './navigation-route.model';
 
 @Component({
-  selector: 'ui-nav-toolbar',
+  selector: 'shared-nav-toolbar',
   templateUrl: './nav-toolbar.component.html',
   styleUrls: ['./nav-toolbar.component.scss'],
 })

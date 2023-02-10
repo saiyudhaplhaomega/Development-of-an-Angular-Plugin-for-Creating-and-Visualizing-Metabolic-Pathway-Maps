@@ -1,5 +1,5 @@
 /*
- * Public API Surface of shared-ui-lib
+ * Public API Surface of shared-lib
  */
 
 export * from './lib/nav-toolbar/nav-toolbar.module';

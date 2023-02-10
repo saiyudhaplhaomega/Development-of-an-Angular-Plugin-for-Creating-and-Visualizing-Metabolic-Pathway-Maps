@@ -99,7 +99,7 @@ export class ExperimentPageComponent
 
   //advanced search parameters
   advancedSearchExpanded: boolean = false;
-  
+
   displayNameEditing: string;
 
   proteinDatabases: DataItem[] = [];

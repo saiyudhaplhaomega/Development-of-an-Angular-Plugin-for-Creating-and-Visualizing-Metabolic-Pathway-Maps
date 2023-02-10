@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { CustomValidators } from './custom-validators';
 
 @Component({
-  selector: 'ui-input-form',
+  selector: 'shared-input-form',
   template: ` <p>Please implement Your inputs here</p> `,
 })
 export class InputFormComponent {
