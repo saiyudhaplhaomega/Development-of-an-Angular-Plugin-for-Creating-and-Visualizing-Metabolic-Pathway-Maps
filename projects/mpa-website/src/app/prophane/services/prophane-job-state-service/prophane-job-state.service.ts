@@ -29,7 +29,7 @@ import {
   MultiFileUploadData,
 } from '../../../core/services/http-client.service';
 import { Router } from '@angular/router';
-import { AuthGuard } from 'dist/shared-lib';
+import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
@@ -96,7 +96,7 @@ export class ProphaneJobStateService {
     private uploaderService: HttpClientService,
     private webserver: WebserveraddressService,
     private router: Router,
-    private authGuard: AuthGuard
+    private auth: AuthService
   ) {}
 
   async initializeProphaneJobState() {
@@ -312,7 +312,7 @@ export class ProphaneJobStateService {
       dialogObservable.subscribe((uploadFailed) => {
         // redirect to prophane results
         if (!uploadFailed) {
-          if (this.authGuard.allowExpert()) {
+          if (this.auth.allowExpert()) {
             this.router.navigate(['./prophanejobcontrol']);
           } else {
             this.router.navigate([

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthGuard } from 'dist/shared-lib';
+import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { HttpClientService } from '../../../../core/services/http-client.service';
 import { DataItem } from '../objects/data-item';
 import { Endpoints } from '../../../../core/services/webserveraddress.service';
@@ -34,13 +34,13 @@ export class DataService2 {
   // 1. calls the server to retrieve user data and initialize the dataMap
   // 2. sets up subscription to call server whenever dataMap is updated
   constructor(
-    private authGuard: AuthGuard,
+    private authService: AuthService,
     private jsonUploader: HttpClientService,
     private navService: NavService2,
     private dialog: MatDialog
   ) {
     // if not logged in, will navigate to login page automatically and no action is taken
-    if (this.authGuard.loggedIn()) {
+    if (this.authService.loggedIn()) {
       // the initial call to the server to retrieve the user data
       this.jsonUploader
         .getObject<DataItem>(Endpoints.GET_USER_DATA)

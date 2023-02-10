@@ -58,14 +58,14 @@ import { LoginModule } from 'dist/shared-lib';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-//    OAuthModule.forRoot(),
+    //    OAuthModule.forRoot(),
     CommonModule,
     HttpClientModule,
     MpaModule,
     ProphaneModule,
     MaterialModule,
     NgChartsModule,
-    LoginModule
+    LoginModule,
   ],
   // services
   providers: [

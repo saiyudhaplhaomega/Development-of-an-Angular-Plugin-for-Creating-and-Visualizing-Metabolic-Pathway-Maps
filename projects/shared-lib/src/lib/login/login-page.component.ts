@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthGuard } from './auth-guard.service';
-import { authConfigGoogle } from './authConfigGoogle';
-import { authConfigElixir } from './authConfigElixir';
 import { UserToken } from './user-token';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,19 +18,19 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private oauthService: OAuthService,
-    public authGuard: AuthGuard
+    //public authGuard: AuthGuard,
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.authGuard.user.subscribe((usert) => {
-      this.user = usert;
+    this._router.events.subscribe((event) => {
+      console.log(event);
     });
-    this.authGuard.guestemail.subscribe((guestEmail) => {
-      this.guestEmail = guestEmail;
+    this.auth._user.subscribe((u) => {
+      this.user = u;
     });
-    this.authGuard.guest.subscribe((guest) => {
-      this.guestlogin = guest;
+    this.auth._guest.subscribe((g) => {
+      this.guestlogin = !!g;
     });
   }
 
@@ -48,39 +47,23 @@ export class LoginPageComponent implements OnInit {
   }
 
   navigateMpa() {
-    this._router.navigateByUrl('mpa');
+    this._router.navigateByUrl('/mpa');
   }
 
   loginGuest() {
-    const tempStr = this.guestEmail;
-    this.authGuard.logout();
-    this.guestlogin = true;
-    this.guestEmail = tempStr;
-    this.authGuard.guestemail.next(this.guestEmail);
-    this.authGuard.guest.next(this.guestlogin);
     this.hideGuestInput();
-  }
-
-  async loginElixir() {
-    this.authGuard.logout();
-    this.oauthService.configure(authConfigElixir);
-    await this.oauthService.loadDiscoveryDocument();
-    sessionStorage.setItem('login_provider', 'elixir');
-    this.oauthService.initLoginFlow();
+    if (this.isEmail(this.guestEmail)) {
+      this.auth.loginGuest(this.guestEmail);
+    } else {
+      this.auth.loginGuest('ANONOYMOUS');
+    }
   }
 
   async loginGoogle() {
-    this.authGuard.logout();
-    this.oauthService.configure(authConfigGoogle);
-    console.log('login attempt loginpage');
-    await this.oauthService.loadDiscoveryDocument();
-    console.log('login attempt done?');
-    sessionStorage.setItem('login_provider', 'google');
-    this.oauthService.initLoginFlow();
-    this._router.navigate(['mpa']);
+    await this.auth.loginGoogle();
   }
 
-  isEmail(value) {
+  isEmail(value: string) {
     if (!String(value).match('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$')) {
       return false;
     } else {

@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 
-
 import { ProphaneJobSubmissionMainComponent } from './prophane/components/prophane-job-submission-main/prophane-job-submission-main.component';
 import { ProphaneJobControlComponent } from './prophane/components/prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './prophane/components/prophane-about/prophane-about.component';
@@ -48,10 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule implements OnInit {
-
-  constructor(private authGuard: AuthGuard) {}
-  ngOnInit(): void {
-    this.authGuard.initializeOAuth();
-  }
-}
+export class AppRoutingModule {}

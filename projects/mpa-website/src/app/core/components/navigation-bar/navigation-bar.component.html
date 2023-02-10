@@ -1,48 +1,53 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-
     <!--div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user"-->
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
       <span *ngIf="!isProphane()">
         <span class="small-margin-right">MePPi</span>
-        <button mat-button (click)='goto("/mpa")' *ngIf='user || guest'>
+        <button mat-button (click)="goto('/mpa')" *ngIf="user || guest">
           MPA
         </button>
       </span>
 
       <span *ngIf="isProphane()">
         <span class="small-margin-right">Prophane</span>
-        <button mat-button (click)='goto("/prophane")' *ngIf='user || guest'>
+        <button mat-button (click)="goto('/prophane')" *ngIf="user || guest">
           Job Submission
         </button>
-        <button mat-button (click)='goto("/prophanejobcontrol")' *ngIf='user'>
+        <button mat-button (click)="goto('/prophanejobcontrol')" *ngIf="user">
           Job Control
         </button>
         <button mat-button [matMenuTriggerFor]="aboutMenu">About</button>
         <mat-menu #aboutMenu="matMenu">
-          <button mat-menu-item (click)='goto("/prophaneabout")'>About Prophane</button>
-          <button mat-menu-item (click)='goto("/termsofservice")'>Terms of Service</button>
-          <button mat-menu-item (click)='goto("/privacypolicy")'>Privacy Policy</button>
-          <button mat-menu-item (click)='goto("/impressum")'>Impressum</button>
+          <button mat-menu-item (click)="goto('/prophaneabout')">
+            About Prophane
+          </button>
+          <button mat-menu-item (click)="goto('/termsofservice')">
+            Terms of Service
+          </button>
+          <button mat-menu-item (click)="goto('/privacypolicy')">
+            Privacy Policy
+          </button>
+          <button mat-menu-item (click)="goto('/impressum')">Impressum</button>
         </mat-menu>
       </span>
     </div>
 
     <div class="spacer"></div>
     <div *ngIf="!user; else elseBlock">
-      <button mat-icon-button (click)='goto("/login")'>
+      <button mat-icon-button (click)="goto('/login')">
         <mat-icon aria-label="account menu icon">account_circle</mat-icon>
       </button>
     </div>
     <ng-template #elseBlock>
-      <button mat-icon-button (click)='goto("/login")'>
-        <img src="{{ user.picture }}">
+      <button mat-icon-button (click)="goto('/login')">
+        <img src="{{ user.picture }}" />
       </button>
     </ng-template>
-    <button mat-button (click)='authGuard.logout()' *ngIf='user || guest'>
+    <button mat-button (click)="authService.logout()" *ngIf="user || guest">
       Log out
     </button>
-    <button mat-button (click)='goto("/login")' *ngIf='!user && !guest'>
+    <button mat-button (click)="goto('/login')" *ngIf="!user && !guest">
       Log in
     </button>
     <span class="small-margin-right"></span>

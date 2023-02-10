@@ -1,25 +1,31 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {AuthGuard} from 'dist/shared-lib';
-import {ErrorStatusProviderService} from './error-status-provider.service';
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AuthService } from 'dist/shared-lib';
+import { ErrorStatusProviderService } from './error-status-provider.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-@Injectable()
 export class GlobalHttpInterceptorService implements HttpInterceptor {
-
   constructor(
     public router: Router,
-    private authGuard: AuthGuard,
-    private errorStatusProvider: ErrorStatusProviderService) {
-  }
+    private authGuard: AuthService,
+    private errorStatusProvider: ErrorStatusProviderService
+  ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse) {
@@ -30,13 +36,13 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
             this.errorStatusProvider.setErrorCode(error.status);
             console.error(`error status : ${error.status} ${error.statusText}`);
             switch (error.status) {
-              case 401:      // login
-                this.authGuard.logout();
-                this.router.navigateByUrl('/login');
+              case 401: // login
+                // this.authGuard.logout();
+                // this.router.navigateByUrl('/login');
                 break;
-              case 403:     // forbidden
-                this.authGuard.logout();
-                this.router.navigateByUrl('/login');
+              case 403: // forbidden
+                // this.authGuard.logout();
+                // this.router.navigateByUrl('/login');
                 break;
               // case 400:
               //   console.error('Bad request');
@@ -74,4 +80,3 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
     );
   }
 }
-

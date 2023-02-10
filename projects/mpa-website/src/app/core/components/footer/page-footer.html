@@ -14,15 +14,17 @@
   </ul>
   <ul>
     <li>Analysis</li>
-    <li *ngIf="authGuard.loggedIn()">
+    <li *ngIf="authService.loggedIn()">
       <a [routerLink]="'/prophane'">Job Submission</a>
     </li>
-    <li *ngIf="authGuard.getUser()">
+    <li *ngIf="authService.loggedIn()">
       <a [routerLink]="'/prophane/jobcontrol'">Job Control</a>
     </li>
-    <li *ngIf="!authGuard.loggedIn()"><a [routerLink]="'/login'">Login</a></li>
-    <li *ngIf="authGuard.loggedIn()">
-      <a (click)="authGuard.logout()">Logout</a>
+    <li *ngIf="!authService.loggedIn()">
+      <a [routerLink]="'/login'">Login</a>
+    </li>
+    <li *ngIf="authService.loggedIn()">
+      <a (click)="authService.logout()">Logout</a>
     </li>
   </ul>
 </div>

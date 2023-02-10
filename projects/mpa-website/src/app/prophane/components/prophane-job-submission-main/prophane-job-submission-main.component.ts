@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { jobLabelData } from '../../objects/prophaneFormData';
-import { AuthGuard } from 'dist/shared-lib';
+import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { JobService } from '../../job.service';
@@ -43,7 +43,7 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private _uploadProgressService: UploadProgressService,
-    public authGuard: AuthGuard,
+    public authService: AuthService,
     public prophaneJobState: ProphaneJobStateService
   ) {}
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { WebserveraddressService } from './webserveraddress.service';
 import { Observable, partition } from 'rxjs';
-import { AuthGuard } from 'dist/shared-lib';
+import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';
@@ -38,7 +38,7 @@ export class HttpClientService {
   constructor(
     private http: HttpClient,
     private webserver: WebserveraddressService,
-    private authGuard: AuthGuard,
+    private authService: AuthService,
     private uploadProgressService: UploadProgressService,
     private dialog: MatDialog
   ) {}
@@ -59,7 +59,7 @@ export class HttpClientService {
     return this.http.post<T2>(this.webserver.getEndpoint(api), obj, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: this.authGuard.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString(),
       }),
       params: params,
     });
@@ -69,7 +69,7 @@ export class HttpClientService {
     return this.http.get<T>(this.webserver.getEndpoint(api), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: this.authGuard.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString(),
       }),
       params: params,
     });
@@ -82,7 +82,7 @@ export class HttpClientService {
     this.webserver.getEndpoint(api);
     return this.http.post(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({
-        Authorization: this.authGuard.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString(),
       }),
       observe: 'events',
       params: params,
@@ -122,7 +122,7 @@ export class HttpClientService {
     this.http
       .post(this.webserver.getEndpoint(api), fd, {
         headers: new HttpHeaders({
-          Authorization: this.authGuard.getUserAuthorization().toString(),
+          Authorization: this.authService.getUserAuthorization().toString(),
         }),
         observe: 'events',
         params: fileList.httpParameters,
