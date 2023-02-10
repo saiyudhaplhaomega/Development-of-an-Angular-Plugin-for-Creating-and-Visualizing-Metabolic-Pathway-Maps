@@ -4,20 +4,21 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Code scaffolding
 
-Run `ng generate component component-name --project shared-ui-lib` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project shared-ui-lib`.
-> Note: Don't forget to add `--project shared-ui-lib` or else it will be added to the default project in your `angular.json` file. 
+Run `ng generate component component-name --project shared-lib` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project shared-lib`.
+
+> Note: Don't forget to add `--project shared-lib` or else it will be added to the default project in your `angular.json` file.
 
 ## Build
 
-Run `ng build shared-ui-lib` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build shared-lib` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Publishing
 
-After building your library with `ng build shared-ui-lib`, go to the dist folder `cd dist/shared-ui-lib` and run `npm publish`.
+After building your library with `ng build shared-lib`, go to the dist folder `cd dist/shared-lib` and run `npm publish`.
 
 ## Running unit tests
 
-Run `ng test shared-ui-lib` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test shared-lib` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Further help
 

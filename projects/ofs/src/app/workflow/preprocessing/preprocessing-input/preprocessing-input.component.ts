@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { InputFormComponent } from 'shared-ui-lib';
+import { InputFormComponent } from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
 import { PreprocessingConfigForm } from '../../models/preprocessing.model';
 import { WorkflowService } from '../../services/workflow.service';

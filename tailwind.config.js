@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./projects/ofs/src/**/*.{html,ts}",
-    "./projects/shared-ui-lib/src/**/*.{html,ts}",
+    "./projects/shared-lib/src/**/*.{html,ts}",
   ],
   theme: {
     extend: {},

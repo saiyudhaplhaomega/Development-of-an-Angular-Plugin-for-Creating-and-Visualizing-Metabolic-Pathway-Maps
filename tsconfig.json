@@ -3,8 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "core-lib": ["dist/core-lib", "dist/core-lib"],
-      "shared-ui-lib": ["dist/shared-ui-lib", "dist/shared-ui-lib"]
+      "shared-lib": ["dist/shared-lib"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

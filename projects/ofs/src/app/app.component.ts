@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { NavigationRoute } from 'shared-ui-lib';
+import { NavigationRoute } from 'shared-lib';
 import { RouteStateService } from './services/route-state.service';
 import { OfsHttpClientService } from './services/ofs-http-client.service';
 

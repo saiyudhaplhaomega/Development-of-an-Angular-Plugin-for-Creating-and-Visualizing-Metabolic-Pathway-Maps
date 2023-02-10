@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { CustomValidators, InputFormComponent } from 'shared-ui-lib';
+import { CustomValidators, InputFormComponent } from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
 import {
   DataGroupForm,

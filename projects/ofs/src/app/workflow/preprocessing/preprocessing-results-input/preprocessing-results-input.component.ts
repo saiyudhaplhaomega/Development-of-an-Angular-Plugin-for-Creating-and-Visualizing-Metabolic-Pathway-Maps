@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { InputFormComponent } from 'shared-ui-lib';
+import { InputFormComponent } from 'shared-lib';
 import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
