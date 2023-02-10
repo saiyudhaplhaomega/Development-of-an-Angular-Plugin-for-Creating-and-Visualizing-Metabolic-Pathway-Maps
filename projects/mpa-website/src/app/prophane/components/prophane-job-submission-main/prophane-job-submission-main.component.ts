@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { jobLabelData } from '../../objects/prophaneFormData';
-import { AuthGuard } from '../../../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { JobService } from '../../job.service';

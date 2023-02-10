@@ -3,7 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse}
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {AuthGuard} from './auth-guard.service';
+import {AuthGuard} from 'dist/shared-lib';
 import {ErrorStatusProviderService} from './error-status-provider.service';
 
 @Injectable({

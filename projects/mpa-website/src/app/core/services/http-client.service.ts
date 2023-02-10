@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { WebserveraddressService } from './webserveraddress.service';
 import { Observable, partition } from 'rxjs';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';

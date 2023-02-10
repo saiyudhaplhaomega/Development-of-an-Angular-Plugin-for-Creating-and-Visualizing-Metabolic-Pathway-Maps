@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { ProphaneAboutComponent } from './components/prophane-about/prophane-about.component';
 import { ProphaneJobControlComponent } from './components/prophane-job-control/prophane-job-control.component';
 import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-submission-main/prophane-job-submission-main.component';

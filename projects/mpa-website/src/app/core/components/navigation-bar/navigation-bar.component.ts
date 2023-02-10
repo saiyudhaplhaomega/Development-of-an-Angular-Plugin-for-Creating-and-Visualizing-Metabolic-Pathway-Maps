@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../services/auth-guard.service';
-import { UserToken } from '../../objects/user-token';
+import { AuthGuard } from 'dist/shared-lib';
+import { UserToken } from 'dist/shared-lib';
 
 @Component({
   selector: 'app-navigation-bar',

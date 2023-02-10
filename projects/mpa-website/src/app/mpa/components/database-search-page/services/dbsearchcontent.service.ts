@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {StreamJSON} from '../../../objects/streamjson';
 import {ExperimentJSON} from '../../../objects/experimentjson';
 import {Endpoints, WebserveraddressService} from '../../../../core/services/webserveraddress.service';
-import { AuthGuard } from '../../../../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 
 const httpOptions = {
   headers: new HttpHeaders({

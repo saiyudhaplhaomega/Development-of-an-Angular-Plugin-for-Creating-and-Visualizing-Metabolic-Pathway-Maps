@@ -5,7 +5,6 @@ import {
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { MaterialModule } from './material-module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,13 +13,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 import { CommonModule } from '@angular/common';
-import { LoginPageComponent } from './core/components/login-page/login-page.component';
 import { WebserveraddressService } from './core/services/webserveraddress.service';
 import { UploadProgressService } from './core/services/upload-progress.service';
 import { UploadDialogComponent } from './core/components/dialog/upload-dialog.component';
 import { NavigationBarComponent } from './core/components/navigation-bar/navigation-bar.component';
 import { FooterComponent } from './core/components/footer/page-footer';
-import { AuthGuard } from './core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { TermsOfServicePageComponent } from './core/components/terms-of-service-page/terms-of-service-page.component';
 import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
 import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
@@ -36,12 +34,12 @@ import { MpaModule } from './mpa/mpa.module';
 import { ProphaneAboutComponent } from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
 import { ErrorPageComponent } from './error-page/error-page-component/error-page.component';
 import { NgChartsModule } from 'ng2-charts';
+import { LoginModule } from 'dist/shared-lib';
 
 @NgModule({
   // components
   declarations: [
     AppComponent,
-    LoginPageComponent,
     NavigationBarComponent,
     FooterComponent,
     TermsOfServicePageComponent,
@@ -60,13 +58,14 @@ import { NgChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
+//    OAuthModule.forRoot(),
     CommonModule,
     HttpClientModule,
     MpaModule,
     ProphaneModule,
     MaterialModule,
     NgChartsModule,
+    LoginModule
   ],
   // services
   providers: [

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthGuard } from '../../../../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { HttpClientService } from '../../../../core/services/http-client.service';
 import { DataItem } from '../objects/data-item';
 import { Endpoints } from '../../../../core/services/webserveraddress.service';

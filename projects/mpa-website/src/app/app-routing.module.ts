@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginPageComponent } from './core/components/login-page/login-page.component';
 
-import { AuthGuard } from './core/services/auth-guard.service';
+
 import { ProphaneJobSubmissionMainComponent } from './prophane/components/prophane-job-submission-main/prophane-job-submission-main.component';
 import { ProphaneJobControlComponent } from './prophane/components/prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './prophane/components/prophane-about/prophane-about.component';
@@ -12,7 +11,8 @@ import { ImpressumPageComponent } from './core/components/impressum-page/impress
 import { PrivacyPolicyPageComponent } from './core/components/privacy-policy-page/privacy-policy-page.component';
 import { DatabaseSearchPageComponent } from './mpa/components/database-search-page/database-search-page.component';
 import { ErrorPageComponent } from './error-page/error-page-component/error-page.component';
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
+import { AuthGuard, LoginPageComponent } from 'dist/shared-lib';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -48,4 +48,10 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule implements OnInit {
+
+  constructor(private authGuard: AuthGuard) {}
+  ngOnInit(): void {
+    this.authGuard.initializeOAuth();
+  }
+}

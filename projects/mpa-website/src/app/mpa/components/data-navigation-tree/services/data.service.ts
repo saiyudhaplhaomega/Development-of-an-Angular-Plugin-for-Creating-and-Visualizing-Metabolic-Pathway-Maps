@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataItem } from '../objects/data-item';
 import { HttpClientService } from '../../../../core/services/http-client.service';
-import { AuthGuard } from '../../../../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { GetDateService } from '../../../../core/services/get-date.service';
 import { MatDialog } from '@angular/material/dialog';
 import { dataNodeIdGenerator } from './dataNodeIdGenerator';

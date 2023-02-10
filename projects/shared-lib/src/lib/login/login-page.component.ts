@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { AuthGuard } from '../../services/auth-guard.service';
-import { authConfigGoogle } from '../../../authConfigGoogle';
-import { authConfigElixir } from '../../../authConfigElixir';
-import { UserToken } from '../../objects/user-token';
+import { AuthGuard } from './auth-guard.service';
+import { authConfigGoogle } from './authConfigGoogle';
+import { authConfigElixir } from './authConfigElixir';
+import { UserToken } from './user-token';
 import { Router } from '@angular/router';
 
 @Component({
@@ -72,9 +72,12 @@ export class LoginPageComponent implements OnInit {
   async loginGoogle() {
     this.authGuard.logout();
     this.oauthService.configure(authConfigGoogle);
+    console.log('login attempt loginpage');
     await this.oauthService.loadDiscoveryDocument();
+    console.log('login attempt done?');
     sessionStorage.setItem('login_provider', 'google');
     this.oauthService.initLoginFlow();
+    this._router.navigate(['mpa']);
   }
 
   isEmail(value) {

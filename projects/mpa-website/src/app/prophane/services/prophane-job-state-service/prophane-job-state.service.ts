@@ -29,7 +29,7 @@ import {
   MultiFileUploadData,
 } from '../../../core/services/http-client.service';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../../core/services/auth-guard.service';
+import { AuthGuard } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
