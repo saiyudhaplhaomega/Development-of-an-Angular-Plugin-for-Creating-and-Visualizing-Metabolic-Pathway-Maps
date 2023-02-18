@@ -9,6 +9,7 @@ import { DataItemMap } from '../objects/data-item-map';
 import { DeleteWarningDialogComponent } from '../../../../core/components/dialog/delete-warning-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ExperimentJSONObject } from '../../../objects/experimentjson';
+import { HttpParams } from '@angular/common/http';
 
 // TODO: properly set everywhere
 export enum NodeType {
@@ -30,19 +31,21 @@ export class DataService2 {
   // TODO: using Subject on the other hand doesnt allow ".value"
   //public dataMap = new Subject<Map<number, DataItem>>();
 
+  public dbExperiment = new ExperimentJSONObject;
+
   // the constructor has two tasks:
   // 1. calls the server to retrieve user data and initialize the dataMap
   // 2. sets up subscription to call server whenever dataMap is updated
   constructor(
     private authService: AuthService,
-    private jsonUploader: HttpClientService,
+    private httpClientService: HttpClientService,
     private navService: NavService2,
     private dialog: MatDialog
   ) {
     // if not logged in, will navigate to login page automatically and no action is taken
     if (this.authService.loggedIn()) {
       // the initial call to the server to retrieve the user data
-      this.jsonUploader
+      this.httpClientService
         .getObject<DataItem>(Endpoints.GET_USER_DATA)
         .subscribe((rootNode) => {
           // from the json response that contains a list of data-items, we create a map and extract the user object
@@ -59,7 +62,7 @@ export class DataService2 {
         if (dataItemMap !== undefined && dataItemMap.isInitialized) {
           // the map is transferred into a list which will be sent to the server
           // the call to send the user data to the server
-          this.jsonUploader
+          this.httpClientService
             .postObject<DataItem, DataItem>(
               dataItemMap.rootNode,
               Endpoints.UPDATE_USER_DATA
@@ -145,15 +148,28 @@ export class DataService2 {
     }
   }
 
+  getExperimentData(experimentID: string){
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          jobid: experimentID,
+        }
+      }
+    )
+    this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA,params)
+    .subscribe((experimentData) => this.dbExperiment = experimentData);
+    return this.dbExperiment
+  }
+
   updateExperiment(nodeObj) {
     // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
     dbExperiment.expid = nodeObj.uuid;
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
-    dbExperiment.creationDate = nodeObj.creation_date;
+    dbExperiment.creationdate = nodeObj.creation_date;
 
-    this.jsonUploader
+    this.httpClientService
       .postObject<ExperimentJSONObject, ExperimentJSONObject>(
         dbExperiment,
         Endpoints.CREATE_EXPERIMENT

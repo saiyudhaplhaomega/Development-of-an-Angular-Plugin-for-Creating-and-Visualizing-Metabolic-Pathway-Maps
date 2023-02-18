@@ -26,13 +26,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
   constructor(
     private _snackBar: MatSnackBar,
     private dataService: DataService2
-  ) {
-    this.creationDate = '';
-    this.originalFilename = '';
-    this.description = '';
-    //TODO back-end request for proteinCount (maybe originalFilename?)
-    this.proteinCount = '';
-  }
+  ) {}
 
   ngOnInit() {
     //  TODO: request db metadata from server
@@ -40,9 +34,6 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
       // TODO: this._dataMap = items;
     });
     this.UUID = this.dataItemOfThisComponent.uuid;
-    this.description = this.dataItemOfThisComponent.description;
-    this.creationDate = this.dataItemOfThisComponent.creation_date;
-    //TODO this.originalFilename = this.dataItemOfThisComponent.originalFilename;
   }
 
   setDescription(){

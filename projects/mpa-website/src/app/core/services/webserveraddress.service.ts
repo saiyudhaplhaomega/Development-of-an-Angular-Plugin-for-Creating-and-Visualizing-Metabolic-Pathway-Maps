@@ -37,7 +37,7 @@ export enum Endpoints {
   GET_USER_DATA = 'mpauser/getuserdata',
   // experiment
   CREATE_EXPERIMENT = 'mpasearch/createexperiment',
-  GET_EXPERIMENT_DATA = 'mpasearch/createexperiment',
+  GET_EXPERIMENT_DATA = 'mpasearch/getexperimentdata',
   SEARCH_METADATA = 'mpasearch/searchmetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',
   GET_PROTEIN_SEQUENCE = 'mpasearch/getproteinsequence',

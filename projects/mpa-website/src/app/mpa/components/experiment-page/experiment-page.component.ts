@@ -47,201 +47,14 @@ enum toleranceUnit {
   PPM = 'ppm'
 }
 
-@Component({
-  selector: 'app-experiment-page',
-  templateUrl: './experiment-page.component.html',
-  styleUrls: ['./experiment-page.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({visibility: 'hidden', height: 0, })),
-      state('expanded', style({ height: '*', })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-    trigger('indicatorRotate', [
-      state('collapsed', style({ transform: 'rotate(0deg)' })),
-      state('expanded', style({ transform: 'rotate(180deg)' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
-      ),
-    ]),
-  ],
-})
-export class ExperimentPageComponent
-  implements OnInit, OnDestroy, ContentComponent
-{
-  dataItemOfThisComponent: DataItem;
-
-  dbExperiment = new ExperimentJSONObject();
-  description: string;
-  creationDate: string;
-  realUUID: string;
-  files_uploaded: boolean;
-
-  // available upload options
-  dataUploadSelection = 'Search Result';
-  dataUploadOptions: string[] = ['Search Result', 'Peaklist + Search Result'];
-
-  //available interaction modes
-  dataUploadModeSelection = 'Result Upload';
-  dataUploadModeOptions: string[] = ['Result Upload', 'Search'];
-
-  //search options
-  fragmentIonToleranceUnitSelection:string = toleranceUnit.PPM;
-  fragmentIonToleranceUnitOptions: string[] = [toleranceUnit.PPM, toleranceUnit.Da];
+//TODO where to put this?
+export class SearchParameters {
+  fragmentIonToleranceUnitOptions: string[] = ['ppm','Da'];
+  precursorIonToleranceUnitOptions: string[] = ['ppm','Da'];
+  fragmentIonToleranceUnitSelection: string = 'ppm';
+  precursorIonToleranceUnitSelection: string = 'Da';
   fragmentIonTolerance: number = 10;
-  precursorIonToleranceUnitSelection:string = toleranceUnit.Da;
-  precursorIonToleranceUnitOptions: string[] = [toleranceUnit.PPM, toleranceUnit.Da];
   precursorIonTolerance: number = 0.1;
-
-  //advanced search parameters
-  advancedSearchExpanded: boolean = false;
-
-  displayNameEditing: string;
-
-  proteinDatabases: DataItem[] = [];
-  proteinDBselection = null;
-
-  // files selected via input field
-  selectedPeaklistFile: File;
-  selectedSearchFile: File;
-  selectedFasta: File;
-
-  // files to upload to server
-  filesToUpload: MultiFileUploadData;
-
-  // child node elements
-  peaklistFileNode: DataItem;
-  searchFileNode: DataItem;
-
-  // button disabling, etc.
-  hasPeaklistFile: boolean;
-  hasSearchFile: boolean;
-
-  // to handle displayed options upon File selection
-  fastaFileSelected = true;
-
-  peaklistSelection = UploadFileTypes.MZML;
-  searchFileSelection = UploadFileTypes.MZIDENT;
-
-  // available options
-  uploadFileTypePeaklist: string[] = [
-    UploadFileTypes.MZML,
-    UploadFileTypes.MGF,
-  ];
-  uploadFileTypeSearch: string[] = [
-    UploadFileTypes.MZIDENT,
-    UploadFileTypes.MASCOT_DAT,
-  ];
-
-  buttonDisabled = true;
-
-  hasMpaData = false;
-  datStats: Datstats;
-
-  // private _dataMap: Map<string, DataItem>;
-  // private children: string[];
-
-  uploadDialogId: string;
-
-  constructor(
-    private _snackBar: MatSnackBar,
-    private dataService: DataService2,
-    private uploaderService: HttpClientService,
-    private uploadProgressService: UploadProgressService,
-    private dialog: MatDialog,
-    private mpaTableDataService: MpaTableDataService
-  ) {
-    this.uploadDialogId = 'uploadDialog';
-  }
-
-  ngOnInit() {
-    // this.dataService.dataMap.subscribe(items => {
-    //   // TODO: this._dataMap = items;
-    // });
-
-    // this.parentUuid = this._dataMap.get(this.id).parent;
-
-    // this.realUUID = this._dataMap.get(this.id).uuid;
-
-    //this.mpaTableDataService.currentExperimentID.next(this.dataItemOfThisComponent.uuid);
-    this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
-    this.creationDate = this.dataItemOfThisComponent.creation_date;
-    this.description = this.dataItemOfThisComponent.description;
-    this.displayNameEditing = this.dataItemOfThisComponent.displayName;
-
-    this.proteinDatabases = this.dataService.getProteinDatabases();
-    this.proteinDBselection = this.proteinDatabases[0];
-
-    this.mpaTableDataService.requestProteinGroups();
-    // this.getChildNodes();
-
-    // this.children = this._dataMap.get(this.uuid).children;
-    //
-    // this.children.map(child => {
-    //   if (this._dataMap.get(child).type === 'searchresult') {
-    //     this.hasSearchFile = true;
-    //     this.searchFileNode = this._dataMap.get(child);
-    //   } else if (this._dataMap.get(child).type === 'peaklist') {
-    //     this.hasPeaklistFile = true;
-    //     this.peaklistFileNode = this._dataMap.get(child);
-    //   }
-    // });
-
-    //dataStats, calculate if there is any
-    this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
-      this.hasMpaData = mpaData.length > 0;
-      if (mpaData.length > 0) {
-        this.datStats = this.calculateDataStats(mpaData);
-      }
-    });
-  }
-
-  // const protein_groups = [];
-  // for (let i = 1; i <= 100; i++) {
-  //   protein_groups.push(createNewProteinGroup(this.uuid));
-  // }
-  // this.mpaTableDataService.mpaData = protein_groups;
-
-  //TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
-
-  // this.uploaderService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
-  //   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
-  //   if (result != null) {
-  //     console.log(result);
-  //     this.dbExperiment = result;
-  //     // value = result;
-  //   }
-  // });
-
-  ngOnDestroy() {
-    //this.updateExperiment();
-  }
-
-  onProteinDBChange(item: DataItem) {
-    console.log(this.proteinDBselection.displayName);
-  }
-
-  onUploadSelectionChange(option: string) {
-    /**
-     * handles change of the upload type selection (peaklist, search file, peaklist + search file)
-     */
-    this.selectedPeaklistFile = undefined;
-    this.selectedSearchFile = undefined;
-    this.selectedFasta = undefined;
-    this.fastaFileSelected =
-      this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
-    this.dataUploadSelection = option;
-    this.disableButton();
-  }
-
-  dataUploadModeSelectionChange(option: string) {
-    this.dataUploadModeSelection = option;
-    this.disableButton();
-  }
 
   unitSelectionChange(unit: string, inputTarget: string){
     if(inputTarget == 'fragmentIonTolerance'){
@@ -305,12 +118,200 @@ export class ExperimentPageComponent
       this.precursorIonTolerance = adjustedInput;
     }
   }
+}
 
-  expandASP(){
-    //TODO
-    console.log('before '+this.advancedSearchExpanded)
+@Component({
+  selector: 'app-experiment-page',
+  templateUrl: './experiment-page.component.html',
+  styleUrls: ['./experiment-page.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({visibility: 'hidden', height: 0, })),
+      state('expanded', style({ height: '*', })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+    trigger('indicatorRotate', [
+      state('collapsed', style({ transform: 'rotate(0deg)' })),
+      state('expanded', style({ transform: 'rotate(180deg)' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
+      ),
+    ]),
+  ],
+})
+export class ExperimentPageComponent
+  implements OnInit, OnDestroy, ContentComponent
+{
+  dataItemOfThisComponent: DataItem;
+
+  dbExperiment = new ExperimentJSONObject();
+
+  // available upload options
+  dataUploadSelection = 'Search Result';
+  dataUploadOptions: string[] = ['Search Result', 'Peaklist + Search Result'];
+
+  //available interaction modes
+  dataUploadModeSelection = 'Result Upload';
+  dataUploadModeOptions: string[] = ['Result Upload', 'Search'];
+
+  //search options
+  searchParameters: SearchParameters;
+
+  //advanced search parameters
+  advancedSearchExpanded: boolean = false;
+
+  displayNameEditing: string;
+
+  proteinDatabases: DataItem[] = [];
+  proteinDBselection = null;
+
+  // files selected via input field
+  selectedPeaklistFile: File;
+  selectedSearchFile: File;
+  selectedFasta: File;
+
+  // files to upload to server
+  filesToUpload: MultiFileUploadData;
+
+  // child node elements
+  peaklistFileNode: DataItem;
+  searchFileNode: DataItem;
+
+  // button disabling, etc.
+  hasPeaklistFile: boolean;
+  hasSearchFile: boolean;
+
+  // to handle displayed options upon File selection
+  fastaFileSelected = true;
+
+  peaklistSelection = UploadFileTypes.MZML;
+  searchFileSelection = UploadFileTypes.MZIDENT;
+
+  // available options
+  uploadFileTypePeaklist: string[] = [
+    UploadFileTypes.MZML,
+    UploadFileTypes.MGF,
+  ];
+  uploadFileTypeSearch: string[] = [
+    UploadFileTypes.MZIDENT,
+    UploadFileTypes.MASCOT_DAT,
+  ];
+
+  buttonDisabled = true;
+
+  hasMpaData = false;
+  datStats: Datstats;
+
+  // private _dataMap: Map<string, DataItem>;
+  // private children: string[];
+
+  uploadDialogId: string;
+
+  constructor(
+    private _snackBar: MatSnackBar,
+    private dataService: DataService2,
+    private httpClientService: HttpClientService,
+    private uploadProgressService: UploadProgressService,
+    private dialog: MatDialog,
+    private mpaTableDataService: MpaTableDataService
+  ) {
+    this.uploadDialogId = 'uploadDialog';
+  }
+
+  ngOnInit() {
+    // this.dataService.dataMap.subscribe(items => {
+    //   // TODO: this._dataMap = items;
+    // });
+
+    // this.parentUuid = this._dataMap.get(this.id).parent;
+
+    // this.realUUID = this._dataMap.get(this.id).uuid;
+
+    //this.mpaTableDataService.currentExperimentID.next(this.dataItemOfThisComponent.uuid);
+    this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
+    this.displayNameEditing = this.dataItemOfThisComponent.displayName;
+
+    this.proteinDatabases = this.dataService.getProteinDatabases();
+    this.proteinDBselection = this.proteinDatabases[0];
+
+    this.mpaTableDataService.requestProteinGroups();
+    // this.getChildNodes();
+
+    // this.children = this._dataMap.get(this.uuid).children;
+    //
+    // this.children.map(child => {
+    //   if (this._dataMap.get(child).type === 'searchresult') {
+    //     this.hasSearchFile = true;
+    //     this.searchFileNode = this._dataMap.get(child);
+    //   } else if (this._dataMap.get(child).type === 'peaklist') {
+    //     this.hasPeaklistFile = true;
+    //     this.peaklistFileNode = this._dataMap.get(child);
+    //   }
+    // });
+
+    this.searchParameters = new SearchParameters;
+
+    //dataStats, calculate if there is any
+    this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
+      this.hasMpaData = mpaData.length > 0;
+      if (mpaData.length > 0) {
+        this.datStats = this.calculateDataStats(mpaData);
+      }
+    });
+    
+    this.dbExperiment = this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid);
+
+  }
+
+  // const protein_groups = [];
+  // for (let i = 1; i <= 100; i++) {
+  //   protein_groups.push(createNewProteinGroup(this.uuid));
+  // }
+  // this.mpaTableDataService.mpaData = protein_groups;
+
+  //TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
+
+  // this.httpClientService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
+  //   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
+  //   if (result != null) {
+  //     console.log(result);
+  //     this.dbExperiment = result;
+  //     // value = result;
+  //   }
+  // });
+
+  ngOnDestroy() {
+    //this.updateExperiment();
+  }
+
+  onProteinDBChange(item: DataItem) {
+    console.log(this.proteinDBselection.displayName);
+  }
+
+  onUploadSelectionChange(option: string) {
+    /**
+     * handles change of the upload type selection (peaklist, search file, peaklist + search file)
+     */
+    this.selectedPeaklistFile = undefined;
+    this.selectedSearchFile = undefined;
+    this.selectedFasta = undefined;
+    this.fastaFileSelected =
+      this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
+    this.dataUploadSelection = option;
+    this.disableButton();
+  }
+
+  dataUploadModeSelectionChange(option: string) {
+    this.dataUploadModeSelection = option;
+    this.disableButton();
+  }
+
+  expandAdvancedSearchParameters(){
     this.advancedSearchExpanded = !this.advancedSearchExpanded;
-    console.log('after '+ this.advancedSearchExpanded)
   }
 
   onFileTypeSelectionChange() {
@@ -434,12 +435,11 @@ export class ExperimentPageComponent
     }
 
     //this.uploaderService.performUpload(this.uploadDialogId);
-    this.uploaderService.performUpload(
+    this.httpClientService.performUpload(
       this.uploadDialogId,
       this.filesToUpload,
       Endpoints.FILES_UPLOAD
     );
-    this.files_uploaded = true;
 
     // invoked if upload dialog is closed
     onDialogClosingObservable.subscribe((uploadFailed) => {
@@ -487,7 +487,7 @@ export class ExperimentPageComponent
 
     // send meta data, receive fileuuid
     try {
-      const metaDataResponse = await this.uploaderService
+      const metaDataResponse = await this.httpClientService
         .postObject<MPAFile, MPAFile>(
           metaDataForServer,
           Endpoints.SEARCH_METADATA
@@ -538,7 +538,7 @@ export class ExperimentPageComponent
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit experiment description';
-    dialogInstance.description = this.description;
+    dialogInstance.description = this.dbExperiment.description;
 
     dialogRef.afterClosed().subscribe((expDescription) => {
       console.log('add description');

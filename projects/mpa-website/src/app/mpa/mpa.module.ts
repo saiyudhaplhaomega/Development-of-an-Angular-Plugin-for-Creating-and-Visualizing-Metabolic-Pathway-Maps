@@ -29,6 +29,8 @@ import { SpectrumViewerComponent } from './components/spectrum-viewer/spectrum-v
 import { ProteineSequenceViewerComponent } from './components/protein-sequence-viewer/proteine-sequence-viewer.component';
 import { NgChartsModule } from 'ng2-charts';
 import { MpaRoutingModule } from './mpa-routing.module';
+import { TaxonomyTabComponent } from './components/experiment-page/taxonomy-tab/taxonomy-tab.component';
+import { FunctionTabComponent } from './components/experiment-page/function-tab/function-tab.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { MpaRoutingModule } from './mpa-routing.module';
     PsmTableComponent,
     SpectrumViewerComponent,
     ProteineSequenceViewerComponent,
+    TaxonomyTabComponent,
+    FunctionTabComponent,
   ],
   imports: [
     CommonModule,

@@ -1,17 +1,15 @@
 export interface ExperimentJSON {
   expid: string;
   description: string;
-  experiment_data: string;
+  //experiment_data: string;
   name: string;
-  creationDate: string;
-  files_uploaded: boolean;
+  creationdate: string;
 }
 
 export class ExperimentJSONObject implements ExperimentJSON {
   expid: string;
   description: string;
-  experiment_data: string;
+  //experiment_data: string;
   name: string;
-  creationDate: string;
-  files_uploaded: boolean;
+  creationdate: string;
 }
