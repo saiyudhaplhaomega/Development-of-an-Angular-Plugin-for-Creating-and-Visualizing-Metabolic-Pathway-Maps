@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavToolbarModule } from 'shared-lib';
+import { LoginModule } from 'shared-lib';
 
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     NavToolbarModule,
     MatButtonModule,
     HttpClientModule,
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

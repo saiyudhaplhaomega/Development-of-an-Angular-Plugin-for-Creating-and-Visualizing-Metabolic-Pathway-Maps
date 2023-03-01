@@ -14,3 +14,4 @@ export * from './lib/login/auth-guard.service';
 export * from './lib/login/auth.service';
 export * from './lib/login/login-page.component';
 export * from './lib/login/user-token';
+export * from './lib/login/login-buttons/login-buttons.component';

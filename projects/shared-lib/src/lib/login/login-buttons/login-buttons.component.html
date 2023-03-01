@@ -1,0 +1,26 @@
+<mat-card>
+  <div matRipple (click)="onClick(1)">
+    <span class="startbox-item-title">Login with Google</span>
+    <div>
+      <ul>
+        <li>use your Google account to sign in</li>
+        <li>extended job control center with progress indicator</li>
+        <li>analysis fully customizable, e.g. add more annotation tasks</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Guest Login Box (info) -->
+  <div matRipple (click)="onClick(0)">
+    <span class="startbox-item-title">Continue without Login</span>
+    <div>
+      <ul>
+        <li>no account required</li>
+        <li>
+          email notification when analysis results are available for download
+        </li>
+        <li>analysis restricted to default workflow and annotation tasks</li>
+      </ul>
+    </div>
+  </div>
+</mat-card>

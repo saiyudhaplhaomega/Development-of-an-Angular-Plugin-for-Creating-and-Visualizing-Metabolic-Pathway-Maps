@@ -4,17 +4,19 @@ import { RouterModule } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { LoginPageComponent } from './login-page.component';
 import { FormsModule } from '@angular/forms';
-import { UserToken } from './user-token';
+import { MatCardModule } from '@angular/material/card';
 
+import { LoginButtonsComponent } from './login-buttons/login-buttons.component';
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent, LoginButtonsComponent],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     OAuthModule.forRoot(),
+    MatCardModule,
   ],
-  exports: [LoginPageComponent],
+  exports: [LoginPageComponent, LoginButtonsComponent],
 })
 export class LoginModule {}
