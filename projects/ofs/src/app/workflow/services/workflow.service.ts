@@ -50,7 +50,7 @@ export type InputConfig =
 export class WorkflowService {
   loading: Boolean;
 
-  subsriptions: Subscription[];
+  subscriptions: Subscription[];
 
   ofsJob: OfsJob;
   ofsJobs: OfsJob[];
