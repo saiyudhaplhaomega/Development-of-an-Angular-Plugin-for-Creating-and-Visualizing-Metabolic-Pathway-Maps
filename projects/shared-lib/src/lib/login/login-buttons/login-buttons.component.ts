@@ -1,25 +1,19 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-export enum LoginType {
-  GUEST,
-  GOOGLE,
-}
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { InputFormComponent } from '../../input-form/input-form';
 
 @Component({
   selector: 'shared-login-buttons',
   templateUrl: './login-buttons.component.html',
-  styleUrls: ['./login-buttons.component.css'],
+  styleUrls: ['./login-buttons.component.scss'],
 })
-export class LoginButtonsComponent implements OnInit {
-  @Output() click: EventEmitter<LoginType>;
+export class LoginButtonsComponent {
+  showGuestLogin = false;
 
-  constructor() {
-    this.click = new EventEmitter<LoginType>();
-  }
+  loginGoogle() {}
 
-  ngOnInit(): void {}
-
-  onClick(type: number) {
-    this.click.emit(type);
+  toggleGuestInput() {
+    console.log(this.showGuestLogin);
+    this.showGuestLogin = !this.showGuestLogin;
   }
 }

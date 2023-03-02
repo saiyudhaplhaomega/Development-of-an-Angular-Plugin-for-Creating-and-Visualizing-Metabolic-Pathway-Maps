@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'shared-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
+  styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
   public user: UserToken;
@@ -16,11 +16,7 @@ export class LoginPageComponent implements OnInit {
   showGuestLogin = false;
   guestEmail = '';
 
-  constructor(
-    private _router: Router,
-    //public authGuard: AuthGuard,
-    public auth: AuthService
-  ) {}
+  constructor(private _router: Router, public auth: AuthService) {}
 
   ngOnInit(): void {
     this._router.events.subscribe((event) => {
@@ -34,12 +30,8 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  showGuestInput() {
-    this.showGuestLogin = true;
-  }
-
-  hideGuestInput() {
-    this.showGuestLogin = false;
+  toggleGuestInput() {
+    this.showGuestLogin = !this.showGuestLogin;
   }
 
   navigateProphane() {
@@ -51,7 +43,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginGuest() {
-    this.hideGuestInput();
+    this.showGuestLogin = false;
     if (this.isEmail(this.guestEmail)) {
       this.auth.loginGuest(this.guestEmail);
     } else {
@@ -69,5 +61,9 @@ export class LoginPageComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  onClick() {
+    console.log('clicked');
   }
 }

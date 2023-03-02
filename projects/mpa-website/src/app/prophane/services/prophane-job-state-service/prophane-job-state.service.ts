@@ -29,9 +29,8 @@ import {
   MultiFileUploadData,
 } from '../../../core/services/http-client.service';
 import { Router } from '@angular/router';
-import { AuthGuard, AuthService } from 'dist/shared-lib';
+import { AuthService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
 
 export enum NoJobCardHeaders {
   REQUESTING_JOB = 'Requesting new Prophane Job',

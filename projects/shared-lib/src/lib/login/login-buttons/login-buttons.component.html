@@ -1,20 +1,27 @@
-<mat-card>
-  <div matRipple (click)="onClick(1)">
-    <span class="startbox-item-title">Login with Google</span>
-    <div>
-      <ul>
+<div class="startbox">
+  <shared-login-button (buttonClick)="loginGoogle()">
+    <span login-button-header class="login-button-title"
+      >Login with Google</span
+    >
+    <div login-button-content>
+      <ul class="list-disc">
         <li>use your Google account to sign in</li>
         <li>extended job control center with progress indicator</li>
         <li>analysis fully customizable, e.g. add more annotation tasks</li>
       </ul>
     </div>
-  </div>
+  </shared-login-button>
 
-  <!-- Guest Login Box (info) -->
-  <div matRipple (click)="onClick(0)">
-    <span class="startbox-item-title">Continue without Login</span>
-    <div>
-      <ul>
+  <shared-login-button
+    *ngIf="!showGuestLogin"
+    (buttonClick)="toggleGuestInput()"
+  >
+    <div login-button-header class="flex justify-between">
+      <span class="login-button-title"> Login as Guest </span>
+    </div>
+
+    <div login-button-content>
+      <ul class="list-disc">
         <li>no account required</li>
         <li>
           email notification when analysis results are available for download
@@ -22,5 +29,15 @@
         <li>analysis restricted to default workflow and annotation tasks</li>
       </ul>
     </div>
-  </div>
-</mat-card>
+  </shared-login-button>
+
+  <shared-guest-input *ngIf="showGuestLogin">
+    <div login-button-header class="flex justify-between">
+      <span class="login-button-title"> Login as Guest </span>
+
+      <button mat-icon-button (click)="toggleGuestInput()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </shared-guest-input>
+</div>

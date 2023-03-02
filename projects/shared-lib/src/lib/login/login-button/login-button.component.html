@@ -1,0 +1,10 @@
+<div
+  (click)="onClick()"
+  mat-ripple
+  [matRippleDisabled]="disabled"
+  [ngClass]="{ showpointer: !disabled }"
+  class="startbox-item rounded select-none mat-elevation-z4"
+>
+  <ng-content select="[login-button-header]"> </ng-content>
+  <ng-content select="[login-button-content]"> </ng-content>
+</div>
