@@ -3,6 +3,8 @@ import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContentComponent } from '../../mpa.component';
+import { MatDialog } from '@angular/material/dialog';
+import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 
 @Component({
   selector: 'app-protein-database-component',
@@ -25,7 +27,8 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private dataService: DataService2
+    private dataService: DataService2,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -34,10 +37,28 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
       // TODO: this._dataMap = items;
     });
     this.UUID = this.dataItemOfThisComponent.uuid;
+    this.creationDate = this.dataItemOfThisComponent.creationDate;
+    this.description = this.dataItemOfThisComponent.description;
+    this.name = this.dataItemOfThisComponent.displayName;
+    //this.dataService.getFastaData(this.UUID);
+    
   }
 
   setDescription(){
+    const dialogRef = this.dialog.open(TextfieldDialogComponent, {
+      disableClose: true,
+    });
 
+    const dialogInstance = dialogRef.componentInstance;
+    dialogInstance.dialogPrompt = 'Edit Protein Database description';
+    dialogInstance.description = this.dataItemOfThisComponent.description;
+
+    dialogRef.afterClosed().subscribe((dbDescription) => {
+      if (this.dataItemOfThisComponent.uuid){
+      this.dataItemOfThisComponent.description = dbDescription;
+      this.updateProteinDB();
+      }
+    });
   }
 
   onAccept() {
@@ -52,5 +73,14 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
       this._dataMap.set(this.id, item);
       // TODO: this.dataService.dataMap.next(this._dataMap);
     }
+  }
+
+  removeProteinDB() {
+    this.dataService.removeDataItem(this.dataItemOfThisComponent);
+  }
+
+  updateProteinDB(): void {
+    this.dataService.updateFastaData(this.dataItemOfThisComponent);
+    //this.dataService.updateNode(this.dataItemOfThisComponent);
   }
 }
