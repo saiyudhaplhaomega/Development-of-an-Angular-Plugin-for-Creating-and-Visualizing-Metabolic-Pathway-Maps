@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { InputFormComponent } from '../../input-form/input-form';
 
@@ -8,7 +8,8 @@ import { InputFormComponent } from '../../input-form/input-form';
   styleUrls: ['./guest-input.component.scss'],
 })
 export class GuestInputComponent extends InputFormComponent {
-  @Input() disabled = false;
+  @Output() guestLoginEvent = new EventEmitter<string>();
+
   guestEMail: FormControl<string>;
 
   constructor(public builder: FormBuilder) {
@@ -17,5 +18,9 @@ export class GuestInputComponent extends InputFormComponent {
 
   ngOnInit(): void {
     this.guestEMail = new FormControl('', [Validators.email]);
+  }
+
+  continueClick() {
+    this.guestLoginEvent.emit(this.guestEMail.getRawValue());
   }
 }

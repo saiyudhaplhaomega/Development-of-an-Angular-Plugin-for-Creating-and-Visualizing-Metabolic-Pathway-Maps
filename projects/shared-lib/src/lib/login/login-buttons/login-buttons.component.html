@@ -31,7 +31,10 @@
     </div>
   </shared-login-button>
 
-  <shared-guest-input *ngIf="showGuestLogin">
+  <shared-guest-input
+    *ngIf="showGuestLogin"
+    (guestLoginEvent)="loginGuest($event)"
+  >
     <div login-button-header class="flex justify-between">
       <span class="login-button-title"> Login as Guest </span>
 
