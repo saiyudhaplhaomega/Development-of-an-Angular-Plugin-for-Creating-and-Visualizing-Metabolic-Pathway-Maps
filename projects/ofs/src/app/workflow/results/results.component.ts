@@ -12,7 +12,7 @@ export class ResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get classifierImages() {
-    const images = this.workflow.classifierImages;
+    const images = this.workflow.ofsData.responseData.classifierResponse;
     return images ? Object.values(images) : [];
   }
 

@@ -12,7 +12,7 @@ export class PreprocessingResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get preprocessingImages() {
-    const images = this.workflow.preprocessingImages;
+    const images = this.workflow.ofsData.responseData.preprocessingResponse;
     return images ? Object.values(images) : [];
   }
 

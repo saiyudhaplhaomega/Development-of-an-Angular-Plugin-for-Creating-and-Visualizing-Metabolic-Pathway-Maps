@@ -14,7 +14,7 @@ export class DataOverviewComponent implements OnInit {
   constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {
-    if (this.workflow.ofsJob.state === OfsJobState.OVERVIEW_RESULTS) {
+    if (this.workflow.ofsData.job.state === OfsJobState.OVERVIEW_RESULTS) {
       this.switchToResults();
     }
   }

@@ -5,35 +5,22 @@
  * - handle accessible routes
  *
  */
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  filter,
-  Observable,
-  Subject,
-  Subscription,
-} from 'rxjs';
-import { ClassifierResponse } from '../../models/classifier-response.model';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Endpoints } from '../../models/endpoints.model';
-import { OverviewResponse } from '../../models/overview-response.model';
-import { PreprocessingResponse } from '../../models/preprocessing-response.model';
-import { WrapperResponse } from '../../models/wrapper-response.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
-import {
-  OfsHttpClientService,
-  RequestObject,
-} from '../../services/ofs-http-client.service';
+import { OfsHttpClientService } from '../../services/ofs-http-client.service';
 import { ClassifierConfig } from '../models/classifier.model';
-import { OfsJob, OfsJobState } from '../models/ofs-job.model';
+import { OFSData } from '../models/ofs-data.model';
+import { OfsJob } from '../models/ofs-job.model';
 import {
-  GroupSelectionOptions,
   OverviewConfig,
   OverviewConfigForRequest,
 } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
-import { Step, steps } from '../models/workflow-steps.model';
+import { steps } from '../models/workflow-steps.model';
 import { WrapperConfig } from '../models/wrapper.model';
 
 export type InputConfig =
@@ -52,24 +39,10 @@ export class WorkflowService {
 
   subscriptions: Subscription[];
 
-  ofsJob: OfsJob;
-  ofsJobs: OfsJob[];
-
-  overviewImages: OverviewResponse;
-  preprocessingImages: PreprocessingResponse;
-  wrapperImages: WrapperResponse;
-  classifierImages: ClassifierResponse;
-
-  overviewConfig: OverviewConfig;
-  preprocessingConfig: PreprocessingConfig;
-  wrapperConfig: WrapperConfig;
-  classifierConfig: ClassifierConfig;
+  ofsData: OFSData;
 
   constructor(private http: OfsHttpClientService, private router: Router) {
-    this.ofsJob = {
-      jobId: '',
-      state: OfsJobState.NOJOB,
-    };
+    this.ofsData = new OFSData();
   }
 
   setRoute(selectedIndex: number) {
@@ -94,25 +67,6 @@ export class WorkflowService {
      * @param {OfsJob} jobId id of requested job
      */
     this.loading = true;
-    this.http
-      .dummyHttpRequest('getJob/', {
-        job: this.ofsJob,
-        configData: undefined,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          this.writeJobToStorage(response.job); // update job state in local storage
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
   }
 
   createOfsJob() {
@@ -121,16 +75,11 @@ export class WorkflowService {
      */
     this.loading = true;
     this.http
-      // .getObject<RequestObject>(Endpoints.CREATE_JOB, new HttpParams())
-      .dummyHttpRequest('createjob/', {
-        job: this.ofsJob,
-        configData: undefined,
-        responsenData: undefined,
-      })
+      .getObject<OFSData>(Endpoints.CREATE_JOB, new HttpParams())
       .subscribe({
-        next: (response) => {
+        next: (response: OFSData) => {
           console.log(response);
-          this.ofsJob = response.job;
+          this.ofsData.job = response.job;
           this.writeJobToStorage(response.job);
         },
         error: (error) => {
@@ -144,148 +93,83 @@ export class WorkflowService {
   }
 
   submitResultsInput(classifierConfig: ClassifierConfig) {
-    this.classifierConfig = classifierConfig;
+    this.ofsData.configData.classifierConfig = classifierConfig;
     this.loading = true;
-
     this.router.navigate(['workflow', 'results']);
-    this.http
-      .dummyHttpRequest('classifierinput/', {
-        job: this.ofsJob,
-        configData: classifierConfig,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          this.classifierImages = response.responsenData as ClassifierResponse;
-
-          this.writeJobToStorage(response.job);
-
-          console.log(response);
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
   }
 
   submitConfig(config: InputConfig, api: Endpoints) {
     this.loading = true;
-    let callback = (response: RequestObject) => {};
-
-    console.log(api);
+    let callback = (response: OFSData) => {};
 
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
-        callback = (response) => {
-          this.overviewImages = response.responsenData as OverviewResponse;
-          this.overviewConfig = response.configData as OverviewConfig;
+        callback = (response: OFSData) => {
+          this.ofsData.responseData.overviewResponse =
+            response.responseData.overviewResponse;
         };
         break;
       case Endpoints.PREPROCESSING_INPUT:
-        callback = (response) => {
-          this.preprocessingImages =
-            response.responsenData as PreprocessingResponse;
-          this.preprocessingConfig = response.configData as PreprocessingConfig;
+        callback = (response: OFSData) => {
+          this.ofsData.responseData.preprocessingResponse =
+            response.responseData.preprocessingResponse;
         };
         break;
       case Endpoints.WRAPPER_INPUT:
-        callback = (response) => {
-          this.wrapperImages = response.responsenData as WrapperResponse;
-          this.wrapperConfig = response.configData as WrapperConfig;
+        callback = (response: OFSData) => {
+          this.ofsData.responseData.wrapperResponse =
+            response.responseData.wrapperResponse;
         };
         break;
       case Endpoints.CLASSIFIER_INPUT:
-        callback = (response) => {
-          this.classifierImages = response.responsenData as ClassifierResponse;
-          this.classifierConfig = response.configData as ClassifierConfig;
+        callback = (response: OFSData) => {
+          this.ofsData.responseData.classifierResponse =
+            response.responseData.classifierResponse;
         };
         break;
     }
 
-    // switch (api) {
-    //   case Endpoints.OVERVIEW_INPUT:
-    //     let filesToUpload: MultiFileUploadData;
+    switch (api) {
+      case Endpoints.OVERVIEW_INPUT:
+        let filesToUpload: MultiFileUploadData;
 
-    //     const overviewConfigForRequest: OverviewConfigForRequest = {
-    //       groups: (config as OverviewConfig).groups,
-    //       groupSelectionOption: (config as OverviewConfig).groupSelectionOption,
-    //     };
-    //     // TODO: request object für alles
-    //     const configForRequest: RequestObject = {
-    //       configData: (config as OverviewConfig).data,
-    //       job: this.ofsJob,
-    //       responsenData: undefined,
-    //     };
+        const configFile = new File([JSON.stringify(this.ofsData)], 'config');
 
-    //     const configFile = new File(
-    //       [JSON.stringify(overviewConfigForRequest)],
-    //       'config'
-    //     );
+        //     filesToUpload = {
+        //       files: [
+        //         {
+        //           uploadFile: (config as OverviewConfig).data,
+        //           fileID: 'inputCSV',
+        //         },
+        //         {
+        //           uploadFile: configFile,
+        //           fileID: 'inputJSON',
+        //         },
+        //       ],
+        //       httpParameters: new HttpParams(),
+        //     };
 
-    //     filesToUpload = {
-    //       files: [
-    //         {
-    //           uploadFile: (config as OverviewConfig).data,
-    //           fileID: 'inputCSV',
-    //         },
-    //         {
-    //           uploadFile: configFile,
-    //           fileID: 'inputJSON',
-    //         },
-    //       ],
-    //       httpParameters: new HttpParams(),
-    //     };
-
-    //     this.http.performUpload(
-    //       'TODO: dialog id',
-    //       filesToUpload,
-    //       Endpoints.OVERVIEW_INPUT
-    //     );
-    //     break;
-    //   case Endpoints.PREPROCESSING_INPUT:
-    //   case Endpoints.WRAPPER_INPUT:
-    //   case Endpoints.CLASSIFIER_INPUT:
-    //     // TODO post
-    //     this.http
-    //       .postObject<RequestObject, RequestObject>(
-    //         configForRequest,
-    //         api,
-    //         new HttpParams()
-    //       )
-    //       .subscribe((response) => {
-    //         console.log(response);
-    //       });
-    //     break;
-    // }
-
-    this.http
-      .dummyHttpRequest(api, {
-        job: this.ofsJob,
-        configData: config,
-        responsenData: undefined,
-      })
-      .subscribe({
-        next: (response) => {
-          this.ofsJob = response.job;
-          callback(response);
-
-          this.writeJobToStorage(response.job);
-
-          console.log(response);
-        },
-        error: (error) => {
-          this.loading = false;
-          console.log(error);
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
+        this.http
+          .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
+          .subscribe((response: OFSData) => {
+            console.log(response);
+            this.ofsData = response;
+            this.loading = false;
+          });
+        break;
+      case Endpoints.PREPROCESSING_INPUT:
+      case Endpoints.WRAPPER_INPUT:
+      case Endpoints.CLASSIFIER_INPUT:
+        // TODO post
+        this.http
+          .postObject<OFSData, OFSData>(this.ofsData, api, new HttpParams())
+          .subscribe((response) => {
+            // TODO: evaluate response!
+            console.log(response);
+            this.loading = false;
+          });
+        break;
+    }
   }
 
   getDownloadData() {}

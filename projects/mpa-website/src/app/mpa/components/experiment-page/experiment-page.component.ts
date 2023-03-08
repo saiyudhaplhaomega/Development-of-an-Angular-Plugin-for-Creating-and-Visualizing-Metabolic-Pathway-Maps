@@ -148,8 +148,6 @@ export class ExperimentPageComponent
 {
   dataItemOfThisComponent: DataItem;
 
-  dbExperiment = new ExperimentJSONObject();
-
   // available upload options
   dataUploadSelection = 'Search Result';
   dataUploadOptions: string[] = ['Search Result', 'Peaklist + Search Result'];
@@ -263,26 +261,9 @@ export class ExperimentPageComponent
       }
     });
     
-    this.dbExperiment = this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid);
+    
 
   }
-
-  // const protein_groups = [];
-  // for (let i = 1; i <= 100; i++) {
-  //   protein_groups.push(createNewProteinGroup(this.uuid));
-  // }
-  // this.mpaTableDataService.mpaData = protein_groups;
-
-  //TODO: REPLACE REFERENCES TO EXPID WITH ID ???? --> this.dbExperiment.expid = this.id;
-
-  // this.httpClientService.postObject<ExperimentJSONObject, ExperimentJSONObject>(
-  //   this.dbExperiment, Endpoints.UNIMPLEMENTED).subscribe(result => {
-  //   if (result != null) {
-  //     console.log(result);
-  //     this.dbExperiment = result;
-  //     // value = result;
-  //   }
-  // });
 
   ngOnDestroy() {
     //this.updateExperiment();
@@ -538,11 +519,10 @@ export class ExperimentPageComponent
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit experiment description';
-    dialogInstance.description = this.dbExperiment.description;
+    dialogInstance.description = this.dataItemOfThisComponent.description;
 
     dialogRef.afterClosed().subscribe((expDescription) => {
-      console.log('add description');
-      this.dbExperiment.description = expDescription;
+      this.dataItemOfThisComponent.description = expDescription;
       //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
       //item.description = expDescription;
       //TODO: this._dataMap.set(this.dbExperiment.expid, item);
@@ -579,7 +559,9 @@ export class ExperimentPageComponent
 
   updateExperiment(): void {
     this.dataItemOfThisComponent.displayName = this.displayNameEditing;
-    this.dataService.updateNode(this.dataItemOfThisComponent);
+    if (this.dataItemOfThisComponent.uuid) {
+    this.dataService.updateExperiment(this.dataItemOfThisComponent);
+  }
   }
 
   onRemoveExperiment() {

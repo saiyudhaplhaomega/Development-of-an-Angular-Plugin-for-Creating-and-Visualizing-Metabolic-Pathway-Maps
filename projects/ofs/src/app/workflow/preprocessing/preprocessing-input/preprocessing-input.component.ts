@@ -58,8 +58,8 @@ export class PreprocessingInputComponent
   }
 
   setExistingFormInput() {
-    if (this.workflow.preprocessingConfig) {
-      this.formModel.patchValue(this.workflow.preprocessingConfig);
+    if (this.workflow.ofsData.configData.preprocessingConfig) {
+      this.formModel.patchValue(this.workflow.ofsData.configData.preprocessingConfig);
       this.disableForm();
     }
   }
