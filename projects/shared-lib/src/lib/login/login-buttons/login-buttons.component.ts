@@ -22,7 +22,6 @@ export class LoginButtonsComponent {
   }
 
   toggleGuestInput() {
-    console.log(this.showGuestLogin);
     this.showGuestLogin = !this.showGuestLogin;
   }
 }

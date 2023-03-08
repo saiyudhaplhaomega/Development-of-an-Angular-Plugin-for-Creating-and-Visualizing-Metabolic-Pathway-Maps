@@ -10,7 +10,7 @@ import { AuthService } from './../auth.service';
 })
 export class LoginPageComponent implements OnInit {
   public user: UserToken;
-  guestlogin = false;
+  guestlogin: boolean = false;
   showGuestLogin = false;
   guestEmail = '';
 
