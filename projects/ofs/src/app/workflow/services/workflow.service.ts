@@ -135,19 +135,19 @@ export class WorkflowService {
 
         const configFile = new File([JSON.stringify(this.ofsData)], 'config');
 
-        //     filesToUpload = {
-        //       files: [
-        //         {
-        //           uploadFile: (config as OverviewConfig).data,
-        //           fileID: 'inputCSV',
-        //         },
-        //         {
-        //           uploadFile: configFile,
-        //           fileID: 'inputJSON',
-        //         },
-        //       ],
-        //       httpParameters: new HttpParams(),
-        //     };
+        filesToUpload = {
+          files: [
+            {
+              uploadFile: (config as OverviewConfig).data,
+              fileID: 'inputCSV',
+            },
+            {
+              uploadFile: configFile,
+              fileID: 'inputJSON',
+            },
+          ],
+          httpParameters: new HttpParams(),
+        };
 
         this.http
           .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
