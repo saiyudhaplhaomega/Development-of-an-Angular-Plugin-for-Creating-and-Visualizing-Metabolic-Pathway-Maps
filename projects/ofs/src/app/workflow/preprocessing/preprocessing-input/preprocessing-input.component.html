@@ -6,7 +6,7 @@
   <mat-form-field appearance="outline">
     <mat-label>control group</mat-label>
     <mat-select formControlName="controlGroup">
-      <mat-option>
+      <mat-option [value]="controlGroupName">
         {{ controlGroupName }}
       </mat-option>
     </mat-select>

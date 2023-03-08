@@ -37,15 +37,14 @@ export class PreprocessingInputComponent
     this.formModel = this.buildForm();
     this.setExistingFormInput();
     this.doSubscriptions();
+
+    this.formModel.get('controlGroup').disable();
   }
 
   buildForm() {
     const formModel = this.builder.group(
       {
-        controlGroup: new FormControl({
-          value: this.controlGroupName,
-          disabled: true,
-        }),
+        controlGroup: new FormControl('control'),
         testGroup: [this.testGroupOptions[0]],
         repeats: [5000, [Validators.required, Validators.min(0)]],
         folds: [5000, [Validators.required, Validators.min(0)]],

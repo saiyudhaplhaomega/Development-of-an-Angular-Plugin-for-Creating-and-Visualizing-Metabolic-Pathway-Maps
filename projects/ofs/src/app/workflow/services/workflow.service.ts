@@ -121,12 +121,12 @@ export class WorkflowService {
      */
     this.loading = true;
     this.http
-      .getObject<RequestObject>(Endpoints.CREATE_JOB, new HttpParams())
-      // .dummyHttpRequest('createjob/', {
-      //   job: this.ofsJob,
-      //   configData: undefined,
-      //   responsenData: undefined,
-      // })
+      // .getObject<RequestObject>(Endpoints.CREATE_JOB, new HttpParams())
+      .dummyHttpRequest('createjob/', {
+        job: this.ofsJob,
+        configData: undefined,
+        responsenData: undefined,
+      })
       .subscribe({
         next: (response) => {
           console.log(response);
@@ -177,6 +177,8 @@ export class WorkflowService {
     this.loading = true;
     let callback = (response: RequestObject) => {};
 
+    console.log(api);
+
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
         callback = (response) => {
@@ -205,61 +207,61 @@ export class WorkflowService {
         break;
     }
 
-    switch (api) {
-      case Endpoints.OVERVIEW_INPUT:
-        let filesToUpload: MultiFileUploadData;
+    // switch (api) {
+    //   case Endpoints.OVERVIEW_INPUT:
+    //     let filesToUpload: MultiFileUploadData;
 
-        const overviewConfigForRequest: OverviewConfigForRequest = {
-          groups: (config as OverviewConfig).groups,
-          groupSelectionOption: (config as OverviewConfig).groupSelectionOption,
-        };
-        // TODO: request object für alles
-        const configForRequest: RequestObject = {
-          configData: (config as OverviewConfig).data,
-          job: this.ofsJob,
-          responsenData: undefined,
-        };
+    //     const overviewConfigForRequest: OverviewConfigForRequest = {
+    //       groups: (config as OverviewConfig).groups,
+    //       groupSelectionOption: (config as OverviewConfig).groupSelectionOption,
+    //     };
+    //     // TODO: request object für alles
+    //     const configForRequest: RequestObject = {
+    //       configData: (config as OverviewConfig).data,
+    //       job: this.ofsJob,
+    //       responsenData: undefined,
+    //     };
 
-        const configFile = new File(
-          [JSON.stringify(overviewConfigForRequest)],
-          'config'
-        );
+    //     const configFile = new File(
+    //       [JSON.stringify(overviewConfigForRequest)],
+    //       'config'
+    //     );
 
-        filesToUpload = {
-          files: [
-            {
-              uploadFile: (config as OverviewConfig).data,
-              fileID: 'inputCSV',
-            },
-            {
-              uploadFile: configFile,
-              fileID: 'inputJSON',
-            },
-          ],
-          httpParameters: new HttpParams(),
-        };
+    //     filesToUpload = {
+    //       files: [
+    //         {
+    //           uploadFile: (config as OverviewConfig).data,
+    //           fileID: 'inputCSV',
+    //         },
+    //         {
+    //           uploadFile: configFile,
+    //           fileID: 'inputJSON',
+    //         },
+    //       ],
+    //       httpParameters: new HttpParams(),
+    //     };
 
-        this.http.performUpload(
-          'TODO: dialog id',
-          filesToUpload,
-          Endpoints.OVERVIEW_INPUT
-        );
-        break;
-      case Endpoints.PREPROCESSING_INPUT:
-      case Endpoints.WRAPPER_INPUT:
-      case Endpoints.CLASSIFIER_INPUT:
-        // TODO post
-        this.http
-          .postObject<RequestObject, RequestObject>(
-            configForRequest,
-            api,
-            new HttpParams()
-          )
-          .subscribe((response) => {
-            console.log(response);
-          });
-        break;
-    }
+    //     this.http.performUpload(
+    //       'TODO: dialog id',
+    //       filesToUpload,
+    //       Endpoints.OVERVIEW_INPUT
+    //     );
+    //     break;
+    //   case Endpoints.PREPROCESSING_INPUT:
+    //   case Endpoints.WRAPPER_INPUT:
+    //   case Endpoints.CLASSIFIER_INPUT:
+    //     // TODO post
+    //     this.http
+    //       .postObject<RequestObject, RequestObject>(
+    //         configForRequest,
+    //         api,
+    //         new HttpParams()
+    //       )
+    //       .subscribe((response) => {
+    //         console.log(response);
+    //       });
+    //     break;
+    // }
 
     this.http
       .dummyHttpRequest(api, {

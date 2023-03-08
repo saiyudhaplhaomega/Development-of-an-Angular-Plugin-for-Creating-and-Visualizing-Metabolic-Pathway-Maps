@@ -143,7 +143,7 @@ export class OfsHttpClientService {
       };
     }
 
-    if (responseData?.hasOwnProperty('controlGroup')) {
+    if (responseData?.hasOwnProperty('repeats')) {
       responseObject.responsenData = {
         pvaluesMolecules:
           '../../../../assets/dummy-figures/p_values_molecules.jpg',
