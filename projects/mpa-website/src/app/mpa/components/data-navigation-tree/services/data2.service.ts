@@ -10,6 +10,7 @@ import { DeleteWarningDialogComponent } from '../../../../core/components/dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ExperimentJSONObject } from '../../../objects/experimentjson';
 import { HttpParams } from '@angular/common/http';
+import { ProtDBJSONObject } from '../../../objects/protdbjson';
 
 // TODO: properly set everywhere
 export enum NodeType {
@@ -30,8 +31,6 @@ export class DataService2 {
   public dataMap = new BehaviorSubject<DataItemMap>(new DataItemMap());
   // TODO: using Subject on the other hand doesnt allow ".value"
   //public dataMap = new Subject<Map<number, DataItem>>();
-
-  public dbExperiment = new ExperimentJSONObject;
 
   // the constructor has two tasks:
   // 1. calls the server to retrieve user data and initialize the dataMap
@@ -85,6 +84,7 @@ export class DataService2 {
     );
     // TODO: update appropriate fields
     itemToUpdate.displayName = updateNode.displayName;
+    itemToUpdate.description = updateNode.description;
     this.dataMap.next(mapCopy);
   }
 
@@ -110,7 +110,7 @@ export class DataService2 {
         icon: undefined,
         displayName: nodeName,
         expanded: true,
-        creation_date: this.getDate(),
+        creationDate: this.getDate(),
         uuid: null,
         description: '',
       };
@@ -149,6 +149,7 @@ export class DataService2 {
   }
 
   getExperimentData(experimentID: string){
+    var dbExperiment: ExperimentJSONObject = new ExperimentJSONObject();
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
@@ -157,8 +158,8 @@ export class DataService2 {
       }
     )
     this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA,params)
-    .subscribe((experimentData) => this.dbExperiment = experimentData);
-    return this.dbExperiment
+    .subscribe((experimentData) => dbExperiment = experimentData);
+    return dbExperiment
   }
 
   updateExperiment(nodeObj) {
@@ -167,17 +168,72 @@ export class DataService2 {
     dbExperiment.expid = nodeObj.uuid;
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
-    dbExperiment.creationdate = nodeObj.creation_date;
-
+    dbExperiment.creationdate = nodeObj.creationDate;
+    
+    const params = new HttpParams(
+      {
+        fromObject: {
+          jobid: nodeObj.uuid,
+        }
+      }
+    )
     this.httpClientService
       .postObject<ExperimentJSONObject, ExperimentJSONObject>(
         dbExperiment,
-        Endpoints.CREATE_EXPERIMENT
+        Endpoints.UPDATE_EXPERIMENT_DATA,
+        params,
       )
       .subscribe((response) => {
         nodeObj.uuid = response.expid;
+        nodeObj.description = response.description;
+        nodeObj.displayName = response.name;
+        nodeObj.creationDate = response.creationdate;
         this.updateNode(nodeObj);
       });
+  }
+
+  getFastaData(nodeObj) {
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          jobid: nodeObj.uuid,
+        }
+      }
+    )
+    this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
+    .subscribe(fastaData => {
+      nodeObj.uuid = fastaData.protdb_id;
+      nodeObj.description = fastaData.description;
+      nodeObj.displayName = fastaData.name;
+      nodeObj.creationDate = fastaData.creationdate;
+      this.updateNode(nodeObj);
+    });
+  }
+
+  updateFastaData(nodeObj) {
+    const proteinDB: ProtDBJSONObject = new ProtDBJSONObject();
+    proteinDB.protdb_id = nodeObj.uuid;
+    proteinDB.name = nodeObj.displayName;
+    proteinDB.description = nodeObj.description;
+    proteinDB.creationdate = nodeObj.creationDate;
+
+    const params = new HttpParams(
+      {fromObject: {
+        jobid: nodeObj.uuid,
+      }}
+    )
+    this.httpClientService.postObject<ProtDBJSONObject,ProtDBJSONObject>(
+      proteinDB,
+      Endpoints.PROTEINLOADER_UPDATE_FASTADATA,
+      params
+    )
+    .subscribe((response) => {
+      nodeObj.uuid = response.protdb_id;
+      nodeObj.description = response.description;
+      nodeObj.displayName = response.name;
+      nodeObj.creationDate = response.creationdate;
+      this.updateNode(nodeObj);
+    })
   }
 
   removeDataItem(dataItem: DataItem) {

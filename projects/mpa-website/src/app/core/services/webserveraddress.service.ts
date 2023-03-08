@@ -38,6 +38,7 @@ export enum Endpoints {
   // experiment
   CREATE_EXPERIMENT = 'mpasearch/createexperiment',
   GET_EXPERIMENT_DATA = 'mpasearch/getexperimentdata',
+  UPDATE_EXPERIMENT_DATA = 'mpasearch/updateexperimentdata',
   SEARCH_METADATA = 'mpasearch/searchmetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',
   GET_PROTEIN_SEQUENCE = 'mpasearch/getproteinsequence',
@@ -45,6 +46,8 @@ export enum Endpoints {
   // proteinloader
   PROTEINLOADER_METADATA = 'proteinloader/fastametadata',
   PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadfasta',
+  PROTEINLOADER_GETFASTADATA = 'proteinloader/getfastadata',
+  PROTEINLOADER_UPDATE_FASTADATA= 'proteinloader/updatefastadata',
   // PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
 
 }

@@ -9,7 +9,7 @@ export interface DataItem {
   icon: string;
   displayName: string;
   expanded: boolean;
-  creation_date: string;
+  creationDate: string;
   uuid: string;
   description: string;
 

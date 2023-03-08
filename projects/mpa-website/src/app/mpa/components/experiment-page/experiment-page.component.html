@@ -20,10 +20,10 @@
                         aria-label="Accept" (click)="onAccept()">
                   <mat-icon>done</mat-icon>
                 </button>
-                <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
-                        *ngIf="this.dbExperiment.name" aria-label="Clear" (click)="this.dbExperiment.name=''">
+                <!-- <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
+                        *ngIf="this.dataItemOfThisComponent.displayName" aria-label="Clear" (click)="this.dataItemOfThisComponent.displayName=''">
                   <mat-icon>close</mat-icon>
-                </button>
+                </button> -->
               </div>
             </div>
 
@@ -34,7 +34,7 @@
               <tr>
                 <th scope="row" class="ml-summary-col">Creation Date</th>
                 <td >
-                  {{this.dbExperiment.creationdate}}
+                  {{this.dataItemOfThisComponent.creationDate}}
                 </td>
               </tr>
               <tr>
@@ -86,7 +86,7 @@
                     <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
                   </th>
                   <td >
-                    {{this.dbExperiment.description}}
+                    {{this.dataItemOfThisComponent.description}}
                   </td>
                 </tr>
               </tbody>
@@ -383,7 +383,7 @@
         <mat-tab label="Protein Groups" disabled="{{!hasMpaData}}">
           <ng-template matTabContent>
           <ng-container *ngIf="hasMpaData">
-            <app-mpa-table class="mpa-table" [experimentUUID]='this.dbExperiment.expid'>
+            <app-mpa-table class="mpa-table" [experimentUUID]='this.dataItemOfThisComponent.uuid'>
             </app-mpa-table>
           </ng-container>
 
