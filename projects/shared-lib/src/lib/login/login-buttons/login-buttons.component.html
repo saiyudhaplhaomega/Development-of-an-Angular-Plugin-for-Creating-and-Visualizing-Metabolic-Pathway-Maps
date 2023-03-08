@@ -1,34 +1,18 @@
 <div class="startbox">
   <shared-login-button (buttonClick)="loginGoogle()">
-    <span login-button-header class="login-button-title"
-      >Login with Google</span
-    >
-    <div login-button-content>
-      <ul class="list-disc">
-        <li>use your Google account to sign in</li>
-        <li>extended job control center with progress indicator</li>
-        <li>analysis fully customizable, e.g. add more annotation tasks</li>
-      </ul>
-    </div>
+    <ng-content login-button-header select="[google-login-header]">
+    </ng-content>
+    <ng-content login-button-content select="[google-login-content]">
+    </ng-content>
   </shared-login-button>
 
   <shared-login-button
     *ngIf="!showGuestLogin"
     (buttonClick)="toggleGuestInput()"
   >
-    <div login-button-header class="flex justify-between">
-      <span class="login-button-title"> Login as Guest </span>
-    </div>
-
-    <div login-button-content>
-      <ul class="list-disc">
-        <li>no account required</li>
-        <li>
-          email notification when analysis results are available for download
-        </li>
-        <li>analysis restricted to default workflow and annotation tasks</li>
-      </ul>
-    </div>
+    <ng-container *ngTemplateOutlet="header" login-button-header></ng-container>
+    <ng-content login-button-content select="[guest-login-content]">
+    </ng-content>
   </shared-login-button>
 
   <shared-guest-input
@@ -36,11 +20,17 @@
     (guestLoginEvent)="loginGuest($event)"
   >
     <div login-button-header class="flex justify-between">
-      <span class="login-button-title"> Login as Guest </span>
-
+      <ng-container
+        *ngTemplateOutlet="header"
+        login-button-header
+      ></ng-container>
       <button mat-icon-button (click)="toggleGuestInput()">
         <mat-icon>close</mat-icon>
       </button>
     </div>
   </shared-guest-input>
 </div>
+
+<ng-template #header>
+  <ng-content select="[guest-login-header]"> </ng-content>
+</ng-template>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { LoginPageComponent } from './login-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';

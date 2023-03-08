@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { AuthGuard } from './auth-guard.service';
-import { UserToken } from './user-token';
+import { UserToken } from './../user-token';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from './../auth.service';
 
 @Component({
   selector: 'shared-login-page',
@@ -19,9 +17,6 @@ export class LoginPageComponent implements OnInit {
   constructor(private _router: Router, public auth: AuthService) {}
 
   ngOnInit(): void {
-    this._router.events.subscribe((event) => {
-      console.log(event);
-    });
     this.auth._user.subscribe((u) => {
       this.user = u;
     });
@@ -30,21 +25,9 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  toggleGuestInput() {
-    this.showGuestLogin = !this.showGuestLogin;
-  }
-
-  navigateProphane() {
-    this._router.navigateByUrl('prophane');
-  }
-
-  navigateMpa() {
-    this._router.navigateByUrl('/mpa');
-  }
-
-  loginGuest() {
-    this.showGuestLogin = false;
-    if (this.isEmail(this.guestEmail)) {
+  loginGuest(email: string) {
+    this.guestEmail = email;
+    if (email.length > 0) {
       this.auth.loginGuest(this.guestEmail);
     } else {
       this.auth.loginGuest('ANONOYMOUS');
@@ -55,15 +38,11 @@ export class LoginPageComponent implements OnInit {
     await this.auth.loginGoogle();
   }
 
-  isEmail(value: string) {
-    if (!String(value).match('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$')) {
-      return false;
-    } else {
-      return true;
-    }
+  navigateProphane() {
+    this._router.navigateByUrl('prophane');
   }
 
-  onClick() {
-    console.log('clicked');
+  navigateMpa() {
+    this._router.navigateByUrl('/mpa');
   }
 }
