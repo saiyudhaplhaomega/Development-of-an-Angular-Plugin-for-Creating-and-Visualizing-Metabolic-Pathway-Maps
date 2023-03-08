@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "startmpa": "ng serve mpa-website",
+    "startofs": "ng serve ofs",
     "build": "ng build",
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",

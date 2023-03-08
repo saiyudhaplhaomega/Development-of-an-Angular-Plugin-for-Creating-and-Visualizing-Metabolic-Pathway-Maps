@@ -12,7 +12,7 @@ export class WrapperResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get wrapperImages() {
-    const images = this.workflow.wrapperImages;
+    const images = this.workflow.ofsData.responseData.wrapperResponse;
     return images ? Object.values(images) : [];
   }
 

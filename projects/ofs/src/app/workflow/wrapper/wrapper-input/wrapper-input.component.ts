@@ -42,10 +42,9 @@ export class WrapperInputComponent
   }
 
   setExistingFormInput() {
-    const wrapperConfig = this.workflow.wrapperConfig;
+    const wrapperConfig = this.workflow.ofsData.configData.wrapperConfig;
     if (wrapperConfig?.folds && wrapperConfig?.repeats) {
-      this.workflow.wrapperConfig;
-      this.formModel.patchValue(this.workflow.wrapperConfig);
+      this.formModel.patchValue(this.workflow.ofsData.configData.wrapperConfig);
       this.disableForm();
     }
   }

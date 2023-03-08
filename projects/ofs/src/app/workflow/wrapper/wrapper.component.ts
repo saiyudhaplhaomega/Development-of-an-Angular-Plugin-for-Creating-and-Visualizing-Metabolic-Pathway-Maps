@@ -14,7 +14,7 @@ export class WrapperComponent implements OnInit {
   constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {
-    if (this.workflow.ofsJob.state === OfsJobState.WRAPPER_RESULTS) {
+    if (this.workflow.ofsData.job.state === OfsJobState.WRAPPER_RESULTS) {
       this.switchToResults();
     }
   }
@@ -24,6 +24,6 @@ export class WrapperComponent implements OnInit {
   }
 
   hasResults() {
-    return this.workflow.wrapperImages !== undefined;
+    return this.workflow.ofsData.responseData.wrapperResponse !== undefined;
   }
 }

@@ -35,11 +35,11 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
   }
 
   get job() {
-    return this.workflow?.ofsJob;
+    return this.workflow?.ofsData.job;
   }
 
   get overviewImages() {
-    return this.workflow?.overviewImages;
+    return this.workflow?.ofsData.responseData.overviewResponse;
   }
 
   onButtonNavigate(event: string) {
@@ -76,13 +76,13 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
   isCompleted(step: Step) {
     switch (step.route) {
       case WorkflowRoutes.OVERVIEW:
-        return this.workflow.overviewImages !== undefined;
+        return this.workflow.ofsData.responseData.overviewResponse !== undefined;
       case WorkflowRoutes.PREPROCESSING:
-        return this.workflow.preprocessingImages !== undefined;
+        return this.workflow.ofsData.responseData.preprocessingResponse !== undefined;
       case WorkflowRoutes.WRAPPER:
-        return this.workflow.wrapperImages !== undefined;
+        return this.workflow.ofsData.responseData.wrapperResponse !== undefined;
       case WorkflowRoutes.RESULTS:
-        return this.workflow.classifierImages !== undefined;
+        return this.workflow.ofsData.responseData.classifierResponse !== undefined;
     }
   }
 

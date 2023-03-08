@@ -2,34 +2,14 @@ import {
   HttpClient,
   HttpEventType,
   HttpHeaders,
-  HttpParams,
+  HttpParams
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { delay, Observable, of } from 'rxjs';
+import { Endpoints, getAdress } from '../models/endpoints.model';
+import { OfsJobState } from '../workflow/models/ofs-job.model';
 import { MultiFileUploadData } from './http-client.service';
 import { UploadProgressService } from './upload-progress.service';
-import { config, delay, Observable, of } from 'rxjs';
-import { ClassifierResponse } from '../models/classifier-response.model';
-import { Endpoints, getAdress } from '../models/endpoints.model';
-import { OverviewResponse } from '../models/overview-response.model';
-import { PreprocessingResponse } from '../models/preprocessing-response.model';
-import { WrapperResponse } from '../models/wrapper-response.model';
-import { ClassifierConfig } from '../workflow/models/classifier.model';
-import { OfsJobState, OfsJob } from '../workflow/models/ofs-job.model';
-import { OverviewConfig } from '../workflow/models/overview.model';
-import { PreprocessingConfig } from '../workflow/models/preprocessing.model';
-import { WrapperConfig } from '../workflow/models/wrapper.model';
-import { InputConfig } from '../workflow/services/workflow.service';
-
-export interface RequestObject {
-  job: OfsJob;
-  configData: InputConfig;
-  responsenData:
-    | undefined
-    | OverviewResponse
-    | PreprocessingResponse
-    | WrapperResponse
-    | ClassifierResponse;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +42,38 @@ export class OfsHttpClientService {
       }),
       params: params,
     });
+  }
+
+  postMultiPartFiles<T>(
+    fileList: MultiFileUploadData,
+    api: Endpoints
+  ): Observable<T>  {
+    const fd = new FormData();
+    let multipartids: string = '';
+    fileList.files.forEach((file) => {
+      multipartids += file.fileID + ';';
+    });
+
+    fd.set('Content-Type', 'multipart/form-data');
+    fd.append('fileIDList', multipartids);
+    fileList.files.map((file) => {
+      fd.append(file.fileID, file.uploadFile);
+    });
+    return this.http.post<T>(getAdress(api), fd, {
+      headers: new HttpHeaders({
+        // Authorization: this.authGuard.getUserAuthorization().toString(),
+      }),
+      params: fileList.httpParameters,
+      reportProgress: true, // currently no way to track? (dialogid)
+    });
+  }
+
+
+  postMultiPartAsync(
+    fileList: MultiFileUploadData,
+    api: Endpoints
+  ) {
+
   }
 
   performUpload(
@@ -123,61 +135,61 @@ export class OfsHttpClientService {
   }
 
   // TODO: keep for demo
-  dummyHttpRequest(
-    api: string,
-    object: RequestObject,
-    params?: HttpParams
-  ): Observable<RequestObject> {
-    const responseObject = JSON.parse(JSON.stringify(object)) as RequestObject;
-    responseObject.job = this.createDummyResponse(api);
+  // dummyHttpRequest(
+  //   api: string,
+  //   object: RequestObject,
+  //   params?: HttpParams
+  // ): Observable<RequestObject> {
+  //   const responseObject = JSON.parse(JSON.stringify(object)) as RequestObject;
+  //   responseObject.job = this.createDummyResponse(api);
 
-    const responseData = responseObject.configData;
+  //   const responseData = responseObject.configData;
 
-    console.log(responseObject);
+  //   console.log(responseObject);
 
-    if (responseData?.hasOwnProperty('groups')) {
-      responseObject.responsenData = {
-        classDistribution: '../../../../assets/dummy-figures/pie.jpg',
-        dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
-        testGroups: ['test1', 'test2'],
-      };
-    }
+  //   if (responseData?.hasOwnProperty('groups')) {
+  //     responseObject.responsenData = {
+  //       classDistribution: '../../../../assets/dummy-figures/pie.jpg',
+  //       dataSparsity: '../../../../assets/dummy-figures/data_sparsity.jpg',
+  //       testGroups: ['test1', 'test2'],
+  //     };
+  //   }
 
-    if (responseData?.hasOwnProperty('controlGroup')) {
-      responseObject.responsenData = {
-        pvaluesMolecules:
-          '../../../../assets/dummy-figures/p_values_molecules.jpg',
-        predictivePerformance:
-          '../../../../assets/dummy-figures/p_values_molecules_accuracy.jpg',
-      };
-    }
+  //   if (responseData?.hasOwnProperty('controlGroup')) {
+  //     responseObject.responsenData = {
+  //       pvaluesMolecules:
+  //         '../../../../assets/dummy-figures/p_values_molecules.jpg',
+  //       predictivePerformance:
+  //         '../../../../assets/dummy-figures/p_values_molecules_accuracy.jpg',
+  //     };
+  //   }
 
-    if (
-      responseData?.hasOwnProperty('repeats') &&
-      !responseData?.hasOwnProperty('controlGroup')
-    ) {
-      responseObject.responsenData = {
-        featureSelection:
-          '../../../../assets/dummy-figures/individual_profile.jpg',
-        featureSelectionProfiles:
-          '../../../../assets/dummy-figures/mutual_profile.jpg',
-      };
-    }
+  //   if (
+  //     responseData?.hasOwnProperty('repeats') &&
+  //     !responseData?.hasOwnProperty('controlGroup')
+  //   ) {
+  //     responseObject.responsenData = {
+  //       featureSelection:
+  //         '../../../../assets/dummy-figures/individual_profile.jpg',
+  //       featureSelectionProfiles:
+  //         '../../../../assets/dummy-figures/mutual_profile.jpg',
+  //     };
+  //   }
 
-    if (responseData?.hasOwnProperty('selectedFeatures')) {
-      responseObject.responsenData = {
-        pairwiseComparison:
-          '../../../../assets/dummy-figures/molecules_pairwise.jpg',
-        pca: '../../../../assets/dummy-figures/pca.jpg',
-      };
-    }
+  //   if (responseData?.hasOwnProperty('selectedFeatures')) {
+  //     responseObject.responsenData = {
+  //       pairwiseComparison:
+  //         '../../../../assets/dummy-figures/molecules_pairwise.jpg',
+  //       pca: '../../../../assets/dummy-figures/pca.jpg',
+  //     };
+  //   }
 
-    console.log(responseObject);
+  //   console.log(responseObject);
 
-    return of(responseObject).pipe(delay(5000));
-    // once observable is completed, subscriptions automatically close
-    // > also applys to http requests
-  }
+  //   return of(responseObject).pipe(delay(5000));
+  //   // once observable is completed, subscriptions automatically close
+  //   // > also applys to http requests
+  // }
 
   createDummyResponse(api: string) {
     const job = { jobId: 'Käsekuchen', state: OfsJobState.NOJOB };

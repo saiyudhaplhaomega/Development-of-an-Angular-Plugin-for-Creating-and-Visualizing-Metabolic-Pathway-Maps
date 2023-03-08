@@ -14,7 +14,7 @@ export class PreprocessingComponent implements OnInit {
   constructor(private workflow: WorkflowService) {}
 
   ngOnInit(): void {
-    if (this.workflow.ofsJob.state === OfsJobState.PREPROCESSING_RESULTS) {
+    if (this.workflow.ofsData.job.state === OfsJobState.PREPROCESSING_RESULTS) {
       this.switchToResults();
     }
   }
@@ -24,6 +24,6 @@ export class PreprocessingComponent implements OnInit {
   }
 
   hasResults() {
-    return this.workflow.preprocessingImages !== undefined;
+    return this.workflow.ofsData.responseData.preprocessingResponse !== undefined;
   }
 }

@@ -26,7 +26,7 @@ export class PreprocessingResultsInputComponent
   }
 
   ngOnDestroy() {
-    this.workflow.wrapperConfig = {
+    this.workflow.ofsData.configData.wrapperConfig = {
       folds: undefined,
       repeats: undefined,
       pvalCutoff: this.pvalCutoff.value,
