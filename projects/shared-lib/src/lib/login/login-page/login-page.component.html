@@ -1,0 +1,95 @@
+<ng-container *ngIf="!user && !guestlogin">
+  <shared-login-buttons
+    (loginGoogleEvent)="loginGoogle()"
+    (loginGuestEvent)="loginGuest($event)"
+  >
+    <span google-login-header class="login-button-title"
+      >Login with Google</span
+    >
+    <div google-login-content>
+      <ul class="list-disc">
+        <li>use your Google account to sign in</li>
+        <li>extended job control center with progress indicator</li>
+        <li>analysis fully customizable, e.g. add more annotation tasks</li>
+      </ul>
+    </div>
+
+    <span guest-login-header class="login-button-title"> Login as Guest </span>
+    <div guest-login-content>
+      <ul class="list-disc">
+        <li>no account required</li>
+        <li>
+          email notification when analysis results are available for download
+        </li>
+        <li>analysis restricted to default workflow and annotation tasks</li>
+      </ul>
+    </div>
+  </shared-login-buttons>
+</ng-container>
+
+<div class="startbox" *ngIf="user">
+  <!-- <div>{{ navigateProphane() }}</div> -->
+  <div class="startbox-item example-ripple-container mat-elevation-z4">
+    <div class="startbox-item-title">Logged in as registered user</div>
+    <div class="startbox-item-content">name: {{ user.name }}</div>
+    <div class="startbox-item-content">email: {{ user.email }}</div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateProphane()"
+      class="float-right"
+    >
+      go to prophane
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateMpa()"
+      class="float-right"
+    >
+      go to mpa
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="auth.logout()"
+      class="float-right"
+    >
+      logout
+    </button>
+  </div>
+</div>
+
+<div class="startbox" *ngIf="guestlogin">
+  <!-- <div>{{ navigateProphane() }}</div> -->
+  <div class="startbox-item example-ripple-container mat-elevation-z4">
+    <div class="startbox-item-title">Logged in as guest (limited features)</div>
+    <div class="startbox-item-content">
+      email: {{ guestEmail ? guestEmail : "no email provided" }}
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateProphane()"
+      class="float-right"
+    >
+      go to prophane
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateMpa()"
+      class="float-right"
+    >
+      go to mpa
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="auth.logout()"
+      class="float-right"
+    >
+      logout
+    </button>
+  </div>
+</div>

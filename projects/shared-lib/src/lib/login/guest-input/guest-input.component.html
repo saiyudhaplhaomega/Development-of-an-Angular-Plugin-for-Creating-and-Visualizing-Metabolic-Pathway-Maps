@@ -1,0 +1,27 @@
+<div class="startbox-item rounded select-none mat-elevation-z4">
+  <ng-content select="[login-button-header]"> </ng-content>
+  <div class="flex flex-row">
+    <mat-form-field
+      appearance="outline"
+      class="flex-auto"
+      style="margin-bottom: -1.25em"
+    >
+      <mat-label>optional: enter email to receive results</mat-label>
+      <input type="email" matInput [formControl]="guestEMail" />
+      <mat-error *ngIf="guestEMail.invalid">{{
+        getErrorMessage(guestEMail)
+      }}</mat-error>
+    </mat-form-field>
+
+    <div class="ml-4 my-auto">
+      <button
+        [disabled]="!guestEMail.valid"
+        mat-flat-button
+        color="primary"
+        (click)="continueClick()"
+      >
+        continue
+      </button>
+    </div>
+  </div>
+</div>

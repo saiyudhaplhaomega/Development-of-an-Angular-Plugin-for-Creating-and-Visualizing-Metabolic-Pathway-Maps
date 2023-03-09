@@ -1,0 +1,30 @@
+.startbox-item {
+  margin: 1em;
+  width: 35em;
+  height: 10em;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  padding: 15px;
+}
+
+.showpointer:hover {
+  box-shadow: 0 0 10px rgba(0, 63, 151, 1);
+}
+
+.showpointer {
+  cursor: pointer;
+}
+
+.login-button-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  display: block;
+  font-size: 1.4em;
+}

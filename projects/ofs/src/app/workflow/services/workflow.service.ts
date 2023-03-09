@@ -8,9 +8,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Subscription
-} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
@@ -19,7 +17,7 @@ import { OFSData } from '../models/ofs-data.model';
 import { OfsJob } from '../models/ofs-job.model';
 import {
   OverviewConfig,
-  OverviewConfigForRequest
+  OverviewConfigForRequest,
 } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { steps } from '../models/workflow-steps.model';
@@ -39,8 +37,7 @@ export type InputConfig =
 export class WorkflowService {
   loading: Boolean;
 
-  subsriptions: Subscription[];
-
+  subscriptions: Subscription[];
 
   ofsData: OFSData;
 
@@ -108,7 +105,8 @@ export class WorkflowService {
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
         callback = (response: OFSData) => {
-          this.ofsData.responseData.overviewResponse = response.responseData.overviewResponse;
+          this.ofsData.responseData.overviewResponse =
+            response.responseData.overviewResponse;
         };
         break;
       case Endpoints.PREPROCESSING_INPUT:
@@ -119,12 +117,14 @@ export class WorkflowService {
         break;
       case Endpoints.WRAPPER_INPUT:
         callback = (response: OFSData) => {
-          this.ofsData.responseData.wrapperResponse = response.responseData.wrapperResponse;
+          this.ofsData.responseData.wrapperResponse =
+            response.responseData.wrapperResponse;
         };
         break;
       case Endpoints.CLASSIFIER_INPUT:
         callback = (response: OFSData) => {
-          this.ofsData.responseData.classifierResponse = response.responseData.classifierResponse;
+          this.ofsData.responseData.classifierResponse =
+            response.responseData.classifierResponse;
         };
         break;
     }
@@ -133,10 +133,7 @@ export class WorkflowService {
       case Endpoints.OVERVIEW_INPUT:
         let filesToUpload: MultiFileUploadData;
 
-        const configFile = new File(
-          [JSON.stringify(this.ofsData)],
-          'config'
-        );
+        const configFile = new File([JSON.stringify(this.ofsData)], 'config');
 
         filesToUpload = {
           files: [
@@ -152,25 +149,20 @@ export class WorkflowService {
           httpParameters: new HttpParams(),
         };
 
-        this.http.postMultiPartFiles(
-          filesToUpload,
-          Endpoints.OVERVIEW_INPUT
-        ).subscribe((response: OFSData) => {
-          console.log(response);
-          this.ofsData = response;
-          this.loading = false;
-        });
+        this.http
+          .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
+          .subscribe((response: OFSData) => {
+            console.log(response);
+            this.ofsData = response;
+            this.loading = false;
+          });
         break;
       case Endpoints.PREPROCESSING_INPUT:
       case Endpoints.WRAPPER_INPUT:
       case Endpoints.CLASSIFIER_INPUT:
         // TODO post
         this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsData,
-            api,
-            new HttpParams()
-          )
+          .postObject<OFSData, OFSData>(this.ofsData, api, new HttpParams())
           .subscribe((response) => {
             // TODO: evaluate response!
             console.log(response);
@@ -178,7 +170,6 @@ export class WorkflowService {
           });
         break;
     }
-
   }
 
   getDownloadData() {}

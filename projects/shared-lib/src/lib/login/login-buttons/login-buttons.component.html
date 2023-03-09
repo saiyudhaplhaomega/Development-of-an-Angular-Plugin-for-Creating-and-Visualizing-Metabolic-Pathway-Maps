@@ -1,0 +1,36 @@
+<div class="startbox">
+  <shared-login-button (buttonClick)="loginGoogle()">
+    <ng-content login-button-header select="[google-login-header]">
+    </ng-content>
+    <ng-content login-button-content select="[google-login-content]">
+    </ng-content>
+  </shared-login-button>
+
+  <shared-login-button
+    *ngIf="!showGuestLogin"
+    (buttonClick)="toggleGuestInput()"
+  >
+    <ng-container *ngTemplateOutlet="header" login-button-header></ng-container>
+    <ng-content login-button-content select="[guest-login-content]">
+    </ng-content>
+  </shared-login-button>
+
+  <shared-guest-input
+    *ngIf="showGuestLogin"
+    (guestLoginEvent)="loginGuest($event)"
+  >
+    <div login-button-header class="flex justify-between">
+      <ng-container
+        *ngTemplateOutlet="header"
+        login-button-header
+      ></ng-container>
+      <button mat-icon-button (click)="toggleGuestInput()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </shared-guest-input>
+</div>
+
+<ng-template #header>
+  <ng-content select="[guest-login-header]"> </ng-content>
+</ng-template>

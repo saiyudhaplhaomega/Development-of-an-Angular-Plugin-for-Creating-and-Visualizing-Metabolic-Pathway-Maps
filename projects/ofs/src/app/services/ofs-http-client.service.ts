@@ -2,7 +2,7 @@ import {
   HttpClient,
   HttpEventType,
   HttpHeaders,
-  HttpParams
+  HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
@@ -47,7 +47,7 @@ export class OfsHttpClientService {
   postMultiPartFiles<T>(
     fileList: MultiFileUploadData,
     api: Endpoints
-  ): Observable<T>  {
+  ): Observable<T> {
     const fd = new FormData();
     let multipartids: string = '';
     fileList.files.forEach((file) => {
@@ -68,13 +68,7 @@ export class OfsHttpClientService {
     });
   }
 
-
-  postMultiPartAsync(
-    fileList: MultiFileUploadData,
-    api: Endpoints
-  ) {
-
-  }
+  postMultiPartAsync(fileList: MultiFileUploadData, api: Endpoints) {}
 
   performUpload(
     dialogId: string,
