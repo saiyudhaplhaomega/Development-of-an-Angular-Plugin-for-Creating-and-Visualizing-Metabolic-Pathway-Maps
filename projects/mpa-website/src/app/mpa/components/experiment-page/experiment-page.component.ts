@@ -37,6 +37,11 @@ interface Datstats {
   totalNoSpectra: number;
 }
 
+interface SearchUploadMetadata {
+	experimentID: String;
+	protdbID: String;
+}
+
 export interface ProteinGroupRequest {
   filename: string;
   experimentID: string;
@@ -148,6 +153,7 @@ export class ExperimentPageComponent
 {
   dataItemOfThisComponent: DataItem;
 
+  // UI VARIABLES
   // available upload options
   dataUploadSelection = 'Search Result';
   dataUploadOptions: string[] = ['Search Result', 'Peaklist + Search Result'];
@@ -155,9 +161,6 @@ export class ExperimentPageComponent
   //available interaction modes
   dataUploadModeSelection = 'Result Upload';
   dataUploadModeOptions: string[] = ['Result Upload', 'Search'];
-
-  //search options
-  searchParameters: SearchParameters;
 
   //advanced search parameters
   advancedSearchExpanded: boolean = false;
@@ -167,19 +170,8 @@ export class ExperimentPageComponent
   proteinDatabases: DataItem[] = [];
   proteinDBselection = null;
 
-  // files selected via input field
-  selectedPeaklistFile: File;
-  selectedSearchFile: File;
-  selectedFasta: File;
-
-  // files to upload to server
-  filesToUpload: MultiFileUploadData;
-
-  // child node elements
-  peaklistFileNode: DataItem;
-  searchFileNode: DataItem;
-
   // button disabling, etc.
+  // TODO: can be removed
   hasPeaklistFile: boolean;
   hasSearchFile: boolean;
 
@@ -203,6 +195,25 @@ export class ExperimentPageComponent
 
   hasMpaData = false;
   datStats: Datstats;
+
+  // DATA SUBMISSION VARIABLES
+  // files selected via input field
+  selectedPeaklistFile: File;
+  selectedSearchFile: File;
+  selectedFasta: File;
+
+  // metadata for file upload (expid etc.)
+  searchUploadMetadata: SearchUploadMetadata;
+
+  //search options
+  searchParameters: SearchParameters;
+
+  // files to upload to server
+  filesToUpload: MultiFileUploadData;
+
+  // child node elements
+  peaklistFileNode: DataItem;
+  searchFileNode: DataItem;
 
   // private _dataMap: Map<string, DataItem>;
   // private children: string[];
@@ -237,6 +248,11 @@ export class ExperimentPageComponent
     this.proteinDBselection = this.proteinDatabases[0];
 
     this.mpaTableDataService.requestProteinGroups();
+
+    this.searchUploadMetadata = {
+      experimentID: this.mpaTableDataService.expID.getValue(),
+      protdbID: this.proteinDBselection.uuid,
+    }
     // this.getChildNodes();
 
     // this.children = this._dataMap.get(this.uuid).children;
@@ -260,8 +276,8 @@ export class ExperimentPageComponent
         this.datStats = this.calculateDataStats(mpaData);
       }
     });
-    
-    
+
+
 
   }
 
@@ -271,6 +287,7 @@ export class ExperimentPageComponent
 
   onProteinDBChange(item: DataItem) {
     console.log(this.proteinDBselection.displayName);
+    this.searchUploadMetadata.protdbID = item.uuid;
   }
 
   onUploadSelectionChange(option: string) {
@@ -349,13 +366,22 @@ export class ExperimentPageComponent
   }
 
   async onSubmit() {
-    this.uploadProgressService.reset();
+
     //this.uploaderService.clearUploadFiles();
+    // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
       fileUploadAdress: Endpoints.FILES_UPLOAD,
       httpParameters: new HttpParams(),
     };
+
+    const configFile = new File(
+      [JSON.stringify(this.searchUploadMetadata)],
+      'config'
+    );
+    this.filesToUpload.files.push({uploadFile: configFile, fileID: 'config'});
+
+    this.uploadProgressService.reset();
     const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
@@ -364,7 +390,7 @@ export class ExperimentPageComponent
         await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
-          this.dataItemOfThisComponent.uuid
+          'Peaklist'
         );
         this.hasPeaklistFile = true;
         break;
@@ -373,14 +399,14 @@ export class ExperimentPageComponent
         await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
-          this.dataItemOfThisComponent.uuid
+          'SearchResult'
         );
 
         if (this.selectedFasta) {
           await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
-            this.dataItemOfThisComponent.uuid
+           'MascotFasta'
           );
         }
 
@@ -392,7 +418,7 @@ export class ExperimentPageComponent
         await this.addFileToUploadData(
           this.selectedPeaklistFile,
           this.peaklistSelection,
-          this.dataItemOfThisComponent.uuid
+          'Peaklist'
         );
         this.hasPeaklistFile = true;
 
@@ -400,7 +426,7 @@ export class ExperimentPageComponent
         await this.addFileToUploadData(
           this.selectedSearchFile,
           this.searchFileSelection,
-          this.dataItemOfThisComponent.uuid
+          'SearchResult'
         );
         this.hasSearchFile = true;
 
@@ -409,30 +435,40 @@ export class ExperimentPageComponent
           await this.addFileToUploadData(
             this.selectedFasta,
             UploadFileTypes.MASCOT_FASTA,
-            this.dataItemOfThisComponent.uuid
+            'MascotFasta'
           );
         }
         break;
     }
 
     //this.uploaderService.performUpload(this.uploadDialogId);
-    this.httpClientService.performUpload(
-      this.uploadDialogId,
-      this.filesToUpload,
-      Endpoints.FILES_UPLOAD
-    );
+    // this.httpClientService.performUpload(
+    //   this.uploadDialogId,
+    //   this.filesToUpload,
+    //   Endpoints.FILES_UPLOAD
+    // );
+
+    this.httpClientService.postMultiPartFiles(
+          this.filesToUpload,
+          Endpoints.FILES_UPLOAD
+      ).subscribe((response) => {
+        // TODO: simple json response that reports upload success
+        // console.log(response);
+        // this.ofsData = response;
+        // this.loading = false;
+      });
 
     // invoked if upload dialog is closed
-    onDialogClosingObservable.subscribe((uploadFailed) => {
-      if (!uploadFailed) {
-        if (this.selectedPeaklistFile) {
-          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
-        }
-        if (this.selectedSearchFile) {
-          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
-        }
-      }
-    });
+    // onDialogClosingObservable.subscribe((uploadFailed) => {
+    //   if (!uploadFailed) {
+    //     if (this.selectedPeaklistFile) {
+    //       //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+    //     }
+    //     if (this.selectedSearchFile) {
+    //       //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+    //     }
+    //   }
+    // });
 
     //this.getChildNodes();
   }
@@ -453,49 +489,50 @@ export class ExperimentPageComponent
     fileType: UploadFileTypes,
     experimentId: string
   ) {
+
     // TODO: implement use of endpoint for file upload independent from type
 
     //const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
 
-    const metaDataForServer: MPAFile = {
-      fileID: '',
-      fileMetaData: JSON.stringify({ fileName: file.name }),
-      protdbID: this.proteinDBselection.uuid,
-      experimentID: experimentId,
-      fileType: fileType,
-      fileStatus: '',
-    };
+    // const metaDataForServer: MPAFile = {
+    //   fileID: '',
+    //   fileMetaData: JSON.stringify({ fileName: file.name }),
+    //   protdbID: this.proteinDBselection.uuid,
+    //   experimentID: experimentId,
+    //   fileType: fileType,
+    //   fileStatus: '',
+    // };
 
-    // send meta data, receive fileuuid
-    try {
-      const metaDataResponse = await this.httpClientService
-        .postObject<MPAFile, MPAFile>(
-          metaDataForServer,
-          Endpoints.SEARCH_METADATA
-        )
-        .toPromise();
-      if (metaDataResponse !== null) {
-        // TODO: evaluate status instead of just checking for null?
-        // TODO: jobid = fileid ?
-        //uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
-        const uploadDataForServer: UploadFile = {
-          uploadFile: file,
-          fileID: metaDataResponse.fileID,
-        };
-        //this.uploaderService.addUploadFiles([uploadDataForServer]);
-        this.filesToUpload.files.push(uploadDataForServer);
-      } else {
-        throw new Error('File could not be created');
-      }
-    } catch (e) {
-      this.dialog
-        .getDialogById(this.uploadDialogId)
-        .componentInstance.setUploadFailed();
-      this.dialog.getDialogById(
-        this.uploadDialogId
-      ).componentInstance.uploadFailedMessage = e.message;
-      console.error(e);
-    }
+    // // send meta data, receive fileuuid
+    // try {
+    //   const metaDataResponse = await this.httpClientService
+    //     .postObject<MPAFile, MPAFile>(
+    //       metaDataForServer,
+    //       Endpoints.SEARCH_METADATA
+    //     )
+    //     .toPromise();
+    //   if (metaDataResponse !== null) {
+    //     // TODO: evaluate status instead of just checking for null?
+    //     // TODO: jobid = fileid ?
+    //     //uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
+    //     const uploadDataForServer: UploadFile = {
+    //       uploadFile: file,
+    //       fileID: metaDataResponse.fileID,
+    //     };
+    //     //this.uploaderService.addUploadFiles([uploadDataForServer]);
+
+    //   } else {
+    //     throw new Error('File could not be created');
+    //   }
+    // } catch (e) {
+    //   this.dialog
+    //     .getDialogById(this.uploadDialogId)
+    //     .componentInstance.setUploadFailed();
+    //   this.dialog.getDialogById(
+    //     this.uploadDialogId
+    //   ).componentInstance.uploadFailedMessage = e.message;
+    //   console.error(e);
+    // }
   }
 
   onAccept() {

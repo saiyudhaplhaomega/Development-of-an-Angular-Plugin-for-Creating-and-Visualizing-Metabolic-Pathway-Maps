@@ -7,10 +7,11 @@ import {
 } from '@angular/common/http';
 import { WebserveraddressService } from './webserveraddress.service';
 import { Observable, partition } from 'rxjs';
-import { AuthGuard, AuthService } from 'dist/shared-lib';
+import { AuthGuard } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';
+import { AuthService } from 'projects/shared-lib/src/lib/login/auth.service';
 
 export interface FileUploadData {
   uploadFile: File;
@@ -26,6 +27,7 @@ export interface MultiFileUploadData {
 
 export interface UploadFile {
   uploadFile: File;
+  // TODO: this is pointless?
   fileID: string;
 }
 
@@ -87,6 +89,30 @@ export class HttpClientService {
       observe: 'events',
       params: params,
       reportProgress: true,
+    });
+  }
+
+  postMultiPartFiles<T>(
+    fileList: MultiFileUploadData,
+    api: Endpoints
+  ): Observable<T>  {
+    const fd = new FormData();
+    let multipartids: string = '';
+    fileList.files.forEach((file) => {
+      multipartids += file.fileID + ';';
+    });
+
+    fd.set('Content-Type', 'multipart/form-data');
+    fd.append('fileIDList', multipartids);
+    fileList.files.map((file) => {
+      fd.append(file.fileID, file.uploadFile);
+    });
+    return this.http.post<T>(this.webserver.getEndpoint(api), fd, {
+      headers: new HttpHeaders({
+        // Authorization: this.authGuard.getUserAuthorization().toString(),
+      }),
+      params: fileList.httpParameters,
+      reportProgress: true, // currently no way to track? (dialogid)
     });
   }
 
