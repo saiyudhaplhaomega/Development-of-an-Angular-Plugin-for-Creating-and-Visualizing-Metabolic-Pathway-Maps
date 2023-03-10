@@ -139,8 +139,8 @@ export class OverviewInputComponent
 
   submitOverviewConfig() {
     this.disableForm();
-    const overViewConfig = this.formModel.getRawValue();
-    this.workflow.submitConfig(overViewConfig, Endpoints.OVERVIEW_INPUT);
+    const overviewConfig = this.formModel.getRawValue();
+    this.workflow.submitConfig(overviewConfig, Endpoints.OVERVIEW_INPUT);
     this.submit.emit();
   }
 
@@ -165,9 +165,9 @@ export class OverviewInputComponent
   }
 
   setExistingFormInput() {
-    if (this.workflow.ofsData.configData.overViewConfig) {
+    if (this.workflow.ofsData.configData.overviewConfig) {
       this.formModel.patchValue(
-        this.workflow.ofsData.configData.overViewConfig
+        this.workflow.ofsData.configData.overviewConfig
       );
       this.disableForm();
     }

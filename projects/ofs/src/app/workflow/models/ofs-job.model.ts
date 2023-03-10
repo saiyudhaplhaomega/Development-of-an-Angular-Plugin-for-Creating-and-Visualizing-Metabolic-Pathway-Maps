@@ -16,7 +16,28 @@ export enum OfsJobState {
   RESULTS_FAIL = 'resultsfail',
 }
 
-export interface OfsJob {
-  jobId: string;
-  state: OfsJobState;
+export class OfsJob {
+  private _jobId: string;
+  private _state: OfsJobState;
+
+  constructor() {
+    this.jobId = '';
+    this.state = OfsJobState.NOJOB;
+  }
+
+  get jobId(): string {
+    return this._jobId;
+  }
+
+  set jobId(value: string) {
+    this._jobId = value;
+  }
+
+  get state(): OfsJobState {
+    return this._state;
+  }
+
+  set state(value: OfsJobState) {
+    this._state = value;
+  }
 }
