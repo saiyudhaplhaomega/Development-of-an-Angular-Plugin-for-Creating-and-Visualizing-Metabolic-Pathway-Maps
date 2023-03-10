@@ -4,7 +4,7 @@
 <div *ngIf="imageLinks.length === 0 && !isLoading">no data</div>
 
 <ng-container *ngFor="let image of imageLinks">
-  <div *ngIf="image">
-    <img [src]="image" />
+  <div *ngIf="!isLoading">
+    <img [src]="image">
   </div>
 </ng-container>

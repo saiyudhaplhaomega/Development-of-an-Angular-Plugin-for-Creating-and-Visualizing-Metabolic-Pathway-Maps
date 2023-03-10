@@ -8,7 +8,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, repeat, retry, Subscription, take } from 'rxjs';
 import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
@@ -31,10 +31,17 @@ export type InputConfig =
   | WrapperConfig
   | ClassifierConfig;
 
+export interface SimpleMessage {
+  message: string;
+}
+
 @Injectable({
   providedIn: 'any',
 })
 export class WorkflowService {
+
+
+
   loading: Boolean;
 
   subscriptions: Subscription[];
@@ -132,9 +139,7 @@ export class WorkflowService {
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
         let filesToUpload: MultiFileUploadData;
-
         const configFile = new File([JSON.stringify(this.ofsData)], 'config');
-
         filesToUpload = {
           files: [
             {
@@ -148,16 +153,25 @@ export class WorkflowService {
           ],
           httpParameters: new HttpParams(),
         };
-
         this.http
           .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
           .subscribe((response: OFSData) => {
-            console.log(response);
             this.ofsData = response;
-            this.loading = false;
-          });
+        });
+        this.http.getObject<SimpleMessage>(Endpoints.OVERVIEW_RESOURCE_AVAIL, new HttpParams({fromObject: {jobid: this.ofsData.job.jobId}}))
+        .pipe(repeat({delay: 2_000 }), filter((res: SimpleMessage) => res.message === 'OK.'), take(1))
+        .subscribe(() => this.loading = false);
         break;
       case Endpoints.PREPROCESSING_INPUT:
+        this.http
+          .postObject<OFSData, OFSData>(this.ofsData, Endpoints.PREPROCESSING_INPUT)
+          .subscribe((response: OFSData) => {
+            this.ofsData = response;
+        });
+        this.http.getObject<SimpleMessage>(Endpoints.OVERVIEW_RESOURCE_AVAIL, new HttpParams({fromObject: {jobid: this.ofsData.job.jobId}}))
+        .pipe(repeat({delay: 2_000 }), filter((res: SimpleMessage) => res.message === 'OK.'), take(1))
+        .subscribe(() => this.loading = false);
+        break;
       case Endpoints.WRAPPER_INPUT:
       case Endpoints.CLASSIFIER_INPUT:
         // TODO post

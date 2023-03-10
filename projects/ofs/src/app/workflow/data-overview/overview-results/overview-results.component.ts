@@ -14,8 +14,8 @@ export class OverviewResultsComponent implements OnInit {
   get overviewImages() {
     const images = [];
     if (this.workflow.ofsData.responseData.overviewResponse !== undefined) {
-      images.push('http://localhost:8080/' + this.workflow.ofsData.responseData.overviewResponse.classDistribution);
-      images.push('http://localhost:8080/' + this.workflow.ofsData.responseData.overviewResponse.dataSparsity);
+      images.push('http://localhost:8080/' + this.workflow.ofsData.job.jobId + '/' + this.workflow.ofsData.responseData.overviewResponse.classDistribution);
+      images.push('http://localhost:8080/' + this.workflow.ofsData.job.jobId + '/' + this.workflow.ofsData.responseData.overviewResponse.dataSparsity);
     }
     return images;
   }
