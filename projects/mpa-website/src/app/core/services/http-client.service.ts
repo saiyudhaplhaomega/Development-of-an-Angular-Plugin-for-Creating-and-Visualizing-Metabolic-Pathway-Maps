@@ -11,7 +11,7 @@ import { AuthGuard } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';
-import { AuthService } from 'projects/shared-lib/src/lib/login/auth.service';
+import { AuthService } from 'dist/shared-lib';
 
 export interface FileUploadData {
   uploadFile: File;
