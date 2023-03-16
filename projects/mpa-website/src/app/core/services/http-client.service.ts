@@ -109,7 +109,7 @@ export class HttpClientService {
     });
     return this.http.post<T>(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({
-        // Authorization: this.authGuard.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString(),
       }),
       params: fileList.httpParameters,
       reportProgress: true, // currently no way to track? (dialogid)

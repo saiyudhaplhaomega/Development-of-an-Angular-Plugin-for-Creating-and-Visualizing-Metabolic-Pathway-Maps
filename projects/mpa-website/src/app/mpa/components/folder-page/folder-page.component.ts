@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { NameEditDialogComponent } from '../../../core/components/dialog/name-edit-dialog.component';
 import { ProteinDatabaseDialogComponent } from './protein-database-dialog/protein-database-dialog.component';
-import { HttpClientService } from '../../../core/services/http-client.service';
+import { HttpClientService, MultiFileUploadData } from '../../../core/services/http-client.service';
 import { Filemetadata } from '../../objects/filemetadata';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
 import { HttpParams } from '@angular/common/http';
@@ -157,27 +157,51 @@ export class FolderPageComponent
               const params: HttpParams = new HttpParams({
                 fromObject: { jobid: result.fileUUID, name: fileData.filename },
               });
-              this.uploaderService
-                .postFile(
-                  dialog.dbFile,
-                  Endpoints.PROTEINLOADER_FILEUPLOAD,
-                  params
-                )
-                .subscribe((result2) => {
-                  if (result2 != null) {
-                    // TODO: executes multiple times, fixed for now on dataservice side
-                    //this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
+              // this.uploaderService
+              //   .postFile(
+              //     dialog.dbFile,
+              //     Endpoints.PROTEINLOADER_FILEUPLOAD,
+              //     params
+              //   )
+              //   .subscribe((result2) => {
+              //     if (result2 != null) {
+              //       // TODO: executes multiple times, fixed for now on dataservice side
+              //       //this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
+              //       let protDBNode = this.dataService.createNewDataItem(
+              //         this.dataItemOfThisComponent,
+              //         dialog.dbName,
+              //         NodeType.ProteinDB
+              //       );
+              //       if (protDBNode !== null) {
+              //         protDBNode.uuid = result.fileUUID;
+              //         this.dataService.updateNode(protDBNode);
+              //       }
+              //     }
+              //   });
+
+                let filesToUpload: MultiFileUploadData = {
+                  files: [],
+                  fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
+                  httpParameters: params,
+                };
+                
+                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'fasta'});
+
+                this.uploaderService.postMultiPartFiles(filesToUpload, Endpoints.PROTEINLOADER_FILEUPLOAD)
+                .subscribe( (result2) => {
+                  if(result2 != null){
                     let protDBNode = this.dataService.createNewDataItem(
                       this.dataItemOfThisComponent,
                       dialog.dbName,
                       NodeType.ProteinDB
                     );
-                    if (protDBNode !== null) {
+                    if(protDBNode !== null) {
                       protDBNode.uuid = result.fileUUID;
                       this.dataService.updateNode(protDBNode);
                     }
                   }
                 });
+
             }
           });
 

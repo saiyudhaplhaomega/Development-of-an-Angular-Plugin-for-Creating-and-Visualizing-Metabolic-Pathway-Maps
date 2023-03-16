@@ -392,7 +392,8 @@ export class ExperimentPageComponent
       httpParameters: new HttpParams(),
     };
 
-    this.searchUploadMetadata.experimentID = this.mpaTableDataService.expID.getValue();
+    this.searchUploadMetadata = new SearchUploadMetadataJSON();
+    this.searchUploadMetadata.experimentID = this.dataItemOfThisComponent.uuid
     this.searchUploadMetadata.protdbID = this.proteinDBselection.uuid;
 
     this.uploadProgressService.reset();
