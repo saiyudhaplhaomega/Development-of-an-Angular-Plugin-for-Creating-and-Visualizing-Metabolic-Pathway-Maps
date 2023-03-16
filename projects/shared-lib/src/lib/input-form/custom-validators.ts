@@ -3,7 +3,11 @@ import {
   FormArray,
   FormGroup,
   ValidationErrors,
+  ValidatorFn,
 } from '@angular/forms';
+
+export const ALLOWEDLETTERCHARS = '^[a-zA-Z]*$';
+export const ALLOWEDSIMPLECHARS = '^[a-zA-Z0-9_.-]*$';
 
 export class CustomValidators {
   static conditionalValidator(
@@ -14,6 +18,38 @@ export class CustomValidators {
       if (condition()) {
         return validator(formControl);
       }
+      return null;
+    };
+  }
+
+  static arrayDuplicateValidator(controlNames: string[]): ValidatorFn {
+    return (form: FormArray) => {
+      const controls = [];
+
+      form.controls.forEach((group: FormGroup) => {
+        console.log(group);
+        controlNames.forEach((name) => {
+          controls.push(group.get(name));
+        });
+      });
+
+      console.log(controls);
+
+      for (let valueIndex = 0; valueIndex < controls.length; valueIndex++) {
+        for (
+          let otherValueIndex = valueIndex + 1;
+          otherValueIndex < controls.length;
+          otherValueIndex++
+        ) {
+          if (controls[valueIndex].value == controls[otherValueIndex].value) {
+            controls.forEach((control) =>
+              control.setErrors({ duplicate: true })
+            );
+            return { duplicate: true };
+          }
+        }
+      }
+
       return null;
     };
   }
@@ -40,7 +76,7 @@ export class CustomValidators {
       case 'required':
         return 'please enter something';
       case 'pattern':
-        return 'allowed chars: a-z0-9._-';
+        return 'allowed chars: a-zA-Z0-9._-';
       case 'email':
         return 'this is not an e-mail';
       case 'minlength':
@@ -51,6 +87,8 @@ export class CustomValidators {
         return 'please provide a higher value';
       case 'max':
         return 'please prvide a lower value';
+      case 'duplicate':
+        return "this field can't contain a duplicate value";
     }
   }
 }

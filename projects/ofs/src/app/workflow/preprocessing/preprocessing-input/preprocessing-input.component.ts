@@ -24,8 +24,8 @@ export class PreprocessingInputComponent
 
   formModel: FormGroup;
 
-  controlGroupName = 'control';
-  testGroupOptions = ['test1', 'test2', 'test3'];
+  controlGroupName: string;
+  testGroupOptions: string[];
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
@@ -34,6 +34,11 @@ export class PreprocessingInputComponent
   }
 
   ngOnInit(): void {
+    this.controlGroupName =
+      this.workflow.ofsData.responseData.overviewResponse.controlGroup;
+    this.testGroupOptions =
+      this.workflow.ofsData.responseData.overviewResponse.testGroups;
+
     this.formModel = this.buildForm();
     this.setExistingFormInput();
     this.doSubscriptions();
@@ -44,7 +49,7 @@ export class PreprocessingInputComponent
   buildForm() {
     const formModel = this.builder.group(
       {
-        controlGroup: new FormControl('control'),
+        controlGroup: new FormControl(this.controlGroupName),
         testGroup: [this.testGroupOptions[0]],
         repeats: [5000, [Validators.required, Validators.min(0)]],
         folds: [5000, [Validators.required, Validators.min(0)]],

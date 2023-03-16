@@ -1,13 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { CustomValidators, InputFormComponent } from 'shared-lib';
+import { BehaviorSubject } from 'rxjs';
+import {
+  CustomValidators,
+  InputFormComponent,
+  ALLOWEDSIMPLECHARS,
+} from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
 import {
   DataGroupForm,
@@ -28,7 +26,6 @@ export class OverviewInputComponent
   formModel: OverviewInputForm;
 
   groupSelectionOptions = Object.values(GroupSelectionOptions);
-  allowedChars = '^[a-zA-Z0-9_.-]*$';
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
@@ -69,10 +66,15 @@ export class OverviewInputComponent
       {
         data: dataFileControl,
         groupSelectionOption: [this.groupSelectionOptions[0]],
-        groups: this.builder.array([
-          this.buildGroup('control'),
-          this.buildGroup('test'),
-        ]),
+        groups: this.builder.array(
+          [this.buildGroup('control'), this.buildGroup('test')],
+          {
+            updateOn: 'blur',
+            validators: [
+              CustomValidators.arrayDuplicateValidator(['groupName']),
+            ],
+          }
+        ),
       },
       {
         updateOn: 'blur',
@@ -86,7 +88,7 @@ export class OverviewInputComponent
     return this.builder.group({
       groupName: [
         defaultName,
-        [Validators.required, Validators.pattern(this.allowedChars)],
+        [Validators.required, Validators.pattern(ALLOWEDSIMPLECHARS)],
       ],
       groupPrefix: [
         '',
@@ -97,7 +99,7 @@ export class OverviewInputComponent
               this.groupSelectionOptions[0],
             Validators.compose([
               Validators.required,
-              Validators.pattern(this.allowedChars),
+              Validators.pattern(ALLOWEDSIMPLECHARS),
             ])
           ),
         ],

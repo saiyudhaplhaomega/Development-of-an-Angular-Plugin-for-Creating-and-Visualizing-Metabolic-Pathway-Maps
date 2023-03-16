@@ -5,9 +5,10 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { delay, filter, Observable, of, repeat, take } from 'rxjs';
 import { Endpoints, getAdress } from '../models/endpoints.model';
 import { OfsJobState } from '../workflow/models/ofs-job.model';
+import { SimpleMessage } from '../workflow/services/workflow.service';
 import { MultiFileUploadData } from './http-client.service';
 import { UploadProgressService } from './upload-progress.service';
 
@@ -44,6 +45,18 @@ export class OfsHttpClientService {
     });
   }
 
+  repeatedGetObject(
+    api: Endpoints,
+    params?: HttpParams,
+    delay: number = 2_000
+  ): Observable<SimpleMessage> {
+    return this.getObject<SimpleMessage>(api, params).pipe(
+      repeat({ delay: delay }),
+      filter((res: SimpleMessage) => res.message === 'OK.'),
+      take(1)
+    );
+  }
+
   postMultiPartFiles<T>(
     fileList: MultiFileUploadData,
     api: Endpoints
@@ -67,8 +80,6 @@ export class OfsHttpClientService {
       reportProgress: true, // currently no way to track? (dialogid)
     });
   }
-
-  postMultiPartAsync(fileList: MultiFileUploadData, api: Endpoints) {}
 
   performUpload(
     dialogId: string,
