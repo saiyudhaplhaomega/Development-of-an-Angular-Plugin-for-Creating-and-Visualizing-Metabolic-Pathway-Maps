@@ -5,6 +5,10 @@ import { OverviewConfig } from './overview.model';
 import { PreprocessingConfig } from './preprocessing.model';
 import { WrapperConfig } from './wrapper.model';
 import { ClassifierConfig } from './classifier.model';
+import { OverviewResponse } from '../../models/overview-response.model';
+import { PreprocessingResponse } from '../../models/preprocessing-response.model';
+import { WrapperResponse } from '../../models/wrapper-response.model';
+import { ClassifierResponse } from '../../models/classifier-response.model';
 
 export interface OFSData {
   job: OfsJob;
@@ -28,4 +32,11 @@ export interface ConfigData {
   preprocessingConfig?: PreprocessingConfig;
   wrapperConfig?: WrapperConfig;
   classifierConfig?: ClassifierConfig;
+}
+
+export interface ResponseData {
+  overviewResponse?: OverviewResponse;
+  preprocessingResponse?: PreprocessingResponse;
+  wrapperResponse?: WrapperResponse;
+  classifierResponse?: ClassifierResponse;
 }
