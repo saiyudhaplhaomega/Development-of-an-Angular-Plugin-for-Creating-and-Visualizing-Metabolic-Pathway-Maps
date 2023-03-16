@@ -76,13 +76,25 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
   isCompleted(step: Step) {
     switch (step.route) {
       case WorkflowRoutes.OVERVIEW:
-        return this.workflow.ofsData.responseData.overviewResponse !== undefined;
+        return (
+          this.workflow.ofsData.responseData.overviewResponse
+            ?.classDistribution !== undefined
+        );
       case WorkflowRoutes.PREPROCESSING:
-        return this.workflow.ofsData.responseData.preprocessingResponse !== undefined;
+        return (
+          this.workflow.ofsData.responseData.preprocessingResponse
+            ?.predictivePerformance !== undefined
+        );
       case WorkflowRoutes.WRAPPER:
-        return this.workflow.ofsData.responseData.wrapperResponse !== undefined;
+        return (
+          this.workflow.ofsData.responseData.wrapperResponse
+            ?.featureSelection !== undefined
+        );
       case WorkflowRoutes.RESULTS:
-        return this.workflow.ofsData.responseData.classifierResponse !== undefined;
+        return (
+          this.workflow.ofsData.responseData.classifierResponse
+            ?.pairwiseComparison !== undefined
+        );
     }
   }
 
@@ -96,5 +108,9 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
 
   showNext() {
     return true;
+  }
+
+  get OFSData() {
+    return this.workflow.ofsData;
   }
 }

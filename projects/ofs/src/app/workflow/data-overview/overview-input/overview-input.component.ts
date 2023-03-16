@@ -165,9 +165,9 @@ export class OverviewInputComponent
   }
 
   setExistingFormInput() {
-    if (this.workflow.ofsData.configData.overViewConfig) {
+    if (this.workflow.ofsData.configData.overviewConfig) {
       this.formModel.patchValue(
-        this.workflow.ofsData.configData.overViewConfig
+        this.workflow.ofsData.configData.overviewConfig
       );
       this.disableForm();
     }

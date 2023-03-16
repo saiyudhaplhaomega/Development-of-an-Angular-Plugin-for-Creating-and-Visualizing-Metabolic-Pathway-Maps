@@ -39,9 +39,6 @@ export interface SimpleMessage {
   providedIn: 'any',
 })
 export class WorkflowService {
-
-
-
   loading: Boolean;
 
   subscriptions: Subscription[];
@@ -107,40 +104,18 @@ export class WorkflowService {
 
   submitConfig(config: InputConfig, api: Endpoints) {
     this.loading = true;
-    let callback = (response: OFSData) => {};
 
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
-        callback = (response: OFSData) => {
-          this.ofsData.responseData.overviewResponse =
-            response.responseData.overviewResponse;
-        };
-        break;
-      case Endpoints.PREPROCESSING_INPUT:
-        callback = (response: OFSData) => {
-          this.ofsData.responseData.preprocessingResponse =
-            response.responseData.preprocessingResponse;
-        };
-        break;
-      case Endpoints.WRAPPER_INPUT:
-        callback = (response: OFSData) => {
-          this.ofsData.responseData.wrapperResponse =
-            response.responseData.wrapperResponse;
-        };
-        break;
-      case Endpoints.CLASSIFIER_INPUT:
-        callback = (response: OFSData) => {
-          this.ofsData.responseData.classifierResponse =
-            response.responseData.classifierResponse;
-        };
-        break;
-    }
+        this.ofsData.configData.overviewConfig = config as OverviewConfig;
 
-    switch (api) {
-      case Endpoints.OVERVIEW_INPUT:
-        let filesToUpload: MultiFileUploadData;
-        const configFile = new File([JSON.stringify(this.ofsData)], 'config');
-        filesToUpload = {
+        const configData = JSON.stringify(this.ofsData);
+        console.log(configData);
+        console.log(this.ofsData);
+
+        const configFile = new File([configData], 'config');
+
+        const filesToUpload: MultiFileUploadData = {
           files: [
             {
               uploadFile: (config as OverviewConfig).data,
@@ -153,24 +128,47 @@ export class WorkflowService {
           ],
           httpParameters: new HttpParams(),
         };
+
         this.http
           .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
           .subscribe((response: OFSData) => {
+            console.log(response);
+
             this.ofsData = response;
-        });
-        this.http.getObject<SimpleMessage>(Endpoints.OVERVIEW_RESOURCE_AVAIL, new HttpParams({fromObject: {jobid: this.ofsData.job.jobId}}))
-        .pipe(repeat({delay: 2_000 }), filter((res: SimpleMessage) => res.message === 'OK.'), take(1))
-        .subscribe(() => this.loading = false);
+          });
+
+        this.http
+          .getObject<SimpleMessage>(
+            Endpoints.OVERVIEW_RESOURCE_AVAIL,
+            new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })
+          )
+          .pipe(
+            repeat({ delay: 2_000 }),
+            filter((res: SimpleMessage) => res.message === 'OK.'),
+            take(1)
+          )
+          .subscribe(() => (this.loading = false));
         break;
       case Endpoints.PREPROCESSING_INPUT:
         this.http
-          .postObject<OFSData, OFSData>(this.ofsData, Endpoints.PREPROCESSING_INPUT)
+          .postObject<OFSData, OFSData>(
+            this.ofsData,
+            Endpoints.PREPROCESSING_INPUT
+          )
           .subscribe((response: OFSData) => {
             this.ofsData = response;
-        });
-        this.http.getObject<SimpleMessage>(Endpoints.OVERVIEW_RESOURCE_AVAIL, new HttpParams({fromObject: {jobid: this.ofsData.job.jobId}}))
-        .pipe(repeat({delay: 2_000 }), filter((res: SimpleMessage) => res.message === 'OK.'), take(1))
-        .subscribe(() => this.loading = false);
+          });
+        this.http
+          .getObject<SimpleMessage>(
+            Endpoints.OVERVIEW_RESOURCE_AVAIL,
+            new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })
+          )
+          .pipe(
+            repeat({ delay: 2_000 }),
+            filter((res: SimpleMessage) => res.message === 'OK.'),
+            take(1)
+          )
+          .subscribe(() => (this.loading = false));
         break;
       case Endpoints.WRAPPER_INPUT:
       case Endpoints.CLASSIFIER_INPUT:
@@ -185,6 +183,4 @@ export class WorkflowService {
         break;
     }
   }
-
-  getDownloadData() {}
 }
