@@ -1,9 +1,4 @@
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 export enum GroupSelectionOptions {
   PREFIX = 'select by prefix',

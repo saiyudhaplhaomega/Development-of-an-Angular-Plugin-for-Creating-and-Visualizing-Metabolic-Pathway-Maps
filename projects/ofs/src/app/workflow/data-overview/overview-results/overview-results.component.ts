@@ -13,9 +13,25 @@ export class OverviewResultsComponent implements OnInit {
 
   get overviewImages() {
     const images = [];
-    if (this.workflow.ofsData.responseData.overviewResponse !== undefined) {
-      images.push('http://localhost:8080/' + this.workflow.ofsData.job.jobId + '/' + this.workflow.ofsData.responseData.overviewResponse.classDistribution);
-      images.push('http://localhost:8080/' + this.workflow.ofsData.job.jobId + '/' + this.workflow.ofsData.responseData.overviewResponse.dataSparsity);
+
+    const overViewResponse =
+      this.workflow.ofsData.responseData.overviewResponse;
+    if (
+      overViewResponse?.classDistribution !== undefined &&
+      overViewResponse?.dataSparsity !== undefined
+    ) {
+      images.push(
+        'http://localhost:8080/' +
+          this.workflow.ofsData.job.jobId +
+          '/' +
+          overViewResponse.classDistribution
+      );
+      images.push(
+        'http://localhost:8080/' +
+          this.workflow.ofsData.job.jobId +
+          '/' +
+          overViewResponse.dataSparsity
+      );
     }
     return images;
   }

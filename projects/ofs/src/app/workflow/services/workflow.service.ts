@@ -82,8 +82,7 @@ export class WorkflowService {
       .getObject<OFSData>(Endpoints.CREATE_JOB, new HttpParams())
       .subscribe({
         next: (response: OFSData) => {
-          console.log(response);
-          this.ofsData.job = response.job;
+          this.ofsData = response;
           this.writeJobToStorage(response.job);
         },
         error: (error) => {
@@ -149,6 +148,7 @@ export class WorkflowService {
           )
           .subscribe(() => (this.loading = false));
         break;
+
       case Endpoints.PREPROCESSING_INPUT:
         this.http
           .postObject<OFSData, OFSData>(

@@ -11,7 +11,7 @@ import { AuthGuard } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';
-import { AuthService } from 'projects/shared-lib/src/lib/login/auth.service';
+import { AuthService } from 'dist/shared-lib';
 
 export interface FileUploadData {
   uploadFile: File;
@@ -109,7 +109,7 @@ export class HttpClientService {
     });
     return this.http.post<T>(this.webserver.getEndpoint(api), fd, {
       headers: new HttpHeaders({
-        // Authorization: this.authGuard.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString(),
       }),
       params: fileList.httpParameters,
       reportProgress: true, // currently no way to track? (dialogid)

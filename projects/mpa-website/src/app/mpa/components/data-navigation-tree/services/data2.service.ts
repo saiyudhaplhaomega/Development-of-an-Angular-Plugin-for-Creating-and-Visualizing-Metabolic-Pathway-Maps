@@ -118,7 +118,7 @@ export class DataService2 {
       switch (nodeType) {
         case NodeType.Experiment:
           newNodeObj.icon = 'computer';
-          this.updateExperiment(newNodeObj);
+          this.createExperiment(newNodeObj);
           break;
         case NodeType.ProteinDB:
           newNodeObj.icon = 'storage';
@@ -160,6 +160,36 @@ export class DataService2 {
     this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA,params)
     .subscribe((experimentData) => dbExperiment = experimentData);
     return dbExperiment
+  }
+
+  createExperiment(nodeObj) {
+    // TODO: Set data from input
+    const dbExperiment = new ExperimentJSONObject();
+    dbExperiment.expid = nodeObj.uuid;
+    dbExperiment.name = nodeObj.displayName;
+    dbExperiment.description = nodeObj.description;
+    dbExperiment.creationdate = nodeObj.creationDate;
+    
+    const params = new HttpParams(
+      {
+        fromObject: {
+          jobid: nodeObj.uuid,
+        }
+      }
+    )
+    this.httpClientService
+      .postObject<ExperimentJSONObject, ExperimentJSONObject>(
+        dbExperiment,
+        Endpoints.CREATE_EXPERIMENT,
+        params,
+      )
+      .subscribe((response) => {
+        nodeObj.uuid = response.expid;
+        nodeObj.description = response.description;
+        nodeObj.displayName = response.name;
+        nodeObj.creationDate = response.creationdate;
+        this.updateNode(nodeObj);
+      });
   }
 
   updateExperiment(nodeObj) {

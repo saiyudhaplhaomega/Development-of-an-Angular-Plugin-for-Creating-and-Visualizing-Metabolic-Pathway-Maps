@@ -127,7 +127,7 @@
         
                 <!-- ProteinDatabase -->
                 <ng-container
-                  *ngIf="(this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result') || (this.dataUploadModeSelection == 'Search')">
+                  *ngIf="(this.dataUploadModeSelection == 'Result Upload' && this.dataUploadSelection == 'Search Result')">
                   <div class="divider-line">Protein Database</div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -323,7 +323,7 @@
                       </div>
                     </ng-container>
         
-                    <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
+                    <ng-container *ngIf="this.searchFileSelection == 'DAT'">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Mascot Dat File</span>
                       </div>
@@ -338,7 +338,7 @@
                     </ng-container>
                   </div>
         
-                  <ng-container *ngIf="this.searchFileSelection == 'Mascot-DAT'">
+                  <ng-container *ngIf="this.searchFileSelection == 'DAT'">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Fasta File</span>

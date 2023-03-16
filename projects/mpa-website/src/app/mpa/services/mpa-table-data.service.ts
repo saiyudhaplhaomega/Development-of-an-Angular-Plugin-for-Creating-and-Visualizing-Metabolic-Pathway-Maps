@@ -221,16 +221,13 @@ export class MpaTableDataService {
         newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
         break;
       case GroupSelection.SUBGROUPS:
-        //newtableData = this.mpaData.filter(group => 'proteinSubGroupID' in group);
         let subgroups = [];
         this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
         newtableData = subgroups;
-        //newtableData.sort((a, b) =>{return parseInt(a.proteinSubGroupID) - parseInt(b.proteinSubGroupID);})
         newtableData.sort((a, b) => {
           let aString = a.proteinSubGroupID.split("_");
           let bString = b.proteinSubGroupID.split("_");
           let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-          console.log(returnValue)
           if (returnValue == 0) {
             returnValue = parseInt(aString[1]) - parseInt(bString[1]);
           }
@@ -239,29 +236,46 @@ export class MpaTableDataService {
 
         break;
       case GroupSelection.HIERARCHICAL:
-        newtableData = this.mpaData;
-        newtableData.forEach(maingroup =>
-          maingroup.proteinSubGroupList.sort((a, b) => {
-            let aString = a.proteinSubGroupID.split("_");
-            let bString = b.proteinSubGroupID.split("_");
-            let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-            console.log(returnValue)
-            if (returnValue == 0) {
-              returnValue = parseInt(aString[1]) - parseInt(bString[1]);
-            }
-            return returnValue;
-          })
-        )
+        // newtableData = this.mpaData;
+        // newtableData.forEach(maingroup =>
+        //   maingroup.proteinSubGroupList.sort((a, b) => {
+        //     let aString = a.proteinSubGroupID.split("_");
+        //     let bString = b.proteinSubGroupID.split("_");
+        //     let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+        //     if (returnValue == 0) {
+        //       returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+        //     }
+        //     return returnValue;
+        //   })
+        // )
 
+        // newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
+
+        newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
         newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
+        break;
     }
 
     this.mpaTableData.next(newtableData);
     this.selectedProteinGroup.next(newtableData[0]);
   }
 
-  sortMpaTableData(groupData: ProteinGroupObject[]){
-    
+  expandMainGroup(mainGroup: ProteinGroupObject, expanding: boolean){
+    let newtableData: ProteinGroupObject[] = this.mpaData.filter(group => 'proteinSubGroupList' in group);
+    newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
+    let indexOfGroup: number = newtableData.findIndex((group) => group == mainGroup);
+    let subgroups: ProteinGroupObject[] = newtableData[indexOfGroup].proteinSubGroupList;
+
+    if(expanding === true){
+    let i: number = 1;
+    subgroups.forEach(subgroup => {
+      newtableData.splice(indexOfGroup + i, 0, subgroup);
+      i++;
+    })
+    }
+
+    this.mpaTableData.next(newtableData);
+    this.selectedProteinGroup.next(newtableData[indexOfGroup]);
   }
 
   onGroupSelection() {

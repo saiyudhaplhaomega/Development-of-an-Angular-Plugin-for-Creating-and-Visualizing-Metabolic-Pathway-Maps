@@ -32,7 +32,7 @@ import {
   styleUrls: ['./mpa-table.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ visibility: 'hidden' ,height: 0,})),
+      state('collapsed', style({ visibility: 'hidden'})),
       state('expanded', style({ height: '*' })),
       transition(
         'expanded <=> collapsed',
@@ -120,11 +120,15 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   // }
 
   onExpand(row: ProteinGroupObject) {
+    let expandingMainGroup: boolean = true;
     if (this.expandedElement === row.proteinGroupID) {
       this.expandedElement = 'none';
-      return;
+      expandingMainGroup = false;
+    }else{
+      this.expandedElement = row.proteinGroupID;
     }
-    this.expandedElement = row.proteinGroupID;
+
+    this.mpaTableDataService.expandMainGroup(row, expandingMainGroup);
   }
 
   onClick(row: ProteinGroupObject) {
