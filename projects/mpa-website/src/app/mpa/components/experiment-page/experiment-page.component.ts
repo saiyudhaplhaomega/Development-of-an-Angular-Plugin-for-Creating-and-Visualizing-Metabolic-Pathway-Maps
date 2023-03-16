@@ -40,6 +40,27 @@ interface Datstats {
 interface SearchUploadMetadata {
 	experimentID: String;
 	protdbID: String;
+  uploadType: String;
+  peaklistFileType: String;
+  searchResultFileType: String;
+  fastaFileType: String;
+  fragmentIonTolerance: number;
+  precursorIonTolerance: number;
+  fragmentIonToleranceUnit: String;
+  precursorIonToleranceUnit: String;
+}
+
+class SearchUploadMetadataJSON implements SearchUploadMetadata {
+  experimentID: String;
+	protdbID: String;
+  uploadType: String;
+  peaklistFileType: String;
+  searchResultFileType: String;
+  fastaFileType: String;
+  fragmentIonTolerance: number;
+  precursorIonTolerance: number;
+  fragmentIonToleranceUnit: String;
+  precursorIonToleranceUnit: String;
 }
 
 export interface ProteinGroupRequest {
@@ -249,10 +270,6 @@ export class ExperimentPageComponent
 
     this.mpaTableDataService.requestProteinGroups();
 
-    this.searchUploadMetadata = {
-      experimentID: this.mpaTableDataService.expID.getValue(),
-      protdbID: this.proteinDBselection.uuid,
-    }
     // this.getChildNodes();
 
     // this.children = this._dataMap.get(this.uuid).children;
@@ -375,72 +392,90 @@ export class ExperimentPageComponent
       httpParameters: new HttpParams(),
     };
 
-    const configFile = new File(
-      [JSON.stringify(this.searchUploadMetadata)],
-      'config'
-    );
-    this.filesToUpload.files.push({uploadFile: configFile, fileID: 'config'});
+    this.searchUploadMetadata.experimentID = this.mpaTableDataService.expID.getValue();
+    this.searchUploadMetadata.protdbID = this.proteinDBselection.uuid;
 
     this.uploadProgressService.reset();
     const onDialogClosingObservable = this.invokeUploadDialog();
 
     switch (this.dataUploadSelection) {
       case 'Peaklist':
+        this.searchUploadMetadata.uploadType = "SEARCH_PEAKLIST";
+        this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
         //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        await this.addFileToUploadData(
-          this.selectedPeaklistFile,
-          this.peaklistSelection,
-          'Peaklist'
-        );
+        // await this.addFileToUploadData(
+        //   this.selectedPeaklistFile,
+        //   this.peaklistSelection,
+        //   'Peaklist'
+        // );
         this.hasPeaklistFile = true;
         break;
 
       case 'Search Result':
-        await this.addFileToUploadData(
-          this.selectedSearchFile,
-          this.searchFileSelection,
-          'SearchResult'
-        );
+        this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
+        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
+        // await this.addFileToUploadData(
+        //   this.selectedSearchFile,
+        //   this.searchFileSelection,
+        //   'SearchResult'
+        // );
 
         if (this.selectedFasta) {
-          await this.addFileToUploadData(
-            this.selectedFasta,
-            UploadFileTypes.MASCOT_FASTA,
-           'MascotFasta'
-          );
+          this.searchUploadMetadata.fastaFileType = UploadFileTypes.MASCOT_FASTA;
+          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
+          // await this.addFileToUploadData(
+          //   this.selectedFasta,
+          //   UploadFileTypes.MASCOT_FASTA,
+          //  'MascotFasta'
+          // );
         }
 
         this.hasSearchFile = true;
         break;
 
       case 'Peaklist + Search Result':
+        this.searchUploadMetadata.uploadType = "SEARCH_RESULT_PEAKLIST"
+        this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
         //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        await this.addFileToUploadData(
-          this.selectedPeaklistFile,
-          this.peaklistSelection,
-          'Peaklist'
-        );
+        // await this.addFileToUploadData(
+        //   this.selectedPeaklistFile,
+        //   this.peaklistSelection,
+        //   'Peaklist'
+        // );
         this.hasPeaklistFile = true;
 
+        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
         //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
-        await this.addFileToUploadData(
-          this.selectedSearchFile,
-          this.searchFileSelection,
-          'SearchResult'
-        );
+        // await this.addFileToUploadData(
+        //   this.selectedSearchFile,
+        //   this.searchFileSelection,
+        //   'SearchResult'
+        // );
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
+          this.searchUploadMetadata.fastaFileType = UploadFileTypes.MASCOT_FASTA;
+          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
           //await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
-          await this.addFileToUploadData(
-            this.selectedFasta,
-            UploadFileTypes.MASCOT_FASTA,
-            'MascotFasta'
-          );
+          // await this.addFileToUploadData(
+          //   this.selectedFasta,
+          //   UploadFileTypes.MASCOT_FASTA,
+          //   'MascotFasta'
+          // );
         }
         break;
     }
 
+    const configFile = new File(
+      [JSON.stringify(this.searchUploadMetadata)],
+      'config'
+    );
+    this.filesToUpload.files.unshift({uploadFile: configFile, fileID: 'config'}); //config HAS to be send first
+    
     //this.uploaderService.performUpload(this.uploadDialogId);
     // this.httpClientService.performUpload(
     //   this.uploadDialogId,
