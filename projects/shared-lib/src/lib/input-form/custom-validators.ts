@@ -27,13 +27,10 @@ export class CustomValidators {
       const controls = [];
 
       form.controls.forEach((group: FormGroup) => {
-        console.log(group);
         controlNames.forEach((name) => {
           controls.push(group.get(name));
         });
       });
-
-      console.log(controls);
 
       for (let valueIndex = 0; valueIndex < controls.length; valueIndex++) {
         for (
@@ -64,7 +61,9 @@ export class CustomValidators {
       ) {
         this.updateValidators(abstractControl);
       } else {
-        abstractControl.updateValueAndValidity();
+        console.log(key);
+        console.log(abstractControl.status);
+        abstractControl.updateValueAndValidity({ emitEvent: false });
       }
     });
   }
@@ -88,7 +87,7 @@ export class CustomValidators {
       case 'max':
         return 'please prvide a lower value';
       case 'duplicate':
-        return "this field can't contain a duplicate value";
+        return 'this field contains a duplicate value';
     }
   }
 }

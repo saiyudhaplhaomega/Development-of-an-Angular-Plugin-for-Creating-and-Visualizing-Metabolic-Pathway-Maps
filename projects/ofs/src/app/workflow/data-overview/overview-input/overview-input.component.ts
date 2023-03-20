@@ -159,6 +159,13 @@ export class OverviewInputComponent
       })
     );
 
+    const pairedValidity = this.subscriptions.push(
+      this.groups.valueChanges.subscribe(() => {
+        CustomValidators.updateValidators(this.groups);
+        // console.log('changed');
+      })
+    );
+
     this.subscriptions.push(
       this.formDisabled$.subscribe((disabled) => {
         disabled ? this.formModel.disable() : this.formModel.enable();
