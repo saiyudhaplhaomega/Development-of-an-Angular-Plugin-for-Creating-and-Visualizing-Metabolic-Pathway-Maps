@@ -9,6 +9,7 @@ export enum Endpoints {
   WRAPPER_INPUT = 'wrapperinput',
   WRAPPER_RESOURCE_AVAIL = 'wrapperresources',
   CLASSIFIER_INPUT = 'classifierinput',
+  CLASSIFIER_RESOURCES = 'classifierresources',
 }
 
 export function getAdress(api: Endpoints) {

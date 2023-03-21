@@ -21,12 +21,14 @@ export class WrapperResultsComponent implements OnInit {
     ) {
       images.push(
         'http://localhost:8080/' +
-
+          this.workflow.ofsData.job.jobId +
+          '/' +
         wrapperResponse.wrapperPanel
       );
       images.push(
         'http://localhost:8080/' +
-
+          this.workflow.ofsData.job.jobId +
+          '/' +
         wrapperResponse.wrapperSingleMolecule
       );
     }

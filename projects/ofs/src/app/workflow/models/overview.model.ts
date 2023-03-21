@@ -26,7 +26,7 @@ export interface DataGroupForm extends FormGroup {
 export interface OverviewConfig {
   data: File;
   groups: DataGroup[];
-  groupSelectionOption: GroupSelectionOptions;
+  groupSelectionOptions: GroupSelectionOptions;
 }
 
 export interface OverviewConfigForRequest {
@@ -39,7 +39,7 @@ export interface OverviewInputForm extends FormGroup {
 
   controls: {
     data: FormControl;
-    groupSelectionOption: FormControl;
+    groupSelectionOptions: FormControl;
     groups: FormArray;
   };
 }

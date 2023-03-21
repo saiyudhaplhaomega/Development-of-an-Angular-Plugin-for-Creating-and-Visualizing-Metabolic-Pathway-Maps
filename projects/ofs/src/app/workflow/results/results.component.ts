@@ -12,9 +12,20 @@ export class ResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get classifierImages() {
-    const images = this.workflow.ofsData.responseData.classifierResponse;
-    return images ? Object.values(images) : [];
+    const images = [];
+    const classifierResponse =
+    this.workflow.ofsData.responseData.classifierResponse;
+    if (
+      classifierResponse?.pcaImage !== undefined    ) {
+      images.push(
+        'http://localhost:8080/' +
+          this.workflow.ofsData.job.jobId +
+          '/' +
+        classifierResponse.pcaImage
+      );
+    return images
   }
+}
 
   isLoading() {
     return this.workflow.loading;

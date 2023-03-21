@@ -47,7 +47,7 @@ export class OverviewInputComponent
   }
 
   get groupSelectionOption() {
-    return this.formModel?.controls.groupSelectionOption;
+    return this.formModel?.controls.groupSelectionOptions;
   }
 
   get groups() {
@@ -65,7 +65,7 @@ export class OverviewInputComponent
     const formModel = this.builder.group(
       {
         data: dataFileControl,
-        groupSelectionOption: [this.groupSelectionOptions[0]],
+        groupSelectionOptions: [this.groupSelectionOptions[0]],
         groups: this.builder.array(
           [this.buildGroup('control'), this.buildGroup('test')],
           {

@@ -21,12 +21,14 @@ export class PreprocessingResultsComponent implements OnInit {
     ) {
       images.push(
         'http://localhost:8080/' +
-
+          this.workflow.ofsData.job.jobId +
+          '/' +
           preprocessingResponse.predictivePerformance
       );
       images.push(
         'http://localhost:8080/' +
-
+          this.workflow.ofsData.job.jobId +
+          '/' +
           preprocessingResponse.pvaluesMolecules
       );
     }

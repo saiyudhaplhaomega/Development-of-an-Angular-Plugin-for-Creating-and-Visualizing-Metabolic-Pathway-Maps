@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Feature, FeatureProfile } from '../../models/classifier.model';
 import { WorkflowService } from '../../services/workflow.service';
+import { Endpoints } from '../../../models/endpoints.model';
 
 @Component({
   selector: 'ofs-wrapper-results-input',
@@ -55,8 +56,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
   //   },
   // ];
 
-  displayedColumns: string[] = ['select', 'featureId'];
-  dataSource = new MatTableDataSource<Feature>(this.listOfFeatures);
+  displayedColumns: string[] = ['select', 'featureID'];
+  dataSource = new MatTableDataSource<Feature>();
   selection = new SelectionModel<string>(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -71,11 +72,11 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
       .featureSelectionProfiles;
   }
 
-  get listOfFeatures() {
-    return this.workflow.ofsData.responseData.wrapperResponse.featureSelection;
+  ngOnInit(): void {
+    this.workflow.featureSubject.subscribe((features) => {
+      this.dataSource.data = features
+    })
   }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -104,7 +105,7 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
     }
 
     const profileFeatures = this.dataSource.data.map(
-      (feature) => feature.featureId
+      (feature) => feature.featureID
     );
 
     this.selection.select(...profileFeatures);
@@ -113,7 +114,7 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
   applyFeatureProfile() {
     if (this.profileSelection.value) {
       const profileFeatures = this.profileSelection.value.features.map(
-        (feature) => feature.featureId
+        (feature) => feature.featureID
       );
 
       this.selection.select(...profileFeatures);
@@ -122,8 +123,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
   generateResults() {
     const selectedFeatures = this.dataSource.data.filter((feature) =>
-      this.selection.selected.includes(feature.featureId)
+      this.selection.selected.includes(feature.featureID)
     );
-    this.workflow.submitResultsInput({ selectedFeatures: selectedFeatures });
+    this.workflow.submitConfig({selectedFeatures: selectedFeatures}, Endpoints.CLASSIFIER_INPUT);
   }
 }

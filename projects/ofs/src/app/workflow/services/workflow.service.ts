@@ -8,11 +8,11 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter, repeat, retry, Subscription, take, tap } from 'rxjs';
+import { BehaviorSubject, filter, repeat, retry, Subscription, take, tap } from 'rxjs';
 import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
-import { ClassifierConfig } from '../models/classifier.model';
+import { ClassifierConfig, Feature } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
 import { OfsJob } from '../models/ofs-job.model';
 import {
@@ -44,6 +44,7 @@ export class WorkflowService {
   subscriptions: Subscription[];
 
   ofsData: OFSData;
+  featureSubject = new BehaviorSubject<Feature[]>([]);
 
   constructor(private http: OfsHttpClientService, private router: Router) {
     this.ofsData = new OFSData();
@@ -95,11 +96,11 @@ export class WorkflowService {
       });
   }
 
-  submitResultsInput(classifierConfig: ClassifierConfig) {
-    this.ofsData.configData.classifierConfig = classifierConfig;
-    this.loading = true;
-    this.router.navigate(['workflow', 'results']);
-  }
+  // submitResultsInput(classifierConfig: ClassifierConfig) {
+  //   this.ofsData.configData.classifierConfig = classifierConfig;
+  //   this.loading = true;
+  //   this.router.navigate(['workflow', 'results']);
+  // }
 
   submitConfig(config: InputConfig, api: Endpoints) {
     this.loading = true;
@@ -108,6 +109,8 @@ export class WorkflowService {
       case Endpoints.OVERVIEW_INPUT:
         this.ofsData.configData.overviewConfig = config as OverviewConfig;
         const configFile = new File([JSON.stringify(this.ofsData)], 'config');
+
+        console.log(JSON.stringify(this.ofsData))
 
         const filesToUpload: MultiFileUploadData = {
           files: [
@@ -139,15 +142,17 @@ export class WorkflowService {
             this.ofsData = response;
           });
 
-        this.http
-          .repeatedGetObject(
-            Endpoints.OVERVIEW_RESOURCE_AVAIL,
-            new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })
-          )
-          .subscribe(() => {
-            this.loading = false;
-          });
-
+        this.http.postObject<OFSData, OFSData>(
+          this.ofsData,
+          Endpoints.OVERVIEW_RESOURCE_AVAIL,
+          new HttpParams()).pipe(
+          repeat({ delay: 5_000 }),
+          filter((res: OFSData) => res.responseData?.overviewResponse.dataSparsity !== undefined),
+          take(1)
+        ).subscribe((response: OFSData) => {
+          this.ofsData = response;
+          this.loading = false;
+        });
         break;
 
       case Endpoints.PREPROCESSING_INPUT:
@@ -163,16 +168,23 @@ export class WorkflowService {
             this.ofsData = response;
           });
 
-        this.http
-          .repeatedGetObject(
+          this.http.postObject<OFSData, OFSData>(
+            this.ofsData,
             Endpoints.PREPROCESSING_RESOURCE_AVAIL,
-            new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })
-          )
-          .subscribe(() => (this.loading = false));
-
+            new HttpParams()).pipe(
+            repeat({ delay: 5_000 }),
+            filter((res: OFSData) => res.responseData?.preprocessingResponse.predictivePerformance !== undefined),
+            take(1)
+            ).subscribe((response: OFSData) => {
+              this.ofsData = response;
+              this.loading = false;
+            });
         break;
       case Endpoints.WRAPPER_INPUT:
-        this.ofsData.configData.wrapperConfig = config as WrapperConfig;
+        const incompleteConfig = config as WrapperConfig
+        incompleteConfig.pvalCutoff = this.ofsData.configData.wrapperConfig.pvalCutoff
+
+        this.ofsData.configData.wrapperConfig = incompleteConfig;
         this.http
           .postObject<OFSData, OFSData>(
             this.ofsData,
@@ -182,26 +194,41 @@ export class WorkflowService {
             this.ofsData = response;
           });
 
-        this.http.getObject<OFSData>(Endpoints.WRAPPER_RESOURCE_AVAIL,  new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })).pipe(
-          repeat({ delay: 2000 }),
+        this.http.postObject<OFSData, OFSData>(
+          this.ofsData,
+          Endpoints.WRAPPER_RESOURCE_AVAIL,
+          new HttpParams()).pipe(
+          repeat({ delay: 5_000 }),
           filter((res: OFSData) => res.responseData?.wrapperResponse.featureSelection !== undefined),
           take(1)
-        )
-        .subscribe((res: OFSData) => {
-          this.ofsData = res;
-          this.loading = false});
+          ).subscribe((response: OFSData) => {
+            this.ofsData = response;
+            this.featureSubject.next(response.responseData.wrapperResponse.featureSelection)
+            this.loading = false;
+          });
         break;
       case Endpoints.CLASSIFIER_INPUT:
         this.ofsData.configData.classifierConfig = config as ClassifierConfig;
+        this.router.navigate(['workflow', 'results']);
 
         // TODO post
         this.http
-          .postObject<OFSData, OFSData>(this.ofsData, api, new HttpParams())
+          .postObject<OFSData, OFSData>(this.ofsData, Endpoints.CLASSIFIER_INPUT, new HttpParams())
           .subscribe((response) => {
-            // TODO: evaluate response!
-            console.log(response);
-            this.loading = false;
+            this.ofsData = response;
           });
+
+          this.http.postObject<OFSData, OFSData>(
+            this.ofsData,
+            Endpoints.CLASSIFIER_RESOURCES,
+            new HttpParams()).pipe(
+            repeat({ delay: 2_000 }),
+            filter((res: OFSData) => res.responseData?.classifierResponse.pcaImage !== undefined),
+            take(1)
+            ).subscribe((response: OFSData) => {
+              this.ofsData = response;
+              this.loading = false;
+            });
         break;
     }
   }

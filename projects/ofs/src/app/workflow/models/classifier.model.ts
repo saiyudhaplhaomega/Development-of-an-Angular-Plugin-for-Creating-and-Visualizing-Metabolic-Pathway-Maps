@@ -1,9 +1,9 @@
 export interface Feature {
-  featureId: string;
+  featureID: string;
 }
 
 export interface FeatureProfile {
-  profileId: string;
+  profileID: string;
   features: Feature[];
 }
 

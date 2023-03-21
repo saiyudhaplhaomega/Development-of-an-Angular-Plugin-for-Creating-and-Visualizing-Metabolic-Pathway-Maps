@@ -16,7 +16,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>group columns</mat-label>
-    <mat-select formControlName="groupSelectionOption">
+    <mat-select formControlName="groupSelectionOptions">
       <mat-option *ngFor="let option of groupSelectionOptions" [value]="option">
         {{ option }}
       </mat-option>

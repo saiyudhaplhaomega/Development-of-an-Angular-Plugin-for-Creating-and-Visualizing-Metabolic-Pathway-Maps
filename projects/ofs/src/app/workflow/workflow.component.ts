@@ -93,7 +93,7 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
       case WorkflowRoutes.RESULTS:
         return (
           this.workflow.ofsData.responseData.classifierResponse
-            ?.pairwiseComparison !== undefined
+            ?.pcaImage !== undefined
         );
     }
   }
