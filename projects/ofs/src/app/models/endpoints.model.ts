@@ -2,10 +2,12 @@ export enum Endpoints {
   // INPUT_FILE_UPLOAD = 'uploadofsfile/',
   CREATE_JOB = 'createjob',
   GET_JOBS = 'getjobs',
-  OVERVIEW_RESOURCE_AVAIL = 'resource',
   OVERVIEW_INPUT = 'overviewinput',
+  OVERVIEW_RESOURCE_AVAIL = 'overviewresources',
   PREPROCESSING_INPUT = 'preprocessinginput',
+  PREPROCESSING_RESOURCE_AVAIL = 'preprocessingresources',
   WRAPPER_INPUT = 'wrapperinput',
+  WRAPPER_RESOURCE_AVAIL = 'wrapperresources',
   CLASSIFIER_INPUT = 'classifierinput',
 }
 

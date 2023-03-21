@@ -165,7 +165,7 @@ export class WorkflowService {
 
         this.http
           .repeatedGetObject(
-            Endpoints.OVERVIEW_RESOURCE_AVAIL,
+            Endpoints.PREPROCESSING_RESOURCE_AVAIL,
             new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })
           )
           .subscribe(() => (this.loading = false));
@@ -173,7 +173,24 @@ export class WorkflowService {
         break;
       case Endpoints.WRAPPER_INPUT:
         this.ofsData.configData.wrapperConfig = config as WrapperConfig;
+        this.http
+          .postObject<OFSData, OFSData>(
+            this.ofsData,
+            Endpoints.WRAPPER_INPUT,
+          )
+          .subscribe((response: OFSData) => {
+            this.ofsData = response;
+          });
 
+        this.http.getObject<OFSData>(Endpoints.WRAPPER_RESOURCE_AVAIL,  new HttpParams({ fromObject: { jobid: this.ofsData.job.jobId } })).pipe(
+          repeat({ delay: 2000 }),
+          filter((res: OFSData) => res.responseData?.wrapperResponse.featureSelection !== undefined),
+          take(1)
+        )
+        .subscribe((res: OFSData) => {
+          this.ofsData = res;
+          this.loading = false});
+        break;
       case Endpoints.CLASSIFIER_INPUT:
         this.ofsData.configData.classifierConfig = config as ClassifierConfig;
 

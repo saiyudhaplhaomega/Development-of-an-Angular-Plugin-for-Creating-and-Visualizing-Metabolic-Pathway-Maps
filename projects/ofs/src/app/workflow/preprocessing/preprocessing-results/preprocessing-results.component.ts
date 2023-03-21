@@ -12,8 +12,25 @@ export class PreprocessingResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get preprocessingImages() {
-    const images = this.workflow.ofsData.responseData.preprocessingResponse;
-    return images ? Object.values(images) : [];
+    const images = [];
+    const preprocessingResponse =
+    this.workflow.ofsData.responseData.preprocessingResponse;
+    if (
+      preprocessingResponse?.pvaluesMolecules !== undefined &&
+      preprocessingResponse?.predictivePerformance !== undefined
+    ) {
+      images.push(
+        'http://localhost:8080/' +
+
+          preprocessingResponse.predictivePerformance
+      );
+      images.push(
+        'http://localhost:8080/' +
+
+          preprocessingResponse.pvaluesMolecules
+      );
+    }
+    return images;
   }
 
   isLoading() {

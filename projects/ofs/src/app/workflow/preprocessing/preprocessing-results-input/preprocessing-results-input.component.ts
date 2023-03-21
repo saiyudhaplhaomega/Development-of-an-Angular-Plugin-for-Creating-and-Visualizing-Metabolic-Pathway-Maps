@@ -27,10 +27,6 @@ export class PreprocessingResultsInputComponent
 
   ngOnDestroy() {
     console.log('Wrapperrr');
-    this.workflow.ofsData.configData.wrapperConfig = {
-      folds: undefined,
-      repeats: undefined,
-      pvalCutoff: this.pvalCutoff.value,
-    };
+    this.workflow.ofsData.configData.wrapperConfig.pvalCutoff =  this.pvalCutoff.value
   }
 }

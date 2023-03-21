@@ -12,8 +12,25 @@ export class WrapperResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   get wrapperImages() {
-    const images = this.workflow.ofsData.responseData.wrapperResponse;
-    return images ? Object.values(images) : [];
+    const images = [];
+    const wrapperResponse =
+    this.workflow.ofsData.responseData.wrapperResponse;
+    if (
+      wrapperResponse?.wrapperPanel !== undefined &&
+      wrapperResponse?.wrapperSingleMolecule !== undefined
+    ) {
+      images.push(
+        'http://localhost:8080/' +
+
+        wrapperResponse.wrapperPanel
+      );
+      images.push(
+        'http://localhost:8080/' +
+
+        wrapperResponse.wrapperSingleMolecule
+      );
+    }
+    return images;
   }
 
   isLoading() {

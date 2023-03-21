@@ -66,7 +66,10 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
   constructor(private workflow: WorkflowService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listOfFeatureProfiles = this.workflow.ofsData.responseData.wrapperResponse.featureSelectionProfiles;
+    this.listOfFeatures = this.workflow.ofsData.responseData.wrapperResponse.featureSelection;
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
