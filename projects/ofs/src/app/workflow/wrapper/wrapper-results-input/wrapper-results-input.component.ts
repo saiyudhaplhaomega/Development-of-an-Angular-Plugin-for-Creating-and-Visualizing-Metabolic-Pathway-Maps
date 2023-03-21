@@ -13,47 +13,47 @@ import { WorkflowService } from '../../services/workflow.service';
   styleUrls: ['./wrapper-results-input.component.scss'],
 })
 export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
-  listOfFeatures: Feature[] = [
-    { featureId: 'feature1' },
-    { featureId: 'feature2' },
-    { featureId: 'feature3' },
-    { featureId: 'feature4' },
-    { featureId: 'feature5' },
-    { featureId: 'feature6' },
-    { featureId: 'feature7' },
-    { featureId: 'feature8' },
-    { featureId: 'feature9' },
-    { featureId: 'feature10' },
-    { featureId: 'feature11' },
-    { featureId: 'feature12' },
-  ];
-  listOfFeatureProfiles: FeatureProfile[] = [
-    {
-      profileId: 'profile1',
-      features: [{ featureId: 'feature1' }, { featureId: 'feature2' }],
-    },
-    {
-      profileId: 'profile2',
-      features: [
-        { featureId: 'feature3' },
-        { featureId: 'feature4' },
-        { featureId: 'feature5' },
-        { featureId: 'feature6' },
-        { featureId: 'feature7' },
-      ],
-    },
-    {
-      profileId: 'profile3',
-      features: [
-        { featureId: 'feature7' },
-        { featureId: 'feature8' },
-        { featureId: 'feature9' },
-        { featureId: 'feature10' },
-        { featureId: 'feature11' },
-        { featureId: 'feature12' },
-      ],
-    },
-  ];
+  // listOfFeatures: Feature[] = [
+  //   { featureId: 'feature1' },
+  //   { featureId: 'feature2' },
+  //   { featureId: 'feature3' },
+  //   { featureId: 'feature4' },
+  //   { featureId: 'feature5' },
+  //   { featureId: 'feature6' },
+  //   { featureId: 'feature7' },
+  //   { featureId: 'feature8' },
+  //   { featureId: 'feature9' },
+  //   { featureId: 'feature10' },
+  //   { featureId: 'feature11' },
+  //   { featureId: 'feature12' },
+  // ];
+  // listOfFeatureProfiles: FeatureProfile[] = [
+  //   {
+  //     profileId: 'profile1',
+  //     features: [{ featureId: 'feature1' }, { featureId: 'feature2' }],
+  //   },
+  //   {
+  //     profileId: 'profile2',
+  //     features: [
+  //       { featureId: 'feature3' },
+  //       { featureId: 'feature4' },
+  //       { featureId: 'feature5' },
+  //       { featureId: 'feature6' },
+  //       { featureId: 'feature7' },
+  //     ],
+  //   },
+  //   {
+  //     profileId: 'profile3',
+  //     features: [
+  //       { featureId: 'feature7' },
+  //       { featureId: 'feature8' },
+  //       { featureId: 'feature9' },
+  //       { featureId: 'feature10' },
+  //       { featureId: 'feature11' },
+  //       { featureId: 'feature12' },
+  //     ],
+  //   },
+  // ];
 
   displayedColumns: string[] = ['select', 'featureId'];
   dataSource = new MatTableDataSource<Feature>(this.listOfFeatures);
@@ -66,10 +66,16 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
   constructor(private workflow: WorkflowService) {}
 
-  ngOnInit(): void {
-    this.listOfFeatureProfiles = this.workflow.ofsData.responseData.wrapperResponse.featureSelectionProfiles;
-    this.listOfFeatures = this.workflow.ofsData.responseData.wrapperResponse.featureSelection;
+  get listOfFeatureProfiles() {
+    return this.workflow.ofsData.responseData.wrapperResponse
+      .featureSelectionProfiles;
   }
+
+  get listOfFeatures() {
+    return this.workflow.ofsData.responseData.wrapperResponse.featureSelection;
+  }
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
