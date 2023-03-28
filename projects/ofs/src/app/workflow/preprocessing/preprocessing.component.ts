@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { OfsJobState } from '../models/ofs-job.model';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { WorkflowService } from '../services/workflow.service';
 import { MatTabGroup } from '@angular/material/tabs';
 
@@ -8,13 +7,13 @@ import { MatTabGroup } from '@angular/material/tabs';
   templateUrl: './preprocessing.component.html',
   styleUrls: ['./preprocessing.component.scss'],
 })
-export class PreprocessingComponent implements OnInit {
+export class PreprocessingComponent implements AfterViewInit {
   @ViewChild('tabs') tabs: MatTabGroup;
 
   constructor(private workflow: WorkflowService) {}
 
-  ngOnInit(): void {
-    if (this.workflow.ofsData.job.state === OfsJobState.PREPROCESSING_RESULTS) {
+  ngAfterViewInit(): void {
+    if (this.hasResults()) {
       this.switchToResults();
     }
   }
@@ -24,6 +23,9 @@ export class PreprocessingComponent implements OnInit {
   }
 
   hasResults() {
-    return this.workflow.ofsData.responseData.preprocessingResponse !== undefined;
+    return (
+      this.workflow.ofsData.responseData.preprocessingResponse
+        ?.predictivePerformance !== undefined
+    );
   }
 }

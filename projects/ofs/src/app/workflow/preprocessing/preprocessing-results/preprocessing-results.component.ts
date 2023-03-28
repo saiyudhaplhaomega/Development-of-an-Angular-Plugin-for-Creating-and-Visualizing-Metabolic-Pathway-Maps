@@ -14,7 +14,7 @@ export class PreprocessingResultsComponent implements OnInit {
   get preprocessingImages() {
     const images = [];
     const preprocessingResponse =
-    this.workflow.ofsData.responseData.preprocessingResponse;
+      this.workflow.ofsData.responseData.preprocessingResponse;
     if (
       preprocessingResponse?.pvaluesMolecules !== undefined &&
       preprocessingResponse?.predictivePerformance !== undefined
@@ -24,12 +24,6 @@ export class PreprocessingResultsComponent implements OnInit {
           this.workflow.ofsData.job.jobId +
           '/' +
           preprocessingResponse.predictivePerformance
-      );
-      images.push(
-        'http://localhost:8080/' +
-          this.workflow.ofsData.job.jobId +
-          '/' +
-          preprocessingResponse.pvaluesMolecules
       );
     }
     return images;

@@ -21,23 +21,32 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="w-16">
-    <mat-label>repeats</mat-label>
-    <input type="number" matInput formControlName="repeats" />
-    <mat-error *ngIf="formModel.get('repeats').invalid">{{
-      getErrorMessage(formModel.get("repeats"))
-    }}</mat-error>
-  </mat-form-field>
+  <div class="grid grid-cols-2 gap-4">
+    <mat-form-field class="col-span-1 w-full" appearance="outline">
+      <mat-label>repeats</mat-label>
+      <input type="number" matInput formControlName="repeats" />
+      <mat-error *ngIf="formModel.get('repeats').invalid">{{
+        getErrorMessage(formModel.get("repeats"))
+      }}</mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="w-16">
-    <mat-label>folds</mat-label>
-    <input type="number" matInput formControlName="folds" />
-    <mat-error *ngIf="formModel.get('folds').invalid">{{
-      getErrorMessage(formModel.get("folds"))
-    }}</mat-error>
-  </mat-form-field>
+    <mat-form-field class="col-span-1 w-full" appearance="outline">
+      <mat-label>folds</mat-label>
+      <input type="number" matInput formControlName="folds" />
+      <mat-error *ngIf="formModel.get('folds').invalid">{{
+        getErrorMessage(formModel.get("folds"))
+      }}</mat-error>
+    </mat-form-field>
+  </div>
 
-  <button [disabled]="!formModel.valid" mat-flat-button color="primary">
-    submit data
-  </button>
+  <div class="form-button-grid">
+    <button
+      class="col-span-2"
+      [disabled]="!formModel.valid"
+      mat-flat-button
+      color="primary"
+    >
+      submit data
+    </button>
+  </div>
 </form>

@@ -46,10 +46,6 @@ export class OverviewInputComponent
     });
   }
 
-  get groupSelectionOption() {
-    return this.formModel?.controls.groupSelectionOptions;
-  }
-
   get groups() {
     return this.formModel?.controls.groups;
   }
@@ -92,40 +88,10 @@ export class OverviewInputComponent
       ],
       groupPrefix: [
         '',
-        [
-          CustomValidators.conditionalValidator(
-            () =>
-              this.groupSelectionOption?.value ===
-              this.groupSelectionOptions[0],
-            Validators.compose([
-              Validators.required,
-              Validators.pattern(ALLOWEDSIMPLECHARS),
-            ])
-          ),
-        ],
+        [Validators.required, Validators.pattern(ALLOWEDSIMPLECHARS)],
       ],
-      groupStart: [
-        undefined,
-        [
-          CustomValidators.conditionalValidator(
-            () =>
-              this.groupSelectionOption?.value ===
-              this.groupSelectionOptions[1],
-            Validators.compose([Validators.required, Validators.min(0)])
-          ),
-        ],
-      ],
-      groupEnd: [
-        undefined,
-        [
-          CustomValidators.conditionalValidator(
-            () =>
-              this.groupSelectionOption?.value ===
-              this.groupSelectionOptions[1],
-            Validators.compose([Validators.required, Validators.min(0)])
-          ),
-        ],
-      ],
+      groupStart: [undefined],
+      groupEnd: [undefined],
     }) as DataGroupForm;
   }
 
@@ -147,22 +113,13 @@ export class OverviewInputComponent
   }
 
   resetForm() {
-    this.formModel.reset({
-      groupSelectionOption: this.groupSelectionOptions[0],
-    });
+    this.formModel = this.buildForm();
   }
 
   doSubscriptions() {
     this.subscriptions.push(
-      this.groupSelectionOption.valueChanges.subscribe(() => {
-        CustomValidators.updateValidators(this.groups);
-      })
-    );
-
-    const pairedValidity = this.subscriptions.push(
       this.groups.valueChanges.subscribe(() => {
         CustomValidators.updateValidators(this.groups);
-        // console.log('changed');
       })
     );
 

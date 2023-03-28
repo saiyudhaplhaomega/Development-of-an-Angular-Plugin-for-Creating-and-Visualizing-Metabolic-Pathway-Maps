@@ -51,11 +51,20 @@ export class WorkflowGuard implements CanActivate {
       case WorkflowRoutes.OVERVIEW:
         return true;
       case WorkflowRoutes.PREPROCESSING:
-        return workflow.ofsData.responseData.overviewResponse !== undefined;
+        return (
+          workflow.ofsData.responseData.overviewResponse?.classDistribution !==
+          undefined
+        );
       case WorkflowRoutes.WRAPPER:
-        return workflow.ofsData.responseData.preprocessingResponse !== undefined;
+        return (
+          workflow.ofsData.responseData.preprocessingResponse
+            ?.predictivePerformance !== undefined
+        );
       case WorkflowRoutes.RESULTS:
-        return workflow.ofsData.responseData.wrapperResponse !== undefined;
+        return (
+          workflow.ofsData.responseData.wrapperResponse?.wrapperPanel !==
+          undefined
+        );
     }
 
     return false;

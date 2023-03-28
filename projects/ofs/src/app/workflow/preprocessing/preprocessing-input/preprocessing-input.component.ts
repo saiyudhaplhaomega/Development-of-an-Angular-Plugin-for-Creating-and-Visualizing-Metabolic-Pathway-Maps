@@ -51,8 +51,8 @@ export class PreprocessingInputComponent
       {
         controlGroup: new FormControl(this.controlGroupName),
         testGroup: [this.testGroupOptions[0]],
-        repeats: [5000, [Validators.required, Validators.min(0)]],
-        folds: [5000, [Validators.required, Validators.min(0)]],
+        repeats: [10000, [Validators.required, Validators.min(0)]],
+        folds: [5, [Validators.required, Validators.min(0)]],
       },
       {
         updateOn: 'blur',

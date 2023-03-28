@@ -9,6 +9,15 @@ import {
 export const ALLOWEDLETTERCHARS = '^[a-zA-Z]*$';
 export const ALLOWEDSIMPLECHARS = '^[a-zA-Z0-9_.-]*$';
 
+/**
+ * use in the validators array:
+ * [
+          CustomValidators.conditionalValidator(
+            () => <CONDITION>,
+            Validators.compose([Validators.required, Validators.min(0)])
+          ),
+    ]
+ */
 export class CustomValidators {
   static conditionalValidator(
     condition: () => any,
@@ -61,8 +70,6 @@ export class CustomValidators {
       ) {
         this.updateValidators(abstractControl);
       } else {
-        console.log(key);
-        console.log(abstractControl.status);
         abstractControl.updateValueAndValidity({ emitEvent: false });
       }
     });

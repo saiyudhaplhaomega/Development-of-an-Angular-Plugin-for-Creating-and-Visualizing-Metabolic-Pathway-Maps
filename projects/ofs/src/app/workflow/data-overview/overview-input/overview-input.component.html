@@ -1,8 +1,4 @@
-<form
-  [formGroup]="formModel"
-  class="flex flex-col"
-  (ngSubmit)="submitOverviewConfig()"
->
+<form [formGroup]="formModel" (ngSubmit)="submitOverviewConfig()">
   <mat-form-field appearance="outline">
     <ngx-mat-file-input
       placeholder="Select File for Upload"
@@ -14,18 +10,22 @@
     }}</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <!-- <mat-form-field appearance="outline">
     <mat-label>group columns</mat-label>
     <mat-select formControlName="groupSelectionOptions">
       <mat-option *ngFor="let option of groupSelectionOptions" [value]="option">
         {{ option }}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
 
-  <div formArrayName="groups" class="mb-8">
+  <div class="mb-4">
+    <mat-divider></mat-divider>
+  </div>
+
+  <div formArrayName="groups">
     <div *ngFor="let group of groups.controls; index as i; first as isFirst">
-      <div *ngIf="isFirst" [formGroupName]="i">
+      <div *ngIf="isFirst" [formGroupName]="i" class="flex flex-col">
         <mat-form-field appearance="outline">
           <mat-label>control group name</mat-label>
           <input type="text" matInput formControlName="groupName" />
@@ -34,40 +34,16 @@
           }}</mat-error>
         </mat-form-field>
 
-        <div
-          *ngIf="groupSelectionOption.value === this.groupSelectionOptions[0]"
-        >
-          <mat-form-field appearance="outline">
-            <mat-label>control group prefix *</mat-label>
-            <input type="text" matInput formControlName="groupPrefix" />
-            <mat-error *ngIf="group.get('groupPrefix').invalid">{{
-              getErrorMessage(group.get("groupPrefix"))
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div
-          *ngIf="groupSelectionOption.value !== this.groupSelectionOptions[0]"
-        >
-          <mat-form-field appearance="outline" class="w-16">
-            <mat-label>start *</mat-label>
-            <input type="number" matInput formControlName="groupStart" />
-            <mat-error *ngIf="group.get('groupStart').invalid">{{
-              getErrorMessage(group.get("groupStart"))
-            }}</mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-16">
-            <mat-label>end *</mat-label>
-            <input type="number" matInput formControlName="groupEnd" />
-            <mat-error *ngIf="group.get('groupEnd').invalid">{{
-              getErrorMessage(group.get("groupEnd"))
-            }}</mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>control group prefix</mat-label>
+          <input type="text" matInput formControlName="groupPrefix" />
+          <mat-error *ngIf="group.get('groupPrefix').invalid">{{
+            getErrorMessage(group.get("groupPrefix"))
+          }}</mat-error>
+        </mat-form-field>
       </div>
 
-      <div *ngIf="!isFirst" [formGroupName]="i">
+      <div *ngIf="!isFirst" [formGroupName]="i" class="flex flex-col">
         <div class="mb-4">
           <mat-divider></mat-divider>
         </div>
@@ -80,51 +56,34 @@
           }}</mat-error>
         </mat-form-field>
 
-        <div
-          *ngIf="groupSelectionOption.value === this.groupSelectionOptions[0]"
-        >
-          <mat-form-field appearance="outline">
-            <mat-label>test group prefix *</mat-label>
-            <input type="text" matInput formControlName="groupPrefix" />
-            <mat-error *ngIf="group.get('groupPrefix').invalid">{{
-              getErrorMessage(group.get("groupPrefix"))
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div
-          *ngIf="groupSelectionOption.value !== this.groupSelectionOptions[0]"
-        >
-          <mat-form-field appearance="outline" class="w-16">
-            <mat-label>start *</mat-label>
-            <input type="number" matInput formControlName="groupStart" />
-            <mat-error *ngIf="group.get('groupStart').invalid">{{
-              getErrorMessage(group.get("groupStart"))
-            }}</mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-16">
-            <mat-label>end *</mat-label>
-            <input type="number" matInput formControlName="groupEnd" />
-            <mat-error *ngIf="group.get('groupEnd').invalid">{{
-              getErrorMessage(group.get("groupEnd"))
-            }}</mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>test group prefix</mat-label>
+          <input type="text" matInput formControlName="groupPrefix" />
+          <mat-error *ngIf="group.get('groupPrefix').invalid">{{
+            getErrorMessage(group.get("groupPrefix"))
+          }}</mat-error>
+        </mat-form-field>
       </div>
 
-      <button
-        *ngIf="i > 1"
-        [disabled]="formDisabled$ | async"
-        mat-icon-button
-        color="primary"
-        type="button"
-        (click)="removeGroup(i)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
+      <div *ngIf="i > 1" class="mb-4">
+        <button
+          [disabled]="formDisabled$ | async"
+          mat-flat-button
+          color="primary"
+          type="button"
+          (click)="removeGroup(i)"
+        >
+          delete this group
+        </button>
+      </div>
     </div>
+  </div>
 
+  <div class="mb-4">
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="form-button-grid">
     <button
       [disabled]="formDisabled$ | async"
       mat-flat-button
@@ -134,9 +93,7 @@
     >
       add group
     </button>
-  </div>
 
-  <div>
     <button
       [disabled]="formDisabled$ | async"
       (click)="resetForm()"
@@ -144,10 +101,11 @@
       color="primary"
       type="button"
     >
-      reset
+      reset all inputs
     </button>
 
     <button
+      class="col-span-2"
       [disabled]="!formModel.valid || (formDisabled$ | async)"
       mat-flat-button
       color="primary"

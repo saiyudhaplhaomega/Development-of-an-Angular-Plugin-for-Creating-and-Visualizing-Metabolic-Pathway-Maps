@@ -16,6 +16,8 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   currentStep: Step;
+  allowBtnPrev$ = new BehaviorSubject<Boolean>(false);
+  allowBtnNext$ = new BehaviorSubject<Boolean>(true);
 
   constructor(private workflow: WorkflowService) {}
 
@@ -28,29 +30,33 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
     this.stepper.selectedIndex = 0;
   }
 
-  ngOnDestroy() {}
-
   get steps() {
     return steps;
+  }
+
+  get currentIndex() {
+    return this.stepper?.selectedIndex;
+  }
+
+  get stepperLength() {
+    return this.stepper?.steps.length;
   }
 
   get job() {
     return this.workflow?.ofsData.job;
   }
 
-  get overviewImages() {
-    return this.workflow?.ofsData.responseData.overviewResponse;
+  get OFSData() {
+    return this.workflow.ofsData;
   }
 
   onButtonNavigate(event: string) {
-    const currentIndex = this.stepper.selectedIndex;
-
-    if (event === 'next' && currentIndex < this.stepper.steps.length) {
-      this.setStep(currentIndex + 1);
+    if (event === 'next' && this.currentIndex < this.stepperLength) {
+      this.setStep(this.currentIndex + 1);
     }
 
-    if (event === 'previous' && currentIndex > 0) {
-      this.setStep(currentIndex - 1);
+    if (event === 'previous' && this.currentIndex > 0) {
+      this.setStep(this.currentIndex - 1);
     }
   }
 
@@ -59,6 +65,7 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
       console.log('navigation resolved: ' + resolved);
       if (resolved) {
         this.stepper.selectedIndex = selectedIndex;
+        this.setButtonControl();
       }
     });
   }
@@ -92,25 +99,33 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
         );
       case WorkflowRoutes.RESULTS:
         return (
-          this.workflow.ofsData.responseData.classifierResponse
-            ?.pcaImage !== undefined
+          this.workflow.ofsData.responseData.classifierResponse?.pcaImage !==
+          undefined
         );
     }
+    return false;
   }
 
   isLoading(): Boolean {
     return this.workflow.loading;
   }
 
-  showPrev() {
-    return true;
-  }
+  setButtonControl() {
+    if (this.currentIndex == 0) {
+      this.allowBtnPrev$.next(false);
+    } else {
+      this.allowBtnPrev$.next(true);
+    }
 
-  showNext() {
-    return true;
-  }
+    console.log(this.isCompleted(this.currentStep));
 
-  get OFSData() {
-    return this.workflow.ofsData;
+    if (
+      this.currentIndex < this.stepperLength ||
+      this.isCompleted(this.currentStep)
+    ) {
+      this.allowBtnNext$.next(false);
+    } else {
+      this.allowBtnNext$.next(true);
+    }
   }
 }

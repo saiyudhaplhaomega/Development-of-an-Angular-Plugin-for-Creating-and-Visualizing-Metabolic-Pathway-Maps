@@ -27,13 +27,23 @@
     </mat-card-header>
     <mat-card-content>
       <router-outlet></router-outlet>
-      <ofs-stepper-control-buttons
-        [showPrev]="showPrev()"
-        [showNext]="showNext()"
-        [disablePrev]="isLoading()"
-        [disableNext]="isLoading()"
-        (onNavigation)="onButtonNavigate($event)"
-      ></ofs-stepper-control-buttons>
+
+      <div class="flex flex-row justify-between">
+        <button
+          [disabled]="!(allowBtnPrev$ | async)"
+          mat-button
+          (click)="onButtonNavigate('previous')"
+        >
+          previous step
+        </button>
+        <button
+          mat-button
+          (click)="onButtonNavigate('next')"
+          [disabled]="!(allowBtnNext$ | async)"
+        >
+          next step
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

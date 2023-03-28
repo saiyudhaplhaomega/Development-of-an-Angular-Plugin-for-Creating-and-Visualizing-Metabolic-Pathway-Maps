@@ -19,15 +19,15 @@ export class PreprocessingResultsInputComponent
   }
 
   ngOnInit(): void {
-    this.pvalCutoff = new FormControl<number>(0.001, [
+    this.pvalCutoff = new FormControl<number>(0.0001, [
       Validators.required,
       Validators.min(0),
     ]);
   }
 
   ngOnDestroy() {
-    console.log('Wrapperrr');
-    this.workflow.ofsData.configData.wrapperConfig.pvalCutoff =  this.pvalCutoff.value
-    console.log(this.workflow.ofsData.configData.wrapperConfig.pvalCutoff)
+    this.workflow.ofsData.configData.wrapperConfig.pvalCutoff =
+      this.pvalCutoff.value;
+    console.log(this.workflow.ofsData.configData.wrapperConfig.pvalCutoff);
   }
 }

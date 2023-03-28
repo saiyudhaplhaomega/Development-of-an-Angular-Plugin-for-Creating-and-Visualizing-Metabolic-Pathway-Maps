@@ -1,10 +1,17 @@
-<div *ngIf="isLoading">
-  <mat-spinner></mat-spinner>
+<div
+  class="h-40 min-h-fit flex items-center justify-center"
+  *ngIf="isLoading || (imageLinks.length === 0 && !isLoading)"
+>
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <p *ngIf="imageLinks.length === 0 && !isLoading">
+    no data yet, please submit an input
+  </p>
 </div>
-<div *ngIf="imageLinks.length === 0 && !isLoading">no data</div>
 
 <ng-container *ngFor="let image of imageLinks">
   <div *ngIf="!isLoading">
-    <img [src]="image">
+    <img [src]="image" />
   </div>
 </ng-container>
