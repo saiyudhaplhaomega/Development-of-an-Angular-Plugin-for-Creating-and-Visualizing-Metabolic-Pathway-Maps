@@ -16,7 +16,6 @@ import { UploadDialogComponent } from '../../../core/components/dialog/upload-di
 import { UploadProgressService } from '../../../core/services/upload-progress.service';
 import { MPAFile, MPAFileObject } from '../../../prophane/objects/mpafile';
 import { HttpParams } from '@angular/common/http';
-import { UploadFileTypes } from '../../objects/experimentUploadFile';
 import { Observable } from 'rxjs';
 import { MpaTableDataService } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
@@ -28,6 +27,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { FileType } from '../../objects/FileType';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -41,9 +41,9 @@ interface SearchUploadMetadata {
 	experimentID: String;
 	protdbID: String;
   uploadType: String;
-  peaklistFileType: String;
-  searchResultFileType: String;
-  fastaFileType: String;
+  peaklistFileType: FileType;
+  searchResultFileType: FileType;
+  fastaFileType: FileType;
   fragmentIonTolerance: number;
   precursorIonTolerance: number;
   fragmentIonToleranceUnit: String;
@@ -54,9 +54,9 @@ class SearchUploadMetadataJSON implements SearchUploadMetadata {
   experimentID: String;
 	protdbID: String;
   uploadType: String;
-  peaklistFileType: String;
-  searchResultFileType: String;
-  fastaFileType: String;
+  peaklistFileType: FileType;
+  searchResultFileType: FileType;
+  fastaFileType: FileType;
   fragmentIonTolerance: number;
   precursorIonTolerance: number;
   fragmentIonToleranceUnit: String;
@@ -199,17 +199,17 @@ export class ExperimentPageComponent
   // to handle displayed options upon File selection
   fastaFileSelected = true;
 
-  peaklistSelection = UploadFileTypes.MZML;
-  searchFileSelection = UploadFileTypes.MZIDENT;
+  peaklistSelection = FileType.MZML;
+  searchFileSelection = FileType.MZIDdentML;
 
   // available options
   uploadFileTypePeaklist: string[] = [
-    UploadFileTypes.MZML,
-    UploadFileTypes.MGF,
+    FileType.MZML,
+    FileType.MGF,
   ];
-  uploadFileTypeSearch: string[] = [
-    UploadFileTypes.MZIDENT,
-    UploadFileTypes.MASCOT_DAT,
+  FileTypeearch: string[] = [
+    FileType.MZIDdentML,
+    FileType.DAT,
   ];
 
   buttonDisabled = true;
@@ -315,7 +315,7 @@ export class ExperimentPageComponent
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
     this.fastaFileSelected =
-      this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
+      this.searchFileSelection !== FileType.DAT;
     this.dataUploadSelection = option;
     this.disableButton();
   }
@@ -337,7 +337,7 @@ export class ExperimentPageComponent
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
     this.fastaFileSelected =
-      this.searchFileSelection !== UploadFileTypes.MASCOT_DAT;
+      this.searchFileSelection !== FileType.DAT;
     this.disableButton();
   }
 
@@ -424,11 +424,11 @@ export class ExperimentPageComponent
         // );
 
         if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = UploadFileTypes.MASCOT_FASTA;
+          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
           this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
           // await this.addFileToUploadData(
           //   this.selectedFasta,
-          //   UploadFileTypes.MASCOT_FASTA,
+          //   FileType.MASCOT_FASTA,
           //  'MascotFasta'
           // );
         }
@@ -459,12 +459,12 @@ export class ExperimentPageComponent
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = UploadFileTypes.MASCOT_FASTA;
+          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
           this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-          //await this.addFileToUploadData(this.selectedFasta, UploadFileTypes.MASCOT_FASTA, this.dbExperiment.expid);
+          //await this.addFileToUploadData(this.selectedFasta, FileType.MASCOT_FASTA, this.dbExperiment.expid);
           // await this.addFileToUploadData(
           //   this.selectedFasta,
-          //   UploadFileTypes.MASCOT_FASTA,
+          //   FileType.MASCOT_FASTA,
           //   'MascotFasta'
           // );
         }
@@ -522,7 +522,7 @@ export class ExperimentPageComponent
 
   async addFileToUploadData(
     file: File,
-    fileType: UploadFileTypes,
+    fileType: FileType,
     experimentId: string
   ) {
 
