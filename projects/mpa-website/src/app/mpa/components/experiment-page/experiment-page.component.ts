@@ -46,8 +46,8 @@ interface SearchUploadMetadata {
   fastaFileType: FileType;
   fragmentIonTolerance: number;
   precursorIonTolerance: number;
-  fragmentIonToleranceUnit: String;
-  precursorIonToleranceUnit: String;
+  fragmentIonToleranceUnit: IonToleranceUnit;
+  precursorIonToleranceUnit: IonToleranceUnit;
 }
 
 class SearchUploadMetadataJSON implements SearchUploadMetadata {
@@ -59,8 +59,8 @@ class SearchUploadMetadataJSON implements SearchUploadMetadata {
   fastaFileType: FileType;
   fragmentIonTolerance: number;
   precursorIonTolerance: number;
-  fragmentIonToleranceUnit: String;
-  precursorIonToleranceUnit: String;
+  fragmentIonToleranceUnit: IonToleranceUnit;
+  precursorIonToleranceUnit: IonToleranceUnit;
 }
 
 export interface ProteinGroupRequest {
@@ -68,7 +68,7 @@ export interface ProteinGroupRequest {
   experimentID: string;
 }
 
-enum toleranceUnit {
+enum IonToleranceUnit {
   Da ='Da',
   PPM = 'ppm'
 }
@@ -85,20 +85,20 @@ export class SearchParameters {
   unitSelectionChange(unit: string, inputTarget: string){
     if(inputTarget == 'fragmentIonTolerance'){
       if(unit != this.fragmentIonToleranceUnitSelection){
-        if(unit == toleranceUnit.PPM){
+        if(unit == IonToleranceUnit.PPM){
           this.fragmentIonTolerance = 10;
         }
-        else if(unit == toleranceUnit.Da){
+        else if(unit == IonToleranceUnit.Da){
           this.fragmentIonTolerance = 0.1;
         }
       }
     }
     else if(inputTarget == 'precursorIonTolerance'){
       if(unit != this.precursorIonToleranceUnitSelection){
-        if(unit == toleranceUnit.PPM){
+        if(unit == IonToleranceUnit.PPM){
           this.precursorIonTolerance = 10;
         }
-        else if(unit == toleranceUnit.Da){
+        else if(unit == IonToleranceUnit.Da){
           this.precursorIonTolerance = 0.1;
         }
       }
@@ -108,7 +108,7 @@ export class SearchParameters {
 
   checkToleranceInput(unit: string, toleranceInput: number, inputTarget: string){
     var adjustedInput: number;
-    if(unit == toleranceUnit.PPM){
+    if(unit == IonToleranceUnit.PPM){
       if(toleranceInput < 0){
         adjustedInput = 0;
       }
@@ -122,7 +122,7 @@ export class SearchParameters {
         adjustedInput = Math.round(toleranceInput);
       }
     }
-    else if(unit == toleranceUnit.Da){
+    else if(unit == IonToleranceUnit.Da){
       if(toleranceInput < 0.001){
        adjustedInput = 0.001;
       }
@@ -207,7 +207,7 @@ export class ExperimentPageComponent
     FileType.MZML,
     FileType.MGF,
   ];
-  FileTypeearch: string[] = [
+  uploadFileTypeSearch: string[] = [
     FileType.MZIDdentML,
     FileType.DAT,
   ];
