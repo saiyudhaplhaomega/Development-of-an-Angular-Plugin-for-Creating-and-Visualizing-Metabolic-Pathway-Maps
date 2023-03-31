@@ -12,6 +12,7 @@ export class DataOverviewComponent implements AfterViewInit {
 
   constructor(private workflow: WorkflowService) {}
 
+  // Life Cycle Hooks
   ngAfterViewInit() {
     if (
       this.workflow.ofsData.responseData.overviewResponse?.classDistribution !==
@@ -21,6 +22,7 @@ export class DataOverviewComponent implements AfterViewInit {
     }
   }
 
+  // Methods
   switchToResults() {
     this.tabs.selectedIndex = 1;
   }

@@ -10,6 +10,8 @@ import { CustomValidators } from './custom-validators';
 export class InputFormComponent {
   @Output() submit = new EventEmitter<any>();
 
+  public formModel: FormGroup;
+  // TODO: remove formDisabled behaviorsubject
   public formDisabled$: BehaviorSubject<Boolean>;
   public subscriptions: Subscription[];
 
@@ -24,9 +26,11 @@ export class InputFormComponent {
 
   public disableForm() {
     this.formDisabled$.next(true);
+    this.formModel.disable();
   }
 
   public enableForm() {
     this.formDisabled$.next(false);
+    this.formModel.enable();
   }
 }

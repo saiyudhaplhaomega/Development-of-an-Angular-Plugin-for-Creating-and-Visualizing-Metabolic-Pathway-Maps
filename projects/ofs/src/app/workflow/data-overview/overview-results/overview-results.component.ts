@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { filter, map, Observable, Subscription, tap } from 'rxjs';
+import { OverviewResponse } from '../../../models/overview-response.model';
+import { OFSData } from '../../models/ofs-data.model';
 import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
@@ -6,34 +9,33 @@ import { WorkflowService } from '../../services/workflow.service';
   templateUrl: './overview-results.component.html',
   styleUrls: ['./overview-results.component.scss'],
 })
-export class OverviewResultsComponent implements OnInit {
-  constructor(private workflow: WorkflowService) {}
+export class OverviewResultsComponent {
+  overViewImages$: Observable<string[]>;
 
-  ngOnInit(): void {}
+  constructor(private workflow: WorkflowService) {
+    // retrieves image urls as observable, used with async pipe in template
+    this.overViewImages$ = this.workflow.ofsData$.pipe(
+      map((data: OFSData): string[] =>
+        this.getImageLinks(data.responseData.overviewResponse)
+      )
+    );
+  }
 
-  get overviewImages() {
-    const images = [];
-
-    const overViewResponse =
-      this.workflow.ofsData.responseData.overviewResponse;
-    if (
-      overViewResponse?.classDistribution !== undefined &&
-      overViewResponse?.dataSparsity !== undefined
-    ) {
-      images.push(
-        'http://localhost:8080/' +
-          this.workflow.ofsData.job.jobId +
-          '/' +
-          overViewResponse.classDistribution
-      );
-      images.push(
-        'http://localhost:8080/' +
-          this.workflow.ofsData.job.jobId +
-          '/' +
-          overViewResponse.dataSparsity
-      );
+  getImageLinks(data: OverviewResponse): string[] {
+    if (!this.checkForOvervieImages(data)) {
+      return [];
     }
-    return images;
+    return this.workflow.getResourceUrls([
+      data.classDistribution,
+      data.dataSparsity,
+    ]);
+  }
+
+  checkForOvervieImages(ofsData: OverviewResponse): boolean {
+    return (
+      ofsData?.classDistribution !== undefined &&
+      ofsData?.dataSparsity !== undefined
+    );
   }
 
   isLoading() {

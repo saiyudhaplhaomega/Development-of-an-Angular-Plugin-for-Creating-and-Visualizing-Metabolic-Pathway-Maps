@@ -7,6 +7,7 @@ import {
   ALLOWEDSIMPLECHARS,
 } from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
+import { OFSData } from '../../models/ofs-data.model';
 import {
   DataGroupForm,
   GroupSelectionOptions,
@@ -23,20 +24,25 @@ export class OverviewInputComponent
   extends InputFormComponent
   implements OnInit, OnDestroy
 {
-  formModel: OverviewInputForm;
-
   groupSelectionOptions = Object.values(GroupSelectionOptions);
+  formModel: OverviewInputForm;
+  //  TODO: remove this Bhaviorsubject
+  formDisabled$ = new BehaviorSubject<Boolean>(false);
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
 
-    this.formDisabled$ = new BehaviorSubject<Boolean>(false);
     this.subscriptions = [];
   }
 
+  // Getters and Setters
+  get groups() {
+    return this.formModel?.controls.groups;
+  }
+
+  //  Lifecycle Hooks
   ngOnInit(): void {
     this.formModel = this.buildForm();
-    this.setExistingFormInput();
     this.doSubscriptions();
   }
 
@@ -46,10 +52,36 @@ export class OverviewInputComponent
     });
   }
 
-  get groups() {
-    return this.formModel?.controls.groups;
+  //  Subscriptions
+  doSubscriptions() {
+    // updates Validators if form value changed, necessary to check for duplicate names (see arrayDuplicateValidator)
+    this.subscriptions.push(
+      this.groups.valueChanges.subscribe(() => {
+        CustomValidators.updateValidators(this.groups);
+      })
+    );
+
+    // form depends on values in ofsdata - react to changes
+    this.subscriptions.push(
+      this.workflow.ofsData$.subscribe((ofsData) => {
+        this.setExistingFormInput(ofsData);
+      })
+    );
   }
 
+  // check if ofsdata contains values relevant to this form
+  setExistingFormInput(ofsData: OFSData) {
+    if (ofsData.configData.overviewConfig?.groups !== undefined) {
+      //  yes: update form values and disable changes
+      this.formModel.patchValue(ofsData.configData.overviewConfig);
+      this.disableForm();
+      return;
+    }
+    // no: allow changes of form
+    this.enableForm();
+  }
+
+  //  Methods
   buildForm(): OverviewInputForm {
     let dataFile: File | null;
 
@@ -105,41 +137,12 @@ export class OverviewInputComponent
     }
   }
 
-  submitOverviewConfig() {
-    this.disableForm();
-    const overviewConfig = this.formModel.getRawValue();
-    this.workflow.submitConfig(overviewConfig, Endpoints.OVERVIEW_INPUT);
-    this.submit.emit();
-  }
-
   resetForm() {
     this.formModel = this.buildForm();
   }
 
-  doSubscriptions() {
-    this.subscriptions.push(
-      this.groups.valueChanges.subscribe(() => {
-        CustomValidators.updateValidators(this.groups);
-      })
-    );
-
-    this.subscriptions.push(
-      this.formDisabled$.subscribe((disabled) => {
-        disabled ? this.formModel.disable() : this.formModel.enable();
-      })
-    );
-  }
-
-  setExistingFormInput() {
-    if (this.workflow.ofsData.configData.overviewConfig) {
-      this.formModel.patchValue(
-        this.workflow.ofsData.configData.overviewConfig
-      );
-      this.disableForm();
-    }
-  }
-
-  isLoading(): Boolean {
-    return this.workflow.loading;
+  submitOverviewConfig() {
+    const overviewConfig = this.formModel.getRawValue();
+    this.workflow.submitConfig(overviewConfig, Endpoints.OVERVIEW_INPUT);
   }
 }

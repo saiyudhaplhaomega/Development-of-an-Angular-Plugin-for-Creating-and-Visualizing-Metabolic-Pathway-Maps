@@ -11,6 +11,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import {
   BehaviorSubject,
   filter,
+  Observable,
   repeat,
   retry,
   Subscription,
@@ -52,16 +53,31 @@ export class WorkflowService {
   subscriptions: Subscription[];
 
   // ofsData: OFSData;
-  ofsData$ = new BehaviorSubject<OFSData>(undefined);
+  ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
   featureSubject = new BehaviorSubject<Feature[]>([]);
 
   constructor(private http: OfsHttpClientService, private router: Router) {
-    // this.ofsData = new OFSData();
-    this.ofsData$.next(new OFSData());
+    this.ofsDataSubject$.next(new OFSData());
   }
 
+  // use this getter if you only need the current value
   get ofsData() {
-    return this.ofsData$.value;
+    return this.ofsDataSubject$.value;
+  }
+
+  // use this getter if you want to react to changes of the data object
+  get ofsData$(): Observable<OFSData> {
+    return this.ofsDataSubject$;
+  }
+
+  getResourceUrls(resources: string[]) {
+    const urls = [];
+    for (let resource of resources) {
+      urls.push(
+        'http://localhost:8080/' + this.ofsData.job.jobId + '/' + resource
+      );
+    }
+    return urls;
   }
 
   setRoute(selectedIndex: number) {
@@ -97,7 +113,7 @@ export class WorkflowService {
       .getObject<OFSData>(Endpoints.CREATE_JOB, new HttpParams())
       .subscribe({
         next: (response: OFSData) => {
-          this.ofsData$.next(response);
+          this.ofsDataSubject$.next(response);
           this.writeJobToStorage(response.job);
         },
         error: (error) => {
@@ -110,28 +126,24 @@ export class WorkflowService {
       });
   }
 
-  // submitResultsInput(classifierConfig: ClassifierConfig) {
-  //   this.ofsData.configData.classifierConfig = classifierConfig;
-  //   this.loading = true;
-  //   this.router.navigate(['workflow', 'results']);
-  // }
-
+  // TODO: submit config as overloaded method?
+  // TODO: Oveviewconfig.data is not included in response from server, remove from object for consistency
   submitConfig(config: InputConfig, api: Endpoints) {
     this.loading = true;
 
-    const currentOfsData = this.ofsData$.value;
+    const currentOfsData = this.ofsDataSubject$.value;
 
     switch (api) {
       case Endpoints.OVERVIEW_INPUT:
         currentOfsData.configData.overviewConfig = config as OverviewConfig;
-        this.ofsData$.next(currentOfsData);
+        this.ofsDataSubject$.next(currentOfsData);
 
         const configFile = new File(
-          [JSON.stringify(this.ofsData$.value)],
+          [JSON.stringify(this.ofsDataSubject$.value)],
           'config'
         );
 
-        console.log(JSON.stringify(this.ofsData$.value));
+        console.log(JSON.stringify(this.ofsDataSubject$.value));
 
         const filesToUpload: MultiFileUploadData = {
           files: [
@@ -150,12 +162,12 @@ export class WorkflowService {
         this.http
           .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
           });
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.OVERVIEW_RESOURCE_AVAIL,
             new HttpParams()
           )
@@ -177,7 +189,7 @@ export class WorkflowService {
                 });
             response.responseData.overviewResponse.controlGroup =
               currentOfsData.configData.overviewConfig.groups[0].groupName;
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
             this.loading = false;
           });
         break;
@@ -185,20 +197,20 @@ export class WorkflowService {
       case Endpoints.PREPROCESSING_INPUT:
         currentOfsData.configData.preprocessingConfig =
           config as PreprocessingConfig;
-        this.ofsData$.next(currentOfsData);
+        this.ofsDataSubject$.next(currentOfsData);
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.PREPROCESSING_INPUT
           )
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
           });
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.PREPROCESSING_RESOURCE_AVAIL,
             new HttpParams()
           )
@@ -212,7 +224,7 @@ export class WorkflowService {
             take(1)
           )
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
             this.loading = false;
           });
         break;
@@ -222,20 +234,20 @@ export class WorkflowService {
         incompleteConfig.pvalCutoff =
           currentOfsData.configData.wrapperConfig.pvalCutoff;
         currentOfsData.configData.wrapperConfig = incompleteConfig;
-        this.ofsData$.next(currentOfsData);
+        this.ofsDataSubject$.next(currentOfsData);
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.WRAPPER_INPUT
           )
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
           });
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.WRAPPER_RESOURCE_AVAIL,
             new HttpParams()
           )
@@ -248,7 +260,7 @@ export class WorkflowService {
             take(1)
           )
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
             this.featureSubject.next(
               response.responseData.wrapperResponse.featureSelection
             );
@@ -258,23 +270,23 @@ export class WorkflowService {
 
       case Endpoints.CLASSIFIER_INPUT:
         currentOfsData.configData.classifierConfig = config as ClassifierConfig;
-        this.ofsData$.next(currentOfsData);
+        this.ofsDataSubject$.next(currentOfsData);
         // this.router.navigate(['workflow', 'results']);
 
         // TODO post
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.CLASSIFIER_INPUT,
             new HttpParams()
           )
           .subscribe((response) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
           });
 
         this.http
           .postObject<OFSData, OFSData>(
-            this.ofsData$.value,
+            this.ofsDataSubject$.value,
             Endpoints.CLASSIFIER_RESOURCES,
             new HttpParams()
           )
@@ -287,7 +299,7 @@ export class WorkflowService {
             take(1)
           )
           .subscribe((response: OFSData) => {
-            this.ofsData$.next(response);
+            this.ofsDataSubject$.next(response);
             this.loading = false;
           });
         break;
