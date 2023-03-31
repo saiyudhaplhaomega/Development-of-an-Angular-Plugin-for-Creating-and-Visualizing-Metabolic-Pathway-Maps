@@ -12,12 +12,14 @@ export class PreprocessingComponent implements AfterViewInit {
 
   constructor(private workflow: WorkflowService) {}
 
+  // Life Cycle Hooks
   ngAfterViewInit(): void {
     if (this.hasResults()) {
       this.switchToResults();
     }
   }
 
+  //  Methods
   switchToResults() {
     this.tabs.selectedIndex = 1;
   }

@@ -18,6 +18,7 @@ export class OverviewResultsComponent {
       map((data: OFSData): string[] =>
         this.getImageLinks(data.responseData.overviewResponse)
       )
+      // output: observable of image urls
     );
   }
 

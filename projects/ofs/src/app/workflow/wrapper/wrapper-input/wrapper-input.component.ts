@@ -5,6 +5,7 @@ import { InputFormComponent } from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
 import { WrapperForm } from '../../models/wrapper.model';
 import { WorkflowService } from '../../services/workflow.service';
+import { OFSData } from '../../models/ofs-data.model';
 
 @Component({
   selector: 'ofs-wrapper-input',
@@ -15,56 +16,66 @@ export class WrapperInputComponent
   extends InputFormComponent
   implements OnInit
 {
-  @Output() submit = new EventEmitter<any>();
+  formModel: WrapperForm;
 
-  formModel: FormGroup;
-
-  pvalPreselection: number = 0.01;
+  //  TODO: remove this Bhaviorsubject
+  formDisabled$ = new BehaviorSubject<Boolean>(false);
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
-    this.formDisabled$ = new BehaviorSubject<Boolean>(false);
     this.subscriptions = [];
   }
 
+  // Life Cycle Hooks
   ngOnInit(): void {
     this.formModel = this.buildForm();
-    this.setExistingFormInput();
     this.doSubscriptions();
   }
 
-  buildForm() {
-    const formModel = this.builder.group({
-      repeats: [5000, [Validators.required, Validators.min(0)]],
-      folds: [5000, [Validators.required, Validators.min(0)]],
-    }) as WrapperForm;
-    return formModel;
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
-  setExistingFormInput() {
-    const wrapperConfig = this.workflow.ofsData.configData.wrapperConfig;
-    if (wrapperConfig?.folds && wrapperConfig?.repeats) {
-      this.formModel.patchValue(this.workflow.ofsData.configData.wrapperConfig);
-      this.disableForm();
-    }
-  }
-
+  //  Subscriptions
   doSubscriptions() {
+    // form depends on values in ofsdata - react to changes
     this.subscriptions.push(
-      this.formDisabled$.subscribe((disabled) => {
-        disabled ? this.formModel.disable() : this.formModel.enable();
+      this.workflow.ofsData$.subscribe((ofsData) => {
+        this.setExistingFormInput(ofsData);
       })
     );
   }
 
-  isLoading(): Boolean {
-    return this.workflow.loading;
+  // Methods
+  // check if ofsdata contains values relevant to this form
+  setExistingFormInput(ofsData: OFSData) {
+    const wrapperConfig = ofsData.configData.wrapperConfig;
+    if (
+      wrapperConfig?.folds !== undefined &&
+      wrapperConfig?.repeats !== undefined &&
+      wrapperConfig.folds !== 0
+    ) {
+      //  yes: update form values and disable changes
+      this.formModel.patchValue(wrapperConfig);
+      this.disableForm();
+      return;
+    }
+    // no: allow changes of form
+    this.enableForm();
+  }
+
+  buildForm() {
+    const formModel = this.builder.group({
+      repeats: [1000, [Validators.required, Validators.min(0)]],
+      folds: [5, [Validators.required, Validators.min(0)]],
+    }) as WrapperForm;
+    return formModel;
   }
 
   submitWrapperConfig() {
-    this.disableForm();
     const wrapperConfig = this.formModel.getRawValue();
     this.workflow.submitConfig(wrapperConfig, Endpoints.WRAPPER_INPUT);
-    this.submit.emit();
   }
 }

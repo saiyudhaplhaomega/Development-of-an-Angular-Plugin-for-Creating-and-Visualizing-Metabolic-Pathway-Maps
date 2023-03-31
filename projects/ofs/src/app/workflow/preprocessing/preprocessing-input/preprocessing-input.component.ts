@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,6 +14,7 @@ import {
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { InputFormComponent } from 'shared-lib';
 import { Endpoints } from '../../../models/endpoints.model';
+import { OFSData } from '../../models/ofs-data.model';
 import { PreprocessingConfigForm } from '../../models/preprocessing.model';
 import { WorkflowService } from '../../services/workflow.service';
 
@@ -18,32 +25,47 @@ import { WorkflowService } from '../../services/workflow.service';
 })
 export class PreprocessingInputComponent
   extends InputFormComponent
-  implements OnInit
+  implements OnInit, OnDestroy
 {
-  @Output() submit = new EventEmitter<any>();
+  formModel: PreprocessingConfigForm;
 
-  formModel: FormGroup;
-
-  controlGroupName: string;
-  testGroupOptions: string[];
+  // TODO: remove this behaviorSubject
+  formDisabled$ = new BehaviorSubject<Boolean>(false);
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
-    this.formDisabled$ = new BehaviorSubject<Boolean>(false);
+
     this.subscriptions = [];
   }
 
+  //  Life Cycle Hooks
   ngOnInit(): void {
-    this.controlGroupName =
-      this.workflow.ofsData.responseData.overviewResponse.controlGroup;
-    this.testGroupOptions =
-      this.workflow.ofsData.responseData.overviewResponse.testGroups;
-
     this.formModel = this.buildForm();
-    this.setExistingFormInput();
     this.doSubscriptions();
+  }
 
-    this.formModel.get('controlGroup').disable();
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
+  //  Getters and Setters
+  get controlGroupName(): string {
+    return this.workflow.ofsData.responseData.overviewResponse.controlGroup;
+  }
+
+  get testGroupOptions(): string[] {
+    return this.workflow.ofsData.responseData.overviewResponse.testGroups;
+  }
+
+  //  Methods
+  doSubscriptions() {
+    this.subscriptions.push(
+      this.workflow.ofsData$.subscribe((ofsData) => {
+        this.setExistingFormInput(ofsData);
+      })
+    );
   }
 
   buildForm() {
@@ -62,37 +84,23 @@ export class PreprocessingInputComponent
     return formModel;
   }
 
-  setExistingFormInput() {
-    if (
-      this.workflow.ofsData.configData.preprocessingConfig?.testGroup !==
-      undefined
-    ) {
-      this.formModel.patchValue(
-        this.workflow.ofsData.configData.preprocessingConfig
-      );
+  setExistingFormInput(ofsData: OFSData) {
+    if (ofsData.configData.preprocessingConfig?.testGroup !== undefined) {
+      //  yes: update form values and disable changes
+      this.formModel.patchValue(ofsData.configData.preprocessingConfig);
       this.disableForm();
+      return;
     }
+    // no: allow changes of form
+    this.enableForm();
+    this.formModel.get('controlGroup').disable();
   }
 
   submitPreprocessingConfig() {
-    this.disableForm();
     const preprocessingConfig = this.formModel.getRawValue();
     this.workflow.submitConfig(
       preprocessingConfig,
       Endpoints.PREPROCESSING_INPUT
-    );
-    this.submit.emit();
-  }
-
-  isLoading(): Boolean {
-    return this.workflow.loading;
-  }
-
-  doSubscriptions() {
-    this.subscriptions.push(
-      this.formDisabled$.subscribe((disabled) => {
-        disabled ? this.formModel.disable() : this.formModel.enable();
-      })
     );
   }
 }

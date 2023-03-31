@@ -14,10 +14,7 @@ export class DataOverviewComponent implements AfterViewInit {
 
   // Life Cycle Hooks
   ngAfterViewInit() {
-    if (
-      this.workflow.ofsData.responseData.overviewResponse?.classDistribution !==
-      undefined
-    ) {
+    if (this.hasResults()) {
       this.switchToResults();
     }
   }
@@ -25,5 +22,12 @@ export class DataOverviewComponent implements AfterViewInit {
   // Methods
   switchToResults() {
     this.tabs.selectedIndex = 1;
+  }
+
+  hasResults() {
+    return (
+      this.workflow.ofsData.responseData.overviewResponse?.classDistribution !==
+      undefined
+    );
   }
 }

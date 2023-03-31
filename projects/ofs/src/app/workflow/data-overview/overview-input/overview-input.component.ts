@@ -71,9 +71,10 @@ export class OverviewInputComponent
 
   // check if ofsdata contains values relevant to this form
   setExistingFormInput(ofsData: OFSData) {
-    if (ofsData.configData.overviewConfig?.groups !== undefined) {
+    const overviewConfig = ofsData.configData.overviewConfig;
+    if (overviewConfig?.groups !== undefined) {
       //  yes: update form values and disable changes
-      this.formModel.patchValue(ofsData.configData.overviewConfig);
+      this.formModel.patchValue(overviewConfig);
       this.disableForm();
       return;
     }

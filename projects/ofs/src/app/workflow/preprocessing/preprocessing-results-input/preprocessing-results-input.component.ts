@@ -28,6 +28,5 @@ export class PreprocessingResultsInputComponent
   ngOnDestroy() {
     this.workflow.ofsData.configData.wrapperConfig.pvalCutoff =
       this.pvalCutoff.value;
-    console.log(this.workflow.ofsData.configData.wrapperConfig.pvalCutoff);
   }
 }

@@ -1,4 +1,4 @@
 <ofs-result-displaying
-  [imageLinks]="preprocessingImages"
+  [imageLinks]="preprocessingImages$ | async"
   [isLoading]="isLoading()"
 ></ofs-result-displaying>
