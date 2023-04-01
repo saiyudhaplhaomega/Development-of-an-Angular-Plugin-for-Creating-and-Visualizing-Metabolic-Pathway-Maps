@@ -29,9 +29,6 @@ export class PreprocessingInputComponent
 {
   formModel: PreprocessingConfigForm;
 
-  // TODO: remove this behaviorSubject
-  formDisabled$ = new BehaviorSubject<Boolean>(false);
-
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);
 

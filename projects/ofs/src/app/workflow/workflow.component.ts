@@ -23,6 +23,7 @@ export class WorkflowComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.workflow.createOfsJob();
+    // this.workflow.setDummyConfig();
     this.updateWorkflowStep(0);
   }
 

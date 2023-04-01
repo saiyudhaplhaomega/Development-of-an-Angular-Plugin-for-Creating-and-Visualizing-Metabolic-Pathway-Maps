@@ -67,7 +67,7 @@
 
       <div *ngIf="i > 1" class="mb-4">
         <button
-          [disabled]="formDisabled$ | async"
+          [disabled]="formModel.disabled"
           mat-flat-button
           color="primary"
           type="button"

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CustomValidators } from './custom-validators';
 
 @Component({
@@ -11,11 +11,14 @@ export class InputFormComponent {
   @Output() submit = new EventEmitter<any>();
 
   public formModel: FormGroup;
-  // TODO: remove formDisabled behaviorsubject
-  public formDisabled$: BehaviorSubject<Boolean>;
+  public formDisabledSubject$ = new BehaviorSubject<boolean>(false);
   public subscriptions: Subscription[];
 
   constructor(public builder: FormBuilder) {}
+
+  get formDisabled$(): Observable<boolean> {
+    return this.formDisabledSubject$;
+  }
 
   public getErrorMessage(control: AbstractControl): string {
     if (control.invalid) {
@@ -25,12 +28,12 @@ export class InputFormComponent {
   }
 
   public disableForm() {
-    this.formDisabled$.next(true);
+    this.formDisabledSubject$.next(true);
     this.formModel.disable();
   }
 
   public enableForm() {
-    this.formDisabled$.next(false);
+    this.formDisabledSubject$.next(false);
     this.formModel.enable();
   }
 }

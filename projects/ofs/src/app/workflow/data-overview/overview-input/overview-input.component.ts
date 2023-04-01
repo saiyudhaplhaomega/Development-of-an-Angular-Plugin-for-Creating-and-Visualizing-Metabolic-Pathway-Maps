@@ -26,8 +26,6 @@ export class OverviewInputComponent
 {
   groupSelectionOptions = Object.values(GroupSelectionOptions);
   formModel: OverviewInputForm;
-  //  TODO: remove this Bhaviorsubject
-  formDisabled$ = new BehaviorSubject<Boolean>(false);
 
   constructor(public builder: FormBuilder, private workflow: WorkflowService) {
     super(builder);

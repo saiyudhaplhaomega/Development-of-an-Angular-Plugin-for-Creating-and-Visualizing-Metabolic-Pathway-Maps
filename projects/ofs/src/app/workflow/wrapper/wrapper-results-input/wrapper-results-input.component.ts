@@ -14,48 +14,6 @@ import { Endpoints } from '../../../models/endpoints.model';
   styleUrls: ['./wrapper-results-input.component.scss'],
 })
 export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
-  // listOfFeatures: Feature[] = [
-  //   { featureId: 'feature1' },
-  //   { featureId: 'feature2' },
-  //   { featureId: 'feature3' },
-  //   { featureId: 'feature4' },
-  //   { featureId: 'feature5' },
-  //   { featureId: 'feature6' },
-  //   { featureId: 'feature7' },
-  //   { featureId: 'feature8' },
-  //   { featureId: 'feature9' },
-  //   { featureId: 'feature10' },
-  //   { featureId: 'feature11' },
-  //   { featureId: 'feature12' },
-  // ];
-  // listOfFeatureProfiles: FeatureProfile[] = [
-  //   {
-  //     profileId: 'profile1',
-  //     features: [{ featureId: 'feature1' }, { featureId: 'feature2' }],
-  //   },
-  //   {
-  //     profileId: 'profile2',
-  //     features: [
-  //       { featureId: 'feature3' },
-  //       { featureId: 'feature4' },
-  //       { featureId: 'feature5' },
-  //       { featureId: 'feature6' },
-  //       { featureId: 'feature7' },
-  //     ],
-  //   },
-  //   {
-  //     profileId: 'profile3',
-  //     features: [
-  //       { featureId: 'feature7' },
-  //       { featureId: 'feature8' },
-  //       { featureId: 'feature9' },
-  //       { featureId: 'feature10' },
-  //       { featureId: 'feature11' },
-  //       { featureId: 'feature12' },
-  //     ],
-  //   },
-  // ];
-
   displayedColumns: string[] = ['select', 'featureID'];
   dataSource = new MatTableDataSource<Feature>();
   selection = new SelectionModel<string>(true, []);
@@ -73,8 +31,9 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.workflow.featureSubject.subscribe((features) => {
-      this.dataSource.data = features;
+    this.workflow.ofsData$.subscribe((features) => {
+      this.dataSource.data =
+        features.responseData.wrapperResponse.featureSelection;
     });
   }
 
@@ -109,6 +68,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
     );
 
     this.selection.select(...profileFeatures);
+
+    console.log(this.selection);
   }
 
   applyFeatureProfile() {
@@ -119,6 +80,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
       this.selection.select(...profileFeatures);
     }
+
+    console.log(this.selection);
   }
 
   generateResults() {

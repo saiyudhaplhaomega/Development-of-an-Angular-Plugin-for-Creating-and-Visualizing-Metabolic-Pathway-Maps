@@ -8,37 +8,20 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  filter,
-  Observable,
-  repeat,
-  Subscription,
-  take,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 import { cloneDeep } from 'lodash';
 import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
-import { ClassifierConfig, Feature } from '../models/classifier.model';
+import { ClassifierConfig } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
 import { OfsJob } from '../models/ofs-job.model';
-import {
-  OverviewConfig,
-  OverviewConfigForRequest,
-} from '../models/overview.model';
+import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { steps } from '../models/workflow-steps.model';
 import { WrapperConfig } from '../models/wrapper.model';
-
-export type InputConfig =
-  | File
-  | OverviewConfigForRequest
-  | OverviewConfig
-  | PreprocessingConfig
-  | WrapperConfig
-  | ClassifierConfig;
+import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
 
 export interface SimpleMessage {
   message: string;
@@ -50,12 +33,9 @@ export interface SimpleMessage {
 // TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
-
   subscriptions: Subscription[];
 
-  // ofsData: OFSData;
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
-  featureSubject = new BehaviorSubject<Feature[]>([]);
 
   constructor(private http: OfsHttpClientService, private router: Router) {
     this.ofsDataSubject$.next(new OFSData());
@@ -106,6 +86,10 @@ export class WorkflowService {
 
   deleteJobsInStorage(jobs: OfsJob[]) {
     // delete jobs in local storage
+  }
+
+  setDummyConfig() {
+    this.ofsDataSubject$.next(dummyConfig as OFSData);
   }
 
   getJobFromServer(jobId: string) {
@@ -251,10 +235,6 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
-        // TODO: remove Feature Subject
-        this.featureSubject.next(
-          response.responseData.wrapperResponse.featureSelection
-        );
         this.loading = false;
       });
   }
