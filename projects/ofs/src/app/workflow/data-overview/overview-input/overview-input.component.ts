@@ -144,6 +144,6 @@ export class OverviewInputComponent
 
   submitOverviewConfig() {
     const overviewConfig = this.formModel.getRawValue();
-    this.workflow.submitConfig(overviewConfig, Endpoints.OVERVIEW_INPUT);
+    this.workflow.submitOverViewConfig(overviewConfig);
   }
 }

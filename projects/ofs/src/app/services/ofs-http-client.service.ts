@@ -5,10 +5,10 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, filter, Observable, of, repeat, take } from 'rxjs';
+import { filter, Observable, of, repeat, take } from 'rxjs';
+import { get } from 'lodash';
 import { Endpoints, getAdress } from '../models/endpoints.model';
 import { OfsJobState } from '../workflow/models/ofs-job.model';
-import { SimpleMessage } from '../workflow/services/workflow.service';
 import { MultiFileUploadData } from './http-client.service';
 import { UploadProgressService } from './upload-progress.service';
 
@@ -45,14 +45,25 @@ export class OfsHttpClientService {
     });
   }
 
-  repeatedGetObject(
+  /**
+   * repeated post requests to server
+   * @param obj object thats posted
+   * @param checkProperty if this property is available in the response, the request will resolve, else requests will be continued
+   * @param api endpoint
+   * @param params http params
+   * @param delay interval between requests
+   * @returns observable of the response object
+   */
+  repeatedPostObject<T1, T2>(
+    obj: T1,
+    checkProperty: string,
     api: Endpoints,
     params?: HttpParams,
-    delay: number = 2_000
-  ): Observable<SimpleMessage> {
-    return this.getObject<SimpleMessage>(api, params).pipe(
+    delay: number = 5_000
+  ): Observable<T2> {
+    return this.postObject<T1, T2>(obj, api, params).pipe(
       repeat({ delay: delay }),
-      filter((res: SimpleMessage) => res.message === 'OK.'),
+      filter((res: T2) => get(res, checkProperty) !== undefined),
       take(1)
     );
   }

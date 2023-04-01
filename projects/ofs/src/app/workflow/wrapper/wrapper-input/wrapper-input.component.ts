@@ -76,6 +76,6 @@ export class WrapperInputComponent
 
   submitWrapperConfig() {
     const wrapperConfig = this.formModel.getRawValue();
-    this.workflow.submitConfig(wrapperConfig, Endpoints.WRAPPER_INPUT);
+    this.workflow.submitWrapperConfig(wrapperConfig);
   }
 }

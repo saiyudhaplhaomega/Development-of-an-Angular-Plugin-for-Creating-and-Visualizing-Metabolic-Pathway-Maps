@@ -7,17 +7,17 @@
  */
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   filter,
   Observable,
   repeat,
-  retry,
   Subscription,
   take,
-  tap,
 } from 'rxjs';
+import { DeepReadonly } from 'ts-essentials';
+import { cloneDeep } from 'lodash';
 import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from '../../services/http-client.service';
 import { OfsHttpClientService } from '../../services/ofs-http-client.service';
@@ -47,6 +47,7 @@ export interface SimpleMessage {
 @Injectable({
   providedIn: 'any',
 })
+// TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
 
@@ -61,8 +62,19 @@ export class WorkflowService {
   }
 
   // use this getter if you only need the current value
-  get ofsData() {
+  get ofsData(): DeepReadonly<OFSData> {
     return this.ofsDataSubject$.value;
+  }
+
+  get ofsDataClone(): OFSData {
+    return cloneDeep(this.ofsData);
+  }
+
+  set wrapperInputConfigPval(value: number) {
+    const newData = this.ofsDataClone;
+    newData.configData.wrapperConfig.pvalCutoff = value;
+
+    this.ofsDataSubject$.next(newData);
   }
 
   // use this getter if you want to react to changes of the data object
@@ -126,183 +138,155 @@ export class WorkflowService {
       });
   }
 
-  // TODO: submit config as overloaded method?
   // TODO: Oveviewconfig.data is not included in response from server, remove from object for consistency
-  submitConfig(config: InputConfig, api: Endpoints) {
+  submitOverViewConfig(config: OverviewConfig) {
     this.loading = true;
+    const currentOfsData = this.ofsDataClone;
 
-    const currentOfsData = this.ofsDataSubject$.value;
+    currentOfsData.configData.overviewConfig = config;
+    this.ofsDataSubject$.next(currentOfsData);
 
-    switch (api) {
-      case Endpoints.OVERVIEW_INPUT:
-        currentOfsData.configData.overviewConfig = config as OverviewConfig;
-        this.ofsDataSubject$.next(currentOfsData);
+    const configFile = new File(
+      [JSON.stringify(this.ofsDataSubject$.value)],
+      'config'
+    );
 
-        const configFile = new File(
-          [JSON.stringify(this.ofsDataSubject$.value)],
-          'config'
+    const filesToUpload: MultiFileUploadData = {
+      files: [
+        {
+          uploadFile: config.data,
+          fileID: 'inputCSV',
+        },
+        {
+          uploadFile: configFile,
+          fileID: 'inputJSON',
+        },
+      ],
+      httpParameters: new HttpParams(),
+    };
+
+    this.http
+      .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+      });
+
+    this.http
+      .repeatedPostObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        'responseData.overviewResponse.dataSparsity',
+        Endpoints.OVERVIEW_RESOURCE_AVAIL,
+        new HttpParams()
+      )
+      .subscribe((response: OFSData) => {
+        // TODO: set testgroup and control group names on the server!
+        response.responseData.overviewResponse.testGroups =
+          this.ofsData.configData.overviewConfig.groups
+            .slice(1)
+            .map((group) => {
+              return group.groupName;
+            });
+        response.responseData.overviewResponse.controlGroup =
+          this.ofsData.configData.overviewConfig.groups[0].groupName;
+        this.ofsDataSubject$.next(response);
+        this.loading = false;
+      });
+  }
+
+  submitPreprocessingConfig(config: PreprocessingConfig) {
+    this.loading = true;
+    const currentOfsData = this.ofsDataClone;
+
+    currentOfsData.configData.preprocessingConfig = config;
+    this.ofsDataSubject$.next(currentOfsData);
+
+    this.http
+      .postObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        Endpoints.PREPROCESSING_INPUT
+      )
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+      });
+
+    this.http
+      .repeatedPostObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        'responseData.preprocessingResponse.predictivePerformance',
+        Endpoints.PREPROCESSING_RESOURCE_AVAIL,
+        new HttpParams()
+      )
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+        this.loading = false;
+      });
+  }
+
+  submitWrapperConfig(config: WrapperConfig) {
+    this.loading = true;
+    const currentOfsData = this.ofsDataClone;
+    const incompleteConfig = config;
+
+    incompleteConfig.pvalCutoff =
+      currentOfsData.configData.wrapperConfig.pvalCutoff;
+
+    currentOfsData.configData.wrapperConfig = incompleteConfig;
+    this.ofsDataSubject$.next(currentOfsData);
+
+    this.http
+      .postObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        Endpoints.WRAPPER_INPUT
+      )
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+      });
+
+    this.http
+      .repeatedPostObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        'responseData.wrapperResponse.featureSelection',
+        Endpoints.WRAPPER_RESOURCE_AVAIL,
+        new HttpParams()
+      )
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+        // TODO: remove Feature Subject
+        this.featureSubject.next(
+          response.responseData.wrapperResponse.featureSelection
         );
+        this.loading = false;
+      });
+  }
 
-        console.log(JSON.stringify(this.ofsDataSubject$.value));
+  submitClassifierConfig(config: ClassifierConfig) {
+    this.setRoute(3);
+    this.loading = true;
+    const currentOfsData = this.ofsDataClone;
 
-        const filesToUpload: MultiFileUploadData = {
-          files: [
-            {
-              uploadFile: (config as OverviewConfig).data,
-              fileID: 'inputCSV',
-            },
-            {
-              uploadFile: configFile,
-              fileID: 'inputJSON',
-            },
-          ],
-          httpParameters: new HttpParams(),
-        };
+    currentOfsData.configData.classifierConfig = config;
+    this.ofsDataSubject$.next(currentOfsData);
 
-        this.http
-          .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-          });
+    this.http
+      .postObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        Endpoints.CLASSIFIER_INPUT,
+        new HttpParams()
+      )
+      .subscribe((response) => {
+        this.ofsDataSubject$.next(response);
+      });
 
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.OVERVIEW_RESOURCE_AVAIL,
-            new HttpParams()
-          )
-          .pipe(
-            repeat({ delay: 5_000 }),
-            filter(
-              (res: OFSData) =>
-                res.responseData?.overviewResponse.dataSparsity !== undefined
-            ),
-            take(1)
-          )
-          .subscribe((response: OFSData) => {
-            // TODO: set testgroup and control group names on the server!
-            response.responseData.overviewResponse.testGroups =
-              currentOfsData.configData.overviewConfig.groups
-                .slice(1)
-                .map((group) => {
-                  return group.groupName;
-                });
-            response.responseData.overviewResponse.controlGroup =
-              currentOfsData.configData.overviewConfig.groups[0].groupName;
-            this.ofsDataSubject$.next(response);
-            this.loading = false;
-          });
-        break;
-
-      case Endpoints.PREPROCESSING_INPUT:
-        currentOfsData.configData.preprocessingConfig =
-          config as PreprocessingConfig;
-        this.ofsDataSubject$.next(currentOfsData);
-
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.PREPROCESSING_INPUT
-          )
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-          });
-
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.PREPROCESSING_RESOURCE_AVAIL,
-            new HttpParams()
-          )
-          .pipe(
-            repeat({ delay: 5_000 }),
-            filter(
-              (res: OFSData) =>
-                res.responseData?.preprocessingResponse
-                  .predictivePerformance !== undefined
-            ),
-            take(1)
-          )
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-            this.loading = false;
-          });
-        break;
-
-      case Endpoints.WRAPPER_INPUT:
-        const incompleteConfig = config as WrapperConfig;
-        incompleteConfig.pvalCutoff =
-          currentOfsData.configData.wrapperConfig.pvalCutoff;
-        currentOfsData.configData.wrapperConfig = incompleteConfig;
-        this.ofsDataSubject$.next(currentOfsData);
-
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.WRAPPER_INPUT
-          )
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-          });
-
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.WRAPPER_RESOURCE_AVAIL,
-            new HttpParams()
-          )
-          .pipe(
-            repeat({ delay: 5_000 }),
-            filter(
-              (res: OFSData) =>
-                res.responseData?.wrapperResponse.featureSelection !== undefined
-            ),
-            take(1)
-          )
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-            this.featureSubject.next(
-              response.responseData.wrapperResponse.featureSelection
-            );
-            this.loading = false;
-          });
-        break;
-
-      case Endpoints.CLASSIFIER_INPUT:
-        currentOfsData.configData.classifierConfig = config as ClassifierConfig;
-        this.ofsDataSubject$.next(currentOfsData);
-        // this.router.navigate(['workflow', 'results']);
-
-        // TODO post
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.CLASSIFIER_INPUT,
-            new HttpParams()
-          )
-          .subscribe((response) => {
-            this.ofsDataSubject$.next(response);
-          });
-
-        this.http
-          .postObject<OFSData, OFSData>(
-            this.ofsDataSubject$.value,
-            Endpoints.CLASSIFIER_RESOURCES,
-            new HttpParams()
-          )
-          .pipe(
-            repeat({ delay: 2_000 }),
-            filter(
-              (res: OFSData) =>
-                res.responseData?.classifierResponse.pcaImage !== undefined
-            ),
-            take(1)
-          )
-          .subscribe((response: OFSData) => {
-            this.ofsDataSubject$.next(response);
-            this.loading = false;
-          });
-        break;
-    }
+    this.http
+      .repeatedPostObject<OFSData, OFSData>(
+        this.ofsDataSubject$.value,
+        'responseData.classifierResponse.pcaImage',
+        Endpoints.CLASSIFIER_RESOURCES,
+        new HttpParams()
+      )
+      .subscribe((response: OFSData) => {
+        this.ofsDataSubject$.next(response);
+        this.loading = false;
+      });
   }
 }

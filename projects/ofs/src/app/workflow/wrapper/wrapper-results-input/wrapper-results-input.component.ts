@@ -74,8 +74,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.workflow.featureSubject.subscribe((features) => {
-      this.dataSource.data = features
-    })
+      this.dataSource.data = features;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -125,6 +125,8 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
     const selectedFeatures = this.dataSource.data.filter((feature) =>
       this.selection.selected.includes(feature.featureID)
     );
-    this.workflow.submitConfig({selectedFeatures: selectedFeatures}, Endpoints.CLASSIFIER_INPUT);
+    this.workflow.submitClassifierConfig({
+      selectedFeatures: selectedFeatures,
+    });
   }
 }

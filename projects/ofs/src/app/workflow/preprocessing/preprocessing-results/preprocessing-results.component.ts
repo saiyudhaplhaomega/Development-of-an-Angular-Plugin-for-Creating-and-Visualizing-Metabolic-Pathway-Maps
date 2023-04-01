@@ -9,7 +9,7 @@ import { PreprocessingResponse } from '../../../models/preprocessing-response.mo
   templateUrl: './preprocessing-results.component.html',
   styleUrls: ['./preprocessing-results.component.scss'],
 })
-export class PreprocessingResultsComponent implements OnInit {
+export class PreprocessingResultsComponent {
   preprocessingImages$: Observable<string[]>;
 
   constructor(private workflow: WorkflowService) {
@@ -21,8 +21,6 @@ export class PreprocessingResultsComponent implements OnInit {
       // output: observable of image urls
     );
   }
-
-  ngOnInit(): void {}
 
   getImageLinks(data: PreprocessingResponse): string[] {
     if (!this.checkForOvervieImages(data)) {

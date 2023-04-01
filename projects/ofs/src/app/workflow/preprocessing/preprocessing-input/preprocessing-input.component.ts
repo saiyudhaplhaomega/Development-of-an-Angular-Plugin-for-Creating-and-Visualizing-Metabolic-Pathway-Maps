@@ -55,7 +55,7 @@ export class PreprocessingInputComponent
     return this.workflow.ofsData.responseData.overviewResponse.controlGroup;
   }
 
-  get testGroupOptions(): string[] {
+  get testGroupOptions(): Readonly<string[]> {
     return this.workflow.ofsData.responseData.overviewResponse.testGroups;
   }
 
@@ -98,9 +98,6 @@ export class PreprocessingInputComponent
 
   submitPreprocessingConfig() {
     const preprocessingConfig = this.formModel.getRawValue();
-    this.workflow.submitConfig(
-      preprocessingConfig,
-      Endpoints.PREPROCESSING_INPUT
-    );
+    this.workflow.submitPreprocessingConfig(preprocessingConfig);
   }
 }
