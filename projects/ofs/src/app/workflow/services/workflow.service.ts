@@ -7,7 +7,6 @@
  */
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 import { cloneDeep } from 'lodash';
@@ -19,9 +18,10 @@ import { OFSData } from '../models/ofs-data.model';
 import { OfsJob } from '../models/ofs-job.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
-import { steps } from '../models/workflow-steps.model';
 import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
+import { StepperService } from './stepper.service';
+import { ResponseData } from '../models/ofs-data.model';
 
 export interface SimpleMessage {
   message: string;
@@ -37,7 +37,10 @@ export class WorkflowService {
 
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
 
-  constructor(private http: OfsHttpClientService, private router: Router) {
+  constructor(
+    private http: OfsHttpClientService,
+    private stepperService: StepperService
+  ) {
     this.ofsDataSubject$.next(new OFSData());
   }
 
@@ -46,7 +49,7 @@ export class WorkflowService {
     return this.ofsDataSubject$.value;
   }
 
-  get ofsDataClone(): OFSData {
+  private get ofsDataClone(): OFSData {
     return cloneDeep(this.ofsData);
   }
 
@@ -62,20 +65,6 @@ export class WorkflowService {
     return this.ofsDataSubject$;
   }
 
-  getResourceUrls(resources: string[]) {
-    const urls = [];
-    for (let resource of resources) {
-      urls.push(
-        'http://localhost:8080/' + this.ofsData.job.jobId + '/' + resource
-      );
-    }
-    return urls;
-  }
-
-  setRoute(selectedIndex: number) {
-    return this.router.navigate(['workflow', steps[selectedIndex].route]);
-  }
-
   loadJobsFromStorage() {
     // load ids of created jobs from local storage
   }
@@ -89,7 +78,29 @@ export class WorkflowService {
   }
 
   setDummyConfig() {
-    this.ofsDataSubject$.next(dummyConfig as OFSData);
+    const existingConfig = dummyConfig as OFSData;
+    this.setCompletedSteps(existingConfig.responseData);
+    this.ofsDataSubject$.next(existingConfig);
+  }
+
+  setCompletedSteps(responseData: ResponseData) {
+    if (responseData.overviewResponse?.classDistribution !== undefined) {
+      this.stepperService.setStepComplete(0);
+    }
+
+    if (
+      responseData.preprocessingResponse?.predictivePerformance !== undefined
+    ) {
+      this.stepperService.setStepComplete(1);
+    }
+
+    if (responseData.wrapperResponse?.wrapperSingleMolecule !== undefined) {
+      this.stepperService.setStepComplete(2);
+    }
+
+    if (responseData.classifierResponse?.pcaImage !== undefined) {
+      this.stepperService.setStepComplete(3);
+    }
   }
 
   getJobFromServer(jobId: string) {
@@ -173,6 +184,7 @@ export class WorkflowService {
         response.responseData.overviewResponse.controlGroup =
           this.ofsData.configData.overviewConfig.groups[0].groupName;
         this.ofsDataSubject$.next(response);
+        this.stepperService.setStepComplete(0);
         this.loading = false;
       });
   }
@@ -202,6 +214,7 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
+        this.stepperService.setStepComplete(1);
         this.loading = false;
       });
   }
@@ -235,12 +248,12 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
+        this.stepperService.setStepComplete(2);
         this.loading = false;
       });
   }
 
   submitClassifierConfig(config: ClassifierConfig) {
-    this.setRoute(3);
     this.loading = true;
     const currentOfsData = this.ofsDataClone;
 
@@ -266,7 +279,18 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
+        this.stepperService.setStepComplete(3);
         this.loading = false;
       });
+  }
+
+  getResourceUrls(resources: string[]) {
+    const urls = [];
+    for (let resource of resources) {
+      urls.push(
+        'http://localhost:8080/' + this.ofsData.job.jobId + '/' + resource
+      );
+    }
+    return urls;
   }
 }

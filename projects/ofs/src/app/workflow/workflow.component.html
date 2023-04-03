@@ -1,15 +1,16 @@
-{{ OFSData | json }}
+<!-- {{ OFSData | json }} -->
 
 <mat-card class="m-4">
   <mat-card-content>
     <mat-stepper
+      [selectedIndex]="(currentStep$ | async).index"
       [linear]="true"
       #stepper
-      (selectionChange)="updateWorkflowStep($event.selectedIndex)"
+      (selectionChange)="setStep($event.selectedIndex)"
     >
       <mat-step
-        *ngFor="let step of steps"
-        [completed]="isCompleted(step)"
+        *ngFor="let step of steps; let i = index"
+        [completed]="(completedSteps$ | async)[i]"
         [editable]="true"
       >
         <ng-template matStepLabel>{{ step.label }}</ng-template>
@@ -22,7 +23,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        {{ currentStep?.label }}
+        {{ (currentStep$ | async).label }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -30,16 +31,16 @@
 
       <div class="flex flex-row justify-between">
         <button
-          [disabled]="!(allowBtnPrev$ | async)"
+          [disabled]="!(allowPrev$ | async)"
           mat-button
-          (click)="onButtonNavigate('previous')"
+          (click)="prevStep()"
         >
           previous step
         </button>
         <button
           mat-button
-          (click)="onButtonNavigate('next')"
-          [disabled]="!(allowBtnNext$ | async)"
+          (click)="nextStep()"
+          [disabled]="!(allowNext$ | async)"
         >
           next step
         </button>

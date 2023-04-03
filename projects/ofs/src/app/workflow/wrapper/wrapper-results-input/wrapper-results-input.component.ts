@@ -3,10 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Feature, FeatureProfile } from '../../models/classifier.model';
 import { WorkflowService } from '../../services/workflow.service';
-import { Endpoints } from '../../../models/endpoints.model';
 
 @Component({
   selector: 'ofs-wrapper-results-input',
@@ -68,8 +67,6 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
     );
 
     this.selection.select(...profileFeatures);
-
-    console.log(this.selection);
   }
 
   applyFeatureProfile() {
@@ -80,8 +77,6 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
 
       this.selection.select(...profileFeatures);
     }
-
-    console.log(this.selection);
   }
 
   generateResults() {

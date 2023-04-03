@@ -46,8 +46,8 @@ export class WorkflowGuard implements CanActivate {
     return tree;
   }
 
-  allowNavigation(route: string, workflow: WorkflowService) {
-    switch (route) {
+  allowNavigation(selectedRoute: string, workflow: WorkflowService) {
+    switch (selectedRoute) {
       case WorkflowRoutes.OVERVIEW:
         return true;
       case WorkflowRoutes.PREPROCESSING:
@@ -62,7 +62,7 @@ export class WorkflowGuard implements CanActivate {
         );
       case WorkflowRoutes.RESULTS:
         return (
-          workflow.ofsData.responseData.wrapperResponse?.wrapperPanel !==
+          workflow.ofsData.responseData.classifierResponse?.pcaImage !==
           undefined
         );
     }
