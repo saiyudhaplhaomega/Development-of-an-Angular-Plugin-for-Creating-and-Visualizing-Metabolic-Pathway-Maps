@@ -79,26 +79,27 @@ export class WorkflowService {
 
   setDummyConfig() {
     const existingConfig = dummyConfig as OFSData;
-    this.setCompletedSteps(existingConfig.responseData);
+    this.setCompletedSteps(existingConfig);
     this.ofsDataSubject$.next(existingConfig);
   }
 
-  setCompletedSteps(responseData: ResponseData) {
-    if (responseData.overviewResponse?.classDistribution !== undefined) {
+  setCompletedSteps(data: OFSData) {
+    if (data.responseData.overviewResponse?.classDistribution !== undefined) {
       this.stepperService.setStepComplete(0);
     }
 
     if (
-      responseData.preprocessingResponse?.predictivePerformance !== undefined
+      data.responseData.preprocessingResponse?.predictivePerformance !==
+      undefined
     ) {
       this.stepperService.setStepComplete(1);
     }
 
-    if (responseData.wrapperResponse?.wrapperSingleMolecule !== undefined) {
+    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
       this.stepperService.setStepComplete(2);
     }
 
-    if (responseData.classifierResponse?.pcaImage !== undefined) {
+    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
       this.stepperService.setStepComplete(3);
     }
   }
@@ -248,7 +249,6 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(2);
         this.loading = false;
       });
   }
@@ -268,6 +268,8 @@ export class WorkflowService {
       )
       .subscribe((response) => {
         this.ofsDataSubject$.next(response);
+        this.stepperService.setStepComplete(2);
+        this.stepperService.setStep(3);
       });
 
     this.http

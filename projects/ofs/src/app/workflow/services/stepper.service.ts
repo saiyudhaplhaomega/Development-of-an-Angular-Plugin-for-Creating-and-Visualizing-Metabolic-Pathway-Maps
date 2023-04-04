@@ -15,21 +15,16 @@ import { WorkflowRoutes } from '../models/workflow-routes.model';
 export class StepperService {
   private readonly _workflowSteps: Step[];
   private readonly _stepNumber: number;
-  private currentStepSubject$: BehaviorSubject<Step>;
-  private allowPrevSubject$: BehaviorSubject<boolean>;
-  private allowNextSubject$: BehaviorSubject<boolean>;
-  private completedStepsSubject$: BehaviorSubject<boolean[]>;
+  private _currentStep$: BehaviorSubject<Step>;
+  private _completedSteps$: BehaviorSubject<boolean[]>;
 
   constructor(private router: Router) {
     this._workflowSteps = steps;
     this._stepNumber = steps.length;
-
-    this.currentStepSubject$ = new BehaviorSubject(this.workflowSteps[0]);
-    this.completedStepsSubject$ = new BehaviorSubject(
+    this._completedSteps$ = new BehaviorSubject(
       this.workflowSteps.map(() => false)
     );
-    this.allowPrevSubject$ = new BehaviorSubject(false);
-    this.allowNextSubject$ = new BehaviorSubject(true);
+    this._currentStep$ = new BehaviorSubject(this.workflowSteps[0]);
   }
 
   // Getters and Setters
@@ -42,23 +37,29 @@ export class StepperService {
   }
 
   get currentStep$(): Observable<Step> {
-    return this.currentStepSubject$;
+    return this._currentStep$;
   }
 
   get currentIndex(): Readonly<number> {
-    return this.currentStepSubject$.value.index;
+    return this._currentStep$.value.index;
   }
 
   get completedSteps$(): Observable<boolean[]> {
-    return this.completedStepsSubject$;
+    return this._completedSteps$;
   }
 
-  get allowPrev$(): Observable<boolean> {
-    return this.allowPrevSubject$;
+  get allowPrev(): boolean {
+    return (
+      this.currentIndex > 0 &&
+      this._completedSteps$.value[this.currentIndex - 1]
+    );
   }
 
-  get allowNext$(): Observable<boolean> {
-    return this.allowNextSubject$;
+  get allowNext(): boolean {
+    return (
+      this.currentIndex < this._stepNumber - 1 &&
+      this._completedSteps$.value[this.currentIndex]
+    );
   }
 
   // Methods
@@ -67,26 +68,26 @@ export class StepperService {
   }
 
   setStepComplete(index: number) {
-    const completedSteps = this.completedStepsSubject$.value;
-    completedSteps[index] = true;
-    this.completedStepsSubject$.next(completedSteps);
+    const steps = this._completedSteps$.value;
+    steps[index] = true;
+    this._completedSteps$.next(steps);
   }
 
   setStepIncomplete(index: number) {
-    const completedSteps = this.completedStepsSubject$.value;
-    completedSteps[index] = false;
-    this.completedStepsSubject$.next(completedSteps);
+    const steps = this._completedSteps$.value;
+    steps[index] = false;
+    this._completedSteps$.next(steps);
   }
 
   setStep(index: number) {
     this.setRoute(index).then((resolved: boolean) => {
       if (resolved) {
-        this.currentStepSubject$.next(this._workflowSteps[index]);
+        this._currentStep$.next(this._workflowSteps[index]);
       }
     });
   }
 
-  setRoute(index: number) {
+  private setRoute(index: number) {
     return this.router.navigate(['workflow', this._workflowSteps[index].route]);
   }
 }

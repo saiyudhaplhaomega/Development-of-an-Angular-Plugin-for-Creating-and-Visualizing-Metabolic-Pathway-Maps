@@ -62,7 +62,7 @@ export class WorkflowGuard implements CanActivate {
         );
       case WorkflowRoutes.RESULTS:
         return (
-          workflow.ofsData.responseData.classifierResponse?.pcaImage !==
+          workflow.ofsData.configData.classifierConfig?.selectedFeatures !==
           undefined
         );
     }

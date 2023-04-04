@@ -3,10 +3,10 @@
 <mat-card class="m-4">
   <mat-card-content>
     <mat-stepper
-      [selectedIndex]="(currentStep$ | async).index"
       [linear]="true"
       #stepper
       (selectionChange)="setStep($event.selectedIndex)"
+      [selectedIndex]="(currentStep$ | async).index"
     >
       <mat-step
         *ngFor="let step of steps; let i = index"
@@ -19,6 +19,9 @@
   </mat-card-content>
 </mat-card>
 
+{{ (currentStep$ | async).index }}
+{{ stepper.selectedIndex }}
+
 <div class="max-w-xl mx-auto px-4 my-2">
   <mat-card>
     <mat-card-header>
@@ -30,18 +33,10 @@
       <router-outlet></router-outlet>
 
       <div class="flex flex-row justify-between">
-        <button
-          [disabled]="!(allowPrev$ | async)"
-          mat-button
-          (click)="prevStep()"
-        >
+        <button mat-button (click)="prevStep()" [disabled]="!allowPrev">
           previous step
         </button>
-        <button
-          mat-button
-          (click)="nextStep()"
-          [disabled]="!(allowNext$ | async)"
-        >
+        <button mat-button (click)="nextStep()" [disabled]="!allowNext">
           next step
         </button>
       </div>

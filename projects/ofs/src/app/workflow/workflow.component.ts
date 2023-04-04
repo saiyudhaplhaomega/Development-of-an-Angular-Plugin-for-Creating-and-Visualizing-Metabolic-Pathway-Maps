@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Step } from './models/workflow-steps.model';
 import { WorkflowService } from './services/workflow.service';
@@ -9,11 +9,9 @@ import { StepperService } from './services/stepper.service';
   templateUrl: './workflow.component.html',
   styleUrls: ['./workflow.component.scss'],
 })
-export class WorkflowComponent {
+export class WorkflowComponent implements OnInit {
   public currentStep$: Observable<Step>;
   public completedSteps$: Observable<boolean[]>;
-  public allowPrev$: Observable<boolean>;
-  public allowNext$: Observable<boolean>;
 
   constructor(
     private workflow: WorkflowService,
@@ -21,18 +19,26 @@ export class WorkflowComponent {
   ) {
     this.currentStep$ = this.stepperService.currentStep$;
     this.completedSteps$ = this.stepperService.completedSteps$;
-    this.allowNext$ = this.stepperService.allowNext$;
-    this.allowPrev$ = this.stepperService.allowPrev$;
   }
+
+  //  TODO: internal tracking of mat stepper for current step doesnt work as expected, implement own stepper
 
   ngOnInit(): void {
     this.stepperService.initialize();
-    this.workflow.createOfsJob();
-    // this.workflow.setDummyConfig();
+    // this.workflow.createOfsJob();
+    this.workflow.setDummyConfig();
   }
 
   get steps() {
     return this.stepperService.workflowSteps;
+  }
+
+  get allowNext() {
+    return this.stepperService.allowNext;
+  }
+
+  get allowPrev() {
+    return this.stepperService.allowPrev;
   }
 
   get OFSData() {
@@ -40,15 +46,19 @@ export class WorkflowComponent {
   }
 
   nextStep() {
-    this.setStep(this.stepperService.currentIndex + 1);
+    if (this.allowNext) {
+      this.setStep(this.stepperService.currentIndex + 1);
+    }
   }
 
   prevStep() {
-    this.setStep(this.stepperService.currentIndex - 1);
+    if (this.allowPrev) {
+      this.setStep(this.stepperService.currentIndex - 1);
+    }
   }
 
   setStep(selectedIndex: number) {
-    console.log('change');
+    console.log(selectedIndex);
     this.stepperService.setStep(selectedIndex);
   }
 }
