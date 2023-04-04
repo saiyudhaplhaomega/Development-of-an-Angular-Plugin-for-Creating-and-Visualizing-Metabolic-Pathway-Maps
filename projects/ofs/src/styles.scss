@@ -49,6 +49,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.workflow-content-container {
+  background: linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12))
+    center/1px 100% no-repeat;
+  @apply grid grid-cols-2 gap-8;
+}
+
 .form-button-grid {
   @apply mb-8 grid grid-cols-2 gap-4;
 }

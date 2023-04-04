@@ -1,4 +1,4 @@
-<mat-tab-group
+<!-- <mat-tab-group
   #tabs
   dynamicHeight
   mat-stretch-tabs="true"
@@ -11,4 +11,13 @@
   <mat-tab label="overview">
     <ofs-overview-results></ofs-overview-results>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
+
+<div class="workflow-content-container">
+  <div class="col-span-1">
+    <ofs-overview-input (submit)="switchToResults()"></ofs-overview-input>
+  </div>
+  <div class="col-span-1">
+    <ofs-overview-results></ofs-overview-results>
+  </div>
+</div>

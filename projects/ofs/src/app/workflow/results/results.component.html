@@ -1,4 +1,8 @@
-<ofs-result-displaying
-  [imageLinks]="classifierImages$ | async"
-  [isLoading]="isLoading()"
-></ofs-result-displaying>
+<div class="workflow-content-container">
+  <div class="col-span-1">
+    <ofs-result-displaying
+      [imageLinks]="classifierImages$ | async"
+      [isLoading]="isLoading()"
+    ></ofs-result-displaying>
+  </div>
+</div>

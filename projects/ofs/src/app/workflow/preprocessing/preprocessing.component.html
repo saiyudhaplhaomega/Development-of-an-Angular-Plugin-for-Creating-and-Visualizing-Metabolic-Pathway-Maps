@@ -1,4 +1,4 @@
-<mat-tab-group
+<!-- <mat-tab-group
   #tabs
   dynamicHeight
   mat-stretch-tabs="true"
@@ -16,4 +16,18 @@
       <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
     </div>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
+
+<div class="workflow-content-container">
+  <div class="col-span-1">
+    <ofs-preprocessing-input
+      (submit)="switchToResults()"
+    ></ofs-preprocessing-input>
+  </div>
+  <div class="col-span-1">
+    <ofs-preprocessing-results></ofs-preprocessing-results>
+    <div *ngIf="hasResults()">
+      <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
+    </div>
+  </div>
+</div>

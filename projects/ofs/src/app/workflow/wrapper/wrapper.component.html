@@ -1,4 +1,4 @@
-<mat-tab-group
+<!-- <mat-tab-group
   #tabs
   dynamicHeight
   mat-stretch-tabs="true"
@@ -14,4 +14,16 @@
       <ofs-wrapper-results-input></ofs-wrapper-results-input>
     </div>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
+
+<div class="workflow-content-container">
+  <div class="col-span-1">
+    <ofs-wrapper-input (submit)="switchToResults()"></ofs-wrapper-input>
+  </div>
+  <div class="col-span-1">
+    <ofs-wrapper-results></ofs-wrapper-results>
+    <div *ngIf="hasResults()">
+      <ofs-wrapper-results-input></ofs-wrapper-results-input>
+    </div>
+  </div>
+</div>
