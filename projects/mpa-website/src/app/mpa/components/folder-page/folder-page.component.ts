@@ -16,6 +16,15 @@ import { ContentComponent } from '../../mpa.component';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { FolderJSONObject } from '../../objects/folderjson';
 
+enum ProteinDBType {
+  FASTA,UNIPROTXML
+}
+class ProteinDBMetadataJSON {
+  originalFileName: String;
+  name: String;
+  dbType: ProteinDBType;  
+}
+
 @Component({
   selector: 'app-folder-page',
   templateUrl: './folder-page.component.html',
@@ -139,24 +148,29 @@ export class FolderPageComponent
 
     dialogRef.afterClosed().subscribe((dialog) => {
       if (dialog.dbName) {
-        const fileData: Filemetadata = {
-          filename: dialog.dbFile.name,
-          fileType: 'fasta',
-          fileUUID: null,
-        };
+        const metaData = new ProteinDBMetadataJSON();
+        metaData.name = dialog.dbName;
+        metaData.originalFileName = dialog.dbFile.name;
 
-        // metadata endpoint, wait for File ID
-        this.uploaderService
-          .postObject<Filemetadata, Filemetadata>(
-            fileData,
-            Endpoints.PROTEINLOADER_METADATA
-          )
-          .subscribe((result) => {
-            if (result != null) {
-              // upload fasta/xml file
-              const params: HttpParams = new HttpParams({
-                fromObject: { jobid: result.fileUUID, name: fileData.filename },
-              });
+        // const fileData: Filemetadata = {
+        //   filename: dialog.dbFile.name,
+        //   fileType: 'fasta',
+        //   fileUUID: null,
+        // };
+
+        // // metadata endpoint, wait for File ID
+        // this.uploaderService
+        //   .postObject<Filemetadata, Filemetadata>(
+        //     fileData,
+        //     Endpoints.PROTEINLOADER_METADATA
+        //   )
+        //   .subscribe((result) => {
+        //     if (result != null) {
+        //       // upload fasta/xml file
+        //       const params: HttpParams = new HttpParams({
+        //         fromObject: { jobid: result.fileUUID, name: fileData.filename },
+        //       });
+
               // this.uploaderService
               //   .postFile(
               //     dialog.dbFile,
@@ -179,13 +193,24 @@ export class FolderPageComponent
               //     }
               //   });
 
+                // let filesToUpload: MultiFileUploadData = {
+                //   files: [],
+                //   fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
+                //   httpParameters: params,
+                // };
+                
                 let filesToUpload: MultiFileUploadData = {
                   files: [],
                   fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
-                  httpParameters: params,
                 };
+
+                const configFile = new File(
+                  [JSON.stringify(metaData)],
+                  'config'
+                );
+                filesToUpload.files.push({uploadFile: configFile, fileID: 'config'})
+                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'protDB'});
                 
-                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'fasta'});
 
                 this.uploaderService.postMultiPartFiles(filesToUpload, Endpoints.PROTEINLOADER_FILEUPLOAD)
                 .subscribe( (result2) => {
@@ -196,19 +221,19 @@ export class FolderPageComponent
                       NodeType.ProteinDB
                     );
                     if(protDBNode !== null) {
-                      protDBNode.uuid = result.fileUUID;
+                      // protDBNode.uuid = result.fileUUID;
                       this.dataService.updateNode(protDBNode);
                     }
                   }
                 });
 
             }
-          });
+         // });
 
         // fileMetaData.filename = dbName;
         // fileMetaData.experimentuuid = this.uuid;
-      }
-    });
+      });
+    //});
 
     // this.uploaderService.postObjDifferentReturnValue(fileMetaData, file.metaDataAdress).subscribe(
     //   result => {
