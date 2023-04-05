@@ -222,22 +222,33 @@ export class DataService2 {
       });
   }
 
-  getFastaData(nodeObj) {
+  // getFastaData(nodeObj) {
+  //   const params: HttpParams = new HttpParams(
+  //     {
+  //       fromObject: {
+  //         jobid: nodeObj.uuid,
+  //       }
+  //     }
+  //   )
+  //   this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
+  //   .subscribe(fastaData => {
+  //     nodeObj.uuid = fastaData.protdb_id;
+  //     nodeObj.description = fastaData.description;
+  //     nodeObj.displayName = fastaData.name;
+  //     nodeObj.creationDate = fastaData.creationdate;
+  //     this.updateNode(nodeObj);
+  //   });
+  // }
+
+  getFastaData(fastaUUID){
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
-          jobid: nodeObj.uuid,
+          jobid: fastaUUID,
         }
       }
     )
-    this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
-    .subscribe(fastaData => {
-      nodeObj.uuid = fastaData.protdb_id;
-      nodeObj.description = fastaData.description;
-      nodeObj.displayName = fastaData.name;
-      nodeObj.creationDate = fastaData.creationdate;
-      this.updateNode(nodeObj);
-    });
+    return this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
   }
 
   updateFastaData(nodeObj) {

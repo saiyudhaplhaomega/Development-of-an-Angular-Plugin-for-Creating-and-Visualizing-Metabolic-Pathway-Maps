@@ -18,7 +18,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
   UUID: string;
   creationDate: string;
   originalFilename: string;
-  proteinCount: string;
+  totalProteins: string;
   description: string;
 
   dataItemOfThisComponent: DataItem;
@@ -37,11 +37,14 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
       // TODO: this._dataMap = items;
     });
     this.UUID = this.dataItemOfThisComponent.uuid;
+    console.log(this.dataItemOfThisComponent)
     this.creationDate = this.dataItemOfThisComponent.creationDate;
     this.description = this.dataItemOfThisComponent.description;
     this.name = this.dataItemOfThisComponent.displayName;
-    //this.dataService.getFastaData(this.UUID);
-    
+    this.dataService.getFastaData(this.UUID).subscribe(fastaData => {
+      this.totalProteins = fastaData.totalProteins.toString();
+      this.originalFilename = fastaData.originalFileName;
+    })
   }
 
   setDescription(){
