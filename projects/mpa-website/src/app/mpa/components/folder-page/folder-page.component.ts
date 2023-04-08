@@ -15,6 +15,16 @@ import { HttpParams } from '@angular/common/http';
 import { ContentComponent } from '../../mpa.component';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { FolderJSONObject } from '../../objects/folderjson';
+import { ProtDBJSONObject } from '../../objects/protdbjson';
+
+enum ProteinDBType {
+  FASTA,UNIPROTXML
+}
+class ProteinDBMetadataJSON {
+  originalFileName: String;
+  name: String;
+  dbType: ProteinDBType;  
+}
 
 @Component({
   selector: 'app-folder-page',
@@ -132,89 +142,46 @@ export class FolderPageComponent
   }
 
   onAddProteinDatabase() {
-    // const fileMetaData = {filename: string, experimentuuid: string};
     const dialogRef = this.dialog.open(ProteinDatabaseDialogComponent, {
       disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((dialog) => {
       if (dialog.dbName) {
-        const fileData: Filemetadata = {
-          filename: dialog.dbFile.name,
-          fileType: 'fasta',
-          fileUUID: null,
-        };
-
-        // metadata endpoint, wait for File ID
-        this.uploaderService
-          .postObject<Filemetadata, Filemetadata>(
-            fileData,
-            Endpoints.PROTEINLOADER_METADATA
-          )
-          .subscribe((result) => {
-            if (result != null) {
-              // upload fasta/xml file
-              const params: HttpParams = new HttpParams({
-                fromObject: { jobid: result.fileUUID, name: fileData.filename },
-              });
-              // this.uploaderService
-              //   .postFile(
-              //     dialog.dbFile,
-              //     Endpoints.PROTEINLOADER_FILEUPLOAD,
-              //     params
-              //   )
-              //   .subscribe((result2) => {
-              //     if (result2 != null) {
-              //       // TODO: executes multiple times, fixed for now on dataservice side
-              //       //this.dataService.addNodeObj(this.id, dialog.dbName, NodeType.ProteinDB, result.fileUUID);
-              //       let protDBNode = this.dataService.createNewDataItem(
-              //         this.dataItemOfThisComponent,
-              //         dialog.dbName,
-              //         NodeType.ProteinDB
-              //       );
-              //       if (protDBNode !== null) {
-              //         protDBNode.uuid = result.fileUUID;
-              //         this.dataService.updateNode(protDBNode);
-              //       }
-              //     }
-              //   });
-
+        const metaData = new ProteinDBMetadataJSON();
+        metaData.name = dialog.dbName;
+        metaData.originalFileName = dialog.dbFile.name;
+                
                 let filesToUpload: MultiFileUploadData = {
                   files: [],
                   fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
-                  httpParameters: params,
                 };
-                
-                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'fasta'});
 
-                this.uploaderService.postMultiPartFiles(filesToUpload, Endpoints.PROTEINLOADER_FILEUPLOAD)
-                .subscribe( (result2) => {
-                  if(result2 != null){
+                const configFile = new File(
+                  [JSON.stringify(metaData)],
+                  'config'
+                );
+                filesToUpload.files.push({uploadFile: configFile, fileID: 'config'})
+                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'protDB'});
+                
+
+                this.uploaderService.postMultiPartFiles<ProtDBJSONObject>(filesToUpload, Endpoints.PROTEINLOADER_FILEUPLOAD)
+                .subscribe( (result) => {
+                  if(result != null){
                     let protDBNode = this.dataService.createNewDataItem(
                       this.dataItemOfThisComponent,
                       dialog.dbName,
                       NodeType.ProteinDB
                     );
                     if(protDBNode !== null) {
-                      protDBNode.uuid = result.fileUUID;
+                      protDBNode.uuid = result.protdb_id;
                       this.dataService.updateNode(protDBNode);
                     }
                   }
                 });
 
             }
-          });
-
-        // fileMetaData.filename = dbName;
-        // fileMetaData.experimentuuid = this.uuid;
-      }
-    });
-
-    // this.uploaderService.postObjDifferentReturnValue(fileMetaData, file.metaDataAdress).subscribe(
-    //   result => {
-    //     console.log(result);
-    //   }
-    // )
+      });
   }
 
   onAddFolder() {
