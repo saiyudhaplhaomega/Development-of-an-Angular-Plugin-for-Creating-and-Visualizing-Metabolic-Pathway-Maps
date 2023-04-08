@@ -58,7 +58,6 @@ export class WorkflowComponent implements OnInit {
   }
 
   setStep(selectedIndex: number) {
-    console.log(selectedIndex);
     this.stepperService.setStep(selectedIndex);
   }
 }

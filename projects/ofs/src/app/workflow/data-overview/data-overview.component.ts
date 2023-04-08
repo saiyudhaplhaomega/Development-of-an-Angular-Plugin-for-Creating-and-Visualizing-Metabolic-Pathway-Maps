@@ -7,27 +7,27 @@ import { WorkflowService } from '../services/workflow.service';
   templateUrl: './data-overview.component.html',
   styleUrls: ['./data-overview.component.scss'],
 })
-export class DataOverviewComponent implements AfterViewInit {
-  @ViewChild('tabs') tabs: MatTabGroup;
+export class DataOverviewComponent {
+  // @ViewChild('tabs') tabs: MatTabGroup;
 
   constructor(private workflow: WorkflowService) {}
 
   // Life Cycle Hooks
-  ngAfterViewInit() {
-    if (this.hasResults()) {
-      this.switchToResults();
-    }
-  }
+  // ngAfterViewInit() {
+  //   if (this.hasResults()) {
+  //     this.switchToResults();
+  //   }
+  // }
 
   // Methods
-  switchToResults() {
-    this.tabs.selectedIndex = 1;
-  }
+  // switchToResults() {
+  //   this.tabs.selectedIndex = 1;
+  // }
 
-  hasResults() {
-    return (
-      this.workflow.ofsData.responseData.overviewResponse?.classDistribution !==
-      undefined
-    );
-  }
+  // hasResults() {
+  //   return (
+  //     this.workflow.ofsData.responseData.overviewResponse?.classDistribution !==
+  //     undefined
+  //   );
+  // }
 }
