@@ -32,13 +32,25 @@
 
 <div class="max-w-screen-2xl mx-auto px-4 mb-2">
   <mat-card>
-    <mat-card-header>
+    <!-- <mat-card-header>
       <mat-card-title>
         {{ (currentStep$ | async).label }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <router-outlet></router-outlet>
-    </mat-card-content>
+    </mat-card-content> -->
+
+    <ofs-carousel>
+      <ng-container *ofsCarouselItem>
+        <div class="w-20 h-20 bg-slate-400">Käse</div>
+      </ng-container>
+      <ng-container *ofsCarouselItem
+        ><div class="w-20 h-20 bg-slate-400">Wurst</div>
+      </ng-container>
+      <ng-container *ofsCarouselItem>
+        <div class="w-20 h-20 bg-slate-400">Brot</div>
+      </ng-container>
+    </ofs-carousel>
   </mat-card>
 </div>

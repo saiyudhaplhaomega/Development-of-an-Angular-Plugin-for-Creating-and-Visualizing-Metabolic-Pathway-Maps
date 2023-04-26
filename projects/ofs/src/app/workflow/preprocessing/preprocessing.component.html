@@ -19,15 +19,17 @@
 </mat-tab-group> -->
 
 <div class="workflow-content-container">
-  <div class="col-span-1">
+  <div class="flex-child">
     <ofs-preprocessing-input
       (submit)="switchToResults()"
     ></ofs-preprocessing-input>
   </div>
-  <div class="col-span-1">
+  <shared-icon-divider></shared-icon-divider>
+  <div class="flex-child">
     <ofs-preprocessing-results></ofs-preprocessing-results>
-    <div *ngIf="hasResults()">
-      <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
-    </div>
+  </div>
+  <shared-icon-divider></shared-icon-divider>
+  <div class="flex-child">
+    <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
   </div>
 </div>

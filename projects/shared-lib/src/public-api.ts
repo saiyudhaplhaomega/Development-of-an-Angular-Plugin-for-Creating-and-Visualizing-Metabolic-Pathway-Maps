@@ -14,3 +14,6 @@ export * from './lib/login/auth-guard.service';
 export * from './lib/login/auth.service';
 export * from './lib/login/login-page/login-page.component';
 export * from './lib/login/user-token';
+
+export * from './lib/icon-divider/icon-divider.module';
+export * from './lib/icon-divider/icon-divider.component';

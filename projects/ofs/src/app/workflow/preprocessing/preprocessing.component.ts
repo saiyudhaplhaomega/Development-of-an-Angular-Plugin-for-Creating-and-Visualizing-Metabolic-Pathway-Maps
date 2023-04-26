@@ -21,7 +21,7 @@ export class PreprocessingComponent implements AfterViewInit {
 
   //  Methods
   switchToResults() {
-    this.tabs.selectedIndex = 1;
+    // this.tabs.selectedIndex = 1;
   }
 
   hasResults() {

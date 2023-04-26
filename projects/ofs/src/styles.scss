@@ -50,9 +50,13 @@ body {
 }
 
 .workflow-content-container {
-  background: linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12))
-    center/1px 100% no-repeat;
-  @apply grid grid-cols-2 gap-8;
+  width: 100%;
+  @apply flex flex-row;
+}
+
+.flex-child {
+  width: 50%;
+  position: relative; /* Set position to relative to child element */
 }
 
 .form-button-grid {

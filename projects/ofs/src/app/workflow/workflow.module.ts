@@ -35,6 +35,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ResultDisplayingComponent } from './reusable-components/result-displaying/result-displaying.component';
 import { WorkflowGuard } from './workflow.guard';
 import { StepperService } from './services/stepper.service';
+import { IconDividerModule } from 'shared-lib';
+import { CarouselComponent } from './reusable-components/carousel/carousel.component';
+import { CarouselItemDirective } from './reusable-components/carousel/carousel-item.directive';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,8 @@ import { StepperService } from './services/stepper.service';
     WrapperResultsInputComponent,
     PreprocessingResultsInputComponent,
     ResultDisplayingComponent,
+    CarouselComponent,
+    CarouselItemDirective,
   ],
   imports: [
     CommonModule,
@@ -72,6 +77,7 @@ import { StepperService } from './services/stepper.service';
     MatDividerModule,
     MatTabsModule,
     MatProgressSpinnerModule,
+    IconDividerModule,
   ],
   providers: [WorkflowService, WorkflowGuard, StepperService],
 })

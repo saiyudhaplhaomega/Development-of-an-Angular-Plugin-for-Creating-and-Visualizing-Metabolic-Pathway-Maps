@@ -17,13 +17,15 @@
 </mat-tab-group> -->
 
 <div class="workflow-content-container">
-  <div class="col-span-1">
+  <div class="flex-child">
     <ofs-wrapper-input (submit)="switchToResults()"></ofs-wrapper-input>
   </div>
-  <div class="col-span-1">
+  <shared-icon-divider></shared-icon-divider>
+  <div class="flex-child">
     <ofs-wrapper-results></ofs-wrapper-results>
-    <div *ngIf="hasResults()">
-      <ofs-wrapper-results-input></ofs-wrapper-results-input>
-    </div>
+  </div>
+  <shared-icon-divider></shared-icon-divider>
+  <div class="flex-child">
+    <ofs-wrapper-results-input></ofs-wrapper-results-input>
   </div>
 </div>
