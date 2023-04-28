@@ -49,6 +49,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-horizontal-content-container {
+  padding: 0px !important;
+}
+
 .workflow-content-container {
   display: grid;
   gap: 1rem;
@@ -69,9 +73,6 @@ body {
   width: 100%;
   position: relative; /* Set position to relative to child element */
   overflow-y: auto;
-}
-
-.workflow-input-panel {
 }
 
 .form-button-grid {
