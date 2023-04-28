@@ -1,52 +1,56 @@
-<form
-  [formGroup]="formModel"
-  class="flex flex-col"
-  (ngSubmit)="submitPreprocessingConfig()"
->
-  <mat-form-field appearance="outline">
-    <mat-label>control group</mat-label>
-    <mat-select formControlName="controlGroup">
-      <mat-option [value]="controlGroupName">
-        {{ controlGroupName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="outer-form-container">
+  <form
+    [formGroup]="formModel"
+    class="flex flex-col"
+    (ngSubmit)="submitPreprocessingConfig()"
+  >
+    <div class="inner-form-container">
+      <mat-form-field appearance="outline">
+        <mat-label>control group</mat-label>
+        <mat-select formControlName="controlGroup">
+          <mat-option [value]="controlGroupName">
+            {{ controlGroupName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>test group</mat-label>
-    <mat-select formControlName="testGroup">
-      <mat-option *ngFor="let option of testGroupOptions" [value]="option">
-        {{ option }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>test group</mat-label>
+        <mat-select formControlName="testGroup">
+          <mat-option *ngFor="let option of testGroupOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <div class="grid grid-cols-2 gap-4">
-    <mat-form-field class="col-span-1 w-full" appearance="outline">
-      <mat-label>repeats</mat-label>
-      <input type="number" matInput formControlName="repeats" />
-      <mat-error *ngIf="formModel.get('repeats').invalid">{{
-        getErrorMessage(formModel.get("repeats"))
-      }}</mat-error>
-    </mat-form-field>
+      <div class="grid grid-cols-2 gap-4">
+        <mat-form-field class="col-span-1 w-full" appearance="outline">
+          <mat-label>repeats</mat-label>
+          <input type="number" matInput formControlName="repeats" />
+          <mat-error *ngIf="formModel.get('repeats').invalid">{{
+            getErrorMessage(formModel.get("repeats"))
+          }}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="col-span-1 w-full" appearance="outline">
-      <mat-label>folds</mat-label>
-      <input type="number" matInput formControlName="folds" />
-      <mat-error *ngIf="formModel.get('folds').invalid">{{
-        getErrorMessage(formModel.get("folds"))
-      }}</mat-error>
-    </mat-form-field>
-  </div>
+        <mat-form-field class="col-span-1 w-full" appearance="outline">
+          <mat-label>folds</mat-label>
+          <input type="number" matInput formControlName="folds" />
+          <mat-error *ngIf="formModel.get('folds').invalid">{{
+            getErrorMessage(formModel.get("folds"))
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
 
-  <div class="form-button-grid">
-    <button
-      class="col-span-2"
-      [disabled]="!formModel.valid"
-      mat-flat-button
-      color="primary"
-    >
-      submit data
-    </button>
-  </div>
-</form>
+    <div class="form-button-grid">
+      <button
+        class="col-span-2"
+        [disabled]="!formModel.valid"
+        mat-flat-button
+        color="primary"
+      >
+        submit data
+      </button>
+    </div>
+  </form>
+</div>

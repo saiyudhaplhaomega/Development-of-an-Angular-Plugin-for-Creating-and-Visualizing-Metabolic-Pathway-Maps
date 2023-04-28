@@ -81,3 +81,11 @@ body {
 form {
   @apply flex flex-col mt-8;
 }
+
+.inner-form-container {
+  @apply flex flex-col overflow-y-auto;
+}
+
+.outer-form-container {
+  @apply flex h-full;
+}
