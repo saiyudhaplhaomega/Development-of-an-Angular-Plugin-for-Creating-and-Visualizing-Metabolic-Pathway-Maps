@@ -38,6 +38,8 @@ import { StepperService } from './services/stepper.service';
 import { IconDividerModule } from 'shared-lib';
 import { CarouselComponent } from './reusable-components/carousel/carousel.component';
 import { CarouselItemDirective } from './reusable-components/carousel/carousel-item.directive';
+import { WorkflowPanelComponent } from './reusable-components/workflow-panel/workflow-panel.component';
+import { WorkflowPanelDirective } from './reusable-components/workflow-panel/workflow-panel-directive';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { CarouselItemDirective } from './reusable-components/carousel/carousel-i
     ResultDisplayingComponent,
     CarouselComponent,
     CarouselItemDirective,
+    WorkflowPanelComponent,
+    WorkflowPanelDirective,
   ],
   imports: [
     CommonModule,

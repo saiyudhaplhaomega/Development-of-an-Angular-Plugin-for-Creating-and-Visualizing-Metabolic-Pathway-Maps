@@ -20,7 +20,7 @@ export class WrapperComponent implements AfterViewInit {
   }
 
   switchToResults() {
-    this.tabs.selectedIndex = 1;
+    // this.tabs.selectedIndex = 1;
   }
 
   hasResults() {

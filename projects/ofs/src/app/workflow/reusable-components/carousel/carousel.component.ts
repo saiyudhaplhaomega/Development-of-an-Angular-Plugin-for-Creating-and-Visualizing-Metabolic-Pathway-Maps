@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import { CarouselItemDirective } from './carousel-item.directive';
 
+export const MAX_WIDTH = '1536px';
+export const PANEL_WIDTH = '512px';
 @Component({
   selector: 'ofs-carousel',
   templateUrl: './carousel.component.html',

@@ -50,13 +50,28 @@ body {
 }
 
 .workflow-content-container {
-  width: 100%;
-  @apply flex flex-row;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(20rem, 1fr) minmax(20rem, 2fr) minmax(
+      20rem,
+      1fr
+    );
+  @apply h-full w-full;
 }
 
-.flex-child {
-  width: 50%;
+@media (min-width: 1536px) {
+  .workflow-content-container {
+    grid-template-columns: 20rem minmax(30rem, 1536px) 20rem;
+  }
+}
+
+.workflow-substep-panel {
+  width: 100%;
   position: relative; /* Set position to relative to child element */
+  overflow-y: auto;
+}
+
+.workflow-input-panel {
 }
 
 .form-button-grid {

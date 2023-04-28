@@ -1,1 +1,26 @@
+.workflow-container {
+  //   width: 1536px;
+  max-height: 48rem;
+  min-height: 32rem;
+  width: 100%;
+  overflow-x: auto;
+  @apply px-4 pb-4;
+}
 
+.workflow-card {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.workflow-card-content {
+  min-height: 0;
+}
+
+.stepper-container {
+  width: 100%;
+  @apply max-w-screen-2xl;
+}

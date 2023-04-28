@@ -1,0 +1,25 @@
+<div class="workflow-content-container">
+  <div class="min-h-0 flex flex-row h-full">
+    <div class="workflow-substep-panel">
+      <ng-container [ngTemplateOutlet]="panels.toArray()[0].tpl"></ng-container>
+    </div>
+    <shared-icon-divider></shared-icon-divider>
+  </div>
+
+  <div class="workflow-substep-panel">
+    <ng-container [ngTemplateOutlet]="panels.toArray()[1].tpl"></ng-container>
+  </div>
+
+  <ng-template [ngIf]="panels.toArray().length > 2">
+    <div class="min-h-0 flex flex-row h-full">
+      <shared-icon-divider></shared-icon-divider>
+      <div class="workflow-substep-panel">
+        <ng-container
+          [ngTemplateOutlet]="panels.toArray()[2].tpl"
+        ></ng-container>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<!-- <ng-container [ngTemplateOutlet]="panels[].tpl"></ng-container> -->

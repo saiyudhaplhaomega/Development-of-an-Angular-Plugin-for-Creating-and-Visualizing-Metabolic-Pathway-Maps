@@ -13,12 +13,11 @@
   </mat-tab>
 </mat-tab-group> -->
 
-<div class="workflow-content-container">
-  <div class="flex-child">
+<ofs-workflow-panel>
+  <ng-template workflowPanel>
     <ofs-overview-input></ofs-overview-input>
-  </div>
-  <shared-icon-divider></shared-icon-divider>
-  <div class="flex-child">
+  </ng-template>
+  <ng-template workflowPanel>
     <ofs-overview-results></ofs-overview-results>
-  </div>
-</div>
+  </ng-template>
+</ofs-workflow-panel>

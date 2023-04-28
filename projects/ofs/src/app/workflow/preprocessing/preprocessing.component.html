@@ -18,18 +18,16 @@
   </mat-tab>
 </mat-tab-group> -->
 
-<div class="workflow-content-container">
-  <div class="flex-child">
+<ofs-workflow-panel>
+  <ng-template workflowPanel>
     <ofs-preprocessing-input
       (submit)="switchToResults()"
     ></ofs-preprocessing-input>
-  </div>
-  <shared-icon-divider></shared-icon-divider>
-  <div class="flex-child">
+  </ng-template>
+  <ng-template workflowPanel>
     <ofs-preprocessing-results></ofs-preprocessing-results>
-  </div>
-  <shared-icon-divider></shared-icon-divider>
-  <div class="flex-child">
+  </ng-template>
+  <ng-template workflowPanel>
     <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
-  </div>
-</div>
+  </ng-template>
+</ofs-workflow-panel>
