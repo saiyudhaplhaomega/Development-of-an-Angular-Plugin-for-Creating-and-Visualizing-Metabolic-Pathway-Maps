@@ -21,7 +21,6 @@ import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
 import { StepperService } from './stepper.service';
-import { ResponseData } from '../models/ofs-data.model';
 
 export interface SimpleMessage {
   message: string;

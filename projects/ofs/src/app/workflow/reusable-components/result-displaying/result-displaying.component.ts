@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ResultDisplayingComponent implements OnInit {
   @Input() imageLinks: null | string[];
+  @Input() tabLables: string[] = [''];
   @Input() isLoading: Boolean = false;
 
   constructor() {}

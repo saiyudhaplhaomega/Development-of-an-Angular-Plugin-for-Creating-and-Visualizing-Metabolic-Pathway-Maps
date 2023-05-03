@@ -49,6 +49,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.centereing-container {
+  @apply h-full flex flex-col items-center justify-center overflow-hidden;
+}
+
 .mat-horizontal-content-container {
   padding: 0px !important;
 }
@@ -80,7 +84,7 @@ body {
 }
 
 form {
-  @apply flex flex-col mt-8;
+  @apply flex flex-col mt-8 min-h-0;
 }
 
 .inner-form-container {
@@ -88,5 +92,5 @@ form {
 }
 
 .outer-form-container {
-  @apply flex h-full;
+  @apply flex flex-col h-full;
 }

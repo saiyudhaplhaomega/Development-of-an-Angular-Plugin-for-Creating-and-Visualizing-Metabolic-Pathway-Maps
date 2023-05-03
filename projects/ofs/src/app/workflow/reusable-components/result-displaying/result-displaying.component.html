@@ -1,4 +1,77 @@
-<div
+<div class="h-full">
+  <ng-template [ngIf]="imageLinks?.length > 1 && !isLoading">
+    <mat-tab-group
+      class="h-full"
+      mat-stretch-tabs="true"
+      mat-align-tabs="center"
+      animationDuration="1000ms"
+    >
+      <mat-tab *ngFor="let image of imageLinks; let i = index">
+        <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
+        <div class="centereing-container">
+          <img class="w-full h-full object-contain min-h-0" [src]="image" />
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-template>
+
+  <div
+    *ngIf="imageLinks?.length === 1 && !isLoading"
+    class="centereing-container"
+  >
+    <span class="mat-tab-label mat-tab-label-content">
+      {{ tabLables[0] }}
+    </span>
+    <img class="w-full h-full object-contain min-h-0" [src]="imageLinks[0]" />
+  </div>
+
+  <div
+    class="centereing-container"
+    *ngIf="isLoading && imageLinks?.length === 0"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div
+    *ngIf="imageLinks?.length === 0 && !isLoading"
+    class="centereing-container"
+  >
+    <p>no data yet, please submit an input</p>
+  </div>
+</div>
+
+<!-- <ng-template #result>
+  <ng-template [ngIf]="imageLinks.length === 1" [ngIfElse]="result_tabs">
+    <img class="w-full h-full object-contain" [src]="imageLinks[0]" />
+  </ng-template>
+  <mat-tab-group
+    dynamicHeight
+    mat-stretch-tabs="true"
+    mat-align-tabs="center"
+    animationDuration="1000ms"
+  >
+    <mat-tab *ngFor="let image of imageLinks; let i = index">
+      <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
+      <img class="w-full h-full object-contain" [src]="image" />
+    </mat-tab>
+  </mat-tab-group>
+</ng-template> -->
+
+<!-- <ng-template #result_tabs>
+  <mat-tab-group
+    dynamicHeight
+    mat-stretch-tabs="true"
+    mat-align-tabs="center"
+    animationDuration="1000ms"
+  >
+    <mat-tab *ngFor="let image of imageLinks; let i = index">
+      <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
+      <img class="w-full h-full object-contain" [src]="image" />
+    </mat-tab>
+  </mat-tab-group>
+</ng-template> -->
+
+<!-- <div
   class="h-40 min-h-fit flex items-center justify-center"
   *ngIf="isLoading || (imageLinks?.length === 0 && !isLoading)"
 >
@@ -14,4 +87,4 @@
   <div *ngIf="!isLoading">
     <img [src]="image" />
   </div>
-</ng-container>
+</ng-container> -->
