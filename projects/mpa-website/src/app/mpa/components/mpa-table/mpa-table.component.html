@@ -11,7 +11,7 @@
       <mat-button-toggle style="font-size: 0.9rem" value="hierarchical">hierarchical</mat-button-toggle>
     </mat-button-toggle-group>
     <mat-form-field style="width: 20%">
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+      <input matInput (keyup)="applyFilter($event.target)" placeholder="Filter">
     </mat-form-field>
   </div>
   <div style="overflow-y: auto; height: 100%" class="table-border">
@@ -25,7 +25,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <ng-container *ngIf="this.mpaTableDataService.groupSelection === 'hierarchical' && this.getRowtype(row) === 'maingroup'">
-            <button mat-icon-button (click)="onExpand(row)">
+            <button mat-icon-button (click)="onExpand(row)" [disabled]="row.hidden">
               <mat-icon [@indicatorRotate]="row.proteinGroupID === expandedElement ? 'expanded': 'collapsed'">
                 expand_more
               </mat-icon>
@@ -54,23 +54,31 @@
         <td mat-cell *matCellDef="let row">{{row.proteinGroupID || row.proteinSubGroupID}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="displayToggleButton">
+        <th mat-header-cell *matHeaderCellDef>Hide Group</th>
+        <td mat-cell *matCellDef="let row" >
+          <mat-checkbox [checked]="row.hidden" (change)="onToggleHideGroup($event.checked,row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="expandedDetail">
-        <td style="width: 100%; padding-left:0; padding-right:0;" [@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+        <td style="width: 100%; padding-left:0;padding-right:0;" [@detailExpand]="row.proteinGroupID === expandedElement ? 'expanded' : 'collapsed'" mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
           <div *ngIf="this.mpaTableDataService.groupSelection === 'hierarchical' && this.getRowtype(row) === 'maingroup' && row.proteinGroupID === expandedElement">
-            <!-- <table style="width: 100%">
-              <tr *ngFor="let subRow of row.proteinSubGroupList" (click)="onClick(subRow)" class="subroup-row"
-                  [ngClass]="{
-                    'table-highlight-row': mpaTableDataService.highlightIfSelected(subRow),
-                    'table-element-row': !mpaTableDataService.highlightIfSelected(subRow)}"
-                    style="width: 100%"
-                    >
-                <td mat-cell></td>
-                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
-                <td mat-cell>{{this.getRowtype(subRow)}}</td>
-                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
-                <td mat-cell>{{subRow.proteinSubGroupID}}</td>
+            <table style="width:100%;">
+              <tr *ngFor="let subrow of row.proteinSubGroupList" (click)="onClick(subrow)" [ngClass]="{
+                'table-highlight-row': mpaTableDataService.highlightIfSelected(subrow),
+                'table-element-row': !mpaTableDataService.highlightIfSelected(subrow),
+                'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && subrow.parentProteinGroupID
+                }">
+                <td class="mat-column-expandButton"></td>
+                <td class="mat-column-proteinGroupID">{{subrow.proteinSubGroupID}}</td>
+                <td class="mat-column-groupType">{{this.getRowtype(subrow)}}</td>
+                <td class="mat-column-representativeAccession">{{subrow.proteinSubGroupID}}</td>
+                <td class="mat-column-representativeDescription">{{subrow.proteinSubGroupID}}</td>
+                <td class="mat-column-displayToggleButton" style="padding-right: 24px;"><mat-checkbox (checked)="subrow.hidden" (change)="onToggleHideGroup($event.checked,subrow)"></mat-checkbox></td>
               </tr>
-            </table> -->
+            </table>
           </div>
         </td>
       </ng-container>
@@ -100,8 +108,13 @@
 <!--    [ngClass]="{'table-hidden-row': true}"-->
 <!--    (click)="expandedElement = expandedElement === row ? null : row"-->
   </div>
-  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-</div>
+  <div style="display:flex;flex-direction: row; justify-content: space-between;flex-wrap: nowrap;align-items: center;">
+    <div style="width:25%;height:68%; display:flex; flex-direction: row;" >
+      <button class="btn btn-primary rki-blue-bg protein-table-button" style="width: 50%; height: 100%; margin-right:1%;" (click)="onDownloadAll()"><div>Download all</div></button>
+    </div>
+    <mat-paginator #paginator style="background: none;" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
+  </div>
+  </div>
 
 <div class="flexbox-column">
   <cdk-accordion>

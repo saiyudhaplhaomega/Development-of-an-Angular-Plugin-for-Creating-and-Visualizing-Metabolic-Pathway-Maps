@@ -73,6 +73,7 @@ export class ProteinGroupObject implements ProteinGroupJSON {
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
+  hidden: boolean;
 
   proteinSubGroupList?: ProteinGroupObject[];
   proteinList: ProteinObject[];  

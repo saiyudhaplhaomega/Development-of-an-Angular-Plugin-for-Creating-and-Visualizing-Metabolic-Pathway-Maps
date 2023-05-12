@@ -15,6 +15,11 @@ export enum GroupSelection {
   HIERARCHICAL = 'hierarchical'
 }
 
+export enum TaxonomyDisplaySelection {
+  HIERARCHICAL = 'hierarchical',
+  FLAT = 'flat'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +28,9 @@ export class MpaTableDataService {
   private mpaData: ProteinGroupObject[];
 
   public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
+
+  //public displayedTableData = new BehaviorSubject<ProteinGroupObject[]>([]);    = mpaTableData
+  public hiddenTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
 
   public selectedProteinGroup = new BehaviorSubject<ProteinGroupObject>(undefined);
   public selectedProtein = new BehaviorSubject<ProteinObject>(undefined);
@@ -41,6 +49,8 @@ export class MpaTableDataService {
   public requestingProteinSequence = false;
 
   public groupSelection = 'maingroups';
+
+  public taxonomyDisplaySelection = 'flat';
 
   // initialize BehaviorSubject with new, empty SpectrumDataObject
   public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
@@ -216,10 +226,6 @@ export class MpaTableDataService {
   setMpaTabledata(groupSelection: string) {
     let newtableData: ProteinGroupObject[];
     switch (groupSelection) {
-      case GroupSelection.MAINGROUPS:
-        newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
-        newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
-        break;
       case GroupSelection.SUBGROUPS:
         let subgroups = [];
         this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
@@ -235,50 +241,49 @@ export class MpaTableDataService {
         })
 
         break;
-      case GroupSelection.HIERARCHICAL:
-        // newtableData = this.mpaData;
-        // newtableData.forEach(maingroup =>
-        //   maingroup.proteinSubGroupList.sort((a, b) => {
-        //     let aString = a.proteinSubGroupID.split("_");
-        //     let bString = b.proteinSubGroupID.split("_");
-        //     let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-        //     if (returnValue == 0) {
-        //       returnValue = parseInt(aString[1]) - parseInt(bString[1]);
-        //     }
-        //     return returnValue;
-        //   })
-        // )
-
-        // newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
-
+      // default encompasses MAINGROUPS and HIERARCHICAL, since for the maingroup-display, there wont render a button to expand the corresponding subgroups
+      default: 
         newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
-        newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
-        break;
+        newtableData.sort((a, b) => {
+          return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
+        })
     }
-
     this.mpaTableData.next(newtableData);
     this.selectedProteinGroup.next(newtableData[0]);
   }
 
-  expandMainGroup(mainGroup: ProteinGroupObject, expanding: boolean){
-    let newtableData: ProteinGroupObject[] = this.mpaData.filter(group => 'proteinSubGroupList' in group);
-    newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
-    let indexOfGroup: number = newtableData.findIndex((group) => group == mainGroup);
-    let subgroups: ProteinGroupObject[] = newtableData[indexOfGroup].proteinSubGroupList;
+  // expandMainGroup(mainGroup: ProteinGroupObject, expanding: boolean){
+  //   let newtableData: ProteinGroupObject[] = this.mpaData.filter(group => 'proteinSubGroupList' in group);
+  //   newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
+  //   let indexOfGroup: number = newtableData.findIndex((group) => group == mainGroup);
+  //   let subgroups: ProteinGroupObject[] = newtableData[indexOfGroup].proteinSubGroupList;
 
-    if(expanding === true){
-    let i: number = 1;
-    subgroups.forEach(subgroup => {
-      newtableData.splice(indexOfGroup + i, 0, subgroup);
-      i++;
-    })
-    }
+  //   if(expanding === true){
+  //   let i: number = 1;
+  //   subgroups.forEach(subgroup => {
+  //     newtableData.splice(indexOfGroup + i, 0, subgroup);
+  //     i++;
+  //   })
+  //   }
 
-    this.mpaTableData.next(newtableData);
-    this.selectedProteinGroup.next(newtableData[indexOfGroup]);
-  }
+  //   this.mpaTableData.next(newtableData);
+  //   this.selectedProteinGroup.next(newtableData[indexOfGroup]);
+  // }
 
   onGroupSelection() {
     this.setMpaTabledata(this.groupSelection);
   }
+
+  onTaxonomyDisplaySelection() {
+    console.log(this.taxonomyDisplaySelection);
+  }
+
+  setTaxonomyDisplayData() {
+    //TODO set displayed data depending on current taxonomyDisplaySelection
+  }
+
+  onHideGroup() {
+    this.setMpaTabledata(this.groupSelection);
+  }
+
 }

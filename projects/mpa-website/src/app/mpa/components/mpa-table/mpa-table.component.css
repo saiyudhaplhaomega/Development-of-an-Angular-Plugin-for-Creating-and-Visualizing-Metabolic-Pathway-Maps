@@ -110,4 +110,41 @@ tr.table-detail-row{
     /*padding: 0 12px;*/
 }
 
+.mat-column-expandButton {
+  width: 5%;
+  padding: 0 0;
+}
 
+.mat-column-proteinGroupID{
+  width: 5%;
+  text-align: center;
+  padding: 0 0;
+}
+
+.mat-column-groupType {
+  width: 10%;
+  text-align: center;
+  padding: 0 0;
+}
+
+.mat-column-representativeAccession {
+  width: 20%;
+  text-align: left;
+  padding: 0 0;
+}
+
+.mat-column-representativeDescription {
+  width: 30%;
+  text-align: left;
+  padding: 0 0;
+}
+
+.mat-column-displayToggleButton {
+  width: 5%;
+  text-align: center;
+  padding: 0 0px;
+}
+
+.protein-table-button {
+  overflow-wrap: break-word;
+}

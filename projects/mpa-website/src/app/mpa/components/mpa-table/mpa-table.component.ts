@@ -56,9 +56,10 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     'groupType',
     'representativeAccession',
     'representativeDescription',
+    'displayToggleButton'
   ];
-  dataSource: MatTableDataSource<ProteinGroupJSON>;
-  showDetails = false;
+  dataSource: MatTableDataSource<ProteinGroupObject>;
+  showDetails: boolean = false;
 
   expandedElement: string = 'none';
 
@@ -93,13 +94,13 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    // TODO: figure out how to do this with or without the event
-    // event.target.value;
-    // filterValue = filterValue.trim(); // Remove whitespace
-    // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    // this.dataSource.filter = filterValue;
-  }
+    applyFilter(event: EventTarget): void {
+      // TODO: figure out how to do this with or without the event
+      // event.target.value;
+      // filterValue = filterValue.trim(); // Remove whitespace
+      // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+      // this.dataSource.filter = filterValue;
+    }
 
   /** Whether the number of selected elements matches the total number of rows. */
   // isAllSelected() {
@@ -119,28 +120,62 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   //   this.selection.toggle(row);
   // }
 
-  onExpand(row: ProteinGroupObject) {
-    let expandingMainGroup: boolean = true;
+  onExpand(row: ProteinGroupObject): void {
     if (this.expandedElement === row.proteinGroupID) {
       this.expandedElement = 'none';
-      expandingMainGroup = false;
     }else{
       this.expandedElement = row.proteinGroupID;
     }
-
-    this.mpaTableDataService.expandMainGroup(row, expandingMainGroup);
   }
 
-  onClick(row: ProteinGroupObject) {
+  onClick(row: ProteinGroupObject): void {
     this.mpaTableDataService.resetCompleteSelection();
     this.mpaTableDataService.selectedProteinGroup.next(row);
   }
 
-  onGroupSelection() {
+  onGroupSelection(): void {
     this.mpaTableDataService.onGroupSelection();
   }
 
   getRowtype(row: ProteinGroupObject) {
     return 'parentProteinGroupID' in row ? 'subgroup' : 'maingroup';
+  }
+
+  onDownloadAll(): void {
+    //TODO move to service and call from here
+  }
+
+  onSaveFile(fileName, fileContent, fileType): void {
+    //TODO move to service, input data received from back-end
+    const file = new Blob([fileContent], { type: fileType});
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = fileName;
+    link.click();
+    link.remove();
+  }
+
+  onToggleHideGroup(checked: boolean,row: ProteinGroupObject) {
+    row.hidden = checked;
+    if(row.proteinGroupID == this.expandedElement){
+      this.onExpand(row)
+    }
+
+    let page = this.paginator.pageIndex;
+    let groupID;
+    if(row.proteinGroupID){
+      groupID = row.proteinGroupID;
+    } else {
+      groupID = row.proteinSubGroupID;
+    }
+
+    //TODO finish onHideGroup, currently does nothing, impl of hidden is missing in back-end
+    this.mpaTableDataService.onHideGroup();
+    this.paginator.pageIndex = page;
+  }
+
+  resetHiddenGroups(){
+
   }
 }
