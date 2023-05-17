@@ -29,9 +29,6 @@ export class MpaTableDataService {
 
   public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
 
-  //public displayedTableData = new BehaviorSubject<ProteinGroupObject[]>([]);    = mpaTableData
-  public hiddenTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
-
   public selectedProteinGroup = new BehaviorSubject<ProteinGroupObject>(undefined);
   public selectedProtein = new BehaviorSubject<ProteinObject>(undefined);
   public peptidesForSelectedProtein = new BehaviorSubject<PeptideObject[]>([]);
@@ -247,6 +244,16 @@ export class MpaTableDataService {
         newtableData.sort((a, b) => {
           return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
         })
+        newtableData.map(group => group.proteinSubGroupList.sort((a, b) => {
+          let aString = a.proteinSubGroupID.split("_");
+          let bString = b.proteinSubGroupID.split("_");
+          let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+          if (returnValue == 0) {
+            returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+          }
+          return returnValue;
+        }))
+
     }
     this.mpaTableData.next(newtableData);
     this.selectedProteinGroup.next(newtableData[0]);
@@ -282,8 +289,31 @@ export class MpaTableDataService {
     //TODO set displayed data depending on current taxonomyDisplaySelection
   }
 
-  onHideGroup() {
-    this.setMpaTabledata(this.groupSelection);
+  onHideGroup(groupID: string) {
+    //TODO implement property in back-end, so that it can be saved and read
+
+    // let displayedData : ProteinGroupObject[];
+    // this.mpaData.forEach(group => {
+    //   console.log(group.hidden)
+    //   if(group.hidden == false){
+    //     let displayedGroup = group;
+    //     let displayedSubGroups: ProteinGroupObject[];
+    //     group.proteinSubGroupList.forEach(subgroup => {
+    //       console.log(group.hidden)
+    //       if(subgroup.hidden == false){
+    //         displayedSubGroups.push(subgroup);
+    //       }
+    //     })
+    //     displayedGroup.proteinSubGroupList = displayedSubGroups;
+    //     displayedData.push(displayedGroup);
+    //   }
+    // })
+
+    // this.mpaTableData.next(displayedData);
+    // this.selectedProteinGroup.next(displayedData[0]);
+    
+    //TODO remove from method
+    this.setMpaTabledata(this.groupSelection)
   }
 
 }

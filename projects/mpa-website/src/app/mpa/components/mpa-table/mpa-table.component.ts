@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   ProteinGroupJSON,
   ProteinGroupObject,
+  PsmObject,
 } from '../../objects/tableobjects';
 import {
   GroupSelection,
@@ -54,6 +55,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     'expandButton',
     'proteinGroupID',
     'groupType',
+    'quantification',
     'representativeAccession',
     'representativeDescription',
     'displayToggleButton'
@@ -141,8 +143,14 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     return 'parentProteinGroupID' in row ? 'subgroup' : 'maingroup';
   }
 
+  getQuantification(row: ProteinGroupObject) {
+    let spectrumIDs = Array.from(new Set(row.psmList.map(psm => psm.spectrumID)))
+    return spectrumIDs.length;
+  }
+
   onDownloadAll(): void {
     //TODO move to service and call from here
+    //TODO use currently displayed mpaTableData to build csv, maybe send to back-end for assembly
   }
 
   onSaveFile(fileName, fileContent, fileType): void {
@@ -163,7 +171,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     }
 
     let page = this.paginator.pageIndex;
-    let groupID;
+    let groupID: string;
     if(row.proteinGroupID){
       groupID = row.proteinGroupID;
     } else {
@@ -171,7 +179,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     }
 
     //TODO finish onHideGroup, currently does nothing, impl of hidden is missing in back-end
-    this.mpaTableDataService.onHideGroup();
+    this.mpaTableDataService.onHideGroup(groupID);
     this.paginator.pageIndex = page;
   }
 

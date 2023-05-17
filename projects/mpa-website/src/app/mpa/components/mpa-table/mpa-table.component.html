@@ -44,6 +44,11 @@
         <td mat-cell *matCellDef="let row">{{this.getRowtype(row)}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="quantification">
+        <th mat-header-cell *matHeaderCellDef>Quantification</th>
+        <td mat-cell *matCellDef="let row">{{this.getQuantification(row)}}</td>
+      </ng-container>
+
       <ng-container matColumnDef="representativeAccession">
         <th mat-header-cell *matHeaderCellDef>Accession</th>
         <td mat-cell *matCellDef="let row">{{row.proteinGroupID || row.proteinSubGroupID}}</td>
@@ -71,9 +76,10 @@
                 'table-element-row': !mpaTableDataService.highlightIfSelected(subrow),
                 'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && subrow.parentProteinGroupID
                 }">
-                <td class="mat-column-expandButton"></td>
+                <td class="mat-column-expandButton" style="padding-left: 24px;"></td>
                 <td class="mat-column-proteinGroupID">{{subrow.proteinSubGroupID}}</td>
                 <td class="mat-column-groupType">{{this.getRowtype(subrow)}}</td>
+                <td class="mat-column-quantification">{{this.getRowtype(subrow)}}</td>
                 <td class="mat-column-representativeAccession">{{subrow.proteinSubGroupID}}</td>
                 <td class="mat-column-representativeDescription">{{subrow.proteinSubGroupID}}</td>
                 <td class="mat-column-displayToggleButton" style="padding-right: 24px;"><mat-checkbox (checked)="subrow.hidden" (change)="onToggleHideGroup($event.checked,subrow)"></mat-checkbox></td>
