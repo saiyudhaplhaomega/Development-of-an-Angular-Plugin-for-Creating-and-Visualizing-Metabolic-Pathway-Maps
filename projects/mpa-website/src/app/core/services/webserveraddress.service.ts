@@ -20,6 +20,7 @@ export enum Endpoints {
 
   // results
   GET_PROTEIN_GROUPS = 'mparesults/getproteingroups',
+  GET_DOWNLOADPROTEINGROUPS = 'mparesults/getproteingroupsdownload',
 
   // LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
 

@@ -12,7 +12,7 @@ import { createProteinGroupData } from './dummyProteinData';
 export enum GroupSelection {
   MAINGROUPS = 'maingroups',
   SUBGROUPS = 'subgroups',
-  HIERARCHICAL = 'hierarchical'
+  HIERARCHICAL = 'hierarchical',
 }
 
 export enum TaxonomyDisplaySelection {
@@ -45,9 +45,9 @@ export class MpaTableDataService {
   public proteinSequenceData = new BehaviorSubject<ProteinSequenceObject>(undefined);
   public requestingProteinSequence = false;
 
-  public groupSelection = 'maingroups';
+  public groupSelection: GroupSelection = GroupSelection.MAINGROUPS;
 
-  public taxonomyDisplaySelection = 'flat';
+  public taxonomyDisplaySelection = TaxonomyDisplaySelection.FLAT;
 
   // initialize BehaviorSubject with new, empty SpectrumDataObject
   public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
@@ -78,7 +78,7 @@ export class MpaTableDataService {
   public requestProteinGroups(){
     this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
       filename: 'sample.mgf', //sinnlos?
-      experimentID: this.expID.value
+      experimentID: this.expID.value,
     }, Endpoints.GET_PROTEIN_GROUPS).subscribe({
       next: (proteinGroups) => {
         this.setMpaData(proteinGroups);
@@ -220,7 +220,7 @@ export class MpaTableDataService {
   this.psmsForSelectedPeptide.next([]);
   }
 
-  setMpaTabledata(groupSelection: string) {
+  setMpaTabledata(groupSelection: GroupSelection) {
     let newtableData: ProteinGroupObject[];
     switch (groupSelection) {
       case GroupSelection.SUBGROUPS:
@@ -314,6 +314,34 @@ export class MpaTableDataService {
     
     //TODO remove from method
     this.setMpaTabledata(this.groupSelection)
+  }
+
+  downloadProteinTableData() {
+    console.log(this.groupSelection);
+    
+    this.httpClientService.postObject<{experimentID: string, groupSelection: GroupSelection}, {message: string;}>({
+      experimentID: this.expID.value,
+      groupSelection: this.groupSelection
+    }, Endpoints.GET_DOWNLOADPROTEINGROUPS).subscribe({
+      next: (json) => {
+        console.log(json)
+        this.onSaveFile("proteinGroupsData",json.message,"text/csv;charset=utf-8")
+      },
+      error: () => {
+        console.log('ERROR: mpa-table-data.service.downloadProteinTableData')
+      }
+    });
+  }
+
+  onSaveFile(fileName, fileContent, fileType): void {
+    //TODO move to service, input data received from back-end
+    const file = new Blob([fileContent], { type: fileType});
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = fileName;
+    link.click();
+    link.remove();
   }
 
 }

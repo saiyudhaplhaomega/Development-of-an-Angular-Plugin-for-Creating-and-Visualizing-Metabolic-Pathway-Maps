@@ -64,6 +64,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   showDetails: boolean = false;
 
   expandedElement: string = 'none';
+  GroupSelection = GroupSelection;                 // make enum available to use in html
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -148,20 +149,8 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     return spectrumIDs.length;
   }
 
-  onDownloadAll(): void {
-    //TODO move to service and call from here
-    //TODO use currently displayed mpaTableData to build csv, maybe send to back-end for assembly
-  }
-
-  onSaveFile(fileName, fileContent, fileType): void {
-    //TODO move to service, input data received from back-end
-    const file = new Blob([fileContent], { type: fileType});
-
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(file);
-    link.download = fileName;
-    link.click();
-    link.remove();
+  downloadProteinTable(): void {
+    this.mpaTableDataService.downloadProteinTableData()
   }
 
   onToggleHideGroup(checked: boolean,row: ProteinGroupObject) {

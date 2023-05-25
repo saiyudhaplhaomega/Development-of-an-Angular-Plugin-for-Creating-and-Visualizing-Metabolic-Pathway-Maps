@@ -17,7 +17,7 @@ import { UploadProgressService } from '../../../core/services/upload-progress.se
 import { MPAFile, MPAFileObject } from '../../../prophane/objects/mpafile';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MpaTableDataService } from '../../services/mpa-table-data.service';
+import { GroupSelection, MpaTableDataService } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
 import {
