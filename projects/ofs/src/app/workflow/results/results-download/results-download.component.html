@@ -1,0 +1,22 @@
+<div class="outer-form-container">
+  <div class="inner-form-container">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>project name</mat-label>
+      <input type="string" matInput [formControl]="projectName" />
+      <mat-error *ngIf="projectName.invalid">{{
+        getErrorMessage(projectName)
+      }}</mat-error>
+    </mat-form-field>
+
+    <div class="form-button-grid">
+      <button
+        class="col-span-2"
+        [disabled]="!projectName.valid || (formDisabled$ | async)"
+        mat-flat-button
+        color="primary"
+      >
+        Download Results
+      </button>
+    </div>
+  </div>
+</div>

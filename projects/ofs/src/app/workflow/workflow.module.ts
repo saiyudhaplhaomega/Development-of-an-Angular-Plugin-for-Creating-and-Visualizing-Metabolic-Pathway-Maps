@@ -8,6 +8,7 @@ import { PreprocessingComponent } from './preprocessing/preprocessing.component'
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ResultsComponent } from './results/results.component';
+import { ResultsFigureComponent } from './results/results-figure/results-figure.component';
 import { OverviewInputComponent } from './data-overview/overview-input/overview-input.component';
 import { OverviewResultsComponent } from './data-overview/overview-results/overview-results.component';
 import { PreprocessingInputComponent } from './preprocessing/preprocessing-input/preprocessing-input.component';
@@ -32,14 +33,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { WorkflowService } from './services/workflow.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ResultDisplayingComponent } from './reusable-components/result-displaying/result-displaying.component';
 import { WorkflowGuard } from './workflow.guard';
 import { StepperService } from './services/stepper.service';
-import { IconDividerModule } from 'shared-lib';
-import { CarouselComponent } from './reusable-components/carousel/carousel.component';
-import { CarouselItemDirective } from './reusable-components/carousel/carousel-item.directive';
-import { WorkflowPanelComponent } from './reusable-components/workflow-panel/workflow-panel.component';
-import { WorkflowPanelDirective } from './reusable-components/workflow-panel/workflow-panel-directive';
+import { IconDividerModule, WorkflowPanelModule } from 'shared-lib';
+import { ResultsDownloadComponent } from './results/results-download/results-download.component';
+import { ResultFiguresModule } from 'shared-lib';
 
 @NgModule({
   declarations: [
@@ -48,6 +46,7 @@ import { WorkflowPanelDirective } from './reusable-components/workflow-panel/wor
     PreprocessingComponent,
     WrapperComponent,
     ResultsComponent,
+    ResultsFigureComponent,
     OverviewResultsComponent,
     OverviewInputComponent,
     PreprocessingInputComponent,
@@ -56,11 +55,7 @@ import { WorkflowPanelDirective } from './reusable-components/workflow-panel/wor
     WrapperResultsComponent,
     WrapperResultsInputComponent,
     PreprocessingResultsInputComponent,
-    ResultDisplayingComponent,
-    CarouselComponent,
-    CarouselItemDirective,
-    WorkflowPanelComponent,
-    WorkflowPanelDirective,
+    ResultsDownloadComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +77,8 @@ import { WorkflowPanelDirective } from './reusable-components/workflow-panel/wor
     MatTabsModule,
     MatProgressSpinnerModule,
     IconDividerModule,
+    WorkflowPanelModule,
+    ResultFiguresModule,
   ],
   providers: [WorkflowService, WorkflowGuard, StepperService],
 })

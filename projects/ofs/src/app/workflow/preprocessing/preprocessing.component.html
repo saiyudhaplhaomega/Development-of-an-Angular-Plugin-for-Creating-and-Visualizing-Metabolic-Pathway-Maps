@@ -18,16 +18,14 @@
   </mat-tab>
 </mat-tab-group> -->
 
-<ofs-workflow-panel>
-  <ng-template workflowPanel>
-    <ofs-preprocessing-input
-      (submit)="switchToResults()"
-    ></ofs-preprocessing-input>
+<lib-workflow-panel>
+  <ng-template lib-workflowPanel>
+    <ofs-preprocessing-input></ofs-preprocessing-input>
   </ng-template>
-  <ng-template workflowPanel>
+  <ng-template lib-workflowPanel>
     <ofs-preprocessing-results></ofs-preprocessing-results>
   </ng-template>
-  <ng-template workflowPanel>
+  <ng-template lib-workflowPanel>
     <ofs-preprocessing-results-input></ofs-preprocessing-results-input>
   </ng-template>
-</ofs-workflow-panel>
+</lib-workflow-panel>

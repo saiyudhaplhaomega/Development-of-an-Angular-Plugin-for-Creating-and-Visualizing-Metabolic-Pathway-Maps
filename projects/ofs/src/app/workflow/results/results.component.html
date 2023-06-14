@@ -1,8 +1,9 @@
-<div class="workflow-content-container">
-  <div class="col-span-1">
-    <ofs-result-displaying
-      [imageLinks]="classifierImages$ | async"
-      [isLoading]="isLoading()"
-    ></ofs-result-displaying>
-  </div>
-</div>
+<lib-workflow-panel [showDividerIcon]="false">
+  <ng-template lib-workflowPanel>
+    <ofs-results-download></ofs-results-download>
+  </ng-template>
+  <ng-template lib-workflowPanel>
+    <ofs-results-figure></ofs-results-figure>
+  </ng-template>
+  <ng-template lib-workflowPanel> </ng-template>
+</lib-workflow-panel>

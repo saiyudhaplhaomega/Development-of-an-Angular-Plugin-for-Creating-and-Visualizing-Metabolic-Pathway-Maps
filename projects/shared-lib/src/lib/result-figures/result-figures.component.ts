@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ofs-result-displaying',
-  templateUrl: './result-displaying.component.html',
-  styleUrls: ['./result-displaying.component.scss'],
+  selector: 'lib-result-figures',
+  templateUrl: './result-figures.component.html',
+  styleUrls: ['./result-figures.component.scss'],
 })
-export class ResultDisplayingComponent implements OnInit {
+export class ResultFiguresComponent implements OnInit {
   @Input() imageLinks: null | string[];
   @Input() tabLables: string[] = [''];
   @Input() isLoading: Boolean = false;

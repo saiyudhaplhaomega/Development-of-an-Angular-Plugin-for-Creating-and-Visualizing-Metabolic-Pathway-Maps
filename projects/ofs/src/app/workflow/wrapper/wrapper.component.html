@@ -1,29 +1,11 @@
-<!-- <mat-tab-group
-  #tabs
-  dynamicHeight
-  mat-stretch-tabs="true"
-  mat-align-tabs="center"
-  animationDuration="1000ms"
->
-  <mat-tab label="input">
-    <ofs-wrapper-input (submit)="switchToResults()"></ofs-wrapper-input>
-  </mat-tab>
-  <mat-tab label="overview">
-    <ofs-wrapper-results></ofs-wrapper-results>
-    <div *ngIf="hasResults()">
-      <ofs-wrapper-results-input></ofs-wrapper-results-input>
-    </div>
-  </mat-tab>
-</mat-tab-group> -->
-
-<ofs-workflow-panel>
-  <ng-template workflowPanel>
+<lib-workflow-panel>
+  <ng-template lib-workflowPanel>
     <ofs-wrapper-input (submit)="switchToResults()"></ofs-wrapper-input>
   </ng-template>
-  <ng-template workflowPanel>
+  <ng-template lib-workflowPanel>
     <ofs-wrapper-results></ofs-wrapper-results>
   </ng-template>
-  <ng-template workflowPanel>
+  <ng-template lib-workflowPanel>
     <ofs-wrapper-results-input></ofs-wrapper-results-input>
   </ng-template>
-</ofs-workflow-panel>
+</lib-workflow-panel>

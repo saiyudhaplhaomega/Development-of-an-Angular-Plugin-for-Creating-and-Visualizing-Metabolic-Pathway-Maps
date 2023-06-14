@@ -29,11 +29,11 @@ export class InputFormComponent {
 
   public disableForm() {
     this.formDisabledSubject$.next(true);
-    this.formModel.disable();
+    this.formModel?.disable();
   }
 
   public enableForm() {
     this.formDisabledSubject$.next(false);
-    this.formModel.enable();
+    this.formModel?.enable();
   }
 }

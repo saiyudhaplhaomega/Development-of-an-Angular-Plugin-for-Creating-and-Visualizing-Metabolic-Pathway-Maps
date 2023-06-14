@@ -17,3 +17,10 @@ export * from './lib/login/user-token';
 
 export * from './lib/icon-divider/icon-divider.module';
 export * from './lib/icon-divider/icon-divider.component';
+
+export * from './lib/workflow-panel/workflow-panel.module';
+export * from './lib/workflow-panel/workflow-panel-directive';
+export * from './lib/workflow-panel/workflow-panel.component';
+
+export * from './lib/result-figures/result-figures.module';
+export * from './lib/result-figures/result-figures.component';

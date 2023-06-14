@@ -1,19 +1,20 @@
 import {
   AfterContentInit,
   Component,
-  ContentChild,
   ContentChildren,
-  OnInit,
+  Input,
   QueryList,
 } from '@angular/core';
 import { WorkflowPanelDirective } from './workflow-panel-directive';
 
 @Component({
-  selector: 'ofs-workflow-panel',
+  selector: 'lib-workflow-panel',
   templateUrl: './workflow-panel.component.html',
   styleUrls: ['./workflow-panel.component.scss'],
 })
 export class WorkflowPanelComponent implements AfterContentInit {
+  @Input() showDividerIcon: boolean = true;
+
   @ContentChildren(WorkflowPanelDirective)
   panels!: QueryList<WorkflowPanelDirective>;
 

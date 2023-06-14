@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'shared-icon-divider',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IconDividerComponent implements OnInit {
   constructor() {}
+
+  @Input() showIcon: boolean = true;
 
   ngOnInit(): void {}
 }

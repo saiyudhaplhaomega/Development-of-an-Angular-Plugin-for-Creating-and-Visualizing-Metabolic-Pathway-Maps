@@ -7,27 +7,8 @@ import { MatTabGroup } from '@angular/material/tabs';
   templateUrl: './preprocessing.component.html',
   styleUrls: ['./preprocessing.component.scss'],
 })
-export class PreprocessingComponent implements AfterViewInit {
+export class PreprocessingComponent {
   @ViewChild('tabs') tabs: MatTabGroup;
 
   constructor(private workflow: WorkflowService) {}
-
-  // Life Cycle Hooks
-  ngAfterViewInit(): void {
-    if (this.hasResults()) {
-      this.switchToResults();
-    }
-  }
-
-  //  Methods
-  switchToResults() {
-    // this.tabs.selectedIndex = 1;
-  }
-
-  hasResults() {
-    return (
-      this.workflow.ofsData.responseData.preprocessingResponse
-        ?.predictivePerformance !== undefined
-    );
-  }
 }

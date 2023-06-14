@@ -32,7 +32,6 @@ export interface SimpleMessage {
 // TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
-  subscriptions: Subscription[];
 
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
 

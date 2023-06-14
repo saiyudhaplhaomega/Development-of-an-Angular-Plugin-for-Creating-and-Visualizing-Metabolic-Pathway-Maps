@@ -1,19 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { InputFormComponent } from 'shared-lib';
-import { Endpoints } from '../../../models/endpoints.model';
 import { OFSData } from '../../models/ofs-data.model';
 import { PreprocessingConfigForm } from '../../models/preprocessing.model';
 import { WorkflowService } from '../../services/workflow.service';
