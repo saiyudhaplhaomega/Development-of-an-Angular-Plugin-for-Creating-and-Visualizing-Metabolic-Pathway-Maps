@@ -325,7 +325,7 @@ export class MpaTableDataService {
     }, Endpoints.GET_DOWNLOADPROTEINGROUPS).subscribe({
       next: (json) => {
         console.log(json)
-        this.onSaveFile("proteinGroupsData",json.message,"text/csv;charset=utf-8")
+        this.onSaveFile("proteinGroupsReport",json.message,"text/csv;charset=utf-8")
       },
       error: () => {
         console.log('ERROR: mpa-table-data.service.downloadProteinTableData')

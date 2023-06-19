@@ -27,7 +27,8 @@ export class PsmTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  
+  PsmScope = PsmScope;
   @Input() scope: PsmScope;
 
   constructor(private mpaTableDataService: MpaTableDataService) {

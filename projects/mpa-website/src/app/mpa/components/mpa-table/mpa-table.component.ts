@@ -153,6 +153,10 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     this.mpaTableDataService.downloadProteinTableData()
   }
 
+  downloadProteinGroupDetails(): void {
+    //TODO wait for decision on batching and simplification of getProteinGroups()
+  }
+
   onToggleHideGroup(checked: boolean,row: ProteinGroupObject) {
     row.hidden = checked;
     if(row.proteinGroupID == this.expandedElement){
@@ -173,6 +177,6 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   resetHiddenGroups(){
-
+    //TODO implement
   }
 }
