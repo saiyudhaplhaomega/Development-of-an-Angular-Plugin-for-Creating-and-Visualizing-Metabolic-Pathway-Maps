@@ -404,20 +404,6 @@ export class ExperimentPageComponent
               uploadFile: this.selectedSearchFile,
               fileID: 'SearchResult',
             });
-          // await this.addFileToUploadData(
-          //   this.selectedSearchFile,
-          //   this.searchFileSelection,
-          //   'SearchResult'
-          // );
-
-          case 'Search Result':
-            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
-            this.searchUploadMetadata.searchResultFileType =
-              this.searchFileSelection;
-            this.filesToUpload.files.push({
-              uploadFile: this.selectedSearchFile,
-              fileID: 'SearchResult',
-            });
             if (this.selectedFasta) {
               this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
               this.filesToUpload.files.push({
