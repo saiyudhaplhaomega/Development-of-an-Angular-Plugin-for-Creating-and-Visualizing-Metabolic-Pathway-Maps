@@ -15,19 +15,19 @@
               <tr>
                 <th scope="row" class="ml-summary-col">Creation Date</th>
                 <td>
-                  {{this.creationDate}}
+                  {{this.protDBDataObject.creationdate}}
                 </td>
               </tr>
               <tr>
                 <th scope="row" class="ml-summary-col">Original Filename</th>
                 <td>
-                  {{this.originalFilename}}
+                  {{this.protDBDataObject.originalFileName}}
                 </td>
               </tr>
               <tr>
                 <th scope="row" class="ml-summary-col"># Proteins</th>
                 <td>
-                  {{this.totalProteins}}
+                  {{this.protDBDataObject.totalProteins}}
                 </td>
               </tr>
             </tbody>
@@ -40,7 +40,7 @@
                 <button style="background: none; border: none" (click)="setDescription()">(edit)</button>
               </th>
               <td >
-                {{this.description}}
+                {{this.protDBDataObject.description}}
               </td>
             </tr>
           </tbody>

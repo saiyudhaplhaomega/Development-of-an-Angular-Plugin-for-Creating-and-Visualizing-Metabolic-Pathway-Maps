@@ -8,7 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { NameEditDialogComponent } from '../../../core/components/dialog/name-edit-dialog.component';
 import { ProteinDatabaseDialogComponent } from './protein-database-dialog/protein-database-dialog.component';
-import { HttpClientService, MultiFileUploadData } from '../../../core/services/http-client.service';
+import {
+  HttpClientService,
+  MultiFileUploadData,
+} from '../../../core/services/http-client.service';
 import { Filemetadata } from '../../objects/filemetadata';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
 import { HttpParams } from '@angular/common/http';
@@ -18,12 +21,13 @@ import { FolderJSONObject } from '../../objects/folderjson';
 import { ProtDBJSONObject } from '../../objects/protdbjson';
 
 enum ProteinDBType {
-  FASTA,UNIPROTXML
+  FASTA,
+  UNIPROTXML,
 }
 class ProteinDBMetadataJSON {
   originalFileName: String;
   name: String;
-  dbType: ProteinDBType;  
+  dbType: ProteinDBType;
 }
 
 @Component({
@@ -148,40 +152,42 @@ export class FolderPageComponent
 
     dialogRef.afterClosed().subscribe((dialog) => {
       if (dialog.dbName) {
-        const metaData = new ProteinDBMetadataJSON();
+        const metaData = new ProtDBJSONObject();
         metaData.name = dialog.dbName;
         metaData.originalFileName = dialog.dbFile.name;
-                
-                let filesToUpload: MultiFileUploadData = {
-                  files: [],
-                  fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
-                };
+        let protDBNode = this.dataService.createNewDataItem(
+          this.dataItemOfThisComponent,
+          dialog.dbName,
+          NodeType.ProteinDB
+        );
+        metaData.creationdate = protDBNode.creationDate;
+        let filesToUpload: MultiFileUploadData = {
+          files: [],
+          fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
+        };
 
-                const configFile = new File(
-                  [JSON.stringify(metaData)],
-                  'config'
-                );
-                filesToUpload.files.push({uploadFile: configFile, fileID: 'config'})
-                filesToUpload.files.push({uploadFile: dialog.dbFile, fileID: 'protDB'});
-                
+        const configFile = new File([JSON.stringify(metaData)], 'config');
+        filesToUpload.files.push({ uploadFile: configFile, fileID: 'config' });
+        filesToUpload.files.push({
+          uploadFile: dialog.dbFile,
+          fileID: 'protDB',
+        });
 
-                this.uploaderService.postMultiPartFiles<ProtDBJSONObject>(filesToUpload, Endpoints.PROTEINLOADER_FILEUPLOAD)
-                .subscribe( (result) => {
-                  if(result != null){
-                    let protDBNode = this.dataService.createNewDataItem(
-                      this.dataItemOfThisComponent,
-                      dialog.dbName,
-                      NodeType.ProteinDB
-                    );
-                    if(protDBNode !== null) {
-                      protDBNode.uuid = result.protdb_id;
-                      this.dataService.updateNode(protDBNode);
-                    }
-                  }
-                });
-
+        this.uploaderService
+          .postMultiPartFiles<ProtDBJSONObject>(
+            filesToUpload,
+            Endpoints.PROTEINLOADER_FILEUPLOAD
+          )
+          .subscribe((result) => {
+            if (result != null) {
+              if (protDBNode !== null) {
+                protDBNode.uuid = result.protdb_id;
+                this.dataService.updateNode(protDBNode);
+              }
             }
-      });
+          });
+      }
+    });
   }
 
   onAddFolder() {

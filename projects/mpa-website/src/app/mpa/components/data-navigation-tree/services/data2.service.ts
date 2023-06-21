@@ -75,6 +75,10 @@ export class DataService2 {
     }
   }
 
+  getDataItemFromId(id: number) {
+    return this.dataMap.getValue().findSpecificNode(this.dataMap.getValue().rootNode, id);
+  }
+
   updateNode(updateNode: DataItem): void {
     let mapCopy: DataItemMap = new DataItemMap();
     mapCopy.initializeAndReturnUser(this.dataMap.value.rootNode);
@@ -169,7 +173,7 @@ export class DataService2 {
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationdate = nodeObj.creationDate;
-    
+
     const params = new HttpParams(
       {
         fromObject: {
@@ -199,7 +203,7 @@ export class DataService2 {
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationdate = nodeObj.creationDate;
-    
+
     const params = new HttpParams(
       {
         fromObject: {
@@ -251,16 +255,10 @@ export class DataService2 {
     return this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
   }
 
-  updateFastaData(nodeObj) {
-    const proteinDB: ProtDBJSONObject = new ProtDBJSONObject();
-    proteinDB.protdb_id = nodeObj.uuid;
-    proteinDB.name = nodeObj.displayName;
-    proteinDB.description = nodeObj.description;
-    proteinDB.creationdate = nodeObj.creationDate;
-
+  updateFastaData(proteinDB: ProtDBJSONObject, nodeObj: DataItem) {
     const params = new HttpParams(
       {fromObject: {
-        jobid: nodeObj.uuid,
+        jobid: proteinDB.protdb_id,
       }}
     )
     this.httpClientService.postObject<ProtDBJSONObject,ProtDBJSONObject>(
@@ -268,11 +266,9 @@ export class DataService2 {
       Endpoints.PROTEINLOADER_UPDATE_FASTADATA,
       params
     )
-    .subscribe((response) => {
-      nodeObj.uuid = response.protdb_id;
+    .subscribe((response: ProtDBJSONObject) => {
       nodeObj.description = response.description;
       nodeObj.displayName = response.name;
-      nodeObj.creationDate = response.creationdate;
       this.updateNode(nodeObj);
     })
   }
