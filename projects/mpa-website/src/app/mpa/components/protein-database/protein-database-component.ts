@@ -18,6 +18,8 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
 
   dataItemOfThisComponent: DataItem;
 
+  loading = true;
+
   constructor(
     private _snackBar: MatSnackBar,
     private dataService: DataService2,
@@ -36,6 +38,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
         .getFastaData(this.protDBDataObject.protdb_id)
         .subscribe((fastaData) => {
           this.protDBDataObject = fastaData;
+          this.loading = false;
         });
     }
   }

@@ -216,6 +216,8 @@ export class ExperimentPageComponent
 
   hasMpaData = false;
   datStats: Datstats;
+  hasTaxonomyData = false;
+  hasFunctionData = false;
 
   // DATA SUBMISSION VARIABLES
   // files selected via input field
@@ -286,7 +288,6 @@ export class ExperimentPageComponent
 
     this.searchParameters = new SearchParameters;
 
-    //dataStats, calculate if there is any
     this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
       this.hasMpaData = mpaData.length > 0;
       if (mpaData.length > 0) {
@@ -383,8 +384,6 @@ export class ExperimentPageComponent
   }
 
   async onSubmit() {
-
-    //this.uploaderService.clearUploadFiles();
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
@@ -404,12 +403,6 @@ export class ExperimentPageComponent
         this.searchUploadMetadata.uploadType = "SEARCH_PEAKLIST";
         this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
         this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
-        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedPeaklistFile,
-        //   this.peaklistSelection,
-        //   'Peaklist'
-        // );
         this.hasPeaklistFile = true;
         break;
 
@@ -417,22 +410,10 @@ export class ExperimentPageComponent
         this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
         this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
         this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        // await this.addFileToUploadData(
-        //   this.selectedSearchFile,
-        //   this.searchFileSelection,
-        //   'SearchResult'
-        // );
-
         if (this.selectedFasta) {
           this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
           this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-          // await this.addFileToUploadData(
-          //   this.selectedFasta,
-          //   FileType.MASCOT_FASTA,
-          //  'MascotFasta'
-          // );
         }
-
         this.hasSearchFile = true;
         break;
 
@@ -440,33 +421,15 @@ export class ExperimentPageComponent
         this.searchUploadMetadata.uploadType = "SEARCH_RESULT_PEAKLIST"
         this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
         this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
-        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedPeaklistFile,
-        //   this.peaklistSelection,
-        //   'Peaklist'
-        // );
         this.hasPeaklistFile = true;
 
         this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
         this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedSearchFile,
-        //   this.searchFileSelection,
-        //   'SearchResult'
-        // );
         this.hasSearchFile = true;
 
         if (this.selectedFasta) {
           this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
           this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-          //await this.addFileToUploadData(this.selectedFasta, FileType.MASCOT_FASTA, this.dbExperiment.expid);
-          // await this.addFileToUploadData(
-          //   this.selectedFasta,
-          //   FileType.MASCOT_FASTA,
-          //   'MascotFasta'
-          // );
         }
         break;
     }
@@ -475,14 +438,7 @@ export class ExperimentPageComponent
       [JSON.stringify(this.searchUploadMetadata)],
       'config'
     );
-    this.filesToUpload.files.unshift({uploadFile: configFile, fileID: 'config'}); //config HAS to be send first
-    
-    //this.uploaderService.performUpload(this.uploadDialogId);
-    // this.httpClientService.performUpload(
-    //   this.uploadDialogId,
-    //   this.filesToUpload,
-    //   Endpoints.FILES_UPLOAD
-    // );
+    this.filesToUpload.files.unshift({uploadFile: configFile, fileID: 'config'});
 
     this.httpClientService.postMultiPartFiles(
           this.filesToUpload,
@@ -520,57 +476,6 @@ export class ExperimentPageComponent
     return dialogRef.afterClosed();
   }
 
-  async addFileToUploadData(
-    file: File,
-    fileType: FileType,
-    experimentId: string
-  ) {
-
-    // TODO: implement use of endpoint for file upload independent from type
-
-    //const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
-
-    // const metaDataForServer: MPAFile = {
-    //   fileID: '',
-    //   fileMetaData: JSON.stringify({ fileName: file.name }),
-    //   protdbID: this.proteinDBselection.uuid,
-    //   experimentID: experimentId,
-    //   fileType: fileType,
-    //   fileStatus: '',
-    // };
-
-    // // send meta data, receive fileuuid
-    // try {
-    //   const metaDataResponse = await this.httpClientService
-    //     .postObject<MPAFile, MPAFile>(
-    //       metaDataForServer,
-    //       Endpoints.SEARCH_METADATA
-    //     )
-    //     .toPromise();
-    //   if (metaDataResponse !== null) {
-    //     // TODO: evaluate status instead of just checking for null?
-    //     // TODO: jobid = fileid ?
-    //     //uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
-    //     const uploadDataForServer: UploadFile = {
-    //       uploadFile: file,
-    //       fileID: metaDataResponse.fileID,
-    //     };
-    //     //this.uploaderService.addUploadFiles([uploadDataForServer]);
-
-    //   } else {
-    //     throw new Error('File could not be created');
-    //   }
-    // } catch (e) {
-    //   this.dialog
-    //     .getDialogById(this.uploadDialogId)
-    //     .componentInstance.setUploadFailed();
-    //   this.dialog.getDialogById(
-    //     this.uploadDialogId
-    //   ).componentInstance.uploadFailedMessage = e.message;
-    //   console.error(e);
-    // }
-  }
-
   onAccept() {
     if (this.displayNameEditing.length > 24) {
       this._snackBar.open('Names longer than 24 characters are not allowed!');
@@ -596,10 +501,6 @@ export class ExperimentPageComponent
 
     dialogRef.afterClosed().subscribe((expDescription) => {
       this.dataItemOfThisComponent.description = expDescription;
-      //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
-      //item.description = expDescription;
-      //TODO: this._dataMap.set(this.dbExperiment.expid, item);
-      // TODO: this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     });
   }
