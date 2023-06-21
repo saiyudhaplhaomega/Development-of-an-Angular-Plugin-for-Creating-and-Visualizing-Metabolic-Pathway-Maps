@@ -7,7 +7,8 @@
       </div>
 
       <div class="card-body">
-        <div style="display:flex; flex-direction:column">
+        <mat-spinner style="margin: auto;" *ngIf="loading === true"></mat-spinner>
+        <div *ngIf="loading === false" style="display:flex; flex-direction:column">
           <table class="table table-light table-hover" style="justify-content:flex-start; max-width:80%;min-width:70%;margin-bottom:0px;">
             <thead>
             </thead>

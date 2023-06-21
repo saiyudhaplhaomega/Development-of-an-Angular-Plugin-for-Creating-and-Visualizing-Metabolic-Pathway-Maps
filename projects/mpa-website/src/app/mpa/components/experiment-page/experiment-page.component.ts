@@ -30,7 +30,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { FileType } from '../../objects/FileType';
+import { FileType } from '../../objects/filetype';
+
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -205,6 +206,8 @@ export class ExperimentPageComponent
 
   hasMpaData = false;
   datStats: Datstats;
+  hasTaxonomyData = false;
+  hasFunctionData = false;
 
   // DATA SUBMISSION VARIABLES
   // files selected via input field
@@ -275,7 +278,6 @@ export class ExperimentPageComponent
 
     this.searchParameters = new SearchParameters();
 
-    //dataStats, calculate if there is any
     this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
       this.hasMpaData = mpaData.length > 0;
       if (mpaData.length > 0) {
@@ -369,7 +371,6 @@ export class ExperimentPageComponent
   }
 
   async onSubmit() {
-    //this.uploaderService.clearUploadFiles();
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
@@ -388,16 +389,7 @@ export class ExperimentPageComponent
       case 'Search':
         this.searchUploadMetadata.uploadType = 'SEARCH_PEAKLIST';
         this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-        this.filesToUpload.files.push({
-          uploadFile: this.selectedPeaklistFile,
-          fileID: 'Peaklist',
-        });
-        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedPeaklistFile,
-        //   this.peaklistSelection,
-        //   'Peaklist'
-        // );
+        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
         this.hasPeaklistFile = true;
         break;
       case 'Result Upload':
@@ -416,66 +408,32 @@ export class ExperimentPageComponent
             //   'SearchResult'
             // );
 
-            if (this.selectedFasta) {
-              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-              this.filesToUpload.files.push({
-                uploadFile: this.selectedFasta,
-                fileID: 'MascotFasta',
-              });
-              // await this.addFileToUploadData(
-              //   this.selectedFasta,
-              //   FileType.MASCOT_FASTA,
-              //  'MascotFasta'
-              // );
-            }
-
-            this.hasSearchFile = true;
-            break;
-
-          case 'Peaklist + Search Result':
-            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT_PEAKLIST';
-            this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-            this.filesToUpload.files.push({
-              uploadFile: this.selectedPeaklistFile,
-              fileID: 'Peaklist',
-            });
-            //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-            // await this.addFileToUploadData(
-            //   this.selectedPeaklistFile,
-            //   this.peaklistSelection,
-            //   'Peaklist'
-            // );
-            this.hasPeaklistFile = true;
-
-            this.searchUploadMetadata.searchResultFileType =
-              this.searchFileSelection;
-            this.filesToUpload.files.push({
-              uploadFile: this.selectedSearchFile,
-              fileID: 'SearchResult',
-            });
-            //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
-            // await this.addFileToUploadData(
-            //   this.selectedSearchFile,
-            //   this.searchFileSelection,
-            //   'SearchResult'
-            // );
-            this.hasSearchFile = true;
-
-            if (this.selectedFasta) {
-              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-              this.filesToUpload.files.push({
-                uploadFile: this.selectedFasta,
-                fileID: 'MascotFasta',
-              });
-              //await this.addFileToUploadData(this.selectedFasta, FileType.MASCOT_FASTA, this.dbExperiment.expid);
-              // await this.addFileToUploadData(
-              //   this.selectedFasta,
-              //   FileType.MASCOT_FASTA,
-              //   'MascotFasta'
-              // );
-            }
-            break;
+      case 'Search Result':
+        this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
+        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
+        if (this.selectedFasta) {
+          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
         }
+        this.hasSearchFile = true;
+        break;
+
+      case 'Peaklist + Search Result':
+        this.searchUploadMetadata.uploadType = "SEARCH_RESULT_PEAKLIST"
+        this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
+        this.hasPeaklistFile = true;
+
+        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
+        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
+        this.hasSearchFile = true;
+
+        if (this.selectedFasta) {
+          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
+        }
+        break;
     }
 
     const configFile = new File(
@@ -544,7 +502,7 @@ export class ExperimentPageComponent
     //this.getChildNodes();
   }
 
-  invokeUploadDialog(): Observable<boolean> {
+  invokeUploadDialog() {
     this.uploadProgressService.setUUID(this.dataItemOfThisComponent.id);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
@@ -553,52 +511,6 @@ export class ExperimentPageComponent
     });
 
     return dialogRef.afterClosed();
-  }
-
-  async addFileToUploadData(
-    file: File,
-    fileType: FileType,
-    experimentId: string
-  ) {
-    // TODO: implement use of endpoint for file upload independent from type
-    //const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
-    // const metaDataForServer: MPAFile = {
-    //   fileID: '',
-    //   fileMetaData: JSON.stringify({ fileName: file.name }),
-    //   protdbID: this.proteinDBselection.uuid,
-    //   experimentID: experimentId,
-    //   fileType: fileType,
-    //   fileStatus: '',
-    // };
-    // // send meta data, receive fileuuid
-    // try {
-    //   const metaDataResponse = await this.httpClientService
-    //     .postObject<MPAFile, MPAFile>(
-    //       metaDataForServer,
-    //       Endpoints.SEARCH_METADATA
-    //     )
-    //     .toPromise();
-    //   if (metaDataResponse !== null) {
-    //     // TODO: evaluate status instead of just checking for null?
-    //     // TODO: jobid = fileid ?
-    //     //uploadDataForServer.httpParameters = uploadDataForServer.httpParameters.set('partid', metaDataResponse.fileID);
-    //     const uploadDataForServer: UploadFile = {
-    //       uploadFile: file,
-    //       fileID: metaDataResponse.fileID,
-    //     };
-    //     //this.uploaderService.addUploadFiles([uploadDataForServer]);
-    //   } else {
-    //     throw new Error('File could not be created');
-    //   }
-    // } catch (e) {
-    //   this.dialog
-    //     .getDialogById(this.uploadDialogId)
-    //     .componentInstance.setUploadFailed();
-    //   this.dialog.getDialogById(
-    //     this.uploadDialogId
-    //   ).componentInstance.uploadFailedMessage = e.message;
-    //   console.error(e);
-    // }
   }
 
   onAccept() {
@@ -626,10 +538,6 @@ export class ExperimentPageComponent
 
     dialogRef.afterClosed().subscribe((expDescription) => {
       this.dataItemOfThisComponent.description = expDescription;
-      //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
-      //item.description = expDescription;
-      //TODO: this._dataMap.set(this.dbExperiment.expid, item);
-      // TODO: this.dataService.dataMap.next(this._dataMap);
       this.updateExperiment();
     });
   }
@@ -693,3 +601,7 @@ export class ExperimentPageComponent
     };
   }
 }
+function invokeUploadDialog() {
+  throw new Error('Function not implemented.');
+}
+

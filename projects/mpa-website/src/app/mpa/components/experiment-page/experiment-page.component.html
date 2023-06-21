@@ -410,14 +410,14 @@
         </mat-tab> -->
 
         <!--   Tab 4: Taxonomy -->
-        <mat-tab label="Taxonomy">
+        <mat-tab label="Taxonomy" disabled="{{!hasTaxonomyData}}">
           <ng-template matTabContent>
             <app-taxonomy-tab class="mpa-table"></app-taxonomy-tab>
           </ng-template>
         </mat-tab>
 
           <!--   Tab 6: Function -->
-            <mat-tab label="Function">
+            <mat-tab label="Function" disabled="{{!hasFunctionData}}">
               <ng-template matTabContent>
                 <app-function-tab></app-function-tab>
               </ng-template>
