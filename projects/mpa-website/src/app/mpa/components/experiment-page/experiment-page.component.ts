@@ -601,7 +601,3 @@ export class ExperimentPageComponent
     };
   }
 }
-function invokeUploadDialog() {
-  throw new Error('Function not implemented.');
-}
-
