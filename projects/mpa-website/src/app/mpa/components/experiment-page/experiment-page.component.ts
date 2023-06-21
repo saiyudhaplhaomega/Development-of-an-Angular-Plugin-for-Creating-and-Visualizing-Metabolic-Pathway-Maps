@@ -32,7 +32,6 @@ import {
 } from '@angular/animations';
 import { FileType } from '../../objects/filetype';
 
-
 interface Datstats {
   totalNoProteinGroups: number;
   totalNoProteins: number;
@@ -389,7 +388,10 @@ export class ExperimentPageComponent
       case 'Search':
         this.searchUploadMetadata.uploadType = 'SEARCH_PEAKLIST';
         this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
+        this.filesToUpload.files.push({
+          uploadFile: this.selectedPeaklistFile,
+          fileID: 'Peaklist',
+        });
         this.hasPeaklistFile = true;
         break;
       case 'Result Upload':
@@ -402,104 +404,124 @@ export class ExperimentPageComponent
               uploadFile: this.selectedSearchFile,
               fileID: 'SearchResult',
             });
-            // await this.addFileToUploadData(
-            //   this.selectedSearchFile,
-            //   this.searchFileSelection,
-            //   'SearchResult'
-            // );
+          // await this.addFileToUploadData(
+          //   this.selectedSearchFile,
+          //   this.searchFileSelection,
+          //   'SearchResult'
+          // );
 
-      case 'Search Result':
-        this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
-        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-        }
-        this.hasSearchFile = true;
-        break;
-
-      case 'Peaklist + Search Result':
-        this.searchUploadMetadata.uploadType = "SEARCH_RESULT_PEAKLIST"
-        this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
-        this.hasPeaklistFile = true;
-
-        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        this.hasSearchFile = true;
-
-        if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-        }
-        break;
-    }
-
-    const configFile = new File(
-      [JSON.stringify(this.searchUploadMetadata)],
-      'config'
-    );
-    this.filesToUpload.files.unshift({
-      uploadFile: configFile,
-      fileID: 'config',
-    }); //config HAS to be send first
-
-    //this.uploaderService.performUpload(this.uploadDialogId);
-    // this.httpClientService.performUpload(
-    //   this.uploadDialogId,
-    //   this.filesToUpload,
-    //   Endpoints.FILES_UPLOAD
-    // );
-    this.uploadProgressService.addToTotal(this.filesToUpload.files[0].uploadFile.size)
-    this.httpClientService
-      .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
-      .subscribe({
-        next: (event) => {
-          console.log('unknown event');
-          console.log(event);
-          console.log(event.type);
-          if (event.type === HttpEventType.UploadProgress) {
-            this.uploadProgressService.changeReportLoaded(event.loaded);
-            console.log('UploadProgress event');
-            console.log(event);
-          } else if (event.type === HttpEventType.Response) {
-            console.log('Response event');
-            console.log(event);
-          }
-        },
-        error: (error) => {
-          console.log(error);
-          if (error.status >= 400) {
-            // handle failed upload
-            if (this.dialog.getDialogById(this.uploadDialogId)) {
-              this.dialog
-                .getDialogById(this.uploadDialogId)
-                .componentInstance.setUploadFailed();
-              this.dialog.getDialogById(
-                this.uploadDialogId
-              ).componentInstance.uploadFailedMessage = error.statusText;
+          case 'Search Result':
+            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
+            this.searchUploadMetadata.searchResultFileType =
+              this.searchFileSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedSearchFile,
+              fileID: 'SearchResult',
+            });
+            if (this.selectedFasta) {
+              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+              this.filesToUpload.files.push({
+                uploadFile: this.selectedFasta,
+                fileID: 'MascotFasta',
+              });
             }
-          } else {
-            throw error;
+            this.hasSearchFile = true;
+            break;
+
+          case 'Peaklist + Search Result':
+            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT_PEAKLIST';
+            this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedPeaklistFile,
+              fileID: 'Peaklist',
+            });
+            this.hasPeaklistFile = true;
+
+            this.searchUploadMetadata.searchResultFileType =
+              this.searchFileSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedSearchFile,
+              fileID: 'SearchResult',
+            });
+            this.hasSearchFile = true;
+
+            if (this.selectedFasta) {
+              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+              this.filesToUpload.files.push({
+                uploadFile: this.selectedFasta,
+                fileID: 'MascotFasta',
+              });
+            }
+            break;
+        }
+
+        const configFile = new File(
+          [JSON.stringify(this.searchUploadMetadata)],
+          'config'
+        );
+        this.filesToUpload.files.unshift({
+          uploadFile: configFile,
+          fileID: 'config',
+        }); //config HAS to be send first
+
+        //this.uploaderService.performUpload(this.uploadDialogId);
+        // this.httpClientService.performUpload(
+        //   this.uploadDialogId,
+        //   this.filesToUpload,
+        //   Endpoints.FILES_UPLOAD
+        // );
+        this.uploadProgressService.addToTotal(
+          this.filesToUpload.files[0].uploadFile.size
+        );
+        this.httpClientService
+          .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
+          .subscribe({
+            next: (event) => {
+              console.log('unknown event');
+              console.log(event);
+              console.log(event.type);
+              if (event.type === HttpEventType.UploadProgress) {
+                this.uploadProgressService.changeReportLoaded(event.loaded);
+                console.log('UploadProgress event');
+                console.log(event);
+              } else if (event.type === HttpEventType.Response) {
+                console.log('Response event');
+                console.log(event);
+              }
+            },
+            error: (error) => {
+              console.log(error);
+              if (error.status >= 400) {
+                // handle failed upload
+                if (this.dialog.getDialogById(this.uploadDialogId)) {
+                  this.dialog
+                    .getDialogById(this.uploadDialogId)
+                    .componentInstance.setUploadFailed();
+                  this.dialog.getDialogById(
+                    this.uploadDialogId
+                  ).componentInstance.uploadFailedMessage = error.statusText;
+                }
+              } else {
+                throw error;
+              }
+            },
+          });
+
+        // invoked if upload dialog is closed
+        onDialogClosingObservable.subscribe((uploadFailed) => {
+          console.log('dialog closing');
+          if (!uploadFailed) {
+            if (this.selectedPeaklistFile) {
+              //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+            }
+            if (this.selectedSearchFile) {
+              //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+            }
           }
-        },
-      });
+        });
 
-    // invoked if upload dialog is closed
-    onDialogClosingObservable.subscribe((uploadFailed) => {
-      console.log('dialog closing')
-      if (!uploadFailed) {
-        if (this.selectedPeaklistFile) {
-          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
-        }
-        if (this.selectedSearchFile) {
-          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
-        }
-      }
-    });
-
-    //this.getChildNodes();
+      //this.getChildNodes();
+    }
   }
 
   invokeUploadDialog() {
@@ -507,7 +529,7 @@ export class ExperimentPageComponent
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: true,
-      data: {successMessage: 'Upload successful.'},
+      data: { successMessage: 'Upload successful.' },
     });
 
     return dialogRef.afterClosed();
