@@ -15,9 +15,12 @@ import { ExperimentJSONObject } from '../../objects/experimentjson';
 import { UploadDialogComponent } from '../../../core/components/dialog/upload-dialog.component';
 import { UploadProgressService } from '../../../core/services/upload-progress.service';
 import { MPAFile, MPAFileObject } from '../../../prophane/objects/mpafile';
-import { HttpParams } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GroupSelection, MpaTableDataService } from '../../services/mpa-table-data.service';
+import {
+  GroupSelection,
+  MpaTableDataService,
+} from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
 import {
@@ -38,8 +41,8 @@ interface Datstats {
 }
 
 interface SearchUploadMetadata {
-	experimentID: String;
-	protdbID: String;
+  experimentID: String;
+  protdbID: String;
   uploadType: String;
   peaklistFileType: FileType;
   searchResultFileType: FileType;
@@ -52,7 +55,7 @@ interface SearchUploadMetadata {
 
 class SearchUploadMetadataJSON implements SearchUploadMetadata {
   experimentID: String;
-	protdbID: String;
+  protdbID: String;
   uploadType: String;
   peaklistFileType: FileType;
   searchResultFileType: FileType;
@@ -69,78 +72,70 @@ export interface ProteinGroupRequest {
 }
 
 enum IonToleranceUnit {
-  Da ='Da',
-  PPM = 'ppm'
+  Da = 'Da',
+  PPM = 'ppm',
 }
 
 //TODO where to put this?
 export class SearchParameters {
-  fragmentIonToleranceUnitOptions: string[] = ['ppm','Da'];
-  precursorIonToleranceUnitOptions: string[] = ['ppm','Da'];
+  fragmentIonToleranceUnitOptions: string[] = ['ppm', 'Da'];
+  precursorIonToleranceUnitOptions: string[] = ['ppm', 'Da'];
   fragmentIonToleranceUnitSelection: string = 'ppm';
   precursorIonToleranceUnitSelection: string = 'Da';
   fragmentIonTolerance: number = 10;
   precursorIonTolerance: number = 0.1;
 
-  unitSelectionChange(unit: string, inputTarget: string){
-    if(inputTarget == 'fragmentIonTolerance'){
-      if(unit != this.fragmentIonToleranceUnitSelection){
-        if(unit == IonToleranceUnit.PPM){
+  unitSelectionChange(unit: string, inputTarget: string) {
+    if (inputTarget == 'fragmentIonTolerance') {
+      if (unit != this.fragmentIonToleranceUnitSelection) {
+        if (unit == IonToleranceUnit.PPM) {
           this.fragmentIonTolerance = 10;
-        }
-        else if(unit == IonToleranceUnit.Da){
+        } else if (unit == IonToleranceUnit.Da) {
           this.fragmentIonTolerance = 0.1;
         }
       }
-    }
-    else if(inputTarget == 'precursorIonTolerance'){
-      if(unit != this.precursorIonToleranceUnitSelection){
-        if(unit == IonToleranceUnit.PPM){
+    } else if (inputTarget == 'precursorIonTolerance') {
+      if (unit != this.precursorIonToleranceUnitSelection) {
+        if (unit == IonToleranceUnit.PPM) {
           this.precursorIonTolerance = 10;
-        }
-        else if(unit == IonToleranceUnit.Da){
+        } else if (unit == IonToleranceUnit.Da) {
           this.precursorIonTolerance = 0.1;
         }
       }
     }
-
   }
 
-  checkToleranceInput(unit: string, toleranceInput: number, inputTarget: string){
+  checkToleranceInput(
+    unit: string,
+    toleranceInput: number,
+    inputTarget: string
+  ) {
     var adjustedInput: number;
-    if(unit == IonToleranceUnit.PPM){
-      if(toleranceInput < 0){
+    if (unit == IonToleranceUnit.PPM) {
+      if (toleranceInput < 0) {
         adjustedInput = 0;
-      }
-      else if(toleranceInput > 1000){
+      } else if (toleranceInput > 1000) {
         adjustedInput = 1000;
-      }
-      else if(toleranceInput == undefined){
+      } else if (toleranceInput == undefined) {
         adjustedInput = 0;
-      }
-      else {
+      } else {
         adjustedInput = Math.round(toleranceInput);
       }
-    }
-    else if(unit == IonToleranceUnit.Da){
-      if(toleranceInput < 0.001){
-       adjustedInput = 0.001;
-      }
-      else if(toleranceInput > 1){
+    } else if (unit == IonToleranceUnit.Da) {
+      if (toleranceInput < 0.001) {
+        adjustedInput = 0.001;
+      } else if (toleranceInput > 1) {
         adjustedInput = 1;
-      }
-      else if(toleranceInput == undefined){
+      } else if (toleranceInput == undefined) {
         adjustedInput = 0;
-      }
-      else {
+      } else {
         adjustedInput = parseFloat(toleranceInput.toPrecision(2));
       }
     }
 
-    if(inputTarget === "fragmentIonTolerance"){
+    if (inputTarget === 'fragmentIonTolerance') {
       this.fragmentIonTolerance = adjustedInput;
-    }
-    else if(inputTarget === "precursorIonTolerance"){
+    } else if (inputTarget === 'precursorIonTolerance') {
       this.precursorIonTolerance = adjustedInput;
     }
   }
@@ -152,8 +147,8 @@ export class SearchParameters {
   styleUrls: ['./experiment-page.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({visibility: 'hidden', height: 0, })),
-      state('expanded', style({ height: '*', })),
+      state('collapsed', style({ visibility: 'hidden', height: 0 })),
+      state('expanded', style({ height: '*' })),
       transition(
         'expanded <=> collapsed',
         animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
@@ -203,14 +198,8 @@ export class ExperimentPageComponent
   searchFileSelection = FileType.MZIDdentML;
 
   // available options
-  uploadFileTypePeaklist: string[] = [
-    FileType.MZML,
-    FileType.MGF,
-  ];
-  uploadFileTypeSearch: string[] = [
-    FileType.MZIDdentML,
-    FileType.DAT,
-  ];
+  uploadFileTypePeaklist: string[] = [FileType.MZML, FileType.MGF];
+  uploadFileTypeSearch: string[] = [FileType.MZIDdentML, FileType.DAT];
 
   buttonDisabled = true;
 
@@ -284,7 +273,7 @@ export class ExperimentPageComponent
     //   }
     // });
 
-    this.searchParameters = new SearchParameters;
+    this.searchParameters = new SearchParameters();
 
     //dataStats, calculate if there is any
     this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
@@ -293,9 +282,6 @@ export class ExperimentPageComponent
         this.datStats = this.calculateDataStats(mpaData);
       }
     });
-
-
-
   }
 
   ngOnDestroy() {
@@ -314,8 +300,7 @@ export class ExperimentPageComponent
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected =
-      this.searchFileSelection !== FileType.DAT;
+    this.fastaFileSelected = this.searchFileSelection !== FileType.DAT;
     this.dataUploadSelection = option;
     this.disableButton();
   }
@@ -325,7 +310,7 @@ export class ExperimentPageComponent
     this.disableButton();
   }
 
-  expandAdvancedSearchParameters(){
+  expandAdvancedSearchParameters() {
     this.advancedSearchExpanded = !this.advancedSearchExpanded;
   }
 
@@ -336,8 +321,7 @@ export class ExperimentPageComponent
     this.selectedPeaklistFile = undefined;
     this.selectedSearchFile = undefined;
     this.selectedFasta = undefined;
-    this.fastaFileSelected =
-      this.searchFileSelection !== FileType.DAT;
+    this.fastaFileSelected = this.searchFileSelection !== FileType.DAT;
     this.disableButton();
   }
 
@@ -362,28 +346,29 @@ export class ExperimentPageComponent
     /**
      * checks if files are selected or uploaded already and disables the submit button
      */
-    if (this.dataUploadSelection === 'Peaklist + Search Result') {
-      this.buttonDisabled =
-        this.hasSearchFile ||
-        this.hasPeaklistFile ||
-        !this.selectedPeaklistFile ||
-        !this.selectedSearchFile ||
-        !this.fastaFileSelected;
-    } else if (this.dataUploadSelection === 'Peaklist') {
+    if (this.dataUploadModeSelection === 'Search') {
       this.buttonDisabled =
         this.hasPeaklistFile ||
         !this.proteinDBselection ||
         !this.selectedPeaklistFile;
-    } else if (this.dataUploadSelection === 'Search Result') {
-      this.buttonDisabled =
-        this.hasSearchFile ||
-        !this.selectedSearchFile ||
-        !this.fastaFileSelected;
+    } else if (this.dataUploadModeSelection === 'Result Upload') {
+      if (this.dataUploadSelection === 'Peaklist + Search Result') {
+        this.buttonDisabled =
+          this.hasSearchFile ||
+          this.hasPeaklistFile ||
+          !this.selectedPeaklistFile ||
+          !this.selectedSearchFile ||
+          !this.fastaFileSelected;
+      } else if (this.dataUploadSelection === 'Search Result') {
+        this.buttonDisabled =
+          this.hasSearchFile ||
+          !this.selectedSearchFile ||
+          !this.fastaFileSelected;
+      }
     }
   }
 
   async onSubmit() {
-
     //this.uploaderService.clearUploadFiles();
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
@@ -393,17 +378,20 @@ export class ExperimentPageComponent
     };
 
     this.searchUploadMetadata = new SearchUploadMetadataJSON();
-    this.searchUploadMetadata.experimentID = this.dataItemOfThisComponent.uuid
+    this.searchUploadMetadata.experimentID = this.dataItemOfThisComponent.uuid;
     this.searchUploadMetadata.protdbID = this.proteinDBselection.uuid;
 
     this.uploadProgressService.reset();
     const onDialogClosingObservable = this.invokeUploadDialog();
 
-    switch (this.dataUploadSelection) {
-      case 'Peaklist':
-        this.searchUploadMetadata.uploadType = "SEARCH_PEAKLIST";
+    switch (this.dataUploadModeSelection) {
+      case 'Search':
+        this.searchUploadMetadata.uploadType = 'SEARCH_PEAKLIST';
         this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
+        this.filesToUpload.files.push({
+          uploadFile: this.selectedPeaklistFile,
+          fileID: 'Peaklist',
+        });
         //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
         // await this.addFileToUploadData(
         //   this.selectedPeaklistFile,
@@ -412,99 +400,146 @@ export class ExperimentPageComponent
         // );
         this.hasPeaklistFile = true;
         break;
+      case 'Result Upload':
+        switch (this.dataUploadSelection) {
+          case 'Search Result':
+            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
+            this.searchUploadMetadata.searchResultFileType =
+              this.searchFileSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedSearchFile,
+              fileID: 'SearchResult',
+            });
+            // await this.addFileToUploadData(
+            //   this.selectedSearchFile,
+            //   this.searchFileSelection,
+            //   'SearchResult'
+            // );
 
-      case 'Search Result':
-        this.searchUploadMetadata.uploadType = 'SEARCH_RESULT';
-        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        // await this.addFileToUploadData(
-        //   this.selectedSearchFile,
-        //   this.searchFileSelection,
-        //   'SearchResult'
-        // );
+            if (this.selectedFasta) {
+              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+              this.filesToUpload.files.push({
+                uploadFile: this.selectedFasta,
+                fileID: 'MascotFasta',
+              });
+              // await this.addFileToUploadData(
+              //   this.selectedFasta,
+              //   FileType.MASCOT_FASTA,
+              //  'MascotFasta'
+              // );
+            }
 
-        if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-          // await this.addFileToUploadData(
-          //   this.selectedFasta,
-          //   FileType.MASCOT_FASTA,
-          //  'MascotFasta'
-          // );
+            this.hasSearchFile = true;
+            break;
+
+          case 'Peaklist + Search Result':
+            this.searchUploadMetadata.uploadType = 'SEARCH_RESULT_PEAKLIST';
+            this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedPeaklistFile,
+              fileID: 'Peaklist',
+            });
+            //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
+            // await this.addFileToUploadData(
+            //   this.selectedPeaklistFile,
+            //   this.peaklistSelection,
+            //   'Peaklist'
+            // );
+            this.hasPeaklistFile = true;
+
+            this.searchUploadMetadata.searchResultFileType =
+              this.searchFileSelection;
+            this.filesToUpload.files.push({
+              uploadFile: this.selectedSearchFile,
+              fileID: 'SearchResult',
+            });
+            //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
+            // await this.addFileToUploadData(
+            //   this.selectedSearchFile,
+            //   this.searchFileSelection,
+            //   'SearchResult'
+            // );
+            this.hasSearchFile = true;
+
+            if (this.selectedFasta) {
+              this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
+              this.filesToUpload.files.push({
+                uploadFile: this.selectedFasta,
+                fileID: 'MascotFasta',
+              });
+              //await this.addFileToUploadData(this.selectedFasta, FileType.MASCOT_FASTA, this.dbExperiment.expid);
+              // await this.addFileToUploadData(
+              //   this.selectedFasta,
+              //   FileType.MASCOT_FASTA,
+              //   'MascotFasta'
+              // );
+            }
+            break;
         }
-
-        this.hasSearchFile = true;
-        break;
-
-      case 'Peaklist + Search Result':
-        this.searchUploadMetadata.uploadType = "SEARCH_RESULT_PEAKLIST"
-        this.searchUploadMetadata.peaklistFileType = this.peaklistSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedPeaklistFile, fileID: 'Peaklist'});
-        //await this.addFileToUploadData(this.selectedPeaklistFile, this.peaklistSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedPeaklistFile,
-        //   this.peaklistSelection,
-        //   'Peaklist'
-        // );
-        this.hasPeaklistFile = true;
-
-        this.searchUploadMetadata.searchResultFileType = this.searchFileSelection;
-        this.filesToUpload.files.push({uploadFile: this.selectedSearchFile, fileID: 'SearchResult'});
-        //await this.addFileToUploadData(this.selectedSearchFile, this.searchFileSelection, this.dbExperiment.expid);
-        // await this.addFileToUploadData(
-        //   this.selectedSearchFile,
-        //   this.searchFileSelection,
-        //   'SearchResult'
-        // );
-        this.hasSearchFile = true;
-
-        if (this.selectedFasta) {
-          this.searchUploadMetadata.fastaFileType = FileType.MASCOT_FASTA;
-          this.filesToUpload.files.push({uploadFile: this.selectedFasta, fileID: 'MascotFasta'});
-          //await this.addFileToUploadData(this.selectedFasta, FileType.MASCOT_FASTA, this.dbExperiment.expid);
-          // await this.addFileToUploadData(
-          //   this.selectedFasta,
-          //   FileType.MASCOT_FASTA,
-          //   'MascotFasta'
-          // );
-        }
-        break;
     }
 
     const configFile = new File(
       [JSON.stringify(this.searchUploadMetadata)],
       'config'
     );
-    this.filesToUpload.files.unshift({uploadFile: configFile, fileID: 'config'}); //config HAS to be send first
-    
+    this.filesToUpload.files.unshift({
+      uploadFile: configFile,
+      fileID: 'config',
+    }); //config HAS to be send first
+
     //this.uploaderService.performUpload(this.uploadDialogId);
     // this.httpClientService.performUpload(
     //   this.uploadDialogId,
     //   this.filesToUpload,
     //   Endpoints.FILES_UPLOAD
     // );
-
-    this.httpClientService.postMultiPartFiles(
-          this.filesToUpload,
-          Endpoints.FILES_UPLOAD
-      ).subscribe((response) => {
-        // TODO: simple json response that reports upload success
-        // console.log(response);
-        // this.ofsData = response;
-        // this.loading = false;
+    this.uploadProgressService.addToTotal(this.filesToUpload.files[0].uploadFile.size)
+    this.httpClientService
+      .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
+      .subscribe({
+        next: (event) => {
+          console.log('unknown event');
+          console.log(event);
+          console.log(event.type);
+          if (event.type === HttpEventType.UploadProgress) {
+            this.uploadProgressService.changeReportLoaded(event.loaded);
+            console.log('UploadProgress event');
+            console.log(event);
+          } else if (event.type === HttpEventType.Response) {
+            console.log('Response event');
+            console.log(event);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status >= 400) {
+            // handle failed upload
+            if (this.dialog.getDialogById(this.uploadDialogId)) {
+              this.dialog
+                .getDialogById(this.uploadDialogId)
+                .componentInstance.setUploadFailed();
+              this.dialog.getDialogById(
+                this.uploadDialogId
+              ).componentInstance.uploadFailedMessage = error.statusText;
+            }
+          } else {
+            throw error;
+          }
+        },
       });
 
     // invoked if upload dialog is closed
-    // onDialogClosingObservable.subscribe((uploadFailed) => {
-    //   if (!uploadFailed) {
-    //     if (this.selectedPeaklistFile) {
-    //       //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
-    //     }
-    //     if (this.selectedSearchFile) {
-    //       //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
-    //     }
-    //   }
-    // });
+    onDialogClosingObservable.subscribe((uploadFailed) => {
+      console.log('dialog closing')
+      if (!uploadFailed) {
+        if (this.selectedPeaklistFile) {
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+        }
+        if (this.selectedSearchFile) {
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+        }
+      }
+    });
 
     //this.getChildNodes();
   }
@@ -514,7 +549,7 @@ export class ExperimentPageComponent
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: true,
-      data: {},
+      data: {successMessage: 'Upload successful.'},
     });
 
     return dialogRef.afterClosed();
@@ -525,11 +560,8 @@ export class ExperimentPageComponent
     fileType: FileType,
     experimentId: string
   ) {
-
     // TODO: implement use of endpoint for file upload independent from type
-
     //const {metaDataEndpoint, uploadEndpoint} = UploadFileTypeToEndpoints(fileType);
-
     // const metaDataForServer: MPAFile = {
     //   fileID: '',
     //   fileMetaData: JSON.stringify({ fileName: file.name }),
@@ -538,7 +570,6 @@ export class ExperimentPageComponent
     //   fileType: fileType,
     //   fileStatus: '',
     // };
-
     // // send meta data, receive fileuuid
     // try {
     //   const metaDataResponse = await this.httpClientService
@@ -556,7 +587,6 @@ export class ExperimentPageComponent
     //       fileID: metaDataResponse.fileID,
     //     };
     //     //this.uploaderService.addUploadFiles([uploadDataForServer]);
-
     //   } else {
     //     throw new Error('File could not be created');
     //   }
@@ -633,8 +663,8 @@ export class ExperimentPageComponent
   updateExperiment(): void {
     this.dataItemOfThisComponent.displayName = this.displayNameEditing;
     if (this.dataItemOfThisComponent.uuid) {
-    this.dataService.updateExperiment(this.dataItemOfThisComponent);
-  }
+      this.dataService.updateExperiment(this.dataItemOfThisComponent);
+    }
   }
 
   onRemoveExperiment() {

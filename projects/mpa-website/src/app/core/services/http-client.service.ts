@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
+  HttpEvent,
   HttpEventType,
   HttpHeaders,
   HttpParams,
@@ -95,7 +96,7 @@ export class HttpClientService {
   postMultiPartFiles<T>(
     fileList: MultiFileUploadData,
     api: Endpoints
-  ): Observable<T>  {
+  ): Observable<T> {
     const fd = new FormData();
     let multipartids: string = '';
     fileList.files.forEach((file) => {
@@ -107,13 +108,42 @@ export class HttpClientService {
     fileList.files.map((file) => {
       fd.append(file.fileID, file.uploadFile);
     });
-    return this.http.post<T>(this.webserver.getEndpoint(api), fd, {
-      headers: new HttpHeaders({
-        Authorization: this.authService.getUserAuthorization().toString(),
-      }),
-      params: fileList.httpParameters,
-      reportProgress: true, // currently no way to track? (dialogid)
+    return this.http
+      .post<T>(this.webserver.getEndpoint(api), fd, {
+        headers: new HttpHeaders({
+          Authorization: this.authService.getUserAuthorization().toString(),
+        }),
+        params: fileList.httpParameters,
+        reportProgress: true, // currently no way to track? (dialogid)
+      });
+
+  }
+
+  postMultiPartFilesEvents(
+    fileList: MultiFileUploadData,
+    api: Endpoints
+  ): Observable<HttpEvent<Object>> {
+    const fd = new FormData();
+    let multipartids: string = '';
+    fileList.files.forEach((file) => {
+      multipartids += file.fileID + ';';
     });
+
+    fd.set('Content-Type', 'multipart/form-data');
+    fd.append('fileIDList', multipartids);
+    fileList.files.map((file) => {
+      fd.append(file.fileID, file.uploadFile);
+    });
+    return this.http
+      .post(this.webserver.getEndpoint(api), fd, {
+        headers: new HttpHeaders({
+          Authorization: this.authService.getUserAuthorization().toString(),
+        }),
+        observe: 'events',
+        params: fileList.httpParameters,
+        reportProgress: true, // currently no way to track? (dialogid)
+      });
+
   }
 
   performUpload(
@@ -158,9 +188,9 @@ export class HttpClientService {
         next: (event) => {
           if (event.type === HttpEventType.UploadProgress) {
             this.uploadProgressService.changeReportLoaded(event.loaded);
-            //console.log(event);
+            console.log(event);
           } else if (event.type === HttpEventType.Response) {
-            //console.log(`File ${fileUploadData.uploadFile.name} uploaded`);
+            console.log('File uploaded');
           }
         },
         error: (error) => {
