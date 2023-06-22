@@ -195,11 +195,11 @@ export class ExperimentPageComponent
   fastaFileSelected = true;
 
   peaklistSelection = FileType.MZML;
-  searchFileSelection = FileType.MZIDdentML;
+  searchFileSelection = FileType.MZIDENTML;
 
   // available options
   uploadFileTypePeaklist: string[] = [FileType.MZML, FileType.MGF];
-  uploadFileTypeSearch: string[] = [FileType.MZIDdentML, FileType.DAT];
+  uploadFileTypeSearch: string[] = [FileType.MZIDENTML, FileType.DAT];
 
   buttonDisabled = true;
 
