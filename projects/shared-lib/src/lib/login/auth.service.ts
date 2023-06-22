@@ -29,10 +29,8 @@ export class AuthService {
 
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
-
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
-
     // Automatically load user profile
     this.oauthService.events
       .pipe(filter((e) => e.type === 'token_received'))
@@ -40,7 +38,7 @@ export class AuthService {
         this.oauthService.loadUserProfile().then((up) => {
           // TODO: find a different way to retrieve UserToken
           this._user.next((up as any).info as UserToken);
-          sessionStorage.setItem('user', JSON.stringify(up));
+          sessionStorage.setItem('user', JSON.stringify((up as any).info));
         });
       });
 
