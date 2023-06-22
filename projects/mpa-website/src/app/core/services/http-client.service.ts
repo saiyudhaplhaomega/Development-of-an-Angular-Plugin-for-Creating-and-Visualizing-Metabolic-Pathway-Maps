@@ -134,6 +134,7 @@ export class HttpClientService {
     fileList.files.map((file) => {
       fd.append(file.fileID, file.uploadFile);
     });
+    console.log('return http');
     return this.http
       .post(this.webserver.getEndpoint(api), fd, {
         headers: new HttpHeaders({

@@ -370,6 +370,7 @@ export class ExperimentPageComponent
   }
 
   async onSubmit() {
+    console.log('onsubmit')
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
@@ -440,74 +441,76 @@ export class ExperimentPageComponent
             }
             break;
         }
+      }
 
-        const configFile = new File(
-          [JSON.stringify(this.searchUploadMetadata)],
-          'config'
-        );
-        this.filesToUpload.files.unshift({
-          uploadFile: configFile,
-          fileID: 'config',
-        }); //config HAS to be send first
+      const configFile = new File(
+        [JSON.stringify(this.searchUploadMetadata)],
+        'config'
+      );
+      this.filesToUpload.files.unshift({
+        uploadFile: configFile,
+        fileID: 'config',
+      }); //config HAS to be send first
 
-        //this.uploaderService.performUpload(this.uploadDialogId);
-        // this.httpClientService.performUpload(
-        //   this.uploadDialogId,
-        //   this.filesToUpload,
-        //   Endpoints.FILES_UPLOAD
-        // );
-        this.uploadProgressService.addToTotal(
-          this.filesToUpload.files[0].uploadFile.size
-        );
-        this.httpClientService
-          .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
-          .subscribe({
-            next: (event) => {
-              console.log('unknown event');
+      //this.uploaderService.performUpload(this.uploadDialogId);
+      // this.httpClientService.performUpload(
+      //   this.uploadDialogId,
+      //   this.filesToUpload,
+      //   Endpoints.FILES_UPLOAD
+      // );
+      this.uploadProgressService.addToTotal(
+        this.filesToUpload.files[0].uploadFile.size
+      );
+      console.log('call http');
+      this.httpClientService
+        .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
+        .subscribe({
+          next: (event) => {
+            console.log('unknown event');
+            console.log(event);
+            console.log(event.type);
+            if (event.type === HttpEventType.UploadProgress) {
+              this.uploadProgressService.changeReportLoaded(event.loaded);
+              console.log('UploadProgress event');
               console.log(event);
-              console.log(event.type);
-              if (event.type === HttpEventType.UploadProgress) {
-                this.uploadProgressService.changeReportLoaded(event.loaded);
-                console.log('UploadProgress event');
-                console.log(event);
-              } else if (event.type === HttpEventType.Response) {
-                console.log('Response event');
-                console.log(event);
-              }
-            },
-            error: (error) => {
-              console.log(error);
-              if (error.status >= 400) {
-                // handle failed upload
-                if (this.dialog.getDialogById(this.uploadDialogId)) {
-                  this.dialog
-                    .getDialogById(this.uploadDialogId)
-                    .componentInstance.setUploadFailed();
-                  this.dialog.getDialogById(
-                    this.uploadDialogId
-                  ).componentInstance.uploadFailedMessage = error.statusText;
-                }
-              } else {
-                throw error;
-              }
-            },
-          });
-
-        // invoked if upload dialog is closed
-        onDialogClosingObservable.subscribe((uploadFailed) => {
-          console.log('dialog closing');
-          if (!uploadFailed) {
-            if (this.selectedPeaklistFile) {
-              //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+            } else if (event.type === HttpEventType.Response) {
+              console.log('Response event');
+              console.log(event);
             }
-            if (this.selectedSearchFile) {
-              //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+          },
+          error: (error) => {
+            console.log(error);
+            if (error.status >= 400) {
+              // handle failed upload
+              if (this.dialog.getDialogById(this.uploadDialogId)) {
+                this.dialog
+                  .getDialogById(this.uploadDialogId)
+                  .componentInstance.setUploadFailed();
+                this.dialog.getDialogById(
+                  this.uploadDialogId
+                ).componentInstance.uploadFailedMessage = error.statusText;
+              }
+            } else {
+              throw error;
             }
-          }
+          },
         });
 
-      //this.getChildNodes();
-    }
+      // invoked if upload dialog is closed
+      onDialogClosingObservable.subscribe((uploadFailed) => {
+        console.log('dialog closing');
+        if (!uploadFailed) {
+          if (this.selectedPeaklistFile) {
+            //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+          }
+          if (this.selectedSearchFile) {
+            //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+          }
+        }
+      });
+
+    //this.getChildNodes();
+
   }
 
   invokeUploadDialog() {
