@@ -31,6 +31,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { MpaRoutingModule } from './mpa-routing.module';
 import { TaxonomyTabComponent } from './components/experiment-page/taxonomy-tab/taxonomy-tab.component';
 import { FunctionTabComponent } from './components/experiment-page/function-tab/function-tab.component';
+import { CompareExperimentsDialogComponentComponent } from './components/experiment-page/compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { FunctionTabComponent } from './components/experiment-page/function-tab/
     ProteineSequenceViewerComponent,
     TaxonomyTabComponent,
     FunctionTabComponent,
+    CompareExperimentsDialogComponentComponent,
   ],
   imports: [
     CommonModule,
