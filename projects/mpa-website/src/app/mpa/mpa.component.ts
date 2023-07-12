@@ -9,6 +9,7 @@ import {SearchResultPageComponent} from './components/search-result-page/search-
 import {DataItem} from './components/data-navigation-tree/objects/data-item';
 import {Subscription} from 'rxjs';
 import {NodeType} from './components/data-navigation-tree/services/data2.service';
+import { ExperimentComparisonComponent } from './components/experiment-comparison/experiment-comparison.component';
 
 export interface ContentComponent {
   dataItemOfThisComponent: DataItem;
@@ -83,6 +84,10 @@ export class MPAComponent implements OnInit, OnDestroy {
       }
       case NodeType.SearchResult: {
         componentRef = this.treeOutlet.createComponent(SearchResultPageComponent);
+        break;
+      }
+      case NodeType.ExperimentComparison: {
+        componentRef = this.treeOutlet.createComponent(ExperimentComparisonComponent);
         break;
       }
       default: {

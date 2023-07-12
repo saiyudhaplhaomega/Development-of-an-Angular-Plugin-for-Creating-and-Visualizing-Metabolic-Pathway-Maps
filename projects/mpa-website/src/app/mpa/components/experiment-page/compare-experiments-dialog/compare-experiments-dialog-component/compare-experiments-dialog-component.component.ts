@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DataService2 } from '../../../data-navigation-tree/services/data2.service';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-compare-experiments-dialog-component',
@@ -11,6 +12,9 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
 
   secondExperiment: string;
   secondExperimentId: string;
+
+  compExpNameForm: UntypedFormGroup;
+
   comparisonFailed: boolean = false;
   listOfExperiments: string[] = [];
   experimentsMap: Map<string, string>;
@@ -19,6 +23,7 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CompareExperimentsDialogComponentComponent>,
     private dataService: DataService2,
+    private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: { expName: string, expID: string },
   ) {
@@ -35,6 +40,16 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     })
     this.secondExperiment = this.listOfExperiments[0];
     this.secondExperimentId = this.experimentsMap.get(this.secondExperiment);
+
+    this.compExpNameForm = this.fb.group({
+      newExpName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
+        ],
+      ],
+    });
   }
 
   selectedExperimentChange(newSelection: string): void {
@@ -43,9 +58,17 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
   }
 
   submitCompareExperiments(): void {
-    if (this.comparisonExperimentName != null && this.comparisonExperimentName.length > 0 && this.data.expID != null && this.secondExperimentId != null) {
+    if (this.compExpNameForm.status == "VALID" && this.data.expID != null && this.secondExperimentId != null) {
       //TODO: call back-end, create new experimentComponent
-      console.log(this.comparisonExperimentName);
+      
+    }
+  }
+
+  getErrorMessage(): string {
+    if (this.compExpNameForm.get('newExpName').hasError('required')) {
+      return 'Please enter a name';
+    } else if (this.compExpNameForm.get('newExpName').hasError('pattern')) {
+      return 'no white spaces or special chars';
     }
   }
 

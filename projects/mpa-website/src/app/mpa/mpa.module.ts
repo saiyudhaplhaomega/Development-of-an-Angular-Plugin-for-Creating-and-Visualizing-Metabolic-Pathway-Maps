@@ -32,6 +32,7 @@ import { MpaRoutingModule } from './mpa-routing.module';
 import { TaxonomyTabComponent } from './components/experiment-page/taxonomy-tab/taxonomy-tab.component';
 import { FunctionTabComponent } from './components/experiment-page/function-tab/function-tab.component';
 import { CompareExperimentsDialogComponentComponent } from './components/experiment-page/compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
+import { ExperimentComparisonComponent } from './components/experiment-comparison/experiment-comparison.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { CompareExperimentsDialogComponentComponent } from './components/experim
     TaxonomyTabComponent,
     FunctionTabComponent,
     CompareExperimentsDialogComponentComponent,
+    ExperimentComparisonComponent,
   ],
   imports: [
     CommonModule,

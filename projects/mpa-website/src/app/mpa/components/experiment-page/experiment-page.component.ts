@@ -3,22 +3,17 @@ import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-  FileUploadData,
   HttpClientService,
   MultiFileUploadData,
-  UploadFile,
 } from '../../../core/services/http-client.service';
 import { ProteinGroupObject } from '../../objects/tableobjects';
 import { MatDialog } from '@angular/material/dialog';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
-import { ExperimentJSONObject } from '../../objects/experimentjson';
 import { UploadDialogComponent } from '../../../core/components/dialog/upload-dialog.component';
 import { UploadProgressService } from '../../../core/services/upload-progress.service';
-import { MPAFile, MPAFileObject } from '../../../prophane/objects/mpafile';
 import { HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  GroupSelection,
   MpaTableDataService,
 } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
@@ -205,7 +200,7 @@ export class ExperimentPageComponent
 
   hasMpaData = false;
   datStats: Datstats;
-  hasTaxonomyData = false;
+  hasTaxonomyData = true;
   hasFunctionData = false;
 
   // DATA SUBMISSION VARIABLES

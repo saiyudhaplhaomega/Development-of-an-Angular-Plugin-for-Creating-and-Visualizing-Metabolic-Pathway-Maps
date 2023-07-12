@@ -1,3 +1,55 @@
-<div class="custom-tab-box">
-    <h2>no taxonomy-data yet</h2>
+<!--  Table  -->
+<div class="flexbox-column protein-table">
+  <div style="display: flex; display: flex; justify-content: space-between">
+    <p style="font-weight: 400; margin: auto 0 auto 0">Taxonomy</p>
+    <mat-form-field style="width: 20%">
+      <input matInput (keyup)="applyFilter($event.target)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div style="overflow-y: auto; height: 100%" class="table-border">
+    <table mat-table
+           style="width: 100%"
+           [dataSource]="dataSource"
+           multiTemplateDataRows
+    >
+
+      <ng-container matColumnDef="item">
+        <th mat-header-cell *matHeaderCellDef>Item? ID</th>
+        <td mat-cell *matCellDef="let row">1</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxonomy">
+        <th mat-header-cell *matHeaderCellDef>Taxonomy</th>
+        <td mat-cell *matCellDef="let row">2</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let row">3</td>
+      </ng-container>
+
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef>Rank</th>
+        <td mat-cell *matCellDef="let row">4</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantification">
+        <th mat-header-cell *matHeaderCellDef>Quantification</th>
+        <td mat-cell *matCellDef="let row">5</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+           class="group-row">
+      </tr>
+    </table>
+
+<!--    [@detailExpand]="row.parentProteinGroupID == expandedElement.proteinGroupID ? 'expanded' : 'collapsed'"-->
+<!--    [class.example-expanded-row]="expandedElement === row"-->
+<!--    [ngClass]="{'table-hidden-row': true}"-->
+<!--    (click)="expandedElement = expandedElement === row ? null : row"-->
+  </div>
+  <div style="display:flex;flex-direction: row; justify-content: space-between; width: 100%; align-items: center; ">
+    <mat-paginator #paginator style="background: none;" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
+  </div>
   </div>

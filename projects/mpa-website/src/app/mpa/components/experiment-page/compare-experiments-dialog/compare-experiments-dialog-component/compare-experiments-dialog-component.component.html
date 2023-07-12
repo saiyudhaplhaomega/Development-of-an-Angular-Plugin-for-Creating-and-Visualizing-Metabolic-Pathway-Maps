@@ -1,4 +1,4 @@
-<div style="min-width: 500px;">
+<div style="min-width: 500px;" mat-dialog-content>
     <div class="input-group mb-0">
         <div class="input-group-prepend">
             <span class="input-group-text">Experiment 1</span>
@@ -16,12 +16,15 @@
             <mat-option *ngFor="let exp of listOfExperiments" [value]="exp">{{exp}}</mat-option>
         </mat-select>
     </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Name</span>
-        </div>
-        <input type="text" class="form-control custom-text-input" [(ngModel)]="this.comparisonExperimentName">
+    <mat-form-field appearance="fill" [formGroup]="compExpNameForm" style="width: 100%;">
+        <mat-label>Comparison-Experiment Name</mat-label>
+        <input type="text" formControlName="newExpName" matInput>
+        <mat-error *ngIf="compExpNameForm.get('newExpName').errors && compExpNameForm.get('newExpName').touched">
+            {{getErrorMessage()}}
+        </mat-error>
+    </mat-form-field>
+    <div>
+        <button class="btn btn-primary rki-blue-bg" (click)="submitCompareExperiments()">Submit</button>
+        <button class="btn float-right btn-danger" (click)="closeDialog()">Cancel</button>
     </div>
-    <button class="btn btn-primary rki-blue-bg" (click)="submitCompareExperiments()">Submit</button>
-    <button class="btn btn-outline-secondary" (click)="closeDialog()">Cancel</button>
 </div>

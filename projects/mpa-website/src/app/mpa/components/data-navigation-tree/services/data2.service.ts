@@ -20,6 +20,7 @@ export enum NodeType {
   PeakList = 'peaklist',
   SearchResult = 'searchresult',
   Folder = 'folder',
+  ExperimentComparison = 'experimentcomparison'
 }
 
 @Injectable({
@@ -137,6 +138,8 @@ export class DataService2 {
         case NodeType.SearchResult:
           newNodeObj.icon = 'folder';
           break;
+        case NodeType.ExperimentComparison:
+          newNodeObj.icon = 'poll';  // alternatives: layers , filter_none ?
       }
       // update the data map
       let mapCopy: DataItemMap = new DataItemMap();

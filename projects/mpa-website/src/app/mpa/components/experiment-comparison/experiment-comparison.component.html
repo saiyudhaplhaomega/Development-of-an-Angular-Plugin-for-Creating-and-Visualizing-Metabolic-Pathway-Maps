@@ -1,0 +1,115 @@
+<div class="jobCards responsive-job-card">
+    <div class="card min-w-600">
+      <div class="card-header custom-card-header">
+        <h5>Experiment Comparison: {{this.dataItemOfThisComponent.displayName}}</h5>
+        <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center" (click)='onRemoveExperiment()'><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="card-body">
+        <mat-tab-group mat-align-tabs="center">
+  
+          <!--          Tab 1: Overview -->
+          <mat-tab label="Overview">
+            <div class="custom-tab-box">
+              <div class="input-group mb-3 ng-star-inserted">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+                </div>
+                <input type="text" class="form-control custom-text-input" [(ngModel)]="this.displayNameEditing">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
+                          aria-label="Accept" (click)="onAccept()">
+                    <mat-icon>done</mat-icon>
+                  </button>
+                  <!-- <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
+                          *ngIf="this.dataItemOfThisComponent.displayName" aria-label="Clear" (click)="this.dataItemOfThisComponent.displayName=''">
+                    <mat-icon>close</mat-icon>
+                  </button> -->
+                </div>
+              </div>
+  
+              <table class="table table-light table-hover" style="margin-bottom:0px;">
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row" class="ml-summary-col">Creation Date</th>
+                  <td >
+                    {{this.dataItemOfThisComponent.creationDate}}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" class="ml-summary-col">Data Summary</th>
+                  <td>
+                    <!-- <ng-container *ngIf="this.hasMpaData">    reuse to display data for both experiments
+                      <mat-list dense>
+                        <mat-list-item > # Protein Groups: {{this.datStats.totalNoProteinGroups}} </mat-list-item>
+                        <mat-list-item > # Proteins: {{this.datStats.totalNoProteins}} </mat-list-item>
+                        <mat-list-item > # Peptides: {{this.datStats.totalNoPeptides}} </mat-list-item>
+                        <mat-list-item > # PSMs: {{this.datStats.totalNoPsms}} </mat-list-item>
+                        <mat-list-item > # Spectra: {{this.datStats.totalNoSpectra}} </mat-list-item>
+                      </mat-list>
+                    </ng-container>
+                    <ng-container *ngIf="!this.hasMpaData">
+                      no data received yet
+                    </ng-container> -->
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table class="table table-light table-hover">
+                <th></th>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="ml-summary-col">Description
+                      <button style="background: none; border: none" (click)="onSetDescription()">(edit)</button>
+                    </th>
+                    <td >
+                      {{this.dataItemOfThisComponent.description}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+  
+          <!--          Tab 3: Protein Groups         -->
+          <!-- adjust proteinTable to be able to display 2 for each -> maybe just pass isComparison=true, then use adjusted columns etc -->
+          <mat-tab label="Protein Groups" disabled="{{!hasMpaData}}">
+            <ng-template matTabContent>
+            <ng-container *ngIf="hasMpaData">
+              <app-mpa-table class="mpa-table" [experimentUUID]='this.dataItemOfThisComponent.uuid'>
+              </app-mpa-table>
+            </ng-container>
+  
+            <ng-container *ngIf="!hasMpaData">
+              <div class="tab-default-content">
+                <div style="padding: 0.5em">
+                  <mat-icon class="icon-box"> search </mat-icon>
+                </div>
+                <span class="tab-text-center">
+                    Waiting for Data...
+                </span>
+              </div>
+            </ng-container>
+  
+          </ng-template>
+          </mat-tab>
+  
+          <!--   Tab 4: Taxonomy -->
+          <mat-tab label="Taxonomy" disabled="{{!hasTaxonomyData}}">
+            <ng-template matTabContent>
+              <app-taxonomy-tab [experimentUUID]='this.dataItemOfThisComponent.uuid'></app-taxonomy-tab>
+            </ng-template>
+          </mat-tab>
+  
+            <!--   Tab 6: Function -->
+              <mat-tab label="Function" disabled="{{!hasFunctionData}}">
+                <ng-template matTabContent>
+                  <app-function-tab></app-function-tab>
+                </ng-template>
+              </mat-tab>
+  
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
