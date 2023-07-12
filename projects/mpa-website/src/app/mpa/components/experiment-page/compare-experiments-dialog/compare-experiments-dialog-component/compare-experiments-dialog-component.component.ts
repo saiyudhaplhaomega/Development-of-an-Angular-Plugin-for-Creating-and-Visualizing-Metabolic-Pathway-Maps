@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DataService2 } from '../../../data-navigation-tree/services/data2.service';
+import { DataService2, NodeType } from '../../../data-navigation-tree/services/data2.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
+import { DataItem } from '../../../data-navigation-tree/objects/data-item';
 
 @Component({
   selector: 'app-compare-experiments-dialog-component',
@@ -25,7 +26,7 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     private dataService: DataService2,
     private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA)
-    public data: { expName: string, expID: string },
+    public data: { parentFolderDataObject: DataItem, expName?: string, expID?: string },
   ) {
 
   }
@@ -42,7 +43,7 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     this.secondExperimentId = this.experimentsMap.get(this.secondExperiment);
 
     this.compExpNameForm = this.fb.group({
-      newExpName: [
+      comparisonExperimentName: [
         '',
         [
           Validators.required,
@@ -58,16 +59,17 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
   }
 
   submitCompareExperiments(): void {
-    if (this.compExpNameForm.status == "VALID" && this.data.expID != null && this.secondExperimentId != null) {
-      //TODO: call back-end, create new experimentComponent
-      
+    console.log(this.comparisonExperimentName);
+    if (this.compExpNameForm.status == "VALID") {
+      const compareExperimentList: string[] = [this.secondExperimentId, this.data.expID];
+      const nodeObject: DataItem = this.dataService.createNewDataItem(this.data.parentFolderDataObject, this.compExpNameForm.value.comparisonExperimentName, NodeType.ExperimentComparison, compareExperimentList);
     }
   }
 
   getErrorMessage(): string {
-    if (this.compExpNameForm.get('newExpName').hasError('required')) {
+    if (this.compExpNameForm.get('comparisonExperimentName').hasError('required')) {
       return 'Please enter a name';
-    } else if (this.compExpNameForm.get('newExpName').hasError('pattern')) {
+    } else if (this.compExpNameForm.get('comparisonExperimentName').hasError('pattern')) {
       return 'no white spaces or special chars';
     }
   }

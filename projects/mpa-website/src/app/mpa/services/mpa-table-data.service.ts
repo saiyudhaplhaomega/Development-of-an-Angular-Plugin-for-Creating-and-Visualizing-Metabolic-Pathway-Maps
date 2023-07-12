@@ -75,7 +75,7 @@ export class MpaTableDataService {
     this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([],''));
   }
 
-  public requestProteinGroups(){
+  public requestProteinGroups() {
     this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
       filename: 'sample.mgf', //sinnlos?
       experimentID: this.expID.value,
@@ -120,7 +120,7 @@ export class MpaTableDataService {
   private i = 0;
 
   private requestSpectrum() {
-    this.requestingSpectrum.next(true);  
+    this.requestingSpectrum.next(true);
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
@@ -192,7 +192,7 @@ export class MpaTableDataService {
     if ('proteinGroupID' in row) {
       return this.selectedProteinGroup.value && row.proteinGroupID === this.selectedProteinGroup.value.proteinGroupID;
     }
-    
+
     if ('proteinSubGroupID' in row) {
       return this.selectedProteinGroup.value && row.proteinSubGroupID === this.selectedProteinGroup.value.proteinSubGroupID;
     }
@@ -239,7 +239,7 @@ export class MpaTableDataService {
 
         break;
       // default encompasses MAINGROUPS and HIERARCHICAL, since for the maingroup-display, there wont render a button to expand the corresponding subgroups
-      default: 
+      default:
         newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
         newtableData.sort((a, b) => {
           return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
@@ -311,14 +311,14 @@ export class MpaTableDataService {
 
     // this.mpaTableData.next(displayedData);
     // this.selectedProteinGroup.next(displayedData[0]);
-    
+
     //TODO remove from method
     this.setMpaTabledata(this.groupSelection)
   }
 
   downloadProteinTableData() {
     console.log(this.groupSelection);
-    
+
     this.httpClientService.postObject<{experimentID: string, groupSelection: GroupSelection}, {message: string;}>({
       experimentID: this.expID.value,
       groupSelection: this.groupSelection

@@ -27,6 +27,7 @@ import {
 } from '@angular/animations';
 import { FileType } from '../../objects/filetype';
 import { CompareExperimentsDialogComponentComponent } from './compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
+import { ExperimentJSONObject } from '../../objects/experimentjson';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -198,7 +199,7 @@ export class ExperimentPageComponent
 
   buttonDisabled = true;
 
-  hasMpaData = false;
+  hasMpaData = true;
   datStats: Datstats;
   hasTaxonomyData = true;
   hasFunctionData = false;
@@ -226,6 +227,7 @@ export class ExperimentPageComponent
   // private children: string[];
 
   uploadDialogId: string;
+  experimentDataObject: ExperimentJSONObject;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -239,42 +241,27 @@ export class ExperimentPageComponent
   }
 
   ngOnInit() {
-    // this.dataService.dataMap.subscribe(items => {
-    //   // TODO: this._dataMap = items;
-    // });
-
-    // this.parentUuid = this._dataMap.get(this.id).parent;
-
-    // this.realUUID = this._dataMap.get(this.id).uuid;
-
-    //this.mpaTableDataService.currentExperimentID.next(this.dataItemOfThisComponent.uuid);
     this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
 
     this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
 
-    this.mpaTableDataService.requestProteinGroups();
-
-    // this.getChildNodes();
-
-    // this.children = this._dataMap.get(this.uuid).children;
-    //
-    // this.children.map(child => {
-    //   if (this._dataMap.get(child).type === 'searchresult') {
-    //     this.hasSearchFile = true;
-    //     this.searchFileNode = this._dataMap.get(child);
-    //   } else if (this._dataMap.get(child).type === 'peaklist') {
-    //     this.hasPeaklistFile = true;
-    //     this.peaklistFileNode = this._dataMap.get(child);
-    //   }
-    // });
+    this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
+      this.experimentDataObject = experimentData;
+      if (this.experimentDataObject.isSearched) {
+        this.hasMpaData = true;
+        this.mpaTableDataService.requestProteinGroups();
+      } else {
+        this.hasMpaData = false;
+      }
+    });
 
     this.searchParameters = new SearchParameters();
-
     this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
+      // TODO: remove this condition?? The value is set based on getExperimentData()
       this.hasMpaData = mpaData.length > 0;
-      if (mpaData.length > 0) {
+      if (this.hasMpaData) {
         this.datStats = this.calculateDataStats(mpaData);
       }
     });
@@ -608,9 +595,11 @@ export class ExperimentPageComponent
   }
 
   onCompareExperiments(): void {
+    const parentFolderDataObject: DataItem = this.dataService.getDataItemFromId(this.dataItemOfThisComponent.parent);
+
     const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
       disableClose: true,
-      data: { expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid },
+      data: {parentFolderDataObject: parentFolderDataObject, expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid},
     });
   }
 

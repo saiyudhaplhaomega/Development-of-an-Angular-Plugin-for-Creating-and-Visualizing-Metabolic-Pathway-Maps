@@ -145,6 +145,28 @@ export class FolderPageComponent
     });
   }
 
+  onAddComparison(): void {
+    const dialogRef = this.dialog.open(NameEditDialogComponent, {
+      disableClose: true,
+    });
+    // gets instance of the dialog component...
+    const dialogInstance = dialogRef.componentInstance;
+    // ...and allows to inject variables
+    dialogInstance.dialogPrompt = 'Please set an experiment name!';
+    dialogInstance.textFieldLabel = 'Experiment Name';
+
+    dialogRef.afterClosed().subscribe((experimentName) => {
+      if (experimentName) {
+        console.log('add experiment');
+        this.dataService.createNewDataItem(
+          this.dataItemOfThisComponent,
+          experimentName,
+          NodeType.ExperimentComparison
+        );
+      }
+    });
+  }
+
   onAddProteinDatabase() {
     const dialogRef = this.dialog.open(ProteinDatabaseDialogComponent, {
       disableClose: true,

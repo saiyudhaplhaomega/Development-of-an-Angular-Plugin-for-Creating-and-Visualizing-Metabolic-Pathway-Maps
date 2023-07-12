@@ -39,6 +39,7 @@ export enum Endpoints {
   // experiment
   CREATE_EXPERIMENT = 'mpasearch/createexperiment',
   GET_EXPERIMENT_DATA = 'mpasearch/getexperimentdata',
+  CREATE_COMPARISON = 'mpasearch/createcomparison',
   UPDATE_EXPERIMENT_DATA = 'mpasearch/updateexperimentdata',
   SEARCH_METADATA = 'mpasearch/searchmetadata',
   SEARCH_UPLOAD = 'mpasearch/searchfileupload',

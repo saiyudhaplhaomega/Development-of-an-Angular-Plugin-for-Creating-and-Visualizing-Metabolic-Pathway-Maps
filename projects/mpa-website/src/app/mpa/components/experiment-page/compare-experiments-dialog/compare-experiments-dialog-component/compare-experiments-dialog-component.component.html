@@ -18,8 +18,8 @@
     </div>
     <mat-form-field appearance="fill" [formGroup]="compExpNameForm" style="width: 100%;">
         <mat-label>Comparison-Experiment Name</mat-label>
-        <input type="text" formControlName="newExpName" matInput>
-        <mat-error *ngIf="compExpNameForm.get('newExpName').errors && compExpNameForm.get('newExpName').touched">
+        <input type="text" formControlName="comparisonExperimentName" matInput>
+        <mat-error *ngIf="compExpNameForm.get('comparisonExperimentName').errors && compExpNameForm.get('comparisonExperimentName').touched">
             {{getErrorMessage()}}
         </mat-error>
     </mat-form-field>

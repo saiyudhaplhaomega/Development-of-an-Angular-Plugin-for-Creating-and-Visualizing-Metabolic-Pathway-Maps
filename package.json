@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "buildmpa": "ng build mpa-website",
     "startmpa": "ng serve mpa-website",
+    "buildofs": "ng build ofs",
     "startofs": "ng serve ofs",
-    "build": "ng build",
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

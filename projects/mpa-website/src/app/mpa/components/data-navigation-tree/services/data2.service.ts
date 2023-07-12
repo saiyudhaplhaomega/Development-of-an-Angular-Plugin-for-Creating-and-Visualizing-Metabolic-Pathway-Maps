@@ -3,7 +3,7 @@ import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { HttpClientService } from '../../../../core/services/http-client.service';
 import { DataItem } from '../objects/data-item';
 import { Endpoints } from '../../../../core/services/webserveraddress.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { NavService2 } from './nav2.service';
 import { DataItemMap } from '../objects/data-item-map';
 import { DeleteWarningDialogComponent } from '../../../../core/components/dialog/delete-warning-dialog.component';
@@ -96,7 +96,8 @@ export class DataService2 {
   createNewDataItem(
     parentNode: DataItem,
     nodeName: string,
-    nodeType: NodeType
+    nodeType: NodeType,
+    compareExperimentList?: string[]
   ): DataItem {
     // TODO: this is a temporary fix for multiple calls of this method from addProteinDatabase
     let shouldAddNode = true;
@@ -140,6 +141,7 @@ export class DataService2 {
           break;
         case NodeType.ExperimentComparison:
           newNodeObj.icon = 'poll';  // alternatives: layers , filter_none ?
+          this.createComparison(newNodeObj, compareExperimentList);
       }
       // update the data map
       let mapCopy: DataItemMap = new DataItemMap();
@@ -155,7 +157,7 @@ export class DataService2 {
     }
   }
 
-  getExperimentData(experimentID: string) {
+  getExperimentData(experimentID: string): Observable<ExperimentJSONObject> {
     var dbExperiment: ExperimentJSONObject = new ExperimentJSONObject();
     const params: HttpParams = new HttpParams(
       {
@@ -164,15 +166,14 @@ export class DataService2 {
         }
       }
     )
-    this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA, params)
-      .subscribe((experimentData) => dbExperiment = experimentData);
-    return dbExperiment
+    return this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA, params);
   }
 
   createExperiment(nodeObj) {
     // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
     dbExperiment.expid = nodeObj.uuid;
+    dbExperiment.type = 'EXPERIMENT';
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationdate = nodeObj.creationDate;
@@ -228,24 +229,6 @@ export class DataService2 {
         this.updateNode(nodeObj);
       });
   }
-
-  // getFastaData(nodeObj) {
-  //   const params: HttpParams = new HttpParams(
-  //     {
-  //       fromObject: {
-  //         jobid: nodeObj.uuid,
-  //       }
-  //     }
-  //   )
-  //   this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
-  //   .subscribe(fastaData => {
-  //     nodeObj.uuid = fastaData.protdb_id;
-  //     nodeObj.description = fastaData.description;
-  //     nodeObj.displayName = fastaData.name;
-  //     nodeObj.creationDate = fastaData.creationdate;
-  //     this.updateNode(nodeObj);
-  //   });
-  // }
 
   getFastaData(fastaUUID) {
     const params: HttpParams = new HttpParams(
@@ -344,4 +327,38 @@ export class DataService2 {
     })
     return map;
   }
+
+  createComparison(nodeObj: DataItem, experimentIDs: string[]) {
+
+    const dbComparison = new ExperimentJSONObject();
+    dbComparison.expid = nodeObj.uuid;
+    dbComparison.type = 'COMPARISON';
+    dbComparison.experiments = experimentIDs;
+    dbComparison.name = nodeObj.displayName;
+    dbComparison.description = nodeObj.description;
+    dbComparison.creationdate = nodeObj.creationDate;
+
+    this.httpClientService
+      .postObject<ExperimentJSONObject, ExperimentJSONObject>(
+        dbComparison,
+        Endpoints.CREATE_COMPARISON,
+        new HttpParams(),
+      )
+      .subscribe((response) => {
+        nodeObj.uuid = response.expid;
+        nodeObj.description = response.description;
+        nodeObj.displayName = response.name;
+        nodeObj.creationDate = response.creationdate;
+        this.updateNode(nodeObj);
+      });
+  }
+
+  getComparisonData() {
+
+  }
+
+  updateComparisonData() {
+
+  }
+
 }
