@@ -152,7 +152,7 @@ export class DataService2 {
     }
   }
 
-  getExperimentData(experimentID: string){
+  getExperimentData(experimentID: string) {
     var dbExperiment: ExperimentJSONObject = new ExperimentJSONObject();
     const params: HttpParams = new HttpParams(
       {
@@ -161,8 +161,8 @@ export class DataService2 {
         }
       }
     )
-    this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA,params)
-    .subscribe((experimentData) => dbExperiment = experimentData);
+    this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA, params)
+      .subscribe((experimentData) => dbExperiment = experimentData);
     return dbExperiment
   }
 
@@ -244,7 +244,7 @@ export class DataService2 {
   //   });
   // }
 
-  getFastaData(fastaUUID){
+  getFastaData(fastaUUID) {
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
@@ -252,25 +252,27 @@ export class DataService2 {
         }
       }
     )
-    return this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA,params)
+    return this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA, params)
   }
 
   updateFastaData(proteinDB: ProtDBJSONObject, nodeObj: DataItem) {
     const params = new HttpParams(
-      {fromObject: {
-        jobid: proteinDB.protdb_id,
-      }}
+      {
+        fromObject: {
+          jobid: proteinDB.protdb_id,
+        }
+      }
     )
-    this.httpClientService.postObject<ProtDBJSONObject,ProtDBJSONObject>(
+    this.httpClientService.postObject<ProtDBJSONObject, ProtDBJSONObject>(
       proteinDB,
       Endpoints.PROTEINLOADER_UPDATE_FASTADATA,
       params
     )
-    .subscribe((response: ProtDBJSONObject) => {
-      nodeObj.description = response.description;
-      nodeObj.displayName = response.name;
-      this.updateNode(nodeObj);
-    })
+      .subscribe((response: ProtDBJSONObject) => {
+        nodeObj.description = response.description;
+        nodeObj.displayName = response.name;
+        this.updateNode(nodeObj);
+      })
   }
 
   removeDataItem(dataItem: DataItem) {
@@ -316,9 +318,8 @@ export class DataService2 {
     const currentSecond = currentDate.getSeconds();
     const offset = currentDate.getTimezoneOffset();
     currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
-    return `${
-      currentDate.toISOString().split('T')[0]
-    } ${currentHour}:${currentMinute}:${currentSecond}`;
+    return `${currentDate.toISOString().split('T')[0]
+      } ${currentHour}:${currentMinute}:${currentSecond}`;
   }
 
   getProteinDatabases(): DataItem[] {
@@ -329,5 +330,15 @@ export class DataService2 {
       }
     });
     return protDBlist;
+  }
+
+  getExperimentsMap() {
+    const map = new Map;
+    this.dataMap.value.getDataItemList().forEach((item) => {
+      if (item.type === NodeType.Experiment) {
+        map.set(item.displayName, item.uuid);
+      }
+    })
+    return map;
   }
 }

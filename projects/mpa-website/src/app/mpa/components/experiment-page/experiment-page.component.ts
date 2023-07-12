@@ -31,6 +31,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { FileType } from '../../objects/filetype';
+import { CompareExperimentsDialogComponentComponent } from './compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
 
 interface Datstats {
   totalNoProteinGroups: number;
@@ -165,8 +166,7 @@ export class SearchParameters {
   ],
 })
 export class ExperimentPageComponent
-  implements OnInit, OnDestroy, ContentComponent
-{
+  implements OnInit, OnDestroy, ContentComponent {
   dataItemOfThisComponent: DataItem;
 
   // UI VARIABLES
@@ -289,12 +289,12 @@ export class ExperimentPageComponent
     //this.updateExperiment();
   }
 
-  onProteinDBChange(item: DataItem) {
+  onProteinDBChange(item: DataItem): void {
     console.log(this.proteinDBselection.displayName);
     this.searchUploadMetadata.protdbID = item.uuid;
   }
 
-  onUploadSelectionChange(option: string) {
+  onUploadSelectionChange(option: string): void {
     /**
      * handles change of the upload type selection (peaklist, search file, peaklist + search file)
      */
@@ -306,16 +306,16 @@ export class ExperimentPageComponent
     this.disableButton();
   }
 
-  dataUploadModeSelectionChange(option: string) {
+  dataUploadModeSelectionChange(option: string): void {
     this.dataUploadModeSelection = option;
     this.disableButton();
   }
 
-  expandAdvancedSearchParameters() {
+  expandAdvancedSearchParameters(): void {
     this.advancedSearchExpanded = !this.advancedSearchExpanded;
   }
 
-  onFileTypeSelectionChange() {
+  onFileTypeSelectionChange(): void {
     /**
      * handles change of upload data type
      */
@@ -327,23 +327,23 @@ export class ExperimentPageComponent
   }
 
   // functions to handle selection of upload files
-  onPeaklistFileChange(files: FileList) {
+  onPeaklistFileChange(files: FileList): void {
     this.selectedPeaklistFile = files[0];
     this.disableButton();
   }
 
-  onSearchFileChange(files: FileList) {
+  onSearchFileChange(files: FileList): void {
     this.selectedSearchFile = files[0];
     this.disableButton();
   }
 
-  onFastaFileChange(files: FileList) {
+  onFastaFileChange(files: FileList): void {
     this.selectedFasta = files[0];
     this.fastaFileSelected = true;
     this.disableButton();
   }
 
-  disableButton() {
+  disableButton(): void {
     /**
      * checks if files are selected or uploaded already and disables the submit button
      */
@@ -441,79 +441,79 @@ export class ExperimentPageComponent
             }
             break;
         }
-      }
+    }
 
-      const configFile = new File(
-        [JSON.stringify(this.searchUploadMetadata)],
-        'config'
-      );
-      this.filesToUpload.files.unshift({
-        uploadFile: configFile,
-        fileID: 'config',
-      }); //config HAS to be send first
+    const configFile = new File(
+      [JSON.stringify(this.searchUploadMetadata)],
+      'config'
+    );
+    this.filesToUpload.files.unshift({
+      uploadFile: configFile,
+      fileID: 'config',
+    }); //config HAS to be send first
 
-      //this.uploaderService.performUpload(this.uploadDialogId);
-      // this.httpClientService.performUpload(
-      //   this.uploadDialogId,
-      //   this.filesToUpload,
-      //   Endpoints.FILES_UPLOAD
-      // );
-      this.uploadProgressService.addToTotal(
-        this.filesToUpload.files[0].uploadFile.size
-      );
-      console.log('call http');
-      this.httpClientService
-        .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
-        .subscribe({
-          next: (event) => {
-            console.log('unknown event');
+    //this.uploaderService.performUpload(this.uploadDialogId);
+    // this.httpClientService.performUpload(
+    //   this.uploadDialogId,
+    //   this.filesToUpload,
+    //   Endpoints.FILES_UPLOAD
+    // );
+    this.uploadProgressService.addToTotal(
+      this.filesToUpload.files[0].uploadFile.size
+    );
+    console.log('call http');
+    this.httpClientService
+      .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
+      .subscribe({
+        next: (event) => {
+          console.log('unknown event');
+          console.log(event);
+          console.log(event.type);
+          if (event.type === HttpEventType.UploadProgress) {
+            this.uploadProgressService.changeReportLoaded(event.loaded);
+            console.log('UploadProgress event');
             console.log(event);
-            console.log(event.type);
-            if (event.type === HttpEventType.UploadProgress) {
-              this.uploadProgressService.changeReportLoaded(event.loaded);
-              console.log('UploadProgress event');
-              console.log(event);
-            } else if (event.type === HttpEventType.Response) {
-              console.log('Response event');
-              console.log(event);
-            }
-          },
-          error: (error) => {
-            console.log(error);
-            if (error.status >= 400) {
-              // handle failed upload
-              if (this.dialog.getDialogById(this.uploadDialogId)) {
-                this.dialog
-                  .getDialogById(this.uploadDialogId)
-                  .componentInstance.setUploadFailed();
-                this.dialog.getDialogById(
-                  this.uploadDialogId
-                ).componentInstance.uploadFailedMessage = error.statusText;
-              }
-            } else {
-              throw error;
-            }
-          },
-        });
-
-      // invoked if upload dialog is closed
-      onDialogClosingObservable.subscribe((uploadFailed) => {
-        console.log('dialog closing');
-        if (!uploadFailed) {
-          if (this.selectedPeaklistFile) {
-            //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+          } else if (event.type === HttpEventType.Response) {
+            console.log('Response event');
+            console.log(event);
           }
-          if (this.selectedSearchFile) {
-            //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status >= 400) {
+            // handle failed upload
+            if (this.dialog.getDialogById(this.uploadDialogId)) {
+              this.dialog
+                .getDialogById(this.uploadDialogId)
+                .componentInstance.setUploadFailed();
+              this.dialog.getDialogById(
+                this.uploadDialogId
+              ).componentInstance.uploadFailedMessage = error.statusText;
+            }
+          } else {
+            throw error;
           }
-        }
+        },
       });
+
+    // invoked if upload dialog is closed
+    onDialogClosingObservable.subscribe((uploadFailed) => {
+      console.log('dialog closing');
+      if (!uploadFailed) {
+        if (this.selectedPeaklistFile) {
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedPeaklistFile.name, NodeType.PeakList, null);
+        }
+        if (this.selectedSearchFile) {
+          //TODO: this.dataService.addNodeObj(this.dbExperiment.expid, this.selectedSearchFile.name, NodeType.SearchResult, null);
+        }
+      }
+    });
 
     //this.getChildNodes();
 
   }
 
-  invokeUploadDialog() {
+  invokeUploadDialog(): Observable<any> {
     this.uploadProgressService.setUUID(this.dataItemOfThisComponent.id);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
@@ -524,7 +524,7 @@ export class ExperimentPageComponent
     return dialogRef.afterClosed();
   }
 
-  onAccept() {
+  onAccept(): void {
     if (this.displayNameEditing.length > 24) {
       this._snackBar.open('Names longer than 24 characters are not allowed!');
       this.displayNameEditing = '';
@@ -535,7 +535,7 @@ export class ExperimentPageComponent
     }
   }
 
-  onSetDescription() {
+  onSetDescription(): void {
     /**
      * handles description change
      */
@@ -553,7 +553,7 @@ export class ExperimentPageComponent
     });
   }
 
-  onDelete(type: string) {
+  onDelete(type: string): void {
     if (type === 'peaklist' && this.hasPeaklistFile) {
       // TODO: this.dataService.removeNode(
       //   this.peaklistFileNode.id, this.id, this.id).subscribe(
@@ -586,7 +586,7 @@ export class ExperimentPageComponent
     }
   }
 
-  onRemoveExperiment() {
+  onRemoveExperiment(): void {
     this.dataService.removeDataItem(this.dataItemOfThisComponent);
   }
 
@@ -611,4 +611,12 @@ export class ExperimentPageComponent
       totalNoSpectra: spectrumCount,
     };
   }
+
+  onCompareExperiments(): void {
+    const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
+      disableClose: true,
+      data: { expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid },
+    });
+  }
+
 }

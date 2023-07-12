@@ -1,0 +1,27 @@
+<div style="min-width: 500px;">
+    <div class="input-group mb-0">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Experiment 1</span>
+        </div>
+        <div class="form-control custom-select">
+            <span>{{data.expName}}</span>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Experiment 2</span>
+        </div>
+        <mat-select class="form-control custom-select" [(value)]="this.secondExperiment"
+            (selectionChange)="selectedExperimentChange($event.value)">
+            <mat-option *ngFor="let exp of listOfExperiments" [value]="exp">{{exp}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Name</span>
+        </div>
+        <input type="text" class="form-control custom-text-input" [(ngModel)]="this.comparisonExperimentName">
+    </div>
+    <button class="btn btn-primary rki-blue-bg" (click)="submitCompareExperiments()">Submit</button>
+    <button class="btn btn-outline-secondary" (click)="closeDialog()">Cancel</button>
+</div>
