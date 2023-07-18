@@ -70,13 +70,13 @@ export class ProteinGroupObject implements ProteinGroupJSON {
   proteinGroupID?: string;
   parentProteinGroupID?: string;
   proteinSubGroupID?: string;
-  representativeAccession?: string;
-  representativeDescription?: string;
+  representativeAccession: string;
+  representativeDescription: string;
   experimentID: string;
   hidden: boolean;
 
   proteinSubGroupList?: ProteinGroupObject[];
-  proteinList: ProteinObject[];  
+  proteinList: ProteinObject[];
   peptideList: PeptideObject[];
   psmList: PsmObject[];
   spectrumIDs: string[];
