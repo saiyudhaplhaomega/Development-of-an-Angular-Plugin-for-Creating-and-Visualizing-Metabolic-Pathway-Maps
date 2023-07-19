@@ -19,6 +19,7 @@ import { ContentComponent } from '../../mpa.component';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { FolderJSONObject } from '../../objects/folderjson';
 import { ProtDBJSONObject } from '../../objects/protdbjson';
+import { CompareExperimentsDialogComponentComponent } from '../experiment-page/compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
 
 enum ProteinDBType {
   FASTA,
@@ -146,23 +147,12 @@ export class FolderPageComponent
   }
 
   onAddComparison(): void {
-    const dialogRef = this.dialog.open(NameEditDialogComponent, {
+    const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
       disableClose: true,
-    });
-    // gets instance of the dialog component...
-    const dialogInstance = dialogRef.componentInstance;
-    // ...and allows to inject variables
-    dialogInstance.dialogPrompt = 'Please set an experiment name!';
-    dialogInstance.textFieldLabel = 'Experiment Name';
-
-    dialogRef.afterClosed().subscribe((experimentName) => {
-      if (experimentName) {
-        console.log('add experiment');
-        this.dataService.createNewDataItem(
-          this.dataItemOfThisComponent,
-          experimentName,
-          NodeType.ExperimentComparison
-        );
+      data: {
+        parentFolderDataObject: this.dataItemOfThisComponent,
+        expName: null,
+        expID: null
       }
     });
   }

@@ -6,7 +6,21 @@
     background-color: brown;
 }
 
+.compare-dialog{
+    min-width: 500px;
+    min-height: 200px;
+    transition: width 2s, height 2s;
+    overflow: hidden;
+}
+
 .form-control {
     min-width: 50%;
     max-width: 50%;
+}
+
+.filler {
+    width:100%;
+    transform: translate(0,20%);
+    text-align: center;
+    color: brown;
 }

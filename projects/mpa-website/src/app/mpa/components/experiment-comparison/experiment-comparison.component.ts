@@ -8,6 +8,8 @@ import {
   HttpClientService,
 } from '../../../core/services/http-client.service';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
+import { MpaTableDataService } from '../../services/mpa-table-data.service';
+import { ExperimentJSONObject } from '../../objects/experimentjson';
 
 @Component({
   selector: 'app-experiment-comparison',
@@ -28,10 +30,22 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
     private _snackBar: MatSnackBar,
     private dataService: DataService2,
     private httpClientService: HttpClientService,
+    private mpaTableDataService: MpaTableDataService,
     private dialog: MatDialog,) {}
 
   ngOnInit() {
+    this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
+
+    this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
+      //this.experimentDataObject = experimentData;
+      if (experimentData.isSearched) {
+        this.hasMpaData = true;
+        this.mpaTableDataService.requestProteinGroups();
+      } else {
+        this.hasMpaData = false;
+      }
+    });
   }
 
   onSetDescription(): void {
