@@ -94,8 +94,8 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
       this.dataService.getExperimentData(this.secondExperimentId).subscribe(exp2 => {
         this.status = "submitted";
         if(exp1.isSearched && exp2.isSearched) {
-          // const compareExperimentList: string[] = [this.firstExperimentId, this.secondExperimentId];
-          // const nodeObject: DataItem = this.dataService.createNewDataItem(this.data.parentFolderDataObject, this.compExpNameForm.value.comparisonExperimentName, NodeType.ExperimentComparison, compareExperimentList);
+          const compareExperimentList: string[] = [this.firstExperimentId, this.secondExperimentId];
+          const nodeObject: DataItem = this.dataService.createNewDataItem(this.data.parentFolderDataObject, this.compExpNameForm.value.comparisonExperimentName, NodeType.ExperimentComparison, compareExperimentList);
         } else{
           this.comparisonFailed = true;
           this.errorMessage = "No uploaded data in ";
