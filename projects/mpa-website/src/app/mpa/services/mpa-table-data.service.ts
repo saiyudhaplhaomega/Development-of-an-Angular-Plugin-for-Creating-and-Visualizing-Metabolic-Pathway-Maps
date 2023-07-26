@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject} from '../objects/tableobjects';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {HttpClientService} from '../../core/services/http-client.service';
-import {Endpoints} from '../../core/services/webserveraddress.service';
-import {HttpParams} from '@angular/common/http';
-import {spectraMockData1, spectraMockData2} from '../components/spectrum-viewer/mockData';
-import {SpectrumDataObject} from '../components/spectrum-viewer/spectrum-data-object';
+import { Injectable } from '@angular/core';
+import { GroupingOptions, PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject } from '../objects/tableobjects';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClientService } from '../../core/services/http-client.service';
+import { Endpoints } from '../../core/services/webserveraddress.service';
+import { HttpParams } from '@angular/common/http';
+import { spectraMockData1, spectraMockData2 } from '../components/spectrum-viewer/mockData';
+import { SpectrumDataObject } from '../components/spectrum-viewer/spectrum-data-object';
 import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
 import { createProteinGroupData } from './dummyProteinData';
 
@@ -72,7 +72,7 @@ export class MpaTableDataService {
         this.requestSpectrum();
       }
     });
-    this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([],''));
+    this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([], ''));
   }
 
   public requestProteinGroups() {
@@ -81,6 +81,15 @@ export class MpaTableDataService {
       experimentID: this.expID.value,
     }, Endpoints.GET_PROTEIN_GROUPS).subscribe({
       next: (proteinGroups) => {
+
+        //TODO display testing
+        proteinGroups.map(group => {
+          group.isDisplayed = true;
+          group.proteinSubGroupList.map(subgroup => {
+            subgroup.isDisplayed = true;
+          })
+        })
+
         this.setMpaData(proteinGroups);
       },
       error: () => {
@@ -110,7 +119,7 @@ export class MpaTableDataService {
         this.requestingProteinSequence = false;
       },
       error: () => {
-        this.proteinSequenceData.next({proteinID: Math.random().toString(36).substring(7), sequence: Math.random().toString(36).substring(7)});
+        this.proteinSequenceData.next({ proteinID: Math.random().toString(36).substring(7), sequence: Math.random().toString(36).substring(7) });
         console.log('ERRRORR...');
         this.requestingProteinSequence = false;
       }
@@ -129,27 +138,9 @@ export class MpaTableDataService {
           spectrumid: this.selectedPsm.value.spectrumID
         }
       });
-
-    // this.httpClientService.getObject<string>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
-    //   next: (spectrumData) => {
-    //     this.spectrumData.next(spectrumData);
-    //     this.requestingSpectrum.next(false);
-    //     console.log(spectrumData);
-    //   },
-    //   error: () => {
-    //     // TODO: just using mock data, remove once endpoint works
-    //     this.requestingSpectrum.next(false);
-    //     if ((this.i % 2) == 0) {
-    //       this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
-    //     } else if ((this.i % 2) != 0) {
-    //       this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
-    //     }
-    //     this.i++;
-    //   }
-    // })
     this.httpClientService.getObject<SpectrumObject>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
       next: (spectrumObj) => {
-        let spectrumDataObj = new SpectrumDataObject(spectrumObj.peakArray,spectrumObj.peptideSequence);
+        let spectrumDataObj = new SpectrumDataObject(spectrumObj.peakArray, spectrumObj.peptideSequence);
         this.spectrumDataObject$.next(spectrumDataObj);
         this.requestingSpectrum.next(false);
       },
@@ -166,13 +157,26 @@ export class MpaTableDataService {
     })
   }
 
-  // TODO: this method might be reusable?
-  emptySpectrumData(){
-    this.spectrumDataObject$.next(new SpectrumDataObject([],''))
+  emptySpectrumData() {
+    this.spectrumDataObject$.next(new SpectrumDataObject([], ''))
   }
 
-
   setMpaData(mpaData: ProteinGroupObject[]) {
+    //sort data after receiving it from back-end, set sorted data as this.mpaData
+    mpaData.sort((a, b) => {
+      return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
+    })
+    mpaData.map(group => {
+      group.proteinSubGroupList.sort((a, b) => {
+        let aString = a.proteinSubGroupID.split("_");
+        let bString = b.proteinSubGroupID.split("_");
+        let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+        if (returnValue == 0) {
+          returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+        }
+        return returnValue;
+      })
+    })
     this.mpaData = mpaData;
     this.setMpaTabledata(this.groupSelection);
   }
@@ -213,135 +217,99 @@ export class MpaTableDataService {
   }
 
   resetCompleteSelection() {
-  this.selectedProtein.next(undefined);
-  this.selectedPeptide.next(undefined);
-  this.selectedPsm.next(undefined);
-  this.peptidesForSelectedProtein.next([]);
-  this.psmsForSelectedPeptide.next([]);
+    this.selectedProtein.next(undefined);
+    this.selectedPeptide.next(undefined);
+    this.selectedPsm.next(undefined);
+    this.peptidesForSelectedProtein.next([]);
+    this.psmsForSelectedPeptide.next([]);
   }
 
+  //uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed
   setMpaTabledata(groupSelection: GroupSelection) {
     let newtableData: ProteinGroupObject[];
-    switch (groupSelection) {
-      case GroupSelection.SUBGROUPS:
-        let subgroups = [];
-        this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup) ? subgroups.push(subgroup) : {} ));
-        newtableData = subgroups;
-        newtableData.sort((a, b) => {
-          let aString = a.proteinSubGroupID.split("_");
-          let bString = b.proteinSubGroupID.split("_");
-          let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-          if (returnValue == 0) {
-            returnValue = parseInt(aString[1]) - parseInt(bString[1]);
-          }
-          return returnValue;
-        })
-
-        break;
-      // default encompasses MAINGROUPS and HIERARCHICAL, since for the maingroup-display, there wont render a button to expand the corresponding subgroups
-      default:
-        newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group);
-        newtableData.sort((a, b) => {
-          return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
-        })
-        newtableData.map(group => group.proteinSubGroupList.sort((a, b) => {
-          let aString = a.proteinSubGroupID.split("_");
-          let bString = b.proteinSubGroupID.split("_");
-          let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-          if (returnValue == 0) {
-            returnValue = parseInt(aString[1]) - parseInt(bString[1]);
-          }
-          return returnValue;
-        }))
-
+    if (groupSelection == GroupSelection.SUBGROUPS) {
+      let subgroups: ProteinGroupObject[] = [];
+      this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => ('proteinSubGroupID' in subgroup && subgroup.isDisplayed) ? subgroups.push(subgroup) : {}));
+      newtableData = subgroups;
+    }
+    else {
+      newtableData = this.mpaData.filter(group => 'proteinSubGroupList' in group && group.isDisplayed);
+      newtableData.map(group => {
+        let subgroups: ProteinGroupObject[] = [];
+        group.proteinSubGroupList.map(subgroup => {('proteinSubGroupID' in subgroup && subgroup.isDisplayed) ? subgroups.push(subgroup) : {}});
+        group.proteinSubGroupList = subgroups;
+      })
     }
     this.mpaTableData.next(newtableData);
     this.selectedProteinGroup.next(newtableData[0]);
   }
 
-  // expandMainGroup(mainGroup: ProteinGroupObject, expanding: boolean){
-  //   let newtableData: ProteinGroupObject[] = this.mpaData.filter(group => 'proteinSubGroupList' in group);
-  //   newtableData.sort((a, b) =>{return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);})
-  //   let indexOfGroup: number = newtableData.findIndex((group) => group == mainGroup);
-  //   let subgroups: ProteinGroupObject[] = newtableData[indexOfGroup].proteinSubGroupList;
-
-  //   if(expanding === true){
-  //   let i: number = 1;
-  //   subgroups.forEach(subgroup => {
-  //     newtableData.splice(indexOfGroup + i, 0, subgroup);
-  //     i++;
-  //   })
-  //   }
-
-  //   this.mpaTableData.next(newtableData);
-  //   this.selectedProteinGroup.next(newtableData[indexOfGroup]);
-  // }
-
-  onGroupSelection() {
+  onGroupSelection(): void {
     this.setMpaTabledata(this.groupSelection);
   }
 
-  onTaxonomyDisplaySelection() {
-    console.log(this.taxonomyDisplaySelection);
-  }
-
-  setTaxonomyDisplayData() {
-    //TODO set displayed data depending on current taxonomyDisplaySelection
-  }
-
-  onHideGroup(groupID: string) {
-    //TODO implement property in back-end, so that it can be saved and read
-
-    // let displayedData : ProteinGroupObject[];
-    // this.mpaData.forEach(group => {
-    //   console.log(group.hidden)
-    //   if(group.hidden == false){
-    //     let displayedGroup = group;
-    //     let displayedSubGroups: ProteinGroupObject[];
-    //     group.proteinSubGroupList.forEach(subgroup => {
-    //       console.log(group.hidden)
-    //       if(subgroup.hidden == false){
-    //         displayedSubGroups.push(subgroup);
-    //       }
-    //     })
-    //     displayedGroup.proteinSubGroupList = displayedSubGroups;
-    //     displayedData.push(displayedGroup);
-    //   }
-    // })
-
-    // this.mpaTableData.next(displayedData);
-    // this.selectedProteinGroup.next(displayedData[0]);
-
-    //TODO remove from method
-    this.setMpaTabledata(this.groupSelection)
-  }
-
-  downloadProteinTableData() {
-    console.log(this.groupSelection);
-
-    this.httpClientService.postObject<{experimentID: string, groupSelection: GroupSelection}, {message: string;}>({
-      experimentID: this.expID.value,
-      groupSelection: this.groupSelection
-    }, Endpoints.GET_DOWNLOADPROTEINGROUPS).subscribe({
-      next: (json) => {
-        console.log(json)
-        this.onSaveFile("proteinGroupsReport",json.message,"text/csv;charset=utf-8")
-      },
-      error: () => {
-        console.log('ERROR: mpa-table-data.service.downloadProteinTableData')
+  onHideSelectedGroups(): void {
+    const tableDataMap = new Map<string, ProteinGroupObject>();
+    this.mpaTableData.value.map(group => {
+      tableDataMap.set(group.proteinGroupID || group.proteinSubGroupID, group);
+      if (this.groupSelection == GroupSelection.HIERARCHICAL) {
+        group.proteinSubGroupList.map(subgroup => {
+          tableDataMap.set(subgroup.proteinSubGroupID, subgroup);
+        })
       }
-    });
+    })
+
+    this.mpaData.map(group => {
+      if (tableDataMap.has(group.proteinGroupID)) {
+        group.isDisplayed = !tableDataMap.get(group.proteinGroupID).isSelected;
+        group.isSelected = false;
+      }
+      group.proteinSubGroupList.map(subgroup => {
+        if (tableDataMap.has(subgroup.proteinSubGroupID)) {
+          subgroup.isDisplayed = !tableDataMap.get(subgroup.proteinSubGroupID).isSelected;
+          subgroup.isSelected = false;
+        }
+      })
+    })
+
+    //TODO update ProteinGroups in back-end with new properties
+    this.setMpaTabledata(this.groupSelection);
   }
 
-  onSaveFile(fileName, fileContent, fileType): void {
-    //TODO move to service, input data received from back-end
-    const file = new Blob([fileContent], { type: fileType});
+  onResetHiddenGroups(): void {
+    this.mpaData.map(group => {
+      !group.isDisplayed ? group.isDisplayed = !group.isDisplayed : {};
+      group.proteinSubGroupList.map(subgroup => {
+        !subgroup.isDisplayed ? subgroup.isDisplayed = !subgroup.isDisplayed : {};
+      })
+    })
 
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(file);
-    link.download = fileName;
-    link.click();
-    link.remove();
+    //TODO update ProteinGroups in back-end with new properties
+    this.setMpaTabledata(this.groupSelection);
   }
+
+downloadProteinTableData(): void {
+  this.httpClientService.postObject<{ experimentID: string, groupSelection: GroupSelection }, { message: string; }>({
+    experimentID: this.expID.value,
+    groupSelection: this.groupSelection
+  }, Endpoints.GET_DOWNLOADPROTEINGROUPS).subscribe({
+    next: (json) => {
+      console.log(json)
+      this.onSaveFile("proteinGroupsReport", json.message, "text/csv;charset=utf-8")
+    },
+    error: () => {
+      console.log('ERROR: mpa-table-data.service.downloadProteinTableData')
+    }
+  });
+}
+
+onSaveFile(fileName: string, fileContent, fileType): void {
+  const file = new Blob([fileContent], { type: fileType });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(file);
+  link.download = fileName;
+  link.click();
+  link.remove();
+}
 
 }

@@ -43,15 +43,15 @@ tr.table-detail-row{
   padding-left:138px;
 }
 
-/*.table-element-row td {*/
-/*  border-bottom-width: 0;*/
-/*}*/
-
 .group-row {
   height: 32px;
+  opacity: 1;
+  transition: opacity 1s, height 1s;
 }
 .subgroup-row {
   height: 28px;
+  opacity: 1;
+  transition: opacity 1s, height 1s;
 }
 
 .detail-table {
@@ -149,7 +149,7 @@ tr.table-detail-row{
   padding: 0 0;
 }
 
-.mat-column-displayToggleButton {
+.mat-column-checkbox {
   width: 5%;
   text-align: center;
   padding: 0 0px;
@@ -157,4 +157,8 @@ tr.table-detail-row{
 
 .protein-table-button {
   overflow-wrap: break-word;
+  margin-right: 5px;
 }
+
+/* the only function of this class is to provide the mpa-table.component a class to grab elements by */
+.checkbox-selected {}

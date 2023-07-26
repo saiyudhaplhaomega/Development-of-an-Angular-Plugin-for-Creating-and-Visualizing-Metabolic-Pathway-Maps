@@ -13,8 +13,6 @@ export enum Group {
 export interface ProteinGroupJSON {
 
   grouptype: Group;
-//  parentProteinGroupID?: string;
-//  childProteinGroupIDs?: string[];
 
   proteinGroupID?: string;
   parentProteinGroupID?: string;
@@ -22,6 +20,8 @@ export interface ProteinGroupJSON {
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
+  isDisplayed: boolean;
+  isSelected: boolean;
 
   proteinSubGroupList?: ProteinGroupObject[];
   proteinList: ProteinJSON[];
@@ -32,8 +32,8 @@ export interface ProteinGroupJSON {
 
 export interface ProteinJSON {
   proteinID: string;
-  accession: string; //TODO: missing?
-  description?: string; // TODO: missing
+  accession: string;
+  description?: string;
   peptideNodes: string[];
 }
 
@@ -59,7 +59,6 @@ export interface ProteinSequenceJSON {
 }
 
 export interface SpectrumJSON {
-  //spectrumID: string;
   spectrumString: string;
   peptideSequence: string;
   peakArray;
@@ -73,7 +72,8 @@ export class ProteinGroupObject implements ProteinGroupJSON {
   representativeAccession: string;
   representativeDescription: string;
   experimentID: string;
-  hidden: boolean;
+  isDisplayed: boolean = true;
+  isSelected: boolean = false;
 
   proteinSubGroupList?: ProteinGroupObject[];
   proteinList: ProteinObject[];
@@ -111,7 +111,6 @@ export class ProteinSequenceObject implements ProteinSequenceJSON {
 }
 
 export class SpectrumObject implements SpectrumJSON {
-  //spectrumID: string;
   spectrumString: string;
   peptideSequence: string;
   peakArray;

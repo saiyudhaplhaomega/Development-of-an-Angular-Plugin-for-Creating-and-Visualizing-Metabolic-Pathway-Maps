@@ -59,10 +59,10 @@
         <td mat-cell *matCellDef="let row">{{row.representativeAccession}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="displayToggleButton">
-        <th mat-header-cell *matHeaderCellDef>Hide Group</th>
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef><mat-checkbox [(ngModel)]="selectedAll" (change)="onSelectAllGroups()"></mat-checkbox></th>
         <td mat-cell *matCellDef="let row" >
-          <mat-checkbox [checked]="row.hidden" (change)="onToggleHideGroup($event.checked,row)">
+          <mat-checkbox [(ngModel)]="row.isSelected" (change)="onSelectGroup(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -74,15 +74,16 @@
               <tr *ngFor="let subrow of row.proteinSubGroupList" (click)="onClick(subrow)" [ngClass]="{
                 'table-highlight-row': mpaTableDataService.highlightIfSelected(subrow),
                 'table-element-row': !mpaTableDataService.highlightIfSelected(subrow),
-                'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && subrow.parentProteinGroupID
+                'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && subrow.parentProteinGroupID,
+                'checkbox-selected': subrow.isSelected
                 }">
                 <td class="mat-column-expandButton" style="padding-left: 24px;"></td>
                 <td class="mat-column-proteinGroupID">{{subrow.proteinSubGroupID}}</td>
                 <td class="mat-column-groupType">{{this.getRowtype(subrow)}}</td>
-                <td class="mat-column-quantification">{{this.getRowtype(subrow)}}</td>
+                <td class="mat-column-quantification">{{this.getQuantification(subrow)}}</td>
                 <td class="mat-column-representativeAccession">{{subrow.accession}}</td>
                 <td class="mat-column-representativeDescription">{{subrow.description}}</td>
-                <td class="mat-column-displayToggleButton" style="padding-right: 24px;"><mat-checkbox (checked)="subrow.hidden" (change)="onToggleHideGroup($event.checked,subrow)"></mat-checkbox></td>
+                <td class="mat-column-checkbox" style="padding-right: 24px;"><mat-checkbox [(ngModel)]="subrow.isSelected"></mat-checkbox></td>
               </tr>
             </table>
           </div>
@@ -99,7 +100,8 @@
           [ngClass]="{
                'table-highlight-row': mpaTableDataService.highlightIfSelected(row),
                'table-element-row': !mpaTableDataService.highlightIfSelected(row),
-               'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && row.parentProteinGroupID
+               'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && row.parentProteinGroupID,
+               'checkbox-selected': row.isSelected
                }"
           >
       </tr>
@@ -117,7 +119,9 @@
   </div>
   <div style="display:flex;flex-direction: row; justify-content: space-between; width: 100%; align-items: center; ">
     <div>
-      <button class="btn btn-primary rki-blue-bg protein-table-button" style="margin-right: 5px;" (click)="downloadProteinTable()">Export</button>
+      <button class="btn btn-primary rki-blue-bg protein-table-button" (click)="downloadProteinTable()">Export</button>
+      <button class="btn btn-primary rki-blue-bg protein-table-button" (click)="hideSelectedGroups()">HideSelectedGroups</button>
+      <button class="btn btn-primary rki-blue-bg protein-table-button" (click)="resetHiddenGroups()">ResetHiddenGroups</button>
     </div>
     <mat-paginator #paginator style="background: none;" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
   </div>

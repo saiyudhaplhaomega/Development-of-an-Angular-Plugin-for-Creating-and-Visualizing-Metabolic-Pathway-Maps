@@ -58,10 +58,11 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     'quantification',
     'representativeAccession',
     'representativeDescription',
-    'displayToggleButton'
+    'checkbox'
   ];
   dataSource: MatTableDataSource<ProteinGroupObject>;
   showDetails: boolean = false;
+  selectedAll: boolean = false;
 
   expandedElement: string = 'none';
   GroupSelection = GroupSelection;                 // make enum available to use in html
@@ -137,7 +138,9 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   onGroupSelection(): void {
+    this.selectedAll = false;
     this.mpaTableDataService.onGroupSelection();
+    this.onSelectAllGroups();
   }
 
   getRowtype(row: ProteinGroupObject) {
@@ -157,26 +160,54 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     //TODO wait for decision on batching and simplification of getProteinGroups()
   }
 
-  onToggleHideGroup(checked: boolean,row: ProteinGroupObject) {
-    row.hidden = checked;
-    if(row.proteinGroupID == this.expandedElement){
-      this.onExpand(row)
-    }
-
-    let page = this.paginator.pageIndex;
-    let groupID: string;
-    if(row.proteinGroupID){
-      groupID = row.proteinGroupID;
-    } else {
-      groupID = row.proteinSubGroupID;
-    }
-
-    //TODO finish onHideGroup, currently does nothing, impl of hidden is missing in back-end
-    this.mpaTableDataService.onHideGroup(groupID);
-    this.paginator.pageIndex = page;
+  downloadSelectedGroups(): void {
+    //TODO wait for decision on batching and simplification of getProteinGroups()
   }
 
-  resetHiddenGroups(){
-    //TODO implement
+  onSelectAllGroups(): void {
+    this.dataSource.data.map(group => {
+      group.isSelected = this.selectedAll;
+      if(this.mpaTableDataService.groupSelection == GroupSelection.HIERARCHICAL) {
+        group.proteinSubGroupList.map(subgroup => {
+          subgroup.isSelected = this.selectedAll;
+        })
+      }
+    })
+  }
+
+  //makes sure to select all subgroups, if a maingroup is selected in hierarchical view
+  onSelectGroup(row: ProteinGroupObject): void {
+    if (this.mpaTableDataService.groupSelection == GroupSelection.HIERARCHICAL) {
+      row.proteinSubGroupList.map(subgroup => {
+        subgroup.isSelected = row.isSelected;
+      })
+    }
+  }
+
+  selectionTests(): void {
+    this.dataSource.data.map(group => {
+      if(group.isSelected){
+        this.mpaTableDataService.groupSelection == GroupSelection.SUBGROUPS ? console.log(group.proteinSubGroupID) : console.log(group.proteinGroupID)
+      }
+      if(this.mpaTableDataService.groupSelection == GroupSelection.HIERARCHICAL) {
+        group.proteinSubGroupList.map(subgroup => {
+          subgroup.isSelected == true ? console.log(subgroup.proteinSubGroupID) : '';
+        })
+      }
+    })
+  }
+
+  hideSelectedGroups(): void {
+    const elements = document.getElementsByClassName('checkbox-selected');
+    for (let i = 0; i<elements.length; i++) {
+      let element = elements[i] as HTMLElement;
+      element.style.opacity = "0";
+    }
+    // actually remove selected rows from view after animation has finished
+    elements.length > 0 ? setTimeout(()=>{this.mpaTableDataService.onHideSelectedGroups()},1000) : {};
+    }
+
+  resetHiddenGroups(): void {
+    this.mpaTableDataService.onResetHiddenGroups();
   }
 }

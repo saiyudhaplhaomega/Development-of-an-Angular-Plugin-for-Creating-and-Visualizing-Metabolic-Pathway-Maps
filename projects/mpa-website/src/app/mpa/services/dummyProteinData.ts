@@ -135,6 +135,8 @@ function createProteinGroupFromInputLists(groupId: string,
     proteinList: inputLists.proteinList,
     psmList: inputLists.psmList,
     spectrumIDs: inputLists.spectrumIDs,
+    isDisplayed: true,
+    isSelected: false,
 
     // representativeAccession: Math.random().toString(36).substring(7),
     // representativeDescription: Math.random().toString(36).substring(7)
