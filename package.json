@@ -8,9 +8,13 @@
     "startmpa": "ng serve mpa-website",
     "buildofs": "ng build ofs",
     "startofs": "ng serve ofs",
+    "buildmetadata": "ng build metadatatool",
+    "startmetadata": "ng serve metadatatool",
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "newwebsite": "ng generate application metadatatool",
+    "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install"
   },
   "private": true,
