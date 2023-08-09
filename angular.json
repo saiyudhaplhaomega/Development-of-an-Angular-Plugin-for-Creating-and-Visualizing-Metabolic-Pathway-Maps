@@ -347,7 +347,7 @@
               "projects/prophane/src/assets"
             ],
             "styles": [
-              "projects/prophane/src/styles.css"
+              "projects/prophane/src/styles.scss"
             ],
             "scripts": []
           },
@@ -414,7 +414,7 @@
               "projects/prophane/src/assets"
             ],
             "styles": [
-              "projects/prophane/src/styles.css"
+              "projects/prophane/src/styles.scss"
             ],
             "scripts": []
           }
