@@ -10,10 +10,12 @@
     "startofs": "ng serve ofs",
     "buildmetadata": "ng build metadatatool",
     "startmetadata": "ng serve metadatatool",
+    "buildprophane": "ng build prophane",
+    "startprophane": "ng serve prophane",
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "newwebsite": "ng generate application metadatatool",
+    "newwebsite": "ng generate application prophane",
     "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install"
   },

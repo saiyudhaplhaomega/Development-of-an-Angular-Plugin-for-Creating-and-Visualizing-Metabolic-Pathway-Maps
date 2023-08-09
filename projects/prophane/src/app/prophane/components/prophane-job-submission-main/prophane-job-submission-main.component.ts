@@ -6,13 +6,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { JobService } from '../../job.service';
 import { NgbModal, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { UploadProgressService } from '../../../core/services/upload-progress.service';
+
 import {
   NoJobCardHeaders,
   ProphaneJobStateService,
 } from '../../services/prophane-job-state-service/prophane-job-state.service';
 import { JobStepperComponent } from '../job-stepper/job-stepper.component';
-import { HttpClientService } from '../../../core/services/http-client.service';
+import { HttpClientService } from 'projects/mpa-website/src/app/core/services/http-client.service';
+import { UploadProgressService } from 'projects/ofs/src/app/services/upload-progress.service';
+
 
 export interface JobLabel {
   stepperLabel: string;

@@ -3,16 +3,17 @@ import { Router } from '@angular/router';
 import { NavigationRoute } from 'shared-lib';
 
 @Component({
-  selector: 'metadata-root',
+  selector: 'prophane-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   constructor(
     private router: Router,
   ) {}
 
-  title = 'metadatatool';
+  title = 'prophane';
 
   routes: NavigationRoute[] = [
     { route: '/home', label: 'home' },

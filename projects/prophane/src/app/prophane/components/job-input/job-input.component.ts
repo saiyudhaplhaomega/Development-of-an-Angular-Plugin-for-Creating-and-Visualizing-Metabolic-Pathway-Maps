@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {prophaneReportStyleLabels, prophaneReportStyles} from '../../objects/prophaneFormData';
 import {ProphaneSampleGroupObject} from '../../objects/prophanesamplegroupjson';
 import {ProphaneJobStateService} from '../../services/prophane-job-state-service/prophane-job-state.service';
+
 import {ProphaneReportStyle} from '../prophane-job-submission-main/prophane-job-submission-formdata';
 
 @Component({

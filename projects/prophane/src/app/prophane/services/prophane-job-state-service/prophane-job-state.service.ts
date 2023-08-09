@@ -15,22 +15,19 @@ import { JobService } from '../../job.service';
 import { ProphaneReportStyle } from '../../components/prophane-job-submission-main/prophane-job-submission-formdata';
 import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
 import { ProphaneAnnotationTaskObject } from '../../objects/prophaneannotationtaskjson';
-import { UploadProgressService } from '../../../core/services/upload-progress.service';
-import { UploadDialogComponent } from '../../../core/components/dialog/upload-dialog.component';
+
 import { MatDialog } from '@angular/material/dialog';
-import {
-  Endpoints,
-  WebserveraddressService,
-} from '../../../core/services/webserveraddress.service';
 import { finalize } from 'rxjs/operators';
-import {
-  FileUploadData,
-  HttpClientService,
-  MultiFileUploadData,
-} from '../../../core/services/http-client.service';
+
 import { Router } from '@angular/router';
 import { AuthService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
+import { UploadDialogComponent } from 'projects/mpa-website/src/app/core/components/dialog/upload-dialog.component';
+import { HttpClientService, MultiFileUploadData } from 'projects/mpa-website/src/app/core/services/http-client.service';
+import { Endpoints, WebserveraddressService } from 'projects/mpa-website/src/app/core/services/webserveraddress.service';
+
+import { UploadProgressService } from 'projects/mpa-website/src/app/core/services/upload-progress.service';
+
 
 export enum NoJobCardHeaders {
   REQUESTING_JOB = 'Requesting new Prophane Job',

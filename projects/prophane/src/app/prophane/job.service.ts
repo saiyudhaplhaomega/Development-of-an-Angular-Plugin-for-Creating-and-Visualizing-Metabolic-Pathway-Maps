@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ProphaneJobObject } from './objects/prophanejobjson';
-import { HttpClientService } from '../core/services/http-client.service';
+
 import { HttpHeaders } from '@angular/common/http';
-import { Endpoints } from '../core/services/webserveraddress.service';
+import { HttpClientService } from 'projects/mpa-website/src/app/core/services/http-client.service';
+import { Endpoints } from 'projects/mpa-website/src/app/core/services/webserveraddress.service';
+
 
 @Injectable({
   providedIn: 'root',
