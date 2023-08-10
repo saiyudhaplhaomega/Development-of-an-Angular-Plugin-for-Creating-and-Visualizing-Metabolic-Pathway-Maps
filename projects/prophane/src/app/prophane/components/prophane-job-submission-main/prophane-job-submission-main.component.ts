@@ -12,7 +12,7 @@ import {
   ProphaneJobStateService,
 } from '../../services/prophane-job-state-service/prophane-job-state.service';
 import { JobStepperComponent } from '../job-stepper/job-stepper.component';
-import { HttpClientService } from 'projects/mpa-website/src/app/core/services/http-client.service';
+import { HttpClientService } from 'projects/mpa/src/app/core/services/http-client.service';
 import { UploadProgressService } from 'projects/ofs/src/app/services/upload-progress.service';
 
 

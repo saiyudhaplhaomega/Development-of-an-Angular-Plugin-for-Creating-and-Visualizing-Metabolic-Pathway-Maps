@@ -3,8 +3,8 @@ import { Observable, of } from 'rxjs';
 import { ProphaneJobObject } from './objects/prophanejobjson';
 
 import { HttpHeaders } from '@angular/common/http';
-import { HttpClientService } from 'projects/mpa-website/src/app/core/services/http-client.service';
-import { Endpoints } from 'projects/mpa-website/src/app/core/services/webserveraddress.service';
+import { HttpClientService } from 'projects/mpa/src/app/core/services/http-client.service';
+import { Endpoints } from 'projects/mpa/src/app/core/services/webserveraddress.service';
 
 
 @Injectable({

@@ -21,21 +21,23 @@ import { JobFunctionComponent } from './components/job-function/job-function.com
 import { JobSubmitComponent } from './components/job-submit/job-submit.component';
 import { JobAnnotationComponent } from './components/job-annotation/job-annotation.component';
 import { ProphaneRoutingModule } from './prophane-routing.module';
-import { MaterialModule } from 'projects/mpa-website/src/app/material-module';
-import { FileInputComponent } from 'projects/mpa-website/src/app/core/components/file-input/file-input.component';
-import { UploadDialogComponent } from 'projects/mpa-website/src/app/core/components/dialog/upload-dialog.component';
+import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
+import { FileInputComponent } from 'projects/mpa/src/app/core/components/file-input/file-input.component';
+import { UploadProgressService } from 'projects/mpa/src/app/core/services/upload-progress.service';
+import { MaterialModule } from 'projects/mpa/src/app/material-module';
 import { LoginModule } from 'shared-lib';
-import { UploadProgressService } from 'projects/mpa-website/src/app/core/services/upload-progress.service';
+
 
 @NgModule({
   declarations: [
     ProphaneJobControlComponent,
     ProphaneAboutComponent,
-    // ProphaneJobSubmissionDialogComponent,
+    ProphaneJobSubmissionMainComponent,
     ProphaneResultViewComponent,
     SafePipe,
     SideBarResultsComponent,
-    ProphaneJobSubmissionMainComponent,
+    ProphaneResultViewComponent,
+    //ProphaneJobSubmissionMainComponent,
     JobStepperComponent,
     JobInputComponent,
     JobInputComponent,
@@ -61,6 +63,11 @@ import { UploadProgressService } from 'projects/mpa-website/src/app/core/service
     MaterialModule,
   ],
   // entryComponents: [ProphaneJobSubmissionDialogComponent],
-  exports: [],
+  exports: [
+    ProphaneAboutComponent,
+    UploadDialogComponent,
+    ProphaneAboutComponent,
+    ProphaneResultViewComponent,
+  ],
 })
 export class ProphaneModule {}

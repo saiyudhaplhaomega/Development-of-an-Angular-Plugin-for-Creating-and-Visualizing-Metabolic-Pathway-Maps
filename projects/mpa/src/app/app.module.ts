@@ -28,13 +28,15 @@ import { GlobalHttpInterceptorService } from './core/services/global-http-interc
 import { DbsearchcontentService } from './mpa/components/database-search-page/services/dbsearchcontent.service';
 import { DataService2 } from './mpa/components/data-navigation-tree/services/data2.service';
 import { NavService2 } from './mpa/components/data-navigation-tree/services/nav2.service';
-import { ProphaneModule } from './prophane/prophane.module';
+
 import { MpaModule } from './mpa/mpa.module';
 
-import { ProphaneAboutComponent } from './prophane/components/prophane-policy-consent/prophane-policy-consent.component';
+
 import { ErrorPageComponent } from './error-page/error-page-component/error-page.component';
 import { NgChartsModule } from 'ng2-charts';
 import { LoginModule } from 'dist/shared-lib';
+import { ProphaneAboutComponent } from 'projects/prophane/src/app/prophane/components/prophane-about/prophane-about.component';
+import { ProphaneModule } from 'projects/prophane/src/app/prophane/prophane.module';
 
 @NgModule({
   // components
@@ -46,8 +48,8 @@ import { LoginModule } from 'dist/shared-lib';
     PrivacyPolicyPageComponent,
     ImpressumPageComponent,
     PrivacyConsentBannerComponent,
-    ProphaneAboutComponent,
-    UploadDialogComponent,
+
+
     ErrorPageComponent,
   ],
   // modules - functionally bundled components, directives, services, etc.

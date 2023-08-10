@@ -22,11 +22,11 @@ import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
-import { UploadDialogComponent } from 'projects/mpa-website/src/app/core/components/dialog/upload-dialog.component';
-import { HttpClientService, MultiFileUploadData } from 'projects/mpa-website/src/app/core/services/http-client.service';
-import { Endpoints, WebserveraddressService } from 'projects/mpa-website/src/app/core/services/webserveraddress.service';
+import { HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
+import { UploadProgressService } from 'projects/mpa/src/app/core/services/upload-progress.service';
+import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
+import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
 
-import { UploadProgressService } from 'projects/mpa-website/src/app/core/services/upload-progress.service';
 
 
 export enum NoJobCardHeaders {

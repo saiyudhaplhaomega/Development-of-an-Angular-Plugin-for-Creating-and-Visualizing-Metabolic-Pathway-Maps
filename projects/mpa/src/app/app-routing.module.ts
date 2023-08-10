@@ -1,9 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProphaneJobSubmissionMainComponent } from './prophane/components/prophane-job-submission-main/prophane-job-submission-main.component';
-import { ProphaneJobControlComponent } from './prophane/components/prophane-job-control/prophane-job-control.component';
-import { ProphaneAboutComponent } from './prophane/components/prophane-about/prophane-about.component';
-import { ProphaneResultViewComponent } from './prophane/components/prophane-result-view/prophane-result-view.component';
+
 import { MPAComponent } from './mpa/mpa.component';
 import { TermsOfServicePageComponent } from './core/components/terms-of-service-page/terms-of-service-page.component';
 import { ImpressumPageComponent } from './core/components/impressum-page/impressum-page.component';
@@ -19,7 +16,7 @@ const routes: Routes = [
   {
     path: 'prophane',
     loadChildren: () =>
-      import('./prophane/prophane.module').then((m) => m.ProphaneModule),
+      import('../../../prophane/src/app/prophane/prophane.module').then((m) => m.ProphaneModule),
   },
   {
     path: 'mpa',

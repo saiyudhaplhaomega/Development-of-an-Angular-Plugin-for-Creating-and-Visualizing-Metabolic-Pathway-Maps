@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "buildmpa": "ng build mpa-website",
-    "startmpa": "ng serve mpa-website",
+    "buildmpa": "ng build mpa",
+    "startmpa": "ng serve mpa",
     "buildofs": "ng build ofs",
     "startofs": "ng serve ofs",
     "buildmetadata": "ng build metadatatool",
@@ -15,7 +15,7 @@
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "newwebsite": "ng generate application prophane",
+    "newwebsite": "ng generate application mpa",
     "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install"
   },
