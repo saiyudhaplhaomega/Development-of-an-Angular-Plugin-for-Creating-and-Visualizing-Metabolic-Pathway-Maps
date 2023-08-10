@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from 'dist/shared-lib';
+import { AuthGuard, LoginPageComponent } from 'dist/shared-lib';
 import { ProphaneAboutComponent } from './components/prophane-about/prophane-about.component';
 import { ProphaneJobControlComponent } from './components/prophane-job-control/prophane-job-control.component';
 import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-submission-main/prophane-job-submission-main.component';
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProphaneJobSubmissionMainComponent,
-    canActivate: [AuthGuard],
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  { path: 'login', component: LoginPageComponent },
+
+  { path: 'jobsubmission', component: ProphaneJobSubmissionMainComponent,
+    //canActivate: [AuthGuard],
   },
   {
     path: 'jobcontrol',
@@ -33,8 +36,7 @@ const routes: Routes = [
 export class ProphaneRoutingModule {}
 
     // const routes: Routes = [
-  //   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  //   { path: 'login', component: LoginPageComponent },
+
   //   {
   //     path: 'prophane',
   //     loadChildren: () =>

@@ -39,7 +39,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   navigateProphane() {
-    this._router.navigateByUrl('prophane');
+    this._router.navigateByUrl('/jobcontrol');
   }
 
   navigateMpa() {

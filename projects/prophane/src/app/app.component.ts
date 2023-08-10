@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavigationRoute } from 'shared-lib';
 
 @Component({
   selector: 'prophane-root',
@@ -9,17 +7,6 @@ import { NavigationRoute } from 'shared-lib';
 })
 export class AppComponent {
 
-  constructor(
-    private router: Router,
-  ) {}
-
   title = 'prophane';
-
-  routes: NavigationRoute[] = [
-    { route: '/home', label: 'home' },
-    { route: '/workflow', label: 'workflow' },
-  ];
-
-
 
 }

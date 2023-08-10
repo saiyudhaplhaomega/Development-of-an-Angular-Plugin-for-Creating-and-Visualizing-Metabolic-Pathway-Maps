@@ -11,6 +11,7 @@ import { PrivacyConsentBannerComponent } from 'projects/mpa-website/src/app/core
 import { FooterComponent } from 'projects/mpa-website/src/app/core/components/footer/page-footer';
 import { MaterialModule } from 'projects/mpa-website/src/app/material-module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { UploadProgressService } from 'projects/mpa-website/src/app/core/services/upload-progress.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   providers: [
     ProphaneModule,
     HttpClient,
+    UploadProgressService,
   ],
   bootstrap: [AppComponent]
 })

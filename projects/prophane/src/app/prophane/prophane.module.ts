@@ -24,6 +24,8 @@ import { ProphaneRoutingModule } from './prophane-routing.module';
 import { MaterialModule } from 'projects/mpa-website/src/app/material-module';
 import { FileInputComponent } from 'projects/mpa-website/src/app/core/components/file-input/file-input.component';
 import { UploadDialogComponent } from 'projects/mpa-website/src/app/core/components/dialog/upload-dialog.component';
+import { LoginModule } from 'shared-lib';
+import { UploadProgressService } from 'projects/mpa-website/src/app/core/services/upload-progress.service';
 
 @NgModule({
   declarations: [
@@ -46,11 +48,15 @@ import { UploadDialogComponent } from 'projects/mpa-website/src/app/core/compone
     JobSubmitComponent,
     JobAnnotationComponent,
   ],
+  providers: [
+    UploadProgressService,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     ProphaneRoutingModule,
+    LoginModule,
     // material module last
     MaterialModule,
   ],
