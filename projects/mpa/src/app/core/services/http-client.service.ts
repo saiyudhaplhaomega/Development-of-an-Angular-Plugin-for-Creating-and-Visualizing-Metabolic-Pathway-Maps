@@ -144,7 +144,6 @@ export class HttpClientService {
         params: fileList.httpParameters,
         reportProgress: true, // currently no way to track? (dialogid)
       });
-
   }
 
   performUpload(
