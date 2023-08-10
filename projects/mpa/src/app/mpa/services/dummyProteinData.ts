@@ -1,5 +1,5 @@
 import {
-  Group,
+  ProteinGroupType,
   GroupingOptions,
   PeptideJSON,
   PeptideObject,
@@ -120,14 +120,14 @@ function createProteinList(peptideList: PeptideJSON[], length: number): ProteinJ
 
 
 function createProteinGroupFromInputLists(groupId: string,
-                                          groupingOption: Group,
+                                          groupingOption: ProteinGroupType,
                                           experimentId: string,
                                           inputLists: InputLists,
                                           parent: string,
                                           children?: ProteinGroupObject[]): ProteinGroupJSON {
 
   const proteinGroupObject: ProteinGroupJSON = {
-    grouptype: groupingOption,
+    groupType: groupingOption,
 
     proteinGroupID: groupId,
     experimentID: experimentId,
@@ -135,7 +135,7 @@ function createProteinGroupFromInputLists(groupId: string,
     proteinList: inputLists.proteinList,
     psmList: inputLists.psmList,
     spectrumIDs: inputLists.spectrumIDs,
-    isDisplayed: true,
+    hidden: false,
     isSelected: false,
 
     // representativeAccession: Math.random().toString(36).substring(7),
@@ -159,7 +159,7 @@ function createNewProteinSubGroup(groupId: string,
                                   experimentID: string,
                                   groupingOption: GroupingOptions): ProteinGroupJSON {
 
-  const subGroupOption = groupingOption === GroupingOptions.OCCAM ? Group.OCCAMSUBGROUP : Group.ANTIOCCAMSUBGROUP;
+  const subGroupOption = groupingOption === GroupingOptions.OCCAM ? ProteinGroupType.OCCAMSUBGROUP : ProteinGroupType.ANTIOCCAMSUBGROUP;
 
   const spectrumList = createSpectrumList(400);
   const peptideList = createPeptideList(200);
@@ -180,7 +180,7 @@ function createMainFromSubGroups(groupId: string,
                                  experimentID: string,
                                  groupingOption: GroupingOptions): ProteinGroupJSON {
 
-  const mainGroupOption = groupingOption === GroupingOptions.OCCAM ? Group.OCCAMGROUP : Group.ANTIOCCAMGROUP;
+  const mainGroupOption = groupingOption === GroupingOptions.OCCAM ? ProteinGroupType.OCCAMGROUP : ProteinGroupType.ANTIOCCAMGROUP;
 
   const inputLists: InputLists = {
     spectrumIDs: [],

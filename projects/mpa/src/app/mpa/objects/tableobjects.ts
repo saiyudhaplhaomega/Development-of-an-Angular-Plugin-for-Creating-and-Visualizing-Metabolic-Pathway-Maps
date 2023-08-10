@@ -3,24 +3,21 @@ export enum GroupingOptions {
   ANTIOCCAM = 'ANTIOCCAMSRAZOR'
 }
 
-export enum Group {
-  OCCAMGROUP,
-  ANTIOCCAMGROUP,
-  OCCAMSUBGROUP,
-  ANTIOCCAMSUBGROUP
+export enum ProteinGroupType {
+  OCCAMGROUP = "OccamGroup",
+  ANTIOCCAMGROUP = "AntiOccamGroup",
+  OCCAMSUBGROUP = "OccamSubGroup",
+  ANTIOCCAMSUBGROUP = "AntiOccamSubGroup"
 }
 
 export interface ProteinGroupJSON {
-
-  grouptype: Group;
-
+  groupType: ProteinGroupType;
   proteinGroupID?: string;
   parentProteinGroupID?: string;
-  proteinSubGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
   experimentID: string;
-  isDisplayed: boolean;
+  hidden: boolean;
   isSelected: boolean;
 
   proteinSubGroupList?: ProteinGroupObject[];
@@ -65,14 +62,13 @@ export interface SpectrumJSON {
 }
 
 export class ProteinGroupObject implements ProteinGroupJSON {
-  grouptype: Group;
+  groupType: ProteinGroupType;
   proteinGroupID?: string;
   parentProteinGroupID?: string;
-  proteinSubGroupID?: string;
   representativeAccession: string;
   representativeDescription: string;
   experimentID: string;
-  isDisplayed: boolean = true;
+  hidden: boolean;
   isSelected: boolean = false;
 
   proteinSubGroupList?: ProteinGroupObject[];
