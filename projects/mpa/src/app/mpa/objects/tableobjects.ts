@@ -12,7 +12,7 @@ export enum ProteinGroupType {
 
 export interface ProteinGroupJSON {
   groupType: ProteinGroupType;
-  proteinGroupID?: string;
+  proteinGroupID: string;
   parentProteinGroupID?: string;
   representativeAccession?: string;
   representativeDescription?: string;
@@ -63,7 +63,7 @@ export interface SpectrumJSON {
 
 export class ProteinGroupObject implements ProteinGroupJSON {
   groupType: ProteinGroupType;
-  proteinGroupID?: string;
+  proteinGroupID: string;
   parentProteinGroupID?: string;
   representativeAccession: string;
   representativeDescription: string;
