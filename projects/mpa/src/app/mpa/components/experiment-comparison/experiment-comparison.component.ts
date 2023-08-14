@@ -58,7 +58,7 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit experiment description';
-    dialogInstance.description = this.dataItemOfThisComponent.description;
+    dialogInstance.value = this.dataItemOfThisComponent.description;
 
     dialogRef.afterClosed().subscribe((expDescription) => {
       this.dataItemOfThisComponent.description = expDescription;

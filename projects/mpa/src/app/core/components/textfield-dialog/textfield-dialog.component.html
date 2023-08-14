@@ -1,14 +1,13 @@
-<div mat-dialog-content >
+<div mat-dialog-content>
   <p> {{dialogPrompt}} </p>
-  <mat-form-field appearance="fill">
-    <mat-label>description</mat-label>
-    <textarea matInput cdkTextareaAutosize
-              [(ngModel)]="description">
-    </textarea>
+  <mat-form-field appearance="fill" [formGroup]="valueForm" style="width: 100%;">
+    <input type="text" formControlName="valueField" matInput />
+    <mat-error *ngIf="valueForm.get('valueField').errors && valueForm.get('valueField').touched">
+      {{getErrorMessage()}}
+    </mat-error>
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
-  <button mat-button
-          [disabled]="nameFormControl.hasError('pattern')"
-          (click)="onSubmitDescription()">Ok</button>
+<div style="display:flex; flex-direction:row; justify-content: space-between;margin-top: 15px;">
+  <button [disabled]="buttonDisabled" class="btn btn-outline-secondary" (click)="onSubmit()">Submit</button>
+  <button class="btn float-right btn-outline-danger" (click)="closeDialog()">Cancel</button>
 </div>

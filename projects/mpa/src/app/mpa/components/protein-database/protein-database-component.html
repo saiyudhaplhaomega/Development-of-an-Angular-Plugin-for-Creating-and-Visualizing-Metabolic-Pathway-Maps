@@ -1,15 +1,18 @@
 <div class="d-flex justify-content-between">
   <div class="jobCards" style="width: 100%; flex-basis: auto; flex-shrink: 1">
-    <div class="card min-w-600" >
+    <div class="card min-w-600">
       <div class="card-header custom-card-header">
         <h5>Protein Data Base</h5>
-        <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center" (click)='removeProteinDB()'><mat-icon>close</mat-icon></button>
+        <button class="btn btn-outline-danger w-sbtn" matTooltip="Delete database" (click)='removeProteinDB()'>
+          <mat-icon style="display: flex; justify-content: center">close</mat-icon>
+        </button>
       </div>
 
       <div class="card-body">
         <mat-spinner style="margin: auto;" *ngIf="loading === true"></mat-spinner>
         <div *ngIf="loading === false" style="display:flex; flex-direction:column">
-          <table class="table table-light table-hover" style="justify-content:flex-start; max-width:80%;min-width:70%;margin-bottom:0px;">
+          <table class="table table-light table-hover"
+            style="justify-content:flex-start; max-width:80%;min-width:70%;margin-bottom:0px;">
             <thead>
             </thead>
             <tbody>
@@ -34,17 +37,17 @@
             </tbody>
           </table>
           <table class="table table-light table-hover" style="max-width:80%;min-width:70%;margin-bottom:0px;">
-          <thead></thead>
-          <tbody>
-            <tr>
-              <th scope="row" class="ml-summary-col">Description
-                <button style="background: none; border: none" (click)="setDescription()">(edit)</button>
-              </th>
-              <td >
-                {{this.protDBDataObject.description}}
-              </td>
-            </tr>
-          </tbody>
+            <thead></thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="ml-summary-col">Description
+                  <button style="background: none; border: none" (click)="setDescription()">(edit)</button>
+                </th>
+                <td>
+                  {{this.protDBDataObject.description}}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
