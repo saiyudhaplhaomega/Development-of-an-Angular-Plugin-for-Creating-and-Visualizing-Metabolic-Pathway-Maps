@@ -420,8 +420,8 @@
               "projects/signaling-tool/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/signaling-tool/src/styles.scss"
-
             ],
             "scripts": []
           }
