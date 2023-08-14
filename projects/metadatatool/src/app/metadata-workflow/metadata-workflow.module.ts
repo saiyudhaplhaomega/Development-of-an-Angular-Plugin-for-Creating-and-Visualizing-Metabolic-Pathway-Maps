@@ -12,4 +12,6 @@ import { MetadataWorkflowComponent } from './metadata-workflow.component';
 
   ],
 })
-export class WorkflowModule {}
+export class WorkflowModule {
+
+}

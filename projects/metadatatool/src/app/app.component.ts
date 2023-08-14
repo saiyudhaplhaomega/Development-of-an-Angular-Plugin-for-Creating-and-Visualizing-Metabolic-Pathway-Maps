@@ -18,4 +18,7 @@ export class AppComponent {
     { route: '/home', label: 'home' },
     { route: '/workflow', label: 'workflow' },
   ];
+
+
+
 }
