@@ -12,7 +12,8 @@ export class AppComponent {
   title = 'signaling-tool';  
 
   routes: NavigationRoute[] = [
-    { route: '/home', label: 'home' },
-    { route: '/blog', label: 'blog' },
+    { route: '/home', label: 'home' }, // navigation toola ekleyebilirz de çıkarabiliriz de 
+    { route: '/about', label: 'about' }, 
+    { route: '/simulation', label: 'simulation'  }
   ];
 }
