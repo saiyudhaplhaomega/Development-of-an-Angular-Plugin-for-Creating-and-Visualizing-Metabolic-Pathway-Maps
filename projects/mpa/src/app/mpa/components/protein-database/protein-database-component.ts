@@ -50,7 +50,8 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit Protein Database description';
-    dialogInstance.description = this.dataItemOfThisComponent.description;
+    dialogInstance.value = this.dataItemOfThisComponent.description;
+    dialogInstance.valueLabel = 'Description';
 
     dialogRef.afterClosed().subscribe((dbDescription) => {
       if (this.dataItemOfThisComponent.uuid) {

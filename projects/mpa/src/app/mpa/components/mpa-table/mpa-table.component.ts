@@ -135,6 +135,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   onClick(row: ProteinGroupObject): void {
     this.mpaTableDataService.resetCompleteSelection();
     this.mpaTableDataService.selectedProteinGroup.next(row);
+    console.log(row)
   }
 
   onGroupSelection(): void {
@@ -187,11 +188,11 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   selectionTests(): void {
     this.dataSource.data.map(group => {
       if(group.isSelected){
-        this.mpaTableDataService.groupSelection == GroupSelection.SUBGROUPS ? console.log(group.proteinSubGroupID) : console.log(group.proteinGroupID)
+        this.mpaTableDataService.groupSelection == GroupSelection.SUBGROUPS ? console.log(group.proteinGroupID) : console.log(group.proteinGroupID)
       }
       if(this.mpaTableDataService.groupSelection == GroupSelection.HIERARCHICAL) {
         group.proteinSubGroupList.map(subgroup => {
-          subgroup.isSelected == true ? console.log(subgroup.proteinSubGroupID) : '';
+          subgroup.isSelected == true ? console.log(subgroup.proteinGroupID) : '';
         })
       }
     })

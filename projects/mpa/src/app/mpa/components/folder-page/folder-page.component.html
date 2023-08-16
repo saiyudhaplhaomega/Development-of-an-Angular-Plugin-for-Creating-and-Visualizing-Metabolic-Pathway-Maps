@@ -6,13 +6,13 @@
   <div class="jobCards" style="width: 100%">
     <div class="card min-w-600">
       <div class="card-header custom-card-header">
-        <h5>Manage Folder</h5>
-        <button class="btn btn-outline-secondary w-sbtn" style="display: flex; justify-content: center"
-          (click)='onRemoveFolder()'><mat-icon>close</mat-icon></button>
+        <h2>Folder: {{this.dataItemOfThisComponent.displayName}} <button style="background: none; border: none" (click)="onSetName()">(edit)</button></h2>
+        <button class="btn btn-outline-danger w-sbtn" matTooltip="Delete folder"
+          (click)='onRemoveFolder()'><mat-icon style="display: flex; justify-content: center">close</mat-icon></button>
       </div>
 
       <div class="card-body">
-        <div class="input-group mb-3 ng-star-inserted" style="min-width:80%;">
+        <!-- <div class="input-group mb-3 ng-star-inserted" style="min-width:80%;">
           <div class="input-group-prepend">
             <span class="input-group-text">Folder Name</span>
           </div>
@@ -23,7 +23,7 @@
               <mat-icon>done</mat-icon>
             </button>
           </div>
-        </div>
+        </div> -->
 
         <div style="display:flex; flex-direction: row; width: 100%;">
           <div style="width: 80%;">

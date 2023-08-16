@@ -259,7 +259,7 @@ export class ExperimentPageComponent
 
     this.searchParameters = new SearchParameters();
     this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
-      // TODO: remove this condition?? The value is set based on getExperimentData()
+      // condition is needed here, otherwise protein groups would be accessible before data has actually loaded (sequencing and loadtimes seem wonky)
       this.hasMpaData = mpaData.length > 0;
       if (this.hasMpaData) {
         this.datStats = this.calculateDataStats(mpaData);
@@ -506,15 +506,38 @@ export class ExperimentPageComponent
     return dialogRef.afterClosed();
   }
 
-  onAccept(): void {
-    if (this.displayNameEditing.length > 24) {
-      this._snackBar.open('Names longer than 24 characters are not allowed!');
-      this.displayNameEditing = '';
-    } else if (this.displayNameEditing.length <= 0) {
-      this._snackBar.open('Empty names are not allowed!');
-    } else {
-      this.updateExperiment();
-    }
+  //TODO refactoring: safe current name, set current name again if new name is not allowed
+  // onAccept(): void {
+  //   if (this.displayNameEditing.length > 24) {
+  //     this._snackBar.open('Names longer than 24 characters are not allowed!');
+  //     setTimeout(() => {this._snackBar.dismiss()},4000);
+  //     this.displayNameEditing = '';
+  //   } else if (this.displayNameEditing.length <= 0) {
+  //     this._snackBar.open('Empty names are not allowed!');
+  //     setTimeout(() => {this._snackBar.dismiss()},4000);
+  //   } else {
+  //     this.updateExperiment();
+  //   }
+  // }
+
+  // handles change of display name
+  onSetName(): void {
+    const dialogRef = this.dialog.open(TextfieldDialogComponent, {
+      disableClose: true,
+    });
+
+    const dialogInstance = dialogRef.componentInstance;
+    dialogInstance.dialogPrompt = 'Edit experiment name';
+    dialogInstance.value = this.dataItemOfThisComponent.displayName;
+    dialogInstance.valueLabel = 'name';
+    dialogInstance.hasValidators = true;
+
+    dialogRef.beforeClosed().subscribe((expName) => {
+      if (expName) {
+        this.dataItemOfThisComponent.displayName = expName;
+        this.updateExperiment();
+      }
+    })
   }
 
   onSetDescription(): void {
@@ -527,11 +550,14 @@ export class ExperimentPageComponent
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit experiment description';
-    dialogInstance.description = this.dataItemOfThisComponent.description;
+    dialogInstance.value = this.dataItemOfThisComponent.description;
+    dialogInstance.valueLabel = 'description';
 
-    dialogRef.afterClosed().subscribe((expDescription) => {
-      this.dataItemOfThisComponent.description = expDescription;
-      this.updateExperiment();
+    dialogRef.beforeClosed().subscribe((expDescription) => {
+      if(expDescription) {
+        this.dataItemOfThisComponent.description = expDescription;
+        this.updateExperiment();
+      }
     });
   }
 
@@ -562,7 +588,6 @@ export class ExperimentPageComponent
   }
 
   updateExperiment(): void {
-    this.dataItemOfThisComponent.displayName = this.displayNameEditing;
     if (this.dataItemOfThisComponent.uuid) {
       this.dataService.updateExperiment(this.dataItemOfThisComponent);
     }
@@ -599,7 +624,7 @@ export class ExperimentPageComponent
 
     const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
       disableClose: true,
-      data: {parentFolderDataObject: parentFolderDataObject, expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid},
+      data: { parentFolderDataObject: parentFolderDataObject, expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid },
     });
   }
 

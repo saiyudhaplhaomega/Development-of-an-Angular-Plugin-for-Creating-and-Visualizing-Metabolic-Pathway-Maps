@@ -92,18 +92,14 @@ export class FolderPageComponent
 
     const dialogInstance = dialogRef.componentInstance;
     dialogInstance.dialogPrompt = 'Edit folder description';
-    dialogInstance.description = this.folder.description;
+    dialogInstance.value = this.folder.description;
+    dialogInstance.valueLabel = 'Description'
 
-    dialogRef.afterClosed().subscribe((folderdescription) => {
-      console.log('add description');
-      this.folder.description = folderdescription;
-      //TODO: const item = this._dataMap.get(this.dbExperiment.expid);
-      //item.description = expDescription;
-      //TODO: this._dataMap.set(this.dbExperiment.expid, item);
-      // TODO: this.dataService.dataMap.next(this._dataMap);
-
-      //TODO: updating description doesn't work as of now
-      this.updateFolder();
+    dialogRef.beforeClosed().subscribe((folderdescription) => {
+      if(folderdescription) {
+        this.folder.description = folderdescription;
+        this.updateFolder();
+      }
     });
   }
 
@@ -111,18 +107,36 @@ export class FolderPageComponent
     this.dataService.updateNode(this.dataItemOfThisComponent);
   }
 
-  onAcceptNameChange(): void {
-    if (this.dataItemOfThisComponent.displayName.length > 24) {
-      this._snackBar.open('Names longer than 24 characters are not allowed!');
-      this.dataItemOfThisComponent.displayName = '';
-    } else if (this.dataItemOfThisComponent.displayName.length <= 0) {
-      this._snackBar.open('Empty names are not allowed!');
-    } else {
-      this.dataItemOfThisComponent.displayName =
-        this.dataItemOfThisComponent.displayName;
-      this.dataService.updateNode(this.dataItemOfThisComponent);
-    }
+  onSetName(): void {
+    const dialogRef = this.dialog.open(TextfieldDialogComponent, {
+      disableClose: true,
+    });
+
+    const dialogInstance = dialogRef.componentInstance;
+    dialogInstance.dialogPrompt = 'Edit folder name';
+    dialogInstance.value = this.dataItemOfThisComponent.displayName;
+    dialogInstance.valueLabel = 'name';
+    dialogInstance.hasValidators = true;
+
+    dialogRef.beforeClosed().subscribe((folderName) => {
+      if (folderName) {
+        this.dataItemOfThisComponent.displayName = folderName;
+        this.updateFolder();
+      }
+    })
   }
+  // onAcceptNameChange(): void {
+  //   if (this.dataItemOfThisComponent.displayName.length > 24) {
+  //     this._snackBar.open('Names longer than 24 characters are not allowed!');
+  //     this.dataItemOfThisComponent.displayName = '';
+  //   } else if (this.dataItemOfThisComponent.displayName.length <= 0) {
+  //     this._snackBar.open('Empty names are not allowed!');
+  //   } else {
+  //     this.dataItemOfThisComponent.displayName =
+  //       this.dataItemOfThisComponent.displayName;
+  //     this.dataService.updateNode(this.dataItemOfThisComponent);
+  //   }
+  // }
 
   onAddExperiment(): void {
     const dialogRef = this.dialog.open(NameEditDialogComponent, {
