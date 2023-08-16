@@ -9,6 +9,7 @@ import { UserToken } from 'dist/shared-lib';
   styleUrls: ['./navigation-bar.component.css'],
 })
 export class NavigationBarComponent implements OnInit {
+
   @Output() toggleSidenav = new EventEmitter<void>();
   user: UserToken;
   guest: boolean;
@@ -26,10 +27,11 @@ export class NavigationBarComponent implements OnInit {
 
   isProphane() {
     // if (window.location.hostname == "prophane.de" || window.location.hostname == "www.prophane.de" || window.location.hostname == "localhost") {
-    return (
-      window.location.hostname === 'prophane.de' ||
-      window.location.hostname === 'www.prophane.de'
-    );
+    return true;
+    //(
+      // window.location.hostname === 'prophane.de' ||
+      // window.location.hostname === 'www.prophane.de'
+    // );
   }
 
   goto(route: string) {

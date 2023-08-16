@@ -80,6 +80,10 @@ import { ResultFiguresModule } from 'shared-lib';
     WorkflowPanelModule,
     ResultFiguresModule,
   ],
-  providers: [WorkflowService, WorkflowGuard, StepperService],
+  providers: [
+    WorkflowService,
+    WorkflowGuard,
+    StepperService
+  ],
 })
 export class WorkflowModule {}

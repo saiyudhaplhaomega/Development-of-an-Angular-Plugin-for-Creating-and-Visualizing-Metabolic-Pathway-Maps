@@ -12,7 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { OfsLandingPageComponent } from './ofs-landing-page/ofs-landing-page.component';
 
 @NgModule({
-  declarations: [AppComponent, OfsLandingPageComponent],
+  declarations: [
+    AppComponent,
+    OfsLandingPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

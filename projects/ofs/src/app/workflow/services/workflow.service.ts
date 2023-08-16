@@ -26,9 +26,9 @@ export interface SimpleMessage {
   message: string;
 }
 
-@Injectable({
-  providedIn: 'any',
-})
+@Injectable(
+  {providedIn: 'any',}
+)
 // TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
