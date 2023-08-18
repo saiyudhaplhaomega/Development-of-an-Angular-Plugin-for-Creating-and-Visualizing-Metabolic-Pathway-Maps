@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 
 export enum WebserverUrls {
   TEST = 'https://www.prophane.de:9091/test/',
+  PROPHANE = 'https://www.prophane.de:9091/',
   LOCALHOST = 'http://localhost:80/'
 }
 
@@ -32,7 +33,7 @@ export enum Endpoints {
   PROPHANE_START_JOB = 'mpacloud/v1/prophaneStartJob',
   UPLOAD_PROPHANE_FASTA = 'mpacloud/v1/prophaneFasta',
   UPLOAD_PROPHANE_CSV = 'mpacloud/v1/prophaneCSV',
-  GET_PROPHANE_JOB = 'mpacloud/v1/getJob/',
+  GET_PROPHANE_JOB = 'mpacloud/v1/getJob',
   GET_PROPHANE_JOBS = 'mpacloud/v1/prophaneJobList',
   // user
   UPDATE_USER_DATA = 'mpauser/updateuserdata',
@@ -64,7 +65,8 @@ export class WebserveraddressService {
   }
 
   public getEndpoint(endpoint: string): string {
-    return WebserverUrls.TEST + endpoint;
+    //return WebserverUrls.TEST + endpoint;
+    return WebserverUrls.PROPHANE + endpoint;
   }
 
 }

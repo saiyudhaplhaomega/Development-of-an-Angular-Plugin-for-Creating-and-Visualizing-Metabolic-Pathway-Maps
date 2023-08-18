@@ -8,10 +8,16 @@ import { ProphaneResultViewComponent } from './prophane/components/prophane-resu
 
 const routes: Routes = [
 
-  //   { path: '', redirectTo: 'login', pathMatch: 'full' },
+{ path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login', component: LoginPageComponent },
 {
   path: '',
+  component: ProphaneJobSubmissionMainComponent,
+  canActivate: [AuthGuard],
+  pathMatch: 'full',
+},
+{
+  path: 'jobsubmission',
   component: ProphaneJobSubmissionMainComponent,
   canActivate: [AuthGuard],
 },
@@ -21,12 +27,14 @@ const routes: Routes = [
   canActivate: [AuthGuard],
 },
 // {
-//   path: 'jobs',
+//    path: 'jobs',
+//    canActivate: [AuthGuard],
 //   redirectTo: '/prophane/(prophaneContent:jobs)',
 //   pathMatch: 'full',
 // },
 { path: 'about', component: ProphaneAboutComponent },
 { path: 'results/:job_uuid', component: ProphaneResultViewComponent },
+{ path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

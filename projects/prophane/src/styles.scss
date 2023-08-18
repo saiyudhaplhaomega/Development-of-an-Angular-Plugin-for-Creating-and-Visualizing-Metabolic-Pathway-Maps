@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./rki_blue_bright.css";
+
 @import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "./custom-theme.scss";
+@import "./rki_blue_bright.css";
 
 // import utilities from the tailwind library
 @tailwind base;

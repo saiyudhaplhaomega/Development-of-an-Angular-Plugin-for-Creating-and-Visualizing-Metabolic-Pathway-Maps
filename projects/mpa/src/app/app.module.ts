@@ -64,7 +64,7 @@ import { ProphaneModule } from 'projects/prophane/src/app/prophane/prophane.modu
     CommonModule,
     HttpClientModule,
     MpaModule,
-    ProphaneModule,
+    //ProphaneModule,
     MaterialModule,
     NgChartsModule,
     LoginModule,

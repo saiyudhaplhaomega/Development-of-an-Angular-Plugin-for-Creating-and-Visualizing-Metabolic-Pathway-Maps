@@ -7,13 +7,14 @@ import { ProphaneJobSubmissionMainComponent } from './components/prophane-job-su
 import { ProphaneResultViewComponent } from './components/prophane-result-view/prophane-result-view.component';
 
 const routes: Routes = [
-
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   { path: 'login', component: LoginPageComponent },
 
-  { path: 'jobsubmission', component: ProphaneJobSubmissionMainComponent,
-    //canActivate: [AuthGuard],
+  {
+    path: 'jobsubmission',
+    component: ProphaneJobSubmissionMainComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'jobcontrol',
@@ -35,31 +36,31 @@ const routes: Routes = [
 })
 export class ProphaneRoutingModule {}
 
-    // const routes: Routes = [
+// const routes: Routes = [
 
-  //   {
-  //     path: 'prophane',
-  //     loadChildren: () =>
-  //       import('./prophane/prophane.module').then((m) => m.ProphaneModule),
-  //   },
-  //   {
-  //     path: 'mpa',
-  //     canLoad: [AuthGuard], // loads module only if route guard allows it
-  //     canActivate: [AuthGuard],
-  //     loadChildren: () => import('./mpa/mpa.module').then((m) => m.MpaModule),
-  //   },
-  //   { path: 'error', component: ErrorPageComponent },
+//   {
+//     path: 'prophane',
+//     loadChildren: () =>
+//       import('./prophane/prophane.module').then((m) => m.ProphaneModule),
+//   },
+//   {
+//     path: 'mpa',
+//     canLoad: [AuthGuard], // loads module only if route guard allows it
+//     canActivate: [AuthGuard],
+//     loadChildren: () => import('./mpa/mpa.module').then((m) => m.MpaModule),
+//   },
+//   { path: 'error', component: ErrorPageComponent },
 
-  //   { path: 'termsofservice', component: TermsOfServicePageComponent },
-  //   { path: 'privacypolicy', component: PrivacyPolicyPageComponent },
-  //   { path: 'impressum', component: ImpressumPageComponent },
-  //   { path: '**', redirectTo: 'login' },
+//   { path: 'termsofservice', component: TermsOfServicePageComponent },
+//   { path: 'privacypolicy', component: PrivacyPolicyPageComponent },
+//   { path: 'impressum', component: ImpressumPageComponent },
+//   { path: '**', redirectTo: 'login' },
 
-  //   /*  { path: 'home', component: HomeDashboardPageComponent},
-  //     { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},
-  //     { path: 'dbsearch', component: DatabaseSearchPageComponent, canActivate: [AuthGuard]},
-  //     { path: 'proteinloader', component: ProteinDatabasePageComponent, canActivate: [AuthGuard]},
-  //     { path: 'modeltrainer', component: ModelDatabasePageComponent, canActivate: [AuthGuard]},
-  //     { path: 'prophane', component: REFACTORING_prophaneJobSubmissionComponent, canActivate: [AuthGuard]},
-  //     { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},*/
-  // ];
+//   /*  { path: 'home', component: HomeDashboardPageComponent},
+//     { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},
+//     { path: 'dbsearch', component: DatabaseSearchPageComponent, canActivate: [AuthGuard]},
+//     { path: 'proteinloader', component: ProteinDatabasePageComponent, canActivate: [AuthGuard]},
+//     { path: 'modeltrainer', component: ModelDatabasePageComponent, canActivate: [AuthGuard]},
+//     { path: 'prophane', component: REFACTORING_prophaneJobSubmissionComponent, canActivate: [AuthGuard]},
+//     { path: 'test', component: TestPageComponent, canActivate: [AuthGuard]},*/
+// ];
