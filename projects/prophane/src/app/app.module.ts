@@ -32,7 +32,7 @@ import { LoginModule } from 'shared-lib';
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
-    LoginModule
+    LoginModule,
     //NavToolbarModule,
   ],
   providers: [

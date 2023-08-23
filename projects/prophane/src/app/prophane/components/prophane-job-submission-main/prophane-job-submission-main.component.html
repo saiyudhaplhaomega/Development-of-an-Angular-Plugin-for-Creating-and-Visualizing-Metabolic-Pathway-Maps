@@ -93,6 +93,12 @@
                 <app-job-function
                   *ngIf="currentCardHeader === 'Functional Annotation'"
                 ></app-job-function>
+                <app-job-custom-map 
+                  *ngIf="currentCardHeader === 'Custom Map Annotation'"
+                ></app-job-custom-map>
+                <app-job-lca 
+                  *ngIf="currentCardHeader === 'Lowest Common Ancestor'"
+                ></app-job-lca>
                 <app-job-submit
                   *ngIf="currentCardHeader === 'Summary'"
                 ></app-job-submit>
