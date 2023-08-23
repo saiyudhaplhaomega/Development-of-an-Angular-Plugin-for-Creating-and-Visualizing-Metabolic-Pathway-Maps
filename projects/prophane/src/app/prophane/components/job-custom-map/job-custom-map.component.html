@@ -1,0 +1,75 @@
+<!--1. only add button shown
+    2. add button -> pre-filled custom maps fields are shown (default job) and added to prophaneJob.param
+    3. changes in fields (input file name empty!) changed in prohane job params
+    4. add file to files to upload  -->
+
+<!--  already added/defined custom Maps -->
+<ng-container *ngFor="let custom_task of this.prophaneJobState.getCustomTasks(); let taskIndex = index">
+    <!--  task Label-->
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text rki-blue-input">Task Label</span>
+        </div>
+        <input
+          type="text" 
+          class="form-control"
+          [ngClass]="{}"
+          [(ngModel)]="custom_task.tasklabel">
+        <div class="input-group-append">
+          <button
+            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
+            class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeCustomTask(custom_task, taskIndex)'>
+            —
+          </button>
+        </div>
+      </div>
+  
+      <!-- task map file to upload -->
+      <app-file-input
+        (fileSelected)="onMapChange($event, taskIndex)"
+        [selectedFile]="prophaneJobState.currentProphaneJob.parameters.customMapTasks[taskIndex].optionstring[0].defaultValue"
+        [labels]="{inputGroupLabel: 'Custom Map File', inputLabel: 'Choose file (.tsv, .csv, .txt)'}"
+        [inputType]="'.tsv, .csv, .txt'"
+      >
+      </app-file-input>
+  
+      <!--  scope-->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Task Type</span>
+        </div>
+        <mat-select class="custom-select"
+                    [(value)]="prophaneJobState.currentProphaneJob.parameters.customMapTasks[taskIndex].scope"
+                    [compareWith]="prophaneJobState.compareByID">
+          <mat-option *ngFor="let scope of prophaneJobState.optionCustomMaps.scope" [value]="scope">
+            {{scope}}
+          </mat-option>
+        </mat-select>
+      </div>
+  
+      <!-- Algorithm, always the same-->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Algorithm</span>
+        </div>
+        <mat-select class="custom-select"
+                    [(value)]="custom_task.algorithm">
+          <ng-container *ngFor="let algo of prophaneJobState.optionCustomMaps.algorithm">
+            <mat-option [value]="algo">
+              {{ algo }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </div>
+
+    </div>
+  
+  </ng-container>
+  
+  <!-- Add new Custom Map Task -->
+  <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addCustomMapTask()'>
+    Add Cutom Map Task
+  </button>
+  
+  

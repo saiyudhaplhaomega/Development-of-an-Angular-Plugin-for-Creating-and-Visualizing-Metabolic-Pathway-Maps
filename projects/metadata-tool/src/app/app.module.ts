@@ -8,6 +8,7 @@ import { NavToolbarModule } from 'shared-lib';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from 'shared-lib';
+import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoginModule } from 'shared-lib';
     MatButtonModule,
     LoginModule,
     BrowserAnimationsModule,
+    WorkflowModule
   ],
   providers: [],
   bootstrap: [AppComponent]

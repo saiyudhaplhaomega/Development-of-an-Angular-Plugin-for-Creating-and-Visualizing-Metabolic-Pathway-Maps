@@ -6,6 +6,9 @@ import {sortBy} from 'lodash';
 import {ProphaneDataBaseOption} from './databaseoptions';
 import {ProphaneEvalueOptions} from './prophaneEvalueOptionsJson';
 import {TaxonomyAdvandedOptionsJson} from './taxonomyAdvandedOptions';
+import {ProphaneLcaObject} from './prophanelcadata';
+import { ProphaneCustomMap } from './prophanecustommapdata';
+
 
 export const jobLabelData = [
   {
@@ -40,6 +43,18 @@ export const jobLabelData = [
   },
   {
     index: 5,
+    stepperLabel: 'Custom Map',
+    cardHeader: 'Custom Map Annotation',
+    expertsOnly: true,
+  },
+  {
+    index: 6,
+    stepperLabel: 'LCA',
+    cardHeader: 'Lowest Common Ancestor',
+    expertsOnly: true,
+  },
+  {
+    index: 7,
     stepperLabel: 'Submit',
     cardHeader: 'Summary',
     expertsOnly: false,
@@ -170,8 +185,14 @@ export const algparams = {
       return option.param.toLowerCase();
     }),
     defaultOptionStringSelection: {
-      param: 'T', valueType: 'number', defaultValue: '0.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []
-    }
+      param: 'T', 
+      valueType: 'number', 
+      defaultValue: '0.0', 
+      min: '0', 
+      max: undefined, 
+      values: [], 
+      isDefault: '0', 
+      avoid: [] }
   },
   hmmsearch: {
     name: 'hmmsearch',
@@ -215,42 +236,71 @@ export const algparams = {
         isDefault: '0',
         avoid: []
       },
-      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
-      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
-      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', values: [], isDefault: '0', avoid: []},
-      {param: 'sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'block-size', valueType: 'number', defaultValue: '2.0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'frameshift', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
+      {param: 'min-score', valueType: 'number', defaultValue: '20', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'id', valueType: 'number', defaultValue: '0.0', min: '0', max: '100', 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'query-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'subject-cover', valueType: 'number', defaultValue: '0', min: '0', max: '100', 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'more-sensitive', valueType: 'none', defaultValue: '', min: undefined, max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'block-size', valueType: 'number', defaultValue: '2.0', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'gapopen', valueType: 'int', defaultValue: '0', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'gapextend', valueType: 'int', defaultValue: '0', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'frameshift', valueType: 'int', defaultValue: '0', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
       {
         param: 'matrix', valueType: 'enum', defaultValue: 'BLOSUM62', min: undefined, max: undefined,
         values: ['BLOSUM62', 'BLOSUM90', 'BLOSUM80', 'BLOSUM50', 'BLOSUM45', 'PAM250', 'PAM70', 'PAM30'], isDefault: '0', avoid: []
       },
-      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
-      {param: 'masking', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
-      {param: 'algo', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
-      {param: 'freq-sd', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'id2', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'window', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'ungapped-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0'},
-      {param: 'hit-band', valueType: 'string', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'hit-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'gapped-xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', values: [], isDefault: '0', avoid: []},
-      {param: 'shapes', valueType: 'int', defaultValue: '0', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'shape-mask', valueType: 'int', defaultValue: '', min: '0', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'index-mode', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined, values: ['0', '1'], isDefault: '0', avoid: []},
-      {param: 'rank-ratio', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'rank-ratio2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, values: [], isDefault: '0', avoid: []},
-      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined, values: [], isDefault: '1', avoid: []},
+      {param: 'comp-based-stats', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined,
+       values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'masking', valueType: 'enum', defaultValue: '1', min: undefined, max: undefined,
+       values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'algo', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined,
+       values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'freq-sd', valueType: 'number', defaultValue: '', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'id2', valueType: 'number', defaultValue: '', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'window', valueType: 'int', defaultValue: '', min: '0', max: undefined,
+       values: [], isDefault: '0', avoid: []},
+      {param: 'xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'ungapped-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, 
+      values: [], isDefault: '0'},
+      {param: 'hit-band', valueType: 'string', defaultValue: '', min: undefined, max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'hit-score', valueType: 'number', defaultValue: '', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'gapped-xdrop', valueType: 'int', defaultValue: '', min: '1', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'band', valueType: 'string', defaultValue: '', min: '-1', max: '-1', 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'shapes', valueType: 'int', defaultValue: '0', min: '0', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'shape-mask', valueType: 'int', defaultValue: '', min: '0', max: undefined,
+       values: [], isDefault: '0', avoid: []},
+      {param: 'index-mode', valueType: 'enum', defaultValue: '0', min: undefined, max: undefined,
+       values: ['0', '1'], isDefault: '0', avoid: []},
+      {param: 'rank-ratio', valueType: 'none', defaultValue: '', min: undefined, max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'rank-ratio2', valueType: 'none', defaultValue: '', min: undefined, max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'max-hsps', valueType: 'int', defaultValue: '1', min: '1', max: undefined,
+       values: [], isDefault: '0', avoid: []},
+      {param: 'dbsize', valueType: 'int', defaultValue: '40000000', min: '1', max: undefined, 
+      values: [], isDefault: '0', avoid: []},
+      {param: 'evalue', valueType: 'evalue', defaultValue: '0.001', min: '0', max: undefined,
+       values: [], isDefault: '1', avoid: []},
     ], function (option) {
-      return option.param.toLowerCase();
       return option.param.toLowerCase();
     }),
     defaultOptionStringSelection: {
@@ -288,7 +338,7 @@ export const optionStrings: TaxonomyAdvandedOptionsJson[] = [
   {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
 ];
 
-
+// chosen by default for "advanced" and not "advanced" users
 export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
   {
     scope: 'Function',
@@ -309,3 +359,132 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     formOptionStringSelection: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0]['defaultOptionStringSelection'],
   }
 ];
+
+
+export const lcaParams = [
+  {name: 'lca', options: sortBy([
+      {
+        param: 'threshold', 
+        valueType: 'number', 
+        defaultValue: '1',
+        min: '0.1',
+        max: '1', 
+        values: [], 
+        isDefault: '1', 
+        avoid: []},
+      {
+        param: 'minimum_number_of_annotations', 
+        valueType: 'int', 
+        defaultValue: '0', 
+        min: '0', 
+        max: '7', 
+        values: ['0', '1', '2', '3', '4', '5', '6', '7'], 
+        isDefault: '0', 
+        avoid: []},
+      {
+        param: 'ignore_unclassified', 
+        valueType: 'none', 
+        defaultValue: '', 
+        min: undefined, 
+        max: undefined, 
+        values: [], 
+        isDefault: '0', 
+        avoid: []}
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
+    defaultOptionStringSelection: {
+      param: 'threshold', 
+      valueType: 'number', 
+      defaultValue: '1', 
+      min: '0.1', 
+      max: '1', 
+      values: [], 
+      isDefault: '1', 
+      avoid: []}
+  },
+  {name: 'democratic_lca', options: sortBy([
+      {
+        param: 'minimum_number_of_annotations', 
+        valueType: 'int', 
+        defaultValue: '0', 
+        min: '0', 
+        max: '7', 
+        values: ['0', '1', '2', '3', '4', '5', '6', '7'], 
+        isDefault: '0', 
+        avoid: []},
+      {
+        param: 'ignore_unclassified', 
+        valueType: 'none', 
+        defaultValue: '', 
+        min: undefined, 
+        max: undefined, 
+        values: [], 
+        isDefault: '0', 
+        avoid: []},
+    ], function (option) {
+      return option.param.toLowerCase();
+    }),
+    defaultOptionStringSelection: {}
+  }
+];
+
+export const lcaOptions: ProphaneLcaObject[] = [
+  {
+    method: 'lca', 
+    name: 'LCA per group', 
+    optionstring: [
+      {param: 'threshold', valueType: 'number', defaultValue: '1', min: '0.1', max: '1', values: [],
+       isDefault: '1', avoid: []}
+    ],
+    formOptionStringSelection: {
+      param: 'minimum_number_of_annotations', valueType: 'int', defaultValue: '0', min: '0', max: '7', 
+      values: ['0', '1', '2', '3', '4', '5', '6', '7'], isDefault: '0', avoid: []},
+  },
+  {
+    method: 'democratic_lca', 
+    name: 'democratic LCA', 
+    optionstring: [],
+    formOptionStringSelection: {
+      param: 'minimum_number_of_annotations', valueType: 'int', defaultValue: '0', min: '0', max: '7', 
+      values: ['0', '1', '2', '3', '4', '5', '6', '7'], isDefault: '0', avoid: []},
+  },
+];
+
+
+
+export const CustomMapOptions: any =  {
+    scope: ['Taxonomy', 'Function'], 
+    algorithm: ['acc2annot_mapper']
+  }
+;
+
+export const customMapParams =
+  {name: 'custom_map', options: [
+      {
+        param: 'path', 
+        valueType: "File", 
+        defaultValue: undefined,}
+      ], function (option) {
+      return option.param.toLowerCase();
+    },
+    defaultOptionStringSelection: {
+      param: 'path', 
+      valueType: "File", 
+      defaultValue: undefined,}
+  }
+
+  export const defaultCustomMapTask: ProphaneCustomMap = 
+  {
+    scope: 'Taxonomy',
+    database_type: 'custom_map',
+    algorithm: 'acc2annot_mapper',
+    tasklabel: 'Custom Map Annotation Task 1',
+    optionstring: [
+      {
+        param: 'path', 
+        valueType: "File", 
+        defaultValue: undefined,}
+    ],
+    formOptionStringSelection:  customMapParams['defaultOptionStringSelection']
+  }
