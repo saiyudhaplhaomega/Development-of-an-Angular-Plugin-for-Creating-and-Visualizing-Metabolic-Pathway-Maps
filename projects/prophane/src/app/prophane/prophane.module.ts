@@ -7,9 +7,6 @@ import { SafePipe } from './safe.pipe';
 import { MaterialModule } from 'projects/mpa/src/app/material-module';
 
 import { LoginModule } from 'shared-lib';
-import { ProphaneRoutingModule } from './prophane-routing.module';
-import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
-
 import { ProphaneJobControlComponent } from './components/prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './components/prophane-about/prophane-about.component';
 // import {ProphaneJobSubmissionDialogComponent} from '../core/services/prophane-job-submission-dialog';
@@ -30,6 +27,9 @@ import { JobLcaComponent } from './components/job-lca/job-lca.component';
 import { ProphaneHelpComponent } from './components/prophane-help/prophane-help.component';
 import { ProphaneTutorialComponent } from './components/prophane-tutorial/prophane-tutorial.component';
 import { JobCustomMapComponent } from './components/job-custom-map/job-custom-map.component';
+
+import { ProphaneRoutingModule } from './prophane-routing.module';
+import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
 
 
 @NgModule({
