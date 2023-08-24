@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaDataInputService } from './metaddata-input.service';
-import { ColumnData } from './metadata-columnData'; 
+import { ColumnData } from './metadata-columnData';
 import Handsontable from 'handsontable/base';
 import { ContextMenu } from 'handsontable/plugins';
 
