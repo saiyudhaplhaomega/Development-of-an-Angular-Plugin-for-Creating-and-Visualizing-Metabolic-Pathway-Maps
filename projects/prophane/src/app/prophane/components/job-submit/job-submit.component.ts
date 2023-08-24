@@ -43,4 +43,15 @@ export class JobSubmitComponent {
     );
     return advanced;
   }
+
+  get_lca_threshold(lcaTask) {
+    return lcaTask.optionstring.filter(i => i.param == 'threshold')[0].defaultValue
+  }
+  get_advanced_lca_options(lcaTask) {
+    return lcaTask.optionstring.filter(i => i.param != 'threshold')
+  }
+  isCustomMapWithoutFile(customMaps){
+    return customMaps.filter(cm =>cm.optionstring.param == 'path').optionstring.defaultValue.length >0
+  }
 }
+

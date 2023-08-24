@@ -10,7 +10,11 @@ import {
   optionStrings,
   prophaneReportStyles,
   quantdata,
+  lcaOptions,
+  CustomMapOptions,
+  defaultCustomMapTask
 } from '../../objects/prophaneFormData';
+import {ProphaneLcaObject} from '../../objects/prophanelcadata';
 import { JobService } from '../../job.service';
 import { ProphaneReportStyle } from '../../components/prophane-job-submission-main/prophane-job-submission-formdata';
 import { ProphaneTaskOptionString } from '../../objects/prophanetaskoptionstring';
@@ -26,6 +30,7 @@ import { HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/cor
 import { UploadProgressService } from 'projects/mpa/src/app/core/services/upload-progress.service';
 import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
 import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
+import { ProphaneCustomMap } from '../../objects/prophanecustommapdata';
 
 
 
@@ -72,16 +77,21 @@ export class ProphaneJobStateService {
   taxtasks = 1;
   functasks = 1;
   taskCounter = 3;
+  customtasksCounter = 0;
+  lcatasks = 1
+
 
   readonly reportStyles = prophaneReportStyles;
   readonly contoptions = contaminationdata;
   readonly quantdata = quantdata;
   readonly evalueOptions = evalueOptions;
-  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); // Important: copy object instead of linking!
-
+  readonly lcaOptions = lcaOptions;
+  readonly optionCustomMaps = CustomMapOptions;
   // readonly defaultOptionString = defaultOptionString;
   readonly databaseOptions = databaseOptions;
   readonly optionStrings = optionStrings;
+  readonly annotationTasks = JSON.parse(JSON.stringify(defaultAnnotationTasks)); // Important: copy object instead of linking!
+  readonly defaultCustomMap = JSON.parse(JSON.stringify(defaultCustomMapTask));
 
   uploadDialogId = 'prophaneUpload';
 
@@ -105,8 +115,10 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
     this.currentProphaneJob.parameters.annotationTasks = this.annotationTasks;
+    this.currentProphaneJob.parameters.customMapTasks = [];
     this.currentProphaneJob.parameters.sampleGroups =
       [] as ProphaneSampleGroupObject[];
+    this.currentProphaneJob.parameters.lcaTask = this.lcaOptions[0];
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
@@ -123,7 +135,6 @@ export class ProphaneJobStateService {
     this.jobService.requestJob(this.currentProphaneJob).subscribe({
       next: (res) => {
         this.currentProphaneJob = res;
-
         this.jobUnavailable = res.status === 'JOB_REJECTED';
         if (res.status === 'JOB_REJECTED') {
           this.noJobCardHeader = NoJobCardHeaders.JOB_UNAVAILABLE;
@@ -150,6 +161,10 @@ export class ProphaneJobStateService {
     return this.currentProphaneJob.parameters.annotationTasks.filter(
       (i) => i.scope === scope
     );
+  }
+
+  getCustomTasks(): any[] {
+    return this.currentProphaneJob.parameters.customMapTasks;
   }
 
   setDefaultAlgorithm(task: ProphaneAnnotationTaskObject, taskIndex: number) {
@@ -228,6 +243,13 @@ export class ProphaneJobStateService {
     }
   }
 
+  addLCAOptionString(task: ProphaneLcaObject) {
+    if (task.optionstring.filter(e =>
+      e.param === task.formOptionStringSelection.param).length === 0) {
+      task.optionstring.push(task.formOptionStringSelection);
+    }
+  }
+
   invokeUploadDialog(): Observable<boolean> {
     this._uploadProgressService.setUUID(
       this.currentProphaneJob.prophaneJobUUID
@@ -262,6 +284,37 @@ export class ProphaneJobStateService {
       //})
     }
   }
+/* 
+  addFilesToUploadData() {
+    const fileList: MultiFileUploadData = {
+      files: [],
+      httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}})
+    };
+    if (this.proteinReportFile && this.fastaFile) {
+      const uploadFastaFile: UploadFile =   {
+        uploadFile: this.proteinReportFile,
+        fileID: 'fastaFile',
+      };
+      const uploadProteinFile: UploadFile =   {
+        uploadFile: this.proteinReportFile,
+        fileID: 'proteinReportFile',
+      };
+      fileList.files.push(uploadFastaFile);
+      fileList.files.push(uploadProteinFile);
+      if (this.currentProphaneJob.parameters.customMaps.length > 0) {
+        this.currentProphaneJob.parameters.customMaps.forEach(function (cm){
+          const uploadCustomMapFile: UploadFile =   {
+            uploadFile: cm.file,
+            fileID: 'custom_map_file_'+ cm.id
+          };
+          fileList.files.push(uploadCustomMapFile);
+        })
+      }
+    }
+    console.log("upload list")
+    console.log(fileList)
+    return fileList
+  } */
 
   setEmapperEvalue(): void {
     this.currentProphaneJob.parameters.annotationTasks.forEach((task) => {

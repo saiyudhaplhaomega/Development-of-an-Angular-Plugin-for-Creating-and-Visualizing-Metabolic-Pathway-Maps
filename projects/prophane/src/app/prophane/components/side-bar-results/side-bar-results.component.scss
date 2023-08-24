@@ -1,0 +1,22 @@
+.mat-expansion-panel-header {
+  border: 1px solid darkblue;
+  background-color: #283593 !important;
+  padding: 2px 10px;
+  cursor: pointer; /* Pointer/hand icon */
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.mat-expansion-panel-header-title {
+  color: white
+}
+
+/* Add a background color on hover */
+.mat-expansion-panel-header:hover {
+  background-color: darkblue !important;
+}
+
+.mat-expansion-panel-header:active {
+  background-color: darkblue !important;
+}
+

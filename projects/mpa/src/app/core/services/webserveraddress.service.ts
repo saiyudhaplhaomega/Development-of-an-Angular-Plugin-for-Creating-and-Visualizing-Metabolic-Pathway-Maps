@@ -53,6 +53,7 @@ export enum Endpoints {
   PROTEINLOADER_GETFASTADATA = 'proteinloader/getfastadata',
   PROTEINLOADER_UPDATE_FASTADATA= 'proteinloader/updatefastadata',
   // PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
+  DOWNLOAD_PROPHANE_TEST_DATA = ""
 
 }
 
