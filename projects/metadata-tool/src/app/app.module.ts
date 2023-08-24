@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from 'shared-lib';
 import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
 import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
+import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/me
     LoginModule,
     BrowserAnimationsModule,
     WorkflowModule,
-    MetaDataCheckboxSelectionModule
+    MetaDataCheckboxSelectionModule,
+    MetadataUploadpageModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
