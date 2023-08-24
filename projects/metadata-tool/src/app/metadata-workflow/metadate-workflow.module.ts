@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HotTableModule } from '@handsontable/angular';
 import { registerAllModules } from 'handsontable/registry';
@@ -20,7 +19,6 @@ registerAllModules();
 @NgModule({
   declarations: [MetadataWorkflowComponent],
   imports: [
-    BrowserModule,
     HotTableModule,
   ],
   exports: [MetadataWorkflowComponent],

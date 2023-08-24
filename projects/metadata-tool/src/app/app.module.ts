@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from 'shared-lib';
 import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
+import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
     MatButtonModule,
     LoginModule,
     BrowserAnimationsModule,
-    WorkflowModule
+    WorkflowModule,
+    MetaDataCheckboxSelectionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
