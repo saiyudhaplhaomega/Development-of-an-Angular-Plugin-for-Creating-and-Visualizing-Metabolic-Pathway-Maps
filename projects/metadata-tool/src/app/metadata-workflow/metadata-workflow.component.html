@@ -1,6 +1,2 @@
-<div>
-    <hot-table
-    [data]="columnData"
-    [settings]="hotSettings">
-</hot-table>
-</div>
+<div #hotContainer></div>
+  <button type="button" (click)="onKey($event)">Export to CSV</button>
