@@ -7,10 +7,9 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Observable, partition } from 'rxjs';
-import { AuthGuard } from 'dist/shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'dist/shared-lib';
+import { AuthService } from './login/auth.service';
 
 export interface Endpoints {}
 
@@ -55,10 +54,10 @@ export class HttpClientService {
 
   postObject<T1, T2>(
     obj: T1,
-    api: string,
+    url: string,
     params?: HttpParams
   ): Observable<T2> {
-    return this.http.post<T2>(this.webserver.getEndpoint(api), obj, {
+    return this.http.post<T2>(url, obj, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: this.authService.getUserAuthorization().toString(),
@@ -67,8 +66,8 @@ export class HttpClientService {
     });
   }
 
-  getObject<T>(api: string, params?: HttpParams): Observable<T> {
-    return this.http.get<T>(this.webserver.getEndpoint(api), {
+  getObject<T>(url: string, params?: HttpParams): Observable<T> {
+    return this.http.get<T>(url, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: this.authService.getUserAuthorization().toString(),
@@ -77,12 +76,11 @@ export class HttpClientService {
     });
   }
 
-  postFile(file: File, api: string, params?: HttpParams) {
+  postFile(file: File, url: string, params?: HttpParams) {
     const fd = new FormData();
     fd.set('Content-Type', 'multipart/form-data');
     fd.append('uploaded_file', file);
-    this.webserver.getEndpoint(api);
-    return this.http.post(this.webserver.getEndpoint(api), fd, {
+    return this.http.post(url, fd, {
       headers: new HttpHeaders({
         Authorization: this.authService.getUserAuthorization().toString(),
       }),
@@ -94,7 +92,7 @@ export class HttpClientService {
 
   postMultiPartFiles<T>(
     fileList: MultiFileUploadData,
-    api: Endpoints
+    url: string
   ): Observable<T> {
     const fd = new FormData();
     let multipartids: string = '';
@@ -108,7 +106,7 @@ export class HttpClientService {
       fd.append(file.fileID, file.uploadFile);
     });
     return this.http
-      .post<T>(this.webserver.getEndpoint(api), fd, {
+      .post<T>(url, fd, {
         headers: new HttpHeaders({
           Authorization: this.authService.getUserAuthorization().toString(),
         }),
@@ -120,7 +118,7 @@ export class HttpClientService {
 
   postMultiPartFilesEvents(
     fileList: MultiFileUploadData,
-    api: Endpoints
+    url: string
   ): Observable<HttpEvent<Object>> {
     const fd = new FormData();
     let multipartids: string = '';
@@ -135,7 +133,7 @@ export class HttpClientService {
     });
     console.log('return http');
     return this.http
-      .post(this.webserver.getEndpoint(api), fd, {
+      .post(url, fd, {
         headers: new HttpHeaders({
           Authorization: this.authService.getUserAuthorization().toString(),
         }),
@@ -148,7 +146,7 @@ export class HttpClientService {
   performUpload(
     dialogId: string,
     fileList: MultiFileUploadData,
-    api: Endpoints
+    url: string
   ) {
     //TODO: handle big file-sizes -> split upload into multiple uploads
     fileList.files.map((fileUploadData) => {
@@ -175,7 +173,7 @@ export class HttpClientService {
     });
 
     this.http
-      .post(this.webserver.getEndpoint(api), fd, {
+      .post(url, fd, {
         headers: new HttpHeaders({
           Authorization: this.authService.getUserAuthorization().toString(),
         }),

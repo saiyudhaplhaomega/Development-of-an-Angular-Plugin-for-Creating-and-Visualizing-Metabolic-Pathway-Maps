@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, UserToken } from 'shared-lib';
 
 @Component({
   selector: 'app-test-example-content',
@@ -7,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestExampleContentComponent implements OnInit {
 
-  constructor() {}
+  user: string = "Unknown";
+
+  constructor(private auth: AuthService) {
+  }
+
 
   ngOnInit(): void {
     console.log("Init Content Page");
+    this.auth._guestemail.subscribe((email: string) => {
+        console.log("new User!");
+        this.user = email;
+    });
   }
 
 }

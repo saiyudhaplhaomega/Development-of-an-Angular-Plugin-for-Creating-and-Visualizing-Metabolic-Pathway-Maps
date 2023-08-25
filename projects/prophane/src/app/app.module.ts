@@ -4,41 +4,41 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import { NavToolbarModule, LoginModule } from 'shared-lib';
-import { ProphaneModule } from './prophane/prophane.module';
-import { NavigationBarComponent } from 'projects/mpa/src/app/core/components/navigation-bar/navigation-bar.component';
-import { PrivacyConsentBannerComponent } from 'projects/mpa/src/app/core/components/privacy-consent-banner/privacy-consent-banner.component';
-import { FooterComponent } from 'projects/mpa/src/app/core/components/footer/page-footer';
-import { MaterialModule } from 'projects/mpa/src/app/material-module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { UploadProgressService } from 'projects/mpa/src/app/core/services/upload-progress.service';
+
+
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoginModule } from 'shared-lib';
+import { StandardPageLayoutModule } from 'shared-lib';
+
+
+// TODO: remove this
+import { MaterialModule } from 'projects/mpa/src/app/material-module';
+// TODO: move to shared-lib
+
+import { FooterComponent } from 'projects/mpa/src/app/core/components/footer/page-footer';
+import { ProphaneModule } from './prophane/prophane.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent,
-    PrivacyConsentBannerComponent,
     FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
-    LoginModule,
-    //NavToolbarModule,
+    StandardPageLayoutModule,
+    ProphaneModule,
+    MaterialModule,
   ],
   providers: [
-    ProphaneModule,
-    HttpClient,
-    UploadProgressService,
+    //HttpClient,
+    //UploadProgressService,
   ],
   bootstrap: [AppComponent]
 })

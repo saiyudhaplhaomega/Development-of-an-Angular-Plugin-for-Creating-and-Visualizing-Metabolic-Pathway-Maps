@@ -1,6 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { InputFormComponent } from '../../input-form/input-form';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'shared-login-buttons',

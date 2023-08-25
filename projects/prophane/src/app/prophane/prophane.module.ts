@@ -1,12 +1,7 @@
 //<reference path="../../../node_modules/@angular/platform-browser/src/browser.d.ts"/>
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SafePipe } from './safe.pipe';
-import { MaterialModule } from 'projects/mpa/src/app/material-module';
-
-import { LoginModule } from 'shared-lib';
 import { ProphaneJobControlComponent } from './components/prophane-job-control/prophane-job-control.component';
 import { ProphaneAboutComponent } from './components/prophane-about/prophane-about.component';
 // import {ProphaneJobSubmissionDialogComponent} from '../core/services/prophane-job-submission-dialog';
@@ -30,6 +25,9 @@ import { JobCustomMapComponent } from './components/job-custom-map/job-custom-ma
 
 import { ProphaneRoutingModule } from './prophane-routing.module';
 import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
+import { MaterialModule } from 'projects/mpa/src/app/material-module';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -41,7 +39,6 @@ import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dial
     SafePipe,
     SideBarResultsComponent,
     ProphaneResultViewComponent,
-    //ProphaneJobSubmissionMainComponent,
     JobStepperComponent,
     JobInputComponent,
     JobInputComponent,
@@ -62,12 +59,10 @@ import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dial
     UploadProgressService,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
     NgbModule,
+    FormsModule,
+    CommonModule,
     ProphaneRoutingModule,
-    LoginModule,
-    // material module last
     MaterialModule,
   ],
   // entryComponents: [ProphaneJobSubmissionDialogComponent],

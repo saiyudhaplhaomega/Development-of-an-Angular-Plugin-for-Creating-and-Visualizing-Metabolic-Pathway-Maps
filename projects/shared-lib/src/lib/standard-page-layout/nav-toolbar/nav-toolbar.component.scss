@@ -1,3 +1,17 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+img {
+  vertical-align: middle;
+  width: 32px;
+  border-radius: 50%;
+}
+
+.small-margin-right {
+  margin-right: 1.5rem;
+}
+
 .sidenav-container {
   height: 100%;
 }

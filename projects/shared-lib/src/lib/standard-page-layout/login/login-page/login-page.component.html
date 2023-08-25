@@ -36,22 +36,6 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="navigateProphane()"
-      class="float-right"
-    >
-      go to prophane
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="navigateMpa()"
-      class="float-right"
-    >
-      go to mpa
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
       (click)="auth.logout()"
       class="float-right"
     >
@@ -59,7 +43,6 @@
     </button>
   </div>
 </div>
-
 <div class="startbox" *ngIf="guestlogin">
   <!-- <div>{{ navigateProphane() }}</div> -->
   <div class="startbox-item example-ripple-container mat-elevation-z4">
@@ -67,22 +50,6 @@
     <div class="startbox-item-content">
       email: {{ guestEmail ? guestEmail : "no email provided" }}
     </div>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="navigateProphane()"
-      class="float-right"
-    >
-      go to prophane
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="navigateMpa()"
-      class="float-right"
-    >
-      go to mpa
-    </button>
     <button
       mat-raised-button
       color="primary"

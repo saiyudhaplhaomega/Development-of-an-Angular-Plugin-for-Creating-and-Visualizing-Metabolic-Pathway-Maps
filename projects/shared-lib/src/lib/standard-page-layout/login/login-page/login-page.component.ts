@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserToken } from './../user-token';
+import { UserToken } from '../user-token';
 import { Router } from '@angular/router';
-import { AuthService } from './../auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'shared-login-page',
@@ -38,11 +38,4 @@ export class LoginPageComponent implements OnInit {
     await this.auth.loginGoogle();
   }
 
-  navigateProphane() {
-    this._router.navigateByUrl('/jobcontrol');
-  }
-
-  navigateMpa() {
-    this._router.navigateByUrl('/mpa');
-  }
 }

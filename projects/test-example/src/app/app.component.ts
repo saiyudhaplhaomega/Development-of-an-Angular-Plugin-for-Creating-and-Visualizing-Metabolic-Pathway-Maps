@@ -7,10 +7,13 @@ import { NavigationRoute } from 'shared-lib';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'testexample';
   routes: NavigationRoute[] = [
     { route: '/home', label: 'Home' },
     { route: '/content', label: 'Content' },
   ];
   homelink: NavigationRoute = { route: '/home', label: 'Home' }
+  //homelink = null;
+
 }

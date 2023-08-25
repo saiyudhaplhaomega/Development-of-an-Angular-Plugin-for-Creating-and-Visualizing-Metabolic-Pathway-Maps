@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { InputFormComponent } from '../../input-form/input-form';
+import { InputFormComponent } from '../../../input-form/input-form';
 
 @Component({
   selector: 'shared-guest-input',
