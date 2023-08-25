@@ -27,7 +27,10 @@ export class MetadataWorkflowComponent implements OnInit {
      // {data: "Project", title: "project", type: "text"},
       //{data: "Program", title: "program", type: "text"},
       {data: "BiologicalReplicate", title: "biological replicate", type: "text"},
-      {data: "Metagenomes", title: "metagenomes", type: "text"},
+      {data: "Metagenomes", title: "metagenomes", type: "text", 
+        editor: 'select',
+        selectOptions: ['organism metagenom', 'ecological metagenom']
+      },
       {data: "EcologicalMetagenomes", title: "ecological metagenomes", type: "text"},
       //{data: "AnalyticalFraction", title: "analytical fraction metagenomes", type: "text"},
      // {data: "TemperatureCondtions", title: "temperature condtions", type: "text"},

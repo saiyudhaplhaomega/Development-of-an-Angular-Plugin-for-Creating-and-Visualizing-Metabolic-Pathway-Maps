@@ -12,6 +12,7 @@ import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
 import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
 import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     WorkflowModule,
     MetaDataCheckboxSelectionModule,
     MetadataUploadpageModule,
-    HttpClientModule
+    HttpClientModule,
+    MetadataDownloadpageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
