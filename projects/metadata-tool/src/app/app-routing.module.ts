@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';
-import { MetadataWorkflowComponent } from './metadata-workflow/metadata-workflow.component';
+import { AppComponent } from './app.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: MetadataLandingPageComponent },
   {
-    path: 'workflow',
+    path: 'home',
     loadChildren: () =>
-      import('./metadata-workflow/metadate-workflow.module').then((m) => m.WorkflowModule)
+      import('./app.module').then((m) => m.AppModule),
+      component: AppComponent
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

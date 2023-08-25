@@ -1,0 +1,13 @@
+<h2>Checkbox Selection for SDRF Table (incomplete)</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div formArrayName="columns">
+        <div *ngFor="let orderControl of columnsData; let i = index">
+          <label>
+            <input type="checkbox" [formControlName]="i" />
+            <span>{{ columnsData[i].title }}</span>
+          </label>
+        </div>
+      </div>
+    <div *ngIf="!form.valid">At least one order must be selected</div>
+    <button type="submit">Submit</button>
+  </form>
