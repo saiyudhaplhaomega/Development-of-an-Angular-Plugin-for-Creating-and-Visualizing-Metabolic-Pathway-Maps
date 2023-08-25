@@ -14,6 +14,9 @@ export class MetadataWorkflowComponent implements OnInit {
   constructor(private MetaDataInputService: MetaDataInputService) {}
   columnData: ColumnData[] = [];
 
+  searchResults: any[] = []; // Store the search results
+  currentSearchIndex: number = -1; // Index of the currently selected search result
+
   hotInstance!: Handsontable; // Store the Handsontable instance
   @ViewChild('hotContainer') hotContainer!: ElementRef;
 
@@ -27,11 +30,11 @@ export class MetadataWorkflowComponent implements OnInit {
      // {data: "Project", title: "project", type: "text"},
       //{data: "Program", title: "program", type: "text"},
       {data: "BiologicalReplicate", title: "biological replicate", type: "text"},
-      {data: "Metagenomes", title: "metagenomes", type: "text", 
-        editor: 'select',
-        selectOptions: ['organism metagenom', 'ecological metagenom']
+      {data: "Metagenomes", title: "metagenomes",
+      type: 'dropdown',
+      source: ['experiment 1', 'experiment 2', 'experiment 3', 'experiment 4']
       },
-      {data: "EcologicalMetagenomes", title: "ecological metagenomes", type: "text"},
+      {data: "EcologicalMetagenomes", title: "ecological metagenomes", type: "text",},
       //{data: "AnalyticalFraction", title: "analytical fraction metagenomes", type: "text"},
      // {data: "TemperatureCondtions", title: "temperature condtions", type: "text"},
      // {data: "Pressure", title: "pressure", type: "text"},
@@ -40,10 +43,15 @@ export class MetadataWorkflowComponent implements OnInit {
       //{data: "ElectronSource", title: "electron Source", type: "text"},
       //{data: "CountIdentifiedSpezies", title: "count identified spezies", type: "text"},
       {data: "AssayName", title: "assay name", type: "text"},
-      {data: "ExperimentType", title: "experiment type", type: "text"},
+      {data: "ExperimentType", title: "experiment type", 
+      type: 'dropdown',
+      source: ['heat shock', 'experiment 2', 'experiment 3', 'experiment 4']},
       //{data: "TechnologyType", title: "technology type", type: "text"},
       {data: "TechnicalReplicate", title: "technical replicate", type: "text"},
-      {data: "Label", title: "label", type: "text"},
+      {data: "Label", title: "label", 
+      type: 'autocomplete',
+      source: ['Label 1', 'BONCAT', 'SILAC'],
+      strict: false},
       //{data: "FractionIdentifier", title: "fraction identifier", type: "text"},
       //{data: "CleavantAgentDetails", title: "cleavant agent details", type: "text"},
       //{data: "Instrument", title: "instrument", type: "text"},
@@ -128,11 +136,61 @@ private initializeHandsontable(): void {
 }
 
 onKey(event: any) {
+  this.performSearch();
+}
+
+private performSearch() {
+    if (this.hotInstance) {
+      const searchField = document.getElementById('search-field') as HTMLInputElement;
+      const search = this.hotInstance.getPlugin('search');
+
+      if (search) {
+        const queryResult = search.query(searchField.value);
+        console.log(queryResult);
+
+        // Update searchResults and currentSearchIndex
+        this.searchResults = queryResult;
+        this.currentSearchIndex = 0; // Reset to the first result
+
+        this.hotInstance.render();
+      }
+    }
+  }
+
+  selectNextSearchResult() {
+    if (this.searchResults.length > 0) {
+      this.currentSearchIndex = (this.currentSearchIndex + 1) % this.searchResults.length;
+      this.selectSearchResult(this.currentSearchIndex);
+    }
+  }
+
+  selectPreviousSearchResult() {
+    if (this.searchResults.length > 0) {
+      this.currentSearchIndex =
+        (this.currentSearchIndex - 1 + this.searchResults.length) % this.searchResults.length;
+      this.selectSearchResult(this.currentSearchIndex);
+    }
+  }
+
+  selectSearchResult(index: number) {
+    if (this.hotInstance) {
+      const result = this.searchResults[index];
+      this.hotInstance.selectCell(result.row, result.col);
+      this.hotInstance.scrollViewportTo(result.row, result.col);
+    }
+  }
+
+  
+onExportClick() {
+  this.exportData();
+}
+
+private exportData() {
   if (this.hotInstance) {
     const exportPlugin = this.hotInstance.getPlugin('exportFile');
 
     exportPlugin.downloadFile('csv', {
-    bom: false,
+      bom: false,
     columnDelimiter: ';',
     columnHeaders: true,
     exportHiddenColumns: true,
@@ -142,8 +200,7 @@ onKey(event: any) {
     mimeType: 'text/csv',
     rowDelimiter: '\r\n',
     rowHeaders: false
-  });
+    });
+  }
 }
-}
-
 }

@@ -1,2 +1,18 @@
+<h2>SDRF Table</h2>
+<!-- Search input -->
+<input id="search-field" type="text" placeholder="Search..." (input)="onKey($event)">
+
+<div *ngIf="searchResults.length > 0">
+  <ul>
+    <li *ngFor="let result of searchResults; let i = index" [class.selected]="i === currentSearchIndex">
+      {{ result.Sourcename }} <!-- Display the relevant search result properties -->
+    </li>
+  </ul>
+</div>
+
+<button (click)="selectNextSearchResult()">Next</button>
+<button (click)="selectPreviousSearchResult()">Previous</button>
+<!-- Table -->
 <div #hotContainer></div>
-  <button type="button" (click)="onKey($event)">Export to CSV</button>
+<!-- Export button -->
+<button (click)="onExportClick()">Export CSV</button>
