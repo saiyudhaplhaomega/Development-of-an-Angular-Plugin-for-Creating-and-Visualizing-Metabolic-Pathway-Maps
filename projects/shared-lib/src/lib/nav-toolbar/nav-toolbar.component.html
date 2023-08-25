@@ -1,3 +1,4 @@
+<!--
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
@@ -29,9 +30,68 @@
       </button>
     </mat-toolbar>
 
-    <!-- router -->
+    <-- router ->
     <div class="overflow-y-auto h-full">
       <ng-content> </ng-content>
     </div>
+
   </mat-sidenav-content>
+
 </mat-sidenav-container>
+-->
+
+
+<!--
+<mat-toolbar color="primary" class="flex justify-between">
+  <div *ngIf="homelink==null">
+    {{applicationname}}
+  </div>
+  <div *ngIf="homelink!=null">
+    <button mat-button (click)="navigate(homelink.route)">
+      {{applicationname}}
+    </button>
+  </div>
+  <div *ngFor="let link of routerlinks">
+    <button mat-button (click)="navigate(link.route)">{{link.label}}</button>
+  </div>
+  <div *ngIf="haslogin">
+    <shared-login-button></shared-login-button>
+    --><!--button mat-flat-button color="primary" class="ml-auto">
+      Log in
+      <mat-icon>account_circle</mat-icon>
+    </button
+  </div>
+
+</mat-toolbar>
+-->
+<!---->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <!--div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user"-->
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+        <span class="small-margin-right">{{applicationname}}</span>
+        <button mat-button (click)="navigate('/mpa')" *ngIf="user || guest">
+          MPA
+        </button>
+    </div>
+    <div class="spacer"></div>
+    <div *ngIf="!user; else elseBlock">
+      <button mat-icon-button (click)="navigate('/login')">
+        <mat-icon aria-label="account menu icon">account_circle</mat-icon>
+      </button>
+    </div>
+    <ng-template #elseBlock>
+      <button mat-icon-button (click)="navigate('/login')">
+        <img src="{{ user.picture }}" />
+      </button>
+    </ng-template>
+    <button mat-button (click)="authService.logout()" *ngIf="user || guest">
+      Log out
+    </button>
+    <button mat-button (click)="navigate('login')" *ngIf="!user && !guest">
+      Log in
+    </button>
+    <span class="small-margin-right"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+

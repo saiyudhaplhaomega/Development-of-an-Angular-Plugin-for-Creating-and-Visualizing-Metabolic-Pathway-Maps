@@ -9,6 +9,8 @@ import { NavToolbarComponent } from './nav-toolbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginModule } from '../login/login.module';
+
 
 @NgModule({
   declarations: [NavToolbarComponent],

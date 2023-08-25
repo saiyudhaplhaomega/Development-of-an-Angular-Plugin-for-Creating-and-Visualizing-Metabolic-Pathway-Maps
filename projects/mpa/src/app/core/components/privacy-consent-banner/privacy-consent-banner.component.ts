@@ -73,4 +73,5 @@ export class PrivacyConsentBannerComponent implements AfterViewInit {
   setConsent() {
     localStorage.setItem('prophane_mpa_policy_consent', this.getCurrentTimestamp().toString());
   }
+
 }

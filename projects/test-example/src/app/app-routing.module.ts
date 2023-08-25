@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginPageComponent } from 'shared-lib';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'login',
   },
   {
     path: 'home',
@@ -14,6 +15,17 @@ const routes: Routes = [
         (m) => m.TestExampleHomeModule
       ),
   },
+  {
+    path: 'content',
+    loadChildren: () =>
+      import('./modules/test-example-content/test-example-content.module').then(
+        (m) => m.TestExampleContentModule
+      ),
+  },
+  {
+    path: 'login', component: LoginPageComponent,
+  },
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({
