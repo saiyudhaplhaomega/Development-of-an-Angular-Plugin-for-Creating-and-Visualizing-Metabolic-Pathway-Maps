@@ -9,15 +9,23 @@
         </button>
       </span>
 
+      <!--header left-->
       <span *ngIf="isProphane()">
         <span class="small-margin-right">Prophane</span>
-        <button mat-button (click)="goto('/prophane')" *ngIf="user || guest">
+        <!--shown after login-->
+        <button mat-button (click)="goto('/jobsubmission')" *ngIf="user || guest">
           Job Submission
         </button>
-        <button mat-button (click)="goto('/prophanejobcontrol')" *ngIf="user">
+        <button mat-button (click)="goto('/jobcontrol')" *ngIf="user">
           Job Control
         </button>
-        <button mat-button [matMenuTriggerFor]="aboutMenu">About</button>
+        <button mat-button (click)="goto('/tutorial')">
+          Tutorial
+        </button>
+        <button mat-button [matMenuTriggerFor]="aboutMenu">
+          About
+        </button>
+      <!--shown after About click-->
         <mat-menu #aboutMenu="matMenu">
           <button mat-menu-item (click)="goto('/prophaneabout')">
             About Prophane
@@ -28,11 +36,14 @@
           <button mat-menu-item (click)="goto('/privacypolicy')">
             Privacy Policy
           </button>
-          <button mat-menu-item (click)="goto('/impressum')">Impressum</button>
+          <button mat-menu-item (click)="goto('/impressum')">
+            Impressum
+          </button>
         </mat-menu>
       </span>
     </div>
 
+    <!--header right-->
     <div class="spacer"></div>
     <div *ngIf="!user; else elseBlock">
       <button mat-icon-button (click)="goto('/login')">
