@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {databaseOptions, lcaParams, quantdata} from '../../prophane/objects/prophaneFormData';
+import { lcaParams, quantdata, databaseOptions } from '../../../model/prophaneFormData';
+
 
 @Component({
   selector: 'app-help',
   templateUrl: './prophane-help.component.html',
-  styleUrls: ['./prophane-help.component.css']
+  styleUrls: ['./prophane-help.component.scss']
 })
 export class ProphaneHelpComponent implements OnInit {
   readonly lcaOptionStrings = JSON.parse(JSON.stringify(lcaParams));

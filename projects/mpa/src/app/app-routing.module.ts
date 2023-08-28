@@ -11,7 +11,7 @@ import { NgModule, OnInit } from '@angular/core';
 import { AuthGuard, LoginPageComponent } from 'dist/shared-lib';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'prophanejobsubmission', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
   {
     path: 'mpa', component: MPAComponent,
@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'termsofservice', component: TermsOfServicePageComponent },
   { path: 'privacypolicy', component: PrivacyPolicyPageComponent },
   { path: 'impressum', component: ImpressumPageComponent },
-  { path: '**', redirectTo: 'prophanejobsubmission' },
+  { path: '**', redirectTo: 'login' },
 
   /*  { path: 'home', component: HomeDashboardPageComponent},
     { path: 'neo4j', component: Neo4jGraphPageComponent, canActivate: [AuthGuard]},

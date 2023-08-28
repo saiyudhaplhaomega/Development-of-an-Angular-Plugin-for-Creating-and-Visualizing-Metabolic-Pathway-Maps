@@ -7,7 +7,7 @@ import { ProphaneJobStateService } from '../../../../services/prophane-job-state
 @Component({
   selector: 'app-job-taxonomy',
   templateUrl: './job-taxonomy.component.html',
-  styleUrls: ['./job-taxonomy.component.css']
+  styleUrls: ['./job-taxonomy.component.scss']
 })
 export class JobTaxonomyComponent {
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ProphaneJobObject} from '../../prophane/objects/prophanejobjson';
 import { JobService } from '../../services/job.service';
 import { ActivatedRoute } from '@angular/router';
+import { ProphaneJobObject } from '../../model/prophanejobjson';
 
 export interface Task {
   taskid: number;
@@ -14,7 +14,7 @@ export interface Task {
 @Component({
   selector: 'app-side-bar-results',
   templateUrl: './side-bar-results.component.html',
-  styleUrls: ['./side-bar-results.component.css']
+  styleUrls: ['./side-bar-results.component.scss']
 })
 
 export class SideBarResultsComponent implements OnInit {

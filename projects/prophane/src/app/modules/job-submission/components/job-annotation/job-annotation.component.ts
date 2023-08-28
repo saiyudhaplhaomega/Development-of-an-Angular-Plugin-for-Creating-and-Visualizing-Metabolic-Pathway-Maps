@@ -5,7 +5,7 @@ import {ProphaneAnnotationTaskObject} from '../../../../model/prophaneannotation
 @Component({
   selector: 'app-job-annotation',
   templateUrl: './job-annotation.component.html',
-  styleUrls: ['./job-annotation.component.css']
+  styleUrls: ['./job-annotation.component.scss']
 })
 export class JobAnnotationComponent {
 

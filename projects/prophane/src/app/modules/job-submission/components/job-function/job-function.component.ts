@@ -7,7 +7,7 @@ import {
 @Component({
   selector: 'app-job-function',
   templateUrl: './job-function.component.html',
-  styleUrls: ['./job-function.component.css']
+  styleUrls: ['./job-function.component.scss']
 })
 export class JobFunctionComponent {
 

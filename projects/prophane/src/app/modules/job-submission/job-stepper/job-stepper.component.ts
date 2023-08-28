@@ -6,7 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 @Component({
   selector: 'app-job-stepper',
   templateUrl: './job-stepper.component.html',
-  styleUrls: ['./job-stepper.component.css']
+  styleUrls: ['./job-stepper.component.scss']
 })
 export class JobStepperComponent implements OnInit, OnDestroy {
 

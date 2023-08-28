@@ -25,7 +25,7 @@ export interface JobLabel {
 @Component({
   selector: 'app-prophane-job-submission-main',
   templateUrl: './prophane-job-submission-main.component.html',
-  styleUrls: ['./prophane-job-submission-main.component.css'],
+  styleUrls: ['./prophane-job-submission-main.component.scss'],
   providers: [ProphaneJobStateService],
 })
 export class ProphaneJobSubmissionMainComponent implements OnInit {

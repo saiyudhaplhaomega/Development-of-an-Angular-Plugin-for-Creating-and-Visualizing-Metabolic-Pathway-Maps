@@ -5,7 +5,7 @@ import {ProphaneSampleGroupObject} from '../../../../model/prophanesamplegroupjs
 @Component({
   selector: 'app-job-sample-groups',
   templateUrl: './job-sample-groups.component.html',
-  styleUrls: ['./job-sample-groups.component.css']
+  styleUrls: ['./job-sample-groups.component.scss']
 })
 export class JobSampleGroupsComponent implements OnInit {
 

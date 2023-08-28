@@ -8,7 +8,7 @@ import {ProphaneReportStyle} from '../prophane-job-submission-main/prophane-job-
 @Component({
   selector: 'app-job-input',
   templateUrl: './job-input.component.html',
-  styleUrls: ['./job-input.component.css']
+  styleUrls: ['./job-input.component.scss']
 })
 export class JobInputComponent {
 

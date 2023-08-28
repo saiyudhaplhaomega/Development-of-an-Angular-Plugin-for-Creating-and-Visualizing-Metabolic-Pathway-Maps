@@ -7,7 +7,7 @@ import {lcaParams} from '../../../../model/prophaneFormData';
 @Component({
   selector: 'app-job-lca',
   templateUrl: './job-lca.component.html',
-  styleUrls: ['./job-lca.component.css']
+  styleUrls: ['./job-lca.component.scss']
 })
 export class JobLcaComponent implements OnInit {
 

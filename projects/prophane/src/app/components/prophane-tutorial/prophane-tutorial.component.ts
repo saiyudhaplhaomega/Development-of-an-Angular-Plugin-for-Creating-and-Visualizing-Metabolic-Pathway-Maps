@@ -1,23 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  databaseOptions,
-  defaultAnnotationTasks,
-  evalueOptions,
-  optionStrings,
-  prophaneReportStyles,
-  quantdata,
-  lcaParams,
-  lcaOptions,
-} from '../../prophane/objects/prophaneFormData';
 import {Observable} from 'rxjs';
-import {ProphaneJobObject} from '../../prophane/objects/prophanejobjson';
+
 import {Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
 import {HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
+import { databaseOptions, lcaOptions, lcaParams, quantdata } from '../../model/prophaneFormData';
+import { ProphaneJobObject } from '../../model/prophanejobjson';
 
 @Component({
   selector: 'app-tutorial',
   templateUrl: './prophane-tutorial.component.html',
-  styleUrls: ['./prophane-tutorial.component.css']
+  styleUrls: ['./prophane-tutorial.component.scss']
 })
 export class ProphaneTutorialComponent implements OnInit {
   readonly quantdata = quantdata;

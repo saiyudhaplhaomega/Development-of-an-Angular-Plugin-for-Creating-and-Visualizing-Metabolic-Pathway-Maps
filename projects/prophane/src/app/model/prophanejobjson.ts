@@ -1,6 +1,5 @@
 import {ProphaneParamObject} from './prophaneparamjson';
 import {ProphaneReportStyle} from './prophane-job-submission-formdata';
-import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 
 export interface ProphaneJobJSON {
   prophaneJobUUID: string;

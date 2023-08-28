@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JobService } from '../../services/job.service';
-import {ProphaneJobObject} from '../../prophane/objects/prophanejobjson';
+import { ProphaneJobObject } from '../../../model/prophanejobjson';
+import { JobService } from '../../../services/job.service';
+
 
 @Component({
   selector: 'app-prophane-result-view',
   templateUrl: './prophane-result-view.component.html',
-  styleUrls: ['./prophane-result-view.component.css']
+  styleUrls: ['./prophane-result-view.component.scss']
 })
 
 export class ProphaneResultViewComponent implements OnInit {

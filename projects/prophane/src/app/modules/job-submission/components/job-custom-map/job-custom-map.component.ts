@@ -5,7 +5,7 @@ import {ProphaneJobStateService} from '../../../../services/prophane-job-state.s
 @Component({
   selector: 'app-job-custom-map',
   templateUrl: './job-custom-map.component.html',
-  styleUrls: ['./job-custom-map.component.css']
+  styleUrls: ['./job-custom-map.component.scss']
 })
 export class JobCustomMapComponent implements OnInit {
   readonly algoOption = [{name: 'acc2annot_mapper', value: 'acc2annot_mapper'}]
