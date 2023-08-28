@@ -1,14 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';
 
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () =>
-      import('./app.module').then((m) => m.AppModule),
-      component: AppComponent
+    path: 'home', component: MetadataLandingPageComponent
+  },
+  {
+    path: 'upload',
+    loadChildren: () => import('./metadata-uploadpage/metadata-uploadpage.module').then((m) => m.MetadataUploadpageModule),
+  },
+  {
+    path: 'workflow',
+    loadChildren: () => import('./metadata-workflow/metadate-workflow.module').then((m) => m.WorkflowModule),
+  },
+  {
+    path: 'download',
+    loadChildren: () => import('./metadata-downloadpage/metadata-downloadpage.module').then((m) => m.MetadataDownloadpageModule),
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

@@ -1,4 +1,17 @@
-<app-metadata-uploadpage></app-metadata-uploadpage>
-<app-checkboxselection></app-checkboxselection>
-<metadata-workflow></metadata-workflow>
-<app-metadata-downloadpage></app-metadata-downloadpage>
+
+<div class="page-content">
+  <div class="header">
+    <shared-nav-toolbar
+      [routerlinks]="routes"
+      [applicationname]="'Metadata Tool'"
+      [haslogin]="true"
+      [homelink]="homelink">
+    </shared-nav-toolbar>
+    <app-privacy-consent-banner></app-privacy-consent-banner>
+  </div>
+  <div class="content">
+    <div style="height: 100%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

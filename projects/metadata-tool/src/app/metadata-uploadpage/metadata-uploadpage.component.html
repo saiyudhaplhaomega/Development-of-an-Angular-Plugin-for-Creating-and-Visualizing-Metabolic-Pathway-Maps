@@ -1,6 +1,6 @@
 <div class="upload-container">
     <h2 class="upload-title">File Upload</h2>
-    <input class="upload-input" type="file" accept=".JPG" multiple (change)="onFilesSelected($event)">
+    <input class="upload-input" type="file" accept=".*" multiple (change)="onFilesSelected($event)">
     <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
       <h3>Selected Files:</h3>
       <ul>

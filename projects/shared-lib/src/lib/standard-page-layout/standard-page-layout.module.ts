@@ -18,8 +18,7 @@ import { GuestInputComponent } from './login/guest-input/guest-input.component';
 import { LoginButtonsComponent } from './login/login-buttons/login-buttons.component';
 import { LoginButtonComponent } from './login/login-button/login-button.component';
 import { PrivacyConsentBannerComponent } from './privacy-consent-banner/privacy-consent-banner.component';
-import { HttpClientService } from 'shared-lib';
-import { UploadProgressService } from './upload-progress.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -48,6 +47,7 @@ import { UploadProgressService } from './upload-progress.service';
     MatIconModule,
     MatCardModule,
     MatRippleModule,
+    MatDialogModule,
   ],
   exports: [
     LoginPageComponent,

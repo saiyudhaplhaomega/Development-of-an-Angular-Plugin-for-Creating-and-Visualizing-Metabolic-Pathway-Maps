@@ -4,15 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';
-import { NavToolbarModule } from 'shared-lib';
+
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginModule } from 'shared-lib';
+
 import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
 import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
 import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';
+import { StandardPageLayoutModule } from 'dist/shared-lib';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,8 @@ import { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-dow
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NavToolbarModule,
     MatButtonModule,
-    LoginModule,
+    StandardPageLayoutModule,
     BrowserAnimationsModule,
     WorkflowModule,
     MetaDataCheckboxSelectionModule,

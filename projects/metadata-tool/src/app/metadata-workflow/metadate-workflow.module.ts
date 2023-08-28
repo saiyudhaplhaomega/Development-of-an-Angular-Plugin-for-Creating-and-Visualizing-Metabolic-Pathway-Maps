@@ -4,6 +4,8 @@ import { registerAllModules } from 'handsontable/registry';
 import { MetadataWorkflowComponent } from './metadata-workflow.component';
 import { registerCellType, NumericCellType, } from 'handsontable/cellTypes';
 import { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';
+import { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';
+import { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';
 
 
 // register the filtering plugins
@@ -20,6 +22,8 @@ registerAllModules();
   declarations: [MetadataWorkflowComponent],
   imports: [
     HotTableModule,
+    MetadataWorkflowRoutingModule,
+    MetaDataCheckboxSelectionModule,
   ],
   exports: [MetadataWorkflowComponent],
 })

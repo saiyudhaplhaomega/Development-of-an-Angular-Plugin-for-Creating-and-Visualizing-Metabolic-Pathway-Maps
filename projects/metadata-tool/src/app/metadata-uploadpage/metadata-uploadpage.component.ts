@@ -1,7 +1,7 @@
-import { HttpClient, HttpEventType } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { Subscription, finalize } from 'rxjs';
-import { MetaDataUploadService } from './metaddata-upload.service';
+
+import { Component } from '@angular/core';
+import { HttpClientService, MultiFileUploadData } from 'shared-lib';
+import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
 
 @Component({
   selector: 'app-metadata-uploadpage',
@@ -13,27 +13,31 @@ export class MetadataUploadpageComponent {
   uploadProgress: number | null = null;
   uploadError: string | null = null;
 
-  constructor(private MetaDataUploadService: MetaDataUploadService) {}
+  constructor(private httpClientService: HttpClientService,
+    private url: WebserveraddressService) {}
 
   onFilesSelected(event: any): void {
     this.selectedFiles = Array.from(event.target.files);
   }
 
   onUpload(): void {
-    this.uploadProgress = 0;
+    //this.uploadProgress = 0;
     this.uploadError = null;
-
-    this.selectedFiles.forEach((file, index) => {
-      this.MetaDataUploadService.uploadFile(file).subscribe(
-        response => {
-          console.log(`Upload successful for file ${index + 1}`, response);
-          this.uploadProgress = ((index + 1) / this.selectedFiles.length) * 100;
-        },
-        error => {
-          console.error(`Upload failed for file ${index + 1}`, error);
-          this.uploadError = 'Upload failed. Please try again.';
-        }
-      );
+    const files: MultiFileUploadData = {
+      files: [],
+      fileUploadAdress: '',
+    }
+    this.selectedFiles.forEach((file) => {
+      files.files.push({uploadFile: file, fileID: file.name});
     });
+    this.httpClientService.postMultiPartFiles(files, this.url.getURL(Endpoints.UPLOAD_FILES)).subscribe(
+      response => {
+        console.log('Upload successful!', response);
+      },
+      error => {
+        console.error('Upload failed :/', error);
+        this.uploadError = 'Upload failed. Please try again.';
+      }
+    );
   }
 }
