@@ -1,40 +1,54 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent, AuthGuard } from 'shared-lib';
-import { ProphaneAboutComponent } from './prophane/components/prophane-about/prophane-about.component';
-import { ProphaneJobControlComponent } from './prophane/components/prophane-job-control/prophane-job-control.component';
-import { ProphaneJobSubmissionMainComponent } from './prophane/components/prophane-job-submission-main/prophane-job-submission-main.component';
-import { ProphaneResultViewComponent } from './prophane/components/prophane-result-view/prophane-result-view.component';
+import { ProphaneResultViewComponent } from './modules/job-control/prophane-result-view/prophane-result-view.component';
 
 const routes: Routes = [
 
 { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login', component: LoginPageComponent },
 {
-  path: '',
-  component: ProphaneJobSubmissionMainComponent,
-  canActivate: [AuthGuard],
-  pathMatch: 'full',
-},
-{
   path: 'jobsubmission',
-  component: ProphaneJobSubmissionMainComponent,
+  loadChildren: () =>
+  import('./modules/job-submission/job-submission.module').then(
+    (m) => m.JobSubmissionModule
+  ),
   canActivate: [AuthGuard],
 },
 {
   path: 'jobcontrol',
-  component: ProphaneJobControlComponent,
+  loadChildren: () =>
+  import('./modules/job-control/job-control.module').then(
+    (m) => m.JobControlModule
+  ),
   canActivate: [AuthGuard],
 },
+{ path: 'about',
+  loadChildren: () =>
+  import('./modules/about-prophane/about-prophane.module').then(
+    (m) => m.AboutProphaneModule
+  ),
+},
+
+
+{ path: 'results/:job_uuid', component: ProphaneResultViewComponent },
+{ path: '**', redirectTo: 'login' },
+
+
+// {
+//   path: '',
+//   component: ProphaneJobSubmissionMainComponent,
+//   canActivate: [AuthGuard],
+//   pathMatch: 'full',
+// },
 // {
 //    path: 'jobs',
 //    canActivate: [AuthGuard],
 //   redirectTo: '/prophane/(prophaneContent:jobs)',
 //   pathMatch: 'full',
 // },
-{ path: 'about', component: ProphaneAboutComponent },
-{ path: 'results/:job_uuid', component: ProphaneResultViewComponent },
-{ path: '**', redirectTo: 'login' },
+
+
 ];
 
 @NgModule({

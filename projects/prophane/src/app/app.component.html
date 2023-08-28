@@ -1,8 +1,13 @@
 
 <div class="page-content">
   <div class="header">
+    <shared-nav-toolbar
+      [routerlinks]="routes"
+      [applicationname]="'Prophane'"
+      [haslogin]="true"
+      [homelink]="homelink">
+    </shared-nav-toolbar>
     <app-privacy-consent-banner></app-privacy-consent-banner>
-    <shared-nav-toolbar [routerlinks]="routes" [applicationname]="'Prophane!!!'" [haslogin]="true" [homelink]="homelink"></shared-nav-toolbar>
   </div>
   <div class="content">
     <div style="height: 100%">

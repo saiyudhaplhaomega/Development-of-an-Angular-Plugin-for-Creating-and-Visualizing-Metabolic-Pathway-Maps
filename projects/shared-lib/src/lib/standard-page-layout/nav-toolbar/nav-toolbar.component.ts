@@ -21,7 +21,6 @@ export class NavToolbarComponent implements OnInit {
 
   constructor(private router: Router, public authService: AuthService) {}
 
-
   ngOnInit(): void {
     this.authService._user.subscribe((res) => {
       this.user = res;
@@ -33,6 +32,13 @@ export class NavToolbarComponent implements OnInit {
 
   navigate(route: string): void {
     this.router.navigate([route]);
+  }
+
+  checkAuthOnLink(link: NavigationRoute): boolean {
+    if (link.requireAuth == true) {
+      return (this.guest || (this.user != null));
+    }
+    return true;
   }
 
 }

@@ -17,7 +17,7 @@ import { MaterialModule } from 'projects/mpa/src/app/material-module';
 // TODO: move to shared-lib
 
 import { FooterComponent } from 'projects/mpa/src/app/core/components/footer/page-footer';
-import { ProphaneModule } from './prophane/prophane.module';
+
 
 @NgModule({
   declarations: [
@@ -33,12 +33,8 @@ import { ProphaneModule } from './prophane/prophane.module';
     CommonModule,
     HttpClientModule,
     StandardPageLayoutModule,
-    ProphaneModule,
+
     MaterialModule,
-  ],
-  providers: [
-    //HttpClient,
-    //UploadProgressService,
   ],
   bootstrap: [AppComponent]
 })

@@ -11,7 +11,9 @@
         </button>
       </span>
       <span *ngFor="let link of routerlinks">
-        <button mat-button (click)="navigate(link.route)">{{link.label}}</button>
+        <ng-container *ngIf="checkAuthOnLink(link)">
+          <button mat-button (click)="navigate(link.route)">{{link.label}}</button>
+        </ng-container>
       </span>
     </div>
     <div class="spacer"></div>

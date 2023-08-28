@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthGuard, AuthService } from 'dist/shared-lib';
-import { HttpClientService } from '../../../../core/services/http-client.service';
+import { HttpClientService } from 'dist/shared-lib';
 import { DataItem } from '../objects/data-item';
 import { Endpoints } from '../../../../core/services/webserveraddress.service';
 import { BehaviorSubject, Observable } from 'rxjs';

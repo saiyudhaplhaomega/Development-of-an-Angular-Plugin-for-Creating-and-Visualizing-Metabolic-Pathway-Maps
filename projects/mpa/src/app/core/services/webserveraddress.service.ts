@@ -55,6 +55,7 @@ export enum Endpoints {
   // PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
   DOWNLOAD_PROPHANE_TEST_DATA = ""
 
+
 }
 
 @Injectable({

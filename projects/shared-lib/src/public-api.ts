@@ -5,14 +5,17 @@
 export * from './lib/standard-page-layout/standard-page-layout.module';
 
 export * from './lib/standard-page-layout/privacy-consent-banner/privacy-consent-banner.component';
+
 export * from './lib/standard-page-layout/login/auth-guard.service';
 export * from './lib/standard-page-layout/login/auth.service';
 export * from './lib/standard-page-layout/login/user-token';
-export * from './lib/standard-page-layout/nav-toolbar/navigation-route.model';
 export * from './lib/standard-page-layout/login/login-page/login-page.component';
+
+export * from './lib/standard-page-layout/nav-toolbar/navigation-route.model';
 export * from './lib/standard-page-layout/nav-toolbar/nav-toolbar.component';
 
-
+export * from './lib/standard-page-layout/upload-progress.service';
+export * from './lib/standard-page-layout/http-client.service';
 
 export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';

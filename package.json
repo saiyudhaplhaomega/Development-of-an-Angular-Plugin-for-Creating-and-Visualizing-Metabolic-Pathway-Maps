@@ -22,7 +22,7 @@
     "new module2": "ng g module modules/TestExampleHome --project test-example --routing",
     "new component1": "ng g component modules/test-example-content --project test-example",
     "new component2": "ng g component modules/test-example-home --project test-example",
-    "new module3": "ng g module standard-page-layout --project shared-lib",
+    "new module3": "ng g module about-prophane --project prophane --routing",
     "test": "ng test",
     "newwebsite": "ng generate application testexample",
     "newcomponent": "ng generate component metadata-workflow",

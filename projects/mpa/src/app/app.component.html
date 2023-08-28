@@ -1,6 +1,12 @@
+
 <div class="page-content">
   <div class="header">
-    <app-navigation-bar></app-navigation-bar>
+    <shared-nav-toolbar
+      [routerlinks]="routes"
+      [applicationname]="'MPA'"
+      [haslogin]="true"
+      [homelink]="homelink">
+    </shared-nav-toolbar>
     <app-privacy-consent-banner></app-privacy-consent-banner>
   </div>
   <div class="content">

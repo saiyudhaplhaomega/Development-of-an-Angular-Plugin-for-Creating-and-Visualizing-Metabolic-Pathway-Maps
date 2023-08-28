@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'dist/shared-lib';
+import { AuthService, NavigationRoute } from 'dist/shared-lib';
 
 //import { AuthGuard } from 'dist/shared-lib';
 
@@ -9,9 +9,17 @@ import { AuthService } from 'dist/shared-lib';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+  title = 'mpa';
+  routes: NavigationRoute[] = [
+    { route: '/mpa', label: 'MPA', requireAuth: true },
+  ];
+  homelink: NavigationRoute = { route: '/jobsubmission', label: 'jobsubmission' }
+
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authService.initializeOAuth();
-  }
+    ngOnInit(): void {
+      this.authService.initializeOAuth();
+    }
+
 }

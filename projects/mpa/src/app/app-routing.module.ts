@@ -14,9 +14,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
   {
-    path: 'prophane',
-    loadChildren: () =>
-      import('../../../prophane/src/app/prophane/prophane.module').then((m) => m.ProphaneModule),
+    path: 'mpa', component: MPAComponent,
   },
   {
     path: 'mpa',

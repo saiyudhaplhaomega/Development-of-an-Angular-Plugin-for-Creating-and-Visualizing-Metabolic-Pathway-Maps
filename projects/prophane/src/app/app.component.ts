@@ -10,9 +10,9 @@ export class AppComponent implements OnInit {
 
   title = 'prophane';
   routes: NavigationRoute[] = [
-    { route: '/jobsubmission', label: 'Job Submission' },
-    { route: '/jobcontrol', label: 'Job Control' },
-    { route: '/about', label: 'About Prophane' },
+    { route: '/jobsubmission', label: 'Job Submission', requireAuth: true },
+    { route: '/jobcontrol', label: 'Job Control', requireAuth: true },
+    { route: '/about', label: 'About Prophane', requireAuth: false },
   ];
   homelink: NavigationRoute = { route: '/jobsubmission', label: 'jobsubmission' }
 
