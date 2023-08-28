@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-prophane-policy-consent',
   templateUrl: './prophane-policy-consent.component.html',
-  styleUrls: ['./prophane-policy-consent.component.css']
+  styleUrls: ['./prophane-policy-consent.component.scss']
 })
 export class ProphaneAboutComponent implements OnDestroy {
 

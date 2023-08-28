@@ -1,4 +1,4 @@
-import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../../job-submission/components/prophane-job-submission-main/prophane-job-submission-formdata';
+import {ProphaneReportStyle, ProphaneReportStyleLabel} from '../modules/job-submission/components/prophane-job-submission-main/prophane-job-submission-formdata';
 import {ProphaneAnnotationTaskObject} from './prophaneannotationtaskjson';
 import {ProphaneContaminationOptionObject} from './prophaneContaminationOption';
 import {ProphaneQuantDataObject} from './prophanequantificationdata';

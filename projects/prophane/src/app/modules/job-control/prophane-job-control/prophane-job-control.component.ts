@@ -5,7 +5,7 @@ import {JobService} from '../../../services/job.service';
 @Component({
   selector: 'app-prophane-job-control',
   templateUrl: './prophane-job-control.component.html',
-  styleUrls: ['./prophane-job-control.component.css']
+  styleUrls: ['./prophane-job-control.component.scss']
 })
 
 export class ProphaneJobControlComponent implements OnInit, OnDestroy {

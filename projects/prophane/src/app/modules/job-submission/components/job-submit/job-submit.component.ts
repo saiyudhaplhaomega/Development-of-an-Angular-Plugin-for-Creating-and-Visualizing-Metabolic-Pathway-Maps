@@ -4,7 +4,7 @@ import {ProphaneJobStateService} from '../../../../services/prophane-job-state.s
 @Component({
   selector: 'app-job-submit',
   templateUrl: './job-submit.component.html',
-  styleUrls: ['./job-submit.component.css']
+  styleUrls: ['./job-submit.component.scss']
 })
 export class JobSubmitComponent {
 
