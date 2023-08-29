@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { GroupingOptions, PeptideObject, ProteinGroupObject, ProteinGroupType, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject } from '../objects/tableobjects';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { HttpClientService } from '../../core/services/http-client.service';
+import { HttpClientService } from 'dist/shared-lib';
 import { Endpoints } from '../../core/services/webserveraddress.service';
 import { HttpParams } from '@angular/common/http';
-import { spectraMockData1, spectraMockData2 } from '../components/spectrum-viewer/mockData';
 import { SpectrumDataObject } from '../components/spectrum-viewer/spectrum-data-object';
 import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
 import { createProteinGroupData } from './dummyProteinData';

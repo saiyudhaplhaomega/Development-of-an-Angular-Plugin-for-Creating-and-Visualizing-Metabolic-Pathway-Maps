@@ -16,12 +16,10 @@ export interface Endpoints {}
 export interface FileUploadData {
   uploadFile: File;
   httpParameters: HttpParams;
-  fileUploadAdress?: string;
 }
 
 export interface MultiFileUploadData {
   files: UploadFile[];
-  fileUploadAdress: string;
   httpParameters?: HttpParams;
 }
 

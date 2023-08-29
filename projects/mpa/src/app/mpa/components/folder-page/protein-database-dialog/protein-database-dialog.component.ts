@@ -5,10 +5,9 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { DataItem } from '../../data-navigation-tree/objects/data-item';
 import { DataService2 } from '../../data-navigation-tree/services/data2.service';
 import { folderNameValidator } from '../../../../core/components/dialog/name-edit-dialog.component';
-import { HttpClientService } from '../../../../core/services/http-client.service';
+import { HttpClientService } from 'dist/shared-lib';
 
 export class ProteinDBDialogData {
   dbName: string;

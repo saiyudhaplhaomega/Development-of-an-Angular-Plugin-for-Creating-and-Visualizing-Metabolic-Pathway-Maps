@@ -4,9 +4,6 @@ import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  HttpClientService,
-} from '../../../core/services/http-client.service';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { MpaTableDataService } from '../../services/mpa-table-data.service';
 import { ExperimentJSONObject } from '../../objects/experimentjson';
@@ -29,7 +26,6 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
   constructor(    
     private _snackBar: MatSnackBar,
     private dataService: DataService2,
-    private httpClientService: HttpClientService,
     private mpaTableDataService: MpaTableDataService,
     private dialog: MatDialog,) {}
 

@@ -1,7 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { HttpClientService } from '../../../core/services/http-client.service';
-import { PeptideJSON, ProteinJSON } from '../../objects/tableobjects';
-import { MpaTableDataService } from '../../services/mpa-table-data.service';
+import { HttpClientService } from 'dist/shared-lib';
 
 export enum PeptideScope {
   'proteinGroup',

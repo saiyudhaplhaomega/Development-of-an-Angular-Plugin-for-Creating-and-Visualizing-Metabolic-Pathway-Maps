@@ -2,15 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService2 } from '../data-navigation-tree/services/data2.service';
 import { DataItem } from '../data-navigation-tree/objects/data-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  HttpClientService,
-  MultiFileUploadData,
-} from '../../../core/services/http-client.service';
+import { HttpClientService, MultiFileUploadData } from 'dist/shared-lib';
 import { ProteinGroupObject } from '../../objects/tableobjects';
 import { MatDialog } from '@angular/material/dialog';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { UploadDialogComponent } from '../../../core/components/dialog/upload-dialog.component';
-import { UploadProgressService } from '../../../core/services/upload-progress.service';
+import { UploadProgressService } from 'dist/shared-lib';
 import { HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {

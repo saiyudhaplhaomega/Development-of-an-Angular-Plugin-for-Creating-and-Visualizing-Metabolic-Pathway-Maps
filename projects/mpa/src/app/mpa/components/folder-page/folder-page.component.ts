@@ -8,10 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { NameEditDialogComponent } from '../../../core/components/dialog/name-edit-dialog.component';
 import { ProteinDatabaseDialogComponent } from './protein-database-dialog/protein-database-dialog.component';
-import {
-  HttpClientService,
-  MultiFileUploadData,
-} from '../../../core/services/http-client.service';
+import { HttpClientService, MultiFileUploadData } from 'dist/shared-lib';
 import { Filemetadata } from '../../objects/filemetadata';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
 import { ContentComponent } from '../../mpa.component';

@@ -9,7 +9,7 @@ import {
 import { WebserveraddressService } from './webserveraddress.service';
 import { Observable, partition } from 'rxjs';
 import { AuthGuard } from 'dist/shared-lib';
-import { UploadProgressService } from './upload-progress.service';
+import { UploadProgressService } from 'dist/shared-lib';
 import { MatDialog } from '@angular/material/dialog';
 import { Endpoints } from '../../core/services/webserveraddress.service';
 import { AuthService } from 'dist/shared-lib';
