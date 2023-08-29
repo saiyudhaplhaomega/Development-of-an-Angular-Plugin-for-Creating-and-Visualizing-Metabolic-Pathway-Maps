@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { GroupingOptions, PeptideObject, ProteinGroupObject, ProteinGroupType, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject } from '../objects/tableobjects';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClientService } from 'dist/shared-lib';
-import { Endpoints } from '../../core/services/webserveraddress.service';
+import { Endpoints, WebserveraddressService } from '../../core/services/webserveraddress.service';
 import { HttpParams } from '@angular/common/http';
 import { SpectrumDataObject } from '../components/spectrum-viewer/spectrum-data-object';
 import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
 import { createProteinGroupData } from './dummyProteinData';
+import { ProteinTableComponent } from '../components/protein-table/protein-table.component';
 
 export enum GroupSelection {
   MAINGROUPS = 'maingroups',
@@ -51,7 +52,9 @@ export class MpaTableDataService {
   // initialize BehaviorSubject with new, empty SpectrumDataObject
   public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
 
-  constructor(private httpClientService: HttpClientService) {
+  constructor(
+    private httpClientService: HttpClientService,
+    private addressService: WebserveraddressService) {
     this.requestingSpectrum.next(true);
     this.selectedProtein.subscribe(protein => {
       if (typeof protein !== 'undefined') {
@@ -78,17 +81,27 @@ export class MpaTableDataService {
     this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
       filename: 'sample.mgf', //sinnlos?
       experimentID: this.expID.value,
-    }, Endpoints.GET_PROTEIN_GROUPS).subscribe({
+    }, this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS)).subscribe({
       next: (proteinGroups) => {
-        this.setMpaData(proteinGroups);
+        // proteinGroups.sort((a, b) => {
+        //   return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
+        // })
+        // proteinGroups.map(group => {
+        //   group.proteinSubGroupList.sort((a, b) => {
+        //     let aString = a.proteinGroupID.split("_");
+        //     let bString = b.proteinGroupID.split("_");
+        //     let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+        //     if (returnValue == 0) {
+        //       returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+        //     }
+        //     return returnValue;
+        //   })
+        // })
+        this.mpaData = proteinGroups;
+        this.setMpaTabledata();
       },
       error: () => {
-        // TODO: THIS IS THE DUMMY DATA:
-        const proteinGroups = createProteinGroupData('', GroupingOptions.OCCAM, {
-          numberOfMainGroups: 100, subGroupsPerMainGroup: 2
-        });
         console.log('ERROR: mpa-table-data.service.requestProteinGroups')
-        this.setMpaData(proteinGroups);
       }
     });
   }
@@ -103,7 +116,7 @@ export class MpaTableDataService {
         }
       });
     this.requestingProteinSequence = true;
-    this.httpClientService.getObject<ProteinSequenceObject>(Endpoints.GET_PROTEIN_SEQUENCE, params).subscribe({
+    this.httpClientService.getObject<ProteinSequenceObject>(this.addressService.getEndpoint(Endpoints.GET_PROTEIN_SEQUENCE), params).subscribe({
       next: (proteinSequence) => {
         this.proteinSequenceData.next(proteinSequence);
         this.requestingProteinSequence = false;
@@ -128,7 +141,7 @@ export class MpaTableDataService {
           spectrumid: this.selectedPsm.value.spectrumID
         }
       });
-    this.httpClientService.getObject<SpectrumObject>(Endpoints.GET_SPECTRUMDATA, params).subscribe({
+    this.httpClientService.getObject<SpectrumObject>(this.addressService.getEndpoint(Endpoints.GET_SPECTRUMDATA), params).subscribe({
       next: (spectrumObj) => {
         let spectrumDataObj = new SpectrumDataObject(spectrumObj.peakArray, spectrumObj.peptideSequence);
         this.spectrumDataObject$.next(spectrumDataObj);
@@ -149,26 +162,6 @@ export class MpaTableDataService {
 
   emptySpectrumData() {
     this.spectrumDataObject$.next(new SpectrumDataObject([], ''))
-  }
-
-  setMpaData(newData: ProteinGroupObject[]) {
-    //sort data after receiving it from back-end, set sorted data as this.mpaData
-    newData.sort((a, b) => {
-      return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
-    })
-    newData.map(group => {
-      group.proteinSubGroupList.sort((a, b) => {
-        let aString = a.proteinGroupID.split("_");
-        let bString = b.proteinGroupID.split("_");
-        let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
-        if (returnValue == 0) {
-          returnValue = parseInt(aString[1]) - parseInt(bString[1]);
-        }
-        return returnValue;
-      })
-    })
-    this.mpaData = newData;
-    this.setMpaTabledata(this.groupSelection);
   }
 
   setPeptidesForSelectedProtein() {
@@ -211,31 +204,60 @@ export class MpaTableDataService {
   }
 
   //uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed
-  setMpaTabledata(groupSelection: GroupSelection) {
-    let newtableData: ProteinGroupObject[];
-    if (groupSelection == GroupSelection.SUBGROUPS) {
+  setMpaTabledata() {
+    let newTableData: ProteinGroupObject[];
+    if (this.groupSelection == GroupSelection.SUBGROUPS) {
       let subgroups: ProteinGroupObject[] = [];
-      this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => subgroup.hidden ? {} : subgroups.push(subgroup)));
-      newtableData = subgroups;
+      this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => subgroups.push(subgroup)));
+      newTableData = subgroups;
     }
     else {
-      newtableData = this.mpaData.filter(group => !group.hidden)
-      newtableData.map(group => {
-        let subgroups: ProteinGroupObject[] = [];
-        group.proteinSubGroupList.map(subgroup => { (!subgroup.hidden) ? subgroups.push(subgroup) : {} });
-        group.proteinSubGroupList = subgroups;
-      })
+      newTableData = this.mpaData.filter(group => group.proteinSubGroupList)
     }
-    this.mpaTableData.next(newtableData);
-    this.selectedProteinGroup.next(newtableData[0]);
+    //TODO sort newTableData
+    newTableData = this.sortTableData(newTableData);
+    console.log(newTableData)
+    this.mpaTableData.next(newTableData);
+    this.selectedProteinGroup.next(newTableData[0]);
+  }
+
+  sortTableData(tableData: ProteinGroupObject[]): ProteinGroupObject[] {
+    let disabledGroups: ProteinGroupObject[] = [];
+    let enabledGroups: ProteinGroupObject[] = [];
+
+    tableData.sort((a, b) => {
+      return parseInt(a.proteinGroupID) - parseInt(b.proteinGroupID);
+    })
+    tableData.map(group => {
+      group.proteinSubGroupList.sort((a, b) => {
+        let aString = a.proteinGroupID.split("_");
+        let bString = b.proteinGroupID.split("_");
+        let returnValue = parseInt(aString[0]) - parseInt(bString[0]);
+        if (returnValue == 0) {
+          returnValue = parseInt(aString[1]) - parseInt(bString[1]);
+        }
+        return returnValue;
+      })
+      let disabledSubGroups: ProteinGroupObject[] = [];
+      let enabledSubGroups: ProteinGroupObject[] = [];
+      group.proteinSubGroupList.map(subgroup => {
+        subgroup.hidden ? disabledSubGroups.push(subgroup) : enabledSubGroups.push(subgroup);
+      })
+      group.proteinSubGroupList = [...enabledSubGroups,...disabledSubGroups];
+      group.hidden ? disabledGroups.push(group) : enabledGroups.push(group);
+    })
+    let groups = [...enabledGroups,...disabledGroups];
+    console.log(groups)
+    return groups;
   }
 
   onGroupSelection(): void {
-    this.setMpaTabledata(this.groupSelection);
+    this.setMpaTabledata();
   }
 
-  onHideSelectedGroups(): void {
+  onToggleDisableGroup(isDisableAction: boolean) {
     // get proteinGroups, put into Map with id as key for easier access while mapping this.mpaData
+    //TODO this map might not be neccessary anymore
     const tableDataMap = new Map<string, ProteinGroupObject>();
     this.mpaTableData.value.map(group => {
       tableDataMap.set(group.proteinGroupID, group);
@@ -246,82 +268,45 @@ export class MpaTableDataService {
       }
     })
 
-    let hiddenGroups: ProteinGroupObject[] = [];
+    let groupsToUpdate: ProteinGroupObject[] = [];
     this.mpaData.map(group => {
-      if (tableDataMap.has(group.proteinGroupID)) {
-        group.hidden = tableDataMap.get(group.proteinGroupID).isSelected;
-        if(group.hidden){
+      if (tableDataMap.get(group.proteinGroupID)) {
+        group.hidden = (isDisableAction && tableDataMap.get(group.proteinGroupID).isSelected) ? true : false;
+        if (tableDataMap.get(group.proteinGroupID).isSelected) {
           let strippedGroup = new ProteinGroupObject;
           strippedGroup.experimentID = group.experimentID;
           strippedGroup.proteinGroupID = group.proteinGroupID;
           strippedGroup.hidden = group.hidden;
           strippedGroup.groupType = group.groupType;
-          hiddenGroups.push(strippedGroup);
+          groupsToUpdate.push(strippedGroup);
         }
+        group.isSelected = false;
       }
       group.proteinSubGroupList.map(subgroup => {
         if (tableDataMap.has(subgroup.proteinGroupID)) {
-          subgroup.hidden = tableDataMap.get(subgroup.proteinGroupID).isSelected;
+          subgroup.hidden = (isDisableAction && tableDataMap.get(subgroup.proteinGroupID).isSelected) ? true : false;
           if(subgroup.hidden) {
             let strippedSubGroup = new ProteinGroupObject;
             strippedSubGroup.experimentID = subgroup.experimentID;
             strippedSubGroup.proteinGroupID = subgroup.proteinGroupID;
             strippedSubGroup.groupType = subgroup.groupType;
             strippedSubGroup.hidden = subgroup.hidden;
-            hiddenGroups.push(strippedSubGroup);
+            groupsToUpdate.push(strippedSubGroup);
           }
           subgroup.isSelected = false;
         }
       })
     })
 
-    // TODO append ''hidden'' groups at the end of the shown groups in table, so they can still be interacted with
-
-
-    this.setMpaTabledata(this.groupSelection);
-    //send proteingroups to update to back-end
-    //TODO is this enough?
-    this.httpClientService.postObject<ProteinGroupObject[],any>(hiddenGroups,Endpoints.POST_UPDATE_PROTEIN_GROUPS).subscribe()
-  }
-
-  // TODO refactor so that only selected AND hidden groups get accessible again -> first implement comment from l. 281
-  onResetHiddenGroups(): void {
-    let groupsToReveal: ProteinGroupObject[] = [];
-    this.mpaData.map(group => {
-      if(group.hidden){
-        group.hidden = !group.hidden;
-        group.isSelected = false;
-        let strippedGroup = new ProteinGroupObject;
-        strippedGroup.experimentID = group.experimentID;
-        strippedGroup.proteinGroupID = group.proteinGroupID;
-        strippedGroup.groupType = group.groupType;
-        strippedGroup.hidden = group.hidden;
-        groupsToReveal.push(strippedGroup);
-      }
-      group.proteinSubGroupList.map(subgroup => {
-        if(subgroup.hidden){
-          subgroup.hidden = !subgroup.hidden;
-          subgroup.isSelected = false;
-          let strippedSubGroup = new ProteinGroupObject;
-          strippedSubGroup.experimentID = subgroup.experimentID;
-          strippedSubGroup.proteinGroupID = subgroup.proteinGroupID;
-          strippedSubGroup.groupType = subgroup.groupType;
-          strippedSubGroup.hidden = subgroup.hidden;
-          groupsToReveal.push(strippedSubGroup);
-        }
-      })
-    })
-
-    //TODO update ProteinGroups in back-end with new properties
-    this.setMpaTabledata(this.groupSelection);
-    this.httpClientService.postObject<ProteinGroupObject[],any>(groupsToReveal,Endpoints.POST_UPDATE_PROTEIN_GROUPS).subscribe();
+    this.setMpaTabledata();
+    this.httpClientService.postObject<ProteinGroupObject[],any>(groupsToUpdate,this.addressService.getEndpoint(Endpoints.POST_UPDATE_PROTEIN_GROUPS)).subscribe()
   }
 
   downloadProteinTableData(): void {
     this.httpClientService.postObject<{ experimentID: string, groupSelection: GroupSelection }, { message: string; }>({
       experimentID: this.expID.value,
       groupSelection: this.groupSelection
-    }, Endpoints.GET_DOWNLOADPROTEINGROUPS).subscribe({
+    }, this.addressService.getEndpoint(Endpoints.GET_DOWNLOADPROTEINGROUPS)).subscribe({
       next: (json) => {
         console.log(json)
         this.onSaveFile("proteinGroupsReport", json.message, "text/csv;charset=utf-8")
