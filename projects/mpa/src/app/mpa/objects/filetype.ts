@@ -1,5 +1,3 @@
-import {Endpoints} from '../../core/services/webserveraddress.service';
-
 export enum FileType {
   MGF = 'MGF',
   MZML = 'MZML',

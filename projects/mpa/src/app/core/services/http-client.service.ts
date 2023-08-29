@@ -22,7 +22,6 @@ export interface FileUploadData {
 
 export interface MultiFileUploadData {
   files: UploadFile[];
-  fileUploadAdress: string;
   httpParameters?: HttpParams;
 }
 

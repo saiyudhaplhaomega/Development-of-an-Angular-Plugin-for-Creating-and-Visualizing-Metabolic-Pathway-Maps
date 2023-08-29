@@ -17,7 +17,7 @@ import {
   MpaTableDataService,
 } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
-import { Endpoints } from '../../../core/services/webserveraddress.service';
+import { Endpoints, WebserveraddressService } from '../../../core/services/webserveraddress.service';
 import {
   animate,
   state,
@@ -232,6 +232,7 @@ export class ExperimentPageComponent
   constructor(
     private _snackBar: MatSnackBar,
     private dataService: DataService2,
+    private addressService: WebserveraddressService,
     private httpClientService: HttpClientService,
     private uploadProgressService: UploadProgressService,
     private dialog: MatDialog,
@@ -356,7 +357,6 @@ export class ExperimentPageComponent
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
-      fileUploadAdress: Endpoints.FILES_UPLOAD,
       httpParameters: new HttpParams(),
     };
 

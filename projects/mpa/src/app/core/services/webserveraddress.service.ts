@@ -67,8 +67,8 @@ export class WebserveraddressService {
   }
 
   public getEndpoint(endpoint: string): string {
-    //return WebserverUrls.TEST + endpoint;
-    return WebserverUrls.PROPHANE + endpoint;
+    //return WebserverUrls.PROPHANE + endpoint;
+    return WebserverUrls.TEST + endpoint;
   }
 
 }

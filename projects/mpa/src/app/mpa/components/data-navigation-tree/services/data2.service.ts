@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthGuard, AuthService } from 'dist/shared-lib';
 import { HttpClientService } from 'dist/shared-lib';
 import { DataItem } from '../objects/data-item';
-import { Endpoints } from '../../../../core/services/webserveraddress.service';
+import { Endpoints, WebserveraddressService } from '../../../../core/services/webserveraddress.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NavService2 } from './nav2.service';
 import { DataItemMap } from '../objects/data-item-map';
@@ -38,6 +38,7 @@ export class DataService2 {
   // 2. sets up subscription to call server whenever dataMap is updated
   constructor(
     private authService: AuthService,
+    private addressService: WebserveraddressService,
     private httpClientService: HttpClientService,
     private navService: NavService2,
     private dialog: MatDialog
@@ -46,10 +47,10 @@ export class DataService2 {
     if (this.authService.loggedIn()) {
       // the initial call to the server to retrieve the user data
       this.httpClientService
-        .getObject<DataItem>(Endpoints.GET_USER_DATA)
+        .getObject<DataItem>(addressService.getEndpoint(Endpoints.GET_USER_DATA))
         .subscribe((rootNode) => {
           // from the json response that contains a list of data-items, we create a map and extract the user object
-          const newMap = new DataItemMap();
+        const newMap = new DataItemMap();
           const user: DataItem = newMap.initializeAndReturnUser(rootNode);
           // once the dataMap object is initialized it is put into the dataMap BehaviourSubject
           this.dataMap.next(newMap);
@@ -65,7 +66,7 @@ export class DataService2 {
           this.httpClientService
             .postObject<DataItem, DataItem>(
               dataItemMap.rootNode,
-              Endpoints.UPDATE_USER_DATA
+              addressService.getEndpoint(Endpoints.UPDATE_USER_DATA)
             )
             .subscribe((result) => {
               // TODO: do we need to look at the response?
@@ -166,7 +167,7 @@ export class DataService2 {
         }
       }
     )
-    return this.httpClientService.getObject<ExperimentJSONObject>(Endpoints.GET_EXPERIMENT_DATA, params);
+    return this.httpClientService.getObject<ExperimentJSONObject>(this.addressService.getEndpoint(Endpoints.GET_EXPERIMENT_DATA), params);
   }
 
   createExperiment(nodeObj) {
@@ -188,7 +189,7 @@ export class DataService2 {
     this.httpClientService
       .postObject<ExperimentJSONObject, ExperimentJSONObject>(
         dbExperiment,
-        Endpoints.CREATE_EXPERIMENT,
+        this.addressService.getEndpoint(Endpoints.CREATE_EXPERIMENT),
         params,
       )
       .subscribe((response) => {
@@ -218,7 +219,7 @@ export class DataService2 {
     this.httpClientService
       .postObject<ExperimentJSONObject, ExperimentJSONObject>(
         dbExperiment,
-        Endpoints.UPDATE_EXPERIMENT_DATA,
+        this.addressService.getEndpoint(Endpoints.UPDATE_EXPERIMENT_DATA),
         params,
       )
       .subscribe((response) => {
@@ -238,7 +239,7 @@ export class DataService2 {
         }
       }
     )
-    return this.httpClientService.getObject<ProtDBJSONObject>(Endpoints.PROTEINLOADER_GETFASTADATA, params)
+    return this.httpClientService.getObject<ProtDBJSONObject>(this.addressService.getEndpoint(Endpoints.PROTEINLOADER_GETFASTADATA), params)
   }
 
   updateFastaData(proteinDB: ProtDBJSONObject, nodeObj: DataItem) {
@@ -251,7 +252,7 @@ export class DataService2 {
     )
     this.httpClientService.postObject<ProtDBJSONObject, ProtDBJSONObject>(
       proteinDB,
-      Endpoints.PROTEINLOADER_UPDATE_FASTADATA,
+      this.addressService.getEndpoint(Endpoints.PROTEINLOADER_UPDATE_FASTADATA),
       params
     )
       .subscribe((response: ProtDBJSONObject) => {
@@ -341,7 +342,7 @@ export class DataService2 {
     this.httpClientService
       .postObject<ExperimentJSONObject, ExperimentJSONObject>(
         dbComparison,
-        Endpoints.CREATE_COMPARISON,
+        this.addressService.getEndpoint(Endpoints.CREATE_COMPARISON),
         new HttpParams(),
       )
       .subscribe((response) => {

@@ -14,7 +14,6 @@ import {
 } from '../../../core/services/http-client.service';
 import { Filemetadata } from '../../objects/filemetadata';
 import { Endpoints } from '../../../core/services/webserveraddress.service';
-import { HttpParams } from '@angular/common/http';
 import { ContentComponent } from '../../mpa.component';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { FolderJSONObject } from '../../objects/folderjson';
@@ -189,7 +188,6 @@ export class FolderPageComponent
         metaData.creationdate = protDBNode.creationDate;
         let filesToUpload: MultiFileUploadData = {
           files: [],
-          fileUploadAdress: Endpoints.PROTEINLOADER_FILEUPLOAD,
         };
 
         const configFile = new File([JSON.stringify(metaData)], 'config');
