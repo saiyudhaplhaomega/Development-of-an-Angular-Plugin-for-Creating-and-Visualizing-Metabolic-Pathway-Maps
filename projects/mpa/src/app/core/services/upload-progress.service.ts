@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 @Injectable()
-export class UploadProgressService {
+export class UploadProgressService2 {
 
   fastaProgress = 0;
   reportProgress = 0;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { defaultCustomMapTask} from '../../../../model/prophaneFormData';
 import {ProphaneJobStateService} from '../../../../services/prophane-job-state.service';
+import { FileInputComponent } from 'shared-lib';
 
 @Component({
   selector: 'app-job-custom-map',

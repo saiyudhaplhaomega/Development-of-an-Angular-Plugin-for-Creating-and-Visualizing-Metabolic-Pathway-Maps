@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { UploadProgressService } from '../../services/upload-progress.service';
+import { UploadProgressService } from '../upload-progress.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface DialogData {
@@ -15,7 +15,7 @@ export interface DialogData {
   templateUrl: './upload-dialog.component.html',
   styleUrls: ['./upload-dialog.component.css'],
 })
-export class UploadDialogComponent2 implements OnInit {
+export class UploadDialogComponent implements OnInit {
   progress: number;
   uploadFailedBoolean = false;
   jobUuid: string;

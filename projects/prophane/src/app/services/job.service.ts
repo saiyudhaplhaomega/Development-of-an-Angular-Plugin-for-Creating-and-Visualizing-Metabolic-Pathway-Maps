@@ -2,26 +2,28 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ProphaneJobObject } from '../model/prophanejobjson';
 
-import { HttpClientService } from 'projects/mpa/src/app/core/services/http-client.service';
-import { Endpoints } from 'projects/mpa/src/app/core/services/webserveraddress.service';
+
+
+import { HttpClientService } from 'shared-lib';
+import { Endpoints, WebserveraddressService } from '../prophane-webserveraddress.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobService {
-  constructor(private jsonUpload: HttpClientService) {}
+  constructor(private jsonUpload: HttpClientService, private address: WebserveraddressService) {}
 
   getJobs(): Observable<ProphaneJobObject[]> {
     return this.jsonUpload.postObject<ProphaneJobObject[], ProphaneJobObject[]>(
       [],
-      Endpoints.GET_PROPHANE_JOBS
+      this.address.getURL(Endpoints.GET_PROPHANE_JOBS)
     );
   }
 
   getJob(uuid: string): Observable<ProphaneJobObject> {
     return this.jsonUpload.getObject<ProphaneJobObject>(
-      Endpoints.GET_PROPHANE_JOB + uuid
+      this.address.getURL(Endpoints.GET_PROPHANE_JOB) + "/" + uuid
     );
   }
 
@@ -39,7 +41,7 @@ export class JobService {
       const observeMe = this.jsonUpload.postObject<
         ProphaneJobObject,
         ProphaneJobObject
-      >(job, Endpoints.PROPHANE_REQUEST_JOB);
+      >(job, this.address.getURL(Endpoints.PROPHANE_REQUEST_JOB));
       console.log('request job: ' + observeMe);
       return observeMe;
     } catch (e) {
@@ -50,14 +52,14 @@ export class JobService {
   saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
     return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(
       job,
-      Endpoints.PROPHANE_SAVE_JOB_FORM
+      this.address.getURL(Endpoints.PROPHANE_SAVE_JOB_FORM)
     );
   }
 
   addJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
     return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(
       job,
-      Endpoints.PROPHANE_START_JOB
+      this.address.getURL(Endpoints.PROPHANE_START_JOB)
     );
   }
 
@@ -66,7 +68,7 @@ export class JobService {
     this.jsonUpload
       .postObject<ProphaneJobObject, ProphaneJobObject>(
         jobToDelete,
-        Endpoints.PROPHANE_DELETE_JOB
+        this.address.getURL(Endpoints.PROPHANE_DELETE_JOB)
       )
       .subscribe((res) => {
         console.log('job deleted: ' + jobToDelete.prophaneJobUUID);

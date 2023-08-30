@@ -23,12 +23,12 @@ import { ProphaneAnnotationTaskObject } from '../model/prophaneannotationtaskjso
 import { MatDialog } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
-import { AuthService } from 'dist/shared-lib';
+import { AuthService, UploadDialogComponent, UploadProgressService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
 import { HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
-import { UploadProgressService } from 'projects/mpa/src/app/core/services/upload-progress.service';
+
 import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
-import { UploadDialogComponent } from 'projects/mpa/src/app/core/components/dialog/upload-dialog.component';
+
 import { ProphaneCustomMap } from '../model/prophanecustommapdata';
 import { ProphaneReportStyle } from '../model/prophane-job-submission-formdata';
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProphaneJobStateService} from '../../../../services/prophane-job-state.service';
 import {ProphaneSampleGroupObject} from '../../../../model/prophanesamplegroupjson';
+import { ProphaneSampleObject } from 'projects/prophane/src/app/model/prophanesamplejson';
 
 @Component({
   selector: 'app-job-sample-groups',
@@ -13,7 +14,7 @@ export class JobSampleGroupsComponent implements OnInit {
     public prophaneJobState: ProphaneJobStateService
   ) { }
 
-  getNewSample() {
+  getNewSample(): ProphaneSampleObject {
     this.prophaneJobState.sampleCount++;
     return {
       id: this.prophaneJobState.sampleCount,
@@ -23,7 +24,7 @@ export class JobSampleGroupsComponent implements OnInit {
     };
   }
 
-  getNewGroupItem() {
+  getNewGroupItem(): ProphaneSampleGroupObject {
     this.prophaneJobState.groupCount++;
     return {
       id: this.prophaneJobState.groupCount,
@@ -32,11 +33,11 @@ export class JobSampleGroupsComponent implements OnInit {
       groupmembersGUI: [this.getNewSample()]};
   }
 
-  addSampleGroup() {
+  addSampleGroup(): void {
     this.prophaneJobState.currentProphaneJob.parameters.sampleGroups.push(this.getNewGroupItem());
   }
 
-  removeSampleGroup(removeGroup: ProphaneSampleGroupObject) {
+  removeSampleGroup(removeGroup: ProphaneSampleGroupObject): void {
     this.prophaneJobState.currentProphaneJob.parameters.sampleGroups =
       this.prophaneJobState.currentProphaneJob.parameters.sampleGroups.filter(obj => obj !== removeGroup);
   }
@@ -55,7 +56,7 @@ export class JobSampleGroupsComponent implements OnInit {
     }
   }
 
-  setSampleName(groupId: number, sampleId: number) {
+  setSampleName(groupId: number, sampleId: number): void {
     this.prophaneJobState.currentProphaneJob.parameters.sampleGroups.forEach(
       (group) => {
         if (group.id === groupId) {

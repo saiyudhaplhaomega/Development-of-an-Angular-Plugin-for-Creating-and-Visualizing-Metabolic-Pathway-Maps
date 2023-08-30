@@ -17,6 +17,10 @@ export * from './lib/standard-page-layout/nav-toolbar/nav-toolbar.component';
 export * from './lib/standard-page-layout/upload-progress.service';
 export * from './lib/standard-page-layout/http-client.service';
 
+export * from './lib/standard-page-layout/file-input/file-input.component';
+
+export * from './lib/standard-page-layout/dialog/upload-dialog.component';
+
 export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';
 

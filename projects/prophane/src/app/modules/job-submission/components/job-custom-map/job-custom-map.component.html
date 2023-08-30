@@ -12,7 +12,7 @@
           <span class="input-group-text rki-blue-input">Task Label</span>
         </div>
         <input
-          type="text" 
+          type="text"
           class="form-control"
           [ngClass]="{}"
           [(ngModel)]="custom_task.tasklabel">
@@ -24,7 +24,7 @@
           </button>
         </div>
       </div>
-  
+
       <!-- task map file to upload -->
       <app-file-input
         (fileSelected)="onMapChange($event, taskIndex)"
@@ -33,7 +33,7 @@
         [inputType]="'.tsv, .csv, .txt'"
       >
       </app-file-input>
-  
+
       <!--  scope-->
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -47,7 +47,7 @@
           </mat-option>
         </mat-select>
       </div>
-  
+
       <!-- Algorithm, always the same-->
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -64,12 +64,11 @@
       </div>
 
     </div>
-  
+
   </ng-container>
-  
+
   <!-- Add new Custom Map Task -->
   <button type="button" class="btn btn-primary float-right rki-blue-bg" (click)='addCustomMapTask()'>
     Add Cutom Map Task
   </button>
-  
-  
+

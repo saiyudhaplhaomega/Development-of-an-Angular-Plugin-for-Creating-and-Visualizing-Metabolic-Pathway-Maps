@@ -1,8 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { JobControlRoutingModule } from './job-control-routing.module';
-import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -45,15 +43,23 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { JobControlRoutingModule } from './job-control-routing.module';
+import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
+//import { SideBarResultsComponent } from '../../components/side-bar-results/side-bar-results.component';
+
 
 
 @NgModule({
   declarations: [
     ProphaneJobControlComponent,
+
+
   ],
   imports: [
     CommonModule,
+
     JobControlRoutingModule,
+
     MatDividerModule,
     MatStepperModule,
     MatSlideToggleModule,

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { AuthGuard, AuthService } from 'dist/shared-lib';
+import { AuthService } from 'dist/shared-lib';
 import { UserToken } from 'dist/shared-lib';
 
 @Component({
@@ -8,6 +8,7 @@ import { UserToken } from 'dist/shared-lib';
   styleUrls: ['./page-footer.css'],
 })
 export class FooterComponent implements OnInit {
+
   user: UserToken;
   guest: boolean;
 
@@ -21,4 +22,5 @@ export class FooterComponent implements OnInit {
     //   this.guest = res;
     // });
   }
+
 }

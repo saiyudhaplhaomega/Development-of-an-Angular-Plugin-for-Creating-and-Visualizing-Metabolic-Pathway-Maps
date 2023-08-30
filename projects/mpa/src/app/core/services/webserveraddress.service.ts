@@ -26,15 +26,7 @@ export enum Endpoints {
 
   // LIST_DB_EXPERIMENTS = 'mpacloud/v1/listexperiments',
 
-  // prophane
-  PROPHANE_DELETE_JOB = 'mpacloud/v1/prophaneDeleteJob',
-  PROPHANE_REQUEST_JOB = 'mpacloud/v1/prophaneRequestJob',
-  PROPHANE_SAVE_JOB_FORM = 'mpacloud/v1/prophaneSaveJobForm',
-  PROPHANE_START_JOB = 'mpacloud/v1/prophaneStartJob',
-  UPLOAD_PROPHANE_FASTA = 'mpacloud/v1/prophaneFasta',
-  UPLOAD_PROPHANE_CSV = 'mpacloud/v1/prophaneCSV',
-  GET_PROPHANE_JOB = 'mpacloud/v1/getJob',
-  GET_PROPHANE_JOBS = 'mpacloud/v1/prophaneJobList',
+
   // user
   UPDATE_USER_DATA = 'mpauser/updateuserdata',
   GET_USER_DATA = 'mpauser/getuserdata',

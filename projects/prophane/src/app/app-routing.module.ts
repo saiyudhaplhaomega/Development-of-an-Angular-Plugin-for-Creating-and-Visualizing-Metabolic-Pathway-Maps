@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent, AuthGuard } from 'shared-lib';
 import { ProphaneResultViewComponent } from './modules/job-control/prophane-result-view/prophane-result-view.component';
+import { TermsOfServicePageComponent } from './components/terms-of-service-page/terms-of-service-page.component';
+import { ImpressumPageComponent } from './components/impressum-page/impressum-page.component';
+import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/privacy-policy-page.component';
 
 const routes: Routes = [
 
@@ -30,6 +33,9 @@ const routes: Routes = [
   ),
 },
 
+{ path: 'termsofservice', component: TermsOfServicePageComponent },
+{ path: 'impressum', component: ImpressumPageComponent },
+{ path: 'privacypolicy', component: PrivacyPolicyPageComponent },
 
 { path: 'results/:job_uuid', component: ProphaneResultViewComponent },
 { path: '**', redirectTo: 'login' },

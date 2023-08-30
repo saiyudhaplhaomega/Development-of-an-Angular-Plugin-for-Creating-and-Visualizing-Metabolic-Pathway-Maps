@@ -1,0 +1,32 @@
+<div *ngIf="this.progress < 100 && this.uploadFailedBoolean == false">
+  <div class="uploadprogress">
+    <div class="mt-5 center">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div class="uploadprogresstext" style="margin-left: -75px; margin-top: 45px; ">{{this.progress}}%</div>
+  </div>
+  <div class="mt-5 uploadprogresstext">uploading ...</div>
+</div>
+<div *ngIf="this.progress >= 100 && this.uploadFailedBoolean == false">
+  <div class="uploadprogress">
+    <div class="mt-5 center">
+      <img src="../../../../assets/img/sucess-icon.png" alt="success" width="150" height="150">
+    </div>
+  </div>
+  <div class="mt-5 uploadsuccesstext">{{successMessage}}</div>
+  <div class="mt-5 uploadsuccesstext">
+    <button mat-raised-button (click)="closeDialog()">Ok</button>
+  </div>
+</div>
+<div *ngIf="this.uploadFailedBoolean == true">
+  <div class="uploadprogress">
+    <div class="mt-5 center">
+      <img src="../../../../assets/img/error-icon.png" alt="success" width="150" height="150">
+    </div>
+  </div>
+  <div class="mt-5 uploadsuccesstext">{{uploadFailedMessage}}</div>
+  <div class="mt-5 uploadsuccesstext" style="padding: 0 20% 0 20%; display: flex; justify-content: space-between">
+    <button mat-raised-button (click)="retryUpload()">Retry</button>
+    <button mat-raised-button (click)="closeDialog()">Close</button>
+  </div>
+</div>

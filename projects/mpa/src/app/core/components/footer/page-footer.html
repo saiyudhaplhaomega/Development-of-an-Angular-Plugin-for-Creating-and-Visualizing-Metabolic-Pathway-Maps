@@ -1,7 +1,7 @@
 <div class="footer p-4">
   <ul>
     <li>About</li>
-    <li><a [routerLink]="'/prophane/about'">About Prophane</a></li>
+    <li><a [routerLink]="'/about'">About Prophane</a></li>
     <li><a [routerLink]="'/termsofservice'">Terms of Service</a></li>
     <li><a [routerLink]="'/privacypolicy'">Privacy Policy</a></li>
     <li><a [routerLink]="'/impressum'">Impressum</a></li>
@@ -15,10 +15,10 @@
   <ul>
     <li>Analysis</li>
     <li *ngIf="authService.loggedIn()">
-      <a [routerLink]="'/prophane'">Job Submission</a>
+      <a [routerLink]="'/jobsubmission'">Job Submission</a>
     </li>
     <li *ngIf="authService.loggedIn()">
-      <a [routerLink]="'/prophane/jobcontrol'">Job Control</a>
+      <a [routerLink]="'/jobcontrol'">Job Control</a>
     </li>
     <li *ngIf="!authService.loggedIn()">
       <a [routerLink]="'/login'">Login</a>

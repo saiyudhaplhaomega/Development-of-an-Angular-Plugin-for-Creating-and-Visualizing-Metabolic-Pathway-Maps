@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { jobLabelData } from '../../../../model/prophaneFormData';
-import { AuthGuard, AuthService } from 'dist/shared-lib';
+import { AuthGuard, AuthService } from 'shared-lib';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { JobService } from '../../../../services/job.service';
@@ -12,8 +12,8 @@ import {
   ProphaneJobStateService,
 } from '../../../../services/prophane-job-state.service';
 import { JobStepperComponent } from '../../job-stepper/job-stepper.component';
-import { HttpClientService } from 'dist/shared-lib';
-import { UploadProgressService } from 'dist/shared-lib';
+import { HttpClientService } from 'shared-lib';
+import { UploadProgressService } from 'shared-lib';
 
 
 export interface JobLabel {
