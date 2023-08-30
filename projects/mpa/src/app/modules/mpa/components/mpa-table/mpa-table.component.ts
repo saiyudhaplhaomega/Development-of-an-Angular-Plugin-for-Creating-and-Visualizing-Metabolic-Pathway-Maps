@@ -201,10 +201,12 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
       element.style.opacity = "0";
     }
     // actually remove selected rows from view after animation has finished
-    elements.length > 0 ? setTimeout(()=>{this.mpaTableDataService.onHideSelectedGroups()},1000) : {};
+    // TODO: this.mpaTableDataService.onHideSelectedGroups() IS MISSING!
+    //elements.length > 0 ? setTimeout(()=>{this.mpaTableDataService.onHideSelectedGroups()},1000) : {};
     }
 
   resetHiddenGroups(): void {
-    this.mpaTableDataService.onResetHiddenGroups();
+    // TODO: this.mpaTableDataService.onResetHiddenGroups() IS MISSING!
+    //this.mpaTableDataService.onResetHiddenGroups();
   }
 }
