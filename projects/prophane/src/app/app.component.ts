@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, NavigationRoute } from 'dist/shared-lib';
+import { FooterContentMain, FooterContentSubElement } from 'projects/shared-lib/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,25 @@ export class AppComponent implements OnInit {
     { route: '/about', label: 'About Prophane', requireAuth: false },
   ];
   homelink: NavigationRoute = { route: '/jobsubmission', label: 'jobsubmission' }
+  footercontent: FooterContentMain[] = [
+    {
+      categoryname: 'About',
+      elements: [
+        {name: 'About Prophane', routerlink: '/about'},
+        {name: 'Terms of Service', routerlink: '/termsofservice'},
+        {name: 'Privacy Policy', routerlink: '/privacypolicy'},
+        {name: 'Impressum', routerlink: '/impressum'},
+      ]
+    },
+    {
+      categoryname: 'Funding & Support',
+      elements: [
+        {name: 'DFG', href: 'http://www.dfg.de'},
+        {name: 'de.NBI', href: 'http://www.denbi.de'},
+        {name: 'de.NBI Cloud', href: 'https://www.denbi.de/cloud'},
+      ]
+    },
+  ];
 
   constructor(private authService: AuthService) {}
 

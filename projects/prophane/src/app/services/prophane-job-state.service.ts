@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService, UploadDialogComponent, UploadProgressService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
-import { HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
+import { HttpClientService, MultiFileUploadData } from 'shared-lib';
 
 import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
 

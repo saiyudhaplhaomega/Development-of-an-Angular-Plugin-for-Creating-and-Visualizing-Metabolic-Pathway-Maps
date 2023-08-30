@@ -1,6 +1,19 @@
-<shared-nav-toolbar [routerlinks]="routes" [applicationname]="'Test Example'" [haslogin]="true" [homelink]="homelink">
-</shared-nav-toolbar>
-<router-outlet></router-outlet>
-
+<div class="page-content">
+  <div class="header">
+    <shared-nav-toolbar
+      [routerlinks]="routes"
+      [applicationname]="'Test Example'"
+      [haslogin]="true"
+      [homelink]="homelink">
+    </shared-nav-toolbar>
+    <app-privacy-consent-banner></app-privacy-consent-banner>
+  </div>
+  <div class="content">
+    <div style="height: 100%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-page-footer class="footer"></app-page-footer>
+</div>
 
 
