@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, NavigationRoute } from 'shared-lib';
+import { AuthService, NavigationRoute } from 'dist/shared-lib';
 
 @Component({
   selector: 'app-root',

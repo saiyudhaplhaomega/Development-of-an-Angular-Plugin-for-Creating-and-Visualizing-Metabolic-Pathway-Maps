@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
+import {Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
 import {HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
 import { databaseOptions, lcaOptions, lcaParams, quantdata } from '../../model/prophaneFormData';
 import { ProphaneJobObject } from '../../model/prophanejobjson';

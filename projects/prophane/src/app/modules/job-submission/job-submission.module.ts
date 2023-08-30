@@ -9,7 +9,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -45,7 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { StandardPageLayoutModule, UploadProgressService } from 'shared-lib';
+import { StandardPageLayoutModule } from 'shared-lib';
 import { JobAnnotationComponent } from './components/job-annotation/job-annotation.component';
 import { JobCustomMapComponent } from './components/job-custom-map/job-custom-map.component';
 import { JobFunctionComponent } from './components/job-function/job-function.component';
@@ -74,72 +73,60 @@ import { JobSubmissionRoutingModule } from './job-submission-routing.module';
     JobStepperComponent,
     JobSampleGroupsComponent,
     JobTaxonomyComponent,
-
-
-
-  ],
-  providers: [
-    UploadProgressService,
   ],
   imports: [
     CommonModule,
     FormsModule,
-    //ReactiveFormsModule, //not required?
-    //BrowserModule, //not required?
-    //BrowserAnimationsModule, //not required?
-
-    HttpClientModule,
-
-    StandardPageLayoutModule, // why do we need to import again ...
-
     JobSubmissionRoutingModule,
-    MatDividerModule,
+    StandardPageLayoutModule, // replace with specific component (file-input)
     MatStepperModule,
     MatSlideToggleModule,
     MatListModule,
-    A11yModule,
-    CdkStepperModule,
-    CdkTableModule,
-    CdkTreeModule,
-    CdkAccordionModule,
-    DragDropModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
     MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    //MatStepperModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    //MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    //MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
     MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
+    // COMPILES WITHOUT THESE, BUT SOME MAY BE NECESSARY FOR STYLES
+    //MatDividerModule,
+    //A11yModule,
+    //CdkStepperModule,
+    //CdkTableModule,
+    //CdkTreeModule,
+    //CdkAccordionModule,
+    //DragDropModule,
+    //MatAutocompleteModule,
+    //MatBadgeModule,
+    //MatBottomSheetModule,
+    //MatButtonToggleModule,
+    //MatCardModule,
+    //MatCheckboxModule,
+    //MatChipsModule,
+    //MatStepperModule,
+    //MatDatepickerModule,
+    //MatDialogModule,
+    //MatDividerModule,
+    //MatExpansionModule,
+    //MatGridListModule,
+    //MatIconModule,
+    //MatInputModule,
+    //MatListModule,
+    //MatMenuModule,
+    //MatNativeDateModule,
+    //MatPaginatorModule,
+    //MatProgressBarModule,
+    //MatProgressSpinnerModule,
+    //MatRadioModule,
+    //MatRippleModule,
+    //MatSidenavModule,
+    //MatSliderModule,
     //MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatTreeModule,
-    PortalModule,
-    ScrollingModule,
+    //MatSnackBarModule,
+    //MatSortModule,
+    //MatTableModule,
+    //MatTabsModule,
+    //MatToolbarModule,
+    //MatTooltipModule,
+    //MatTreeModule,
+    //PortalModule,
+    //ScrollingModule,
   ]
 })
 export class JobSubmissionModule { }

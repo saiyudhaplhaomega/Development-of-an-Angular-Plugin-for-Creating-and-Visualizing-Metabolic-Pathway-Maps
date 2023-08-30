@@ -27,7 +27,7 @@ import { AuthService, UploadDialogComponent, UploadProgressService } from 'dist/
 import { Observable } from 'rxjs';
 import { HttpClientService, MultiFileUploadData } from 'projects/mpa/src/app/core/services/http-client.service';
 
-import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/core/services/webserveraddress.service';
+import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
 
 import { ProphaneCustomMap } from '../model/prophanecustommapdata';
 import { ProphaneReportStyle } from '../model/prophane-job-submission-formdata';

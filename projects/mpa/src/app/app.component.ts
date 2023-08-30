@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, NavigationRoute } from 'dist/shared-lib';
+import { AuthService, NavigationRoute } from 'shared-lib';
 
 //import { AuthGuard } from 'dist/shared-lib';
 

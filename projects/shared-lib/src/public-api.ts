@@ -20,6 +20,9 @@ export * from './lib/standard-page-layout/http-client.service';
 export * from './lib/standard-page-layout/file-input/file-input.component';
 
 export * from './lib/standard-page-layout/dialog/upload-dialog.component';
+export * from './lib/standard-page-layout/dialog/delete-warning-dialog.component';
+
+export * from './lib/standard-page-layout/footer/page-footer.component'
 
 export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';

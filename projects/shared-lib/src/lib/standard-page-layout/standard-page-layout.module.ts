@@ -21,10 +21,10 @@ import { PrivacyConsentBannerComponent } from './privacy-consent-banner/privacy-
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FileInputComponent } from './file-input/file-input.component';
-import { UploadProgressService } from './upload-progress.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { UploadDialogComponent } from './dialog/upload-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FooterComponent } from './footer/page-footer.component';
+import { DeleteWarningDialogComponent } from './dialog/delete-warning-dialog.component';
 
 
 
@@ -39,10 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PrivacyConsentBannerComponent,
     FileInputComponent,
     UploadDialogComponent,
-  ],
-  providers: [
-    UploadProgressService,
-    HttpClient,
+    FooterComponent,
+    DeleteWarningDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +48,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     //BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
+
 
     OAuthModule.forRoot(),
     ReactiveFormsModule,
@@ -73,6 +71,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PrivacyConsentBannerComponent,
     FileInputComponent,
     UploadDialogComponent,
+    FooterComponent,
+    DeleteWarningDialogComponent,
   ],
 })
 export class StandardPageLayoutModule { }
