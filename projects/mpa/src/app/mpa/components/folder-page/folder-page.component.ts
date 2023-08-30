@@ -10,7 +10,7 @@ import { NameEditDialogComponent } from '../../../core/components/dialog/name-ed
 import { ProteinDatabaseDialogComponent } from './protein-database-dialog/protein-database-dialog.component';
 import { HttpClientService, MultiFileUploadData } from 'dist/shared-lib';
 import { Filemetadata } from '../../objects/filemetadata';
-import { Endpoints } from '../../../core/services/webserveraddress.service';
+import { Endpoints, WebserveraddressService } from '../../../core/services/webserveraddress.service';
 import { ContentComponent } from '../../mpa.component';
 import { TextfieldDialogComponent } from '../../../core/components/textfield-dialog/textfield-dialog.component';
 import { FolderJSONObject } from '../../objects/folderjson';
@@ -47,6 +47,7 @@ export class FolderPageComponent
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private dataService: DataService2,
+    private addressService: WebserveraddressService,
     private uploaderService: HttpClientService
   ) {
     this.subfolders = [];
@@ -197,7 +198,7 @@ export class FolderPageComponent
         this.uploaderService
           .postMultiPartFiles<ProtDBJSONObject>(
             filesToUpload,
-            Endpoints.PROTEINLOADER_FILEUPLOAD
+            this.addressService.getEndpoint(Endpoints.PROTEINLOADER_FILEUPLOAD)
           )
           .subscribe((result) => {
             if (result != null) {

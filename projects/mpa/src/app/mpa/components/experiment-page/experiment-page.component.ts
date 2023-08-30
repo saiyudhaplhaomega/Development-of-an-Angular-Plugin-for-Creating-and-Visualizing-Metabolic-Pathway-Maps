@@ -442,7 +442,7 @@ export class ExperimentPageComponent
     );
     console.log('call http');
     this.httpClientService
-      .postMultiPartFilesEvents(this.filesToUpload, Endpoints.FILES_UPLOAD)
+      .postMultiPartFilesEvents(this.filesToUpload, this.addressService.getEndpoint(Endpoints.FILES_UPLOAD))
       .subscribe({
         next: (event) => {
           console.log('unknown event');
