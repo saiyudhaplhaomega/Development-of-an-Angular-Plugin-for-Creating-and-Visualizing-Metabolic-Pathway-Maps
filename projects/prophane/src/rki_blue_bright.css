@@ -2707,7 +2707,7 @@ button:focus, button:active:focus, button.active:focus {
 
 .consent-wrapper{
   z-index: 100000000000;
-  margin-top: -26px;
+  margin-top: -10px;
 }
 
 .policy-consent {

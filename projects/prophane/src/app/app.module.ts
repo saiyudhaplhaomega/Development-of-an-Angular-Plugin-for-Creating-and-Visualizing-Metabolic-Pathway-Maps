@@ -18,8 +18,6 @@ import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/pri
 import { TermsOfServicePageComponent } from './components/terms-of-service-page/terms-of-service-page.component';
 import { SafePipe } from './safe.pipe';
 
-import { FooterComponent } from 'projects/shared-lib/src/lib/components/footer/page-footer';
-
 
 @NgModule({
   declarations: [
@@ -43,7 +41,7 @@ import { FooterComponent } from 'projects/shared-lib/src/lib/components/footer/p
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
 
 

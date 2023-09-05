@@ -43,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+
 import { JobControlRoutingModule } from './job-control-routing.module';
 import { ProphaneJobControlComponent } from './prophane-job-control/prophane-job-control.component';
 //import { SideBarResultsComponent } from '../../components/side-bar-results/side-bar-results.component';
