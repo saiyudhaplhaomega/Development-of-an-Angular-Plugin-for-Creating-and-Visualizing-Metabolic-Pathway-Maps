@@ -350,7 +350,6 @@ export class ExperimentPageComponent
   }
 
   async onSubmit() {
-    console.log('onsubmit')
     // TODO: this doesnt have to be a filed, its just set here ...
     this.filesToUpload = {
       files: [],
@@ -440,7 +439,7 @@ export class ExperimentPageComponent
     this.uploadProgressService.addToTotal(
       this.filesToUpload.files[0].uploadFile.size
     );
-    console.log('call http');
+
     this.httpClientService
       .postMultiPartFilesEvents(this.filesToUpload, this.addressService.getEndpoint(Endpoints.FILES_UPLOAD))
       .subscribe({

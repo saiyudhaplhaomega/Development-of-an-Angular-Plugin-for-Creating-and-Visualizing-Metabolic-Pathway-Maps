@@ -23,7 +23,7 @@ import { ProphaneAnnotationTaskObject } from '../model/prophaneannotationtaskjso
 import { MatDialog } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
-import { AuthService, UploadDialogComponent, UploadProgressService } from 'dist/shared-lib';
+import { AuthService, UploadDialogComponent, UploadFile, UploadProgressService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
 import { HttpClientService, MultiFileUploadData } from 'shared-lib';
 
@@ -31,6 +31,7 @@ import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebs
 
 import { ProphaneCustomMap } from '../model/prophanecustommapdata';
 import { ProphaneReportStyle } from '../model/prophane-job-submission-formdata';
+import { HttpEventType, HttpParams } from '@angular/common/http';
 
 
 
@@ -264,7 +265,7 @@ export class ProphaneJobStateService {
   }
 
   addFilesToUploadData() {
-    if (this.proteinReportFile && this.fastaFile) {
+    //if (this.proteinReportFile && this.fastaFile) {
       // TODO: requires a change in backend or a switch to "postFile()" method
       // const uploadDataForServer: MultiFileUploadData = [
       //   {
@@ -282,7 +283,7 @@ export class ProphaneJobStateService {
       //uploadDataForServer.map(file => {
       //  this.filesToUpload.files.push(file);
       //})
-    }
+    //}
   }
 /*
   addFilesToUploadData() {
@@ -336,30 +337,75 @@ export class ProphaneJobStateService {
     });
   }
 
-  startProphaneJob(): void {
-    this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
-    this.currentProphaneJob.fastaFilename = this.fastaFile.name;
-    this.setEmapperEvalue();
-    this.jobService.addJob(this.currentProphaneJob).subscribe();
-  }
 
   submitJob(): void {
     if (this.formErrors.size === 0) {
-      this._uploadProgressService.reset();
-      const dialogObservable = this.invokeUploadDialog();
 
-      this.addFilesToUploadData();
-      this.uploaderService.performUpload(
-        this.uploadDialogId,
+      this.currentProphaneJob.csvFilename = this.proteinReportFile.name;
+      this.currentProphaneJob.fastaFilename = this.fastaFile.name;
+      this.setEmapperEvalue();
+
+      this._uploadProgressService.reset();
+      const onDialogClosingObservable = this.invokeUploadDialog();
+
+      this.filesToUpload = {
+        files: [],
+        httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}})
+      };
+
+      const prophaneJsonAsFile = new File([JSON.stringify(this.currentProphaneJob)], 'jobObject');
+      const jobObjectFile: UploadFile = {uploadFile: prophaneJsonAsFile, fileID: 'jobObject'};
+      const reportFile: UploadFile = {uploadFile: this.proteinReportFile, fileID: 'reportFile'};
+      const fastaFile: UploadFile = {uploadFile: this.fastaFile, fileID: 'fastaFile'};
+      this.filesToUpload.files.push(jobObjectFile);
+      this.filesToUpload.files.push(reportFile);
+      this.filesToUpload.files.push(fastaFile);
+
+      this.uploaderService.postMultiPartFilesEvents(
         this.filesToUpload,
         Endpoints.FILES_UPLOAD
       );
 
-      // TODO: start prophane job only if upload was successful?
-      this.startProphaneJob();
+      this._uploadProgressService.addToTotal(
+        this.filesToUpload.files[0].uploadFile.size
+      );
 
-      dialogObservable.subscribe((uploadFailed) => {
-        // redirect to prophane results
+      this.uploaderService
+      .postMultiPartFilesEvents(this.filesToUpload, this.webserver.getEndpoint(Endpoints.FILES_UPLOAD))
+      .subscribe({
+        next: (event) => {
+          console.log('unknown event');
+          console.log(event);
+          console.log(event.type);
+          if (event.type === HttpEventType.UploadProgress) {
+            this._uploadProgressService.changeReportLoaded(event.loaded);
+            console.log('UploadProgress event');
+            console.log(event);
+          } else if (event.type === HttpEventType.Response) {
+            console.log('Response event');
+            console.log(event);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status >= 400) {
+            // handle failed upload
+            if (this.dialog.getDialogById(this.uploadDialogId)) {
+              this.dialog
+                .getDialogById(this.uploadDialogId)
+                .componentInstance.setUploadFailed();
+              this.dialog.getDialogById(
+                this.uploadDialogId
+              ).componentInstance.uploadFailedMessage = error.statusText;
+            }
+          } else {
+            throw error;
+          }
+        },
+      });
+
+      onDialogClosingObservable.subscribe((uploadFailed) => {
+        console.log('dialog closing');
         if (!uploadFailed) {
           if (this.auth.allowExpert()) {
             this.router.navigate(['./prophanejobcontrol']);
@@ -370,6 +416,10 @@ export class ProphaneJobStateService {
           }
         }
       });
+
+
+
+
     }
   }
 

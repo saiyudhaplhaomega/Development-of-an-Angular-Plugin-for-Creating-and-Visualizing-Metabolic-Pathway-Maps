@@ -56,12 +56,6 @@ export class JobService {
     );
   }
 
-  addJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(
-      job,
-      this.address.getURL(Endpoints.PROPHANE_START_JOB)
-    );
-  }
 
   /** DELETE: delete the job from the server */
   deleteJob(jobToDelete: ProphaneJobObject) {
