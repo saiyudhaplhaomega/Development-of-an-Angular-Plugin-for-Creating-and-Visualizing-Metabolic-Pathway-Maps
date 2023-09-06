@@ -4,8 +4,6 @@ import {ProphaneSampleGroupObject} from '../../../../model/prophanesamplegroupjs
 import {ProphaneJobStateService} from '../../../../services/prophane-job-state.service';
 import { FileInputComponent } from 'shared-lib';
 
-import {ProphaneReportStyle} from '../prophane-job-submission-main/prophane-job-submission-formdata';
-
 @Component({
   selector: 'app-job-input',
   templateUrl: './job-input.component.html',

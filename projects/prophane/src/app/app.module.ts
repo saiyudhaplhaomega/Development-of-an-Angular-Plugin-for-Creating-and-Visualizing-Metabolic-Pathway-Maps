@@ -18,6 +18,7 @@ import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/pri
 import { TermsOfServicePageComponent } from './components/terms-of-service-page/terms-of-service-page.component';
 import { SafePipe } from './safe.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,3 +42,6 @@ import { SafePipe } from './safe.pipe';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+
+

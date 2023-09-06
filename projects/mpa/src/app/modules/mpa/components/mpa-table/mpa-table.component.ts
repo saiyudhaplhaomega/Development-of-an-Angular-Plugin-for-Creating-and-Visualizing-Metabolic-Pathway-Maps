@@ -129,8 +129,10 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   onClick(row: ProteinGroupObject): void {
+    if (!row.hidden){
     this.mpaTableDataService.resetCompleteSelection();
     this.mpaTableDataService.selectedProteinGroup.next(row);
+    }
     console.log(row)
   }
 
@@ -181,32 +183,18 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  selectionTests(): void {
-    this.dataSource.data.map(group => {
-      if(group.isSelected){
-        this.mpaTableDataService.groupSelection == GroupSelection.SUBGROUPS ? console.log(group.proteinGroupID) : console.log(group.proteinGroupID)
-      }
-      if(this.mpaTableDataService.groupSelection == GroupSelection.HIERARCHICAL) {
-        group.proteinSubGroupList.map(subgroup => {
-          subgroup.isSelected == true ? console.log(subgroup.proteinGroupID) : '';
-        })
-      }
-    })
-  }
-
-  hideSelectedGroups(): void {
+  disableSelectedGroups(): void {
     const elements = document.getElementsByClassName('checkbox-selected');
-    for (let i = 0; i<elements.length; i++) {
-      let element = elements[i] as HTMLElement;
-      element.style.opacity = "0";
-    }
-    // actually remove selected rows from view after animation has finished
-    // TODO: this.mpaTableDataService.onHideSelectedGroups() IS MISSING!
-    //elements.length > 0 ? setTimeout(()=>{this.mpaTableDataService.onHideSelectedGroups()},1000) : {};
+    // animation doesn't work as intended right now
+    // for (let i = 0; i<elements.length; i++) {
+    //   let element = elements[i] as HTMLElement;
+    //   element.style.opacity = "0";
+    // }
+    elements.length > 0 ? setTimeout(()=>{this.mpaTableDataService.onToggleDisableGroup(true)},1000) : {};
     }
 
-  resetHiddenGroups(): void {
-    // TODO: this.mpaTableDataService.onResetHiddenGroups() IS MISSING!
-    //this.mpaTableDataService.onResetHiddenGroups();
+  enableSelectedGroups(): void {
+    const elements = document.getElementsByClassName('checkbox-selected');
+    elements.length > 0 ? this.mpaTableDataService.onToggleDisableGroup(false) : {};
   }
 }

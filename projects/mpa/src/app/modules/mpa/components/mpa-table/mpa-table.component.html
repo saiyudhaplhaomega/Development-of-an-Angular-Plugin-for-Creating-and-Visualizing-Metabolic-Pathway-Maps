@@ -57,9 +57,13 @@
 
       <ng-container matColumnDef="checkbox">
         <th mat-header-cell *matHeaderCellDef>
-          <div>
-            <button class="btn btn-primary protein-table-button" (click)="hideSelectedGroups()"><mat-icon>visibility_off</mat-icon></button>
-            <button class="btn btn-primary protein-table-button" (click)="resetHiddenGroups()"><mat-icon>visibility</mat-icon></button>
+          <div style="display:flex;flex-direction: column;">
+            <div style="display:flex;justify-content: center;gap: 2px;">
+              <button class="btn btn-outline-secondary protein-table-visibility-button" matTooltip="Disable selected groups"
+                (click)="disableSelectedGroups()"><mat-icon style="transform:scale(0.7) translate(-0.7em,-0.7em)">visibility_off</mat-icon></button>
+              <button class="btn btn-outline-secondary protein-table-visibility-button" matTooltip="Enable selected groups"
+                (click)="enableSelectedGroups()"><mat-icon style="transform:scale(0.7) translate(-0.7em,-0.7em)">visibility</mat-icon></button>
+            </div>
             <mat-checkbox [(ngModel)]="selectedAll" (change)="onSelectAllGroups()"></mat-checkbox>
           </div>
         </th>
@@ -79,6 +83,7 @@
               <tr *ngFor="let subrow of row.proteinSubGroupList" (click)="onClick(subrow)" [ngClass]="{
                 'table-highlight-row': mpaTableDataService.highlightIfSelected(subrow),
                 'table-element-row': !mpaTableDataService.highlightIfSelected(subrow),
+                'table-disabled-row': subrow.hidden,
                 'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && subrow.parentProteinGroupID,
                 'checkbox-selected': subrow.isSelected
                 }">
@@ -102,6 +107,7 @@
            row.parentProteinGroupID !== expandedElement" class="group-row" [ngClass]="{
                'table-highlight-row': mpaTableDataService.highlightIfSelected(row),
                'table-element-row': !mpaTableDataService.highlightIfSelected(row),
+               'table-disabled-row': row.hidden,
                'subgroup-row': mpaTableDataService.groupSelection === 'hierarchical' && row.parentProteinGroupID,
                'checkbox-selected': row.isSelected
                }">

@@ -7,43 +7,12 @@
       [haslogin]="true"
       [homelink]="homelink">
     </shared-nav-toolbar>
-    <app-privacy-consent-banner></app-privacy-consent-banner>
   </div>
+  <app-privacy-consent-banner></app-privacy-consent-banner>
   <div class="content">
     <div style="height: 100%">
       <router-outlet></router-outlet>
     </div>
   </div>
   <app-page-footer class="footer" [footercontent]="footercontent"></app-page-footer>
-
-  <!-- OLD FOOTER CONTENT
-    <li>About</li>
-    <li><a [routerLink]="'/about'">About Prophane</a></li>
-    <li><a [routerLink]="'/termsofservice'">Terms of Service</a></li>
-    <li><a [routerLink]="'/privacypolicy'">Privacy Policy</a></li>
-    <li><a [routerLink]="'/impressum'">Impressum</a></li>
-
-  <ul>
-    <li>Funding & Support</li>
-    <li><a href="http://www.dfg.de">DFG</a></li>
-    <li><a href="http://www.denbi.de">deNBI</a></li>
-    <li><a href="https://www.denbi.de/cloud">deNBI Cloud</a></li>
-  </ul>
-
-  <ul>
-    <li>Analysis</li>
-    <li *ngIf="authService.loggedIn()">
-      <a [routerLink]="'/jobsubmission'">Job Submission</a>
-    </li>
-    <li *ngIf="authService.loggedIn()">
-      <a [routerLink]="'/jobcontrol'">Job Control</a>
-    </li>
-    <li *ngIf="!authService.loggedIn()">
-      <a [routerLink]="'/login'">Login</a>
-    </li>
-    <li *ngIf="authService.loggedIn()">
-      <a (click)="authService.logout()">Logout</a>
-    </li>
-  </ul>
-  -->
 </div>

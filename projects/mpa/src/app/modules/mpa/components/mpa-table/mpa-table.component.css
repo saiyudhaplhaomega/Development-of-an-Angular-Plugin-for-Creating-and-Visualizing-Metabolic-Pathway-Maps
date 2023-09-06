@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.table-element-row:hover {
+.table-element-row:not(.table-disabled-row):hover {
   background: #f5f5f5;
 }
 
@@ -33,6 +33,10 @@
 .table-highlight-row:hover {
   background: #f5d3d3;
   cursor: pointer;
+}
+
+.table-disabled-row {
+  background:#c4c4c4;
 }
 
 tr.table-detail-row{
@@ -155,9 +159,9 @@ tr.table-detail-row{
   padding: 0 0px;
 }
 
-.protein-table-button {
-  overflow-wrap: break-word;
-  margin-right: 5px;
+.protein-table-visibility-button {
+  height: 15px;
+  width: 15px;
 }
 
 /* the only function of this class is to provide the mpa-table.component a class to grab elements by */
