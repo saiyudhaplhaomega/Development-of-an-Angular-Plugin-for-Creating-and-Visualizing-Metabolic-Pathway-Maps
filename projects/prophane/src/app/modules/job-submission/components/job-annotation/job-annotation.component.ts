@@ -19,6 +19,12 @@ export class JobAnnotationComponent {
     this.prophaneJobState.currentProphaneJob.parameters.annotationTasks =
       this.prophaneJobState.currentProphaneJob.parameters.annotationTasks.filter(obj => obj !== removeTask);
     this.prophaneJobState.taskCounter--;
+    if (this.scope == 'Taxonomy'){
+    this.prophaneJobState.taxtasks--;
+    }
+    if (this.scope == 'Function'){
+      this.prophaneJobState.functasks--;
+      }
 
     // delete all errors associated with an annotation task
     for (const key of this.prophaneJobState.formErrors.keys()) {

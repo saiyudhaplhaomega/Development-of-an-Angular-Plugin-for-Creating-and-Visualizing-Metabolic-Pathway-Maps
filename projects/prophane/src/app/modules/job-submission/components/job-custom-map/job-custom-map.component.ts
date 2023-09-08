@@ -25,7 +25,6 @@ export class JobCustomMapComponent implements OnInit {
     .customMapTasks[taskid].optionstring[0].defaultValue = files[0];
   }
 
-
   addCustomMapTask() {
     this.prophaneJobState.customtasksCounter++;
     let task = JSON.parse(

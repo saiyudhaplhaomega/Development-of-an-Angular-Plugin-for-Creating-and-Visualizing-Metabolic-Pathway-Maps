@@ -22,9 +22,14 @@
   <div class="input-group-append" style="flex: 1; overflow:hidden">
   <mat-select class="custom-select"
               [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.reportStyle"
+              [placeholder]="prophaneJobState.currentProphaneJob.parameters.reportStyle.name"
               [compareWith]="prophaneJobState.compareByID"
-              (selectionChange)="onSourceChange()">
-    <mat-option *ngFor="let typeItem of this.reportStyles" [value]="typeItem">{{typeItem.name}}</mat-option>
+              (selectionChange)="onSourceChange()"
+              [matTooltip]="prophaneJobState.currentProphaneJob.parameters.reportStyle.name">
+    <mat-option *ngFor="let typeItem of this.reportStyles" 
+                [value]="typeItem">
+                {{typeItem.name}}
+    </mat-option>
   </mat-select>
 </div>
 </div>

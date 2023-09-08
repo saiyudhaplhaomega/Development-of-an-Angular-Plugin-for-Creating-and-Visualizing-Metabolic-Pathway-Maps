@@ -2,7 +2,10 @@
     2. add button -> pre-filled custom maps fields are shown (default job) and added to prophaneJob.param
     3. changes in fields (input file name empty!) changed in prohane job params
     4. add file to files to upload  -->
-
+<div *ngIf="prophaneJobState.getCustomTasks().length === 0">
+  No custom map annotation task defined.
+  <mat-divider class="mb-3"> </mat-divider>
+</div>
 <!--  already added/defined custom Maps -->
 <ng-container *ngFor="let custom_task of this.prophaneJobState.getCustomTasks(); let taskIndex = index">
     <!--  task Label-->
