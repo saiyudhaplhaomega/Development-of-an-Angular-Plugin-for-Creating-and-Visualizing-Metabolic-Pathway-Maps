@@ -6,6 +6,7 @@ import {ProphaneJobStateService} from '../../../../services/prophane-job-state.s
   templateUrl: './job-quantification.component.html',
   styleUrls: ['./job-quantification.component.scss']
 })
+
 export class JobQuantificationComponent {
 
   constructor(
