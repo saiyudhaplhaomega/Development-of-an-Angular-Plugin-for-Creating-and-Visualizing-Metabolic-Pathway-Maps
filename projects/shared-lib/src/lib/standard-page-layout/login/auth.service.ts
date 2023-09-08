@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
+import {OAuthService } from 'angular-oauth2-oidc';
+// beginning with version 9 moved to own library, install via npm i angular-oauth2-oidc-jwks --save
+import {JwksValidationHandler} from 'angular-oauth2-oidc-jwks';
 import { BehaviorSubject, filter } from 'rxjs';
 import { authConfigElixir } from './authConfigElixir';
 import { authConfigGoogle } from './authConfigGoogle';
