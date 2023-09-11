@@ -1,31 +1,34 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { DataService, NodeType} from '../../../../services/data.service';
-import { UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DataService, NodeType } from '../../../../services/data.service';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DataItem } from '../../../../model/data-item';
+import { ExperimentJSONObject } from '../../../../model/experimentjson';
 
+export enum DialogStatus {
+  UNSUBMITTED = "unsubmitted",
+  LOADING = "loading",
+  SUBMITTED = "submitted", //currently not used, may be useless in this scenario
+  FAILED = "failed",
+  SUCCESS = "success"
+}
 @Component({
   selector: 'app-compare-experiments-dialog-component',
   templateUrl: './compare-experiments-dialog-component.component.html',
   styleUrls: ['./compare-experiments-dialog-component.component.scss']
 })
 export class CompareExperimentsDialogComponentComponent implements OnInit {
-  firstExperiment: string;
-  firstExperimentId: string;
-
-  secondExperiment: string;
-  secondExperimentId: string;
-
   compExpNameForm: UntypedFormGroup;
   comparisonExperimentName: string;
 
-  listOfExperiments: string[] = [];
-  experimentsMap: Map<string, string>;
+
+  availableExperimentsNames: string[];
+  availableExperiments: Map<string, string>;
+  experimentsForm: FormControl;
 
   //maybe only status needed, converted to boolean where needed? AND enum?
-  comparisonFailed: boolean = false;
-  status: string = "unsubmitted";
-  submitDisabled: boolean = true;
+  status: DialogStatus;
+  submitDisabled: boolean = false;
   errorMessage: string;
 
   constructor(
@@ -35,17 +38,20 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { parentFolderDataObject: DataItem, expName?: string, expID?: string },
   ) {
-  }
+    console.log("constructor")
+   }
 
   ngOnInit(): void {
-    this.experimentsMap = this.dataService.getExperimentsMap();
-    this.experimentsMap.forEach((value, key) => {
-      if (key != this.data.expName) {
-        this.listOfExperiments.push(key);
-      }
+    console.log("init")
+    this.availableExperimentsNames = [];
+    this.availableExperiments = this.dataService.getExperimentsMap();
+    this.availableExperiments.forEach((expid, key) => {
+      this.availableExperimentsNames.push(key)
     })
-    this.initializeDefaults();
-
+    this.experimentsForm = new FormControl([]);
+    this.experimentsForm.valueChanges.subscribe(() => {
+      this.validateSubmits();
+    })
     this.compExpNameForm = this.fb.group({
       comparisonExperimentName: [
         '',
@@ -58,76 +64,69 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     this.compExpNameForm.statusChanges.subscribe(() => {
       this.validateSubmits();
     })
-
+    this.initializeDefaults();
   }
 
   // used in the "goBack"-button after submission failed and in ngOnInit
   initializeDefaults() {
-    if (this.data.expName == null){
-      this.firstExperiment = this.listOfExperiments[0];
-      this.firstExperimentId = this.experimentsMap.get(this.firstExperiment);
-      this.secondExperiment = this.listOfExperiments[1];
-    } else {
-      this.firstExperiment = this.data.expName;
-      this.firstExperimentId = this.data.expID;
-      this.secondExperiment = this.listOfExperiments[0];
-    }
-    this.secondExperimentId = this.experimentsMap.get(this.secondExperiment);
-    this.status = "unsubmitted";
+    this.status = DialogStatus.UNSUBMITTED;
     this.errorMessage = '';
-  }
-
-  selectedExperimentChange(newSelection: string, expToChange: string): void {
-    if (expToChange == "first") {
-      this.firstExperiment = newSelection;
-      this.firstExperimentId = this.experimentsMap.get(this.firstExperiment);
-    } else {
-    this.secondExperiment = newSelection;
-    this.secondExperimentId = this.experimentsMap.get(this.secondExperiment);
+    if (this.data.expName) {
+      this.experimentsForm.setValue([this.data.expName]);
     }
-    this.validateSubmits();
   }
 
-  submitCompareExperiments(): void {
-    this.status="loading";
-    this.dataService.getExperimentData(this.firstExperimentId).subscribe(exp1 => {
-      this.dataService.getExperimentData(this.secondExperimentId).subscribe(exp2 => {
-        this.status = "submitted";
-        if(exp1.isSearched && exp2.isSearched) {
-          const compareExperimentList: string[] = [this.firstExperimentId, this.secondExperimentId];
-          const nodeObject: DataItem = this.dataService.createNewDataItem(this.data.parentFolderDataObject, this.compExpNameForm.value.comparisonExperimentName, NodeType.ExperimentComparison, compareExperimentList);
-        } else{
-          this.comparisonFailed = true;
-          this.errorMessage = "No uploaded data in ";
-          !exp1.isSearched ? this.errorMessage += exp1.name+" " : '';
-          !exp2.isSearched ? this.errorMessage += ","+exp2.name : '';
+  submitCompareExperiments() {
+    this.status = DialogStatus.LOADING;
+    let selectedExperimentsNames: string[] = this.experimentsForm.value
+    let selectedExperimentsIDs: string[] = [];
+    let responses: ExperimentJSONObject[] = [];
+    for (let i = 0; i < selectedExperimentsNames.length; i++) {
+      selectedExperimentsIDs.push(this.availableExperiments.get(selectedExperimentsNames[i]))
+      this.dataService.getExperimentData(selectedExperimentsIDs[i]).subscribe(res => {
+        responses.push(res);
+        if(responses.length == selectedExperimentsIDs.length){
+          for(let i in responses) {
+            if (!responses[i].isSearched) {
+              this.status = DialogStatus.FAILED;
+              this.errorMessage.length > 1 ? this.errorMessage += ", " + responses[i].name : this.errorMessage += "No data uploaded in " + responses[i].name;
+            }
+          }
+          this.status == DialogStatus.FAILED ? {} : this.createNewComparisonNode(selectedExperimentsIDs);
         }
       })
+    }
+  }
+  createNewComparisonNode(selectedExperimentsIDs: string[]) {
+    const nodeObject: DataItem = this.dataService.createNewDataItem(this.data.parentFolderDataObject, this.compExpNameForm.value.comparisonExperimentName, NodeType.ExperimentComparison, selectedExperimentsIDs);
+    this.dataService.getExperimentData(nodeObject.uuid).subscribe(res => {
+      //TODO is this right? does comparison also get set to isSearched = true?
+      res.isSearched ? this.status = DialogStatus.SUCCESS : this.status = DialogStatus.FAILED;
     })
   }
 
-  getErrorMessage(): string {
+  //errorMessage for the name form
+  getNameErrorMessage(): string {
     if (this.compExpNameForm.get('comparisonExperimentName').hasError('required')) {
       return 'Please enter a name';
     } else if (this.compExpNameForm.get('comparisonExperimentName').hasError('pattern')) {
-      return 'no white spaces or special chars';
+      return 'No white spaces or special chars';
     } else {
       return '';
     }
   }
 
-  //TODO is there a better/more efficient way to handle this without constantly checking if else?
+  //enables/disables submit button and sends back an errorMessage
   validateSubmits(): void {
-    if ( this.compExpNameForm.status != "VALID"|| this.firstExperimentId == this.secondExperimentId) {
+    if (this.compExpNameForm.status != "VALID"|| this.experimentsForm.value.length < 2) {
       this.submitDisabled = true;
-      this.errorMessage = (this.firstExperimentId == this.secondExperimentId) ? "select distinct experiments" : '';
-    } else if (this.firstExperimentId && this.secondExperimentId) {
+    } else if (this.experimentsForm.value.length > 1 && this.compExpNameForm.status == "VALID") {
       this.submitDisabled = false;
       this.errorMessage = "";
     }
   }
 
   closeDialog(): void {
-    this.dialogRef.close(this.comparisonFailed);
+    this.dialogRef.close(this.status == DialogStatus.SUCCESS ? true : false);
   }
 }
