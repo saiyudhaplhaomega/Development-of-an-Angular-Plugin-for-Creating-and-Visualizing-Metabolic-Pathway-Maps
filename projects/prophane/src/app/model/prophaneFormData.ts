@@ -7,8 +7,6 @@ import {ProphaneDataBaseOption} from './databaseoptions';
 import {ProphaneEvalueOptions} from './prophaneEvalueOptionsJson';
 import {TaxonomyAdvandedOptionsJson} from './taxonomyAdvandedOptions';
 import {ProphaneLcaObject} from './prophanelcadata';
-import { ProphaneCustomMap } from './prophanecustommapdata';
-import { NONE_TYPE } from '@angular/compiler';
 
 
 export const jobLabelData = [
@@ -496,8 +494,6 @@ export const lcaOptions: ProphaneLcaObject[] = [
       values: ['0', '1', '2', '3', '4', '5', '6', '7'], isDefault: '0', avoid: []},
   },
 ];
-
-
 
 export const CustomMapOptions: any =  {
     scope: ['Taxonomy', 'Function'],

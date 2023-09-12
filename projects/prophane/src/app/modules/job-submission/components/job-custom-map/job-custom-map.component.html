@@ -7,6 +7,7 @@
   <mat-divider class="mb-3"> </mat-divider>
 </div>
 
+
 <!--  already added/defined custom Maps -->
 <ng-container *ngFor="let custom_task of this.prophaneJobState.getCustomTasks(); let customIndex = index">
     <!--  task Label-->
@@ -18,7 +19,11 @@
         <input
           type="text"
           class="form-control"
-          [ngClass]="{}"
+          [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
+                      'Custom_map_task_' + customIndex, custom_task, 'tasklabel', true,
+                      prophaneJobState.getCustomTasks()
+                      )
+                  }"
           [(ngModel)]="custom_task.tasklabel">
         <div class="input-group-append">
           <button
@@ -29,7 +34,7 @@
         </div>
       </div>
 
-      <!-- Reference Database /task map file to upload 
+      <!-- not working, always first custom_task with customIndex 0 changed in onMapChange
       <app-file-input
         (fileSelected)="onMapChange(custom_task, customIndex, $event)"
         [selectedFile]="prophaneJobState.customMapFiles[customIndex]"
@@ -38,27 +43,29 @@
       >
       </app-file-input>
       -->
+
+      <!-- Reference Database /task map file to upload  -->
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-        <span class="input-group-text">Custom Map File</span>
+          <span class="input-group-text">Custom Map File</span>
+        </div>
+        <div class="custom-file input-group-append" style="flex: 1; overflow:hidden">
+          <input type="file" 
+                accept='.tsv, .csv, .txt'
+                id='{{"custom_map_" + customIndex}}'
+                #customfile
+                (change)="onMapChange(custom_task, customIndex, customfile.files)"
+                class="custom-file-input">
+          <label *ngIf="!prophaneJobState.customMapFiles[customIndex]" 
+                class="custom-file-label"
+                for='{{"custom_map_" + customIndex}}'>
+                Choose custom map file (.tsv, .csv, .txt)</label>
+          <label *ngIf="prophaneJobState.customMapFiles[customIndex]" 
+                class="custom-file-label"
+                for='{{"custom_map_" + customIndex}}'>
+                {{prophaneJobState.customMapFiles[customIndex].name}}</label>
+        </div>
       </div>
-      <div class="custom-file input-group-append" style="flex: 1; overflow:hidden">
-        <input type="file" 
-              accept='.tsv, .csv, .txt'
-              id='{{"custom_map_" + customIndex}}'
-              #customfile
-              (change)="onMapChange(custom_task, customIndex, customfile.files)"
-              class="custom-file-input">
-        <label *ngIf="!prophaneJobState.customMapFiles[customIndex]" 
-              class="custom-file-label"
-              for='{{"custom_map_" + customIndex}}'>
-              Choose custom map file (.tsv, .csv, .txt)</label>
-        <label *ngIf="prophaneJobState.customMapFiles[customIndex]" 
-               class="custom-file-label"
-               for='{{"custom_map_" + customIndex}}'>{{prophaneJobState.customMapFiles[customIndex].name}}</label>
-      </div>
-    </div>
-
 
       <!--  scope-->
       <div class="input-group mb-3">

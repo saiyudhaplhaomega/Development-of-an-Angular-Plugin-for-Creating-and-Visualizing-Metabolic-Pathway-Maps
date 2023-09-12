@@ -9,8 +9,8 @@
       type="text" 
       class="form-control"
       [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-      this.scope + '_task_' + taskIndex, task, 'tasklabel',true,
-           prophaneJobState.filterAnnotationTasks('Taxonomy'))}"
+      this.scope + '_task_' + taskIndex, task, 'tasklabel', true,
+           prophaneJobState.filterAnnotationTasks(this.scope))}"
       [(ngModel)]="task.tasklabel">
     <div class="input-group-append">
       <button

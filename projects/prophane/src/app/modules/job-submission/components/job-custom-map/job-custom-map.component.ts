@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { defaultCustomMapTask} from '../../../../model/prophaneFormData';
 import {ProphaneJobStateService} from '../../../../services/prophane-job-state.service';
 import { ProphaneAnnotationTaskObject } from 'projects/prophane/src/app/model/prophaneannotationtaskjson';
@@ -10,9 +10,6 @@ import { ProphaneAnnotationTaskObject } from 'projects/prophane/src/app/model/pr
   styleUrls: ['./job-custom-map.component.scss']
 })
 export class JobCustomMapComponent implements OnInit {
-  readonly algoOption = [{name: 'acc2annot_mapper', value: 'acc2annot_mapper'}]
-  readonly typeOptions = ['taxonomic', 'functional']
-
   constructor(
     public prophaneJobState: ProphaneJobStateService
   ) { }
@@ -30,7 +27,7 @@ export class JobCustomMapComponent implements OnInit {
       this.prophaneJobState.customMapFiles.push(files[0])
     }
 
-    // add filename to params path
+    // add filename to params path, defaultValue
     custom_task.optionstring[0].defaultValue = files[0].name;
   }
 

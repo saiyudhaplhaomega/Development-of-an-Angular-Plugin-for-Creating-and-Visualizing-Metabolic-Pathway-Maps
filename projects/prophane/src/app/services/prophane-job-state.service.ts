@@ -459,7 +459,6 @@ export class ProphaneJobStateService {
      * @return {boolean} isValid - isValid defines status of formfield for css styling
      * users
      */
-
     let isValid = true;
     let errorPrompt: string;
     const type = input.hasOwnProperty('valueType') ? input.valueType : 'string';
