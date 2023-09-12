@@ -11,8 +11,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 import { cloneDeep } from 'lodash';
 import { Endpoints } from '../../models/endpoints.model';
-import { MultiFileUploadData } from '../../services/http-client.service';
-import { OfsHttpClientService } from '../../services/ofs-http-client.service';
+import { MultiFileUploadData } from 'shared-lib';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
 import { OfsJob } from '../models/ofs-job.model';
@@ -21,6 +20,7 @@ import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
 import { StepperService } from './stepper.service';
+import { HttpClientService } from 'shared-lib';
 
 export interface SimpleMessage {
   message: string;
@@ -36,7 +36,7 @@ export class WorkflowService {
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
 
   constructor(
-    private http: OfsHttpClientService,
+    private http: HttpClientService,
     private stepperService: StepperService
   ) {
     this.ofsDataSubject$.next(new OFSData());

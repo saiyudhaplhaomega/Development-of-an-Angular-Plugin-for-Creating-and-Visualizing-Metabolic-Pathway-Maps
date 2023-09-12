@@ -30,11 +30,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { WrapperResultsInputComponent } from './wrapper/wrapper-results-input/wrapper-results-input.component';
 import { PreprocessingResultsInputComponent } from './preprocessing/preprocessing-results-input/preprocessing-results-input.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { WorkflowService } from './services/workflow.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { WorkflowGuard } from './workflow.guard';
-import { StepperService } from './services/stepper.service';
 import { IconDividerModule, WorkflowPanelModule } from 'shared-lib';
 import { ResultsDownloadComponent } from './results/results-download/results-download.component';
 import { ResultFiguresModule } from 'shared-lib';
@@ -80,10 +77,6 @@ import { ResultFiguresModule } from 'shared-lib';
     WorkflowPanelModule,
     ResultFiguresModule,
   ],
-  providers: [
-    WorkflowService,
-    WorkflowGuard,
-    StepperService
-  ],
+  providers: [],
 })
 export class WorkflowModule {}

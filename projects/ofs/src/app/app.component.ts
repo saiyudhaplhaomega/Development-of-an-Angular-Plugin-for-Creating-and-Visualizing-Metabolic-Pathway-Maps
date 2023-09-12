@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { AuthService, HttpClientService, NavigationRoute } from 'shared-lib';
+import { AuthService, FooterContentMain, HttpClientService, NavigationRoute } from 'shared-lib';
 import { RouteStateService } from './services/route-state.service';
 
 @Component({
@@ -26,6 +26,25 @@ export class AppComponent implements OnInit {
     label: 'Home',
     requireAuth: false,
   };
+  footercontent: FooterContentMain[] = [
+    {
+      categoryname: 'About',
+      elements: [
+        {name: 'About Prophane', routerlink: '/about'},
+        {name: 'Terms of Service', routerlink: '/termsofservice'},
+        {name: 'Privacy Policy', routerlink: '/privacypolicy'},
+        {name: 'Impressum', routerlink: '/impressum'},
+      ]
+    },
+    {
+      categoryname: 'Funding & Support',
+      elements: [
+        {name: 'DFG', href: 'http://www.dfg.de'},
+        {name: 'de.NBI', href: 'http://www.denbi.de'},
+        {name: 'de.NBI Cloud', href: 'https://www.denbi.de/cloud'},
+      ]
+    },
+  ];
 
   ngOnInit() {
     this.router.events

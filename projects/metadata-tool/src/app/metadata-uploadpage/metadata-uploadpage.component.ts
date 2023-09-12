@@ -25,7 +25,6 @@ export class MetadataUploadpageComponent {
     this.uploadError = null;
     const files: MultiFileUploadData = {
       files: [],
-      fileUploadAdress: '',
     }
     this.selectedFiles.forEach((file) => {
       files.files.push({uploadFile: file, fileID: file.name});

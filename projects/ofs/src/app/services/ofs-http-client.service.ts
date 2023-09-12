@@ -9,13 +9,13 @@ import { filter, Observable, of, repeat, take } from 'rxjs';
 import { get } from 'lodash';
 import { Endpoints, getAdress } from '../models/endpoints.model';
 import { OfsJobState } from '../workflow/models/ofs-job.model';
-import { MultiFileUploadData } from './http-client.service';
+import { MultiFileUploadData } from 'shared-lib';
 import { UploadProgressService } from './upload-progress.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OfsHttpClientService {
+export class OfsHttpClientServiceDEPRECATED {
   constructor(
     private http: HttpClient,
     private uploadProgressService: UploadProgressService
