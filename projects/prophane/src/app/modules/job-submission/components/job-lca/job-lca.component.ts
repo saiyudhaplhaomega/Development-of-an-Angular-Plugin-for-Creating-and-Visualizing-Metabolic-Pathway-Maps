@@ -33,7 +33,8 @@ export class JobLcaComponent implements OnInit {
   }
 
   isValidNumber(val, min, max, elemid) {
-    if (val === undefined || isNaN(parseFloat(val)) || (min !== undefined && min > val) || (max !== undefined && max < val)) {
+    if (val === undefined || isNaN(parseFloat(val)) || (min !== undefined && min > val) 
+        || (max !== undefined && max < val)) {
       this.addFormInputErr(elemid);
       return false;
     }     else {
@@ -54,7 +55,9 @@ export class JobLcaComponent implements OnInit {
   }
 
   removeLCAOptionString(removeTask: ProphaneTaskOptionString) {
-    this.prophaneJobState.currentProphaneJob.parameters.lcaTask.optionstring = this.prophaneJobState.currentProphaneJob.parameters.lcaTask.optionstring.filter(obj => obj !== removeTask);
+    this.prophaneJobState.currentProphaneJob.parameters.lcaTask.optionstring = 
+    this.prophaneJobState.currentProphaneJob.parameters.
+    lcaTask.optionstring.filter(obj => obj !== removeTask);
   }
 
   getLCAAdvancedOptions(algo: String): ProphaneTaskOptionString[] {

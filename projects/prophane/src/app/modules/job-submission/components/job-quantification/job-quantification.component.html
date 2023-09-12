@@ -2,10 +2,17 @@
   <div class="input-group-prepend">
     <span class="input-group-text rki-blue-input">Quantification method</span>
   </div>
-  <mat-select class="custom-select" [(value)]="prophaneJobState.currentProphaneJob.parameters.quantification"
-              [compareWith]="prophaneJobState.compareByID">
-    <mat-option *ngFor="let quantitem of prophaneJobState.quantdata" [value]="quantitem">
+  <mat-select class="custom-select input-group-append" 
+              style="flex: 1; overflow:hidden"
+              [placeholder]="prophaneJobState.currentProphaneJob.parameters.quantification.name"
+              [(value)]="prophaneJobState.currentProphaneJob.parameters.quantification"
+              [compareWith]="prophaneJobState.compareByID"
+              [matTooltip]="prophaneJobState.currentProphaneJob.parameters.quantification.name">
+    <mat-option *ngFor="let quantitem of prophaneJobState.quantdata" 
+                id="quantValue"
+                [value]="quantitem">
       {{quantitem.name}}
     </mat-option>
+
   </mat-select>
 </div>

@@ -6,15 +6,18 @@
       <span class="input-group-text rki-blue-input">Task Label</span>
     </div>
     <input
-      type="text" class="form-control"
+      type="text" 
+      class="form-control"
       [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
-      this.scope + '_task_' + taskIndex, task, 'tasklabel',true,
-           prophaneJobState.filterAnnotationTasks('Taxonomy'))}"
+      this.scope + '_task_' + taskIndex, task, 'tasklabel', true,
+           prophaneJobState.filterAnnotationTasks(this.scope))}"
       [(ngModel)]="task.tasklabel">
     <div class="input-group-append">
       <button
         style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-        class="btn btn-outline-secondary w-sbtn" type="button" (click)='removeAnnotationTask(task, taskIndex)'>
+        class="btn btn-outline-secondary w-sbtn" 
+        type="button" 
+        (click)='removeAnnotationTask(task, taskIndex)'>
         —
       </button>
     </div>
@@ -28,7 +31,8 @@
     <div class="input-group-prepend">
       <span class="input-group-text">Reference Database</span>
     </div>
-    <mat-select class="custom-select" 
+    <mat-select class="custom-select input-group-append"
+                style="flex: 1; overflow:hidden"
                 [(value)]="task.database"
                 [compareWith]="prophaneJobState.compare"
                 (valueChange)="prophaneJobState.setDefaultAlgorithm(task, taskIndex)">
@@ -40,7 +44,9 @@
       </ng-container>
     </mat-select>
     <div class="input-group-append custom-select">
-      <mat-select [(value)]="task.databaseversion" [disabled]="true" [compareWith]="prophaneJobState.compare">
+      <mat-select [(value)]="task.databaseversion" 
+                  [disabled]="true" 
+                  [compareWith]="prophaneJobState.compare">
         <mat-option value="latest">latest</mat-option>
       </mat-select>
     </div>
@@ -51,7 +57,8 @@
     <div class="input-group-prepend">
       <span class="input-group-text">Search Algorithm</span>
     </div>
-    <mat-select class="custom-select"
+    <mat-select class="custom-select input-group-append"
+                style="flex: 1; overflow:hidden"
                 [(value)]="task.algorithm"
                 [compareWith]="prophaneJobState.compare"
                 (valueChange)="prophaneJobState.resetOptstr(task, taskIndex)">
@@ -79,7 +86,8 @@
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" type="button"
+            class="btn btn-outline-secondary w-sbtn" 
+            type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
@@ -103,7 +111,8 @@
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" type="button"
+            class="btn btn-outline-secondary w-sbtn" 
+            type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
@@ -129,7 +138,8 @@
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" type="button"
+            class="btn btn-outline-secondary w-sbtn" 
+            type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
@@ -155,7 +165,8 @@
         <div
           style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
           class="input-group-append custom-select">
-          <mat-select [(value)]="algoSel.defaultValue" placeholder="Custom">
+          <mat-select [(value)]="algoSel.defaultValue" 
+                      placeholder="Custom">
             <mat-option *ngFor="let evalueRange of prophaneJobState.evalueOptions"
                         [value]="evalueRange.numerical">
               {{ evalueRange.text}}
@@ -176,7 +187,8 @@
           </span>
         </div>
         <div class="input-group-append custom-select">
-          <mat-select [(value)]="algoSel.defaultValue" [compareWith]="prophaneJobState.compare">
+          <mat-select [(value)]="algoSel.defaultValue" 
+                      [compareWith]="prophaneJobState.compare">
             <ng-container *ngFor="let enumVal of algoSel.values">
               <mat-option [value]="enumVal">
                 {{enumVal}}
@@ -185,7 +197,8 @@
           </mat-select>
         </div>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary w-sbtn" type="button"
+          <button class="btn btn-outline-secondary w-sbtn" 
+                  type="button"
                   (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
@@ -209,7 +222,8 @@
         <div class="input-group-append">
           <button
             style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" type="button"
+            class="btn btn-outline-secondary w-sbtn" 
+            type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
           </button>
@@ -224,15 +238,19 @@
   <!-- Advanced Option -->
   <div class="input-group mb-3">
     <!-- The Dropbox that displays optionstrings that can be added -->
-    <div class="input-group-prepend">
+    <div  class="input-group-prepend">
       <span class="input-group-text">Add Advanced Options</span>
     </div>
+
     <ng-container *ngFor="let db of prophaneJobState.optionStrings">
       <ng-container *ngIf="db.database === task.database">
         <ng-container *ngFor="let algo of db.algs">
           <ng-container *ngIf="algo.name === task.algorithm">
-            <mat-select class="custom-select" [(ngModel)]="task.formOptionStringSelection"
-                        [(value)]="task.formOptionStringSelection" [compareWith]="prophaneJobState.compare"
+            <mat-select class="custom-select input-group-append" 
+                        style="flex: 1; overflow:hidden" 
+                        [(ngModel)]="task.formOptionStringSelection"
+                        [(value)]="task.formOptionStringSelection" 
+                        [compareWith]="prophaneJobState.compare"
                         placeholder="Choose Option">
               <ng-container *ngFor="let option of algo.options">
                 <ng-container *ngIf="!prophaneJobState.isAlreadyInTask(task.optionstring, option)">
@@ -243,7 +261,9 @@
               </ng-container>
             </mat-select>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="prophaneJobState.addOptionString(task)">
+              <button class="btn btn-outline-secondary w-sbtn" 
+                      type="button" 
+                      (click)="prophaneJobState.addOptionString(task)">
                 +
               </button>
             </div>
@@ -251,7 +271,7 @@
         </ng-container>
       </ng-container>
     </ng-container>
-  </div>
+</div>
 
   <mat-divider class="mb-3"> </mat-divider>
 </ng-container>

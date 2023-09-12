@@ -84,6 +84,7 @@ import { JobSubmissionRoutingModule } from './job-submission-routing.module';
     MatListModule,
     MatButtonModule,
     MatSelectModule,
+    MatTooltipModule,
     // COMPILES WITHOUT THESE, BUT SOME MAY BE NECESSARY FOR STYLES
     //MatDividerModule,
     //A11yModule,

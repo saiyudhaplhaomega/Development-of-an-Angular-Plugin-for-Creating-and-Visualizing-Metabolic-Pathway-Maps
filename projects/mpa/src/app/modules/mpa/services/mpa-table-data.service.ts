@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpClientService } from 'dist/shared-lib';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Endpoints, WebserveraddressService } from '../../../mpawebserveraddress.service';
 import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
 import { SpectrumDataObject } from '../components/spectrum-viewer/spectrum-data-object';
@@ -75,7 +75,8 @@ export class MpaTableDataService {
     this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([], ''));
   }
 
-  public requestProteinGroups() {
+  public requestProteinGroups(): Observable<boolean> {
+    let returnValue = new Subject<boolean>();
     this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
       filename: 'sample.mgf', //sinnlos?
       experimentID: this.expID.value,
@@ -83,11 +84,14 @@ export class MpaTableDataService {
       next: (proteinGroups) => {
         this.mpaData = proteinGroups;
         this.setMpaTabledata();
+        returnValue.next(true);
       },
       error: () => {
         console.log('ERROR: mpa-table-data.service.requestProteinGroups')
+        returnValue.next(false);
       }
     });
+    return returnValue.asObservable();
   }
 
   private requestSequence() {

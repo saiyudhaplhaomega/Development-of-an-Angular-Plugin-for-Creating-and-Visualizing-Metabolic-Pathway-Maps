@@ -3,7 +3,9 @@
     <div class="input-group-prepend">
       <span class="input-group-text rki-blue-input">LCA method</span>
     </div>
-    <mat-select class="custom-select" [(value)]="prophaneJobState.currentProphaneJob.parameters.lcaTask"
+    <mat-select class="custom-select input-group-append" 
+                style="flex: 1; overflow:hidden"
+                [(value)]="prophaneJobState.currentProphaneJob.parameters.lcaTask"
                 [compareWith]="prophaneJobState.compareByID">
       <mat-option *ngFor="let lcamethod of lcaTasks" [value]="lcamethod">
         {{lcamethod.name}}
@@ -63,11 +65,13 @@
   </ng-container>
   
   <!-- LCA Advanced Options Button,The Dropbox that displays optionstrings that can be added  -->
-  <div class="input-group mb-5">
+  <ng-container *ngIf="prophaneJobState.currentProphaneJob.parameters.lcaTask.optionstring.length<3">
+  <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text">Add Advanced Options</span>
     </div>
-    <mat-select class="custom-select"
+    <mat-select class="custom-select input-group-append" 
+                style="flex: 1; overflow:hidden"
                 [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.lcaTask.formOptionStringSelection"
                 [(value)]="prophaneJobState.currentProphaneJob.parameters.lcaTask.formOptionStringSelection"
                 [compareWith]="prophaneJobState.compare"
@@ -80,9 +84,12 @@
       </ng-container>
     </mat-select>
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary w-sbtn" type="button" (click)="prophaneJobState.addLCAOptionString(prophaneJobState.currentProphaneJob.parameters.lcaTask)">
+      <button class="btn btn-outline-secondary w-sbtn" 
+              type="button" 
+              (click)="prophaneJobState.addLCAOptionString(prophaneJobState.currentProphaneJob.parameters.lcaTask)">
         +
       </button>
     </div>
   </div>
+</ng-container>
   

@@ -194,12 +194,12 @@ export class ExperimentPageComponent
   uploadFileTypePeaklist: string[] = [FileType.MZML, FileType.MGF];
   uploadFileTypeSearch: string[] = [FileType.MZIDENTML, FileType.DAT];
 
-  buttonDisabled = true;
+  buttonDisabled: boolean = true;
 
-  hasMpaData = true;
   datStats: Datstats;
-  hasTaxonomyData = true;
-  hasFunctionData = false;
+  hasMpaData: boolean = false;
+  hasTaxonomyData: boolean = false;
+  hasFunctionData: boolean = false;
 
   // DATA SUBMISSION VARIABLES
   // files selected via input field
@@ -244,25 +244,26 @@ export class ExperimentPageComponent
 
     this.proteinDatabases = this.dataService.getProteinDatabases();
     this.proteinDBselection = this.proteinDatabases[0];
-
+    
     this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
       this.experimentDataObject = experimentData;
       if (this.experimentDataObject.isSearched) {
-        this.hasMpaData = true;
-        this.mpaTableDataService.requestProteinGroups();
+        this.mpaTableDataService.requestProteinGroups().subscribe({
+          next: res => {
+            if (res) {
+              this.hasMpaData = true;
+              this.datStats = this.calculateDataStats(this.mpaTableDataService.mpaTableData.value);
+            } else {
+              this.hasMpaData = false;
+            }
+          }
+        });
       } else {
         this.hasMpaData = false;
       }
     });
 
     this.searchParameters = new SearchParameters();
-    this.mpaTableDataService.mpaTableData.subscribe((mpaData) => {
-      // condition is needed here, otherwise protein groups would be accessible before data has actually loaded (sequencing and loadtimes seem wonky)
-      this.hasMpaData = mpaData.length > 0;
-      if (this.hasMpaData) {
-        this.datStats = this.calculateDataStats(mpaData);
-      }
-    });
   }
 
   ngOnDestroy() {

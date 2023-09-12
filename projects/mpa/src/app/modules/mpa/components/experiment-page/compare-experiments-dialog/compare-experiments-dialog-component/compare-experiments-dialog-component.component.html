@@ -1,36 +1,29 @@
 <div class="compare-dialog" mat-dialog-content>
     <div *ngIf="status=='unsubmitted'">
-        <div class="input-group mb-0">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Experiment 1</span>
-            </div>
-            <ng-container *ngIf="data.expName else firstExpSelect">
-                <div class="form-control custom-select">
-                    <span>{{firstExperiment}}</span>
-                </div>
-            </ng-container>
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Experiment 2</span>
-            </div>
-            <mat-select class="form-control custom-select" [(value)]="this.secondExperiment"
-                (selectionChange)="selectedExperimentChange($event.value, 'second')">
-                <mat-option *ngFor="let exp of listOfExperiments" [value]="exp">{{exp}}</mat-option>
-            </mat-select>
-        </div>
         <mat-form-field appearance="fill" [formGroup]="compExpNameForm" style="width: 100%;">
             <mat-label>Comparison-Experiment Name</mat-label>
             <input type="text" formControlName="comparisonExperimentName" matInput>
             <mat-error
                 *ngIf="compExpNameForm.get('comparisonExperimentName').errors && compExpNameForm.get('comparisonExperimentName').touched">
-                {{getErrorMessage()}}
+                {{getNameErrorMessage()}}
             </mat-error>
         </mat-form-field>
+        <section style="margin-top:10px;">
+            <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Experiments</span>
+                </div>
+                <mat-select class="form-control custom-select" [formControl]="experimentsForm"
+                    placeholder="select experiments to compare" multiple>
+                    <mat-option *ngFor="let option of availableExperimentsNames" [value]="option" [disabled]="option == this.data.expName ? true : false"
+                        >{{option}}</mat-option>
+                </mat-select>
+            </div>
+        </section>
         <div style="display:flex; flex-direction:row;">
             <button class="btn btn-primary rki-blue-bg" (click)="submitCompareExperiments()"
                 [disabled]='submitDisabled'>Submit</button>
-            <div class="filler">{{this.errorMessage}}</div>
+            <div class="filler"></div>
             <button class="btn float-right btn-danger" (click)="closeDialog()">Cancel</button>
         </div>
     </div>
@@ -39,27 +32,22 @@
         <mat-spinner style="margin:auto; transform: translateY(50%);"></mat-spinner>
     </div>
 
-    <div *ngIf="status=='submitted'" style="display: grid; grid-template-rows: 4fr 1fr; ">
-        <div>
-            <div *ngIf="!comparisonFailed">
+    <div style="display: grid; grid-template-rows: 4fr 1fr; ">
+        <div *ngIf="status=='success'">
                 <h2>SUCCESS</h2>
-            </div>
-            <div *ngIf="comparisonFailed">
-                <h2>ERROR</h2>
-                <h3>{{this.errorMessage}}</h3>
-            </div>
         </div>
-        <div style="display:flex; flex-direction: row;">
-            <button class="btn btn-primary rki-blue-bg" (click)="initializeDefaults()" *ngIf="comparisonFailed">Back</button>
-                <div class="filler"></div>
+        <div *ngIf="status=='failed'">
+            <h2>ERROR</h2>
+            <h3>{{this.errorMessage}}</h3>
+        </div>
+        <div style="display:flex; flex-direction: row;" *ngIf="status=='failed'">
+            <button class="btn btn-primary rki-blue-bg" (click)="initializeDefaults()">Back</button>
+            <div class="filler"></div>
+            <button class="btn float-right btn-danger" (click)="closeDialog()">Close</button>
+        </div>
+        <div style="display:flex; flex-direction: row;" *ngIf="status=='success'">
+            <div class="filler"></div>
             <button class="btn float-right btn-danger" (click)="closeDialog()">Close</button>
         </div>
     </div>
 </div>
-
-<ng-template #firstExpSelect>
-    <mat-select class="form-control custom-select" [(value)]="this.firstExperiment"
-        (selectionChange)="selectedExperimentChange($event.value, 'first')">
-        <mat-option *ngFor="let exp of listOfExperiments" [value]="exp">{{exp}}</mat-option>
-    </mat-select>
-</ng-template>

@@ -106,7 +106,7 @@
 }
 
 .mat-card-header .mat-card-title {
-  font-size: 20px
+  font-size: 20px;
 }
 
 .mat-card-content, .mat-card-subtitle {
@@ -2589,6 +2589,10 @@ button:focus, button:active:focus, button.active:focus {
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
+}
+.startbox-content {
+  margin-left: 30px;
+  text-align: left;
 }
 
 .startbox-item {
