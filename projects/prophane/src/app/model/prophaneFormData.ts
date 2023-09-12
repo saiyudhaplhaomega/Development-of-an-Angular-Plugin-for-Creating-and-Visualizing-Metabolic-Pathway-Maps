@@ -8,6 +8,7 @@ import {ProphaneEvalueOptions} from './prophaneEvalueOptionsJson';
 import {TaxonomyAdvandedOptionsJson} from './taxonomyAdvandedOptions';
 import {ProphaneLcaObject} from './prophanelcadata';
 import { ProphaneCustomMap } from './prophanecustommapdata';
+import { NONE_TYPE } from '@angular/compiler';
 
 
 export const jobLabelData = [
@@ -313,6 +314,34 @@ export const algparams = {
       isDefault: '0',
       avoid: []
     }
+  },
+  acc2annot_mapper: {
+    name: 'acc2annot_mapper',
+    options: [
+      {
+        param: 'path',
+        valueType: File,
+        defaultValue: undefined,
+        min: undefined,
+        max: undefined,
+        values: [],
+        isDefault: '1',
+        avoid: []
+      },
+      
+    ], function (option) {
+      return option.param.toLowerCase();
+    },
+    defaultOptionStringSelection: {
+      param: 'path',
+      valueType: File,
+      defaultValue: undefined,
+      min: undefined,
+      max: undefined,
+      values: [],
+      isDefault: '1',
+      avoid: []
+    }
   }
 };
 
@@ -336,6 +365,7 @@ export const optionStrings: TaxonomyAdvandedOptionsJson[] = [
   {database: 'resfams_full', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
   {database: 'resfams_core', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
   {database: 'dbcan', algs: [getAlgoData('hmmscan', ['cut_tc', 'cut_nc', 'cut_ga']), getAlgoData('hmmsearch', ['cut_tc', 'cut_nc', 'cut_ga'])]},
+  {database: 'custom_map', algs: [getAlgoData('acc2annot_mapper', [])]},
 ];
 
 // chosen by default for "advanced" and not "advanced" users
@@ -355,11 +385,27 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
     databaseversion: 'latest',
     algorithm: 'diamond blastp',
     tasklabel: 'Taxonomic Annotation Task 1',
-    optionstring: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0]['options'].filter(i => i['isDefault'] === '1'),
-    formOptionStringSelection: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0]['defaultOptionStringSelection'],
-  }
+    optionstring: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0]['algs'][0][
+      'options'].filter(i => i['isDefault'] === '1'),
+    formOptionStringSelection: optionStrings.filter(i => i['database'] === 'ncbi_nr')[0][
+      'algs'][0]['defaultOptionStringSelection'],
+  },
+
 ];
 
+export const defaultCustomMapTask: ProphaneAnnotationTaskObject = 
+{
+  scope: 'Taxonomy',
+  database: 'custom_map',
+  databaseversion: '',
+  algorithm: 'acc2annot_mapper',
+  tasklabel: 'Custom Map Annotation Task 1',
+  optionstring: optionStrings.filter(i => i['database'] === 'custom_map')[0]['algs'][0][
+    'options'].filter(i => i['isDefault'] === '1'),
+  formOptionStringSelection:  optionStrings.filter(i => i['database'] === 'custom_map')[0][
+    'algs'][0]['defaultOptionStringSelection'],
+  
+}
 
 export const lcaParams = [
   {name: 'lca', options: sortBy([
@@ -459,32 +505,3 @@ export const CustomMapOptions: any =  {
   }
 ;
 
-export const customMapParams =
-  {name: 'custom_map', options: [
-      {
-        param: 'path',
-        valueType: "File",
-        defaultValue: undefined,}
-      ], function (option) {
-      return option.param.toLowerCase();
-    },
-    defaultOptionStringSelection: {
-      param: 'path',
-      valueType: "File",
-      defaultValue: undefined,}
-  }
-
-  export const defaultCustomMapTask: ProphaneCustomMap =
-  {
-    scope: 'Taxonomy',
-    database_type: 'custom_map',
-    algorithm: 'acc2annot_mapper',
-    tasklabel: 'Custom Map Annotation Task 1',
-    optionstring: [
-      {
-        param: 'path',
-        valueType: "File",
-        defaultValue: undefined,}
-    ],
-    formOptionStringSelection:  customMapParams['defaultOptionStringSelection']
-  }

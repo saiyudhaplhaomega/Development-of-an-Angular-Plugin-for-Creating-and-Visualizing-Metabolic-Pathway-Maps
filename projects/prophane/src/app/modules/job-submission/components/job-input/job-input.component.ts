@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {prophaneReportStyleLabels, prophaneReportStyles} from '../../../../model/prophaneFormData';
 import {ProphaneSampleGroupObject} from '../../../../model/prophanesamplegroupjson';
 import {ProphaneJobStateService} from '../../../../services/prophane-job-state.service';
-import { FileInputComponent } from 'shared-lib';
 
 @Component({
   selector: 'app-job-input',

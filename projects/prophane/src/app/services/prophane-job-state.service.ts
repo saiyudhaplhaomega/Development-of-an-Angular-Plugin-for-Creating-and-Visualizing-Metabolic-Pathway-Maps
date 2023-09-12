@@ -12,7 +12,7 @@ import {
   quantdata,
   lcaOptions,
   CustomMapOptions,
-  defaultCustomMapTask
+  defaultCustomMapTask,
 } from '../model/prophaneFormData';
 import {ProphaneLcaObject} from '../model/prophanelcadata';
 import { JobService } from '../services/job.service';
@@ -29,7 +29,6 @@ import { HttpClientService, MultiFileUploadData } from 'shared-lib';
 
 import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
 
-import { ProphaneCustomMap } from '../model/prophanecustommapdata';
 import { ProphaneReportStyle } from '../model/prophane-job-submission-formdata';
 import { HttpEventType, HttpParams } from '@angular/common/http';
 
@@ -56,6 +55,8 @@ export class ProphaneJobStateService {
   // Website related variables
   proteinReportFile: File;
   fastaFile: File;
+  customMapFiles: File[] = [];
+
   expertView = false;
   filesToUpload: MultiFileUploadData;
 
@@ -77,7 +78,7 @@ export class ProphaneJobStateService {
   groupCount = 0;
   taxtasks = 1;
   functasks = 1;
-  taskCounter = 3;
+  taskCounter = 2;
   customtasksCounter = 0;
   lcatasks = 1
 
@@ -116,7 +117,6 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
     this.currentProphaneJob.parameters.annotationTasks = this.annotationTasks;
-    this.currentProphaneJob.parameters.customMapTasks = [];
     this.currentProphaneJob.parameters.sampleGroups =
       [] as ProphaneSampleGroupObject[];
     this.currentProphaneJob.parameters.lcaTask = this.lcaOptions[0];
@@ -165,7 +165,9 @@ export class ProphaneJobStateService {
   }
 
   getCustomTasks(): any[] {
-    return this.currentProphaneJob.parameters.customMapTasks;
+    return this.currentProphaneJob.parameters.annotationTasks.filter(
+      (i) => i.database === "custom_map"
+    );
   }
 
   setDefaultAlgorithm(task: ProphaneAnnotationTaskObject, taskIndex: number) {
@@ -357,9 +359,16 @@ export class ProphaneJobStateService {
       const jobObjectFile: UploadFile = {uploadFile: prophaneJsonAsFile, fileID: 'jobObject'};
       const reportFile: UploadFile = {uploadFile: this.proteinReportFile, fileID: 'reportFile'};
       const fastaFile: UploadFile = {uploadFile: this.fastaFile, fileID: 'fastaFile'};
+
       this.filesToUpload.files.push(jobObjectFile);
       this.filesToUpload.files.push(reportFile);
       this.filesToUpload.files.push(fastaFile);
+      // custom maps, id = file name
+      if (this.customMapFiles.length > 0){
+        this.customMapFiles.forEach(custommap => {
+          this.filesToUpload.files.push({uploadFile: custommap, fileID: custommap.name});
+        });
+      }
 
       this.uploaderService.postMultiPartFilesEvents(
         this.filesToUpload,
