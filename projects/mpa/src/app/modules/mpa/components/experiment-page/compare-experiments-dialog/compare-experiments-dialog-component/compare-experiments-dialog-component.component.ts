@@ -37,12 +37,9 @@ export class CompareExperimentsDialogComponentComponent implements OnInit {
     private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: { parentFolderDataObject: DataItem, expName?: string, expID?: string },
-  ) {
-    console.log("constructor")
-   }
+  ) {}
 
   ngOnInit(): void {
-    console.log("init")
     this.availableExperimentsNames = [];
     this.availableExperiments = this.dataService.getExperimentsMap();
     this.availableExperiments.forEach((expid, key) => {

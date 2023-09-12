@@ -376,7 +376,7 @@
 
         <!--          Tab 3: Protein Groups         -->
 
-        <mat-tab label="Protein Groups" disabled="{{!hasMpaData}}">
+        <mat-tab label="Protein Groups" [disabled]="!hasMpaData">
           <ng-template matTabContent>
             <ng-container *ngIf="hasMpaData">
               <app-mpa-table class="mpa-table" [experimentUUID]='this.dataItemOfThisComponent.uuid'>
