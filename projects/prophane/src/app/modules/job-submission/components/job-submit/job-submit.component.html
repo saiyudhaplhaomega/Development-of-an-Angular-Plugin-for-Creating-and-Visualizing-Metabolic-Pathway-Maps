@@ -138,8 +138,7 @@
 
 <!-- Functional Task (Summary) -->
 <table *ngIf="prophaneJobState.expertView" class="table .table-light table-hover">
-  <thead>
-  </thead>
+  <thead></thead>
   <tbody>
   <tr *ngIf="prophaneJobState.filterAnnotationTasks('Function').length == 0">
     <th scope="row" class="ml-summary-col">Functional Annotation</th>
@@ -171,9 +170,9 @@
 </table>
 
 <!-- Custom Map Task (Summary) -->
-<table *ngIf="prophaneJobState.expertView && prophaneJobState.getCustomTasks().length > 0" class="table .table-light table-hover">
-  <thead>
-  </thead>
+<table *ngIf="prophaneJobState.expertView && prophaneJobState.getCustomTasks().length > 0"
+        class="table .table-light table-hover">
+  <thead></thead>
   <tbody>
     <tr *ngFor="let custom_task of prophaneJobState.getCustomTasks()">
       <th scope="row" class="ml-summary-col">
@@ -184,11 +183,13 @@
         <mat-list dense >
           <mat-list-item [ngClass]="!custom_task.optionstring[0].defaultValue ? 'table-warning' : ''">
             Custom Map File: {{ custom_task.optionstring[0].defaultValue ?
-            custom_task.optionstring[0].defaultValue : 'not selected yet' }}</mat-list-item>
+            custom_task.optionstring[0].defaultValue : 'not selected yet' }}
+          </mat-list-item>
+          <mat-list-item> algorithm: {{ custom_task.algorithm }}  </mat-list-item>
           <mat-list-item> Scope: {{ custom_task.scope }} </mat-list-item>
         </mat-list>
       </td>
-  </tr>
+    </tr>
   </tbody>
 </table>
 

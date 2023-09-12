@@ -160,7 +160,7 @@ export class ProphaneJobStateService {
 
   filterAnnotationTasks(scope: string): any[] {
     return this.currentProphaneJob.parameters.annotationTasks.filter(
-      (i) => i.scope === scope
+      (i) => i.scope === scope && i.database != "custom_map"
     );
   }
 
