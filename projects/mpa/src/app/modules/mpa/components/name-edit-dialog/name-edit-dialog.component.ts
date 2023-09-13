@@ -36,7 +36,7 @@ export class NameEditDialogComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
-          folderNameValidator(this.existingNodeNames),
+          NodeNameValidator(this.existingNodeNames),
         ],
       ],
     });
@@ -63,7 +63,7 @@ export class NameEditDialogComponent implements OnInit {
   }
 }
 
-export function folderNameValidator(existingNames: string[]): ValidatorFn {
+export function NodeNameValidator(existingNames: string[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let forbidden = false;
     for (const name of existingNames) {

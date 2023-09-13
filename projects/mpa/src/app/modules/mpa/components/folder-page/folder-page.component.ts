@@ -15,25 +15,25 @@ import { TextfieldDialogComponent } from '../textfield-dialog/textfield-dialog.c
 import { FolderJSONObject } from '../../model/folderjson';
 import { ProtDBJSONObject } from '../../model/protdbjson';
 import { CompareExperimentsDialogComponentComponent } from '../experiment-page/compare-experiments-dialog/compare-experiments-dialog-component/compare-experiments-dialog-component.component';
-
-enum ProteinDBType {
-  FASTA,
-  UNIPROTXML,
-}
-class ProteinDBMetadataJSON {
-  originalFileName: String;
-  name: String;
-  dbType: ProteinDBType;
-}
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-folder-page',
   templateUrl: './folder-page.component.html',
   styleUrls: ['./folder-page.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ visibility: 'hidden', height: 0, opacity: 0 })),
+      state('expanded', style({ height: '*', opacity: 1 })),
+      transition(
+        'expanded <=> collapsed',
+        animate('325ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ]
 })
 export class FolderPageComponent
-  implements OnInit, OnDestroy, ContentComponent
-{
+  implements OnInit, OnDestroy, ContentComponent {
   dataItemOfThisComponent: DataItem;
   folder = new FolderJSONObject();
   existingNodeNames = [];
@@ -41,6 +41,7 @@ export class FolderPageComponent
   experiments: string[];
   protdbs: string[];
   description: string;
+  intentToAddExperiment: boolean;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -72,11 +73,12 @@ export class FolderPageComponent
     this.experiments = nexperiments;
     this.protdbs = nprotdbs;
     this.subfolders = nsubfolders;
+    this.intentToAddExperiment = false;
 
     this.folder.description = this.dataItemOfThisComponent.description;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   onSetDescription() {
     /**
@@ -92,7 +94,7 @@ export class FolderPageComponent
     dialogInstance.valueLabel = 'Description'
 
     dialogRef.beforeClosed().subscribe((folderdescription) => {
-      if(folderdescription) {
+      if (folderdescription) {
         this.folder.description = folderdescription;
         this.updateFolder();
       }
@@ -135,25 +137,26 @@ export class FolderPageComponent
   // }
 
   onAddExperiment(): void {
-    const dialogRef = this.dialog.open(NameEditDialogComponent, {
-      disableClose: true,
-    });
-    // gets instance of the dialog component...
-    const dialogInstance = dialogRef.componentInstance;
-    // ...and allows to inject variables
-    dialogInstance.dialogPrompt = 'Please set an experiment name!';
-    dialogInstance.textFieldLabel = 'Experiment Name';
+    this.intentToAddExperiment = !this.intentToAddExperiment;
+    // const dialogRef = this.dialog.open(NameEditDialogComponent, {
+    //   disableClose: true,
+    // });
+    // // gets instance of the dialog component...
+    // const dialogInstance = dialogRef.componentInstance;
+    // // ...and allows to inject variables
+    // dialogInstance.dialogPrompt = 'Please set an experiment name!';
+    // dialogInstance.textFieldLabel = 'Experiment Name';
 
-    dialogRef.afterClosed().subscribe((experimentName) => {
-      if (experimentName) {
-        console.log('add experiment');
-        this.dataService.createNewDataItem(
-          this.dataItemOfThisComponent,
-          experimentName,
-          NodeType.Experiment
-        );
-      }
-    });
+    // dialogRef.afterClosed().subscribe((experimentName) => {
+    //   if (experimentName) {
+    //     console.log('add experiment');
+    //     this.dataService.createNewDataItem(
+    //       this.dataItemOfThisComponent,
+    //       experimentName,
+    //       NodeType.Experiment
+    //     );
+    //   }
+    // });
   }
 
   onAddComparison(): void {

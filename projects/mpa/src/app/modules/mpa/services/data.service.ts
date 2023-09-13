@@ -150,7 +150,7 @@ export class DataService {
       // actual update that triggers a server call
       this.dataMap.next(mapCopy);
       // navigate to newly created node
-      this.navService.navigateOutlet(newNodeObj);
+      //this.navService.navigateOutlet(newNodeObj);
       return newNodeObj;
     } else {
       return null;
@@ -352,13 +352,4 @@ export class DataService {
         this.updateNode(nodeObj);
       });
   }
-
-  getComparisonData() {
-
-  }
-
-  updateComparisonData() {
-
-  }
-
 }
