@@ -8,7 +8,7 @@ import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/pri
 
 const routes: Routes = [
 
-{ path: '', redirectTo: 'login', pathMatch: 'full' },
+{ path: '', redirectTo: 'jobsubmission', pathMatch: 'full'},
 { path: 'login', component: LoginPageComponent },
 {
   path: 'jobsubmission',
