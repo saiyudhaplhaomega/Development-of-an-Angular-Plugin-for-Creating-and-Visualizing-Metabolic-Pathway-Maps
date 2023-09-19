@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
-import { folderNameValidator } from '../../name-edit-dialog/name-edit-dialog.component';
+import { NodeNameValidator } from '../../name-edit-dialog/name-edit-dialog.component';
 import { HttpClientService } from 'dist/shared-lib';
 
 export class ProteinDBDialogData {
@@ -42,7 +42,7 @@ export class ProteinDatabaseDialogComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
-          folderNameValidator(this.existingNodeNames),
+          NodeNameValidator(this.existingNodeNames),
         ],
       ],
       dbFile: ['', [Validators.required]],

@@ -1,14 +1,11 @@
-<!--<input class="form-control ng-untouched ng-pristine ng-valid" type="text" ng-reflect-ng-style="[object Object]"-->
-<!--       ng-reflect-model="Taxonomic Annotation Task 1" style="background-color: white;">-->
-
-
-<div class="d-flex justify-content-between">
-  <div class="jobCards" style="width: 100%">
+<div>
+  <div class="jobCards" style="width: 100%; margin-bottom: 8px;">
     <div class="card min-w-600">
       <div class="card-header custom-card-header">
-        <h2>Folder: {{this.dataItemOfThisComponent.displayName}} <button style="background: none; border: none" (click)="onSetName()">(edit)</button></h2>
-        <button class="btn btn-outline-danger w-sbtn" matTooltip="Delete folder"
-          (click)='onRemoveFolder()'><mat-icon style="display: flex; justify-content: center">close</mat-icon></button>
+        <h2>Folder: {{this.dataItemOfThisComponent.displayName}} <button style="background: none; border: none"
+            (click)="onSetName()">(edit)</button></h2>
+        <button class="btn btn-outline-danger w-sbtn" matTooltip="Delete folder" (click)='onRemoveFolder()'><mat-icon
+            style="display: flex; justify-content: center">close</mat-icon></button>
       </div>
 
       <div class="card-body">
@@ -24,7 +21,6 @@
             </button>
           </div>
         </div> -->
-
         <div style="display:flex; flex-direction: row; width: 100%;">
           <div style="width: 80%;">
             <table class="table table-light table-hover" style="margin-bottom:0px;">
@@ -77,7 +73,8 @@
           </div>
 
           <div style="flex-shrink: 0;">
-            <table class="table" style="border: #fff;"> <!-- use table to align buttons with rows, delete all styling, except dynamic height-->
+            <table class="table" style="border: #fff;">
+              <!-- use table to align buttons with rows, delete all styling, except dynamic height-->
               <thead>
               </thead>
               <tbody>
@@ -115,4 +112,15 @@
       </div>
     </div>
   </div>
+
+    <div class="jobCards" style="width: 100%" [@detailExpand]="intentToAddExperiment ? 'expanded' : 'collapsed'">
+      <div class="card min-w-600">
+        <div class="card-header custom-card-header">
+          <h2>Add Experiments</h2>
+        </div>
+        <div class="card-body">
+          <app-file-upload [parentDataItem]="this.dataItemOfThisComponent"></app-file-upload>
+        </div>
+      </div>
+    </div>
 </div>
