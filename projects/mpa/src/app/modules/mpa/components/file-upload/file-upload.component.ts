@@ -61,13 +61,17 @@ export class FileUploadComponent implements OnInit {
         '',
         [
           Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(24),
           Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
           NodeNameValidator(this.existingNodeNames)
         ],
       ],
     });
     this.experimentForm.get('expName').valueChanges.subscribe({
-      next: value => console.log(value)
+      next: value => {
+        this.disableButton()
+      }
     })
     if (this.parentDataItem.type == 'folder') {
       this.dataUploadModeSelection = 'Search';
@@ -132,6 +136,7 @@ export class FileUploadComponent implements OnInit {
 
   fileAmountSelectionChange() {
     console.log(this.fileAmountSelection)
+    this.disableButton();
   }
 
   onUploadSelectionChange(option: string): void {
@@ -148,6 +153,11 @@ export class FileUploadComponent implements OnInit {
 
   dataUploadModeSelectionChange(option: string): void {
     this.dataUploadModeSelection = option;
+    this.disableButton();
+  }
+
+  intentToUploadChange() {
+    !this.intentToUpload ? this.fileAmountSelection = this.fileAmountOptions[0] : {};
     this.disableButton();
   }
 
@@ -175,6 +185,7 @@ export class FileUploadComponent implements OnInit {
     }
     this.selectedPeaklistFiles = files;
     this.disableButton();
+    console.log(this.selectedPeaklistFile.name + " " + this.selectedPeaklistFiles.length)
   }
 
   getFileNames(fileList: File[]) {
@@ -200,25 +211,47 @@ export class FileUploadComponent implements OnInit {
     /**
      * checks if files are selected or uploaded already and disables the submit button
      */
-    if (this.dataUploadModeSelection === 'Search') {
-      this.buttonDisabled =
-        this.hasPeaklistFile ||
-        !this.proteinDBselection ||
-        !this.selectedPeaklistFile;
-    } else if (this.dataUploadModeSelection === 'Result Upload') {
-      if (this.dataUploadSelection === 'Peaklist + Search Result') {
-        this.buttonDisabled =
-          this.hasSearchFile ||
-          this.hasPeaklistFile ||
-          !this.selectedPeaklistFile ||
-          !this.selectedSearchFile ||
-          !this.fastaFileSelected;
-      } else if (this.dataUploadSelection === 'Search Result') {
-        this.buttonDisabled =
-          this.hasSearchFile ||
-          !this.selectedSearchFile ||
-          !this.fastaFileSelected;
+    if (this.intentToUpload) {
+      if (this.parentDataItem.type == 'folder') {
+        if (this.fileAmountSelection == 'Single') {
+          if (this.experimentForm.get('expName').valid && this.experimentForm.get('expName').dirty) {
+            this.buttonDisabled =
+              this.hasPeaklistFile ||
+              !this.proteinDBselection ||
+              !this.selectedPeaklistFile;
+          } else {
+            this.buttonDisabled = true;
+          }
+        } else {
+          this.buttonDisabled =
+            this.hasPeaklistFile ||
+            !this.proteinDBselection ||
+            !this.selectedPeaklistFile;
+        }
+      } else {
+        if (this.dataUploadModeSelection === 'Search') {
+          this.buttonDisabled =
+            this.hasPeaklistFile ||
+            !this.proteinDBselection ||
+            !this.selectedPeaklistFile;
+        } else if (this.dataUploadModeSelection === 'Result Upload') {
+          if (this.dataUploadSelection === 'Peaklist + Search Result') {
+            this.buttonDisabled =
+              this.hasSearchFile ||
+              this.hasPeaklistFile ||
+              !this.selectedPeaklistFile ||
+              !this.selectedSearchFile ||
+              !this.fastaFileSelected;
+          } else if (this.dataUploadSelection === 'Search Result') {
+            this.buttonDisabled =
+              this.hasSearchFile ||
+              !this.selectedSearchFile ||
+              !this.fastaFileSelected;
+          }
+        }
       }
+    } else {
+      this.experimentForm.get('expName').valid ? this.buttonDisabled = false : this.buttonDisabled = true;
     }
   }
 

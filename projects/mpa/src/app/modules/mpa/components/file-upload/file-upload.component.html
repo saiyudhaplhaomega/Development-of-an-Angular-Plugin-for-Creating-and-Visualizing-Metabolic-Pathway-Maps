@@ -16,7 +16,7 @@
         <ng-container *ngIf="this.parentDataItem.type == 'folder'">
             <div class="divider-line">General Parameters</div>
             <div class="input-group mb-3">
-                <mat-checkbox [(ngModel)]="intentToUpload">Upload data right now?</mat-checkbox>
+                <mat-checkbox [(ngModel)]="intentToUpload" (change)="intentToUploadChange()">Upload data right now?</mat-checkbox>
             </div>
             <div class="input-group mb-3"
                 [@detailExpand]="this.fileAmountSelection == 'Single' ? 'expanded' : 'collapsed'">
@@ -34,7 +34,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Upload Amount</span>
                     </div>
-                    <mat-select class="form-control custom-select" [(value)]="this.fileAmountSelection">
+                    <mat-select class="form-control custom-select" [(value)]="this.fileAmountSelection" (selectionChange)="this.fileAmountSelectionChange()">
                         <mat-option *ngFor="let fileAmount of fileAmountOptions"
                             [value]="fileAmount">{{fileAmount}}</mat-option>
                     </mat-select>
