@@ -1,5 +1,6 @@
 export interface NavigationRoute {
-  route: string;
   label: string;
+  route?: string;
   requireAuth?: boolean;
+  children?: NavigationRoute[];
 }

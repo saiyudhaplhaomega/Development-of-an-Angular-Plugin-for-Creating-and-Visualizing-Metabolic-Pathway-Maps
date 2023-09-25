@@ -9,17 +9,19 @@ import { AuthService, NavigationRoute } from 'shared-lib';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  title = 'MPA';
 
-  title = 'mpa';
   routes: NavigationRoute[] = [
     { route: '/mpa', label: 'MPA', requireAuth: true },
   ];
-  homelink: NavigationRoute = { route: '/jobsubmission', label: 'jobsubmission' }
+  homelink: NavigationRoute = {
+    route: '/jobsubmission',
+    label: 'jobsubmission',
+  };
 
   constructor(private authService: AuthService) {}
 
-    ngOnInit(): void {
-      this.authService.initializeOAuth();
-    }
-
+  ngOnInit(): void {
+    this.authService.initializeOAuth();
+  }
 }

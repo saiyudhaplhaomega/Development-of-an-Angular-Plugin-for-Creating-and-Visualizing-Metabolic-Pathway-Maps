@@ -1,0 +1,52 @@
+<footer>
+  <mat-accordion>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+      class="bg-gray-700"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title> &copy;2023. ISAS e.V. </mat-panel-title>
+        <mat-panel-description>
+          <ul *ngIf="!panelOpenState">
+            <li class="float-left p-4" *ngFor="let category of footerContent">
+              {{ category.categoryName }}
+            </li>
+          </ul>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        <div class="footer-panels">
+          <img class="m-auto" *ngIf="logoPath" [src]="logoPath" />
+
+          <div *ngFor="let category of footerContent">
+            <span class="font-bold">{{ category.categoryName }}</span>
+            <ul>
+              <li *ngFor="let link of category.elements">
+                <ng-container
+                  *ngIf="
+                    link.href && !link.routerLink;
+                    then externalLink;
+                    else routerLink
+                  "
+                >
+                </ng-container>
+
+                <ng-template #externalLink
+                  ><a [href]="link.href">{{ link.name }}</a></ng-template
+                >
+                <ng-template #routerLink
+                  ><a [routerLink]="link.routerLink">{{
+                    link.name
+                  }}</a></ng-template
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</footer>
+<!-- <footer class="bg-gray-700 text-white">&copy;2023. ISAS e.V. Dortmund</footer> -->

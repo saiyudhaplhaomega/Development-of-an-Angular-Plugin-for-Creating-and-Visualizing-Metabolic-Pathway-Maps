@@ -1,0 +1,37 @@
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+  color: hsla(0, 0%, 100%, 0.7);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+}
+
+.mat-accordion .mat-expansion-panel {
+  border-radius: 0;
+}
+
+.mat-expansion-panel-header-title {
+  color: inherit;
+  font-family: inherit;
+}
+
+.mat-expansion-panel-header {
+  max-height: 96px;
+  min-height: 48px;
+  height: auto;
+}
+
+.mat-expansion-panel-header-description {
+  color: inherit;
+  font-family: inherit;
+}
+
+.footer-panels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
