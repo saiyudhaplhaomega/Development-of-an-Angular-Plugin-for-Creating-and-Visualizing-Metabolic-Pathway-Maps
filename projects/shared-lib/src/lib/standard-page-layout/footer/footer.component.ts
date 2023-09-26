@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NestedNavigationRoute } from '../nav-toolbar/navigation-route.model';
 
 export class FooterContentMain {
   categoryName: string;
@@ -18,7 +19,9 @@ export class FooterContentSubElement {
 })
 export class FooterComponent {
   @Input() logoPath: string = undefined;
-  @Input() footerContent: FooterContentMain[];
+  @Input() footerContent: NestedNavigationRoute[];
+
+  copyRight = '2023. ISAS e.V.';
 
   panelOpenState = false;
 }

@@ -7,6 +7,7 @@
 
     <!-- links for navigation -->
     <ng-container *ngFor="let link of visibleLinks">
+      <!-- content is inserted depending on condition: https://angular.io/api/core/ng-container -->
       <ng-container *ngIf="link.route; then simpleLink; else nestedLinks">
       </ng-container>
 
@@ -19,7 +20,7 @@
         </button>
       </ng-template>
 
-      <!-- nested links -->
+      <!-- nested links with menu -->
       <ng-template #nestedLinks>
         <button [matMenuTriggerFor]="menu" color="primary" mat-flat-button>
           <span>
@@ -38,7 +39,7 @@
     </ng-container>
 
     <!-- login button -->
-    <div *ngIf="true" class="ml-auto">
+    <div *ngIf="hasLogin" class="ml-auto">
       <button mat-flat-button color="primary">
         Log in
         <mat-icon>account_circle</mat-icon>
@@ -46,12 +47,14 @@
     </div>
   </mat-toolbar>
 
-  <!-- application content -->
+  <!-- application content is projected into router and footer slots: https://angular.io/guide/content-projection -->
   <div class="flex flex-col h-full overflow-y-auto">
     <div class="overflow-y-auto">
+      <!-- router slot -->
       <ng-content select="router-outlet"></ng-content>
     </div>
     <div class="mt-auto">
+      <!-- footer slot -->
       <ng-content select="#footer"></ng-content>
     </div>
   </div>

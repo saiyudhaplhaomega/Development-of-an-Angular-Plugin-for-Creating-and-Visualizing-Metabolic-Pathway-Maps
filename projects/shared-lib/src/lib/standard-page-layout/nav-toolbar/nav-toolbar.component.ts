@@ -1,5 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NavigationRoute } from './navigation-route.model';
+import {
+  SimpleNavigationRoute,
+  NestedNavigationRoute,
+} from './navigation-route.model';
 import { AuthService } from '../login/auth.service';
 import { UserToken } from '../login/user-token';
 import { Subscription } from 'rxjs';
@@ -11,14 +14,14 @@ import { Subscription } from 'rxjs';
 })
 export class NavToolbarComponent implements OnInit, OnDestroy {
   @Input() applicationName: string = '';
-  @Input() routerLinks: NavigationRoute[] = [];
-  @Input() homeLink: NavigationRoute;
+  @Input() routerLinks: NestedNavigationRoute[] = [];
+  @Input() homeLink: SimpleNavigationRoute;
   @Input() hasLogin: Boolean = false;
 
   user: UserToken;
   guest: boolean;
 
-  visibleLinks: NavigationRoute[] = []; // links that will be visible on the toolbar
+  visibleLinks: NestedNavigationRoute[] = []; // links that will be visible on the toolbar
   Subscriptions: Subscription[] = [];
 
   // TODO: optional Auth service?
@@ -53,7 +56,7 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  checkAuthOnLink(link: NavigationRoute): boolean {
+  checkAuthOnLink(link: NestedNavigationRoute): boolean {
     if (link.requireAuth) {
       return this.guest || this.user != null;
     }

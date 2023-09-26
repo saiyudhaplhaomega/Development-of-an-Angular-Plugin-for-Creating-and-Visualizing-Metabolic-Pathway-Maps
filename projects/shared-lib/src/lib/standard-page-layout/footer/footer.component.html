@@ -6,11 +6,13 @@
       class="bg-gray-700"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title> &copy;2023. ISAS e.V. </mat-panel-title>
+        <mat-panel-title>
+          {{ "&copy;" + copyRight }}
+        </mat-panel-title>
         <mat-panel-description>
           <ul *ngIf="!panelOpenState">
             <li class="float-left p-4" *ngFor="let category of footerContent">
-              {{ category.categoryName }}
+              {{ category.label }}
             </li>
           </ul>
         </mat-panel-description>
@@ -18,29 +20,30 @@
 
       <ng-template matExpansionPanelContent>
         <div class="footer-panels">
+          <!-- logo image -->
           <img class="m-auto" *ngIf="logoPath" [src]="logoPath" />
 
+          <!-- panels for categories -->
           <div *ngFor="let category of footerContent">
-            <span class="font-bold">{{ category.categoryName }}</span>
+            <span class="font-bold">{{ category.label }}</span>
             <ul>
-              <li *ngFor="let link of category.elements">
+              <li *ngFor="let link of category.children">
+                <!-- depending on provided properties, either templates for external or router links are inserted -->
                 <ng-container
                   *ngIf="
-                    link.href && !link.routerLink;
+                    link.href && !link.route;
                     then externalLink;
                     else routerLink
                   "
                 >
                 </ng-container>
 
-                <ng-template #externalLink
-                  ><a [href]="link.href">{{ link.name }}</a></ng-template
-                >
-                <ng-template #routerLink
-                  ><a [routerLink]="link.routerLink">{{
-                    link.name
-                  }}</a></ng-template
-                >
+                <ng-template #externalLink>
+                  <a [href]="link.href">{{ link.label }}</a>
+                </ng-template>
+                <ng-template #routerLink>
+                  <a [routerLink]="link.route">{{ link.label }}</a>
+                </ng-template>
               </li>
             </ul>
           </div>
@@ -49,4 +52,3 @@
     </mat-expansion-panel>
   </mat-accordion>
 </footer>
-<!-- <footer class="bg-gray-700 text-white">&copy;2023. ISAS e.V. Dortmund</footer> -->
