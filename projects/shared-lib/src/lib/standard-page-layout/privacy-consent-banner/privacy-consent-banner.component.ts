@@ -1,34 +1,45 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-privacy-consent-banner',
   templateUrl: './privacy-consent-banner.component.html',
-  styleUrls: ['./privacy-consent-banner.component.css'],
+  styleUrls: ['./privacy-consent-banner.component.scss'],
   animations: [
     trigger('policyConsent', [
-      state('initial', style({
-        backgroundColor: '#001933',
-        height: '0px',
-        overflow: 'hidden',
-      })),
-      state('final', style({
-        backgroundColor: '#001933',
-        width: '100%',
-        height: '100px',
-      })),
+      state(
+        'initial',
+        style({
+          backgroundColor: '#001933',
+          height: '0px',
+          overflow: 'hidden',
+        })
+      ),
+      state(
+        'final',
+        style({
+          backgroundColor: '#001933',
+          width: '100%',
+          height: '100px',
+        })
+      ),
       transition('initial=>final', animate('300ms 500ms ease-in')),
-      transition('final=>initial', animate('0ms 500ms ease-out'))
-    ])]
+      transition('final=>initial', animate('0ms 500ms ease-out')),
+    ]),
+  ],
 })
-
 export class PrivacyConsentBannerComponent implements AfterViewInit {
-
   consentDialogStatus = 'initial';
   expiryDays = 30;
 
-  constructor () {
-    console.log("Privacy Consent Banner is here!");
+  constructor() {
+    console.log('Privacy Consent Banner is here!');
   }
 
   ngAfterViewInit() {
@@ -58,6 +69,7 @@ export class PrivacyConsentBannerComponent implements AfterViewInit {
   }
 
   hasConsented() {
+    // return false;
     const value = localStorage.getItem('prophane_mpa_policy_consent');
     if (value === null || this.isExpired(parseInt(value))) {
       return false;
@@ -72,7 +84,9 @@ export class PrivacyConsentBannerComponent implements AfterViewInit {
   }
 
   setConsent() {
-    localStorage.setItem('prophane_mpa_policy_consent', this.getCurrentTimestamp().toString());
+    localStorage.setItem(
+      'prophane_mpa_policy_consent',
+      this.getCurrentTimestamp().toString()
+    );
   }
-
 }

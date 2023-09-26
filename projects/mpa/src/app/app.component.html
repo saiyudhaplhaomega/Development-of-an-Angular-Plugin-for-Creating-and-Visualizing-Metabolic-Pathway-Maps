@@ -1,3 +1,4 @@
+<!-- TODO: privacy consent banner fades in diagonally on the right side -->
 <app-privacy-consent-banner></app-privacy-consent-banner>
 <shared-nav-toolbar
   [routerLinks]="routes"
@@ -6,5 +7,9 @@
   [homeLink]="homelink"
 >
   <router-outlet></router-outlet>
-  <!-- <app-page-footer class="footer"></app-page-footer> -->
+  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+    [logoPath]="footerLogoPath"
+  ></shared-footer>
 </shared-nav-toolbar>
