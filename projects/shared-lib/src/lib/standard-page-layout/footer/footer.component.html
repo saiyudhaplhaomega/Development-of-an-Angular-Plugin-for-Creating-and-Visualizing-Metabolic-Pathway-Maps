@@ -1,0 +1,54 @@
+<footer>
+  <mat-accordion>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+      class="bg-gray-700"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "&copy;" + copyRight }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <ul *ngIf="!panelOpenState">
+            <li class="float-left p-4" *ngFor="let category of footerContent">
+              {{ category.label }}
+            </li>
+          </ul>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        <div class="footer-panels">
+          <!-- logo image -->
+          <img class="m-auto" *ngIf="logoPath" [src]="logoPath" />
+
+          <!-- panels for categories -->
+          <div *ngFor="let category of footerContent">
+            <span class="font-bold">{{ category.label }}</span>
+            <ul>
+              <li *ngFor="let link of category.children">
+                <!-- depending on provided properties, either templates for external or router links are inserted -->
+                <ng-container
+                  *ngIf="
+                    link.href && !link.route;
+                    then externalLink;
+                    else routerLink
+                  "
+                >
+                </ng-container>
+
+                <ng-template #externalLink>
+                  <a [href]="link.href">{{ link.label }}</a>
+                </ng-template>
+                <ng-template #routerLink>
+                  <a [routerLink]="link.route">{{ link.label }}</a>
+                </ng-template>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</footer>

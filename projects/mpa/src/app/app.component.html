@@ -1,18 +1,15 @@
-
-<div class="page-content">
-  <div class="header">
-    <shared-nav-toolbar
-      [routerlinks]="routes"
-      [applicationname]="'MPA'"
-      [haslogin]="true"
-      [homelink]="homelink">
-    </shared-nav-toolbar>
-    <app-privacy-consent-banner></app-privacy-consent-banner>
-  </div>
-  <div class="content">
-    <div style="height: 100%">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  <app-page-footer class="footer"></app-page-footer>
-</div>
+<!-- TODO: privacy consent banner fades in diagonally on the right side -->
+<app-privacy-consent-banner></app-privacy-consent-banner>
+<shared-nav-toolbar
+  [routerLinks]="routes"
+  [applicationName]="title"
+  [hasLogin]="true"
+  [homeLink]="homelink"
+>
+  <router-outlet></router-outlet>
+  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+    [logoPath]="footerLogoPath"
+  ></shared-footer>
+</shared-nav-toolbar>

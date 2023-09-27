@@ -2,6 +2,8 @@
  * Public API Surface of shared-lib
  */
 
+// TODO: services and components should be exposed via modules (https://angular.io/guide/creating-libraries)
+
 export * from './lib/standard-page-layout/standard-page-layout.module';
 
 export * from './lib/standard-page-layout/privacy-consent-banner/privacy-consent-banner.component';
@@ -22,11 +24,10 @@ export * from './lib/standard-page-layout/file-input/file-input.component';
 export * from './lib/standard-page-layout/dialog/upload-dialog.component';
 export * from './lib/standard-page-layout/dialog/delete-warning-dialog.component';
 
-export * from './lib/standard-page-layout/footer/page-footer.component'
+export * from './lib/standard-page-layout/footer/footer.component';
 
 export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';
-
 
 export * from './lib/icon-divider/icon-divider.module';
 export * from './lib/icon-divider/icon-divider.component';

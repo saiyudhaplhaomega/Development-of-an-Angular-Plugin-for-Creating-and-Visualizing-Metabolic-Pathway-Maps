@@ -1,39 +1,61 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <!--div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" *ngIf="user"-->
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
-      <span *ngIf="homelink===null">
-        <span class="small-margin-right">{{applicationname}}</span>
-      </span>
-      <span *ngIf="homelink!==null">
-        <button mat-button (click)="navigate(homelink.route)">
-          <span class="small-margin-right">{{applicationname}}</span>
-        </button>
-      </span>
-      <span *ngFor="let link of routerlinks">
-        <ng-container *ngIf="checkAuthOnLink(link)">
-          <button mat-button (click)="navigate(link.route)">{{link.label}}</button>
-        </ng-container>
-      </span>
-    </div>
-    <div class="spacer"></div>
-    <div *ngIf="!user; else elseBlock">
-      <button mat-icon-button (click)="navigate('/login')">
-        <mat-icon aria-label="account menu icon">account_circle</mat-icon>
-      </button>
-    </div>
-    <ng-template #elseBlock>
-      <button mat-icon-button (click)="navigate('/login')">
-        <img src="{{ user.picture }}" />
-      </button>
-    </ng-template>
-    <button mat-button (click)="authService.logout()" *ngIf="user || guest">
-      Log out
+<div class="flex flex-col h-full">
+  <mat-toolbar color="primary" class="flex-shrink-0">
+    <!-- application name and navigation to landing page -->
+    <button mat-flat-button color="primary" routerLink="homeLink">
+      <span> {{ applicationName }} </span>
     </button>
-    <button mat-button (click)="navigate('login')" *ngIf="!user && !guest">
-      Log in
-    </button>
-    <span class="small-margin-right"></span>
-  </mat-toolbar-row>
-</mat-toolbar>
 
+    <!-- links for navigation -->
+    <ng-container *ngFor="let link of visibleLinks">
+      <!-- content is inserted depending on condition: https://angular.io/api/core/ng-container -->
+      <ng-container *ngIf="link.route; then simpleLink; else nestedLinks">
+      </ng-container>
+
+      <!-- simple links without nesting -->
+      <ng-template #simpleLink>
+        <button color="primary" mat-flat-button [routerLink]="link.route">
+          <span>
+            {{ link.label }}
+          </span>
+        </button>
+      </ng-template>
+
+      <!-- nested links with menu -->
+      <ng-template #nestedLinks>
+        <button [matMenuTriggerFor]="menu" color="primary" mat-flat-button>
+          <span>
+            {{ link.label }}
+          </span>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <ng-container *ngFor="let childLink of link.children">
+            <button mat-menu-item [routerLink]="childLink.route">
+              {{ childLink.label }}
+            </button>
+          </ng-container>
+        </mat-menu>
+      </ng-template>
+    </ng-container>
+
+    <!-- login button -->
+    <div *ngIf="hasLogin" class="ml-auto">
+      <button mat-flat-button color="primary">
+        Log in
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- application content is projected into router and footer slots: https://angular.io/guide/content-projection -->
+  <div class="flex flex-col h-full overflow-y-auto">
+    <div class="overflow-y-auto">
+      <!-- router slot -->
+      <ng-content select="router-outlet"></ng-content>
+    </div>
+    <div class="mt-auto">
+      <!-- footer slot -->
+      <ng-content select="#footer"></ng-content>
+    </div>
+  </div>
+</div>

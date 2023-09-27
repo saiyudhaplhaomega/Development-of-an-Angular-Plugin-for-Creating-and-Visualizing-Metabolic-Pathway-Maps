@@ -1,44 +1,65 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NavigationRoute } from './navigation-route.model';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  SimpleNavigationRoute,
+  NestedNavigationRoute,
+} from './navigation-route.model';
 import { AuthService } from '../login/auth.service';
 import { UserToken } from '../login/user-token';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'shared-nav-toolbar',
   templateUrl: './nav-toolbar.component.html',
   styleUrls: ['./nav-toolbar.component.scss'],
 })
-export class NavToolbarComponent implements OnInit {
-  @Input() applicationname: string = '';
-  @Input() routerlinks: NavigationRoute[] = [];
-  @Input() homelink: NavigationRoute = null;
-  @Input() haslogin: Boolean = false;
+export class NavToolbarComponent implements OnInit, OnDestroy {
+  @Input() applicationName: string = '';
+  @Input() routerLinks: NestedNavigationRoute[] = [];
+  @Input() homeLink: SimpleNavigationRoute;
+  @Input() hasLogin: Boolean = false;
 
-  @Output() toggleSidenav = new EventEmitter<void>();
   user: UserToken;
   guest: boolean;
 
-  constructor(private router: Router, public authService: AuthService) {}
+  visibleLinks: NestedNavigationRoute[] = []; // links that will be visible on the toolbar
+  Subscriptions: Subscription[] = [];
+
+  // TODO: optional Auth service?
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService._user.subscribe((res) => {
-      this.user = res;
-    });
-    this.authService._guest.subscribe((res) => {
-      this.guest = res;
-    });
+    this.Subscriptions.push(
+      this.authService._user.subscribe((res) => {
+        this.user = res;
+        this.updateVisibleLinks();
+      })
+    ),
+      this.authService._guest.subscribe((res) => {
+        this.guest = res;
+        this.updateVisibleLinks();
+      });
   }
 
-  navigate(route: string): void {
-    this.router.navigate([route]);
+  ngOnDestroy(): void {
+    this.Subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  checkAuthOnLink(link: NavigationRoute): boolean {
-    if (link.requireAuth == true) {
-      return (this.guest || (this.user != null));
+  updateVisibleLinks(): void {
+    if (!this.hasLogin) {
+      this.visibleLinks = this.routerLinks;
+      return;
+    }
+
+    this.visibleLinks = this.routerLinks.filter((link) =>
+      this.checkAuthOnLink(link)
+    );
+  }
+
+  checkAuthOnLink(link: NestedNavigationRoute): boolean {
+    if (link.requireAuth) {
+      return this.guest || this.user != null;
     }
     return true;
   }
-
 }

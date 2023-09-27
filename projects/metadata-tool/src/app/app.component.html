@@ -1,17 +1,14 @@
-
-<div class="page-content">
-  <div class="header">
-    <shared-nav-toolbar
-      [routerlinks]="routes"
-      [applicationname]="'Metadata Tool'"
-      [haslogin]="true"
-      [homelink]="homelink">
-    </shared-nav-toolbar>
-    <app-privacy-consent-banner></app-privacy-consent-banner>
-  </div>
-  <div class="content">
-    <div style="height: 100%">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+<app-privacy-consent-banner></app-privacy-consent-banner>
+<shared-nav-toolbar
+  [routerLinks]="routes"
+  [applicationName]="'Metadata Tool'"
+  [hasLogin]="true"
+  [homeLink]="homelink"
+>
+  <router-outlet></router-outlet>
+  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+    [logoPath]="footerLogoPath"
+  ></shared-footer>
+</shared-nav-toolbar>
