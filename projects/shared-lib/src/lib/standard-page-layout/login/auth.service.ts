@@ -41,6 +41,7 @@ export class AuthService {
           // TODO: find a different way to retrieve UserToken
           this._user.next((up as any).info as UserToken);
           sessionStorage.setItem('user', JSON.stringify((up as any).info));
+          console.log("user saved");
         });
       });
 

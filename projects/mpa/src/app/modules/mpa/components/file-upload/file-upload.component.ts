@@ -72,6 +72,7 @@ export class FileUploadComponent implements OnInit {
     if (this.parentDataItem.type == 'folder') {
       this.dataUploadModeSelection = 'Search';
     }
+    this.filesUploadMetadata = new FilesUploadMetadataJSON();
   }
 
   existingNodeNames: string[];
@@ -110,7 +111,7 @@ export class FileUploadComponent implements OnInit {
   // available options
   uploadFileTypePeaklist: string[] = [FileType.MZML, FileType.MGF];
   uploadFileTypeSearch: string[] = [FileType.MZIDENTML, FileType.DAT];
-  buttonDisabled: boolean = true;
+  buttonDisabled: boolean = false;
   // DATA SUBMISSION VARIABLES
   // files selected via input field
   selectedPeaklistFiles: File[];
@@ -228,6 +229,7 @@ export class FileUploadComponent implements OnInit {
       const onDialogClosingObservable = this.invokeUploadDialog();
 
       if (this.fileAmountSelection == 'Single') {
+        console.log("single");
         this.filesToUpload = {
           files: [],
           httpParameters: new HttpParams(),
@@ -313,9 +315,9 @@ export class FileUploadComponent implements OnInit {
           uploadFile: configFile,
           fileID: 'config',
         });
-        for (let i in this.filesToUpload) {
+        for (let file of this.filesToUpload.files) {
           this.uploadProgressService.addToTotal(
-            this.filesToUpload.files[i].uploadFile.size
+           file.uploadFile.size
           );
         }
 
