@@ -10,7 +10,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 import { cloneDeep } from 'lodash';
-import { Endpoints } from '../../models/endpoints.model';
 import { MultiFileUploadData } from 'shared-lib';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
@@ -21,6 +20,7 @@ import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
 import { StepperService } from './stepper.service';
 import { HttpClientService } from 'shared-lib';
+import { WebserveraddressService, Endpoints} from '../../offwebserveraddress.service';
 
 export interface SimpleMessage {
   message: string;
@@ -37,7 +37,8 @@ export class WorkflowService {
 
   constructor(
     private http: HttpClientService,
-    private stepperService: StepperService
+    private stepperService: StepperService,
+    private address: WebserveraddressService
   ) {
     this.ofsDataSubject$.next(new OFSData());
   }
@@ -116,7 +117,7 @@ export class WorkflowService {
      */
     this.loading = true;
     this.http
-      .getObject<OFSData>(Endpoints.CREATE_JOB, new HttpParams())
+      .getObject<OFSData>(this.address.getEndpoint(Endpoints.CREATE_JOB), new HttpParams())
       .subscribe({
         next: (response: OFSData) => {
           this.ofsDataSubject$.next(response);
@@ -160,7 +161,7 @@ export class WorkflowService {
     };
 
     this.http
-      .postMultiPartFiles(filesToUpload, Endpoints.OVERVIEW_INPUT)
+      .postMultiPartFiles(filesToUpload, this.address.getEndpoint(Endpoints.OVERVIEW_INPUT))
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
       });
@@ -169,7 +170,7 @@ export class WorkflowService {
       .repeatedPostObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
         'responseData.overviewResponse.dataSparsity',
-        Endpoints.OVERVIEW_RESOURCE_AVAIL,
+        this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
         new HttpParams()
       )
       .subscribe((response: OFSData) => {
@@ -198,7 +199,7 @@ export class WorkflowService {
     this.http
       .postObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
-        Endpoints.PREPROCESSING_INPUT
+        this.address.getEndpoint(Endpoints.PREPROCESSING_INPUT)
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
@@ -208,7 +209,7 @@ export class WorkflowService {
       .repeatedPostObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
         'responseData.preprocessingResponse.predictivePerformance',
-        Endpoints.PREPROCESSING_RESOURCE_AVAIL,
+        this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
         new HttpParams()
       )
       .subscribe((response: OFSData) => {
@@ -232,7 +233,7 @@ export class WorkflowService {
     this.http
       .postObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
-        Endpoints.WRAPPER_INPUT
+        this.address.getEndpoint(Endpoints.WRAPPER_INPUT)
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
@@ -242,7 +243,7 @@ export class WorkflowService {
       .repeatedPostObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
         'responseData.wrapperResponse.featureSelection',
-        Endpoints.WRAPPER_RESOURCE_AVAIL,
+        this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
         new HttpParams()
       )
       .subscribe((response: OFSData) => {
@@ -261,7 +262,7 @@ export class WorkflowService {
     this.http
       .postObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
-        Endpoints.CLASSIFIER_INPUT,
+        this.address.getEndpoint(Endpoints.CLASSIFIER_INPUT),
         new HttpParams()
       )
       .subscribe((response) => {
@@ -274,7 +275,7 @@ export class WorkflowService {
       .repeatedPostObject<OFSData, OFSData>(
         this.ofsDataSubject$.value,
         'responseData.classifierResponse.pcaImage',
-        Endpoints.CLASSIFIER_RESOURCES,
+        this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
         new HttpParams()
       )
       .subscribe((response: OFSData) => {

@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class UploadProgressService {
+export class UploadProgressServiceDEPRECATED {
   fastaProgress = 0;
   reportProgress = 0;
   total = 0;
