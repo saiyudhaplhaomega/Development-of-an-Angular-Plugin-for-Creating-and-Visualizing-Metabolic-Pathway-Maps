@@ -3,7 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import {
   AuthService,
-  FooterContentMain,
   SimpleNavigationRoute,
   NestedNavigationRoute,
 } from 'shared-lib';

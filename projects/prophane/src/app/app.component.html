@@ -2,10 +2,10 @@
 <div class="page-content">
   <div class="header">
     <shared-nav-toolbar
-      [routerlinks]="routes"
-      [applicationname]="'Prophane'"
-      [haslogin]="true"
-      [homelink]="homelink">
+      [routerLinks]="routes"
+      [applicationName]="'Prophane'"
+      [hasLogin]="true"
+      [homeLink]="homelink">
     </shared-nav-toolbar>
   </div>
   <app-privacy-consent-banner></app-privacy-consent-banner>
@@ -14,5 +14,5 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-  <app-page-footer class="footer" [footercontent]="footercontent"></app-page-footer>
+  <shared-footer class="footer" [footerContent]="footerContent"></shared-footer>
 </div>

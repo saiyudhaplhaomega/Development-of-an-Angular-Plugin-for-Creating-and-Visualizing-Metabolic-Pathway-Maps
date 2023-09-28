@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, NavigationRoute } from 'dist/shared-lib';
 import {
-  FooterContentMain,
-  FooterContentSubElement,
-} from 'projects/shared-lib/src/public-api';
+  AuthService,
+  SimpleNavigationRoute,
+  NestedNavigationRoute,
+} from 'shared-lib';
 
 @Component({
   selector: 'app-root',
@@ -12,35 +12,37 @@ import {
 })
 export class AppComponent implements OnInit {
   title = 'prophane';
-  routes: NavigationRoute[] = [
+  routes: SimpleNavigationRoute[] = [
     { route: '/jobsubmission', label: 'Job Submission', requireAuth: true },
     { route: '/jobcontrol', label: 'Job Control', requireAuth: true },
     { route: '/about', label: 'About Prophane', requireAuth: false },
   ];
-  homelink: NavigationRoute = {
+  homelink: SimpleNavigationRoute = {
     route: '/jobsubmission',
     label: 'jobsubmission',
   };
 
-  footerContent: FooterContentMain[] = [
+  footerContent: NestedNavigationRoute[] = [
     {
-      categoryName: 'About',
-      elements: [
-        { name: 'About Prophane', routerLink: '/about' },
-        { name: 'Terms of Service', routerLink: '/termsofservice' },
-        { name: 'Privacy Policy', routerLink: '/privacypolicy' },
-        { name: 'Impressum', routerLink: '/impressum' },
+      label: 'About',
+      children: [
+        { label: 'About Prophane', route: '/about' },
+        { label: 'Terms of Service', route: '/termsofservice' },
+        { label: 'Privacy Policy', route: '/privacypolicy' },
+        { label: 'Impressum', route: '/impressum' },
       ],
     },
     {
-      categoryName: 'Funding & Support',
-      elements: [
-        { name: 'DFG', href: 'http://www.dfg.de' },
-        { name: 'de.NBI', href: 'http://www.denbi.de' },
-        { name: 'de.NBI Cloud', href: 'https://www.denbi.de/cloud' },
+      label: 'Funding & Support',
+      children: [
+        { label: 'DFG', href: 'http://www.dfg.de' },
+        { label: 'de.NBI', href: 'http://www.denbi.de' },
+        { label: 'de.NBI Cloud', href: 'https://www.denbi.de/cloud' },
       ],
     },
   ];
+
+  footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
 
   constructor(private authService: AuthService) {}
 

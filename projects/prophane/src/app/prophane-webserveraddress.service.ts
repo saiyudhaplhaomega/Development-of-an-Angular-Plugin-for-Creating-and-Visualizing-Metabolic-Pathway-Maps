@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export enum WebserverUrls {
-  TEST = 'https://prophane.de:9091/prophane_test/',
-  PRODUCTION = 'https://prophane.de:9091/prophane/',
+  TEST = 'https://prophane.de/prophane_test/',
+  PRODUCTION = 'https://prophane.de/prophane/',
 }
 
 export enum Endpoints {
@@ -12,7 +12,7 @@ export enum Endpoints {
   PROPHANE_SAVE_JOB_FORM = 'prophaneSaveJobForm',
 
   // TODO replace with single endpoint
-  PROPHANE_START_JOB = 'prophaneStartJob',
+  PROPHANE_FILEUPLOAD = 'prophaneFileUpload',
 
   GET_PROPHANE_JOB = 'getJob',
   GET_PROPHANE_JOBS = 'prophaneJobList',

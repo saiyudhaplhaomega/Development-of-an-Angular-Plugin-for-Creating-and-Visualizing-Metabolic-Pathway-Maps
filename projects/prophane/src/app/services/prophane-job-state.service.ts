@@ -25,9 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService, UploadDialogComponent, UploadFile, UploadProgressService } from 'dist/shared-lib';
 import { Observable } from 'rxjs';
-import { HttpClientService, MultiFileUploadData } from 'shared-lib';
-
-import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
+import { MultiFileUploadData } from 'shared-lib';
 
 import { ProphaneReportStyle } from '../model/prophane-job-submission-formdata';
 import { HttpEventType, HttpParams } from '@angular/common/http';
@@ -101,8 +99,6 @@ export class ProphaneJobStateService {
     private jobService: JobService,
     private _uploadProgressService: UploadProgressService,
     public dialog: MatDialog,
-    private uploaderService: HttpClientService,
-    private webserver: WebserveraddressService,
     private router: Router,
     private auth: AuthService
   ) {}
@@ -266,58 +262,6 @@ export class ProphaneJobStateService {
     return dialogRef.afterClosed();
   }
 
-  addFilesToUploadData() {
-    //if (this.proteinReportFile && this.fastaFile) {
-      // TODO: requires a change in backend or a switch to "postFile()" method
-      // const uploadDataForServer: MultiFileUploadData = [
-      //   {
-      //     uploadFile: this.proteinReportFile,
-      //     httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
-      //     //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_CSV,
-      //   },
-      //   {
-      //     uploadFile: this.fastaFile,
-      //     httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}}),
-      //     //fileUploadAdress: Endpoints.UPLOAD_PROPHANE_FASTA,
-      //   }
-      // ];
-      //this.uploaderService.addUploadFiles(uploadDataForServer);
-      //uploadDataForServer.map(file => {
-      //  this.filesToUpload.files.push(file);
-      //})
-    //}
-  }
-/*
-  addFilesToUploadData() {
-    const fileList: MultiFileUploadData = {
-      files: [],
-      httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}})
-    };
-    if (this.proteinReportFile && this.fastaFile) {
-      const uploadFastaFile: UploadFile =   {
-        uploadFile: this.proteinReportFile,
-        fileID: 'fastaFile',
-      };
-      const uploadProteinFile: UploadFile =   {
-        uploadFile: this.proteinReportFile,
-        fileID: 'proteinReportFile',
-      };
-      fileList.files.push(uploadFastaFile);
-      fileList.files.push(uploadProteinFile);
-      if (this.currentProphaneJob.parameters.customMaps.length > 0) {
-        this.currentProphaneJob.parameters.customMaps.forEach(function (cm){
-          const uploadCustomMapFile: UploadFile =   {
-            uploadFile: cm.file,
-            fileID: 'custom_map_file_'+ cm.id
-          };
-          fileList.files.push(uploadCustomMapFile);
-        })
-      }
-    }
-    console.log("upload list")
-    console.log(fileList)
-    return fileList
-  } */
 
   setEmapperEvalue(): void {
     this.currentProphaneJob.parameters.annotationTasks.forEach((task) => {
@@ -340,6 +284,7 @@ export class ProphaneJobStateService {
   }
 
 
+  // TODO: a lot of this should be contained in JobService
   submitJob(): void {
     if (this.formErrors.size === 0) {
 
@@ -352,7 +297,7 @@ export class ProphaneJobStateService {
 
       this.filesToUpload = {
         files: [],
-        httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}})
+        //httpParameters: new HttpParams({fromObject: {partid: this.currentProphaneJob.prophaneJobUUID}})
       };
 
       const prophaneJsonAsFile = new File([JSON.stringify(this.currentProphaneJob)], 'jobObject');
@@ -370,17 +315,11 @@ export class ProphaneJobStateService {
         });
       }
 
-      this.uploaderService.postMultiPartFilesEvents(
-        this.filesToUpload,
-        Endpoints.FILES_UPLOAD
-      );
-
       this._uploadProgressService.addToTotal(
         this.filesToUpload.files[0].uploadFile.size
       );
 
-      this.uploaderService
-      .postMultiPartFilesEvents(this.filesToUpload, this.webserver.getEndpoint(Endpoints.FILES_UPLOAD))
+      this.jobService.submitJob(this.filesToUpload)
       .subscribe({
         next: (event) => {
           console.log('unknown event');

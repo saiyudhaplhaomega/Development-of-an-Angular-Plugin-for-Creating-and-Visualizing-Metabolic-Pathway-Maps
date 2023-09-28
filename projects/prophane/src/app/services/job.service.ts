@@ -6,6 +6,7 @@ import { ProphaneJobObject } from '../model/prophanejobjson';
 
 import { HttpClientService } from 'shared-lib';
 import { Endpoints, WebserveraddressService } from '../prophane-webserveraddress.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 
 @Injectable({
@@ -67,6 +68,11 @@ export class JobService {
       .subscribe((res) => {
         console.log('job deleted: ' + jobToDelete.prophaneJobUUID);
       });
+  }
+
+  submitJob(filesToUpload): Observable<HttpEvent<Object>> {
+      return this.jsonUpload
+      .postMultiPartFilesEvents(filesToUpload, this.address.getURL(Endpoints.PROPHANE_FILEUPLOAD));
   }
 
   /**
