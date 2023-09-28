@@ -123,14 +123,21 @@
         </mat-tab> -->
 
         <!--   Tab 4: Taxonomy -->
-        <mat-tab label="Taxonomy" disabled="{{!hasTaxonomyData}}">
+        <mat-tab label="Taxonomy" >
           <ng-template matTabContent>
-            <app-taxonomy-tab class="mpa-table"></app-taxonomy-tab>
+            <app-taxonomy-tab></app-taxonomy-tab>
+          </ng-template>
+        </mat-tab>
+
+        <!-- Tab 5: Keywords -->
+        <mat-tab label="Keywords">
+          <ng-template matTabContent>
+            <app-keywords-tab></app-keywords-tab>
           </ng-template>
         </mat-tab>
 
         <!--   Tab 6: Function -->
-        <mat-tab label="Function" disabled="{{!hasFunctionData}}">
+        <mat-tab label="Function">
           <ng-template matTabContent>
             <app-function-tab></app-function-tab>
           </ng-template>

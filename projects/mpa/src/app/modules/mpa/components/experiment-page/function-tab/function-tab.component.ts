@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UniProtKeyword } from '../../../model/keywordjson';
 
 @Component({
   selector: 'app-function-tab',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class FunctionTabComponent {
 
+  keywords: UniProtKeyword[];
 }
