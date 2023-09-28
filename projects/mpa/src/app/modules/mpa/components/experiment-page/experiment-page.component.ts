@@ -44,7 +44,7 @@ export class ExperimentPageComponent
 
   datStats: Datstats;
   hasMpaData: boolean = false;
-  hasTaxonomyData: boolean = false;
+  hasTaxonomyData: boolean = true;
   hasFunctionData: boolean = false;
 
   // child node elements

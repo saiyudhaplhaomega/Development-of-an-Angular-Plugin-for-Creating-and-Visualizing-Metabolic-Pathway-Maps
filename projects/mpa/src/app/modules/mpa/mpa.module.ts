@@ -73,6 +73,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { KeywordsTabComponent } from './components/experiment-page/keywords-tab/keywords-tab.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     CompareExperimentsDialogComponentComponent,
     ExperimentComparisonComponent,
     FileUploadComponent,
+    KeywordsTabComponent,
   ],
   imports: [
     CommonModule,

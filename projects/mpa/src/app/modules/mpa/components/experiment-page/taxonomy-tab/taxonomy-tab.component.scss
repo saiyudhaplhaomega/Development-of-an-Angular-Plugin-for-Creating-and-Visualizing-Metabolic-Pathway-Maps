@@ -1,0 +1,33 @@
+.taxonomy-tree {
+    float: left;
+    text-align: left;
+    min-width: 80%;
+}
+
+.taxonomy-tree ul,
+.taxonomy-tree li {
+    margin-top:  0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.taxonomy-tree-node {
+    display: block;
+}
+
+.taxonomy-tree-node>button {
+    font-weight: 400;
+}
+
+.taxonomy-tree-node .taxonomy-tree-node {
+    padding-left: 20px;
+}
+
+.taxonomy-tree-node-info {
+    user-select:text;
+    width: 100%;
+}
+
+.taxonomy-tree-invisible {
+    display: none;
+}
