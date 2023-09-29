@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { InputFormComponent } from 'shared-lib';
-import { Endpoints } from '../../../models/endpoints.model';
 import { WrapperForm } from '../../models/wrapper.model';
 import { WorkflowService } from '../../services/workflow.service';
 import { OFSData } from '../../models/ofs-data.model';

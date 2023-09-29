@@ -164,28 +164,27 @@ export class WorkflowService {
       .postMultiPartFiles(filesToUpload, this.address.getEndpoint(Endpoints.OVERVIEW_INPUT))
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
-      });
-
-    this.http
-      .repeatedPostObject<OFSData, OFSData>(
-        this.ofsDataSubject$.value,
-        'responseData.overviewResponse.dataSparsity',
-        this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
-        new HttpParams()
-      )
-      .subscribe((response: OFSData) => {
-        // TODO: set testgroup and control group names on the server!
-        response.responseData.overviewResponse.testGroups =
-          this.ofsData.configData.overviewConfig.groups
-            .slice(1)
-            .map((group) => {
-              return group.groupName;
-            });
-        response.responseData.overviewResponse.controlGroup =
-          this.ofsData.configData.overviewConfig.groups[0].groupName;
-        this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(0);
-        this.loading = false;
+        this.http
+        .repeatedPostObject<OFSData, OFSData>(
+          response,
+          'responseData.overviewResponse.dataSparsity',
+          this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
+          new HttpParams()
+        )
+        .subscribe((response: OFSData) => {
+          // TODO: set testgroup and control group names on the server!
+          response.responseData.overviewResponse.testGroups =
+            this.ofsData.configData.overviewConfig.groups
+              .slice(1)
+              .map((group) => {
+                return group.groupName;
+              });
+          response.responseData.overviewResponse.controlGroup =
+            this.ofsData.configData.overviewConfig.groups[0].groupName;
+          this.ofsDataSubject$.next(response);
+          this.stepperService.setStepComplete(0);
+          this.loading = false;
+        });
       });
   }
 

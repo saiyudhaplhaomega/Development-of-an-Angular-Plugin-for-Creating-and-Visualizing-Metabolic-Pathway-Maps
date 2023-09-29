@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export interface WrapperConfig {
+  wrapperJobId: string;
   repeats: number;
   folds: number;
   pvalCutoff?: number;

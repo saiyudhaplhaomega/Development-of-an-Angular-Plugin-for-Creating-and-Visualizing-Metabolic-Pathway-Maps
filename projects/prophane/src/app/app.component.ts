@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
+  //footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
 
   constructor(private authService: AuthService) {}
 

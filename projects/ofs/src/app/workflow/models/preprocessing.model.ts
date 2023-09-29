@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export interface PreprocessingConfig {
+  configJobId: string;
   controlGroup: string;
   testGroup: string;
   repeats: number;

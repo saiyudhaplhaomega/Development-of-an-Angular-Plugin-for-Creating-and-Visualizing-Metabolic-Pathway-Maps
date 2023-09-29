@@ -1,5 +1,4 @@
-
-<div class="page-content">
+<!-- <div class="page-content">
   <div class="header">
     <shared-nav-toolbar
       [routerLinks]="routes"
@@ -15,4 +14,24 @@
     </div>
   </div>
   <shared-footer class="footer" [footerContent]="footerContent"></shared-footer>
-</div>
+</div> -->
+
+<app-privacy-consent-banner></app-privacy-consent-banner>
+<shared-nav-toolbar
+  [routerLinks]="routes"
+  [applicationName]="'Prophane'"
+  [hasLogin]="false"
+  [homeLink]="homelink"
+>
+  <!-- content should always be placed inside share-nav-toolbar, because styling -->
+
+  <!-- always place a router instance here to display content -->
+  <router-outlet></router-outlet>
+
+  <!-- if you place a footer, give it an id of 'footer' -->
+  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+
+  ></shared-footer>
+</shared-nav-toolbar>

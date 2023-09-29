@@ -6,7 +6,6 @@ import {
   InputFormComponent,
   ALLOWEDSIMPLECHARS,
 } from 'shared-lib';
-import { Endpoints } from '../../../models/endpoints.model';
 import { OFSData } from '../../models/ofs-data.model';
 import {
   DataGroupForm,

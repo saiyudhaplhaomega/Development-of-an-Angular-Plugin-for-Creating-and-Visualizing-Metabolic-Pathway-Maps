@@ -24,12 +24,14 @@ export interface DataGroupForm extends FormGroup {
 }
 
 export interface OverviewConfig {
+  overviewJobId: string;
   data: File;
   groups: DataGroup[];
   groupSelectionOptions: GroupSelectionOptions;
 }
 
 export interface OverviewConfigForRequest {
+  overviewJobId: string;
   groups: DataGroup[];
   groupSelectionOption: GroupSelectionOptions;
 }

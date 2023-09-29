@@ -8,5 +8,6 @@ export interface FeatureProfile {
 }
 
 export interface ClassifierConfig {
+  classifierJobId: string;
   selectedFeatures: Feature[];
 }
