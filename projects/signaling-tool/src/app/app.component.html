@@ -1,8 +1,20 @@
 <shared-nav-toolbar
   [routerLinks]="routes"
-  [applicationName]="'Signaling-Tool'"
+  [applicationName]="title"
+  [hasLogin]="false"
+  [homeLink]="homeLink"
 >
+  <!-- content should always be placed inside share-nav-toolbar, because styling -->
+
+  <!-- always place a router instance here to display content -->
   <router-outlet></router-outlet>
-</shared-nav-toolbar>    
+
+  <!-- if you place a footer, give it an id of 'footer' -->
+ <!--  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+    [logoPath]="footerLogoPath"
+  ></shared-footer> -->
+</shared-nav-toolbar>
  
 

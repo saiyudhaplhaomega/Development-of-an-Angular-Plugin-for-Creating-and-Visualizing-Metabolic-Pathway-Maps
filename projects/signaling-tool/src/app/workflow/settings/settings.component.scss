@@ -1,0 +1,52 @@
+/* Table Styles */
+mat-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Allow table columns to adjust to content */
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style for the header cells */
+mat-header-cell {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Style for the data cells */
+mat-cell {
+  background-color: #ffffff;
+}
+
+/* Add hover effect for rows */
+mat-row:hover {
+  background-color: #f0f0f0;
+}
+
+/* Paginator Styles */
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Style for paginator buttons */
+.mat-paginator-page-size, .mat-paginator-range-label, .mat-paginator-navigation {
+  font-size: 14px;
+}
+
+/* Style for paginator button icons */
+.mat-paginator-icon {
+  font-size: 20px;
+}
+ 
+
+.table-container {
+  max-height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
