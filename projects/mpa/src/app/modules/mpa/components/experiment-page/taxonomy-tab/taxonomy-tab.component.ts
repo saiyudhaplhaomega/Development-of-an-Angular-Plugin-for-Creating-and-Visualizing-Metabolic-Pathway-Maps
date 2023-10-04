@@ -94,8 +94,10 @@ export class TaxonomyTabComponent implements OnInit {
 
   applyFilter(): void {
     let nodes = this.taxonomyNodes.rootNode.children;
-    for (let i in nodes) {
-      this.filterChildren(nodes[i]);
+    if (this.filterString.length > 2) {
+      for (let i in nodes) {
+        this.filterChildren(nodes[i]);
+      }
     }
   }
 
@@ -107,7 +109,7 @@ export class TaxonomyTabComponent implements OnInit {
       node.displayed = true;
       descendants.map(desc => desc.displayed = true);
 
-      //this section is to make sure matches in multiple sequential levels get considered and displayed (i.e. parent: Bacteria, child with children: Acidobacterioa)
+      //this section is to make sure matches in multiple sequential levels get considered and displayed (i.e. parent: Bacteria, child with children: Acidobacterioa when 'bacte' is searched)
       let descMatched = false;
       descendants.map(desc => regExp.test(desc.description) ? descMatched = true : '');
       if (descMatched) {
@@ -136,5 +138,11 @@ export class TaxonomyTabComponent implements OnInit {
         node.displayed = false;
       }
     }
+  }
+
+  //TODO implement insertion into detail-view-component
+  nodeClicked(node:taxNode): void {
+    !this.treeControl.isExpanded(node) ? this.treeControl.expand(node) : {} ;
+    console.log(node)
   }
 }
