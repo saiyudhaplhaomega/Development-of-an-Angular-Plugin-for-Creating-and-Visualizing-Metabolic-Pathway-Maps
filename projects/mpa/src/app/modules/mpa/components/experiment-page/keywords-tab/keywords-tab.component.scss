@@ -1,0 +1,39 @@
+.keywords-tab ul,
+.keywords-tab li {
+    margin-top:  0;
+    margin-bottom: 0;
+    padding: 0 0 0 0;
+    list-style-type: none;
+}
+
+.keyword-category {
+    margin-bottom: 5px;
+    box-shadow: none;
+    width: 100%;
+}
+
+.keyword-category-header {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.3);
+}
+
+.keyword-row {
+    display:flex;
+    justify-content: space-between;
+}
+
+.keyword-row>span {
+    margin-top:auto;
+    margin-bottom:auto;
+    padding-right: 3px;
+}
+
+.keyword-row:not(.keyword-row-header):hover{
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.keyword-row-header {
+    padding-bottom: 3px !important;
+}
