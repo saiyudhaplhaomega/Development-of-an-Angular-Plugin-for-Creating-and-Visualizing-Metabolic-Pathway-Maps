@@ -31,6 +31,7 @@ export interface SimpleMessage {
 )
 // TODO: control current step from here
 export class WorkflowService {
+
   loading: Boolean;
 
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
@@ -282,9 +283,8 @@ export class WorkflowService {
           this.loading = false;
         });
       });
-
-
   }
+
 
   getResourceUrls(resources: string[]) {
     const urls = [];
@@ -295,4 +295,12 @@ export class WorkflowService {
     }
     return urls;
   }
+
+  getDownloadLink(): string {
+    if (this.ofsData.responseData && this.ofsData.responseData.classifierResponse && this.ofsData.responseData.classifierResponse.downloadLink) {
+      return this.ofsData.responseData.classifierResponse.downloadLink;
+    }
+    return null;
+  }
+
 }

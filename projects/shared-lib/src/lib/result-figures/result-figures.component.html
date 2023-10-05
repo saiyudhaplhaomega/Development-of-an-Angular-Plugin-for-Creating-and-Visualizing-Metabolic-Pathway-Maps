@@ -9,7 +9,9 @@
       <mat-tab *ngFor="let image of imageLinks; let i = index">
         <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
         <div class="centereing-container">
-          <img class="w-full h-full object-contain min-h-0" [src]="image" />
+          <!-- <img class="w-full h-full object-contain min-h-0" [src]="image" /> -->
+          <object type="text/html" [data]=" image | safe "width="800px" height="600px" style="overflow:auto">
+          </object>
         </div>
       </mat-tab>
     </mat-tab-group>
@@ -22,7 +24,9 @@
     <span class="mat-tab-label mat-tab-label-content">
       {{ tabLables[0] }}
     </span>
-    <img class="w-full h-full object-contain min-h-0" [src]="imageLinks[0]" />
+    <object type="text/html" [data]=" imageLinks[0] | safe "width="800px" height="600px" style="overflow:auto">
+    </object>
+    <!--<img class="w-full h-full object-contain min-h-0" [src]="imageLinks[0]" />-->
   </div>
 
   <div

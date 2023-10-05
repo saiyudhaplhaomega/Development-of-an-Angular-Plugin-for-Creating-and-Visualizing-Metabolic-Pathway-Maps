@@ -10,6 +10,7 @@
 
     <div class="form-button-grid">
       <button
+        (click)="this.downloadData()"
         class="col-span-2"
         [disabled]="!projectName.valid || (formDisabled$ | async)"
         mat-flat-button

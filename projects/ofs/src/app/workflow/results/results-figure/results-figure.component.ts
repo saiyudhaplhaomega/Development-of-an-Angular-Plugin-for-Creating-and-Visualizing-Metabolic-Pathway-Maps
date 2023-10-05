@@ -26,7 +26,7 @@ export class ResultsFigureComponent {
     if (!this.checkForOvervieImages(data)) {
       return [];
     }
-    return this.workflow.getResourceUrls([data.pcaImage]);
+    return this.workflow.getResourceUrls([data.pcaImage, data.hacImage, data.scatterPlotImage]);
   }
 
   checkForOvervieImages(ofsData: ClassifierResponse): boolean {
