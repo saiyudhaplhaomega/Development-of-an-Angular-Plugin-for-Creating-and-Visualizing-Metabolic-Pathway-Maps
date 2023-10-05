@@ -80,10 +80,11 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
   }
 
   generateResults() {
-    const selectedFeatures = this.dataSource.data.filter((feature) =>
+    const selectedFeatures: Feature[] = this.dataSource.data.filter((feature) =>
       this.selection.selected.includes(feature.featureID)
     );
     this.workflow.submitClassifierConfig({
+      classifierJobId: "",
       selectedFeatures: selectedFeatures,
     });
   }

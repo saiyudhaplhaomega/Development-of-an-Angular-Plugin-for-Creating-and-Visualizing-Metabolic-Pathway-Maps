@@ -202,20 +202,20 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
+        this.http
+        .repeatedPostObject<OFSData, OFSData>(
+          this.ofsDataSubject$.value,
+          'responseData.preprocessingResponse.predictivePerformance',
+          this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
+          new HttpParams()
+        )
+        .subscribe((response: OFSData) => {
+          this.ofsDataSubject$.next(response);
+          this.stepperService.setStepComplete(1);
+          this.loading = false;
+        });
       });
 
-    this.http
-      .repeatedPostObject<OFSData, OFSData>(
-        this.ofsDataSubject$.value,
-        'responseData.preprocessingResponse.predictivePerformance',
-        this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
-        new HttpParams()
-      )
-      .subscribe((response: OFSData) => {
-        this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(1);
-        this.loading = false;
-      });
   }
 
   submitWrapperConfig(config: WrapperConfig) {
@@ -236,19 +236,20 @@ export class WorkflowService {
       )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
+        this.http
+        .repeatedPostObject<OFSData, OFSData>(
+          this.ofsDataSubject$.value,
+          'responseData.wrapperResponse.featureSelection',
+          this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
+          new HttpParams()
+        )
+        .subscribe((response: OFSData) => {
+          this.ofsDataSubject$.next(response);
+          this.loading = false;
+        });
       });
 
-    this.http
-      .repeatedPostObject<OFSData, OFSData>(
-        this.ofsDataSubject$.value,
-        'responseData.wrapperResponse.featureSelection',
-        this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
-        new HttpParams()
-      )
-      .subscribe((response: OFSData) => {
-        this.ofsDataSubject$.next(response);
-        this.loading = false;
-      });
+
   }
 
   submitClassifierConfig(config: ClassifierConfig) {
@@ -268,20 +269,21 @@ export class WorkflowService {
         this.ofsDataSubject$.next(response);
         this.stepperService.setStepComplete(2);
         this.stepperService.setStep(3);
+        this.http
+        .repeatedPostObject<OFSData, OFSData>(
+          this.ofsDataSubject$.value,
+          'responseData.classifierResponse.pcaImage',
+          this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
+          new HttpParams()
+        )
+        .subscribe((response: OFSData) => {
+          this.ofsDataSubject$.next(response);
+          this.stepperService.setStepComplete(3);
+          this.loading = false;
+        });
       });
 
-    this.http
-      .repeatedPostObject<OFSData, OFSData>(
-        this.ofsDataSubject$.value,
-        'responseData.classifierResponse.pcaImage',
-        this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
-        new HttpParams()
-      )
-      .subscribe((response: OFSData) => {
-        this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(3);
-        this.loading = false;
-      });
+
   }
 
   getResourceUrls(resources: string[]) {
