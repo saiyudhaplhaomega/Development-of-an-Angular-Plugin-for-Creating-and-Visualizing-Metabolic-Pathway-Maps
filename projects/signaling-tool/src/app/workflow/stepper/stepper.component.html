@@ -1,0 +1,21 @@
+<!-- <div class="stepper">
+  <div
+    *ngFor="let step of steps; let i = index"
+    [class.active]="i === currentStep"
+    class="step"
+    (click)="stepChange.emit(i)"
+  >
+    {{ step }}
+  </div> -->
+</div>
+<div class="stepper">
+  <div
+    *ngFor="let step of steps; let i = index"
+    [class.active]="i === currentStep"
+    class="step"
+    (click)="onStepClick(i)"
+  >
+    {{ step }}
+  </div>
+</div>
+ 

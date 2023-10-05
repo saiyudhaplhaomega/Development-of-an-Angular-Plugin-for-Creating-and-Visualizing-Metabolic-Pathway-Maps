@@ -1,1 +1,56 @@
-<p>workflow works!</p>
+<!-- <div class="workflow-container">
+  <app-stepper
+    [steps]="steps"
+    [currentStep]="currentStep"
+    (stepChange)="changeStep($event)"
+  ></app-stepper>
+
+  <router-outlet></router-outlet>
+
+  <div class="actions">
+    <button (click)="goToPreviousStep()" [disabled]="currentStep === 0">Previous</button>
+    <button (click)="goToNextStep()" [disabled]="currentStep === steps.length - 1">Next</button>
+  </div>
+</div> -->
+ 
+<!-- <div class="workflow-container">
+  <app-stepper
+    [steps]="steps"
+    [currentStep]="currentStep"
+    (stepChange)="changeStep($event)"
+  ></app-stepper>
+
+  <div class="workflow-content">
+    <ng-container *ngIf="currentStep === 0">
+      <app-settings></app-settings>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 1">
+      <app-results></app-results>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 2">
+      <app-exploration></app-exploration>
+    </ng-container>
+  </div>
+
+  <div class="actions">
+    <button (click)="goToPreviousStep()" [disabled]="currentStep === 0">Previous</button>
+    <button (click)="goToNextStep()" [disabled]="currentStep === steps.length - 1">Next</button>
+  </div>
+</div>
+ --> 
+
+ <div class="workflow-container">
+  <mat-horizontal-stepper [linear]="true" [selectedIndex]="currentStep">
+    <mat-step *ngFor="let step of steps; let i = index" [label]="step">
+      <ng-container [ngSwitch]="i">
+        <app-settings *ngSwitchCase="0"></app-settings>
+        <app-results *ngSwitchCase="1"></app-results>
+        <app-exploration *ngSwitchCase="2"></app-exploration>
+      </ng-container>
+      <div class="actions">
+        <button mat-button (click)="goToPreviousStep()" [disabled]="i === 0">Previous</button>
+        <button mat-button (click)="goToNextStep()" [disabled]="i === steps.length - 1">Next</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

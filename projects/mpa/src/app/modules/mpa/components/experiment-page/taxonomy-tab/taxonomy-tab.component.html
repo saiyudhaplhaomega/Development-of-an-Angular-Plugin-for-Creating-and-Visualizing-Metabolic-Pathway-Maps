@@ -1,27 +1,35 @@
 <div style="min-height: 300px;">
-  <mat-form-field style="width: 20%">
+  <mat-form-field style="width: 20%; margin-right: 15px;">
     <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
   </mat-form-field>
   <div class="taxonomy-tree">
     <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for expandable nodes -->
-      <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="taxonomy-tree-node" [style.display]="node.displayed ? 'block' : 'none'">
-        <div>
-          <button mat-button cdkTreeNodeToggle>
-            <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
-          </button>
-          <span class="taxonomy-tree-node-info">{{node.description}}</span>
+      <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="taxonomy-tree-node"
+        [style.display]="node.displayed ? 'block' : 'none'">
+        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)">
+          <div class="taxonomy-tree-node-essentials">
+            <button mat-button cdkTreeNodeToggle>
+              <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
+            </button>
+            <span class="taxonomy-tree-node-info">{{node.description}}</span>
+          </div>
+          <span class="taxonomy-tree-node-quant">4234329048230958</span>
         </div>
         <div [@detailExpand]="treeControl.isExpanded(node) ? 'expanded' : 'collapsed'">
           <ng-container cdkTreeNodeOutlet></ng-container>
         </div>
       </cdk-nested-tree-node>
 
-      <!-- template for leaf nodes (i.e. the upper most nodes) -->
-      <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="taxonomy-tree-node" [style.display]="node.displayed ? 'block' : 'none'">
-        <div>
-          <button mat-button disabled></button>
-          <span class="taxonomy-tree-node-info">{{node.description}}</span>
+      <!-- template for leaf nodes (i.e. the outer most nodes) -->
+      <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="taxonomy-tree-node"
+        [style.display]="node.displayed ? 'block' : 'none'">
+        <div class="taxonomy-tree-node-row">
+          <div class="taxonomy-tree-node-essentials">
+            <button mat-button disabled></button>
+            <span class="taxonomy-tree-node-info">{{node.description}}</span>
+          </div>
+          <span class="taxonomy-tree-node-quant">4234329048230958</span>
         </div>
       </cdk-nested-tree-node>
     </cdk-tree>

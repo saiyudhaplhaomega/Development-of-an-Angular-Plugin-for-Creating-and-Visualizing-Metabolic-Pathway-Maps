@@ -1,1 +1,26 @@
-<p>keywords-tab works!</p>
+<div style="min-height: 300px;" class="keywords-tab">
+    <mat-form-field style="width: 20%; margin-right: 15px;">
+        <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
+      </mat-form-field>
+    <mat-accordion multi>
+        <ng-container *ngFor="let key of this.keyArray">
+            <mat-expansion-panel class="keyword-category">
+                <mat-expansion-panel-header class="keyword-category-header">
+                    {{key.toString()}}
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <ul class="keyword-list">
+                        <li class="keyword-row-header keyword-row">
+                            <span>Description</span>
+                            <span>Quantification</span>
+                        </li>
+                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" (click)="keywordClicked(keyword)">
+                            <span>{{keyword.description}}</span>
+                            <span>dsfsdf</span>
+                        </li>
+                    </ul>
+                </ng-template>
+            </mat-expansion-panel>
+        </ng-container>
+    </mat-accordion>
+</div>
