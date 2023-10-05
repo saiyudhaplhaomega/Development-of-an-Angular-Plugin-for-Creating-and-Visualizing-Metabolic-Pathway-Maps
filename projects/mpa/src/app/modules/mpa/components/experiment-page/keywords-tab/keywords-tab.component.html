@@ -1,7 +1,13 @@
 <div style="min-height: 300px;" class="keywords-tab">
-    <mat-form-field style="width: 20%; margin-right: 15px;">
-        <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
-      </mat-form-field>
+    <div class="keywords-tab-options">
+        <mat-form-field style="width: 20%; margin-right: 15px;">
+            <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
+        </mat-form-field>
+        <div>
+            <button mat-button (click)="expandAll()">Expand all</button>
+            <button mat-button (click)="collapseAll()">Collapse all</button>
+        </div>
+    </div>
     <mat-accordion multi>
         <ng-container *ngFor="let key of this.keyArray">
             <mat-expansion-panel class="keyword-category">
@@ -14,13 +20,17 @@
                             <span>Description</span>
                             <span>Quantification</span>
                         </li>
-                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" (click)="keywordClicked(keyword)">
+                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" [ngClass]="{'keyword-row-selected': isSelectedKeyword(keyword)}"
+                            (click)="keywordClicked(keyword)">
                             <span>{{keyword.description}}</span>
-                            <span>dsfsdf</span>
+                            <span>765</span>
                         </li>
                     </ul>
                 </ng-template>
             </mat-expansion-panel>
         </ng-container>
     </mat-accordion>
+    <ng-container *ngIf="!(this.keyArray.length > 0)">
+        <p>No matching data found!</p>
+    </ng-container>
 </div>

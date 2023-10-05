@@ -1,7 +1,13 @@
-<div style="min-height: 300px;">
-  <mat-form-field style="width: 20%; margin-right: 15px;">
-    <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
-  </mat-form-field>
+<div style="min-height: 300px;" class="taxonomy-tab">
+  <div class="taxonomy-tab-options">
+    <mat-form-field style="width: 20%; margin-right: 15px;">
+      <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
+    </mat-form-field>
+    <div>
+      <button mat-button (click)="expandAll()">Expand all</button>
+      <button mat-button (click)="collapseAll()">Collapse all</button>
+    </div>
+  </div>
   <div class="taxonomy-tree">
     <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for expandable nodes -->
@@ -24,7 +30,7 @@
       <!-- template for leaf nodes (i.e. the outer most nodes) -->
       <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="taxonomy-tree-node"
         [style.display]="node.displayed ? 'block' : 'none'">
-        <div class="taxonomy-tree-node-row">
+        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)">
           <div class="taxonomy-tree-node-essentials">
             <button mat-button disabled></button>
             <span class="taxonomy-tree-node-info">{{node.description}}</span>

@@ -1,3 +1,16 @@
+.taxonomy-tab>button {
+    font-weight: 400;
+}
+
+.taxonomy-tab-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 1em;
+    margin-left: 2em;
+    align-items: center;
+}
+
 .taxonomy-tree {
     float: left;
     text-align: left;
@@ -13,10 +26,6 @@
 
 .taxonomy-tree-node {
     display: block;
-}
-
-.taxonomy-tree-node>button {
-    font-weight: 400;
 }
 
 .taxonomy-tree-node .taxonomy-tree-node {

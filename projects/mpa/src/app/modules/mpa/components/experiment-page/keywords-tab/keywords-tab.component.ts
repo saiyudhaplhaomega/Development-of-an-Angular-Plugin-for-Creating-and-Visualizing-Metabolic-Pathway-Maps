@@ -9,36 +9,50 @@ import { KeywordJSONObject, UniProtKeyword, UniProtKeywordCategories } from '../
 })
 export class KeywordsTabComponent implements OnInit {
 
-  //TODO implement buttons to open/close all expansion-panels with accordion
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  //TODO delete mock-data
+  keywordCategories = UniProtKeywordCategories;
+  filterString: string;
+
+  //TODO delete mock-data and move dataStructures into service-class
   keywordsJSON: KeywordJSONObject = new KeywordJSONObject();
   dataMap: Map<UniProtKeywordCategories, UniProtKeyword[]>;
   keyArray: UniProtKeywordCategories[];
-  keywordCategories = UniProtKeywordCategories;
-  filterString: string;
+  selectedKeyword: string;  //only use description -> multiple instances of keywords in different categories can all get highlighted -> granted they are otherwise equal?
+  
 
   constructor() {
     this.keywordsJSON.keywords = [
       { category: UniProtKeywordCategories.BIOLOGICAL_PROCESS, description: 'desc1' },
-      { category: UniProtKeywordCategories.LIGAND, description: 'asdf' },
+      { category: UniProtKeywordCategories.DISEASE, description: 'desc2' },
       { category: UniProtKeywordCategories.DISEASE, description: 'desc3' },
-      { category: UniProtKeywordCategories.DISEASE, description: 'efef' },
-      { category: UniProtKeywordCategories.BIOLOGICAL_PROCESS, description: 'too' },
-      { category: UniProtKeywordCategories.LIGAND, description: 'nnnv' }
+      { category: UniProtKeywordCategories.BIOLOGICAL_PROCESS, description: 'desc4' },
+      { category: UniProtKeywordCategories.DISEASE, description: 'desc1' }
 
     ]
     this.dataMap = new Map<UniProtKeywordCategories, UniProtKeyword[]>();
     this.keyArray = [];
+    this.selectedKeyword = '';
   }
 
   ngOnInit(): void {
-    // this.keywordsJSON.keywords.sort((a,b) => a.category.localeCompare(b.category));
-    this.setData(this.keywordsJSON.keywords)
+    this.setKeywordTabData(this.keywordsJSON.keywords)
   }
 
-  setData(keywords: UniProtKeyword[]): void {
+  //TODO implement insertion into detail-component and display of that component
+  keywordClicked(keyword: UniProtKeyword): void {
+    this.selectedKeyword = keyword.description;
+  }
+
+  isSelectedKeyword(keyword: UniProtKeyword): boolean {
+    return keyword.description == this.selectedKeyword;
+  }
+
+  setKeywordTabData(keywords: UniProtKeyword[]): void {
+    // clear map and keyArray to prevent data duplication while filtering
+    this.keyArray = [];
+    this.dataMap.clear();
+
     for (let i in keywords) {
       let categoryArray = this.dataMap.get(keywords[i].category);
       if (categoryArray) {
@@ -46,23 +60,18 @@ export class KeywordsTabComponent implements OnInit {
       } else {
         categoryArray = [keywords[i]];
       }
-      categoryArray = this.sortData('category',categoryArray)
-      this.dataMap.set(keywords[i].category,categoryArray);
+      categoryArray = this.sortKeywordTabData('category', categoryArray)
+      this.dataMap.set(keywords[i].category, categoryArray);
     }
 
-    this.dataMap.forEach((value,key) => {
+    this.dataMap.forEach((value, key) => {
       this.keyArray.push(key);
     })
   }
 
-  //TODO implement insertion into detail-component and display of that component
-  keywordClicked(keyword: UniProtKeyword): void {
-    console.log(keyword);
-  }
-
-  sortData(sortBy: string, data: UniProtKeyword[]): UniProtKeyword[] {
+  sortKeywordTabData(sortBy: string, data: UniProtKeyword[]): UniProtKeyword[] {
     if (sortBy == 'category') {
-      data.sort((a,b) => a.category.localeCompare(b.category));
+      data.sort((a, b) => a.category.localeCompare(b.category));
       return data;
     } else if (sortBy == 'quant') {
       //TODO
@@ -71,8 +80,17 @@ export class KeywordsTabComponent implements OnInit {
     }
   }
 
-  //TODO implement
   applyFilter(): void {
-   
+    let regExp = new RegExp(this.filterString, 'i');
+    let newData = this.keywordsJSON.keywords.filter(keyword => regExp.test(keyword.description));
+    this.setKeywordTabData(newData);
+  }
+
+  expandAll() {
+    this.accordion.openAll();
+  }
+
+  collapseAll() {
+    this.accordion.closeAll();
   }
 }

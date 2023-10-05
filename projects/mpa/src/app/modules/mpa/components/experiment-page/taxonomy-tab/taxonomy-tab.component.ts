@@ -145,4 +145,12 @@ export class TaxonomyTabComponent implements OnInit {
     !this.treeControl.isExpanded(node) ? this.treeControl.expand(node) : {} ;
     console.log(node)
   }
+
+  expandAll() {
+    this.treeControl.expandDescendants(this.taxonomyNodes.rootNode);
+  }
+
+  collapseAll() {
+    this.treeControl.collapseDescendants(this.taxonomyNodes.rootNode);
+  }
 }
