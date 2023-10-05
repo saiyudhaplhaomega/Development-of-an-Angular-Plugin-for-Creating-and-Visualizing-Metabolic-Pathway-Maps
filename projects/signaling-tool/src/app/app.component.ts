@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { NavigationRoute } from 'shared-lib';
+
+import {
+  AuthService,
+  SimpleNavigationRoute,
+  NestedNavigationRoute,
+} from 'shared-lib';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +15,13 @@ import { NavigationRoute } from 'shared-lib';
 }) 
 export class AppComponent {
   title = 'signaling-tool';  
+  homeLink: SimpleNavigationRoute=  
+    { route: '/landing', label: 'landing' } 
+  ;
 
-  routes: NavigationRoute[] = [
-    { route: '/home', label: 'home' }, // navigation toola ekleyebilirz de çıkarabiliriz de 
-    { route: '/about', label: 'about' }, 
-    { route: '/simulation', label: 'simulation'  }
+  routes:  SimpleNavigationRoute[] = [
+    { route: '/landing', label: 'landing' }, // navigation toola ekleyebilirz de çıkarabiliriz de 
+    { route: '/workflow', label: 'workflow' }, 
+    
   ];
 }

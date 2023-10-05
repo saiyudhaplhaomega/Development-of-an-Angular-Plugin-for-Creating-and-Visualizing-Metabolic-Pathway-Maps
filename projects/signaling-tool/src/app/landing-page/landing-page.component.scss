@@ -1,0 +1,46 @@
+/* landing-page.component.scss */
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 0 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.bg-gray-700 {
+  background-color: #4a5568;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer {
+  font-size: 18px;
+}
+
+/* Style for the "Start Workflow" button */
+.button-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+
+ 
+  
+  
+ 

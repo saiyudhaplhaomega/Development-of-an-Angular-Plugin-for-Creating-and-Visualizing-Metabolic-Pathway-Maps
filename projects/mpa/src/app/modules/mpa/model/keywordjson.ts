@@ -1,14 +1,14 @@
 export enum UniProtKeywordCategories {
-    BIOLOGICAL_PROCESS = 'biological process',
-    CELLULAR_COMPONENT = 'cellular component',
-    CODING_SEQUENCE_DIVERSITY = 'coding sequence diversity',
-    DEVELOPMENTAL_STAGE = 'developmental stage',
-    DISEASE = 'disease',
-    DOMAIN = 'domain',
-    LIGAND = 'ligand',
-    MOLECULAR_FUNCTION = 'molecular function',
-    POST_TRANSLATIONAL_MODIFICATION = 'post-translational modification',
-    TECHNICAL_TERM = 'technical term',
+    BIOLOGICAL_PROCESS = 'Biological Process',
+    CELLULAR_COMPONENT = 'Cellular Component',
+    CODING_SEQUENCE_DIVERSITY = 'Coding Sequence Diversity',
+    DEVELOPMENTAL_STAGE = 'Developmental Stage',
+    DISEASE = 'Disease',
+    DOMAIN = 'Domain',
+    LIGAND = 'Ligand',
+    MOLECULAR_FUNCTION = 'Molecular Function',
+    POST_TRANSLATIONAL_MODIFICATION = 'Post-Translational Modification',
+    TECHNICAL_TERM = 'Technical Term',
 }
 
 export class UniProtKeyword {

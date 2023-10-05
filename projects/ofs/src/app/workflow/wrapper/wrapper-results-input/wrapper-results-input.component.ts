@@ -84,7 +84,7 @@ export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
       this.selection.selected.includes(feature.featureID)
     );
     this.workflow.submitClassifierConfig({
-      classifierJobId: "",
+      classifierJobId: '', // TODO: get classifier job id?
       selectedFeatures: selectedFeatures,
     });
   }

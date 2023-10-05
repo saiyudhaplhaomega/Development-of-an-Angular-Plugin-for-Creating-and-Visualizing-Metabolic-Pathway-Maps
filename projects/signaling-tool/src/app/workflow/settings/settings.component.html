@@ -1,0 +1,58 @@
+<!-- <form [formGroup]="settingsForm">
+  <table>
+    <thead>
+      <tr>
+        <th>Molecules</th>
+        <th>Initial-State</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let setting of settings">
+        <td>{{ setting }}</td>
+        <td>
+          <mat-slide-toggle [formControlName]="setting"></mat-slide-toggle>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="submit">Submit</button>
+</form>
+
+<h2>Current Form Data</h2>
+<pre>{{ settingsForm.value | json }}</pre> -->
+ 
+<!-- settings.component.html -->
+
+<mat-table [dataSource]="dataData" matSort> 
+
+  <ng-container matColumnDef="molecule">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Molecule</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.molecule }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="value">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Value</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.value }}</mat-cell>
+  </ng-container> 
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+ 
+<mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
