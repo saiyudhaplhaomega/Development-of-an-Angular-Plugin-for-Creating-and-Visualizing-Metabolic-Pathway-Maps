@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     { route: '/jobsubmission', label: 'Job Submission', requireAuth: true },
     { route: '/jobcontrol', label: 'Job Control', requireAuth: true },
     { route: '/about', label: 'About Prophane', requireAuth: false },
+    { route: '/tutorial', label: 'Prophane Tutorial', requireAuth: false },
   ];
   homelink: SimpleNavigationRoute = {
     route: '/jobsubmission',

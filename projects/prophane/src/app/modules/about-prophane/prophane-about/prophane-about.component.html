@@ -1,119 +1,707 @@
 <!-- this is the sticky menu -->
 <div style="display: flex; justify-content: center">
-  <div class="w-50 ml-5">
+  <div class="w-75 ml-5">
+    <h1 class="mt-4 mb-4" style="font-weight: bold; font-size: 1.5em;">Prophane Documentation</h1>
     <mat-accordion MatAccordion>
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            About Prophane
+            Prophane Workflow Description
           </mat-panel-title>
         </mat-expansion-panel-header>
-        Prophane provides a tailored and fully automated workflow for metaproteomics analysis
-        with special focus on metaprotein annotation.<br>
-        For this, Prophane supports inputs from different programs such as MetaProteomeAnalyzer
-        (transfer: metaprotein report), Scaffold (transfer: protein report),
-        Proteome Discoverer (transfer: protXML and PSMS.txt) and a generic format (tabular).
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Workflow Description
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <img src="assets/img/workflow.png" alt="simpilified Workflow">
-        <br><br>
-        In metaproteomics, protein identifications can be ambiguous when a identfied peptide (or
-        subset of identfied peptides) can be assigned to more than one protein. The most common
-        approach is, to group these ambiguous identifications to so-called protein groups (synonyme:
-        metaprotein, protein family). Prophane provides consistent protein annotation based
+        <br>
+        Prophane provides a tailored and fully automated workflow for metaproteomics analysis with special focus on
+        metaprotein taxonomic and functional annotation. For the annotations you can choose between different databases
+        and algorithm (see link to about - databases).
+        In metaproteomics, protein identifications can be ambiguous when a identified peptide (or subset of identfied
+        peptides) can be assigned to more than one protein. The most common approach is, to group these ambiguous
+        identifications to so-called protein groups (synonyme: metaprotein, protein family).
+        Prophane provides consistent protein annotation based
         on sequence homology and condensates metaprotein annotation based on a lowest common ancestor
         approach (LCA). Moreover, quantitative data is provided in a sample-specific manner based on
-        normalized spectral abundance factors (NSAF). While the standard analysis needs minimal input,
+        normalized spectral abundance factors (NSAF).
+        While the standard analysis needs minimal input,
         an expert mode is available allowing detailed customizations of each workflow step and the
-        selection of various annotation databases and search algorithms.
+        selection of various annotation databases and search algorithms.<br>
+        Different input formats are supported and results are output in 2 different formats: a tab-seperated
+        summary.txt file or in the standard mzTab format ("lca-summary.mztab" AND "protein_summary.mztab"
+        and LCA_results per protein group). Additionally the summary results are visualized via Krona plots.
+        <img src="assets/img/workflow_tutorial.png" alt="Workflow">
+        <br>
+        <img src="assets/img/workflow.png" alt="simpilified Workflow">
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Annotation Databases & Algorithms
+            Input Files
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <br>
+        The minimum input for a prophane analysis consists of a proteomic search result file (the "Report File") and the
+        matching FASTA
+        file.
+        <br><br>
+        <h2 style="font-weight: bold;">Report files</h2>
+        The report file is the protein identification file of the mass spectrometry analysis and must contain
+        information about protein groups (also known as metaprotein or protein-families).
+        Prophane supports various different input formats, as listed below. If you plan to use another input format on a
+        regulary basis, please contact us (support@prophane.de).<br>
+
+        So far, Prophane supports proteomic search result data provided in:
+        <br><br>
+        <ul class="bullet_list">
+          <li>generic input format</li>
+          <li>mzTab format</li>
+          <li>mzIdent1.2 format</li>
+        </ul>
+        <div class="mt-1 mb-1"></div>
+        It also accommodates data produced by search software such as:
+        <br><br>
+        <ul class="bullet_list">
+          <li>MetaProteome Analyzer in single or sample comparison format</li>
+          <li>Proteome Discoverer protein group output</li>
+          <li>Scaffold output</li>
+        </ul>
+        <br>
+        <h2 style="font-weight: bold;">FASTA file</h2>
+        The FASTA file can be plain or gzipped and should contain sequences for all identified proteins. Ensure that
+        the protein accessions or IDs in the FASTA file match those used in the protein identification report. You can
+        use the same FASTA file you used for peptide-spectrum matching. However, if the FASTA file is excessively
+        large, it can significantly increase Prophane's runtime. Ideally, the FASTA file should contain all sequences
+        present in the
+        identification file and no more. Avoid using sequence accession IDs containing pipes ('|') to ensure
+        consistent data processing by Prophane. Sequence IDs with two or more pipes, such as Uniprot protein
+        accessions, will be processed (e.g. from
+        sp|O70558|SPR2G_MOUSE to 070558).
+        <br><br>
+
+        <h2 style="font-weight: bold;">Report Files Formats</h2>
+        <br>
+        <h2 style="font-weight: bold;">Generic Format</h2>
+        A generic table format (tab separated values) that is designed to be easy to recreate. The column "protein
+        accessions"
+        contains all protein accessions of one protein group and the quantification is based on spectral counts per
+        protein group.
+        Example table:
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">sample category</th>
+              <th scope="col">sample name</th>
+              <th scope="col">protein accessions</th>
+              <th scope="col">spectrum count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">sample A</td>
+              <td scope="col">replicate 1</td>
+              <td scope="col">WP_003131952.1,NP_268346.1,KZK33282.1</td>
+              <td scope="col">1</td>
+            </tr>
+            <tr>
+              <td scope="col">sample A</td>
+              <td scope="col">replicate 1</td>
+              <td scope="col">WP_000665196.1</td>
+              <td scope="col">2</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h2 style="font-weight: bold;">mzTab 1.0.0 exchange format</h2>
+        Data provided in the mzTab exchange format can be processed by prophane. Protein group information must be
+        provided in the ambiguity_members column. PSM section must be present. To distinguish between different samples,
+        the entries in the column
+        spectra_ref in the PSM section must be in the following format: ms_run[1-n]:"SPECTRA_REFERENCE". This format
+        must also
+        be kept if only one ms run is analyzed.
+        Quantification is performed by counting the spectra/PSMs assigned to a protein group.
+        <br><br>
+        <h2 style="font-weight: bold;">mzIdentML1.2.0 exchange format</h2>
+        Data provided in the mzIdentML 1.2.0 exchange format containing ProteinAmbiguityGroup can be processed by
+        Prophane.
+        In the mzIdent 1.2.0 version there is the possibility of summarizing similar proteins in 'ProteinAmbiguityGroup'
+        sections.
+        These groups are essential for performing metaproteome analysis with Prophane. Since mzIdent version 1.1.0
+        doesn't
+        support protein groups, these files cannot be processed by Prophane.
+        Quantification is performed by counting the spectra/PSMs assigned to a protein group.
+        <br><br>
+        <h2 style="font-weight: bold;">MPA (single experiment)</h2>
+        Data provided by Metaproteome Analyzer (MPA) can be used by exporting metaprotein report (CSV).
+        <br><br>
+        <h2 style="font-weight: bold;">MPA (multiple experiment)</h2>
+        Data provided by Metaproteome Analyzer (MPA) can be used by exporting metaprotein multisample report (CSV).
+        <br><br>
+        <h2 style="font-weight: bold;">Protein Discoverer protein group</h2>
+        Proteome Discoverer protein-group data export:
+        1. check for filters set under "Display Folters -> Proteins", and remove the filter for master proteins
+        2. go to Protein Groups table and request "Show associated tables -> Proteins"
+        3. export this record as follows: File -> Export -> to Microsoft Excel
+        Abundance of the master protein is used for the protein group abundances/ as quantification values.
+        If multiple abundances are available, the order of selected abundances is as follows:
+        'Abundance: sample' (=raw abundance), 'Abundances (Scaled): sample', 'Abundances (Normalized): sample',
+        If the master_protein row of a protein group contains no values for all samples in the abundance columns, these
+        protein groups are ignored.
+
+        If you use scaled or normalized abundance values we strongly recommend selecting "Raw value (no normalization)"
+        in step "Quantification method".
+        <br><br>
+        <h2 style="font-weight: bold;">Scaffold</h2>
+        Data provided by Scaffold can be used by exporting Scaffold's protein report (TSV/XLS).
+        <br><br>
+
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Sample Groups
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        <h2 style="font-weight: bold;">Usage of sample groups</h2>
+        The definition of sample groups are relevant for getting
+        mean quantification values about different samples. This allows a comparison of different sample groups,
+        e.g untreated samples vs. treated samples.
+        Sample group mean quantification values are reported in the "summary.txt" or "lca_summary.mztab" file and
+        displayed in the Krona-Plots. The quantification values for each sample are reported additionally.
+        If no groups are specified, quantification is carried out for each sample separately.
+        <br><br>
+        <h2 style="font-weight: bold;">Sample name extraction of different report files by Prophane</h2>
+        The following table describes how Prophane extract sample names from different protein reports. Use the same
+        sample names within sample group definition.
+        <div id="sample_name_table">
+          <h3>Sample name extraction of different input files:</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">input file</th>
+                <th scope="col">sample columns or elements</th>
+                <th scope="col">comment</th>
+                <th scope="col">example</th>
+                <th scope="col">extracted sample name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="col">GENERIC table</td>
+                <td scope="col">sample category, sample name</td>
+                <td scope="col">sample name is generated by fusing the sample category and sample name column with :: as
+                  separator</td>
+                <td scope="col">sample1 | replicateA | acc1 | 2 </td>
+                <td scope="col">sample1::replicateA </td>
+              </tr>
+              <tr>
+                <td scope="col">mzTab</td>
+                <td scope="col">MTD section of mzTab. All ms_run[number] elements are extracted.</td>
+                <td scope="col">Samples are identified in the MTD section if they match the following pattern:
+                  ms_run[number].</td>
+                <td scope="col">"MTD ms_run[1]-location null" </td>
+                <td scope="col"> ms_run[1] </td>
+              </tr>
+              <tr>
+                <td scope="col">mzIdent1.2.0</td>
+                <td scope="col">SpectrumIdentificationResult Element, spectraData_ref attribute</td>
+                <td scope="col">sample names are extracted from the XML Element &gt;SpectrumIdentificationResult&gt;
+                  ,attribute spectraData_ref</td>
+                <td scope="col">&gt;SpectrumIdentificationResult spectraData_ref="qExactive2.mgf"
+                  spectrumID="index=5708" id="SIR_1769"&gt;</td>
+                <td scope="col">qExactive2.mgf</td>
+              </tr>
+              <tr>
+                <td scope="col">MPA's single sample Metaprotein Report</td>
+                <td scope="col">column 'sample' or None</td>
+                <td scope="col">if column 'sample' is present in given report, content of this sample will be used. Else
+                  generic sample name `sample1` is used.</td>
+                <td scope="col">no sample information provided</td>
+                <td scope="col"> sample1 </td>
+              </tr>
+              <tr>
+                <td scope="col">MPA's Multiprotein Report</td>
+                <td scope="col">column headers starting with EXP:sample_name</td>
+                <td scope="col">sample names are extracted from column headers that start with "EXP:", with the string
+                  after the colon (':') being the sample name</td>
+                <td scope="col"> ... | Protein Accessions | EXP:S13.mgf | EXP:S20.mgf | EXP:S23.mgf | ... </td>
+                <td scope="col"> S13.mgf, S20.mgf, S23.mgf</td>
+              </tr>
+              <tr>
+                <td scope="col">Proteome Discoverer's protein group report</td>
+                <td scope="col">e.g. Abundances (Scaled): F1: Sample</td>
+                <td scope="col">Sample names are extracted from the abundance columns in protein group headers that
+                  follow the schema "Abundance (x): Fnumber"</td>
+                <td scope="col"> ... | Abundances (Scaled): F1: Sample | Abundances (Scaled): F2: Sample | ...
+                </td>
+                <td scope="col"> F1, F2 </td>
+              </tr>
+              <tr>
+                <td scope="col">Scaffold's protein report</td>
+                <td scope="col">both columns: Biological sample category AND Biological sample name are combined.</td>
+                <td scope="col">values of both columns are fused using :: as separator </td>
+                <td scope="col">... | sample A | replicate 1 | ...</td>
+                <td scope="col"> sample1::replicateA</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Quantification
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        Normalized Spectral Abundance Factor (NSAF) is a label-free quantification method that normalizes the number of
+        identified spectra
+        to the metaprotein size (to the largest, smallest protein of the protein group or to the mean of all protein
+        group members).
+        <div id="table_normalization">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">quant method</th>
+                <th scope="col">description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="col">{{quantdata[0].name}}</td>
+                <td scope="col">NSAF are calculated. Normalization is based on the largest sequence length of the
+                  respective protein group.</td>
+              </tr>
+              <tr>
+                <td scope="col">{{quantdata[1].name}}</td>
+                <td scope="col">NSAF are calculated. Normalization is based on the smallest sequence length of the
+                  respective protein group.</td>
+              </tr>
+              <tr>
+                <td scope="col">{{quantdata[2].name}}</td>
+                <td scope="col">NSAF are calculated. Normalization is based on the averaged sequence length of the
+                  respective protein group.</td>
+              </tr>
+              <tr>
+                <td scope="col">{{quantdata[3].name}}</td>
+                <td scope="col">Unprocessed quantification values are shown. No NSAF are calculated.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Taxonomic Annotation
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        Taxonomic annotation searches the selected reference database for similar proteins, retrieves the associated
+        taxon ID and specifies the entire taxonomic lineage of this protein.
+        The search algorithm DIAMOND BLASTP searches for sequence homologies in the specified protein database.
+        <img src="assets/img/taxonomic_annotation_schema.png" alt="Taxonomic Annotation With DIAMOND Blast p"
+          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 80%;">
+        <img>
+        <br><br>
+        Prophane supports following protein sequence databases:
+        <ul class="bullet_list" *ngFor="let db of TaxonomicDatabases ">
+          <li>
+            <span>{{db.name}}</span>
+          </li>
+        </ul>
+        <br>
+        Prophane reports always the taxonomic lineage of the protein with the highest scoring match.
+        The evalue defines how similar the reported proteins have to be to be reported. The smaller the evalue, the more
+        similar the protein match.
+        For information regarding additional parameters, please check the DIAMOND documentation:
+        <a target="_blank"
+          href="https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf">https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf</a>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Functional Annotation
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        Prophane supports following protein functional databases:
+        <ul class="bullet_list" *ngFor="let funcTask of FunctionalDatabases">
+          <li>
+            <span>{{funcTask.name}}</span>
+          </li>
+        </ul>
+        <br>
+        <h2 style="font-weight: bold;">Profile-HMM Databases</h2>
+
+        Prophane utilizes the HMMER3 algorithm to search functional profile-HMM databases, which include PFAM, TIGRFAM,
+        Resfams, CAzY/dbCAN, and FOAM. You have the option to choose between two search modes:
+
+        <dl class="row">
+          <dt class="col-sm-2"><strong>hmmscan:</strong></dt>
+          <dd class="col-sm-10"> This mode searches protein sequences against a profile HMM database.</dd>
+          <dt class="col-sm-2"><strong>hmmsearch:</strong></dt>
+          <dd class="col-sm-10">In contrast, hmmsearch matches multiple sequence alignments or searches profile HMMs
+            against a
+            sequence database.</dd>
+        </dl>
+
+        The functional annotation results include a hierarchically ordered function description, the protein family
+        name, and the match ID.
+        <br><br>
+        For additional details about the parameters used by hmmscan and hmmsearch, please refer to the HMMER user
+        guide:
+        <a target="_blank" href="https://eddylab.org/software/hmmer/Userguide.pdf">
+          https://eddylab.org/software/hmmer/Userguide.pdf</a>
+        <img src="assets/img/functional_annotation_hmmer.png" alt="Functional Annotation via HMMER3">
+        <br>
+        <h2 style="font-weight: bold;">Eggnog DatabaseFunctional Annotation with EggNOG Database and emapper</h2>
+        In Prophane, when utilizing the EggNOG database and emapper for functional annotation, the approach is based
+        on precomputed orthology assignments rather than homology. Orthologs, also known as orthologous genes, are
+        genes found in different species that share a common origin from a single gene in the last common ancestor.
+        This method has been demonstrated to provide more accurate predictions compared to homology-based approaches.
+        <br>
+        The EggNOG database is built upon a carefully curated selection of representative species, encompassing a
+        diverse range of organisms across the tree of life. The orthologs identified from this database are associated
+        with common annotations, including GO terms, protein descriptions, KEGG annotations, PFAMs, and COG
+        categories.
+        <br>
+        The evalue defines how similar the reported proteins have to be to be reported. The smaller the evalue, the
+        more similar the protein match.
+        For additional information about the parameters used for emapper and the EggNOG database, please refer to the
+        EggNog wiki:
+        <a target="_blank" href="https://github.com/eggnogdb/eggnog-mapper/wiki">
+          https://github.com/eggnogdb/eggnog-mapper/wiki</a>
+        <img src="assets/img/functional_annotation_emapper.png" alt="Functional Annotation via EMAPPER">
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Custom Map
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        Prophane allows users to upload custom maps for taxonomic or functional annotations. These user-specified custom
+        maps enable the mapping of identified protein accessions to specific taxonomic or functional information. The
+        "acc2annot_mapper" within Prophane matches annotations based on protein accessions.
+        <br>
+        One common use case for custom maps is assigning taxa to protein groups in experiments with a known sample
+        composition. Custom maps containing protein accessions and species lineages allow for tailored annotation, even
+        excluding species with similar sequences.
+        <br>
+        Annotations are extracted from a user-provided tab-separated table (TSV) file. The names of the annotation
+        levels are derived from the column names in the user-provided table, which serves as the basis for annotation.
+        It's important to avoid using spaces, commas, tabulators, and semicolons in the column names.
+        <br><br>
+        Example Table taxonomic annotation:
+        <table class="table table-striped" id="custom_map_table_tax">
+          <thead>
+            <tr>
+              <th scope="col">acc</th>
+              <th scope="col">superkingdom</th>
+              <th scope="col">phylum</th>
+              <th scope="col">genus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">KZK33282.1</td>
+              <td scope="col">Bacteria</td>
+              <td scope="col">Firmicutes</td>
+              <td scope="col">Lactococcus</td>
+            </tr>
+            <tr>
+              <td scope="col">PKC80086.1</td>
+              <td scope="col">Bacteria</td>
+              <td scope="col">Actinobacteria</td>
+              <td scope="col">Bifidobacterium</td>
+            </tr>
+          </tbody>
+        </table>
+
+        Example Table functional annotation:
+        <table class="table table-striped" id="custom_map_table_func">
+          <thead>
+            <tr>
+              <th scope="col">acc</th>
+              <th scope="col">level1</th>
+              <th scope="col">level2</th>
+              <th scope="col">level3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">1000565.METUNv1_03812</td>
+              <td scope="col">information storage and processing</td>
+              <td scope="col">Translation, ribosomal structure and biogenesis</td>
+              <td scope="col">ATPase</td>
+            </tr>
+            <tr>
+              <td scope="col">362663.ECP_0061</td>
+              <td scope="col">information storage and processing</td>
+              <td scope="col">Replication, recombination and repair</td>
+              <td scope="col">DNA polymerase</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Annotation Databases & Algorithms & Parameters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
         We are very grateful to all people putting a lot of effort in the development of innovative search
         algorithms and doing a great job in the curation and maintenance of protein annotation databases. Prophane
         provides the following annotation combinations:
         <br><br>
+        <h2 style="font-weight: bold;">Annotation Databases</h2>
+
         <table class="table table-striped">
           <thead>
-          <tr>
-            <th>scope</th>
-            <th>database</th>
-            <th>search algorithm</th>
-            <th>url</th>
-          </tr>
+            <tr>
+              <th>Database</th>
+              <th>Scope</th>
+              <th>Search Algorithm</th>
+              <th>Description</th>
+              <th>url</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td >taxonomy</td>
-            <td>NCBI protein nr</td>
-            <td>diamond blastp</td>
-            <td><a target="_blank" href="https://www.ncbi.nlm.nih.gov/protein">https://www.ncbi.nlm.nih.gov/protein</a>
-            </td>
-          </tr>
-          <tr>
-            <td>taxonomy</td>
-            <td>UniprotKB</td>
-            <td>diamond blastp</td>
-            <td><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
-          </tr>
-          <tr>
-            <td>taxonomy</td>
-            <td>Swiss-Prot</td>
-            <td>diamond blastp</td>
-            <td><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
-          </tr>
-          <tr>
-            <td>taxonomy</td>
-            <td>TrEMBL</td>
-            <td>diamond blastp</td>
-            <td><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a></td>
-          </tr>
-          <tr>
-            <td>function</td>
-            <td>eggNOG</td>
-            <td>eggnog-mapper</td>
-            <td><a target="_blank" href="http://eggnogdb.embl.de/">http://eggnogdb.embl.de/</a></td>
-          </tr>
-          <tr>
-            <td>function</td>
-            <td>PFAMs</td>
-            <td>hmmer3</td>
-            <td><a target="_blank" href="https://pfam.xfam.org/">http://eggnogdb.embl.de/</a></td>
-          </tr>
-          <tr>
-            <td>function</td>
-            <td>TIGRFAMs</td>
-            <td>hmmer3</td>
-            <td><a target="_blank" href="http://tigrfams.jcvi.org/cgi-bin/index.cgi">http://tigrfams.jcvi.org/cgi-bin/index.cgi</a>
-            </td>
-          </tr>
-          <tr>
-            <td>function</td>
-            <td>Resfams</td>
-            <td>hmmer3</td>
-            <td><a target="_blank"
-                               href="http://www.dantaslab.org/resfams">http://www.dantaslab.org/resfams</a></td>
-          </tr>
-          <tr>
-            <td>function</td>
-            <td>CAzY/dbCAN</td>
-            <td>hmmer3</td>
-            <td><a target="_blank" href="http://bcb.unl.edu/dbCAN2/">http://bcb.unl.edu/dbCAN2/</a></td>
-          </tr>
+            <tr>
+              <td>NCBI nr</td>
+              <td>taxonomy</td>
+              <td>diamond blastp</td>
+              <td>full NCBI protein database</td>
+              <td><a target="_blank"
+                  href="https://www.ncbi.nlm.nih.gov/protein">https://www.ncbi.nlm.nih.gov/protein</a><br>
+                <a
+                  href="https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz">https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz</a><br>
+              </td>
+            </tr>
+            <tr>
+              <td>UniprotKB</td>
+              <td>taxonomy</td>
+              <td>diamond blastp</td>
+              <td>full UniprotKB database (TrEMBL & Swiss-Prot)</td>
+              <td><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Swiss-Prot</td>
+              <td>taxonomy</td>
+              <td>diamond blastp</td>
+              <td>small, expertly curated protein database</td>
+              <td><a target="_blank"
+                  href="https://www.expasy.org/resources/uniprotkb-swiss-prot">https://www.expasy.org/resources/uniprotkb-swiss-prot</a><br>
+                <a
+                  href="ftp://ftp.expasy.org/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz">ftp://ftp.expasy.org/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</a><br>
+              </td>
+            </tr>
+            <tr>
+              <td>TrEMBL</td>
+              <td>taxonomy</td>
+              <td>diamond blastp</td>
+              <td>automatic annotation of Uniprot cds sequences</td>
+              <td><a target="_blank" href="https://www.uniprot.org/">https://www.uniprot.org/</a><br>
+                <a
+                  href="ftp://ftp.expasy.org/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz">ftp://ftp.expasy.org/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz</a><br>
+              </td>
+            </tr>
+            <tr>
+              <td>eggNOG</td>
+              <td>function</td>
+              <td>eggnog-mapper</td>
+              <td>protein funtion database of 12535 organism in 17M ortologous groups</td>
+              <td><a target="_blank" href="http://eggnogdb.embl.de/">http://eggnogdb.embl.de/</a><br>
+                <a
+                  href="http://eggnog6.embl.de/download/emapperdb-5.0.2/eggnog.db.gz">http://eggnog6.embl.de/download/emapperdb-5.0.2/eggnog.db.gz</a><br>
+              </td>
+            </tr>
+            <tr>
+              <td>PFAMs</td>
+              <td>function</td>
+              <td>hmmer3</td>
+              <td>large protein families database with 20795 entries in 659 clans</td>
+              <td><a target="_blank" href="https://pfam.xfam.org/">https://pfam.xfam.org/</a><br>
+                <a
+                  href="ftp://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam36.0/Pfam-A.hmm.gz">ftp://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam36.0/Pfam-A.hmm.gz</a>
+              </td>
+            </tr>
+            <tr>
+              <td>TIGRFAMs</td>
+              <td>function</td>
+              <td>hmmer3</td>
+              <td>bacterial protein funtion database with 4488 HMMs</td>
+              <td><a target="_blank"
+                  href="http://tigrfams.jcvi.org/cgi-bin/index.cgi">http://tigrfams.jcvi.org/cgi-bin/index.cgi</a><br>
+                <a
+                  href="https://ftp.ncbi.nlm.nih.gov/hmm/TIGRFAMs/release_15.0/TIGRFAMs_15.0_HMM.LIB.gz">https://ftp.ncbi.nlm.nih.gov/hmm/TIGRFAMs/release_15.0/TIGRFAMs_15.0_HMM.LIB.gz</a>
+              </td>
+            </tr>
+            <tr>
+              <td>FOAM</td>
+              <td>function</td>
+              <td>hmmer3</td>
+              <td>protein funtion database "Functional Assignments for Metagenomes"</td>
+              <td><a target="_blank" href="https://osf.io/5ba2v/">https://osf.io/5ba2v/</a><br>
+                <a href="https://osf.io/download/bdpv5/">https://osf.io/download/bdpv5/</a><br>
+                <a href="https://osf.io/download/muan4/">https://osf.io/download/muan4/</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Resfams</td>
+              <td>function</td>
+              <td>hmmer3</td>
+              <td>curated database of protein families confirmed for antibiotic resistance function</td>
+              <td><a target="_blank" href="http://www.dantaslab.org/resfams">http://www.dantaslab.org/resfams</a><br>
+                <a
+                  href="http://dantaslab.wustl.edu/resfams/Resfams-full.hmm.gz">http://dantaslab.wustl.edu/resfams/Resfams-full.hmm.gz</a><br>
+                <a
+                  href="http://dantaslab.wustl.edu/resfams/Resfams.hmm.gz">http://dantaslab.wustl.edu/resfams/Resfams.hmm.gz</a>
+              </td>
+            </tr>
+            <tr>
+              <td>CAzY/dbCAN</td>
+              <td>function</td>
+              <td>hmmer3</td>
+              <td>curated database of Carbohydrate-active enzymes</td>
+              <td><a target="_blank" href="http://bcb.unl.edu/dbCAN2/">http://bcb.unl.edu/dbCAN2/</a><br>
+                <a
+                  href="http://bcb.unl.edu/dbCAN2/download/Databases/dbCAN-HMMdb-V8.txt">http://bcb.unl.edu/dbCAN2/download/Databases/dbCAN-HMMdb-V8.txt</a>
+                <br>
+                <a href="http://bcb.unl.edu/dbCAN2/download/Databases/CAZyDB.07302020.fam-activities.txt">http://bcb.unl.edu/dbCAN2/download/Databases/CAZyDB.07302020.fam-activities.txt"
+                </a>
+              </td>
+            </tr>
           </tbody>
         </table>
+        <br>
+        <h2 style="font-weight: bold;"> Annotation Algorithms Parameters</h2>
+        <table class="table table-striped" id="paramter_table">
+          <thead>
+            <tr>
+              <th>Database(s)</th>
+              <th>Search Algorithm</th>
+              <th>mandatory parameter [default]</th>
+              <th>optional parameters [default]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>UniprotKB (TrEMBL & Swiss-Prot)<br> NCBI protein nr</td>
+              <td>diamond blastp</td>
+              <td>evalue [0.001] </td>
+              <td>algo [0], band [], block-size [2.0], comp-based-stats [1], dbsize [40000000], frameshift [0],
+                freq-sd[],gapextend [0], gapopen [0], gapped-xdrop [ ], hit-band: [ ], hit-score: [ ], id [0.0], id2 [
+                ],
+                index-mode [0], masking [1], max-hsps [1], rank-ratio [ ], rank-ratio2 [ ], sensitive: [ ],
+                shape-mask [ ], matrix: ['BLOSUM62'], strand: [both], unapped-score [ ], window [ ], shapes [0],
+                xdrop [ ], query-cover [0], more-sensitive [ ], min-score [20]
+              </td>
+            </tr>
+            <tr>
+              <td>PFAMs<br> TIGRFAMs<br> FOAM<br> DBcan<br> ResFam</td>
+              <td> hmmscan <br> OR <br> hmmsearch </td>
+              <td>evalue [0.001] </td>
+              <td>E [10], T [0.0], domE [10], domT [0.0], incE [10], incT [0.0], incdomE [10], incomT [0.0],
+                cut_ga [ ], cut_nc [ ], cut_tc [ ], max [ ], F1 [0.02], F2 [0.001], F3 [0.00001], nobias [ ],
+                nonull2 [ ], domZ [int], seed [42], Z [int]
+              </td>
+            </tr>
+            <tr>
+              <td>EggNOG</td>
+              <td>emapper</td>
+              <td>m: <br> diamond <br> OR <br> hmmer </td>
+              <td>gapextend [0], gapopen [0], go_evidence ['experimental'], gguessdb [131567], hmm_maxhits [1],
+                hmm_maxseqlen [5000], hmm_qcov [0], hmm_score [20.0], query-cover [0], seed_ortholog_score [60.0],
+                subject-cover [0], target_orthologs [one2one], tax_scope [131567], Z [40000000]
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        Use following resources for more information about the usage of different parameters: <br>
+        <ul class="bullet_list">
+          <li><strong>DIAMOND: </strong> <a target="_blank" style="color:blue"
+              href="https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf">DIAMOND documentation</a>
+          </li>
+          <li><strong>HMMER3: </strong><a target="_blank" style="color:blue"
+              href="eddylab.org/software/hmmer/Userguide.pdf">HMMER3 documentation</a></li>
+          <li><strong>EMAPPER: </strong><a target="_blank" style="color:blue"
+              href="https://github.com/eggnogdb/eggnog-mapper/wiki">EMAPPER documentation</a></li>
+
+        </ul>
       </mat-expansion-panel>
+
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Lowest Common Ancestor (LCA)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        <div id="lca"></div>
+        The LCA approach searches hierarchical data to find the lowest common node shared by all members of
+        a group. For every functional or taxonomical annotation at each annotation level, Prophane determines an LCA to
+        represent all protein group members. Often, proteins within a group or metaproteins have different annotations.
+        To obtain a unified representative for all members, Prophane determines the lowest common ancestor among them.
+        If this is not possible the assigned LCA-value is referred to as "various".
+        <br><br>
+        Two different methods und two advanced options are available for LCA determination: <br><br>
+        <h2 style="font-weight: bold;">LCA method: LCA per group</h2>
+
+
+        The "LCA per group" method determines the LCA based on annotations of proteins within a
+        protein group.
+        It allows users to set a threshold value for each group, ranging from 0 to 1. <br>
+        If multiple annotations passing the threshold, the annotation with highest support is chosen. If no annotation
+        passing this threshold, prophane returns the value "various".<br>
+        A threshold value of 1 returns an
+        LCA only if all annotations of all protein group members share the same annotation; otherwise the LCA is
+        reported as "various".
+        With a threshold value of 0.51, Prophane returns an LCA if more than half of the annotations are
+        the same. <br>
+        <img src="assets/img/group_lca.png" alt="group LCA method">
+        <br>
+        <h2 style="font-weight: bold;">LCA method: democratic LCA</h2>
+        The "democratic LCA" method selects the annotation that occurs most frequently across all
+        protein groups from each protein group. <br>
+        The democratic LCA method chooses of all annotations always the one, which is the most often identified about
+        all protein groups. So with this method you get the smallest variance in the results.
+        Depending on the chosen LCA-method, you get different results. Compare Picture 1 und 2.
+        <img src="assets/img/democratic_lca.png" alt="democratic LCA method">
+
+        <br>
+        <h2 style="font-weight: bold;">Advanced Option: ignore_unclassified</h2>
+        This advanced option considers only proteins for LCA determination if an annotation was found (excluding
+        "unclassified" annotations).
+        <img src="assets/img/lca_ignore_unclassified.png" alt="parameter ignore_unclassified">
+        <br>
+        <h2 style="font-weight: bold;">Advanced Option: minimum_number_of_annotations</h2>
+        The "minimum_number_of_annotations" advanced option in Prophane empowers users to specify a minimum count of
+        annotations within the annotation lineage that will be taken into account by the LCA methods. This feature
+        proves especially useful for effectively managing annotations that might be considered extraneous or less
+        informative.<br>
+        For instance, when dealing with annotations like vector annotation that typically
+        consist of lineage with only one-level annotations, this option allows users to filter out these less
+        informative annotations, ensuring a more meaningful and accurate LCA determination process.
+        <img src="assets/img/lca_min_nb.png" alt="parameter min_nb_of-annotations">
+        <br>
+      </mat-expansion-panel>
+
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -121,10 +709,244 @@
             Output
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <br>
         Once an analysis is completed you can download all results as a single archive
-        in the Job Control section.
-        To learn more about the different result files, please read the respective section
-        in the README file (<a href="https://gitlab.com/s.fuchs/prophane/blob/master/README.md" target="_blank">https://gitlab.com/s.fuchs/prophane/blob/master/README.md</a>).
+        in the Job Control section or via link for unregistered users.<br><br>
+        <h2 style="font-weight: bold;">Structure of the Result Folder</h2>
+        <table class="table table-striped" id="paramter_table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Content</th>
+              <th>File Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>summary.txt</td>
+              <td>Main result file: summary table of all analyses</td>
+              <td> TSV </td>
+            </tr>
+            <tr>
+              <td>lca_summary.mztab</td>
+              <td>Main result file: summary table containing protein group information (LCA and Quantification)</td>
+              <td>mztab</td>
+            </tr>
+            <tr>
+              <td>protein_summary.mztab</td>
+              <td>Main result file: annotations on protein level</td>
+              <td> mztab </td>
+            </tr>
+            <tr>
+              <td>pgs/protein_groups.sql</td>
+              <td>SQL database of protein groups</td>
+              <td> TSV </td>
+            </tr>
+            <tr>
+              <td>plots/plot_of_{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}'
+                }}.v{{ '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.html</td>
+              <td>interactive krona plots</td>
+              <td> HTML </td>
+            </tr>
+            <tr>
+              <td>seqs/all.faa</td>
+              <td>all accessions from the proteomic search result and their respective protein sequences</td>
+              <td> FASTA </td>
+            </tr>
+            <tr>
+              <td>seqs/missing_taxa.faa </td>
+              <td> FASTA file containing sequences of taxonomically undefined proteins (those not covered by the
+                optionally provided taxmap input file. In most cases, this file is the same as seqs/all.faa) </td>
+              <td>FASTA</td>
+            </tr>
+            <tr>
+              <td>| seqs/ambiguous_sequences.txt </td>
+              <td>Usually not created; accessions, which could not be found in provided input FASTA.</td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>seqs/missing_sequences.txt </td>
+              <td>Usually not created; accessions, which could not be found in provided input FASTA.</td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>segs/pgs/pg.{{ '{' }}n{{ '}' }}.faa </td>
+              <td>sequence information of protein group n </td>
+              <td>FASTA</td>
+            </tr>
+            <tr>
+              <td>tasks/quant.tsv</td>
+              <td>quantification information for each taxonomic or functional lowest common ancestor (LCA) </td>
+              <td>TSV</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.best_hits </td>
+              <td>best hits extracted from raw annotation result </td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.lca </td>
+              <td> LCA of each protein group</td>
+              <td>TSV</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.log </td>
+              <td>log of annotation command </td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.map </td>
+              <td>respective accession-annotation linking </td>
+              <td>TSV</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.quant </td>
+              <td>LCA of each sample and replicate and their calculated quantification</td>
+              <td>TSV</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.result </td>
+              <td>raw annotation result </td>
+              <td>TXT/TSV</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.result-cmd.txt </td>
+              <td>annotation command, as executed in the shell </td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}' }}.v{{
+                '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.xml</td>
+              <td>input for creation of krona plot </td>
+              <td>XML</td>
+            </tr>
+            <tr>
+              <td>tasks/{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_
+                {{ '{' }}db_type{{ '}' }}.v{{ '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.yaml </td>
+              <td>annotation task parameters (full path to db, annotation algorithm, command line parameters, shortname
+                of task, annotation type)</td>
+              <td>YAML</td>
+            </tr>
+            <tr>
+              <td>tax/taxmap.txt </td>
+              <td>taxonomic information extracted from user-defined taxmaps</td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>tax/missing_taxa_map.txt </td>
+              <td>accessions without any taxonomic data/prediction </td>
+              <td>TXT</td>
+            </tr>
+            <tr>
+              <td>tax/ambiguous_taxa.txt</td>
+              <td>Usually not created; accessions with ambiguous taxonomies extracted from user-defined taxmaps</td>
+              <td>TXT</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h2 style="font-weight: bold;">The summary.txt File</h2><br>
+        The summary.txt file is a tab-separated file that can be easily imported into Excel via the data panel for
+        further analysis.
+        The file begins with a header row, followed by information about protein groups.
+        Protein groups consist of two types of rows: "group" and "member" rows and have a unique protein group number
+        (column <strong>"#pg"</strong>).
+        <br><br>
+
+        <strong>Group Rows</strong> (column <strong>"level"</strong> = group): <br>
+        These rows summarize information about the protein group: <br>
+        <ul class="bullet_list">
+          <li><strong> "members_count": </strong> The numbers of proteins in this metaprotein group.</li>
+          <li><strong> "members_identifier": </strong> Accesions of all protein group members</li>
+          <li><strong> Task Results: </strong> Information about the lowest common ancestor (LCA) assigned to a group.
+          </li>
+          <li><strong> Quantification Results: </strong> Quantification values of samples and sample groups</li>
+          <li><strong> Lca Support: </strong> Lca support values </li>
+        </ul>
+
+        <br>
+        <strong>Member Rows</strong> (column <strong>"level"</strong> = member): <br>
+        These rows contain results of the analyses per protein. Multiple rows are possible for a protein if the task
+        yields different results. If no results are obtained for a protein, it is marked as 'unclassified.' <br>
+        <ul class="bullet_list">
+          <li><strong> "members_identifier": </strong> Accession of protein</li>
+          <li><strong> Task Results: </strong> Funtional or taxonomical annotation of this protein.</li>
+        </ul>
+        <br>
+        <strong>Task Results:</strong><br>
+        Columns display results of taxonomic and functional annotations using the naming schema:<br>
+        "task_{{ '{' }}task_number{{ '}' }}::{{ '{' }}task_name{{ '}' }}::{{ '{' }}task_level{{ '}' }}"<br>
+        Group rows contain the weighted LCA for each task, while member rows show potentially different annotation
+        results.
+        <br><br>
+
+        <strong>Quantification Results:</strong><br>
+        Columns providing raw quantification values of samples and samples groups use following naming schema
+        for the given raw quant values (e.g. spectra count) and standard deviation (sd):<br>
+        <ul class="bullet_list">
+          <li>raw_quant::group_name (mean)</li>
+          <li>raw_quant_sd::group_name (mean)</li>
+          <li>raw_quant::sample_name</li>
+          <li>raw_quant_sd::sample_name</li>
+        </ul>
+        <br>
+        Columns providing normalized quantification values and standard deviation (sd) of samples and samples groups use
+        following naming schema:<br>
+        <ul class="bullet_list">
+          <li>quant::group_name(mean)</li>
+          <li>quant_sd::group_name(mean)</li>
+          <li>quant::sample_name</li>
+          <li>quant_sd::sample_name</li>
+        </ul>
+        <br>
+
+        <strong>Spectra columns:</strong><br>
+        If the spectra information are available (possible for mzTab and mzIdent1.2), they are shown in the columns
+        "{{ '{' }}sample_name{{ '}' }}:: spectra_IDs"
+        <br><br>
+
+        <strong>LCA Support Results:</strong><br>
+        Columns indicating LCA support use following naming schema:<br>
+        task_{{ '{' }}task_nb{{ '}' }}::{{ '{' }}task{{ '}' }}::{{ '{' }}level{{ '}' }}::lca-support
+        <br> and following value format:<br>
+        number_supporting_proteins/number_all_protein_group_proteins (e.g. 150/150) <br>
+        OR if threshold is not passed <br>
+        (highest_possible_number_supporting_proteins)/number_all_protein_group_proteins (e.g. (60)/150) <br><br>
+
+        The first number indicates the number of proteins (or spectra if available) supporting the chosen LCA.<br>
+        The second number represent the total count of identified proteins (or spectra if available) for the entire
+        group. <br>
+        Values in brackets, e.g., "(60)/150," indicate that no LCA with
+        support above the given threshold could be identified. <br>
+        A value of "0/0" is used when no lineage information is available, corresponding to 'unclassified' entries.
+        <br>
+
+        <br><br>
+        <h2 style="font-weight: bold;">The lca_summary.mztab File</h2>
+        <br>
+
+        <br><br>
+        <h2 style="font-weight: bold;">The protein_summary.mztab File</h2>
+        <br>
+
+
+        <h2 style="font-weight: bold;">Krona Plots</h2>
+        Krona plots are a powerful visualization tool in Prophane, allowing users to explore and interpret the taxonomic
+        or functional abundances of metagenomic data with ease.
+        Krona plots are automatically generated for each task in Prophane. The size of each field in the Krona plot
+        corresponds to the normalized quantification values, providing a visual representation of the relative
+        abundance.
+        Krona plots support the viewing of results for different sample groups and different samples and provide an interactive zoom function.
+        <img src="assets/img/Krona.svg" alt="Krona Plot" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
+        style="max-width: 80%;">
+
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -133,8 +955,9 @@
             Funding and Support
           </mat-panel-title>
         </mat-expansion-panel-header>
-        This project is funded by
-        <ul>
+        <br>
+        This project is funded by: 
+        <ul class="bullet_list">
           <li>Deutsche Forschungsgesellschaft (DFG), "Research Software Sustainability"</li>
           <li>de.NBI, computational ressources and support</li>
         </ul>
@@ -146,6 +969,7 @@
             Contact
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <br>
         In case of questions or problems, do not hesitate to contact us:
         <br><br>
         <b>support@prophane.de</b>

@@ -5,6 +5,7 @@ import { ProphaneResultViewComponent } from './modules/job-control/prophane-resu
 import { TermsOfServicePageComponent } from './components/terms-of-service-page/terms-of-service-page.component';
 import { ImpressumPageComponent } from './components/impressum-page/impressum-page.component';
 import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/privacy-policy-page.component';
+import { ProphaneTutorialComponent } from './modules/about-prophane/prophane-tutorial/prophane-tutorial.component';
 
 const routes: Routes = [
 
@@ -32,7 +33,14 @@ const routes: Routes = [
     (m) => m.AboutProphaneModule
   ),
 },
+// { path: 'tutorial',
+//   loadChildren: () =>
+//   import('./components/prophane-tutorial/prophane-tutorial.component').then(
+//     (m) => m.ProphaneTutorialComponent
+//   ),
+// },
 
+{ path: 'tutorial', component: ProphaneTutorialComponent },
 { path: 'termsofservice', component: TermsOfServicePageComponent },
 { path: 'impressum', component: ImpressumPageComponent },
 { path: 'privacypolicy', component: PrivacyPolicyPageComponent },
@@ -40,25 +48,16 @@ const routes: Routes = [
 { path: 'results/:job_uuid', component: ProphaneResultViewComponent },
 { path: '**', redirectTo: 'login' },
 
-
-// {
-//   path: '',
-//   component: ProphaneJobSubmissionMainComponent,
-//   canActivate: [AuthGuard],
-//   pathMatch: 'full',
-// },
-// {
-//    path: 'jobs',
-//    canActivate: [AuthGuard],
-//   redirectTo: '/prophane/(prophaneContent:jobs)',
-//   pathMatch: 'full',
-// },
-
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 64] // [x, y]
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

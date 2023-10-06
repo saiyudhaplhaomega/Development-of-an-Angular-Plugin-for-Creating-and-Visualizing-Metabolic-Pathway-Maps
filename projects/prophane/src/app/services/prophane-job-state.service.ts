@@ -109,7 +109,7 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.parameters = new ProphaneParamObject();
     this.currentProphaneJob.parameters.contaminationOption =
       this.contoptions[0];
-    this.currentProphaneJob.parameters.jobLabel = 'Yet another Prophane job';
+    this.currentProphaneJob.parameters.jobLabel = 'Metaproteomic annotation 1';
     this.currentProphaneJob.parameters.reportStyle = this.reportStyles[0];
     this.currentProphaneJob.parameters.quantification = this.quantdata[0];
     this.currentProphaneJob.parameters.annotationTasks = this.annotationTasks;
