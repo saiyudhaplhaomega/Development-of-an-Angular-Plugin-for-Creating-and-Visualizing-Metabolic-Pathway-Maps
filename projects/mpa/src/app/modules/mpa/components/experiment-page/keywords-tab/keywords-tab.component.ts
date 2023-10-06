@@ -44,10 +44,6 @@ export class KeywordsTabComponent implements OnInit {
     this.selectedKeyword = keyword.description;
   }
 
-  isSelectedKeyword(keyword: UniProtKeyword): boolean {
-    return keyword.description == this.selectedKeyword;
-  }
-
   setKeywordTabData(keywords: UniProtKeyword[]): void {
     // clear map and keyArray to prevent data duplication while filtering
     this.keyArray = [];

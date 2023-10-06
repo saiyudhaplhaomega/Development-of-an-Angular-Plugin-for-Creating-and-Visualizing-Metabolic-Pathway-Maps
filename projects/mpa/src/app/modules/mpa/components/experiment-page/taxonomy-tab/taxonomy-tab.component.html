@@ -13,7 +13,7 @@
       <!-- This is the tree node template for expandable nodes -->
       <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="taxonomy-tree-node"
         [style.display]="node.displayed ? 'block' : 'none'">
-        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)">
+        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)" [ngClass]="{'taxonomy-tree-node-highlighted': node.id == selectedTaxNode.id}">
           <div class="taxonomy-tree-node-essentials">
             <button mat-button cdkTreeNodeToggle>
               <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
@@ -30,7 +30,7 @@
       <!-- template for leaf nodes (i.e. the outer most nodes) -->
       <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="taxonomy-tree-node"
         [style.display]="node.displayed ? 'block' : 'none'">
-        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)">
+        <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)" [ngClass]="{'taxonomy-tree-node-highlighted': node.id == selectedTaxNode.id}">
           <div class="taxonomy-tree-node-essentials">
             <button mat-button disabled></button>
             <span class="taxonomy-tree-node-info">{{node.description}}</span>

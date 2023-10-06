@@ -2,7 +2,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, Input } from '@angular/core';
-import { taxNode, TaxonomyTreeJSONObject } from '../../../model/taxonomytreejson';
+import { TaxonomyNode, TaxonomyTreeJSONObject } from '../../../model/taxonomytreejson';
 
 @Component({
   selector: 'app-taxonomy-tab',
@@ -23,13 +23,14 @@ export class TaxonomyTabComponent implements OnInit {
 
   @Input() experimentUUID: string;
 
+  dataSource: ArrayDataSource<TaxonomyNode>;
+  treeControl: NestedTreeControl<TaxonomyNode>;
+  selectedTaxNode: TaxonomyNode;
+
   //TODO delete mock-data
   taxonomyNodes: TaxonomyTreeJSONObject;
   hasTaxNodes: boolean
   filterString: string;
-
-  dataSource: ArrayDataSource<taxNode>;
-  treeControl: NestedTreeControl<taxNode>;
 
   constructor() {
     this.taxonomyNodes = new TaxonomyTreeJSONObject();
@@ -82,15 +83,16 @@ export class TaxonomyTabComponent implements OnInit {
 
     this.filterString = '';
     this.hasTaxNodes = true;
+    this.selectedTaxNode = new TaxonomyNode();
 
     this.dataSource = new ArrayDataSource(this.taxonomyNodes.rootNode.children);
-    this.treeControl = new NestedTreeControl<taxNode>(node => node.children);
+    this.treeControl = new NestedTreeControl<TaxonomyNode>(node => node.children);
   }
 
   ngOnInit(): void {
   }
 
-  hasChild = (_: number, node: taxNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: TaxonomyNode) => !!node.children && node.children.length > 0;
 
   applyFilter(): void {
     let nodes = this.taxonomyNodes.rootNode.children;
@@ -102,7 +104,7 @@ export class TaxonomyTabComponent implements OnInit {
   }
 
   //TODO clean-up
-  filterChildren(node: taxNode) {
+  filterChildren(node: TaxonomyNode) {
     let regExp = new RegExp(this.filterString, 'i');
     let descendants = this.treeControl.getDescendants(node);
     if (regExp.test(node.description)) {
@@ -141,9 +143,9 @@ export class TaxonomyTabComponent implements OnInit {
   }
 
   //TODO implement insertion into detail-view-component
-  nodeClicked(node:taxNode): void {
-    !this.treeControl.isExpanded(node) ? this.treeControl.expand(node) : {} ;
-    console.log(node)
+  nodeClicked(node: TaxonomyNode): void {
+    !this.treeControl.isExpanded(node) ? this.treeControl.expand(node) : {};
+    this.selectedTaxNode = node;
   }
 
   expandAll() {

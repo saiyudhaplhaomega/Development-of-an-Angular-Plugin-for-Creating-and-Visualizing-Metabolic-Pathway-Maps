@@ -20,7 +20,7 @@
                             <span>Description</span>
                             <span>Quantification</span>
                         </li>
-                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" [ngClass]="{'keyword-row-selected': isSelectedKeyword(keyword)}"
+                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" [ngClass]="{'keyword-row-selected': keyword.description == selectedKeyword}"
                             (click)="keywordClicked(keyword)">
                             <span>{{keyword.description}}</span>
                             <span>765</span>

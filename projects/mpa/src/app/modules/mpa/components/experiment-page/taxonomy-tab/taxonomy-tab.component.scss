@@ -38,8 +38,16 @@
     cursor: pointer;
 }
 
-.taxonomy-tree-node-row:hover {
+.taxonomy-tree-node-row:not(.taxonomy-tree-node-highlighted):hover {
     background-color: #fafafa;
+}
+
+.taxonomy-tree-node-highlighted {
+    background-color: #FFDBD6;
+}
+
+.taxonomy-tree-node-highlighted:hover {
+    background-color: #f5d3d3;
 }
 
 .taxonomy-tree-node-essentials {

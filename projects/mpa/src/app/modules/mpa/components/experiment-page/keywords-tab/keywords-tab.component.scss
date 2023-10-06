@@ -30,6 +30,7 @@
 .keyword-row {
     display:flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .keyword-row>span {
@@ -40,7 +41,6 @@
 
 .keyword-row:not(.keyword-row-header):not(.keyword-row-selected):hover{
     background-color: #fafafa;
-    cursor: pointer;
 }
 
 .keyword-row-selected {
@@ -49,7 +49,6 @@
 
 .keyword-row-selected:hover {
     background-color: #f5d3d3;
-    cursor: pointer;
 }
 
 .keyword-row-header {

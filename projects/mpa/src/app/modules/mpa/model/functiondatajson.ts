@@ -1,21 +1,18 @@
-export class ECObject {
-    id: string;
-    description: string;
-    //proteinids: [];
+export enum FunctionIdentifier {
+    EC = 'ec',
+    KO = 'ko',
 }
-
-export class KOObject {
+export class FunctionDataObject {
     id: string;
+    type: FunctionIdentifier;
     description: string;
     //proteinids: [];
 }
 
 export interface FunctionDataJSON {
-    ec?: ECObject;
-    ko?: KOObject;
+    functionData: FunctionDataObject[];
 }
 
 export class FunctionDataJSONObject implements FunctionDataJSON {
-    ec?: ECObject;
-    ko?: KOObject;
+    functionData: FunctionDataObject[];
 }

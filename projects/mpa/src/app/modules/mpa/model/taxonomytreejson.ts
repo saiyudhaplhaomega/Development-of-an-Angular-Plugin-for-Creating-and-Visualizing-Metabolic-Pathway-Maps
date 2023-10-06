@@ -1,16 +1,16 @@
-export class taxNode {
+export class TaxonomyNode {
     id: string;
     description: string;
-    children: taxNode[];
+    children: TaxonomyNode[];
     //proteinids: string[];
 
     //solely for front-end purposes (i.e. filtering)
     displayed: boolean = true;
   }
   export interface TaxonomyTreeJSON {
-    rootNode: taxNode;
+    rootNode: TaxonomyNode;
   }
   
   export class TaxonomyTreeJSONObject implements TaxonomyTreeJSON {
-    rootNode: taxNode;
+    rootNode: TaxonomyNode;
   }
