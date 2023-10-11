@@ -6,7 +6,14 @@
   flex: 1 0 auto;
 }
 
+.footer{
+  --text-color: hsla(0, 0%, 100%, 0.9);
+  color: var(--text-color);
+}
+
 .header {
+color: rgb(0, 63, 151) !important;
+background-color:rgb(0, 63, 151) !important;
 flex: 0 0 auto;
 height: 64px;
 }
@@ -18,11 +25,19 @@ flex-direction: column;
 overflow: auto;
 }
 
-.footer {
-color: rgba(0, 0, 0, .5);
-background-color: rgba(0, 0, 0, .04);
-font-family: Roboto, "Helvetica Neue", sans-serif;
-font-size: 12px;
-height: 140px;
-flex-shrink: 0;
+::ng-deep .footer_color {
+color: hsla(0, 0%, 100%, 0.9) !important;
+background-color:rgb(0, 63, 151) !important;
+font-size: 12;
 }
+
+::ng-deep .header_color {
+  color: hsla(0, 0%, 100%, 0.9) !important;
+  background-color: rgb(0, 63, 151) !important;
+}
+
+::ng-deep .header_tool_name{
+  color: hsla(0, 0%, 100%, 0.9) !important;
+  background-color: rgb(0, 63, 151) !important;;
+}
+

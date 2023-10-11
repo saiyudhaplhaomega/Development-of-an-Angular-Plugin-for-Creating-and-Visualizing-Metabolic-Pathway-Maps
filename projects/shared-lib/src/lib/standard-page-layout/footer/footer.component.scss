@@ -29,9 +29,10 @@ ul {
   font-weight: 700;
 }
 
-.bg-gray-700 {
+.footer_color {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  color: hsla(0, 0%, 100%, 0.7);
 }
 
 .mat-expansion-panel {

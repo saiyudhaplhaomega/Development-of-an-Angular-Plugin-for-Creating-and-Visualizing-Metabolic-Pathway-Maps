@@ -1,7 +1,7 @@
 <div class="flex flex-col h-full">
-  <mat-toolbar color="primary" class="flex-shrink-0">
+  <mat-toolbar class="flex-shrink-0 header_color">
     <!-- application name and navigation to landing page -->
-    <button mat-flat-button color="primary" routerLink="homeLink">
+    <button mat-flat-button class="header_tool_name" routerLink="homeLink">
       <span> {{ applicationName }} </span>
     </button>
 
@@ -13,7 +13,7 @@
 
       <!-- simple links without nesting -->
       <ng-template #simpleLink>
-        <button color="primary" mat-flat-button [routerLink]="link.route">
+        <button mat-flat-button class="header_color" [routerLink]="link.route">
           <span>
             {{ link.label }}
           </span>
@@ -22,7 +22,7 @@
 
       <!-- nested links with menu -->
       <ng-template #nestedLinks>
-        <button [matMenuTriggerFor]="menu" color="primary" mat-flat-button>
+        <button [matMenuTriggerFor]="menu" mat-flat-button class="nested_header_color">
           <span>
             {{ link.label }}
           </span>
@@ -40,7 +40,7 @@
 
     <!-- login button -->
     <div *ngIf="hasLogin" class="ml-auto">
-      <button mat-flat-button color="primary">
+      <button mat-flat-button class="header_color">
         Log in
         <mat-icon>account_circle</mat-icon>
       </button>

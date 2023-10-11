@@ -1,37 +1,17 @@
-<!-- <div class="page-content">
-  <div class="header">
-    <shared-nav-toolbar
-      [routerLinks]="routes"
-      [applicationName]="'Prophane'"
-      [hasLogin]="true"
-      [homeLink]="homelink">
-    </shared-nav-toolbar>
-  </div>
-  <app-privacy-consent-banner></app-privacy-consent-banner>
-  <div class="content">
-    <div style="height: 100%">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  <shared-footer class="footer" [footerContent]="footerContent"></shared-footer>
-</div> -->
-
 <app-privacy-consent-banner></app-privacy-consent-banner>
-<shared-nav-toolbar
-  [routerLinks]="routes"
-  [applicationName]="'Prophane'"
-  [hasLogin]="false"
+
+<shared-nav-toolbar 
+  [routerLinks]="routes" 
+  [applicationName]="'Prophane'" 
+  [hasLogin]="true" 
   [homeLink]="homelink"
->
+  >
   <!-- content should always be placed inside share-nav-toolbar, because styling -->
 
   <!-- always place a router instance here to display content -->
   <router-outlet></router-outlet>
 
   <!-- if you place a footer, give it an id of 'footer' -->
-  <shared-footer
-    id="footer"
-    [footerContent]="footerContent"
-
-  ></shared-footer>
+  <shared-footer id="footer" [footerContent]="footerContent"></shared-footer>
+  
 </shared-nav-toolbar>
