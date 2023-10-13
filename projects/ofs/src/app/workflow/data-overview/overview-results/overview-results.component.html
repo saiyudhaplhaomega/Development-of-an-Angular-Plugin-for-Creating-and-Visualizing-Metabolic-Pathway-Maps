@@ -1,5 +1,16 @@
-<lib-result-figures
-  [imageLinks]="overViewImages$ | async"
-  [isLoading]="isLoading()"
-  [tabLables]="['Class Distribution', 'Data Sparsity']"
-></lib-result-figures>
+<div class="documentation-content-container">
+  <section class="mat-typography">
+    <h2>Class distribution and sparsity</h2>
+    <p>
+      The following plots show the class distribution and data sparsity of your
+      data. The class distribution plot shows the number of samples per class
+      for each group. The data sparsity plot shows the number of samples per
+      feature for each group.
+    </p>
+  </section>
+  <lib-result-figures
+    [imageLinks]="overViewImages$ | async"
+    [isLoading]="isLoading()"
+    [tabLables]="['Class Distribution', 'Data Sparsity']"
+  ></lib-result-figures>
+</div>

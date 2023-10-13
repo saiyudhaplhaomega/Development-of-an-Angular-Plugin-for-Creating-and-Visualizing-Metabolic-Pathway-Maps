@@ -7,6 +7,10 @@ export interface WrapperConfig {
   pvalCutoff?: number;
 }
 
+export class WrapperConfig implements WrapperConfig {
+  constructor() {}
+}
+
 export interface WrapperForm extends FormGroup {
   value: WrapperConfig;
 

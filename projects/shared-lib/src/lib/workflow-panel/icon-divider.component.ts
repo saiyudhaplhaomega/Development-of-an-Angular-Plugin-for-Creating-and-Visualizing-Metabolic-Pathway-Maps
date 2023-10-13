@@ -14,7 +14,6 @@ export class IconDividerComponent implements OnInit {
   isVertical: Boolean = false;
 
   ngOnInit(): void {
-    console.log(this.panelService.orientation === PanelOrientation.VERTICAL);
     this.isVertical =
       this.panelService.orientation === PanelOrientation.VERTICAL;
   }

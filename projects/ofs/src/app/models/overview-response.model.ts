@@ -4,3 +4,7 @@ export interface OverviewResponse {
   testGroups: string[];
   controlGroup: string;
 }
+
+export class OverviewResponse implements OverviewResponse {
+  constructor() {}
+}

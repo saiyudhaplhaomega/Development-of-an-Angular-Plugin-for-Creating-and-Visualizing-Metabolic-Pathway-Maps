@@ -8,7 +8,5 @@ import { MatTabGroup } from '@angular/material/tabs';
   styleUrls: ['./preprocessing.component.scss'],
 })
 export class PreprocessingComponent {
-  @ViewChild('tabs') tabs: MatTabGroup;
-
-  constructor(private workflow: WorkflowService) {}
+  constructor() {}
 }

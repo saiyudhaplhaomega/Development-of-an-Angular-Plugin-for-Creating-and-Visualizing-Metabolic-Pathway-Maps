@@ -42,6 +42,10 @@ export class WorkflowService {
     private address: WebserveraddressService
   ) {
     this.ofsDataSubject$.next(new OFSData());
+
+    this.ofsDataSubject$.subscribe((data) => {
+      console.log(data);
+    });
   }
 
   // use this getter if you only need the current value

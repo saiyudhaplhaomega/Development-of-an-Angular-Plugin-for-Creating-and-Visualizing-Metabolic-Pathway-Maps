@@ -22,16 +22,25 @@ export class OFSData implements OFSData {
       jobId: '',
       state: OfsJobState.NOJOB,
     };
-    this.configData = {};
-    this.responseData = {};
+    this.configData = new ConfigData();
+    this.responseData = new ResponseData();
   }
 }
 
 export interface ConfigData {
-  overviewConfig?: OverviewConfig;
-  preprocessingConfig?: PreprocessingConfig;
-  wrapperConfig?: WrapperConfig;
-  classifierConfig?: ClassifierConfig;
+  overviewConfig: OverviewConfig;
+  preprocessingConfig: PreprocessingConfig;
+  wrapperConfig: WrapperConfig;
+  classifierConfig: ClassifierConfig;
+}
+
+export class ConfigData implements ConfigData {
+  constructor() {
+    this.overviewConfig = new OverviewConfig();
+    this.preprocessingConfig = new PreprocessingConfig();
+    this.wrapperConfig = new WrapperConfig();
+    this.classifierConfig = new ClassifierConfig();
+  }
 }
 
 export interface ResponseData {
@@ -39,4 +48,10 @@ export interface ResponseData {
   preprocessingResponse?: PreprocessingResponse;
   wrapperResponse?: WrapperResponse;
   classifierResponse?: ClassifierResponse;
+}
+
+export class ResponseData implements ResponseData {
+  constructor() {
+    this.overviewResponse = new OverviewResponse();
+  }
 }

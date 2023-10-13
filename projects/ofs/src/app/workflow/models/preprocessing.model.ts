@@ -8,6 +8,10 @@ export interface PreprocessingConfig {
   folds: number;
 }
 
+export class PreprocessingConfig implements PreprocessingConfig {
+  constructor() {}
+}
+
 export interface PreprocessingConfigForm extends FormGroup {
   value: PreprocessingConfig;
 

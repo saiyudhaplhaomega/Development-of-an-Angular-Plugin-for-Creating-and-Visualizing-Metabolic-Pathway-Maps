@@ -11,3 +11,7 @@ export interface ClassifierConfig {
   classifierJobId: string;
   selectedFeatures: Feature[];
 }
+
+export class ClassifierConfig implements ClassifierConfig {
+  constructor() {}
+}

@@ -12,6 +12,12 @@ export interface DataGroup {
   groupEnd: number;
 }
 
+export class DataGroup implements DataGroup {
+  constructor(groupName: string) {
+    this.groupName = groupName;
+  }
+}
+
 export interface DataGroupForm extends FormGroup {
   value: DataGroup;
 
@@ -30,10 +36,10 @@ export interface OverviewConfig {
   groupSelectionOptions: GroupSelectionOptions;
 }
 
-export interface OverviewConfigForRequest {
-  overviewJobId: string;
-  groups: DataGroup[];
-  groupSelectionOption: GroupSelectionOptions;
+export class OverviewConfig implements OverviewConfig {
+  constructor() {
+    this.groups = [new DataGroup('control'), new DataGroup('test')];
+  }
 }
 
 export interface OverviewInputForm extends FormGroup {
