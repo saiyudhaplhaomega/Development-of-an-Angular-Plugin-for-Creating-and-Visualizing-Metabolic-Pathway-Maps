@@ -32,7 +32,7 @@ import { PreprocessingResultsInputComponent } from './preprocessing/preprocessin
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { IconDividerModule, WorkflowPanelModule } from 'shared-lib';
+import { WorkflowPanelModule } from 'shared-lib';
 import { ResultsDownloadComponent } from './results/results-download/results-download.component';
 import { ResultFiguresModule } from 'shared-lib';
 
@@ -73,7 +73,6 @@ import { ResultFiguresModule } from 'shared-lib';
     MatDividerModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    IconDividerModule,
     WorkflowPanelModule,
     ResultFiguresModule,
   ],

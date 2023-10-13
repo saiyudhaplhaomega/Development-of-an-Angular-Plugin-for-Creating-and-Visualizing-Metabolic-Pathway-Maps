@@ -9,15 +9,17 @@
     </mat-form-field>
 
     <div class="form-button-grid">
-      <button
-        (click)="this.downloadData()"
-        class="col-span-2"
+      <a
+        [href]="this.downloadData()"
+        target="_blank"
+        download="results.zip"
         [disabled]="!projectName.valid || (formDisabled$ | async)"
         mat-flat-button
         color="primary"
+        class="col-span-2"
       >
-        Download Results
-      </button>
+        <!-- <a [href]="downloadLink" download="results.zip">Download Results</a> -->
+      </a>
     </div>
   </div>
 </div>

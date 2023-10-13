@@ -1,25 +1,41 @@
-<div class="workflow-content-container">
-  <div class="min-h-0 flex flex-row h-full">
-    <div class="workflow-substep-panel">
-      <ng-container [ngTemplateOutlet]="panels.toArray()[0].tpl"></ng-container>
-    </div>
+<div
+  class="workflow-content-container"
+  [ngClass]="{
+    vertical: orientation === 'vertical'
+  }"
+>
+  <ng-container *ngIf="orientation === 'vertical'">
+    <ng-container [ngTemplateOutlet]="panels.toArray()[0].tpl"></ng-container>
     <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
-  </div>
+    <!-- <ng-container [ngTemplateOutlet]="panels.toArray()[1].tpl"></ng-container> -->
+    <!-- <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider> -->
+  </ng-container>
 
-  <div class="workflow-substep-panel">
-    <ng-container [ngTemplateOutlet]="panels.toArray()[1].tpl"></ng-container>
-  </div>
-
-  <ng-template [ngIf]="panels.toArray().length > 2">
-    <div class="min-h-0 flex flex-row h-full">
-      <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
+  <ng-container *ngIf="orientation === 'horizontal'">
+    <div class="workflow-substep-horizontal-container">
       <div class="workflow-substep-panel">
         <ng-container
-          [ngTemplateOutlet]="panels.toArray()[2].tpl"
+          [ngTemplateOutlet]="panels.toArray()[0].tpl"
         ></ng-container>
       </div>
+      <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
     </div>
-  </ng-template>
+
+    <div class="workflow-substep-panel">
+      <ng-container [ngTemplateOutlet]="panels.toArray()[1].tpl"></ng-container>
+    </div>
+
+    <ng-template [ngIf]="panels.toArray().length > 2">
+      <div class="workflow-substep-horizontal-container">
+        <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
+        <div class="workflow-substep-panel">
+          <ng-container
+            [ngTemplateOutlet]="panels.toArray()[2].tpl"
+          ></ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
 </div>
 
 <!-- <ng-container [ngTemplateOutlet]="panels[].tpl"></ng-container> -->

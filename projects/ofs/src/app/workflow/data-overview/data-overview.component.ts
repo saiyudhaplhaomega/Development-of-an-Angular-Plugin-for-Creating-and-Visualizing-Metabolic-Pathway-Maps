@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material/tabs';
-import { WorkflowService } from '../services/workflow.service';
+import { Component } from '@angular/core';
+import { PanelOrientation } from 'shared-lib';
 
 @Component({
   selector: 'ofs-data-overview',
   templateUrl: './data-overview.component.html',
   styleUrls: ['./data-overview.component.scss'],
 })
-export class DataOverviewComponent {}
+export class DataOverviewComponent {
+  orientation = PanelOrientation.VERTICAL;
+}

@@ -20,18 +20,18 @@ import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
 import { StepperService } from './stepper.service';
 import { HttpClientService } from 'shared-lib';
-import { WebserveraddressService, Endpoints} from '../../offwebserveraddress.service';
+import {
+  WebserveraddressService,
+  Endpoints,
+} from '../../offwebserveraddress.service';
 
 export interface SimpleMessage {
   message: string;
 }
 
-@Injectable(
-  {providedIn: 'any',}
-)
+@Injectable({ providedIn: 'any' })
 // TODO: control current step from here
 export class WorkflowService {
-
   loading: Boolean;
 
   ofsDataSubject$ = new BehaviorSubject<OFSData>(undefined);
@@ -118,7 +118,10 @@ export class WorkflowService {
      */
     this.loading = true;
     this.http
-      .getObject<OFSData>(this.address.getEndpoint(Endpoints.CREATE_JOB), new HttpParams())
+      .getObject<OFSData>(
+        this.address.getEndpoint(Endpoints.CREATE_JOB),
+        new HttpParams()
+      )
       .subscribe({
         next: (response: OFSData) => {
           this.ofsDataSubject$.next(response);
@@ -162,30 +165,33 @@ export class WorkflowService {
     };
 
     this.http
-      .postMultiPartFiles(filesToUpload, this.address.getEndpoint(Endpoints.OVERVIEW_INPUT))
+      .postMultiPartFiles(
+        filesToUpload,
+        this.address.getEndpoint(Endpoints.OVERVIEW_INPUT)
+      )
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
         this.http
-        .repeatedPostObject<OFSData, OFSData>(
-          response,
-          'responseData.overviewResponse.dataSparsity',
-          this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
-          new HttpParams()
-        )
-        .subscribe((response: OFSData) => {
-          // TODO: set testgroup and control group names on the server!
-          response.responseData.overviewResponse.testGroups =
-            this.ofsData.configData.overviewConfig.groups
-              .slice(1)
-              .map((group) => {
-                return group.groupName;
-              });
-          response.responseData.overviewResponse.controlGroup =
-            this.ofsData.configData.overviewConfig.groups[0].groupName;
-          this.ofsDataSubject$.next(response);
-          this.stepperService.setStepComplete(0);
-          this.loading = false;
-        });
+          .repeatedPostObject<OFSData, OFSData>(
+            response,
+            'responseData.overviewResponse.dataSparsity',
+            this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
+            new HttpParams()
+          )
+          .subscribe((response: OFSData) => {
+            // TODO: set testgroup and control group names on the server!
+            response.responseData.overviewResponse.testGroups =
+              this.ofsData.configData.overviewConfig.groups
+                .slice(1)
+                .map((group) => {
+                  return group.groupName;
+                });
+            response.responseData.overviewResponse.controlGroup =
+              this.ofsData.configData.overviewConfig.groups[0].groupName;
+            this.ofsDataSubject$.next(response);
+            this.stepperService.setStepComplete(0);
+            this.loading = false;
+          });
       });
   }
 
@@ -204,19 +210,18 @@ export class WorkflowService {
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
         this.http
-        .repeatedPostObject<OFSData, OFSData>(
-          this.ofsDataSubject$.value,
-          'responseData.preprocessingResponse.predictivePerformance',
-          this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
-          new HttpParams()
-        )
-        .subscribe((response: OFSData) => {
-          this.ofsDataSubject$.next(response);
-          this.stepperService.setStepComplete(1);
-          this.loading = false;
-        });
+          .repeatedPostObject<OFSData, OFSData>(
+            this.ofsDataSubject$.value,
+            'responseData.preprocessingResponse.predictivePerformance',
+            this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
+            new HttpParams()
+          )
+          .subscribe((response: OFSData) => {
+            this.ofsDataSubject$.next(response);
+            this.stepperService.setStepComplete(1);
+            this.loading = false;
+          });
       });
-
   }
 
   submitWrapperConfig(config: WrapperConfig) {
@@ -238,19 +243,17 @@ export class WorkflowService {
       .subscribe((response: OFSData) => {
         this.ofsDataSubject$.next(response);
         this.http
-        .repeatedPostObject<OFSData, OFSData>(
-          this.ofsDataSubject$.value,
-          'responseData.wrapperResponse.featureSelection',
-          this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
-          new HttpParams()
-        )
-        .subscribe((response: OFSData) => {
-          this.ofsDataSubject$.next(response);
-          this.loading = false;
-        });
+          .repeatedPostObject<OFSData, OFSData>(
+            this.ofsDataSubject$.value,
+            'responseData.wrapperResponse.featureSelection',
+            this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
+            new HttpParams()
+          )
+          .subscribe((response: OFSData) => {
+            this.ofsDataSubject$.next(response);
+            this.loading = false;
+          });
       });
-
-
   }
 
   submitClassifierConfig(config: ClassifierConfig) {
@@ -271,20 +274,19 @@ export class WorkflowService {
         this.stepperService.setStepComplete(2);
         this.stepperService.setStep(3);
         this.http
-        .repeatedPostObject<OFSData, OFSData>(
-          this.ofsDataSubject$.value,
-          'responseData.classifierResponse.pcaImage',
-          this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
-          new HttpParams()
-        )
-        .subscribe((response: OFSData) => {
-          this.ofsDataSubject$.next(response);
-          this.stepperService.setStepComplete(3);
-          this.loading = false;
-        });
+          .repeatedPostObject<OFSData, OFSData>(
+            this.ofsDataSubject$.value,
+            'responseData.classifierResponse.pcaImage',
+            this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
+            new HttpParams()
+          )
+          .subscribe((response: OFSData) => {
+            this.ofsDataSubject$.next(response);
+            this.stepperService.setStepComplete(3);
+            this.loading = false;
+          });
       });
   }
-
 
   getResourceUrls(resources: string[]) {
     const urls = [];
@@ -297,10 +299,13 @@ export class WorkflowService {
   }
 
   getDownloadLink(): string {
-    if (this.ofsData.responseData && this.ofsData.responseData.classifierResponse && this.ofsData.responseData.classifierResponse.downloadLink) {
+    if (
+      this.ofsData.responseData &&
+      this.ofsData.responseData.classifierResponse &&
+      this.ofsData.responseData.classifierResponse.downloadLink
+    ) {
       return this.ofsData.responseData.classifierResponse.downloadLink;
     }
     return null;
   }
-
 }

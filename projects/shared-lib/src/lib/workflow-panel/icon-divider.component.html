@@ -1,0 +1,10 @@
+<div class="divider-vertical" [ngClass]="{ 'divider-horizontal': isVertical }">
+  <ng-template [ngIf]="showIcon">
+    <!-- helloo -->
+    <mat-icon
+      fontIcon="play_arrow"
+      class="divider-content"
+      [ngClass]="{ 'rotate-90': isVertical }"
+    ></mat-icon>
+  </ng-template>
+</div>

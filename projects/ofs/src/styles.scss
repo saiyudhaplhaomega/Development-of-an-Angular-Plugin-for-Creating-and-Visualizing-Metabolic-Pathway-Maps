@@ -59,28 +59,6 @@ body {
   padding: 0px !important;
 }
 
-.workflow-content-container {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(20rem, 1fr) minmax(20rem, 2fr) minmax(
-      20rem,
-      1fr
-    );
-  @apply h-full w-full;
-}
-
-@media (min-width: 1536px) {
-  .workflow-content-container {
-    grid-template-columns: 20rem minmax(30rem, 1536px) 20rem;
-  }
-}
-
-.workflow-substep-panel {
-  width: 100%;
-  position: relative; /* Set position to relative to child element */
-  overflow-y: auto;
-}
-
 .form-button-grid {
   @apply mb-8 grid grid-cols-2 gap-4;
 }
@@ -95,4 +73,9 @@ form {
 
 .outer-form-container {
   @apply flex flex-col h-full;
+}
+
+.mat-vertical-stepper-content {
+  height: 100% !important;
+  visibility: visible !important;
 }

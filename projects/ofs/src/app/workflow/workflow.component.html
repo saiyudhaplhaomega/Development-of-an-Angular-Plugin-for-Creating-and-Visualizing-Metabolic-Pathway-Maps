@@ -1,46 +1,81 @@
 <!-- {{ OFSData | json }} -->
 
-<div class="flex flex-col h-full">
+<div>
+  <!-- <div class="flex flex-col h-full"> -->
   <div class="stepper-container mx-auto p-4 flex-grow-0 flex-shrink-0">
-    <mat-card>
-      <mat-card-content>
-        <mat-stepper
-          [linear]="true"
-          #stepper
-          (selectionChange)="setStep($event.selectedIndex)"
-          [selectedIndex]="(currentStep$ | async).index"
-        >
-          <mat-step
-            *ngFor="let step of steps; let i = index"
-            [completed]="(completedSteps$ | async)[i]"
-            [editable]="true"
-          >
-            <ng-template matStepLabel>{{ step.label }}</ng-template>
-          </mat-step>
-        </mat-stepper>
+    <!-- <mat-card>
+      <mat-card-content> -->
+    <mat-stepper
+      orientation="vertical"
+      [linear]="true"
+      #stepper
+      (selectionChange)="setStep($event.selectedIndex)"
+      [selectedIndex]="(currentStep$ | async).index"
+    >
+      <!-- *ngFor="let step of steps; let i = index"
+    [completed]="(completedSteps$ | async)[i]"
+    [editable]="true"
+     -->
+      <mat-step
+        style="visibility: visible; height: 100%"
+        [completed]="(completedSteps$ | async)[0]"
+        [editable]="true"
+      >
+        <ng-template matStepLabel>{{ steps[0].label }}</ng-template>
+        <ofs-data-overview></ofs-data-overview>
+      </mat-step>
 
-        <div class="flex flex-row justify-between">
-          <button mat-button (click)="prevStep()" [disabled]="!allowPrev">
-            previous step
-          </button>
-          <button mat-button (click)="nextStep()" [disabled]="!allowNext">
-            next step
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      <mat-step
+        style="visibility: visible; height: 100%"
+        [completed]="(completedSteps$ | async)[1]"
+        [editable]="true"
+      >
+        <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
+        <ofs-data-overview></ofs-data-overview>
+      </mat-step>
 
-  <div class="workflow-container">
-    <mat-card class="workflow-card">
-      <mat-card-header>
-        <mat-card-title>
-          {{ (currentStep$ | async).label }}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="workflow-card-content">
-        <router-outlet></router-outlet>
-      </mat-card-content>
-    </mat-card>
+      <mat-step
+        style="visibility: visible; height: 100%"
+        [completed]="(completedSteps$ | async)[2]"
+        [editable]="true"
+      >
+        <ng-template matStepLabel>{{ steps[2].label }}</ng-template>
+        <ofs-data-overview></ofs-data-overview>
+      </mat-step>
+
+      <mat-step
+        style="visibility: visible; height: 100%"
+        [completed]="(completedSteps$ | async)[3]"
+        [editable]="true"
+      >
+        <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
+        <ofs-data-overview></ofs-data-overview>
+      </mat-step>
+    </mat-stepper>
+
+    <!-- <div class="flex flex-row justify-between">
+            <button mat-button (click)="prevStep()" [disabled]="!allowPrev">
+              previous step
+            </button>
+            <button mat-button (click)="nextStep()" [disabled]="!allowNext">
+              next step
+            </button>
+          </div> -->
+    <!-- </mat-card-content>
+    </mat-card> -->
+    <!-- </div> -->
+
+    <!-- <div class="workflow-container">
+      <mat-card class="workflow-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ (currentStep$ | async).label }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="workflow-card-content">
+          <router-outlet></router-outlet>
+        </mat-card-content>
+      </mat-card>
+    </div> -->
   </div>
 </div>
