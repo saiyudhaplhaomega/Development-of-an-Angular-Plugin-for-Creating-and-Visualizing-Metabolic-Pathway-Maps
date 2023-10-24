@@ -1,6 +1,7 @@
 export class TaxonomyNode {
     id: string;
     description: string;
+    rank: string;
     children: TaxonomyNode[];
     //proteinids: string[];
 
@@ -10,7 +11,7 @@ export class TaxonomyNode {
   export interface TaxonomyTreeJSON {
     rootNode: TaxonomyNode;
   }
-  
+
   export class TaxonomyTreeJSONObject implements TaxonomyTreeJSON {
     rootNode: TaxonomyNode;
   }
