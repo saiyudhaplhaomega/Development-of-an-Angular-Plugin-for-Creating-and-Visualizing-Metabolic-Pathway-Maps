@@ -13,8 +13,12 @@ const routes: Routes = [
     loadChildren: () => import('./metadata-uploadpage/metadata-uploadpage.module').then((m) => m.MetadataUploadpageModule),
   },
   {
+    path: 'checkboxselection',
+    loadChildren: () => import('./metadata-checkboxselection/metadata-checkboxselection.module').then((m) => m.MetaDataCheckboxSelectionModule),
+  },
+  {
     path: 'workflow',
-    loadChildren: () => import('./metadata-workflow/metadate-workflow.module').then((m) => m.WorkflowModule),
+    loadChildren: () => import('./metadata-workflow/metadata-workflow.module').then((m) => m.WorkflowModule),
   },
   {
     path: 'download',

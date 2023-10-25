@@ -4,6 +4,7 @@ import { MetadataUploadpageComponent } from './metadata-uploadpage.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.m
     MatIconModule,
     MatProgressBarModule,
     MetadataUploadpageRoutingModule,
+    MatButtonModule,
   ],
   exports: [MetadataUploadpageComponent]
 })
