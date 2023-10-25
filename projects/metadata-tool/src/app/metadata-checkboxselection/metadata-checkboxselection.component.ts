@@ -4,7 +4,6 @@ import {
   FormGroup,
   FormArray,
   FormControl,
-  ValidatorFn
 } from '@angular/forms';
 
 @Component({
