@@ -1,7 +1,7 @@
 export class TaxonomyNode {
     id: string;
     description: string;
-    rank: string;
+    rank?: string;
     children: TaxonomyNode[];
     //proteinids: string[];
 
