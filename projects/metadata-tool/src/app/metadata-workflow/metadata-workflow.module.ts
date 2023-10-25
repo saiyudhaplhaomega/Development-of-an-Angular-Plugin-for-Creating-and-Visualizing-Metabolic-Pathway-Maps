@@ -6,6 +6,7 @@ import { registerCellType, NumericCellType, } from 'handsontable/cellTypes';
 import { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';
 import { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 
 // register the filtering plugins
@@ -21,10 +22,11 @@ registerAllModules();
 @NgModule({
   declarations: [MetadataWorkflowComponent],
   imports: [
+    CommonModule,
     HotTableModule,
     MetadataWorkflowRoutingModule,
     MatButtonModule,
-    
+
   ],
   exports: [MetadataWorkflowComponent],
 })

@@ -22,6 +22,7 @@ import { StandardPageLayoutModule } from 'dist/shared-lib';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MatButtonModule,
     StandardPageLayoutModule,
