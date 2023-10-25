@@ -1,15 +1,29 @@
-<div class="upload-container">
-    <h2 class="upload-title">File Upload</h2>
-    <input class="upload-input" type="file" accept=".*" multiple (change)="onFilesSelected($event)">
-    <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
-      <h3>Selected Files:</h3>
-      <ul>
-        <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
-      </ul>
+    <div class="upload-container">
+      <h2 class="upload-title">File Upload</h2>
+      <input
+        class="upload-input"
+        type="file"
+        accept=".*"
+        multiple
+        (change)="onFilesSelected($event)"
+      />
+      <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
+        <h3>Selected Files:</h3>
+        <ul>
+          <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+        </ul>
+      </div>
+      <button class="upload-button" (click)="onUpload()">Upload</button>
+      <div class="upload-progress" *ngIf="uploadProgress !== null">
+        <progress max="100" [value]="uploadProgress"></progress>
+      </div>
+      <p class="error-message" *ngIf="uploadError">{{ uploadError }}</p>
     </div>
-    <button class="upload-button" (click)="onUpload()">Upload</button>
-    <div class="upload-progress" *ngIf="uploadProgress !== null">
-      <progress max="100" [value]="uploadProgress"></progress>
+
+    <!-- link to workflow -->
+    <div class="text-center mt-20 mb-20">
+      <!-- <shared-login-buttons></shared-login-buttons> -->
+      <button mat-flat-button color="primary" routerLink="/checkboxselection">
+        Next Page
+      </button>
     </div>
-    <p class="error-message" *ngIf="uploadError">{{ uploadError }}</p>
-  </div>

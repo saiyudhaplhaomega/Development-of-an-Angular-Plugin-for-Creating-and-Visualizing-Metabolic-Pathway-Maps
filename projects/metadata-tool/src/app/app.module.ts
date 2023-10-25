@@ -8,7 +8,7 @@ import { MetadataLandingPageComponent } from './metadata-landing-page/metadata-l
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { WorkflowModule } from './metadata-workflow/metadate-workflow.module';
+import { WorkflowModule } from './metadata-workflow/metadata-workflow.module';
 import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
 import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';
 import { HttpClientModule } from '@angular/common/http';

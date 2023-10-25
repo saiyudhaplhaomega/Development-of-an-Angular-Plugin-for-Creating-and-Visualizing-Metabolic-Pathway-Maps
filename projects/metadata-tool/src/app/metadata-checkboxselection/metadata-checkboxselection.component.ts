@@ -83,7 +83,6 @@ export class MetaDataCheckboxSelectionComponent {
   
     console.log(selectedColumns);
   
-    // Now you can use the selectedColumns array as needed
-    // For example, you can integrate it into a new list or perform any other actions.
+
   }
 }
