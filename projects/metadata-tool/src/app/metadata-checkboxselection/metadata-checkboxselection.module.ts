@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MetadataCheckboxSelectionRoutingModule } from './metadata-checkboxselection-routing.module';
 
 
 @NgModule({
@@ -12,8 +11,8 @@ import { MetadataCheckboxSelectionRoutingModule } from './metadata-checkboxselec
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MetadataCheckboxSelectionRoutingModule,
     MatButtonModule,
+  
   ],
   exports: [MetaDataCheckboxSelectionComponent]
 })

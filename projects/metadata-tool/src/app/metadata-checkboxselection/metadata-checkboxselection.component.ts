@@ -14,13 +14,19 @@ import {
 export class MetaDataCheckboxSelectionComponent {
 
   form: FormGroup;
-  columnsData = [
+  columnsDataFirst = [
     {data: "Counter", title: "counter", type: 'numeric'},
     {data: "Sourcename", title: "source name", type: 'text'},
     {data: "ProjectIdentifier", title: "Project identifier", type: "text"},
     {data: "Study", title: "study", type: "text"},
     {data: "Project", title: "project", type: "text"},
     {data: "Program", title: "program", type: "text"},
+
+   
+    
+    {data: "Comment", title: "comment", type: "text"},
+  ];
+  columnsDataCharacteristic = [
     {data: "BiologicalReplicate", title: "biological replicate", type: "text"},
     {data: "Metagenomes", title: "metagenomes", type: "text"},
     {data: "EcologicalMetagenomes", title: "ecological metagenomes", type: "text"},
@@ -31,9 +37,14 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "CarbonSource", title: "carbon Source", type: "text"},
     {data: "ElectronSource", title: "electron Source", type: "text"},
     {data: "CountIdentifiedSpezies", title: "count identified spezies", type: "text"},
-    {data: "AssayName", title: "assay name", type: "text"},
-    {data: "ExperimentType", title: "experiment type", type: "text"},
-    {data: "TechnologyType", title: "technology type", type: "text"},
+  ];
+ 
+  columnsDataThrid = [  
+  {data: "AssayName", title: "assay name", type: "text"},
+  {data: "ExperimentType", title: "experiment type", type: "text"},
+  {data: "TechnologyType", title: "technology type", type: "text"},];
+
+  columnsDataComment = [
     {data: "TechnicalReplicate", title: "technical replicate", type: "text"},
     {data: "Label", title: "label", type: "text"},
     {data: "FractionIdentifier", title: "fraction identifier", type: "text"},
@@ -49,11 +60,12 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "FileUri", title: "file uri", type: "text"},
     {data: "mzID", title: "mzID", type: "text"},
     {data: "mzML", title: "mzML", type: "text"},
-    {data: "FactorValue", title: "factor value", type: "text"},
     {data: "Comment", title: "comment", type: "text"},
   ];
 
- 
+  columnsDataFactorValue = [
+    {data: "FactorValue", title: "factor value", type: "text"},
+  ];
 
   get columnsControls() {
     return (this.form.get('columns') as FormArray).controls;

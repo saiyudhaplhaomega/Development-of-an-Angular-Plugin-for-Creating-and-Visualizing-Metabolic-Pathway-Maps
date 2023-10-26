@@ -14,7 +14,6 @@ export class AppComponent {
   title = 'metadatatool';
   routes: NestedNavigationRoute[] = [
     { route: '/upload', label: 'Upload', requireAuth: false },
-    { route: '/checkboxselection', label: 'Selection', requireAuth: false },
     { route: '/workflow', label: 'Workflow', requireAuth: false },
     { route: '/download', label: 'Donwload', requireAuth: false },
   ];
