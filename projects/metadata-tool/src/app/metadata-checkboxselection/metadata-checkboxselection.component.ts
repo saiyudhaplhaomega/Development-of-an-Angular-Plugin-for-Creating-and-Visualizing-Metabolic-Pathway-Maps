@@ -14,18 +14,15 @@ import {
 export class MetaDataCheckboxSelectionComponent {
 
   form: FormGroup;
-  columnsDataFirst = [
+  columnsData = [
     {data: "Counter", title: "counter", type: 'numeric'},
     {data: "Sourcename", title: "source name", type: 'text'},
     {data: "ProjectIdentifier", title: "Project identifier", type: "text"},
     {data: "Study", title: "study", type: "text"},
     {data: "Project", title: "project", type: "text"},
     {data: "Program", title: "program", type: "text"},
-
-   
-    
-    {data: "Comment", title: "comment", type: "text"},
   ];
+
   columnsDataCharacteristic = [
     {data: "BiologicalReplicate", title: "biological replicate", type: "text"},
     {data: "Metagenomes", title: "metagenomes", type: "text"},
@@ -61,11 +58,11 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "mzID", title: "mzID", type: "text"},
     {data: "mzML", title: "mzML", type: "text"},
     {data: "Comment", title: "comment", type: "text"},
-  ];
-
-  columnsDataFactorValue = [
     {data: "FactorValue", title: "factor value", type: "text"},
   ];
+
+  
+
 
   get columnsControls() {
     return (this.form.get('columns') as FormArray).controls;
@@ -79,21 +76,22 @@ export class MetaDataCheckboxSelectionComponent {
     this.form = this.formBuilder.group({
       columns: new FormArray([])
     });
-  
+
     this.addCheckboxes(); // Call addCheckboxes after initializing form
   }
 
   private addCheckboxes() {
     this.columnsData.forEach(() => this.ordersFormArray.push(new FormControl(false)));
   }
-  
+
+
   submit() {
     const selectedColumns = this.form.value.columns
       .map((checked: boolean, i: number) => checked ? this.columnsData[i] : null)
       .filter((column: any) => column !== null);
-  
+
     console.log(selectedColumns);
-  
 
   }
+
 }

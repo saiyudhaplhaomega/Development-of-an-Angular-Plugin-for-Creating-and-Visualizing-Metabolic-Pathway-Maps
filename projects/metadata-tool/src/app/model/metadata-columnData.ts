@@ -1,6 +1,8 @@
 export interface ColumnData {
   Counter: number;
   Sourcename: string;
+  spectrumFile: string;
+	psmFile: string;
   ProjectIdentifier: string;
   Study: string;
   Project: string;
@@ -35,4 +37,5 @@ export interface ColumnData {
   mzML: string;
   Comment: string;
   FactorValue: string;
+  fileType: string;
 }
