@@ -40,44 +40,7 @@ export class FileUploadComponent implements OnInit {
 
   @Input() parentDataItem: DataItem;
 
-  constructor(
-    private dataService: DataService,
-    private addressService: WebserveraddressService,
-    private httpClientService: HttpClientService,
-    private uploadProgressService: UploadProgressService,
-    private fb: UntypedFormBuilder,
-    private dialog: MatDialog,
-  ) { }
 
-  ngOnInit(): void {
-    this.existingNodeNames = this.dataService.getExistingNodeNames();
-    this.proteinDatabases = this.dataService.getProteinDatabases();
-    this.proteinDBselection = this.proteinDatabases[0];
-    this.selectedPeaklistFiles = [];
-    this.searchParameters = new SearchParameters();
-    this.parentDataItem.type == 'folder' ? this.intentToUpload = false : this.intentToUpload = true;
-    this.experimentForm = this.fb.group({
-      expName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(24),
-          Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
-          NodeNameValidator(this.existingNodeNames)
-        ],
-      ],
-    });
-    this.experimentForm.get('expName').valueChanges.subscribe({
-      next: value => {
-        this.disableButton()
-      }
-    })
-    if (this.parentDataItem.type == 'folder') {
-      this.dataUploadModeSelection = 'Search';
-    }
-    this.filesUploadMetadata = new FilesUploadMetadataJSON();
-  }
 
   existingNodeNames: string[];
   experimentForm: UntypedFormGroup;
@@ -130,6 +93,45 @@ export class FileUploadComponent implements OnInit {
   // metadata for file upload (expid etc.)
   filesUploadMetadata: FilesUploadMetadata;
   filesToUpload: MultiFileUploadData;
+
+  constructor(
+    private dataService: DataService,
+    private addressService: WebserveraddressService,
+    private httpClientService: HttpClientService,
+    private uploadProgressService: UploadProgressService,
+    private fb: UntypedFormBuilder,
+    private dialog: MatDialog,
+  ) { }
+
+  ngOnInit(): void {
+    this.existingNodeNames = this.dataService.getExistingNodeNames();
+    this.proteinDatabases = this.dataService.getProteinDatabases();
+    this.proteinDBselection = this.proteinDatabases[0];
+    this.selectedPeaklistFiles = [];
+    this.searchParameters = new SearchParameters();
+    this.parentDataItem.type == 'folder' ? this.intentToUpload = false : this.intentToUpload = true;
+    this.experimentForm = this.fb.group({
+      expName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(24),
+          Validators.pattern('[äÄöÖüÜa-zA-Z0-9_-]*'),
+          NodeNameValidator(this.existingNodeNames)
+        ],
+      ],
+    });
+    this.experimentForm.get('expName').valueChanges.subscribe({
+      next: value => {
+        this.disableButton()
+      }
+    })
+    if (this.parentDataItem.type == 'folder') {
+      this.dataUploadModeSelection = 'Search';
+    }
+    this.filesUploadMetadata = new FilesUploadMetadataJSON();
+  }
 
   onProteinDBChange(item: DataItem): void {
     this.filesUploadMetadata.protdbID = item.uuid;

@@ -53,7 +53,7 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "Comment", title: "comment", type: "text"},
   ];
 
- 
+
 
   get columnsControls() {
     return (this.form.get('columns') as FormArray).controls;
@@ -67,21 +67,22 @@ export class MetaDataCheckboxSelectionComponent {
     this.form = this.formBuilder.group({
       columns: new FormArray([])
     });
-  
+
     this.addCheckboxes(); // Call addCheckboxes after initializing form
   }
 
   private addCheckboxes() {
     this.columnsData.forEach(() => this.ordersFormArray.push(new FormControl(false)));
   }
-  
+
+
   submit() {
     const selectedColumns = this.form.value.columns
       .map((checked: boolean, i: number) => checked ? this.columnsData[i] : null)
       .filter((column: any) => column !== null);
-  
+
     console.log(selectedColumns);
-  
 
   }
+
 }
