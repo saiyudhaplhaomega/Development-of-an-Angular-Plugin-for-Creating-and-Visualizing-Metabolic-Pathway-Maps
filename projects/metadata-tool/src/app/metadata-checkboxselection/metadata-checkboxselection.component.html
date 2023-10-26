@@ -1,16 +1,53 @@
 <h2>Checkbox Selection for SDRF Table (incomplete)</h2>
 <form [formGroup]="form" (ngSubmit)="submit()">
-    <div formArrayName="columns">
-        <div *ngFor="let orderControl of columnsData; let i = index">
-          <label>
-            <input type="checkbox" [formControlName]="i" />
-            <span>{{ columnsData[i].title }}</span>
-          </label>
-        </div>
+  <div class="sections-container">
+  <div>
+    <h3>Section 1</h3>
+    <div formArrayName="section1">
+      <div *ngFor="let columnControl of section1Controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ section1Data[i].title }}</span>
+        </label>
       </div>
-    <div *ngIf="!form.valid">At least one order must be selected</div>
-    <button mat-flat-button color="primary" type="submit">
-      Continue
-    </button>
-  </form>
-
+    </div>
+  </div>
+  <div>
+    <h3>Section 2</h3>
+    <div formArrayName="section2">
+      <div *ngFor="let columnControl of section2Controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ section2Data[i].title }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>Section 3</h3>
+    <div formArrayName="section3">
+      <div *ngFor="let columnControl of section3Controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ section3Data[i].title }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>Section 4</h3>
+    <div formArrayName="section4">
+      <div *ngFor="let columnControl of section4Controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ section4Data[i].title }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!form.valid">At least one column must be selected</div>
+</div>
+<button mat-flat-button color="primary" type="submit">
+  Continue
+</button>
+</form>

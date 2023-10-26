@@ -14,7 +14,7 @@ import {
 export class MetaDataCheckboxSelectionComponent {
 
   form: FormGroup;
-  columnsData = [
+  section1Data = [
     {data: "Counter", title: "counter", type: 'numeric'},
     {data: "Sourcename", title: "source name", type: 'text'},
     {data: "ProjectIdentifier", title: "Project identifier", type: "text"},
@@ -23,7 +23,7 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "Program", title: "program", type: "text"},
   ];
 
-  columnsDataCharacteristic = [
+  section2Data = [
     {data: "BiologicalReplicate", title: "biological replicate", type: "text"},
     {data: "Metagenomes", title: "metagenomes", type: "text"},
     {data: "EcologicalMetagenomes", title: "ecological metagenomes", type: "text"},
@@ -36,12 +36,12 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "CountIdentifiedSpezies", title: "count identified spezies", type: "text"},
   ];
  
-  columnsDataThrid = [  
+  section3Data = [  
   {data: "AssayName", title: "assay name", type: "text"},
   {data: "ExperimentType", title: "experiment type", type: "text"},
   {data: "TechnologyType", title: "technology type", type: "text"},];
 
-  columnsDataComment = [
+  section4Data = [
     {data: "TechnicalReplicate", title: "technical replicate", type: "text"},
     {data: "Label", title: "label", type: "text"},
     {data: "FractionIdentifier", title: "fraction identifier", type: "text"},
@@ -61,37 +61,60 @@ export class MetaDataCheckboxSelectionComponent {
     {data: "FactorValue", title: "factor value", type: "text"},
   ];
 
-  
-
-
-  get columnsControls() {
-    return (this.form.get('columns') as FormArray).controls;
-  }
-
-  get ordersFormArray() {
-    return this.form.get('columns') as FormArray;
-  }
-
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
-      columns: new FormArray([])
+      section1: new FormArray([]),
+      section2: new FormArray([]),
+      section3: new FormArray([]),
+      section4: new FormArray([]),
     });
 
-    this.addCheckboxes(); // Call addCheckboxes after initializing form
+    this.addCheckboxes(this.section1Data, this.form.get('section1') as FormArray);
+    this.addCheckboxes(this.section2Data, this.form.get('section2') as FormArray);
+    this.addCheckboxes(this.section3Data, this.form.get('section3') as FormArray);
+    this.addCheckboxes(this.section4Data, this.form.get('section4') as FormArray);
   }
 
-  private addCheckboxes() {
-    this.columnsData.forEach(() => this.ordersFormArray.push(new FormControl(false)));
+  private addCheckboxes(data: any[], formArray: FormArray) {
+    data.forEach(() => formArray.push(new FormControl(false)));
   }
 
 
   submit() {
-    const selectedColumns = this.form.value.columns
-      .map((checked: boolean, i: number) => checked ? this.columnsData[i] : null)
-      .filter((column: any) => column !== null);
-
-    console.log(selectedColumns);
-
+    const selectedColumnsSection1 = this.getSelectedColumns(this.form.get('section1') as FormArray, this.section1Data);
+    const selectedColumnsSection2 = this.getSelectedColumns(this.form.get('section2') as FormArray, this.section2Data);
+    const selectedColumnsSection3 = this.getSelectedColumns(this.form.get('section3') as FormArray, this.section3Data);
+    const selectedColumnsSection4 = this.getSelectedColumns(this.form.get('section4') as FormArray, this.section4Data);
+  
+    const mergedSelection = [
+      ...selectedColumnsSection1,
+      ...selectedColumnsSection2,
+      ...selectedColumnsSection3,
+      ...selectedColumnsSection4
+    ];
+  
+    console.log(mergedSelection);
+  }
+  
+  private getSelectedColumns(formArray: FormArray, data: any[]) {
+    return formArray.controls
+      .map((control, index) => control.value ? data[index] : null)
+      .filter((column) => column !== null);
   }
 
+  get section1Controls() {
+    return (this.form.get('section1') as FormArray).controls;
+  }
+
+  get section2Controls() {
+    return (this.form.get('section2') as FormArray).controls;
+  }
+
+  get section3Controls() {
+    return (this.form.get('section3') as FormArray).controls;
+  }
+
+  get section4Controls() {
+    return (this.form.get('section4') as FormArray).controls;
+  }
 }

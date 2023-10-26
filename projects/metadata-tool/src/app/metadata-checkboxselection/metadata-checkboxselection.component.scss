@@ -1,0 +1,21 @@
+.sections-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Align items at the start (top) */
+  }
+  
+  .sections-container > div {
+    margin-right: 20px; /* Adjust the margin as needed */
+  }
+  
+  /* Adjust checkbox label alignment */
+  .sections-container label {
+    display: flex;
+    align-items: center; /* Align checkboxes with their labels */
+    margin-bottom: 0; /* Remove vertical margin on labels */
+  }
+  
+  /* Add some spacing between checkboxes and labels */
+  .sections-container label input {
+    margin-right: 5px; /* Adjust the margin as needed */
+  }
