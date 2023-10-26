@@ -2,31 +2,31 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="sections-container">
   <div>
-    <h3>Section 1</h3>
+    <h3>Section 1 (Selected: {{ section1Counter }})</h3>
     <div formArrayName="section1">
       <div *ngFor="let columnControl of section1Controls; let i = index">
         <label>
-          <input type="checkbox" [formControlName]="i" />
+          <input type="checkbox" [formControlName]="i" (change)="updateCounters('section1')" />
           <span>{{ section1Data[i].title }}</span>
         </label>
       </div>
     </div>
   </div>
   <div>
-    <h3>Section 2</h3>
+    <h3>Section 2 (Selected: {{ section2Counter }})</h3>
     <div formArrayName="section2">
       <div *ngFor="let columnControl of section2Controls; let i = index">
         <label>
-          <input type="checkbox" [formControlName]="i" />
+          <input type="checkbox" [formControlName]="i" (change)="updateCounters('section2')"/>
           <span>{{ section2Data[i].title }}</span>
         </label>
       </div>
     </div>
   </div>
   <div>
-    <h3>Section 3</h3>
+    <h3>Section 3 (Selected: {{ section3Counter }})</h3>
     <div formArrayName="section3">
-      <div *ngFor="let columnControl of section3Controls; let i = index">
+      <div *ngFor="let columnControl of section3Controls; let i = index" (change)="updateCounters('section3')">
         <label>
           <input type="checkbox" [formControlName]="i" />
           <span>{{ section3Data[i].title }}</span>
@@ -35,9 +35,9 @@
     </div>
   </div>
   <div>
-    <h3>Section 4</h3>
+    <h3>Section 4 (Selected: {{ section4Counter }})</h3>
     <div formArrayName="section4">
-      <div *ngFor="let columnControl of section4Controls; let i = index">
+      <div *ngFor="let columnControl of section4Controls; let i = index" (change)="updateCounters('section4')">
         <label>
           <input type="checkbox" [formControlName]="i" />
           <span>{{ section4Data[i].title }}</span>

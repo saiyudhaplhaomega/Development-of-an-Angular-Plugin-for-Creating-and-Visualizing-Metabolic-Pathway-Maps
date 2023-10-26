@@ -5,7 +5,6 @@ import { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection
 
 import { MatButtonModule } from '@angular/material/button';
 
-
 @NgModule({
   declarations: [MetaDataCheckboxSelectionComponent],
   imports: [

@@ -3,7 +3,8 @@ import { MetaDataInputService } from './metaddata-input.service';
 import { ColumnData } from '../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
-
+import { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'metadata-workflow',
@@ -11,8 +12,36 @@ import Handsontable from 'handsontable';
   styleUrls: ['./metadata-workflow.component.scss'],
 })
 export class MetadataWorkflowComponent implements OnInit {
-  constructor(private metaDataInputService: MetaDataInputService) {}
+  constructor(
+    private metaDataInputService: MetaDataInputService,
+    private checkboxService: CheckboxSelectionService
+  ) {}
+
+  mergedSelection: any[] = [];
   columnData: ColumnData[] = [];
+  titlesArray: string[] = [];
+  titlesString: string = '';
+
+  private mergedSelectionSubscription: Subscription;
+
+
+  section1Counter: number = 0;
+  section2Counter: number = 0;
+  section3Counter: number = 0;
+  section4Counter: number = 0;
+  HeadersData = this.titlesArray;
+  nestedHeadersData =  [
+    [
+      { label: 'A', colspan: 4 },
+      { label: 'Selection1', colspan: this.section1Counter },
+      { label: 'B', colspan: 2 },
+      { label: 'Selection2', colspan: this.section2Counter },
+      { label: 'Selection3', colspan: this.section3Counter },
+      { label: 'Selection4', colspan: this.section4Counter },
+    ],
+    this.titlesArray,
+  ];
+
 
   searchResults: any[] = []; // Store the search results
   currentSearchIndex: number = -1; // Index of the currently selected search result
@@ -22,120 +51,30 @@ export class MetadataWorkflowComponent implements OnInit {
 
   hotSettings: Handsontable.GridSettings = {
     data: [], // Bind to the fetched data
-    columns: [
-      { data: 'Counter', title: 'counter', type: 'numeric', readOnly: true },
-      { data: 'Sourcename', title: 'source name', type: 'text' },
-      { data: 'ProjectIdentifier', title: 'Project identifier', type: 'text' },
-      //{data: "Study", title: "study", type: "text"},
-      // {data: "Project", title: "project", type: "text"},
-      //{data: "Program", title: "program", type: "text"},
-      {
-        data: 'BiologicalReplicate',
-        title: 'biological replicate',
-        type: 'text',
-      },
-      {
-        data: 'Metagenomes',
-        title: 'metagenomes',
-        type: 'dropdown',
-        source: [
-          'experiment 1',
-          'experiment 2',
-          'experiment 3',
-          'experiment 4',
-        ],
-      },
-      {
-        data: 'EcologicalMetagenomes',
-        title: 'ecological metagenomes',
-        type: 'text',
-      },
-      //{data: "AnalyticalFraction", title: "analytical fraction metagenomes", type: "text"},
-      // {data: "TemperatureCondtions", title: "temperature condtions", type: "text"},
-      // {data: "Pressure", title: "pressure", type: "text"},
-      //{data: "pH", title: "pH", type: "text"},
-      //{data: "CarbonSource", title: "carbon Source", type: "text"},
-      //{data: "ElectronSource", title: "electron Source", type: "text"},
-      //{data: "CountIdentifiedSpezies", title: "count identified spezies", type: "text"},
-      { data: 'AssayName', title: 'assay name', type: 'text' },
-      {
-        data: 'ExperimentType',
-        title: 'experiment type',
-        type: 'dropdown',
-        source: ['heat shock', 'experiment 2', 'experiment 3', 'experiment 4'],
-      },
-      //{data: "TechnologyType", title: "technology type", type: "text"},
-      {
-        data: 'TechnicalReplicate',
-        title: 'technical replicate',
-        type: 'text',
-      },
-      {
-        data: 'Label',
-        title: 'label',
-        type: 'autocomplete',
-        source: ['Label 1', 'BONCAT', 'SILAC'],
-        strict: false,
-      },
-      //{data: "FractionIdentifier", title: "fraction identifier", type: "text"},
-      //{data: "CleavantAgentDetails", title: "cleavant agent details", type: "text"},
-      //{data: "Instrument", title: "instrument", type: "text"},
-      //{data: "ModificationParameters", title: "modification parameters", type: "text"},
-      //{data: "ModificationParameters1", title: "modification parameters.1", type: "text"},
-      //{data: "ModificationParameters2", title: "modification parameters.2", type: "text"},
-      //{data: "DissociationMethod", title: "dissociation method", type: "text"},
-      //{data: "PrecursorMassTolerance", title: "precursor mass tolerance", type: "text"},
-      //{data: "FragmentMassTolerance", title: "fragment mass tolerance", type: "text"},
-      { data: 'DataFile', title: 'data file', type: 'text' },
-      { data: 'FileUri', title: 'file uri', type: 'text' },
-      { data: 'mzID', title: 'mzID', type: 'text' },
-      { data: 'mzML', title: 'mzML', type: 'text' },
-      { data: 'FactorValue', title: 'factor value', type: 'text' },
-      //{data: "Comment", title: "comment", type: "text"},
-    ],
+    columns: this.mergedSelection,
 
     height: 'auto',
     manualColumnResize: true,
     licenseKey: 'non-commercial-and-evaluation',
     multiColumnSorting: true,
     // manualColumnMove: true,
-    colHeaders: true,
+
     filters: true,
     search: true,
-    nestedHeaders: [
-      [
-        { label: '', colspan: 3 },
-        { label: 'characteritics', colspan: 3 },
-        { label: '', colspan: 2 },
-        { label: 'comment', colspan: 6 },
-        { label: 'factor value', colspan: 1 },
-      ],
-      [
-        'counter',
-        'source name',
-        'project identifier',
-        'biological replicate',
-        'metagenomes',
-        'ecological metagenomes',
-        'assay name',
-        'experiment type',
-        'technical replicate',
-        'label',
-        'data file',
-        'file uri',
-        'mzID',
-        'mzML',
-        'experiment type',
-      ],
-    ],
-    collapsibleColumns: [
-      { row: 0, col: 0, collapsible: true },
-      { row: 0, col: 3, collapsible: true },
-      { row: 0, col: 6, collapsible: true },
-      { row: 0, col: 8, collapsible: true },
-      { row: 0, col: 14, collapsible: true },
-      { row: 0, col: 15, collapsible: true },
-    ],
+    colHeaders: this.HeadersData,
+
+    //NestedHeader nimmt keine Arrays oder Strings. Problem lösen!!!
+    //nestedHeaders: this.nestedHeadersData,
+
+  //  collapsibleColumns: [
+  //    { row: 0, col: 0, collapsible: true },
+  //    { row: 0, col: 3, collapsible: true },
+   //   { row: 0, col: 6, collapsible: true },
+   //   { row: 0, col: 8, collapsible: true },
+   //   { row: 0, col: 14, collapsible: true },
+   //   { row: 0, col: 15, collapsible: true },
+  //  ],
+
     manualRowMove: true,
     hiddenRows: {
       indicators: true,
@@ -163,6 +102,51 @@ export class MetadataWorkflowComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.mergedSelectionSubscription =
+      this.checkboxService.mergedSelection$.subscribe((selection) => {
+        this.mergedSelection = selection;
+
+        // Update the columns in hotSettings
+        this.hotSettings.columns = this.mergedSelection;
+
+        if (this.hotInstance) {
+          // Update the Handsontable instance with new columns
+          this.hotInstance.updateSettings(this.hotSettings);
+        }
+      });
+
+    this.checkboxService.mergedSelection$.subscribe((selection) => {
+      this.mergedSelection = selection;
+      this.titlesArray = this.mergedSelection.map((item) => item.title);
+      this.titlesString = this.titlesArray.join(', ');
+      console.log(this.titlesArray);
+    });
+
+    this.checkboxService.section1Counter$.subscribe((count) => {
+      this.section1Counter = count;
+  
+    });
+
+    this.checkboxService.section2Counter$.subscribe((count) => {
+      this.section2Counter = count;
+ 
+    });
+
+    this.checkboxService.section3Counter$.subscribe((count) => {
+      this.section3Counter = count;
+   
+    });
+
+    this.checkboxService.section4Counter$.subscribe((count) => {
+      this.section4Counter = count;
+     
+    });
+
+    this.checkboxService.mergedSelection$.subscribe((selection) => {
+      this.mergedSelection = selection;
+    
+    });
+
     this.metaDataInputService.getColumnData().then((columnData) => {
       this.columnData = columnData; // Populate columnData with fetched data
       this.hotSettings.data = this.columnData; // Update data in hotSettings
@@ -176,6 +160,8 @@ export class MetadataWorkflowComponent implements OnInit {
       this.hotSettings
     );
   }
+
+
 
   onKey(event: any) {
     this.performSearch();
@@ -252,5 +238,4 @@ export class MetadataWorkflowComponent implements OnInit {
   submit() {
     this.metaDataInputService.submiteTable();
   }
-
 }

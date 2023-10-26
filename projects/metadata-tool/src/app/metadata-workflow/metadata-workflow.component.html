@@ -1,5 +1,12 @@
 <app-checkboxselection></app-checkboxselection>
 
+<p>Section 1 Count: {{ section1Counter }}</p>
+<p>Section 2 Count: {{ section2Counter }}</p>
+<p>Section 3 Count: {{ section3Counter }}</p>
+<p>Section 4 Count: {{ section4Counter }}</p>
+
+<p>{{ titlesString }}</p>
+
 <h2>SDRF Table</h2>
 <!-- Search input -->
 <input
@@ -38,7 +45,5 @@
   <button mat-flat-button color="primary" routerLink="/download">
     Go to Download
   </button>
-  <button mat-flat-button color="primary" onclick="submit()">
-    Submit
-  </button>
+  <button mat-flat-button color="primary" onclick="submit()">Submit</button>
 </div>
