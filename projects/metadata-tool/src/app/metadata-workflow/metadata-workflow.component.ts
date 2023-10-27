@@ -5,6 +5,7 @@ import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
 import { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';
 import { Subscription } from 'rxjs';
+import { MetaDataUploadJsonObject } from '../model/metadatauploadjson';
 
 @Component({
   selector: 'metadata-workflow',
@@ -124,34 +125,47 @@ export class MetadataWorkflowComponent implements OnInit {
 
     this.checkboxService.section1Counter$.subscribe((count) => {
       this.section1Counter = count;
-  
+
     });
 
     this.checkboxService.section2Counter$.subscribe((count) => {
       this.section2Counter = count;
- 
+
     });
 
     this.checkboxService.section3Counter$.subscribe((count) => {
       this.section3Counter = count;
-   
+
     });
 
     this.checkboxService.section4Counter$.subscribe((count) => {
       this.section4Counter = count;
-     
+
     });
 
     this.checkboxService.mergedSelection$.subscribe((selection) => {
       this.mergedSelection = selection;
-    
+
     });
 
-    this.metaDataInputService.getColumnData().then((columnData) => {
-      this.columnData = columnData; // Populate columnData with fetched data
-      this.hotSettings.data = this.columnData; // Update data in hotSettings
-      this.initializeHandsontable(); // Initialize Handsontable with the data
+
+    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {
+      Promise.resolve(obj.metadataJson).then((columnData) => {
+        this.columnData = columnData; // Populate columnData with fetched data
+        this.hotSettings.data = this.columnData;
+        this.initializeHandsontable();
+      });
     });
+
+
+
+
+
+    // this.metaDataInputService.getColumnData().then((columnData) => {
+    //   this.columnData = columnData; // Populate columnData with fetched data
+    //   this.hotSettings.data = this.columnData; // Update data in hotSettings
+    //   this.initializeHandsontable(); // Initialize Handsontable with the data
+    // });
   }
 
   private initializeHandsontable(): void {

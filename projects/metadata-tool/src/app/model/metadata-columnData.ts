@@ -39,3 +39,45 @@ export interface ColumnData {
   FactorValue: string;
   fileType: string;
 }
+
+export class ColumnDataObject implements ColumnData {
+  Counter: number;
+  Sourcename: string;
+  spectrumFile: string;
+	psmFile: string;
+  ProjectIdentifier: string;
+  Study: string;
+  Project: string;
+  Program: string;
+  BiologicalReplicate: number;
+  Metagenomes: string;
+  EcologicalMetagenomes: string;
+  AnalyticalFraction: string;
+  TemperatureCondtions: string;
+  Pressure: string;
+  pH: string;
+  CarbonSource: string;
+  ElectronSource: string;
+  CountIdentifiedSpezies: string;
+  AssayName: string;
+  ExperimentType: string;
+  TechnologyType: string;
+  TechnicalReplicate: number;
+  Label: string;
+  FractionIdentifier: number;
+  CleavantAgentDetails: string;
+  Instrument: string;
+  ModificationParameters: string;
+  ModificationParameters1: string;
+  ModificationParameters2: string;
+  DissociationMethod: string;
+  PrecursorMassTolerance: string;
+  FragmentMassTolerance: string;
+  DataFile: string;
+  FileUri: string;
+  mzID: string;
+  mzML: string;
+  Comment: string;
+  FactorValue: string;
+  fileType: string;
+}

@@ -75,6 +75,19 @@ export class HttpClientService {
     });
   }
 
+  repeatedGetObject<T>(
+    checkProperty: string,
+    api: string,
+    params?: HttpParams,
+    delay: number = 5_000
+  ): Observable<T> {
+    return this.getObject<T>(api, params).pipe(
+      repeat({ delay: delay }),
+      filter((res: T) => get(res, checkProperty) !== undefined),
+      take(1)
+    );
+  }
+
   postFile(file: File, url: string, params?: HttpParams) {
     const fd = new FormData();
     fd.set('Content-Type', 'multipart/form-data');
