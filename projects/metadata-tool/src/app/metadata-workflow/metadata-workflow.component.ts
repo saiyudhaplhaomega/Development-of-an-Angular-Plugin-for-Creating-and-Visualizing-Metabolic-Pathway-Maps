@@ -63,7 +63,7 @@ export class MetadataWorkflowComponent implements OnInit {
     filters: true,
     search: true,
     colHeaders: this.HeadersData,
-
+    rowHeaders: true,
     //NestedHeader nimmt keine Arrays oder Strings. Problem lösen!!!
     //nestedHeaders: this.nestedHeadersData,
 

@@ -28,7 +28,7 @@ export class MetaDataCheckboxSelectionComponent {
     title: 'label',
     type: 'autocomplete',
     source: ['Label 1', 'BONCAT', 'SILAC'],
-    strict: false,
+    strict: true,
   },
   {
     data: 'Metagenomes',
@@ -43,7 +43,6 @@ export class MetaDataCheckboxSelectionComponent {
   },];
 
   section1Data = [
-    { data: 'Sourcename', title: 'source name', type: 'text' },
     { data: 'ProjectIdentifier', title: 'Project identifier', type: 'text' },
     { data: 'Study', title: 'study', type: 'text' },
     { data: 'Project', title: 'project', type: 'text' },
