@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CheckboxSelectionService } from './checkboxselectionservice';
 
@@ -10,28 +10,28 @@ import { CheckboxSelectionService } from './checkboxselectionservice';
 export class MetaDataCheckboxSelectionComponent {
   form: FormGroup;
 
-  notSelectable1 = [{ data: 'Sourcename', title: 'source name', type: 'text' },
+  notSelectable1 = [{ data: 'sourcename', title: 'source name', type: 'text' },
   /// TESTING
   {
-    data: 'ExperimentType',
+    data: 'experimentType',
     title: 'experiment type',
     type: 'dropdown',
     source: ['heat shock', 'experiment 2', 'experiment 3', 'experiment 4'],
   },
   {
-    data: 'TechnicalReplicate',
+    data: 'technicalReplicate',
     title: 'technical replicate',
     type: 'text',
   },
   {
-    data: 'Label',
+    data: 'label',
     title: 'label',
     type: 'autocomplete',
     source: ['Label 1', 'BONCAT', 'SILAC'],
     strict: true,
   },
   {
-    data: 'Metagenomes',
+    data: 'metagenomes',
     title: 'metagenomes',
     type: 'dropdown',
     source: [
@@ -43,102 +43,104 @@ export class MetaDataCheckboxSelectionComponent {
   },];
 
   section1Data = [
-    { data: 'ProjectIdentifier', title: 'Project identifier', type: 'text' },
-    { data: 'Study', title: 'study', type: 'text' },
-    { data: 'Project', title: 'project', type: 'text' },
-    { data: 'Program', title: 'program', type: 'text' },
+    { data: 'projectIdentifier', title: 'Project identifier', type: 'text' },
+    { data: 'study', title: 'study', type: 'text' },
+    { data: 'project', title: 'project', type: 'text' },
+    { data: 'program', title: 'program', type: 'text' },
   ];
 
   notSelectable2 = [
     {
-      data: 'BiologicalReplicate',
+      data: 'biologicalReplicate',
       title: 'biological replicate',
       type: 'text',
     },
-    { data: 'Metagenomes', title: 'metagenomes', type: 'text' },
+    { data: 'metagenomes', title: 'metagenomes', type: 'text' },
   ];
 
   section2Data = [
     {
-      data: 'EcologicalMetagenomes',
+      data: 'ecologicalMetagenomes',
       title: 'ecological metagenomes',
       type: 'text',
     },
     {
-      data: 'AnalyticalFraction',
+      data: 'analyticalFraction',
       title: 'analytical fraction metagenomes',
       type: 'text',
     },
     {
-      data: 'TemperatureCondtions',
+      data: 'temperatureCondtions',
       title: 'temperature condtions',
       type: 'text',
     },
-    { data: 'Pressure', title: 'pressure', type: 'text' },
+    { data: 'pressure', title: 'pressure', type: 'text' },
     { data: 'pH', title: 'pH', type: 'text' },
-    { data: 'CarbonSource', title: 'carbon Source', type: 'text' },
-    { data: 'ElectronSource', title: 'electron Source', type: 'text' },
+    { data: 'carbonSource', title: 'carbon Source', type: 'text' },
+    { data: 'electronSource', title: 'electron Source', type: 'text' },
     {
-      data: 'CountIdentifiedSpezies',
+      data: 'countIdentifiedSpezies',
       title: 'count identified spezies',
       type: 'text',
     },
   ];
 
   section3Data = [
-    { data: 'AssayName', title: 'assay name', type: 'text' },
-    { data: 'ExperimentType', title: 'experiment type', type: 'text' },
-    { data: 'TechnologyType', title: 'technology type', type: 'text' },
+    { data: 'assayName', title: 'assay name', type: 'text' },
+    { data: 'experimentType', title: 'experiment type', type: 'text' },
+    { data: 'technologyType', title: 'technology type', type: 'text' },
   ];
 
   section4Data = [
-    { data: 'TechnicalReplicate', title: 'technical replicate', type: 'text' },
-    { data: 'Label', title: 'label', type: 'text' },
-    { data: 'FractionIdentifier', title: 'fraction identifier', type: 'text' },
+    { data: 'technicalReplicate', title: 'technical replicate', type: 'text' },
+    { data: 'label', title: 'label', type: 'text' },
+    { data: 'fractionIdentifier', title: 'fraction identifier', type: 'text' },
     {
-      data: 'CleavantAgentDetails',
+      data: 'cleavantAgentDetails',
       title: 'cleavant agent details',
       type: 'text',
     },
-    { data: 'Instrument', title: 'instrument', type: 'text' },
+    { data: 'instrument', title: 'instrument', type: 'text' },
     {
-      data: 'ModificationParameters',
+      data: 'modificationParameters',
       title: 'modification parameters',
       type: 'text',
     },
     {
-      data: 'ModificationParameters1',
+      data: 'modificationParameters1',
       title: 'modification parameters.1',
       type: 'text',
     },
     {
-      data: 'ModificationParameters2',
+      data: 'modificationParameters2',
       title: 'modification parameters.2',
       type: 'text',
     },
-    { data: 'DissociationMethod', title: 'dissociation method', type: 'text' },
+    { data: 'dissociationMethod', title: 'dissociation method', type: 'text' },
     {
-      data: 'PrecursorMassTolerance',
+      data: 'precursorMassTolerance',
       title: 'precursor mass tolerance',
       type: 'text',
     },
     {
-      data: 'FragmentMassTolerance',
+      data: 'fragmentMassTolerance',
       title: 'fragment mass tolerance',
       type: 'text',
     },
-    { data: 'DataFile', title: 'data file', type: 'text' },
-    { data: 'FileUri', title: 'file uri', type: 'text' },
+    { data: 'dataFile', title: 'data file', type: 'text' },
+    { data: 'fileUri', title: 'file uri', type: 'text' },
     { data: 'mzID', title: 'mzID', type: 'text' },
     { data: 'mzML', title: 'mzML', type: 'text' },
-    { data: 'Comment', title: 'comment', type: 'text' },
-    { data: 'FactorValue', title: 'factor value', type: 'text' },
+    { data: 'comment', title: 'comment', type: 'text' },
+    { data: 'factorValue', title: 'factor value', type: 'text' },
   ];
 
   section1Counter: number = 0;
   section2Counter: number = 0;
   section3Counter: number = 0;
   section4Counter: number = 0;
+
+  @Output() continueClicked = new EventEmitter<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -215,7 +217,7 @@ export class MetaDataCheckboxSelectionComponent {
     ];
 
     this.checkboxService.updateMergedSelection(mergedSelection);
-    console.log(mergedSelection);
+    this.continueClicked.emit();
   }
 
   private getSelectedColumns(formArray: FormArray, data: any[]) {
@@ -276,6 +278,7 @@ export class MetaDataCheckboxSelectionComponent {
       default:
         break;
     }
+    
   }
 
   private updateCounter(formArray: FormArray, counter: number) {
@@ -291,4 +294,5 @@ export class MetaDataCheckboxSelectionComponent {
       this.checkboxService.updateSection4Counter(counter);
     }
   }
+
 }

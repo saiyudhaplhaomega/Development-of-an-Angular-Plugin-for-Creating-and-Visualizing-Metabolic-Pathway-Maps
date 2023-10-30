@@ -22,6 +22,8 @@ export class MetadataWorkflowComponent implements OnInit {
   columnData: ColumnData[] = [];
   titlesArray: string[] = [];
   titlesString: string = '';
+  showSelection: boolean = true;
+  showTable: boolean = false;
 
   private mergedSelectionSubscription: Subscription;
 
@@ -120,7 +122,6 @@ export class MetadataWorkflowComponent implements OnInit {
       this.mergedSelection = selection;
       this.titlesArray = this.mergedSelection.map((item) => item.title);
       this.titlesString = this.titlesArray.join(', ');
-      console.log(this.titlesArray);
     });
 
     this.checkboxService.section1Counter$.subscribe((count) => {
@@ -249,7 +250,24 @@ export class MetadataWorkflowComponent implements OnInit {
     }
   }
 
+  exportDataAsArray(): any[][] {
+    if (this.hotInstance) {
+      // Get the current data from Handsontable
+      const data = this.hotInstance.getData();
+      return data;
+    }
+    return [];
+  }
+
+  toggleSelection() {
+    this.showSelection = !this.showSelection;
+  }
+  
   submit() {
-    this.metaDataInputService.submiteTable();
+    const data = this.hotInstance.getData();
+    
+     console.log(data);
+     // Weiß nicht wofür das ist? 
+     // this.metaDataInputService.submiteTable();
   }
 }
