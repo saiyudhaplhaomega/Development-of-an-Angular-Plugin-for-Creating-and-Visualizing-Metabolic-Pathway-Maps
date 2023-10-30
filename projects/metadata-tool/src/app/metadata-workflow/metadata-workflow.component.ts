@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MetaDataInputService } from './metaddata-input.service';
-import { ColumnData } from '../model/metadata-columnData';
+import { ColumnData, ColumnDataObject } from '../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
 import { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';
@@ -16,22 +16,25 @@ export class MetadataWorkflowComponent implements OnInit {
   constructor(
     private metaDataInputService: MetaDataInputService,
     private checkboxService: CheckboxSelectionService
+    
   ) {}
+
+  private mergedSelectionSubscription: Subscription;
 
   mergedSelection: any[] = [];
   columnData: ColumnData[] = [];
   titlesArray: string[] = [];
   titlesString: string = '';
+  dataArray: string[] = [];
+  dataString: string = '';
   showSelection: boolean = true;
   showTable: boolean = false;
-
-  private mergedSelectionSubscription: Subscription;
-
 
   section1Counter: number = 0;
   section2Counter: number = 0;
   section3Counter: number = 0;
   section4Counter: number = 0;
+
   HeadersData = this.titlesArray;
   nestedHeadersData =  [
     [
@@ -122,7 +125,11 @@ export class MetadataWorkflowComponent implements OnInit {
       this.mergedSelection = selection;
       this.titlesArray = this.mergedSelection.map((item) => item.title);
       this.titlesString = this.titlesArray.join(', ');
+      this.dataArray = this.mergedSelection.map((item) => item.data);
+      this.dataString = this.dataArray.join(', ');
     });
+
+
 
     this.checkboxService.section1Counter$.subscribe((count) => {
       this.section1Counter = count;
@@ -250,13 +257,24 @@ export class MetadataWorkflowComponent implements OnInit {
     }
   }
 
-  exportDataAsArray(): any[][] {
+  exportDataAsObject(): ColumnDataObject[] {
     if (this.hotInstance) {
-      // Get the current data from Handsontable
       const data = this.hotInstance.getData();
-      return data;
+      const headers = this.dataArray; // Use the separate array of headers
+      const result = [];
+  
+      for (let i = 0; i < data.length; i++) { // Start from the first row since we have separate headers
+        const obj: any = {};
+        for (let j = 0; j < headers.length; j++) {
+          const key = headers[j].replace(/\s+/g, ''); // Remove spaces from headers
+          obj[key] = data[i][j];
+        }
+        result.push(obj);
+      }
+  
+      return result;
     }
-    return [];
+    return []; // Return an empty array if no data is available
   }
 
   toggleSelection() {
@@ -264,10 +282,8 @@ export class MetadataWorkflowComponent implements OnInit {
   }
 
   submit() {
-    const data = this.hotInstance.getData();
-
-     console.log(data);
-     // data as ColumnData[]
-     this.metaDataInputService.submiteTable(data);
+    const data = this.exportDataAsObject();
+    console.log(data);
+    this.metaDataInputService.submiteTable(data);
   }
 }
