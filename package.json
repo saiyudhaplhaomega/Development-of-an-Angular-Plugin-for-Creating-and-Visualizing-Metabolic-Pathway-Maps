@@ -16,6 +16,8 @@
     "startsignalling": "ng serve signalling-tool",
     "buildmetadata": "ng build metadata-tool",
     "startmetadata": "ng serve metadata-tool",
+    "buildlifesciencegraph": "ng build lifesciencegraph",
+    "startlifesciencegraph": "ng serve lifesciencegraph",
     "buildSharedLib": "ng build shared-lib --watch",
     "watch": "ng build --watch --configuration development",
     "new module1": "ng g module modules/TestExampleContent --project test-example --routing",
@@ -24,7 +26,7 @@
     "new component2": "ng g component modules/test-example-home --project test-example",
     "new module3": "ng g module about-prophane --project prophane --routing",
     "test": "ng test",
-    "newwebsite": "ng generate application testexample",
+    "newwebsite": "ng generate application lifesciencegraph",
     "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install"
   },

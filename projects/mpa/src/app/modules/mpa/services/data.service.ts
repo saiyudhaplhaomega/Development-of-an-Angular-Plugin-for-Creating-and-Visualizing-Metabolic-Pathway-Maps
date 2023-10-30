@@ -76,7 +76,7 @@ export class DataService {
     }
   }
 
-  getDataItemFromId(id: number) {
+  getDataItemFromId(id: number): DataItem {
     return this.dataMap.getValue().findSpecificNode(this.dataMap.getValue().rootNode, id);
   }
 
