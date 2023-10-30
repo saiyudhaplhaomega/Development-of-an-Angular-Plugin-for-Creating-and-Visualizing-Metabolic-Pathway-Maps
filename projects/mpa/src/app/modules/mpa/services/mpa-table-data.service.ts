@@ -23,7 +23,9 @@ export enum TaxonomyDisplaySelection {
 })
 export class MpaTableDataService {
 
-  private mpaData: ProteinGroupObject[];
+  // used to save ExperimentIDs, ProteinGroupObject[] as to prevent constant requests to the database; eliminates loadtime after initial loading
+  private savedMpaDataMap: Map<string, ProteinGroupObject[]> = new Map<string, ProteinGroupObject[]>();
+  private savedMpaDataIDs: string[] = [];
 
   public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
 
@@ -76,21 +78,35 @@ export class MpaTableDataService {
   }
 
   public requestProteinGroups(): Observable<boolean> {
-    let returnValue = new Subject<boolean>();
-    this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
-      filename: 'sample.mgf', //sinnlos?
-      experimentID: this.expID.value,
-    }, this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS)).subscribe({
-      next: (proteinGroups) => {
-        this.mpaData = proteinGroups;
-        this.setMpaTabledata();
-        returnValue.next(true);
-      },
-      error: () => {
-        console.log('ERROR: mpa-table-data.service.requestProteinGroups')
-        returnValue.next(false);
+    // check if data already saved
+    // yes -> set mpaTableData to corresponding entry from savedMpaData
+    // no -> check if savedMpaData exceeds size -> delete oldest entry
+    let returnValue: Subject<boolean> = new Subject<boolean>();
+    if (this.savedMpaDataMap.get(this.expID.value)) {
+      this.setMpaTabledata();
+      setTimeout(() => returnValue.next(true),500); // setTimeout() to set returnValue after it is returned asObservable -> enables the subscription to catch on
+    } else {
+      // makes sure, not too much data is retained
+      if (this.savedMpaDataIDs.length > 9) {
+        this.savedMpaDataMap.delete(this.savedMpaDataIDs[0]);
+        this.savedMpaDataIDs.shift();
       }
-    });
+      this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
+        filename: 'sample.mgf', //sinnlos?
+        experimentID: this.expID.value,
+      }, this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS)).subscribe({
+        next: (proteinGroups) => {
+          this.savedMpaDataIDs.push(this.expID.value);
+          this.savedMpaDataMap.set(this.expID.value,proteinGroups);
+          this.setMpaTabledata();
+          returnValue.next(true);
+        },
+        error: () => {
+          console.log('ERROR: mpa-table-data.service.requestProteinGroups')
+          returnValue.next(false);
+        }
+      });
+    }
     return returnValue.asObservable();
   }
 
@@ -193,14 +209,13 @@ export class MpaTableDataService {
 
   //uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed
   setMpaTabledata() {
-    let newTableData: ProteinGroupObject[];
+    let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value);
+    let newTableData: ProteinGroupObject[] = [];
     if (this.groupSelection == GroupSelection.SUBGROUPS) {
-      let subgroups: ProteinGroupObject[] = [];
-      this.mpaData.map(group => group.proteinSubGroupList.map(subgroup => subgroups.push(subgroup)));
-      newTableData = subgroups;
+      mpaData.map(group => group.proteinSubGroupList.map(subgroup => newTableData.push(subgroup)));
     }
     else {
-      newTableData = this.mpaData.filter(group => group.proteinSubGroupList)
+      newTableData = mpaData.filter(group => group.proteinSubGroupList)
     }
     newTableData = this.sortTableData(newTableData);
     this.mpaTableData.next(newTableData);
@@ -243,7 +258,8 @@ export class MpaTableDataService {
   //updates the 'hidden' property of the selected groups in this.mpaData and sends an update to the back-end and this.mpaTableData
   onToggleDisableGroup(isDisableAction: boolean) {
     let groupsToUpdate: ProteinGroupObject[] = [];
-    this.mpaData.map(group => {
+    let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value);
+    mpaData.map(group => {
       if (group.isSelected) {
         group.hidden = (isDisableAction) ? true : false;
         let strippedGroup = new ProteinGroupObject;
@@ -267,9 +283,10 @@ export class MpaTableDataService {
         subgroup.isSelected = false;
       })
     })
+    this.savedMpaDataMap.set(this.expID.value, mpaData);
     this.setMpaTabledata();
     this.httpClientService.postObject<ProteinGroupObject[], any>(groupsToUpdate, this.addressService.getEndpoint(Endpoints.POST_UPDATE_PROTEIN_GROUPS)).subscribe({
-      next: ans => {}//TODO evaluate answer?
+      next: ans => { }//TODO evaluate answer?
     })
   }
 
