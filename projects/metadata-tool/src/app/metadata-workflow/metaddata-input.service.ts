@@ -9,6 +9,7 @@ import { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatau
 import { HttpEventType, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+import { DownloadLinksJson } from '../model/download-json';
 
 @Injectable({
   providedIn: 'root',
@@ -205,8 +206,24 @@ export class MetaDataInputService {
     });
   }
 
-  submiteTable() {
-    //this.http.postObject<MetadaDataUploadJson, DownloadLinksJson>().subscribe() {};
-  }
+  submiteTable(data: ColumnData[]) {
+    const uploadJson = this.metadataUploadJson.getValue();
+    uploadJson.metadataJson = data;
+    this.metadataUploadJson.next(uploadJson);
+    this.http.postObject<MetaDataUploadJson, DownloadLinksJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))
+      .subscribe((response) => {
+        this.http
+          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
+            this.metadataUploadJson.value,
+            'jobID',
+            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),
+            new HttpParams()
+          )
+          .subscribe((response: DownloadLinksJson) => {
+              // SAVE DOwnload link jsn
+          });
 
+      });
+
+    }
 }

@@ -262,12 +262,12 @@ export class MetadataWorkflowComponent implements OnInit {
   toggleSelection() {
     this.showSelection = !this.showSelection;
   }
-  
+
   submit() {
     const data = this.hotInstance.getData();
-    
+
      console.log(data);
-     // Weiß nicht wofür das ist? 
-     // this.metaDataInputService.submiteTable();
+     // data as ColumnData[]
+     this.metaDataInputService.submiteTable(data);
   }
 }
