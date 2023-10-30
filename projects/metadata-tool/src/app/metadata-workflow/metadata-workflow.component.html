@@ -1,49 +1,46 @@
-<app-checkboxselection></app-checkboxselection>
+<button mat-flat-button color="primary" (click)="toggleSelection()">
+  {{ showSelection ? 'Hide Selection' : 'Show Selection' }}
+</button>
 
-<p>Section 1 Count: {{ section1Counter }}</p>
-<p>Section 2 Count: {{ section2Counter }}</p>
-<p>Section 3 Count: {{ section3Counter }}</p>
-<p>Section 4 Count: {{ section4Counter }}</p>
-
-<p>{{ titlesString }}</p>
-
-<h2>SDRF Table</h2>
-<!-- Search input -->
-<input
-  id="search-field"
-  type="text"
-  placeholder="Search..."
-  (input)="onKey($event)"
-/>
-
-<div *ngIf="searchResults.length > 0">
-  <ul>
-    <li
-      *ngFor="let result of searchResults; let i = index"
-      [class.selected]="i === currentSearchIndex"
-    >
-      {{ result.Sourcename }}
-      <!-- Display the relevant search result properties -->
-    </li>
-  </ul>
+<div *ngIf="showSelection">
+  <app-checkboxselection></app-checkboxselection>
 </div>
-<button mat-flat-button color="primary" (click)="selectNextSearchResult()">
-  Next
-</button>
-<button mat-flat-button color="primary" (click)="selectPreviousSearchResult()">
-  Previous
-</button>
-<!-- Table -->
-<div #hotContainer></div>
-<!-- Export button -->
-<button mat-flat-button color="primary" (click)="onExportClick()">
-  Quick Export to CSV
-</button>
 
-<div class="text-center mt-20 mb-20">
-  <!-- <shared-login-buttons></shared-login-buttons> -->
-  <button mat-flat-button color="primary" routerLink="/download">
-    Go to Download
+  <h2>SDRF Table</h2>
+  <!-- Search input -->
+  <input
+    id="search-field"
+    type="text"
+    placeholder="Search..."
+    (input)="onKey($event)"
+  />
+  <div *ngIf="searchResults.length > 0">
+    <ul>
+      <li
+        *ngFor="let result of searchResults; let i = index"
+        [class.selected]="i === currentSearchIndex"
+      >
+        {{ result.Sourcename }}
+        <!-- Display the relevant search result properties -->
+      </li>
+    </ul>
+  </div>
+  <button mat-flat-button color="primary" (click)="selectNextSearchResult()">
+    Next
   </button>
-  <button mat-flat-button color="primary" onclick="submit()">Submit</button>
-</div>
+  <button mat-flat-button color="primary" (click)="selectPreviousSearchResult()">
+    Previous
+  </button>
+  <!-- Table -->
+  <div #hotContainer></div>
+  <!-- Export button -->
+  <button mat-flat-button color="primary" (click)="onExportClick()">
+    Quick Export to CSV
+  </button>
+
+  <div class="text-center mt-20 mb-20">
+    <!-- <shared-login-buttons></shared-login-buttons> -->
+    <button mat-flat-button color="primary" (click)="submit()" routerLink="/download">
+      Submit and go to Download
+    </button>
+  </div>
