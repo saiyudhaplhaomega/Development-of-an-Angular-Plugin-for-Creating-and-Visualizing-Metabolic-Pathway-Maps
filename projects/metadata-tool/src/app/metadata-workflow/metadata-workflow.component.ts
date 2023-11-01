@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MetaDataInputService } from './metaddata-input.service';
 import { ColumnData, ColumnDataObject } from '../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
@@ -15,8 +21,8 @@ import { MetaDataUploadJsonObject } from '../model/metadatauploadjson';
 export class MetadataWorkflowComponent implements OnInit {
   constructor(
     private metaDataInputService: MetaDataInputService,
-    private checkboxService: CheckboxSelectionService
-    
+    private checkboxService: CheckboxSelectionService,
+    private cd: ChangeDetectorRef
   ) {}
 
   private mergedSelectionSubscription: Subscription;
@@ -34,20 +40,9 @@ export class MetadataWorkflowComponent implements OnInit {
   section2Counter: number = 0;
   section3Counter: number = 0;
   section4Counter: number = 0;
-
+  section4Countertrue: number = 0;
   HeadersData = this.titlesArray;
-  nestedHeadersData =  [
-    [
-      { label: 'A', colspan: 4 },
-      { label: 'Selection1', colspan: this.section1Counter },
-      { label: 'B', colspan: 2 },
-      { label: 'Selection2', colspan: this.section2Counter },
-      { label: 'Selection3', colspan: this.section3Counter },
-      { label: 'Selection4', colspan: this.section4Counter },
-    ],
-    this.titlesArray,
-  ];
-
+  nestedHeadersData: any[][] = [];
 
   searchResults: any[] = []; // Store the search results
   currentSearchIndex: number = -1; // Index of the currently selected search result
@@ -70,16 +65,26 @@ export class MetadataWorkflowComponent implements OnInit {
     colHeaders: this.HeadersData,
     rowHeaders: true,
     //NestedHeader nimmt keine Arrays oder Strings. Problem lösen!!!
-    //nestedHeaders: this.nestedHeadersData,
+    // nestedHeaders:  [
+    //   [
+    //     { label: 'A', colspan: 4 },
+    //       { label: 'Selection1', colspan: this.section1Counter },
+    //       { label: 'B', colspan: 2 },
+    //       { label: 'Selection2', colspan: this.section2Counter },
+    //       { label: 'Selection3', colspan: this.section3Counter },
+    //      { label: 'Selection4', colspan: this.section4Counter },
+    //     ],
+    //     this.titlesArray,
+    //   ],
 
-  //  collapsibleColumns: [
-  //    { row: 0, col: 0, collapsible: true },
-  //    { row: 0, col: 3, collapsible: true },
-   //   { row: 0, col: 6, collapsible: true },
-   //   { row: 0, col: 8, collapsible: true },
-   //   { row: 0, col: 14, collapsible: true },
-   //   { row: 0, col: 15, collapsible: true },
-  //  ],
+    //  collapsibleColumns: [
+    //    { row: 0, col: 0, collapsible: true },
+    //    { row: 0, col: 3, collapsible: true },
+    //   { row: 0, col: 6, collapsible: true },
+    //   { row: 0, col: 8, collapsible: true },
+    //   { row: 0, col: 14, collapsible: true },
+    //   { row: 0, col: 15, collapsible: true },
+    //  ],
 
     manualRowMove: true,
     hiddenRows: {
@@ -108,6 +113,16 @@ export class MetadataWorkflowComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.mergedSelectionSubscription = this.checkboxService.mergedSelection$.subscribe((selection) => {
+      this.mergedSelection = selection;
+      this.titlesArray = this.mergedSelection.map((item) => item.title);
+      this.titlesString = this.titlesArray.join(', ');
+      this.dataArray = this.mergedSelection.map((item) => item.data);
+      this.dataString = this.dataArray.join(', ');
+      this.updateNestedHeadersData(); // Call the function to generate the nested headers
+      this.hotInstance.updateSettings(this.hotSettings);
+    });
+
     this.mergedSelectionSubscription =
       this.checkboxService.mergedSelection$.subscribe((selection) => {
         this.mergedSelection = selection;
@@ -121,41 +136,32 @@ export class MetadataWorkflowComponent implements OnInit {
         }
       });
 
-    this.checkboxService.mergedSelection$.subscribe((selection) => {
-      this.mergedSelection = selection;
-      this.titlesArray = this.mergedSelection.map((item) => item.title);
-      this.titlesString = this.titlesArray.join(', ');
-      this.dataArray = this.mergedSelection.map((item) => item.data);
-      this.dataString = this.dataArray.join(', ');
-    });
-
-
+    this.cd.detectChanges();
 
     this.checkboxService.section1Counter$.subscribe((count) => {
       this.section1Counter = count;
-
+      this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
     this.checkboxService.section2Counter$.subscribe((count) => {
       this.section2Counter = count;
-
+      this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
     this.checkboxService.section3Counter$.subscribe((count) => {
       this.section3Counter = count;
-
+      this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
     this.checkboxService.section4Counter$.subscribe((count) => {
       this.section4Counter = count;
-
+      this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
     this.checkboxService.mergedSelection$.subscribe((selection) => {
       this.mergedSelection = selection;
-
+      this.updateNestedHeadersData(); // Update nestedHeadersData
     });
-
 
     this.metaDataInputService.metadataUploadJson.subscribe((obj) => {
       Promise.resolve(obj.metadataJson).then((columnData) => {
@@ -165,10 +171,6 @@ export class MetadataWorkflowComponent implements OnInit {
       });
     });
 
-
-
-
-
     // this.metaDataInputService.getColumnData().then((columnData) => {
     //   this.columnData = columnData; // Populate columnData with fetched data
     //   this.hotSettings.data = this.columnData; // Update data in hotSettings
@@ -176,14 +178,37 @@ export class MetadataWorkflowComponent implements OnInit {
     // });
   }
 
+  updateNestedHeadersData(): void {
+    // Calculate colspan values
+    const section1Colspan = this.section1Counter;
+    const section2Colspan = this.section2Counter;
+    const section3Colspan = this.section3Counter;
+    const section4Colspan = this.section4Counter;
+    const section4Countertrue = this.section4Counter + 1;
+    // Generate the nested header structure based on your function or logic
+    this.nestedHeadersData = [
+      [
+        { label: 'A', colspan: 4 },
+        { label: 'Selection1', colspan: section1Colspan },
+        { label: 'B', colspan: 2 },
+        { label: 'Selection2', colspan: section2Colspan },
+        { label: 'Selection3', colspan: section3Colspan },
+        { label: 'Selection4', colspan: section4Countertrue },
+      ],
+      this.titlesArray,
+    ];
+
+    // Update the nestedHeaders property in the hotSettings
+    this.hotSettings.nestedHeaders = this.nestedHeadersData;
+  }
+
+
   private initializeHandsontable(): void {
     this.hotInstance = new Handsontable(
       this.hotContainer.nativeElement,
       this.hotSettings
     );
   }
-
-
 
   onKey(event: any) {
     this.performSearch();
@@ -262,16 +287,17 @@ export class MetadataWorkflowComponent implements OnInit {
       const data = this.hotInstance.getData();
       const headers = this.dataArray; // Use the separate array of headers
       const result = [];
-  
-      for (let i = 0; i < data.length; i++) { // Start from the first row since we have separate headers
+
+      for (let i = 0; i < data.length; i++) {
+        // Start from the first row since we have separate headers
         const obj: any = {};
         for (let j = 0; j < headers.length; j++) {
-          const key = headers[j].replace(/\s+/g, ''); // Remove spaces from headers
+          const key = headers[j];
           obj[key] = data[i][j];
         }
         result.push(obj);
       }
-  
+
       return result;
     }
     return []; // Return an empty array if no data is available
@@ -284,6 +310,7 @@ export class MetadataWorkflowComponent implements OnInit {
   submit() {
     const data = this.exportDataAsObject();
     console.log(data);
+    console.log(this.nestedHeadersData);
     this.metaDataInputService.submiteTable(data);
   }
 }
