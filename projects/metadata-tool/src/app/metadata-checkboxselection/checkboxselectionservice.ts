@@ -6,32 +6,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CheckboxSelectionService {
   
-  private section1CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  section1Counter$: Observable<number> = this.section1CounterSubject.asObservable();
+  private selectableProperties1CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  selectableProperties1Counter$: Observable<number> = this.selectableProperties1CounterSubject.asObservable();
 
-  private section2CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  section2Counter$: Observable<number> = this.section2CounterSubject.asObservable();
+  private selectableCharacteristicCounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  selectableCharacteristicCounter$: Observable<number> = this.selectableCharacteristicCounterSubject.asObservable();
 
-  private section3CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  section3Counter$: Observable<number> = this.section3CounterSubject.asObservable();
+  private selectableProperties2CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  selectableProperties2Counter$: Observable<number> = this.selectableProperties2CounterSubject.asObservable();
 
-  private section4CounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  section4Counter$: Observable<number> = this.section4CounterSubject.asObservable();
+  private selectableCommentsCounterSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  selectableCommentsCounter$: Observable<number> = this.selectableCommentsCounterSubject.asObservable();
 
-  updateSection1Counter(count: number) {
-    this.section1CounterSubject.next(count);
+  updateProperties1Counter(count: number) {
+    this.selectableProperties1CounterSubject.next(count);
   }
 
-  updateSection2Counter(count: number) {
-    this.section2CounterSubject.next(count);
+  updateCharacteristicCounter(count: number) {
+    this.selectableCharacteristicCounterSubject.next(count);
   }
 
-  updateSection3Counter(count: number) {
-    this.section3CounterSubject.next(count);
+  updateProperties2Counter(count: number) {
+    this.selectableProperties2CounterSubject.next(count);
   }
 
-  updateSection4Counter(count: number) {
-    this.section4CounterSubject.next(count);
+  updateCommentsCounter(count: number) {
+    this.selectableCommentsCounterSubject.next(count);
   }
 
   private mergedSelectionSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);

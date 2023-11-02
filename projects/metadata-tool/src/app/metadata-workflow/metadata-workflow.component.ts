@@ -36,13 +36,14 @@ export class MetadataWorkflowComponent implements OnInit {
   showSelection: boolean = true;
   showTable: boolean = false;
 
-  section1Counter: number = 0;
-  section2Counter: number = 0;
-  section3Counter: number = 0;
-  section4Counter: number = 0;
-  section4Countertrue: number = 0;
+  selectableProperties1Counter: number = 0;
+  selectableCharacteristicCounter: number = 0;
+  selectableProperties2Counter: number = 0;
+  selectableCommentsCounter: number = 0;
+
   HeadersData = this.titlesArray;
   nestedHeadersData: any[][] = [];
+  collapsibleColumnsData: any[] = [];
 
   searchResults: any[] = []; // Store the search results
   currentSearchIndex: number = -1; // Index of the currently selected search result
@@ -58,34 +59,10 @@ export class MetadataWorkflowComponent implements OnInit {
     manualColumnResize: true,
     licenseKey: 'non-commercial-and-evaluation',
     multiColumnSorting: true,
-    // manualColumnMove: true,
-
     filters: true,
     search: true,
     colHeaders: this.HeadersData,
     rowHeaders: true,
-    //NestedHeader nimmt keine Arrays oder Strings. Problem lösen!!!
-    // nestedHeaders:  [
-    //   [
-    //     { label: 'A', colspan: 4 },
-    //       { label: 'Selection1', colspan: this.section1Counter },
-    //       { label: 'B', colspan: 2 },
-    //       { label: 'Selection2', colspan: this.section2Counter },
-    //       { label: 'Selection3', colspan: this.section3Counter },
-    //      { label: 'Selection4', colspan: this.section4Counter },
-    //     ],
-    //     this.titlesArray,
-    //   ],
-
-    //  collapsibleColumns: [
-    //    { row: 0, col: 0, collapsible: true },
-    //    { row: 0, col: 3, collapsible: true },
-    //   { row: 0, col: 6, collapsible: true },
-    //   { row: 0, col: 8, collapsible: true },
-    //   { row: 0, col: 14, collapsible: true },
-    //   { row: 0, col: 15, collapsible: true },
-    //  ],
-
     manualRowMove: true,
     hiddenRows: {
       indicators: true,
@@ -138,23 +115,23 @@ export class MetadataWorkflowComponent implements OnInit {
 
     this.cd.detectChanges();
 
-    this.checkboxService.section1Counter$.subscribe((count) => {
-      this.section1Counter = count;
+    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {
+      this.selectableProperties1Counter = count;
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
-    this.checkboxService.section2Counter$.subscribe((count) => {
-      this.section2Counter = count;
+    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {
+      this.selectableCharacteristicCounter = count;
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
-    this.checkboxService.section3Counter$.subscribe((count) => {
-      this.section3Counter = count;
+    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {
+      this.selectableProperties2Counter = count;
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
-    this.checkboxService.section4Counter$.subscribe((count) => {
-      this.section4Counter = count;
+    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {
+      this.selectableCommentsCounter = count;
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
@@ -180,26 +157,34 @@ export class MetadataWorkflowComponent implements OnInit {
 
   updateNestedHeadersData(): void {
     // Calculate colspan values
-    const section1Colspan = this.section1Counter;
-    const section2Colspan = this.section2Counter;
-    const section3Colspan = this.section3Counter;
-    const section4Colspan = this.section4Counter;
-    const section4Countertrue = this.section4Counter + 1;
-    // Generate the nested header structure based on your function or logic
+    const properties1Colspan = this.selectableProperties1Counter + 2;
+    const characteristicColspan = this.selectableCharacteristicCounter + 2;
+    const properties2Colspan = this.selectableProperties2Counter + 2;
+    const commentsColspan = this.selectableCommentsCounter + 6;
+
     this.nestedHeadersData = [
       [
-        { label: 'A', colspan: 4 },
-        { label: 'Selection1', colspan: section1Colspan },
-        { label: 'B', colspan: 2 },
-        { label: 'Selection2', colspan: section2Colspan },
-        { label: 'Selection3', colspan: section3Colspan },
-        { label: 'Selection4', colspan: section4Countertrue },
+        { label: '', colspan: properties1Colspan },
+        { label: 'characteristic', colspan: characteristicColspan },
+        { label: '', colspan: properties2Colspan },
+        { label: 'comments', colspan: commentsColspan },
+        { label: 'factor value', colspan: 1 },
       ],
       this.titlesArray,
     ];
 
+    //still a bit buggy; Problem is probably when you select a checkbox that not all counters get updated. 
+    this.collapsibleColumnsData = [
+      {row: -2, col: properties1Colspan, collapsible: true},
+      {row: -2, col: characteristicColspan, collapsible: true},
+      {row: -2, col: properties2Colspan, collapsible: true},
+      {row: -2, col: commentsColspan, collapsible: true},
+      {row: -2, col: 1, collapsible: false},
+    ]
+
     // Update the nestedHeaders property in the hotSettings
     this.hotSettings.nestedHeaders = this.nestedHeadersData;
+    this.hotSettings.collapsibleColumns = this.collapsibleColumnsData;
   }
 
 

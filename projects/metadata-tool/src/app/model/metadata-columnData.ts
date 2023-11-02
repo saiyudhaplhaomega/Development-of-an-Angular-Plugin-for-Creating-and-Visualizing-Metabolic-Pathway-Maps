@@ -1,7 +1,6 @@
 export interface ColumnData {
   sourcename: string;
-  spectrumFile: string;
-	psmFile: string;
+  group: string;
   ProjectIdentifier: string;
   study: string;
   project: string;
@@ -9,6 +8,8 @@ export interface ColumnData {
   biologicalReplicate: number;
   metagenomes: string;
   ecologicalMetagenomes: string;
+  organismalMetagenomes: string; 
+  syntheticMetagenome: string; 
   analyticalFraction: string;
   temperatureCondtions: string;
   pressure: string;
@@ -34,6 +35,8 @@ export interface ColumnData {
   fileUri: string;
   mzID: string;
   mzML: string;
+  spectrumFile: string;
+	psmFile: string;
   comment: string;
   factorValue: string;
   fileType: string;
@@ -41,8 +44,7 @@ export interface ColumnData {
 
 export class ColumnDataObject implements ColumnData {
   sourcename: string;
-  spectrumFile: string;
-	psmFile: string;
+  group: string;
   ProjectIdentifier: string;
   study: string;
   project: string;
@@ -50,6 +52,8 @@ export class ColumnDataObject implements ColumnData {
   biologicalReplicate: number;
   metagenomes: string;
   ecologicalMetagenomes: string;
+  organismalMetagenomes: string; 
+  syntheticMetagenome: string; 
   analyticalFraction: string;
   temperatureCondtions: string;
   pressure: string;
@@ -75,6 +79,8 @@ export class ColumnDataObject implements ColumnData {
   fileUri: string;
   mzID: string;
   mzML: string;
+  spectrumFile: string;
+	psmFile: string;
   comment: string;
   factorValue: string;
   fileType: string;
