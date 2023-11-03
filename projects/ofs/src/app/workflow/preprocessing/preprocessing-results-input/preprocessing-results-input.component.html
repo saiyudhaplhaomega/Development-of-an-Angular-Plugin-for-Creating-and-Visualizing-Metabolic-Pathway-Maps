@@ -1,7 +1,0 @@
-<mat-form-field class="w-full" appearance="outline">
-  <mat-label>cutoff for p-value</mat-label>
-  <input type="number" matInput [formControl]="pvalCutoff" step="any" />
-  <mat-error *ngIf="pvalCutoff.invalid">{{
-    getErrorMessage(pvalCutoff)
-  }}</mat-error>
-</mat-form-field>

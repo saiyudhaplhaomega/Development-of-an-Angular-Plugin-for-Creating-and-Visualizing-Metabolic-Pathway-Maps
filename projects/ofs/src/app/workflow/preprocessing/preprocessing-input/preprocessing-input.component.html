@@ -1,79 +1,68 @@
 <div class="documentation-content-container">
   <section class="mat-typography">
-    <h2>Initial Input</h2>
+    <h2>Preprocessing Input</h2>
     <p>
-      Firtsly, you need to upload the data file you want to analyze. Please
-      upload the data as comma-seperated (.csv) file formatted according to our
-      specifications. The fields "control group name" and "test group name"
-      define the labels for the respecitve groups in subsequent plots. The
-      fields "control group prefix" and "test group prefix" should be set to the
-      corresponding prefixes used in the data file column names.
-    </p>
-    <p>
-      After submitting, we generate a plot showing the sizes of your data groups
-      and a plot showing
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam accusamus
+      in, vero illum sit labore rem fuga sequi aliquid sapiente nisi, modi
+      praesentium omnis illo placeat eius amet quidem non.
     </p>
   </section>
 
   <div class="outer-form-container">
-    <ng-container *ngIf="controlGroupName && testGroupOptions">
-      <form
-        [formGroup]="formModel"
-        class="flex flex-col"
-        (ngSubmit)="submitPreprocessingConfig()"
-      >
-        <div class="inner-form-container">
-          <mat-form-field appearance="outline">
-            <mat-label>control group</mat-label>
-            <mat-select formControlName="controlGroup">
-              <mat-option [value]="controlGroupName">
-                {{ controlGroupName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <form
+      [formGroup]="formModel"
+      class="flex flex-col"
+      (ngSubmit)="submitPreprocessingConfig()"
+    >
+      <div class="inner-form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>control group</mat-label>
+          <mat-select formControlName="controlGroup">
+            <mat-option [value]="controlGroupName">
+              {{ controlGroupName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>test group</mat-label>
-            <mat-select formControlName="testGroup">
-              <mat-option
-                *ngFor="let option of testGroupOptions"
-                [value]="option"
-              >
-                {{ option }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>test group</mat-label>
+          <mat-select formControlName="testGroup">
+            <mat-option
+              *ngFor="let option of testGroupOptions"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <div class="grid grid-cols-2 gap-4">
-            <mat-form-field class="col-span-1 w-full" appearance="outline">
-              <mat-label>repeats</mat-label>
-              <input type="number" matInput formControlName="repeats" />
-              <mat-error *ngIf="formModel.get('repeats').invalid">{{
-                getErrorMessage(formModel.get("repeats"))
-              }}</mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>repeats</mat-label>
+          <input type="number" matInput formControlName="repeats" />
+          <mat-error *ngIf="formModel.get('repeats').invalid">{{
+            getErrorMessage(formModel.get("repeats"))
+          }}</mat-error>
+        </mat-form-field>
 
-            <mat-form-field class="col-span-1 w-full" appearance="outline">
-              <mat-label>folds</mat-label>
-              <input type="number" matInput formControlName="folds" />
-              <mat-error *ngIf="formModel.get('folds').invalid">{{
-                getErrorMessage(formModel.get("folds"))
-              }}</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>folds</mat-label>
+          <input type="number" matInput formControlName="folds" />
+          <mat-error *ngIf="formModel.get('folds').invalid">{{
+            getErrorMessage(formModel.get("folds"))
+          }}</mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-button-grid">
-          <button
-            class="col-span-2"
-            [disabled]="!formModel.valid"
-            mat-flat-button
-            color="primary"
-          >
-            submit data
-          </button>
-        </div>
-      </form>
-    </ng-container>
+      <div class="form-button-grid">
+        <button
+          class="col-span-2"
+          [disabled]="!formModel.valid"
+          mat-flat-button
+          color="primary"
+        >
+          Next
+        </button>
+      </div>
+    </form>
   </div>
 </div>

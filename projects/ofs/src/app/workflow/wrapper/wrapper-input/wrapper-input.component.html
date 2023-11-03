@@ -1,27 +1,47 @@
-<form
-  [formGroup]="formModel"
-  (ngSubmit)="submitWrapperConfig()"
-  class="flex flex-col"
->
-  <div class="grid grid-cols-2 gap-4">
-    <mat-form-field class="col-span-1 w-full" appearance="outline">
-      <mat-label>repeats</mat-label>
-      <input type="number" matInput formControlName="repeats" />
-      <mat-error *ngIf="formModel.get('repeats').invalid">{{
-        getErrorMessage(formModel.get("repeats"))
-      }}</mat-error>
-    </mat-form-field>
+<div class="documentation-content-container">
+  <section class="mat-typography">
+    <h2>Wrapper Input</h2>
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem vero quas
+      numquam? At nulla ad quo itaque doloremque. Earum nihil debitis
+      voluptatibus obcaecati recusandae cumque animi repellendus quis eveniet
+      ea?
+    </p>
+  </section>
 
-    <mat-form-field class="col-span-1 w-full" appearance="outline">
-      <mat-label>folds</mat-label>
-      <input type="number" matInput formControlName="folds" />
-      <mat-error *ngIf="formModel.get('folds').invalid">{{
-        getErrorMessage(formModel.get("folds"))
-      }}</mat-error>
-    </mat-form-field>
-  </div>
+  <form
+    [formGroup]="formModel"
+    (ngSubmit)="submitWrapperConfig()"
+    class="outer-form-container"
+  >
+    <div class="inner-form-container">
+      <mat-form-field appearance="outline">
+        <mat-label>p-value cutoff</mat-label>
+        <input type="number" matInput formControlName="pvalCutoff" />
+        <mat-error *ngIf="formModel.get('pvalCutoff').invalid">{{
+          getErrorMessage(formModel.get("pvalCutoff"))
+        }}</mat-error>
+      </mat-form-field>
 
-  <button [disabled]="!formModel.valid" mat-flat-button color="primary">
-    submit data
-  </button>
-</form>
+      <mat-form-field appearance="outline">
+        <mat-label>repeats</mat-label>
+        <input type="number" matInput formControlName="repeats" />
+        <mat-error *ngIf="formModel.get('repeats').invalid">{{
+          getErrorMessage(formModel.get("repeats"))
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>folds</mat-label>
+        <input type="number" matInput formControlName="folds" />
+        <mat-error *ngIf="formModel.get('folds').invalid">{{
+          getErrorMessage(formModel.get("folds"))
+        }}</mat-error>
+      </mat-form-field>
+
+      <button [disabled]="!formModel.valid" mat-flat-button color="primary">
+        Next
+      </button>
+    </div>
+  </form>
+</div>

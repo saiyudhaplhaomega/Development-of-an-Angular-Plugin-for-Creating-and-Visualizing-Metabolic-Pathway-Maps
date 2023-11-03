@@ -24,6 +24,7 @@ export class PreprocessingInputComponent
 
   //  Life Cycle Hooks
   ngOnInit(): void {
+    this.formModel = this.buildForm();
     this.doSubscriptions();
   }
 
@@ -46,11 +47,6 @@ export class PreprocessingInputComponent
   doSubscriptions() {
     this.subscriptions.push(
       this.workflow.ofsData$.subscribe((ofsData) => {
-        if (
-          ofsData?.responseData?.overviewResponse.controlGroup !== undefined
-        ) {
-          this.formModel = this.buildForm();
-        }
         this.setExistingFormInput(ofsData);
       })
     );
@@ -59,8 +55,8 @@ export class PreprocessingInputComponent
   buildForm() {
     const formModel = this.builder.group(
       {
-        controlGroup: new FormControl(this.controlGroupName),
-        testGroup: [this.testGroupOptions[0]],
+        controlGroup: new FormControl('control'),
+        testGroup: ['test'],
         repeats: [10000, [Validators.required, Validators.min(0)]],
         folds: [5, [Validators.required, Validators.min(0)]],
       },

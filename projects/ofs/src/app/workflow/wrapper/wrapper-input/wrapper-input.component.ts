@@ -64,6 +64,7 @@ export class WrapperInputComponent
 
   buildForm() {
     const formModel = this.builder.group({
+      pvalCutoff: [0.0001, [Validators.required, Validators.min(0)]],
       repeats: [1000, [Validators.required, Validators.min(0)]],
       folds: [5, [Validators.required, Validators.min(0)]],
     }) as WrapperForm;

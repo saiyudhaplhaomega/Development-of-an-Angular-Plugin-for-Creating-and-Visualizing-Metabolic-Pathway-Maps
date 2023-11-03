@@ -8,11 +8,11 @@ import { Feature, FeatureProfile } from '../../models/classifier.model';
 import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
-  selector: 'ofs-wrapper-results-input',
-  templateUrl: './wrapper-results-input.component.html',
-  styleUrls: ['./wrapper-results-input.component.scss'],
+  selector: 'ofs-results-input',
+  templateUrl: './results-input.component.html',
+  styleUrls: ['./results-input.component.scss'],
 })
-export class WrapperResultsInputComponent implements OnInit, AfterViewInit {
+export class ResultsInputComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['select', 'featureID'];
   dataSource = new MatTableDataSource<Feature>();
   selection = new SelectionModel<string>(true, []);

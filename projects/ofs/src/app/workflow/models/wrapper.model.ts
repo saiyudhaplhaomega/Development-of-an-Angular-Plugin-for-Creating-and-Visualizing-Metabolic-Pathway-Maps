@@ -4,7 +4,7 @@ export interface WrapperConfig {
   wrapperJobId: string;
   repeats: number;
   folds: number;
-  pvalCutoff?: number;
+  pvalCutoff: number;
 }
 
 export class WrapperConfig implements WrapperConfig {

@@ -31,7 +31,7 @@
         [editable]="true"
       >
         <ng-template matStepLabel>{{ steps[2].label }}</ng-template>
-        <ofs-data-overview></ofs-data-overview>
+        <ofs-wrapper></ofs-wrapper>
       </mat-step>
 
       <mat-step
@@ -40,33 +40,8 @@
         [editable]="true"
       >
         <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
-        <ofs-data-overview></ofs-data-overview>
+        <ofs-results></ofs-results>
       </mat-step>
     </mat-stepper>
-
-    <!-- <div class="flex flex-row justify-between">
-            <button mat-button (click)="prevStep()" [disabled]="!allowPrev">
-              previous step
-            </button>
-            <button mat-button (click)="nextStep()" [disabled]="!allowNext">
-              next step
-            </button>
-          </div> -->
-    <!-- </mat-card-content>
-    </mat-card> -->
-    <!-- </div> -->
-
-    <!-- <div class="workflow-container">
-      <mat-card class="workflow-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{ (currentStep$ | async).label }}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="workflow-card-content">
-          <router-outlet></router-outlet>
-        </mat-card-content>
-      </mat-card>
-    </div> -->
   </div>
 </div>

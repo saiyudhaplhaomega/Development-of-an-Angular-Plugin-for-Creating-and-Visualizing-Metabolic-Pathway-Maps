@@ -1,9 +1,11 @@
-<lib-workflow-panel [showDividerIcon]="false">
+<lib-workflow-panel [showDividerIcon]="true">
   <ng-template lib-workflowPanel>
-    <ofs-results-download></ofs-results-download>
+    <ofs-results-input></ofs-results-input>
   </ng-template>
   <ng-template lib-workflowPanel>
     <ofs-results-figure></ofs-results-figure>
   </ng-template>
-  <ng-template lib-workflowPanel> </ng-template>
+  <ng-template lib-workflowPanel>
+    <ofs-results-download></ofs-results-download>
+  </ng-template>
 </lib-workflow-panel>
