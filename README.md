@@ -1,3 +1,17 @@
+## Run Storybook:
+
+1. Install the shared Library
+
+  ```bash
+  ng build shared-lib
+  ```
+2. Run Storybook 
+
+  ```bash
+  ng run metadata-tool:storybook 
+  ```
+
+
 <<<<<<< HEAD
 
 # Test4
