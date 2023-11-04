@@ -1,3 +1,13 @@
+# AngularPSM
+
+## Init Repo
+
+Make sure to have npm installed on your system. Then run:
+
+```bash
+npm i
+```
+
 ## Run Storybook:
 
 1. Install the shared Library
@@ -11,11 +21,6 @@
   ng run metadata-tool:storybook 
   ```
 
-
-<<<<<<< HEAD
-
-# Test4
-# AngularPSM
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3 and updated to somewhere around 7.
 
@@ -67,7 +72,3 @@ container dann verfügbar auf dcos
 Test-Server Access:
 ssh -i cloud -L 80:129.70.51.126:10001 public
 
-=======
-mpa-cloud-website
-===============
->>>>>>> remotes/origin/master
