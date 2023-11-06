@@ -3717,7 +3717,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3727,7 +3727,27 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3834,6 +3854,16 @@
                 "defaultValue": "{\n  title: 'Example/Page',\n  component: Page,\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/angular/configure/story-layout\n    layout: 'fullscreen',\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [Button, Header],\n      imports: [CommonModule],\n    }),\n  ],\n}"
             },
             {
+                "name": "mockDownloadFile",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "action('Download button clicked')"
+            },
+            {
                 "name": "preview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3877,7 +3907,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "(args) => ({\n  props: args,\n  // ... other template setup\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3887,11 +3927,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "(args: MetadataLandingPageComponent) => ({\n  component: MetadataLandingPageComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
             }
         ],
         "functions": [],
@@ -3985,12 +4035,12 @@
             }
         ],
         "groupedVariables": {
-            "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts": [
+            "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                    "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -4000,19 +4050,41 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                    "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(args) => ({\n  props: args,\n  // ... other template setup\n})"
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args) => ({\n  component: MetaDataCheckboxSelectionComponent,\n  props: {\n    ...args,\n    form: new FormGroup({\n      properties1: new FormArray([new FormControl(false)]),\n      characteristic: new FormArray([new FormControl(false)]),\n      properties2: new FormArray([new FormControl(false)]),\n      comments: new FormArray([new FormControl(false)]),\n    }),\n    selectableProperties1: [{ title: 'Property 1' }],\n    selectableCharacteristic: [{ title: 'Characteristic 1' }],\n    selectableProperties2: [{ title: 'Property 2' }],\n    selectableComments: [{ title: 'Comment 1' }],\n  },\n  template: args.template,\n})"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/landing-page.stories.ts": [
+            "projects/metadata-tool/src/ownStories/landingPage.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -4022,11 +4094,43 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args: MetadataLandingPageComponent) => ({\n  component: MetadataLandingPageComponent,\n  props: args,\n})"
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/metadataDownload.story.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "mockDownloadFile",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "action('Download button clicked')"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
                 }
             ],
             "projects/metadata-tool/src/environments/environment.prod.ts": [
@@ -4358,7 +4462,7 @@
         ]
     },
     "coverage": {
-        "count": 2,
+        "count": 1,
         "status": "low",
         "files": [
             {
@@ -4527,7 +4631,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                "filePath": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -4537,7 +4641,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/ownStories/checkboxselection.stories.ts",
+                "filePath": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -4547,7 +4651,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                "filePath": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -4557,7 +4661,57 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/ownStories/landing-page.stories.ts",
+                "filePath": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mockDownloadFile",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
