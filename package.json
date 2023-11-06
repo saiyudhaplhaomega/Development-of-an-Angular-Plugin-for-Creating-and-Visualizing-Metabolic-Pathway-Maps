@@ -28,7 +28,9 @@
     "test": "ng test",
     "newwebsite": "ng generate application lifesciencegraph",
     "newcomponent": "ng generate component metadata-workflow",
-    "npm build": "npm install"
+    "npm build": "npm install",
+    "compodoc": "./node_modules/.bin/compodoc -p ./tsconfig.json"
+
   },
   "private": true,
   "dependencies": {
