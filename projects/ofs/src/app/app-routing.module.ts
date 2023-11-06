@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OfsLandingPageComponent } from './ofs-landing-page/ofs-landing-page.component';
 
-// import { NavigationComponent } from './navigation/navigation.component';
+// TODO: route guard? (the route guard for workflow routes still exists)
 
 const routes: Routes = [
   { path: 'home', component: OfsLandingPageComponent },

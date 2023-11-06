@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WorkflowRoutingModule } from './workflow-routing.module';
 import { WorkflowComponent } from './workflow.component';
 import { DataOverviewComponent } from './data-overview/data-overview.component';
 import { PreprocessingComponent } from './preprocessing/preprocessing.component';
@@ -27,14 +26,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { WrapperResultsInputComponent } from './wrapper/wrapper-results-input/wrapper-results-input.component';
-import { PreprocessingResultsInputComponent } from './preprocessing/preprocessing-results-input/preprocessing-results-input.component';
+import { ResultsInputComponent } from './results/results-input/results-input.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WorkflowPanelModule } from 'shared-lib';
 import { ResultsDownloadComponent } from './results/results-download/results-download.component';
 import { ResultFiguresModule } from 'shared-lib';
+import { WorkflowRoutingModule } from './workflow-routing.module';
 
 @NgModule({
   declarations: [
@@ -50,13 +49,11 @@ import { ResultFiguresModule } from 'shared-lib';
     PreprocessingResultsComponent,
     WrapperInputComponent,
     WrapperResultsComponent,
-    WrapperResultsInputComponent,
-    PreprocessingResultsInputComponent,
+    ResultsInputComponent,
     ResultsDownloadComponent,
   ],
   imports: [
     CommonModule,
-    WorkflowRoutingModule,
     MatStepperModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -75,6 +72,7 @@ import { ResultFiguresModule } from 'shared-lib';
     MatProgressSpinnerModule,
     WorkflowPanelModule,
     ResultFiguresModule,
+    WorkflowRoutingModule,
   ],
   providers: [],
 })

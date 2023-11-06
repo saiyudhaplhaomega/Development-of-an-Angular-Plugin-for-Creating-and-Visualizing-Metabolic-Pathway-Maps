@@ -11,28 +11,6 @@ const routes: Routes = [
   {
     path: '',
     component: WorkflowComponent,
-    children: [
-      {
-        path: 'overview',
-        component: DataOverviewComponent,
-        canActivate: [WorkflowGuard],
-      },
-      {
-        path: 'preprocessing',
-        component: PreprocessingComponent,
-        canActivate: [WorkflowGuard],
-      },
-      {
-        path: 'wrapper',
-        component: WrapperComponent,
-        canActivate: [WorkflowGuard],
-      },
-      {
-        path: 'results',
-        component: ResultsComponent,
-        canActivate: [WorkflowGuard],
-      },
-    ],
   },
 ];
 

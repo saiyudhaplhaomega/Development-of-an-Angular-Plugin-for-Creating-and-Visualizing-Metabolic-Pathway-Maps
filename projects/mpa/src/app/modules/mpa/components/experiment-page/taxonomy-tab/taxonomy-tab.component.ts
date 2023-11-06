@@ -95,6 +95,7 @@ export class TaxonomyTabComponent implements OnInit {
   hasChild = (_: number, node: TaxonomyNode) => !!node.children && node.children.length > 0;
 
   applyFilter(): void {
+    //TODO test push
     let nodes = this.taxonomyNodes.rootNode.children;
     for (let i in nodes) {
       this.filterChildren(nodes[i]);

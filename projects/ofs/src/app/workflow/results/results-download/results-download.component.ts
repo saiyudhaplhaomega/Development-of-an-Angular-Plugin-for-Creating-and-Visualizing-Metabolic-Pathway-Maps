@@ -18,8 +18,6 @@ export class ResultsDownloadComponent
 
   subscriptions: Subscription[];
 
-  downloadLink = this.workflow.getDownloadLink();
-
   constructor(
     public builder: FormBuilder,
     private stepper: StepperService,
@@ -62,15 +60,8 @@ export class ResultsDownloadComponent
   }
 
   downloadData() {
+    // TODO: method is called everytime the view is rendered = bad performance
+    // console.log(this.workflow.getDownloadLink());
     return this.workflow.getDownloadLink();
-    //   if (this.workflow.getDownloadLink() !== null) {
-    //     const link = document.createElement('a');
-    //     link.setAttribute('target', '_blank');
-    //     link.setAttribute('href', this.workflow.getDownloadLink());
-    //     link.setAttribute('download', 'results.zip');
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     link.remove();
-    // }
   }
 }

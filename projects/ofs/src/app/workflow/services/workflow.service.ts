@@ -43,9 +43,9 @@ export class WorkflowService {
   ) {
     this.ofsDataSubject$.next(new OFSData());
 
-    this.ofsDataSubject$.subscribe((data) => {
-      console.log(data);
-    });
+    // this.ofsDataSubject$.subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
   // use this getter if you only need the current value
@@ -57,28 +57,9 @@ export class WorkflowService {
     return cloneDeep(this.ofsData);
   }
 
-  set wrapperInputConfigPval(value: number) {
-    const newData = this.ofsDataClone;
-    newData.configData.wrapperConfig.pvalCutoff = value;
-
-    this.ofsDataSubject$.next(newData);
-  }
-
   // use this getter if you want to react to changes of the data object
   get ofsData$(): Observable<OFSData> {
     return this.ofsDataSubject$;
-  }
-
-  loadJobsFromStorage() {
-    // load ids of created jobs from local storage
-  }
-
-  writeJobToStorage(job: OfsJob) {
-    // write job to local storage
-  }
-
-  deleteJobsInStorage(jobs: OfsJob[]) {
-    // delete jobs in local storage
   }
 
   setDummyConfig() {
@@ -87,6 +68,7 @@ export class WorkflowService {
     this.ofsDataSubject$.next(existingConfig);
   }
 
+  // used to set completed steps when loading existing job
   setCompletedSteps(data: OFSData) {
     if (data.responseData.overviewResponse?.classDistribution !== undefined) {
       this.stepperService.setStepComplete(0);
@@ -108,14 +90,6 @@ export class WorkflowService {
     }
   }
 
-  getJobFromServer(jobId: string) {
-    /**
-     * Retrives job data for the specified job from server and updates job in local storage
-     * @param {OfsJob} jobId id of requested job
-     */
-    this.loading = true;
-  }
-
   createOfsJob() {
     /**
      * Requests new job from server
@@ -129,7 +103,6 @@ export class WorkflowService {
       .subscribe({
         next: (response: OFSData) => {
           this.ofsDataSubject$.next(response);
-          this.writeJobToStorage(response.job);
         },
         error: (error) => {
           this.loading = false;
@@ -193,6 +166,7 @@ export class WorkflowService {
             response.responseData.overviewResponse.controlGroup =
               this.ofsData.configData.overviewConfig.groups[0].groupName;
             this.ofsDataSubject$.next(response);
+            // TODO: use one method for setting steps? --> setCompletedSteps
             this.stepperService.setStepComplete(0);
             this.loading = false;
           });
@@ -231,12 +205,8 @@ export class WorkflowService {
   submitWrapperConfig(config: WrapperConfig) {
     this.loading = true;
     const currentOfsData = this.ofsDataClone;
-    const incompleteConfig = config;
 
-    incompleteConfig.pvalCutoff =
-      currentOfsData.configData.wrapperConfig.pvalCutoff;
-
-    currentOfsData.configData.wrapperConfig = incompleteConfig;
+    currentOfsData.configData.wrapperConfig = config;
     this.ofsDataSubject$.next(currentOfsData);
 
     this.http
@@ -302,14 +272,7 @@ export class WorkflowService {
     return urls;
   }
 
-  getDownloadLink(): string {
-    if (
-      this.ofsData.responseData &&
-      this.ofsData.responseData.classifierResponse &&
-      this.ofsData.responseData.classifierResponse.downloadLink
-    ) {
-      return this.ofsData.responseData.classifierResponse.downloadLink;
-    }
-    return null;
+  getDownloadLink(): string | undefined {
+    return this.ofsData?.responseData?.classifierResponse?.downloadLink;
   }
 }

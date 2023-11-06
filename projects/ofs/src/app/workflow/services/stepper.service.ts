@@ -64,7 +64,8 @@ export class StepperService {
 
   // Methods
   initialize() {
-    this.setRoute(0);
+    // this.setRoute(0);
+    this.setStep(0);
   }
 
   setStepComplete(index: number) {
@@ -80,14 +81,14 @@ export class StepperService {
   }
 
   setStep(index: number) {
-    this.setRoute(index).then((resolved: boolean) => {
-      if (resolved) {
-        this._currentStep$.next(this._workflowSteps[index]);
-      }
-    });
+    // this.setRoute(index).then((resolved: boolean) => {
+    // if (resolved) {
+    this._currentStep$.next(this._workflowSteps[index]);
+    //   }
+    // });
   }
 
-  private setRoute(index: number) {
-    return this.router.navigate(['workflow', this._workflowSteps[index].route]);
-  }
+  // private setRoute(index: number) {
+  //   return this.router.navigate(['workflow', this._workflowSteps[index].route]);
+  // }
 }

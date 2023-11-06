@@ -10,7 +10,7 @@
 
     <div class="form-button-grid">
       <a
-        [href]="this.downloadData()"
+        [href]="downloadData()"
         target="_blank"
         download="results.zip"
         [disabled]="!projectName.valid || (formDisabled$ | async)"
@@ -18,7 +18,7 @@
         color="primary"
         class="col-span-2"
       >
-        <!-- <a [href]="downloadLink" download="results.zip">Download Results</a> -->
+        Download Results
       </a>
     </div>
   </div>
