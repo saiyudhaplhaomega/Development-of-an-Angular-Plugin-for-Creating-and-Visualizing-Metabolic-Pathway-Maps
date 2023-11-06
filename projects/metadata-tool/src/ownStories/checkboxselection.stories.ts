@@ -12,7 +12,7 @@ import { moduleMetadata } from '@storybook/angular';
 import {  MetaDataCheckboxSelectionComponent  } from '../app/metadata-checkboxselection/metadata-checkboxselection.component';
 
 export default {
-  title: 'CheckboxSelectionComponent',
+  title: 'Project/CheckboxSelectionComponent',
   component: MetaDataCheckboxSelectionComponent,
   decorators: [
     moduleMetadata({
