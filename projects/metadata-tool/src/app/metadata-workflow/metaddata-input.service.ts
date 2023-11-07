@@ -92,9 +92,10 @@ export class MetaDataInputService {
     this.metadataUploadJson.next(uploadJson);
     this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))
       .subscribe((response) => {
+        this.metadataUploadJson.next(response);
         this.http
           .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
-            this.metadataUploadJson.value,
+            response,
             'jobID',
             this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),
             new HttpParams()
