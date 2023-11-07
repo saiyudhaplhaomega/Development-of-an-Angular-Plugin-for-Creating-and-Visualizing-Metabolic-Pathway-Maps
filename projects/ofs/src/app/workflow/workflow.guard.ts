@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RouteStateService } from '../services/route-state.service';
 import { WorkflowRoutes } from './models/workflow-routes.model';
@@ -15,7 +8,7 @@ import { WorkflowService } from './services/workflow.service';
 @Injectable({
   providedIn: 'any',
 })
-export class WorkflowGuard implements CanActivate {
+export class WorkflowGuard  {
   previousRoute: string;
 
   constructor(
