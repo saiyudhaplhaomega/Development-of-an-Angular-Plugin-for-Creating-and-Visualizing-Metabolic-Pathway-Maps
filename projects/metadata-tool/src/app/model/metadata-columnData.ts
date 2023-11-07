@@ -1,7 +1,7 @@
 export interface ColumnData {
   sourcename: string;
   group: string;
-  ProjectIdentifier: string;
+  projectIdentifier: string;
   study: string;
   project: string;
   program: string;
@@ -45,7 +45,7 @@ export interface ColumnData {
 export class ColumnDataObject implements ColumnData {
   sourcename: string;
   group: string;
-  ProjectIdentifier: string;
+  projectIdentifier: string;
   study: string;
   project: string;
   program: string;

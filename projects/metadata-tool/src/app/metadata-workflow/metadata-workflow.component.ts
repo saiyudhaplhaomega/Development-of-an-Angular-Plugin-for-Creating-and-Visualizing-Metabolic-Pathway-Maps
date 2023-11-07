@@ -90,15 +90,17 @@ export class MetadataWorkflowComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.mergedSelectionSubscription = this.checkboxService.mergedSelection$.subscribe((selection) => {
-      this.mergedSelection = selection;
-      this.titlesArray = this.mergedSelection.map((item) => item.title);
-      this.titlesString = this.titlesArray.join(', ');
-      this.dataArray = this.mergedSelection.map((item) => item.data);
-      this.dataString = this.dataArray.join(', ');
-      this.updateNestedHeadersData(); // Call the function to generate the nested headers
-      this.hotInstance.updateSettings(this.hotSettings);
-    });
+
+    this.mergedSelectionSubscription =
+      this.checkboxService.mergedSelection$.subscribe((selection) => {
+        this.mergedSelection = selection;
+        this.titlesArray = this.mergedSelection.map((item) => item.title);
+        this.titlesString = this.titlesArray.join(', ');
+        this.dataArray = this.mergedSelection.map((item) => item.data);
+        this.dataString = this.dataArray.join(', ');
+        this.updateNestedHeadersData(); // Call the function to generate the nested headers
+        this.hotInstance.updateSettings(this.hotSettings);
+      });
 
     this.mergedSelectionSubscription =
       this.checkboxService.mergedSelection$.subscribe((selection) => {
@@ -113,7 +115,7 @@ export class MetadataWorkflowComponent implements OnInit {
         }
       });
 
-    this.cd.detectChanges();
+    // this.cd.detectChanges();
 
     this.checkboxService.selectableProperties1Counter$.subscribe((count) => {
       this.selectableProperties1Counter = count;
@@ -173,25 +175,15 @@ export class MetadataWorkflowComponent implements OnInit {
       this.titlesArray,
     ];
 
-    //still a bit buggy; Problem is probably when you select a checkbox that not all counters get updated. 
-    this.collapsibleColumnsData = [
-      {row: -2, col: properties1Colspan, collapsible: true},
-      {row: -2, col: characteristicColspan, collapsible: true},
-      {row: -2, col: properties2Colspan, collapsible: true},
-      {row: -2, col: commentsColspan, collapsible: true},
-      {row: -2, col: 1, collapsible: false},
-    ]
-
-    // Update the nestedHeaders property in the hotSettings
     this.hotSettings.nestedHeaders = this.nestedHeadersData;
-    this.hotSettings.collapsibleColumns = this.collapsibleColumnsData;
-  }
+    this.hotSettings.collapsibleColumns = true;
 
+  }
 
   private initializeHandsontable(): void {
     this.hotInstance = new Handsontable(
       this.hotContainer.nativeElement,
-      this.hotSettings
+      this.hotSettings,
     );
   }
 
@@ -295,7 +287,6 @@ export class MetadataWorkflowComponent implements OnInit {
   submit() {
     const data = this.exportDataAsObject();
     console.log(data);
-    console.log(this.nestedHeadersData);
     this.metaDataInputService.submiteTable(data);
   }
 }
