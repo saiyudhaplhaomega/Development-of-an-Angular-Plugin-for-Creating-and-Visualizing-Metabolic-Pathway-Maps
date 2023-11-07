@@ -90,7 +90,7 @@ export class MetaDataInputService {
     const uploadJson = this.metadataUploadJson.getValue();
     uploadJson.metadataJson = data;
     this.metadataUploadJson.next(uploadJson);
-    this.http.postObject<MetaDataUploadJson, DownloadLinksJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))
+    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))
       .subscribe((response) => {
         this.http
           .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
