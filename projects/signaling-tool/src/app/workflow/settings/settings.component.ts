@@ -36,8 +36,8 @@ export class SettingsComponent implements OnInit {
 }  */  
 
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator'; 
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator'; 
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort'; 
 import { HttpClient } from '@angular/common/http'; 
 import { Data } from './interfaces';  

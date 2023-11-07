@@ -7,18 +7,18 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { StandardPageLayoutModule} from 'shared-lib';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
 import { FormsModule } from '@angular/forms'; 
-import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field'; 
 import { FooterComponent } from './footer/footer.component';  
 import { MatStepperModule } from '@angular/material/stepper';  
 import { WorkflowModule } from './workflow/workflow.module'; 
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';  
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';  
 import { HttpClientModule } from '@angular/common/http';
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator'; 
 import {Component} from '@angular/core'; 
 
 

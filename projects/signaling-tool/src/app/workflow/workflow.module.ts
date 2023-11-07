@@ -8,10 +8,10 @@ import { ResultsComponent } from './results/results.component';
 import { StepperComponent } from './stepper/stepper.component'; 
 import { MatStepperModule } from '@angular/material/stepper'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle'; 
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator'; 
 import { HttpClientModule } from '@angular/common/http';
 
 
