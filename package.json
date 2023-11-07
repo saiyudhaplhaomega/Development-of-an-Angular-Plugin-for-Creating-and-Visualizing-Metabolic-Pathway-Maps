@@ -16,6 +16,7 @@
     "startsignalling": "ng serve signalling-tool",
     "buildmetadata": "ng build metadata-tool",
     "startmetadata": "ng serve metadata-tool",
+    "storybookmetadata": "ng run metadata-tool:storybook",
     "buildlifesciencegraph": "ng build lifesciencegraph",
     "startlifesciencegraph": "ng serve lifesciencegraph",
     "buildSharedLib": "ng build shared-lib --watch",
@@ -30,6 +31,7 @@
     "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install",
     "compodoc": "./node_modules/.bin/compodoc -p ./tsconfig.json"
+
 
   },
   "private": true,
