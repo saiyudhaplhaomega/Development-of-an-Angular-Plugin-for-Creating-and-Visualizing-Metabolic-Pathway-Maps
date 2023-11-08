@@ -1,5 +1,19 @@
 # AngularPSM
 
+## Run storybook
+
+Make shure you have the the shared Library installed.
+
+  ```bash
+  ng build shared-lib
+  ```
+
+**Note:** You have to `cd` inside the root folder `mpa-website` to run storybook!
+
+```bash
+ng run metadata-tool:storybook
+```
+
 ## Init Repo
 
 Make sure to have npm installed on your system. Then run:
@@ -8,18 +22,19 @@ Make sure to have npm installed on your system. Then run:
 npm i
 ```
 
-## Run Storybook:
+If some error occures like:
+```bash
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+...
+```
 
-1. Install the shared Library
+Run with `--legacy-peer-deps` based on [link](https://stackoverflow.com/questions/64573177/unable-to-resolve-dependency-tree-error-when-installing-npm-packages)
 
-  ```bash
-  ng build shared-lib
-  ```
-2. Run Storybook 
+```bash
+npm install --legacy-peer-deps
+```
 
-  ```bash
-  ng run metadata-tool:storybook 
-  ```
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3 and updated to somewhere around 7.
