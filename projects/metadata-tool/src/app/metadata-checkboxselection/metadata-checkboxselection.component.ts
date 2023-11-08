@@ -11,6 +11,7 @@ export class MetaDataCheckboxSelectionComponent {
   form: FormGroup;
 
   notSelectableProperties1 = [
+    { data: 'identID', title: 'identID', type: 'text'},
     { data: 'sourcename', title: 'source name', type: 'text' },
     { data: 'projectIdentifier', title: 'project identifier', type: 'text' },
   ];
@@ -31,8 +32,8 @@ export class MetaDataCheckboxSelectionComponent {
     {
       data: 'metagenomes',
       title: 'metagenomes',
-      type: 'autocomplete',
-      source: [
+      editor: 'select',
+      selectOptions: [
         'ecological metagenomes',
         'organismal metagenomes',
         'synthetic metagenome',

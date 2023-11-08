@@ -64,6 +64,10 @@ export class MetadataWorkflowComponent implements OnInit {
     colHeaders: this.HeadersData,
     rowHeaders: true,
     manualRowMove: true,
+    hiddenColumns: {
+      columns: [0],
+      indicators: false
+    },
     contextMenu: {
       items: {
         undo: {
@@ -132,9 +136,13 @@ export class MetadataWorkflowComponent implements OnInit {
 
     this.metaDataInputService.metadataUploadJson.subscribe((obj) => {
       Promise.resolve(obj.metadataJson).then((columnData) => {
-        this.columnData = columnData; // Populate columnData with fetched data
+        this.columnData = columnData;
         this.hotSettings.data = this.columnData;
-        this.initializeHandsontable();
+        if (!this.hotInstance) {
+          this.initializeHandsontable();
+        } else {
+          this.hotInstance.updateSettings(this.hotSettings);
+        }
       });
     });
 
@@ -250,25 +258,41 @@ export class MetadataWorkflowComponent implements OnInit {
   exportDataAsObject(): ColumnDataObject[] {
     if (this.hotInstance) {
       const dataExport = this.hotInstance.getData();
-      const headers = this.dataArray; 
+      const headers = this.dataArray;
       const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;
       const columnData: ColumnDataObject[] = [];
-
+  
+      // Create a map of unique IDs to objects in the result array
+      const resultMap = new Map(result.map((obj) => [obj.identID, obj]));
+  
       for (let i = 0; i < dataExport.length; i++) {
         const obj: ColumnDataObject = new ColumnDataObject();
         for (let j = 0; j < headers.length; j++) {
           const key = headers[j];
           obj[key] = dataExport[i][j];
         }
-        columnData.push(obj);
-        // TODO: Finde richtiges ColumndataObject; Aktualisiere metadataJson mit neuen Content
-        // handsontable richtiges objectmapping
-        // mit einem eintrag mal probieren
+  
+        // Check if the object with the same ID exists in the result array
+        if (resultMap.has(obj.identID)) {
+          // Merge the changed data from dataExport into the existing object
+          const existingObj = resultMap.get(obj.identID);
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {
+              existingObj[key] = obj[key];
+            }
+          }
+        }
       }
-
-      return result;
+  
+      // Convert the map back to an array
+      const mergedResult = Array.from(resultMap.values());
+  
+      // Update the metadataJson value
+      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;
+  
+      return mergedResult;
     }
-    return []; // Return an empty array if no data is available
+    return [];
   }
 
   toggleSelection() {
@@ -277,7 +301,6 @@ export class MetadataWorkflowComponent implements OnInit {
 
   submit() {
     const dataExport = this.exportDataAsObject();
-    console.log(dataExport);
     this.metaDataInputService.submiteTable(dataExport);
   }
 }
