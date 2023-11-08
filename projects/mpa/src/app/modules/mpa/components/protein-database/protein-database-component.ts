@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { DataItem } from '../../model/data-item';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContentComponent } from '../../mpa.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { TextfieldDialogComponent } from '../textfield-dialog/textfield-dialog.component';
 import { ProtDBJSONObject } from '../../model/protdbjson';
 

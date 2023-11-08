@@ -4,8 +4,8 @@ import {
   NodeType,
 } from '../../services/data.service';
 import { DataItem } from '../../model/data-item';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { NameEditDialogComponent } from '../name-edit-dialog/name-edit-dialog.component';
 import { ProteinDatabaseDialogComponent } from './protein-database-dialog/protein-database-dialog.component';
 import { HttpClientService, MultiFileUploadData } from 'dist/shared-lib';

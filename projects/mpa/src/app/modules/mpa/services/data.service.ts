@@ -6,7 +6,7 @@ import { Endpoints, WebserveraddressService } from '../../../mpawebserveraddress
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NavService } from './nav.service';
 import { DataItemMap } from '../model/data-item-map';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ExperimentJSONObject } from '../model/experimentjson';
 import { HttpParams } from '@angular/common/http';
 import { ProtDBJSONObject } from '../model/protdbjson';

@@ -9,9 +9,9 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { ProteinJSON, ProteinObject } from '../../model/tableobjects';
 import { MpaTableDataService } from '../../services/mpa-table-data.service';
 
