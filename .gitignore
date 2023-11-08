@@ -30,6 +30,7 @@ bun.lockb
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+.dockerrc
 
 # Miscellaneous
 /.angular/cache

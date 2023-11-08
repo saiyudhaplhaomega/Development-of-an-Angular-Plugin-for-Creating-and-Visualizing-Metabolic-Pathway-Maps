@@ -6,7 +6,7 @@ import { SearchParameters } from '../../model/search-parameters';
 import { HttpClientService, MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
 import { DataService, NodeType } from '../../services/data.service';
 import { Endpoints, WebserveraddressService } from 'projects/mpa/src/app/mpawebserveraddress.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Observable, takeWhile } from 'rxjs';
 import { HttpEventType, HttpParams } from '@angular/common/http';
 import { animate, state, style, transition, trigger } from '@angular/animations';

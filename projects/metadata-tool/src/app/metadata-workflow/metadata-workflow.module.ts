@@ -5,7 +5,7 @@ import { MetadataWorkflowComponent } from './metadata-workflow.component';
 import { registerCellType, NumericCellType, } from 'handsontable/cellTypes';
 import { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';
 import { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { CommonModule } from '@angular/common';
 import { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';
 

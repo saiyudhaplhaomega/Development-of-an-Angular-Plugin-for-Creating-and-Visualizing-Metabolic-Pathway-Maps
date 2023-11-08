@@ -1,28 +1,63 @@
 # AngularPSM
 
+## Run storybook
+
+Make shure you have the the shared Library installed.
+
+```sh
+ng build shared-lib
+```
+
+**Note:** You have to `cd` inside the root folder `mpa-website` to run storybook!
+
+```sh
+ng run metadata-tool:storybook
+```
+
 ## Init Repo
 
 Make sure to have npm installed on your system. Then run:
 
-```bash
+```sh
 npm i
 ```
 
-## Run Storybook:
+If some error occures like:
 
-1. Install the shared Library
+```sh
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+...
+```
 
-  ```bash
-  ng build shared-lib
-  ```
-2. Run Storybook 
+Run with `--legacy-peer-deps` based on [link](https://stackoverflow.com/questions/64573177/unable-to-resolve-dependency-tree-error-when-installing-npm-packages)
 
-  ```bash
-  ng run metadata-tool:storybook 
-  ```
+```sh
+npm install --legacy-peer-deps
+```
 
+## Setup Backend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3 and updated to somewhere around 7.
+### Install docker container 
+
+```sh
+sudo docker run -it  -d -p 9500:9500 --name metadatatool mpacloud/metadatatool-test 
+```
+
+### Update Image
+
+```sh
+sudo docker pull mpacloud/metadatatool-test:latest
+```
+
+### Run docker container autmatically, when workspaces starts in VS Code
+
+1. install the `Docker Run` extention for VS Code
+2. `cmd  + shift + p` to open command palette
+3. `Docker Run: Add Container`
+4. Select metadatatool
+
+Now, every time the same workspace gets opend with vs code, the docker container should start running. 
 
 ## Development server
 
@@ -72,3 +107,5 @@ container dann verfügbar auf dcos
 Test-Server Access:
 ssh -i cloud -L 80:129.70.51.126:10001 public
 
+
+<!-- This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3 and updated to somewhere around 7. -->

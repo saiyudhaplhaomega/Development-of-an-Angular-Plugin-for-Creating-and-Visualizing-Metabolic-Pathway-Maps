@@ -4,7 +4,7 @@ import {
   NodeType,
 } from '../../services/data.service';
 import { NameEditDialogComponent } from '../../components/name-edit-dialog/name-edit-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ContentComponent } from '../../mpa.component';
 import { DataItem } from '../../model/data-item';
 

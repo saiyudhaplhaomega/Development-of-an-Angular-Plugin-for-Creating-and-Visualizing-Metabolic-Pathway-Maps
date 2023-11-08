@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "ColumnData",
-            "id": "interface-ColumnData-296f8a8c949418625aa12cb3107200641e8c9ccf55e4c09b34d36004e84fbf6f5ed0994d33fe46bb764e1714cc671f10d5a01d8f7e4cc4e495054d86afec7475",
+            "id": "interface-ColumnData-59099cbe9a5bfebf7a0663481ca251a2853061ef18c93409412ad9de81bb4d61c00f7d318035f67936b55c05462465fe032090539d53a8f625af991f4b1cb804",
             "file": "projects/metadata-tool/src/app/model/metadata-columnData.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  ProjectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  ProjectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
+            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
             "properties": [
                 {
                     "name": "analyticalFraction",
@@ -299,7 +299,7 @@
                     "line": 6
                 },
                 {
-                    "name": "ProjectIdentifier",
+                    "name": "projectIdentifier",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -853,12 +853,12 @@
         },
         {
             "name": "MetaDataInputService",
-            "id": "injectable-MetaDataInputService-85e09a405e6dcb02ddc31c075b1afd43f8a93dd9f1ca7c10034c5fd226bb0608023c3a911a409ea6c7a955f82d048be5ba4a6099df11374a27a0da5e48e5176f",
+            "id": "injectable-MetaDataInputService-d3edb8df708d73fd9fa2fb6785ff50fd8e11fd2d5d6281705d79fc0d86babf8492cd8098e1994500968990a4dff7f17af5b9e26ad50a6f83abf5ab92bef70762",
             "file": "projects/metadata-tool/src/app/metadata-workflow/metaddata-input.service.ts",
             "properties": [
                 {
                     "name": "dummyData",
-                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n      {\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n      {\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n    ]\n  }",
+                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: []\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "MetaDataUploadJson",
@@ -874,7 +874,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 157,
+                    "line": 28,
                     "modifierKind": [
                         125
                     ]
@@ -894,7 +894,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 218,
+                    "line": 89,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -934,7 +934,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 164,
+                    "line": 35,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -972,7 +972,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n      {\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n      {\n        sourcename: 'biogas sample',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        ProjectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf'\n      },\n    ]\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(data: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = data;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, DownloadLinksJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            this.metadataUploadJson.value,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: []\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(data: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = data;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -992,7 +992,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 157,
+                "line": 28,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -1077,12 +1077,12 @@
     "classes": [
         {
             "name": "ColumnDataObject",
-            "id": "class-ColumnDataObject-296f8a8c949418625aa12cb3107200641e8c9ccf55e4c09b34d36004e84fbf6f5ed0994d33fe46bb764e1714cc671f10d5a01d8f7e4cc4e495054d86afec7475",
+            "id": "class-ColumnDataObject-59099cbe9a5bfebf7a0663481ca251a2853061ef18c93409412ad9de81bb4d61c00f7d318035f67936b55c05462465fe032090539d53a8f625af991f4b1cb804",
             "file": "projects/metadata-tool/src/app/model/metadata-columnData.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  ProjectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  ProjectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
+            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
             "properties": [
                 {
                     "name": "analyticalFraction",
@@ -1373,7 +1373,7 @@
                     "line": 50
                 },
                 {
-                    "name": "ProjectIdentifier",
+                    "name": "projectIdentifier",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -2517,11 +2517,55 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"flex flex-col h-full justify-between\">\n  <!-- content -->\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\n        Start Workflow\n      </button>\n    </div>\n\n    <!-- link to tutorial -->\n\n    <!-- about -->\n    <section>\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\n      <p>\n        Embark on a seamless journey of data transformation with our\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\n        format, our tool is designed to provide you with a hassle-free\n        experience, ensuring your metadata is accurately and efficiently\n        converted to the format you need. Unlock the full potential of your data\n        with features tailored for precision, speed, and flexibility. The\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\n        allowing you to focus on what truly matters – making the most out of\n        your data. Experience the future of metadata management today!\n      </p>\n    </section>\n\n    <!-- link to repo and publication -->\n    <section>\n      <h2 class=\"text-center\">Citing</h2>\n      <p>Our fancy publication can be read here [LINK]</p>\n    </section>\n\n    <section>\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\n      <p>\n        Our fancy GitHub repo can be found\n        <a\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\n          >here</a\n        >.\n      </p>\n    </section>\n\n    <!-- funding -->\n    <section>\n      <h2 class=\"text-center\">Affiliations</h2>\n      <p>We are funded by</p>\n    </section>\n  </main>\n</div>\n"
+            "templateData": "<div class=\"flex flex-col h-full justify-between\">\n  <!-- content -->\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\n        Start Workflow\n      </button>\n    </div>\n\n    <!-- link to tutorial -->\n\n    <!-- about -->\n    <section>\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\n      <p>\n        Embark on a seamless journey of data transformation with our\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\n        format, our tool is designed to provide you with a hassle-free\n        experience, ensuring your metadata is accurately and efficiently\n        converted to SDRF, mzID and mzML. Unlock the full potential of your data\n        with features tailored for precision, speed, and flexibility. The\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\n        allowing you to focus on what truly matters – making the most out of\n        your data. Experience the future of metadata management today!>\n      </p>\n    </section>\n\n    <!-- link to repo and publication -->\n    <section>\n      <h2 class=\"text-center\">Citing</h2>\n      <p>Our fancy publication can be read here [LINK]</p>\n    </section>\n\n    <section>\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\n      <p>\n        Our fancy GitHub repo can be found\n        <a\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\n          >here</a\n        >.\n      </p>\n    </section>\n\n    <!-- funding -->\n    <section>\n      <h2 class=\"text-center\">Affiliations</h2>\n      <p>We are funded by</p>\n    </section>\n  </main>\n</div>\n"
+        },
+        {
+            "name": "MetadataQuestComponent",
+            "id": "component-MetadataQuestComponent-f5c1aad406fa22da54439561e99ee6cd6d06b6cb6e88232b5817d6bece94d811920ff44bc17784299fed3b63f84fbe89f924eb87d8f4118da824a7c0050d49ea",
+            "file": "projects/metadata-tool/src/app/questionnaire/metadata-quest.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "metadata-quest",
+            "styleUrls": [
+                "./metadata-quest.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./metadata-quest.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestComponent {\n\n}",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./metadata-quest.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "templateData": "\n"
         },
         {
             "name": "MetadataUploadpageComponent",
-            "id": "component-MetadataUploadpageComponent-30ae23f80e93cb986d7881ef571d3846a0f80131b1b751d3678d851bd0d1d5d1b46e45b949f71378a50831edf8ea5ab317f0de6ce60a30850c2c24245c13ca85",
+            "id": "component-MetadataUploadpageComponent-5516e1fe570cb7f5b08e1d1ccf1818d772cb37e921339919ff1f03a2fe06e4110c93687436cf39bde76009bd124b9be58ad4470f3a7d6d9f9ed14da20f5a0dcb",
             "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2620,7 +2664,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2693,7 +2737,7 @@
         },
         {
             "name": "MetadataWorkflowComponent",
-            "id": "component-MetadataWorkflowComponent-6370b9a0e72d1e7f8e1c38ff2499c0286e356895bc4f6674bae45caa1131b80f7897d7997a4e9a8f2357c1245b5384816abe0b59650d7144791fc08a0f3b3ed4",
+            "id": "component-MetadataWorkflowComponent-7e23760790c3e8590b155156e30d2e6d88bbc7a7d34a10aa8ebe054f74dcd8a705c468dda1b1624352f41126059d3ff720fbf08b78436b0b6ab8222141d689ef",
             "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2940,7 +2984,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 251,
+                    "line": 243,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2953,7 +2997,7 @@
                     "optional": false,
                     "returnType": "ColumnDataObject[]",
                     "typeParameters": [],
-                    "line": 270,
+                    "line": 262,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2963,7 +3007,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 191,
+                    "line": 183,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2986,7 +3030,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 247,
+                    "line": 239,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3003,7 +3047,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 198,
+                    "line": 190,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3024,7 +3068,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 202,
+                    "line": 194,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3037,7 +3081,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 222,
+                    "line": 214,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3047,7 +3091,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 230,
+                    "line": 222,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3064,7 +3108,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 239,
+                    "line": 231,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3085,7 +3129,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 295,
+                    "line": 287,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3095,7 +3139,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 291,
+                    "line": 283,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3105,7 +3149,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 158,
+                    "line": 160,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -3119,7 +3163,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\nimport { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../model/metadatauploadjson';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenRows: {\n      indicators: true,\n    },\n    hiddenColumns: {\n      indicators: true,\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        hidden_rows_hide: {\n          name: 'hidden_rows_hide',\n        },\n        hidden_rows_show: {\n          name: 'hidden_rows_show',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n    this.mergedSelectionSubscription = this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.titlesArray = this.mergedSelection.map((item) => item.title);\n      this.titlesString = this.titlesArray.join(', ');\n      this.dataArray = this.mergedSelection.map((item) => item.data);\n      this.dataString = this.dataArray.join(', ');\n      this.updateNestedHeadersData(); // Call the function to generate the nested headers\n      this.hotInstance.updateSettings(this.hotSettings);\n    });\n\n    this.mergedSelectionSubscription =\n      this.checkboxService.mergedSelection$.subscribe((selection) => {\n        this.mergedSelection = selection;\n\n        // Update the columns in hotSettings\n        this.hotSettings.columns = this.mergedSelection;\n\n        if (this.hotInstance) {\n          // Update the Handsontable instance with new columns\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n\n    this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData; // Populate columnData with fetched data\n        this.hotSettings.data = this.columnData;\n        this.initializeHandsontable();\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    //still a bit buggy; Problem is probably when you select a checkbox that not all counters get updated. \n    this.collapsibleColumnsData = [\n      {row: -2, col: properties1Colspan, collapsible: true},\n      {row: -2, col: characteristicColspan, collapsible: true},\n      {row: -2, col: properties2Colspan, collapsible: true},\n      {row: -2, col: commentsColspan, collapsible: true},\n      {row: -2, col: 1, collapsible: false},\n    ]\n\n    // Update the nestedHeaders property in the hotSettings\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = this.collapsibleColumnsData;\n  }\n\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const data = this.hotInstance.getData();\n      const headers = this.dataArray; // Use the separate array of headers\n      const result = [];\n\n      for (let i = 0; i < data.length; i++) {\n        // Start from the first row since we have separate headers\n        const obj: any = {};\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = data[i][j];\n        }\n        result.push(obj);\n      }\n\n      return result;\n    }\n    return []; // Return an empty array if no data is available\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const data = this.exportDataAsObject();\n    console.log(data);\n    console.log(this.nestedHeadersData);\n    this.metaDataInputService.submiteTable(data);\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\nimport { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../model/metadatauploadjson';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenRows: {\n      indicators: true,\n    },\n    hiddenColumns: {\n      indicators: true,\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        hidden_rows_hide: {\n          name: 'hidden_rows_hide',\n        },\n        hidden_rows_show: {\n          name: 'hidden_rows_show',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n\n    this.mergedSelectionSubscription =\n      this.checkboxService.mergedSelection$.subscribe((selection) => {\n        this.mergedSelection = selection;\n        this.titlesArray = this.mergedSelection.map((item) => item.title);\n        this.titlesString = this.titlesArray.join(', ');\n        this.dataArray = this.mergedSelection.map((item) => item.data);\n        this.dataString = this.dataArray.join(', ');\n        this.updateNestedHeadersData(); // Call the function to generate the nested headers\n        this.hotInstance.updateSettings(this.hotSettings);\n      });\n\n    this.mergedSelectionSubscription =\n      this.checkboxService.mergedSelection$.subscribe((selection) => {\n        this.mergedSelection = selection;\n\n        // Update the columns in hotSettings\n        this.hotSettings.columns = this.mergedSelection;\n\n        if (this.hotInstance) {\n          // Update the Handsontable instance with new columns\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n\n    // this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData; // Populate columnData with fetched data\n        this.hotSettings.data = this.columnData;\n        this.initializeHandsontable();\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = true;\n\n  }\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings,\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const data = this.hotInstance.getData();\n      const headers = this.dataArray; // Use the separate array of headers\n      const result = [];\n\n      for (let i = 0; i < data.length; i++) {\n        // Start from the first row since we have separate headers\n        const obj: any = {};\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = data[i][j];\n        }\n        result.push(obj);\n      }\n\n      return result;\n    }\n    return []; // Return an empty array if no data is available\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const data = this.exportDataAsObject();\n    console.log(data);\n    this.metaDataInputService.submiteTable(data);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3188,7 +3232,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "\n<button mat-flat-button color=\"primary\" (click)=\"toggleSelection()\">\n  {{ showSelection ? 'Hide Selection' : 'Show Selection' }}\n</button>\n\n<div *ngIf=\"showSelection\">\n  <app-checkboxselection></app-checkboxselection>\n</div>\n\n  <h2>SDRF Table</h2>\n  <!-- Search input -->\n  <input\n    id=\"search-field\"\n    type=\"text\"\n    placeholder=\"Search...\"\n    (input)=\"onKey($event)\"\n  />\n  <div *ngIf=\"searchResults.length > 0\">\n    <ul>\n      <li\n        *ngFor=\"let result of searchResults; let i = index\"\n        [class.selected]=\"i === currentSearchIndex\"\n      >\n        {{ result.Sourcename }}\n        <!-- Display the relevant search result properties -->\n      </li>\n    </ul>\n  </div>\n  <button mat-flat-button color=\"primary\" (click)=\"selectNextSearchResult()\">\n    Next\n  </button>\n  <button mat-flat-button color=\"primary\" (click)=\"selectPreviousSearchResult()\">\n    Previous\n  </button>\n  <!-- Table -->\n  <div #hotContainer></div>\n  <!-- Export button -->\n  <button mat-flat-button color=\"primary\" (click)=\"onExportClick()\">\n    Quick Export to CSV\n  </button>\n\n  <div class=\"text-center mt-20 mb-20\">\n    <!-- <shared-login-buttons></shared-login-buttons> -->\n    <button mat-flat-button color=\"primary\" (click)=\"submit()\">\n      Submit and go to Download\n    </button>\n  </div>"
+            "templateData": "\n<button mat-flat-button color=\"primary\" (click)=\"toggleSelection()\">\n  {{ showSelection ? 'Hide Selection' : 'Show Selection' }}\n</button>\n\n<div *ngIf=\"showSelection\">\n  <app-checkboxselection></app-checkboxselection>\n</div>\n\n\n  <h2>SDRF Table</h2>\n  <!-- Search input -->\n  <input\n    id=\"search-field\"\n    type=\"text\"\n    placeholder=\"Search...\"\n    (input)=\"onKey($event)\"\n  />\n  <div *ngIf=\"searchResults.length > 0\">\n    <ul>\n      <li\n        *ngFor=\"let result of searchResults; let i = index\"\n        [class.selected]=\"i === currentSearchIndex\"\n      >\n        {{ result.Sourcename }}\n        <!-- Display the relevant search result properties -->\n      </li>\n    </ul>\n  </div>\n  <button mat-flat-button color=\"primary\" (click)=\"selectNextSearchResult()\">\n    Next\n  </button>\n  <button mat-flat-button color=\"primary\" (click)=\"selectPreviousSearchResult()\">\n    Previous\n  </button>\n  <!-- Table -->\n  <div #hotContainer></div>\n  <!-- Export button -->\n  <button mat-flat-button color=\"primary\" (click)=\"onExportClick()\">\n    Quick Export to CSV\n  </button>\n\n  <div class=\"text-center mt-20 mb-20\">\n    <!-- <shared-login-buttons></shared-login-buttons> -->\n    <button mat-flat-button color=\"primary\" (click)=\"submit()\">\n      Submit and go to Download\n    </button>\n  </div>"
         },
         {
             "name": "PageComponent",
@@ -3278,13 +3322,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-fa4ca9c8676313afb26bfa6a35226a03e2b3c9e3252e5f708228a9c960fb6082a2028d2ad1e85b068241fbd45593f4effb84183f58564fff03c161f0326051cc",
+            "id": "module-AppModule-c7ea44f1a48c05f30fbc403d0f62775089279ad236fd5b850c99ae510e2350f2564d9f1db65ead63b1b3b9165ac56dd97b1e534e182f5200be0baf2e91d4c577",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n    WorkflowModule,\n    MetaDataCheckboxSelectionModule,\n    MetadataUploadpageModule,\n    HttpClientModule,\n    MetadataDownloadpageModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n    WorkflowModule,\n    MetaDataCheckboxSelectionModule,\n    MetadataUploadpageModule,\n    HttpClientModule,\n    MetadataDownloadpageModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3377,13 +3421,13 @@
         },
         {
             "name": "MetaDataCheckboxSelectionModule",
-            "id": "module-MetaDataCheckboxSelectionModule-577e888f549cb4dacae0a79d2f98fbbf0513fe95b305f631c757237caed6e77c0e1a70d1ddb8d63ce927a3b932d4eb66db2224cec73e73a58f1b02b6480acbee",
+            "id": "module-MetaDataCheckboxSelectionModule-1865640806fe44b5552475045ce9a6341a2b5b667a984c32c62f81b18ddc77d5c9d5ba6fd7e6037305df2da4f5173d85e4ef35a1c411ba1cdbb6ce5904717b5d",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';\n\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [MetaDataCheckboxSelectionComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    MatButtonModule,\n  \n  ],\n  exports: [MetaDataCheckboxSelectionComponent]\n})\nexport class MetaDataCheckboxSelectionModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';\n\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\n\n@NgModule({\n  declarations: [MetaDataCheckboxSelectionComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    MatButtonModule,\n  \n  ],\n  exports: [MetaDataCheckboxSelectionComponent]\n})\nexport class MetaDataCheckboxSelectionModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3457,13 +3501,13 @@
         },
         {
             "name": "MetadataDownloadpageModule",
-            "id": "module-MetadataDownloadpageModule-d3c28b27cc05eecd16aec6b7eb58aa9462a774ef94ada946482f3e71131fe78b7808d920521801f39cad16314c6ce6dafd0f5121c701d604d27a7441b38ce3e4",
+            "id": "module-MetadataDownloadpageModule-cb1ba7f594247e0658264ec21aa5cd565ec556e2b78295ef1436d86abaf13691c6b4f987c874d397030119400a0c109c14a4ddfa558aa05b1f7e2bf4ca2615c4",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataDownloadpageComponent } from './metadata-downloadpage.component';\nimport { MetadataDownloadpageRoutingModule } from './metadata-downloadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n\n\n@NgModule({\n  declarations: [MetadataDownloadpageComponent],\n  imports: [\n    CommonModule,\n    MetadataDownloadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataDownloadpageComponent]\n})\nexport class MetadataDownloadpageModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataDownloadpageComponent } from './metadata-downloadpage.component';\nimport { MetadataDownloadpageRoutingModule } from './metadata-downloadpage-routing.module';\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\n\n\n\n@NgModule({\n  declarations: [MetadataDownloadpageComponent],\n  imports: [\n    CommonModule,\n    MetadataDownloadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataDownloadpageComponent]\n})\nexport class MetadataDownloadpageModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3540,14 +3584,58 @@
             ]
         },
         {
+            "name": "MetadataQuestModule",
+            "id": "module-MetadataQuestModule-173c795f03d7c38aba5fb89534fa74ded79a929da10fbc044a4dfe450824c59ca04e67e947fa9fa72c3cd11fca7cb789b8b49efc2def2c1c674db7ed0029e21e",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/metadata-tool/src/app/questionnaire/metadata-quest.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {MatIconModule} from '@angular/material/icon';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MetadataQuestComponent } from './metadata-quest.component';\n\n@NgModule({\n  declarations: [ MetadataQuestComponent ],\n  imports: [\n    CommonModule,\n    MatIconModule,  \n    MatButtonModule,\n  ],\n  exports: [MetadataQuestComponent]\n})\nexport class MetadataQuestModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "MetadataQuestComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "MetadataQuestComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "MetadataUploadpageModule",
-            "id": "module-MetadataUploadpageModule-5336f9c6ec34d7142c7aaa498977e2c386802a14f140a3e3486278cdce21cf08ed53054594177d3762ef0e0504a29896967dc7da5e49177e51f606f832496d88",
+            "id": "module-MetadataUploadpageModule-f6be6edb5f4da6310b22c8c406e849242521c490e9c2b53f6966025923e85bc381cd4c0650546368f492111e5b9f3ac7fb61e96ce707316478ce8b2c8a2d8dbb",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport {MatIconModule} from '@angular/material/icon';\nimport {MatProgressBarModule} from '@angular/material/progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport {MatIconModule} from '@angular/material/icon';\nimport {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3661,13 +3749,13 @@
         },
         {
             "name": "WorkflowModule",
-            "id": "module-WorkflowModule-78705bfc244f7473ae5bc42e5ab551419bec46bc5510f7a0a23b7e8b0303194e2ef6b5dd7f4e3031e69a541dc253e91dafb543f59f23ef56fc248ad2ca2a0aaf",
+            "id": "module-WorkflowModule-123ead55a90dcbba04c97b76dd1d47341e9593523fb1ccd960bc86675df8ba05f4b347323f32b14f3130cef5f7a3b89969d5306349c7417ef243f9c68ea26bdd",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3748,6 +3836,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3942,6 +4040,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "(args) => ({\n  props: args,\n})"
             }
         ],
         "functions": [],
@@ -4131,6 +4239,28 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/uploadPage.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "(args) => ({\n  props: args,\n})"
                 }
             ],
             "projects/metadata-tool/src/environments/environment.prod.ts": [
@@ -4602,6 +4732,15 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/metadata-tool/src/app/questionnaire/metadata-quest.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MetadataQuestComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/metadata-tool/src/app/webserveraddress.service.ts",
                 "type": "injectable",
                 "linktype": "injectable",
@@ -4712,6 +4851,26 @@
             },
             {
                 "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
