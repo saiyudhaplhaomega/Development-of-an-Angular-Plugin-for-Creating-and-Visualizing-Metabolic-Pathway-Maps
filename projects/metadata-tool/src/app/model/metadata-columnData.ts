@@ -1,4 +1,7 @@
 export interface ColumnData {
+
+  identID: string;
+  counter: number;
   sourcename: string;
   group: string;
   projectIdentifier: string;
@@ -43,6 +46,8 @@ export interface ColumnData {
 }
 
 export class ColumnDataObject implements ColumnData {
+  identID: string;
+  counter: number;
   sourcename: string;
   group: string;
   projectIdentifier: string;
