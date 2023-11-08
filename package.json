@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "NODE_ENV=development ng serve",
+    "start": "xdg-open http://localhost:4200 &&  NODE_ENV=development ng serve ",
     "buildtest": "ng build test-example",
     "starttest": "ng serve test-example",
     "buildmpa": "ng build mpa",
