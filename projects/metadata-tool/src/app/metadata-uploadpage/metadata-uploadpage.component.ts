@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 //import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
 import { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';
 import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { OnInit } from '@angular/core';
 
 @Component({

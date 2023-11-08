@@ -7,7 +7,7 @@ import {
 } from '../webserveraddress.service';
 import { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';
 import { HttpEventType, HttpParams } from '@angular/common/http';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { DownloadLinksJson } from '../model/download-json';
 
