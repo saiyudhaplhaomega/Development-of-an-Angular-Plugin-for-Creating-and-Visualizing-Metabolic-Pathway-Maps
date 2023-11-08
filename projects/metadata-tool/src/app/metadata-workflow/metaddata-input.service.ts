@@ -86,9 +86,9 @@ export class MetaDataInputService {
     });
   }
 
-  submiteTable(data: ColumnData[]) {
+  submiteTable(dataExport: ColumnData[]) {
     const uploadJson = this.metadataUploadJson.getValue();
-    uploadJson.metadataJson = data;
+    uploadJson.metadataJson = dataExport;
     this.metadataUploadJson.next(uploadJson);
     this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))
       .subscribe((response) => {

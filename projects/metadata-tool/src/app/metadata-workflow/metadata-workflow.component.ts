@@ -64,12 +64,6 @@ export class MetadataWorkflowComponent implements OnInit {
     colHeaders: this.HeadersData,
     rowHeaders: true,
     manualRowMove: true,
-    hiddenRows: {
-      indicators: true,
-    },
-    hiddenColumns: {
-      indicators: true,
-    },
     contextMenu: {
       items: {
         undo: {
@@ -77,12 +71,6 @@ export class MetadataWorkflowComponent implements OnInit {
         },
         redo: {
           name: 'redo',
-        },
-        hidden_rows_hide: {
-          name: 'hidden_rows_hide',
-        },
-        hidden_rows_show: {
-          name: 'hidden_rows_show',
         },
         separator: ContextMenu.SEPARATOR,
       },
@@ -261,18 +249,21 @@ export class MetadataWorkflowComponent implements OnInit {
 
   exportDataAsObject(): ColumnDataObject[] {
     if (this.hotInstance) {
-      const data = this.hotInstance.getData();
-      const headers = this.dataArray; // Use the separate array of headers
-      const result = [];
+      const dataExport = this.hotInstance.getData();
+      const headers = this.dataArray; 
+      const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;
+      const columnData: ColumnDataObject[] = [];
 
-      for (let i = 0; i < data.length; i++) {
-        // Start from the first row since we have separate headers
-        const obj: any = {};
+      for (let i = 0; i < dataExport.length; i++) {
+        const obj: ColumnDataObject = new ColumnDataObject();
         for (let j = 0; j < headers.length; j++) {
           const key = headers[j];
-          obj[key] = data[i][j];
+          obj[key] = dataExport[i][j];
         }
-        result.push(obj);
+        columnData.push(obj);
+        // TODO: Finde richtiges ColumndataObject; Aktualisiere metadataJson mit neuen Content
+        // handsontable richtiges objectmapping
+        // mit einem eintrag mal probieren
       }
 
       return result;
@@ -285,8 +276,8 @@ export class MetadataWorkflowComponent implements OnInit {
   }
 
   submit() {
-    const data = this.exportDataAsObject();
-    console.log(data);
-    this.metaDataInputService.submiteTable(data);
+    const dataExport = this.exportDataAsObject();
+    console.log(dataExport);
+    this.metaDataInputService.submiteTable(dataExport);
   }
 }
