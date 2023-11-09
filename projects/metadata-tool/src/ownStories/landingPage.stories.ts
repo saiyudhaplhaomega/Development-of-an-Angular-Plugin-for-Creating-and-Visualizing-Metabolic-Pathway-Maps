@@ -13,8 +13,11 @@ export default {
   decorators: [
     applicationConfig({
       providers: [
+        //Core modules
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(HttpClientModule),
+
+        // Matirial Design
         importProvidersFrom(MatButtonModule),
       ],
     }),
