@@ -27,11 +27,11 @@ import { StandardPageLayoutModule } from 'dist/shared-lib';
     MatButtonModule,
     StandardPageLayoutModule,
     BrowserAnimationsModule,
-    WorkflowModule,
-    MetaDataCheckboxSelectionModule,
-    MetadataUploadpageModule,
+
+
+
     HttpClientModule,
-    MetadataDownloadpageModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
