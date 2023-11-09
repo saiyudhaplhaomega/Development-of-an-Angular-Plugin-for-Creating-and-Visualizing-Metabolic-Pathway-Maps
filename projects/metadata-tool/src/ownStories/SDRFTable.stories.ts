@@ -1,12 +1,14 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MetadataWorkflowComponent } from '../app/metadata-workflow/metadata-workflow.component';
-import { applicationConfig } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientService } from 'shared-lib';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { importProvidersFrom } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
-export default {
+
+const meta: Meta = {
   title: 'Project/SDRF Table Component',
   component: MetadataWorkflowComponent,
   decorators: [
@@ -14,25 +16,20 @@ export default {
       providers: [
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(HttpClientModule),
-        // Any other modules that your component requires
+        importProvidersFrom(OAuthModule.forRoot()),
+        importProvidersFrom(MatDialogModule),
+        // ...any other modules that your component requires
       ],
     }),
   ],
 };
 
-const Template = (args) => ({
-  props: args,
-  applicationConfig: {
-    providers: [
-      // Provide HttpClientService, which will use HttpClient from HttpClientModule
-      HttpClientService,
-      // Any other services that need to be provided
-    ],
-  },
-  // ... other template setup
-});
+export default meta;
 
-export const Default = Template.bind({});
-Default.args = {
-  // ... args setup
+type Story = StoryObj<typeof MetadataWorkflowComponent>;
+
+export const Default: Story = {
+  render: () => ({
+    props: {},
+  }),
 };
