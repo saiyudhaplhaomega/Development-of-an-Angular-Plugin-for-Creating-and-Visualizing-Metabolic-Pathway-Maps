@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "ColumnData",
-            "id": "interface-ColumnData-59099cbe9a5bfebf7a0663481ca251a2853061ef18c93409412ad9de81bb4d61c00f7d318035f67936b55c05462465fe032090539d53a8f625af991f4b1cb804",
+            "id": "interface-ColumnData-8d61e2590cdee95408405bf1a99b04bc7c30692cdd82045a4eb56e2765e2af3778ffaf100b77855e63beb9c3d57789b0329f6ff0dcc652116cadb9d5efa7ad13",
             "file": "projects/metadata-tool/src/app/model/metadata-columnData.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
+            "sourceCode": "export interface ColumnData {\n\n  identID: string;\n  counter: number;\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  identID: string;\n  counter: number;\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
             "properties": [
                 {
                     "name": "analyticalFraction",
@@ -17,7 +17,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 16
                 },
                 {
                     "name": "assayName",
@@ -26,7 +26,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 23
                 },
                 {
                     "name": "biologicalReplicate",
@@ -35,7 +35,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 8
+                    "line": 11
                 },
                 {
                     "name": "carbonSource",
@@ -44,7 +44,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 20
                 },
                 {
                     "name": "cleavantAgentDetails",
@@ -53,7 +53,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 29
                 },
                 {
                     "name": "comment",
@@ -62,7 +62,16 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 40
+                    "line": 43
+                },
+                {
+                    "name": "counter",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
                 },
                 {
                     "name": "countIdentifiedSpezies",
@@ -71,7 +80,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 22
                 },
                 {
                     "name": "dataFile",
@@ -80,7 +89,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 34
+                    "line": 37
                 },
                 {
                     "name": "dissociationMethod",
@@ -89,7 +98,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 34
                 },
                 {
                     "name": "ecologicalMetagenomes",
@@ -98,7 +107,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 13
                 },
                 {
                     "name": "electronSource",
@@ -107,7 +116,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 21
                 },
                 {
                     "name": "experimentType",
@@ -116,7 +125,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 24
                 },
                 {
                     "name": "factorValue",
@@ -125,7 +134,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 41
+                    "line": 44
                 },
                 {
                     "name": "fileType",
@@ -134,7 +143,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 42
+                    "line": 45
                 },
                 {
                     "name": "fileUri",
@@ -143,7 +152,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 35
+                    "line": 38
                 },
                 {
                     "name": "fractionIdentifier",
@@ -152,7 +161,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 25
+                    "line": 28
                 },
                 {
                     "name": "fragmentMassTolerance",
@@ -161,10 +170,19 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 33
+                    "line": 36
                 },
                 {
                     "name": "group",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "identID",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -179,7 +197,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 30
                 },
                 {
                     "name": "label",
@@ -188,7 +206,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 24
+                    "line": 27
                 },
                 {
                     "name": "metagenomes",
@@ -197,7 +215,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 9
+                    "line": 12
                 },
                 {
                     "name": "modificationParameters",
@@ -206,7 +224,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 31
                 },
                 {
                     "name": "modificationParameters1",
@@ -215,7 +233,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 32
                 },
                 {
                     "name": "modificationParameters2",
@@ -224,7 +242,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 33
                 },
                 {
                     "name": "mzID",
@@ -233,7 +251,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 39
                 },
                 {
                     "name": "mzML",
@@ -242,7 +260,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 37
+                    "line": 40
                 },
                 {
                     "name": "organismalMetagenomes",
@@ -251,7 +269,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 14
                 },
                 {
                     "name": "pH",
@@ -260,7 +278,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 16
+                    "line": 19
                 },
                 {
                     "name": "precursorMassTolerance",
@@ -269,7 +287,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 35
                 },
                 {
                     "name": "pressure",
@@ -278,7 +296,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 15
+                    "line": 18
                 },
                 {
                     "name": "program",
@@ -287,7 +305,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 7
+                    "line": 10
                 },
                 {
                     "name": "project",
@@ -296,7 +314,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 6
+                    "line": 9
                 },
                 {
                     "name": "projectIdentifier",
@@ -305,7 +323,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 4
+                    "line": 7
                 },
                 {
                     "name": "psmFile",
@@ -314,7 +332,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 39
+                    "line": 42
                 },
                 {
                     "name": "sourcename",
@@ -323,7 +341,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 2
+                    "line": 5
                 },
                 {
                     "name": "spectrumFile",
@@ -332,7 +350,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 38
+                    "line": 41
                 },
                 {
                     "name": "study",
@@ -341,7 +359,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 5
+                    "line": 8
                 },
                 {
                     "name": "syntheticMetagenome",
@@ -350,7 +368,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 15
                 },
                 {
                     "name": "technicalReplicate",
@@ -359,7 +377,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 26
                 },
                 {
                     "name": "technologyType",
@@ -368,7 +386,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 25
                 },
                 {
                     "name": "temperatureCondtions",
@@ -377,7 +395,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 17
                 }
             ],
             "indexSignatures": [],
@@ -853,12 +871,12 @@
         },
         {
             "name": "MetaDataInputService",
-            "id": "injectable-MetaDataInputService-d3edb8df708d73fd9fa2fb6785ff50fd8e11fd2d5d6281705d79fc0d86babf8492cd8098e1994500968990a4dff7f17af5b9e26ad50a6f83abf5ab92bef70762",
+            "id": "injectable-MetaDataInputService-3eb5ecd8cbd1d221ed34182847c1d3ddd2aeb6e1bfdc072773ce3b2ea71c338914e8bea15784a3c5d71c1c71ac2525a637a3cddfba1ec537acd2d564f4e80d01",
             "file": "projects/metadata-tool/src/app/metadata-workflow/metaddata-input.service.ts",
             "properties": [
                 {
                     "name": "dummyData",
-                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: []\n  }",
+                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "MetaDataUploadJson",
@@ -874,7 +892,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 28,
+                    "line": 162,
                     "modifierKind": [
                         125
                     ]
@@ -885,7 +903,7 @@
                     "name": "submiteTable",
                     "args": [
                         {
-                            "name": "data",
+                            "name": "dataExport",
                             "type": "ColumnData[]",
                             "deprecated": false,
                             "deprecationMessage": ""
@@ -894,12 +912,12 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 89,
+                    "line": 223,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "name": "data",
+                            "name": "dataExport",
                             "type": "ColumnData[]",
                             "deprecated": false,
                             "deprecationMessage": "",
@@ -934,7 +952,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 35,
+                    "line": 169,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -972,7 +990,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: []\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(data: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = data;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(dataExport: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = dataExport;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -992,7 +1010,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 28,
+                "line": 162,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -1077,12 +1095,12 @@
     "classes": [
         {
             "name": "ColumnDataObject",
-            "id": "class-ColumnDataObject-59099cbe9a5bfebf7a0663481ca251a2853061ef18c93409412ad9de81bb4d61c00f7d318035f67936b55c05462465fe032090539d53a8f625af991f4b1cb804",
+            "id": "class-ColumnDataObject-8d61e2590cdee95408405bf1a99b04bc7c30692cdd82045a4eb56e2765e2af3778ffaf100b77855e63beb9c3d57789b0329f6ff0dcc652116cadb9d5efa7ad13",
             "file": "projects/metadata-tool/src/app/model/metadata-columnData.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "export interface ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
+            "sourceCode": "export interface ColumnData {\n\n  identID: string;\n  counter: number;\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n\nexport class ColumnDataObject implements ColumnData {\n  identID: string;\n  counter: number;\n  sourcename: string;\n  group: string;\n  projectIdentifier: string;\n  study: string;\n  project: string;\n  program: string;\n  biologicalReplicate: number;\n  metagenomes: string;\n  ecologicalMetagenomes: string;\n  organismalMetagenomes: string; \n  syntheticMetagenome: string; \n  analyticalFraction: string;\n  temperatureCondtions: string;\n  pressure: string;\n  pH: string;\n  carbonSource: string;\n  electronSource: string;\n  countIdentifiedSpezies: string;\n  assayName: string;\n  experimentType: string;\n  technologyType: string;\n  technicalReplicate: number;\n  label: string;\n  fractionIdentifier: number;\n  cleavantAgentDetails: string;\n  instrument: string;\n  modificationParameters: string;\n  modificationParameters1: string;\n  modificationParameters2: string;\n  dissociationMethod: string;\n  precursorMassTolerance: string;\n  fragmentMassTolerance: string;\n  dataFile: string;\n  fileUri: string;\n  mzID: string;\n  mzML: string;\n  spectrumFile: string;\n\tpsmFile: string;\n  comment: string;\n  factorValue: string;\n  fileType: string;\n}\n",
             "properties": [
                 {
                     "name": "analyticalFraction",
@@ -1091,7 +1109,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 57
+                    "line": 62
                 },
                 {
                     "name": "assayName",
@@ -1100,7 +1118,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 64
+                    "line": 69
                 },
                 {
                     "name": "biologicalReplicate",
@@ -1109,7 +1127,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 52
+                    "line": 57
                 },
                 {
                     "name": "carbonSource",
@@ -1118,7 +1136,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 61
+                    "line": 66
                 },
                 {
                     "name": "cleavantAgentDetails",
@@ -1127,7 +1145,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 70
+                    "line": 75
                 },
                 {
                     "name": "comment",
@@ -1136,7 +1154,16 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 84
+                    "line": 89
+                },
+                {
+                    "name": "counter",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 50
                 },
                 {
                     "name": "countIdentifiedSpezies",
@@ -1145,7 +1172,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 63
+                    "line": 68
                 },
                 {
                     "name": "dataFile",
@@ -1154,7 +1181,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 78
+                    "line": 83
                 },
                 {
                     "name": "dissociationMethod",
@@ -1163,7 +1190,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 75
+                    "line": 80
                 },
                 {
                     "name": "ecologicalMetagenomes",
@@ -1172,7 +1199,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 54
+                    "line": 59
                 },
                 {
                     "name": "electronSource",
@@ -1181,7 +1208,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 62
+                    "line": 67
                 },
                 {
                     "name": "experimentType",
@@ -1190,7 +1217,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 65
+                    "line": 70
                 },
                 {
                     "name": "factorValue",
@@ -1199,7 +1226,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 85
+                    "line": 90
                 },
                 {
                     "name": "fileType",
@@ -1208,7 +1235,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 86
+                    "line": 91
                 },
                 {
                     "name": "fileUri",
@@ -1217,7 +1244,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 79
+                    "line": 84
                 },
                 {
                     "name": "fractionIdentifier",
@@ -1226,7 +1253,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 69
+                    "line": 74
                 },
                 {
                     "name": "fragmentMassTolerance",
@@ -1235,7 +1262,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 77
+                    "line": 82
                 },
                 {
                     "name": "group",
@@ -1244,172 +1271,10 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 47
+                    "line": 52
                 },
                 {
-                    "name": "instrument",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 71
-                },
-                {
-                    "name": "label",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 68
-                },
-                {
-                    "name": "metagenomes",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 53
-                },
-                {
-                    "name": "modificationParameters",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 72
-                },
-                {
-                    "name": "modificationParameters1",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 73
-                },
-                {
-                    "name": "modificationParameters2",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 74
-                },
-                {
-                    "name": "mzID",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 80
-                },
-                {
-                    "name": "mzML",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 81
-                },
-                {
-                    "name": "organismalMetagenomes",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 55
-                },
-                {
-                    "name": "pH",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 60
-                },
-                {
-                    "name": "precursorMassTolerance",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 76
-                },
-                {
-                    "name": "pressure",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 59
-                },
-                {
-                    "name": "program",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 51
-                },
-                {
-                    "name": "project",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 50
-                },
-                {
-                    "name": "projectIdentifier",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 48
-                },
-                {
-                    "name": "psmFile",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 83
-                },
-                {
-                    "name": "sourcename",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 46
-                },
-                {
-                    "name": "spectrumFile",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 82
-                },
-                {
-                    "name": "study",
+                    "name": "identID",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -1418,7 +1283,115 @@
                     "line": 49
                 },
                 {
-                    "name": "syntheticMetagenome",
+                    "name": "instrument",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 76
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 73
+                },
+                {
+                    "name": "metagenomes",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 58
+                },
+                {
+                    "name": "modificationParameters",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 77
+                },
+                {
+                    "name": "modificationParameters1",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 78
+                },
+                {
+                    "name": "modificationParameters2",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 79
+                },
+                {
+                    "name": "mzID",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 85
+                },
+                {
+                    "name": "mzML",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 86
+                },
+                {
+                    "name": "organismalMetagenomes",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 60
+                },
+                {
+                    "name": "pH",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 65
+                },
+                {
+                    "name": "precursorMassTolerance",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 81
+                },
+                {
+                    "name": "pressure",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 64
+                },
+                {
+                    "name": "program",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -1427,13 +1400,76 @@
                     "line": 56
                 },
                 {
+                    "name": "project",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 55
+                },
+                {
+                    "name": "projectIdentifier",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 53
+                },
+                {
+                    "name": "psmFile",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 88
+                },
+                {
+                    "name": "sourcename",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 51
+                },
+                {
+                    "name": "spectrumFile",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 87
+                },
+                {
+                    "name": "study",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 54
+                },
+                {
+                    "name": "syntheticMetagenome",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 61
+                },
+                {
                     "name": "technicalReplicate",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 67
+                    "line": 72
                 },
                 {
                     "name": "technologyType",
@@ -1442,7 +1478,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 66
+                    "line": 71
                 },
                 {
                     "name": "temperatureCondtions",
@@ -1451,7 +1487,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 58
+                    "line": 63
                 }
             ],
             "methods": [],
@@ -1887,7 +1923,7 @@
         },
         {
             "name": "MetaDataCheckboxSelectionComponent",
-            "id": "component-MetaDataCheckboxSelectionComponent-20cf0ce9947d4db290094fc83646cfcb2bfbd902ecb09409552f59d1207822da04544bb33c1a692e053595e5b6f74cf3af157cb37a443183297871970560db79",
+            "id": "component-MetaDataCheckboxSelectionComponent-380729dc720b1879407ad9aa1c03119e3617a2d351c68a3f017fc083238b186a3bdac56f3d80962ecbe9dd677bfe2fe6bb095aafd200a39df2f7b9752ac1ba22",
             "file": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1911,7 +1947,7 @@
                     "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 147,
+                    "line": 148,
                     "type": "EventEmitter"
                 }
             ],
@@ -1924,7 +1960,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 140
+                    "line": 141
                 },
                 {
                     "name": "form",
@@ -1937,13 +1973,13 @@
                 },
                 {
                     "name": "notSelectableCharacteristic",
-                    "defaultValue": "[\n    {\n      data: 'biologicalReplicate',\n      title: 'biological replicate',\n      type: 'text',\n    },\n    {\n      data: 'metagenomes',\n      title: 'metagenomes',\n      type: 'autocomplete',\n      source: [\n        'ecological metagenomes',\n        'organismal metagenomes',\n        'synthetic metagenome',\n      ],\n      strict: true,\n    },\n  ]",
+                    "defaultValue": "[\n    {\n      data: 'biologicalReplicate',\n      title: 'biological replicate',\n      type: 'text',\n    },\n    {\n      data: 'metagenomes',\n      title: 'metagenomes',\n      editor: 'select',\n      selectOptions: [\n        'ecological metagenomes',\n        'organismal metagenomes',\n        'synthetic metagenome',\n      ],\n      strict: true,\n    },\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 25
+                    "line": 26
                 },
                 {
                     "name": "notSelectableComments1",
@@ -1953,7 +1989,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 90
+                    "line": 91
                 },
                 {
                     "name": "notSelectableComments2",
@@ -1963,11 +1999,11 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 133
+                    "line": 134
                 },
                 {
                     "name": "notSelectableProperties1",
-                    "defaultValue": "[\n    { data: 'sourcename', title: 'source name', type: 'text' },\n    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },\n  ]",
+                    "defaultValue": "[\n    { data: 'identID', title: 'identID', type: 'text'},\n    { data: 'sourcename', title: 'source name', type: 'text' },\n    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -1983,7 +2019,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 81
+                    "line": 82
                 },
                 {
                     "name": "selectableCharacteristic",
@@ -1993,7 +2029,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 44
+                    "line": 45
                 },
                 {
                     "name": "selectableCharacteristicCounter",
@@ -2003,7 +2039,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 143
+                    "line": 144
                 },
                 {
                     "name": "selectableComments",
@@ -2013,7 +2049,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 95
+                    "line": 96
                 },
                 {
                     "name": "selectableCommentsCounter",
@@ -2023,7 +2059,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 145
+                    "line": 146
                 },
                 {
                     "name": "selectableProperties1",
@@ -2033,7 +2069,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 19
                 },
                 {
                     "name": "selectableProperties1Counter",
@@ -2043,7 +2079,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 142
+                    "line": 143
                 },
                 {
                     "name": "selectableProperties2",
@@ -2053,7 +2089,7 @@
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 86
+                    "line": 87
                 },
                 {
                     "name": "selectableProperties2Counter",
@@ -2063,7 +2099,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 144
+                    "line": 145
                 }
             ],
             "methodsClass": [
@@ -2092,7 +2128,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 183,
+                    "line": 184,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2147,7 +2183,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 229,
+                    "line": 230,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2180,7 +2216,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 194,
+                    "line": 195,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2203,7 +2239,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 286,
+                    "line": 287,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2243,7 +2279,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 251,
+                    "line": 252,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2268,7 +2304,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Output } from '@angular/core';\nimport { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';\nimport { CheckboxSelectionService } from './checkboxselectionservice';\n\n@Component({\n  selector: 'app-checkboxselection',\n  templateUrl: './metadata-checkboxselection.component.html',\n  styleUrls: ['./metadata-checkboxselection.component.scss'],\n})\nexport class MetaDataCheckboxSelectionComponent {\n  form: FormGroup;\n\n  notSelectableProperties1 = [\n    { data: 'sourcename', title: 'source name', type: 'text' },\n    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },\n  ];\n\n  selectableProperties1 = [\n    { data: 'study', title: 'study', type: 'text' },\n    { data: 'project', title: 'project', type: 'text' },\n    { data: 'program', title: 'program', type: 'text' },\n    { data: 'group', title: 'group', type: 'text' },\n  ];\n\n  notSelectableCharacteristic = [\n    {\n      data: 'biologicalReplicate',\n      title: 'biological replicate',\n      type: 'text',\n    },\n    {\n      data: 'metagenomes',\n      title: 'metagenomes',\n      type: 'autocomplete',\n      source: [\n        'ecological metagenomes',\n        'organismal metagenomes',\n        'synthetic metagenome',\n      ],\n      strict: true,\n    },\n  ];\n\n  selectableCharacteristic = [\n    {\n      data: 'ecologicalMetagenomes',\n      title: 'ecological metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'organismalMetagenomes',\n      title: 'organismal metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'syntheticMetagenome',\n      title: 'synthetic metagenome',\n      type: 'text',\n    },\n    {\n      data: 'analyticalFraction',\n      title: 'analytical fraction metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'temperatureCondtions',\n      title: 'temperature condtions',\n      type: 'text',\n    },\n    { data: 'pressure', title: 'pressure', type: 'text' },\n    { data: 'pH', title: 'pH', type: 'text' },\n    { data: 'carbonSource', title: 'carbon Source', type: 'text' },\n    { data: 'electronSource', title: 'electron Source', type: 'text' },\n    {\n      data: 'countIdentifiedSpezies',\n      title: 'count identified spezies',\n      type: 'text',\n    },\n  ];\n\n  notSelectableProperties2 = [\n    { data: 'assayName', title: 'assay name', type: 'text' },\n    { data: 'experimentType', title: 'experiment type', type: 'text' },\n  ];\n\n  selectableProperties2 = [\n    { data: 'technologyType', title: 'technology type', type: 'text' },\n  ];\n\n  notSelectableComments1 = [\n    { data: 'technicalReplicate', title: 'technical replicate', type: 'text' },\n    { data: 'label', title: 'label', type: 'text' },\n  ];\n\n  selectableComments = [\n    { data: 'fractionIdentifier', title: 'fraction identifier', type: 'text' },\n    { data: 'spectrumFile', title: 'spectrum file', type: 'text' },\n    {\n      data: 'cleavantAgentDetails',\n      title: 'cleavant agent details',\n      type: 'text',\n    },\n    { data: 'instrument', title: 'instrument', type: 'text' },\n    {\n      data: 'modificationParameters',\n      title: 'modification parameters',\n      type: 'text',\n    },\n    {\n      data: 'modificationParameters1',\n      title: 'modification parameters.1',\n      type: 'text',\n    },\n    {\n      data: 'modificationParameters2',\n      title: 'modification parameters.2',\n      type: 'text',\n    },\n    { data: 'dissociationMethod', title: 'dissociation method', type: 'text' },\n    {\n      data: 'precursorMassTolerance',\n      title: 'precursor mass tolerance',\n      type: 'text',\n    },\n    {\n      data: 'fragmentMassTolerance',\n      title: 'fragment mass tolerance',\n      type: 'text',\n    },\n    { data: 'psm file', title: 'psm file', type: 'text' },\n  ];\n\n  notSelectableComments2 = [\n    { data: 'dataFile', title: 'data file', type: 'text' },\n    { data: 'fileUri', title: 'file uri', type: 'text' },\n    { data: 'mzID', title: 'mzID', type: 'text' },\n    { data: 'mzML', title: 'mzML', type: 'text' },\n  ];\n\n  factorValue = [{ data: 'factorValue', title: 'factor value', type: 'text' }];\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  @Output() continueClicked = new EventEmitter<void>();\n\n  constructor(\n    private formBuilder: FormBuilder,\n    private checkboxService: CheckboxSelectionService\n  ) {\n    this.form = this.formBuilder.group({\n      properties1: new FormArray([]),\n      characteristic: new FormArray([]),\n      properties2: new FormArray([]),\n      comments: new FormArray([]),\n    });\n\n    // Add checkboxes and initialize counters\n    this.addCheckboxes(\n      this.selectableProperties1,\n      this.form.get('properties1') as FormArray,\n      this.selectableProperties1Counter\n    );\n    this.addCheckboxes(\n      this.selectableCharacteristic,\n      this.form.get('characteristic') as FormArray,\n      this.selectableCharacteristicCounter\n    );\n    this.addCheckboxes(\n      this.selectableProperties2,\n      this.form.get('properties2') as FormArray,\n      this.selectableProperties2Counter\n    );\n    this.addCheckboxes(\n      this.selectableComments,\n      this.form.get('comments') as FormArray,\n      this.selectableCommentsCounter\n    );\n  }\n\n  private addCheckboxes(data: any[], formArray: FormArray, counter: number) {\n    data.forEach(() => {\n      formArray.push(new FormControl(false));\n    });\n    // Initialize the counter based on the initially selected checkboxes\n    counter = formArray.controls.filter((control) => control.value).length;\n\n    // Update the counter via the service\n    this.updateCounter(formArray, counter);\n  }\n\n  submit() {\n    const selectedColumnsProperties1 = this.getSelectedColumns(\n      this.form.get('properties1') as FormArray,\n      this.selectableProperties1\n    );\n    const selectedColumnsCharacteristic = this.getSelectedColumns(\n      this.form.get('characteristic') as FormArray,\n      this.selectableCharacteristic\n    );\n    const selectedColumnsProperties2 = this.getSelectedColumns(\n      this.form.get('properties2') as FormArray,\n      this.selectableProperties2\n    );\n    const selectedColumnsComments = this.getSelectedColumns(\n      this.form.get('comments') as FormArray,\n      this.selectableComments\n    );\n\n    const mergedSelection = [\n      ...this.notSelectableProperties1,\n      ...selectedColumnsProperties1,\n      ...this.notSelectableCharacteristic,\n      ...selectedColumnsCharacteristic,\n      ...this.notSelectableProperties2,\n      ...selectedColumnsProperties2,\n      ...this.notSelectableComments1,\n      ...selectedColumnsComments,\n      ...this.notSelectableComments2,\n      ...this.factorValue,\n    ];\n\n    this.checkboxService.updateMergedSelection(mergedSelection);\n    this.continueClicked.emit();\n  }\n\n  private getSelectedColumns(formArray: FormArray, data: any[]) {\n    return formArray.controls\n      .map((control, index) => (control.value ? data[index] : null))\n      .filter((column) => column !== null);\n  }\n\n  get properties1Controls() {\n    return (this.form.get('properties1') as FormArray).controls;\n  }\n\n  get characteristicControls() {\n    return (this.form.get('characteristic') as FormArray).controls;\n  }\n\n  get properties2Controls() {\n    return (this.form.get('properties2') as FormArray).controls;\n  }\n\n  get commentsControls() {\n    return (this.form.get('comments') as FormArray).controls;\n  }\n\n  updateCounters(section: string) {\n    const formArray = this.form.get(section) as FormArray;\n    const counter = formArray.controls.filter(\n      (control) => control.value\n    ).length;\n    switch (section) {\n      case 'properties1':\n        this.selectableProperties1Counter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateProperties1Counter(counter);\n        break;\n      case 'characteristic':\n        this.selectableCharacteristicCounter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateCharacteristicCounter(counter);\n        break;\n      case 'properties2':\n        this.selectableProperties2Counter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateProperties2Counter(counter);\n        break;\n      case 'comments':\n        this.selectableCommentsCounter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateCommentsCounter(counter);\n        break;\n      default:\n        break;\n    }\n  }\n\n  private updateCounter(formArray: FormArray, counter: number) {\n    counter = formArray.controls.filter((control) => control.value).length;\n\n    if (formArray === this.form.get('properties1')) {\n      this.checkboxService.updateProperties1Counter(counter);\n    } else if (formArray === this.form.get('characteristic')) {\n      this.checkboxService.updateCharacteristicCounter(counter);\n    } else if (formArray === this.form.get('properties2')) {\n      this.checkboxService.updateProperties2Counter(counter);\n    } else if (formArray === this.form.get('comments')) {\n      this.checkboxService.updateCommentsCounter(counter);\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Output } from '@angular/core';\nimport { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';\nimport { CheckboxSelectionService } from './checkboxselectionservice';\n\n@Component({\n  selector: 'app-checkboxselection',\n  templateUrl: './metadata-checkboxselection.component.html',\n  styleUrls: ['./metadata-checkboxselection.component.scss'],\n})\nexport class MetaDataCheckboxSelectionComponent {\n  form: FormGroup;\n\n  notSelectableProperties1 = [\n    { data: 'identID', title: 'identID', type: 'text'},\n    { data: 'sourcename', title: 'source name', type: 'text' },\n    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },\n  ];\n\n  selectableProperties1 = [\n    { data: 'study', title: 'study', type: 'text' },\n    { data: 'project', title: 'project', type: 'text' },\n    { data: 'program', title: 'program', type: 'text' },\n    { data: 'group', title: 'group', type: 'text' },\n  ];\n\n  notSelectableCharacteristic = [\n    {\n      data: 'biologicalReplicate',\n      title: 'biological replicate',\n      type: 'text',\n    },\n    {\n      data: 'metagenomes',\n      title: 'metagenomes',\n      editor: 'select',\n      selectOptions: [\n        'ecological metagenomes',\n        'organismal metagenomes',\n        'synthetic metagenome',\n      ],\n      strict: true,\n    },\n  ];\n\n  selectableCharacteristic = [\n    {\n      data: 'ecologicalMetagenomes',\n      title: 'ecological metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'organismalMetagenomes',\n      title: 'organismal metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'syntheticMetagenome',\n      title: 'synthetic metagenome',\n      type: 'text',\n    },\n    {\n      data: 'analyticalFraction',\n      title: 'analytical fraction metagenomes',\n      type: 'text',\n    },\n    {\n      data: 'temperatureCondtions',\n      title: 'temperature condtions',\n      type: 'text',\n    },\n    { data: 'pressure', title: 'pressure', type: 'text' },\n    { data: 'pH', title: 'pH', type: 'text' },\n    { data: 'carbonSource', title: 'carbon Source', type: 'text' },\n    { data: 'electronSource', title: 'electron Source', type: 'text' },\n    {\n      data: 'countIdentifiedSpezies',\n      title: 'count identified spezies',\n      type: 'text',\n    },\n  ];\n\n  notSelectableProperties2 = [\n    { data: 'assayName', title: 'assay name', type: 'text' },\n    { data: 'experimentType', title: 'experiment type', type: 'text' },\n  ];\n\n  selectableProperties2 = [\n    { data: 'technologyType', title: 'technology type', type: 'text' },\n  ];\n\n  notSelectableComments1 = [\n    { data: 'technicalReplicate', title: 'technical replicate', type: 'text' },\n    { data: 'label', title: 'label', type: 'text' },\n  ];\n\n  selectableComments = [\n    { data: 'fractionIdentifier', title: 'fraction identifier', type: 'text' },\n    { data: 'spectrumFile', title: 'spectrum file', type: 'text' },\n    {\n      data: 'cleavantAgentDetails',\n      title: 'cleavant agent details',\n      type: 'text',\n    },\n    { data: 'instrument', title: 'instrument', type: 'text' },\n    {\n      data: 'modificationParameters',\n      title: 'modification parameters',\n      type: 'text',\n    },\n    {\n      data: 'modificationParameters1',\n      title: 'modification parameters.1',\n      type: 'text',\n    },\n    {\n      data: 'modificationParameters2',\n      title: 'modification parameters.2',\n      type: 'text',\n    },\n    { data: 'dissociationMethod', title: 'dissociation method', type: 'text' },\n    {\n      data: 'precursorMassTolerance',\n      title: 'precursor mass tolerance',\n      type: 'text',\n    },\n    {\n      data: 'fragmentMassTolerance',\n      title: 'fragment mass tolerance',\n      type: 'text',\n    },\n    { data: 'psm file', title: 'psm file', type: 'text' },\n  ];\n\n  notSelectableComments2 = [\n    { data: 'dataFile', title: 'data file', type: 'text' },\n    { data: 'fileUri', title: 'file uri', type: 'text' },\n    { data: 'mzID', title: 'mzID', type: 'text' },\n    { data: 'mzML', title: 'mzML', type: 'text' },\n  ];\n\n  factorValue = [{ data: 'factorValue', title: 'factor value', type: 'text' }];\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  @Output() continueClicked = new EventEmitter<void>();\n\n  constructor(\n    private formBuilder: FormBuilder,\n    private checkboxService: CheckboxSelectionService\n  ) {\n    this.form = this.formBuilder.group({\n      properties1: new FormArray([]),\n      characteristic: new FormArray([]),\n      properties2: new FormArray([]),\n      comments: new FormArray([]),\n    });\n\n    // Add checkboxes and initialize counters\n    this.addCheckboxes(\n      this.selectableProperties1,\n      this.form.get('properties1') as FormArray,\n      this.selectableProperties1Counter\n    );\n    this.addCheckboxes(\n      this.selectableCharacteristic,\n      this.form.get('characteristic') as FormArray,\n      this.selectableCharacteristicCounter\n    );\n    this.addCheckboxes(\n      this.selectableProperties2,\n      this.form.get('properties2') as FormArray,\n      this.selectableProperties2Counter\n    );\n    this.addCheckboxes(\n      this.selectableComments,\n      this.form.get('comments') as FormArray,\n      this.selectableCommentsCounter\n    );\n  }\n\n  private addCheckboxes(data: any[], formArray: FormArray, counter: number) {\n    data.forEach(() => {\n      formArray.push(new FormControl(false));\n    });\n    // Initialize the counter based on the initially selected checkboxes\n    counter = formArray.controls.filter((control) => control.value).length;\n\n    // Update the counter via the service\n    this.updateCounter(formArray, counter);\n  }\n\n  submit() {\n    const selectedColumnsProperties1 = this.getSelectedColumns(\n      this.form.get('properties1') as FormArray,\n      this.selectableProperties1\n    );\n    const selectedColumnsCharacteristic = this.getSelectedColumns(\n      this.form.get('characteristic') as FormArray,\n      this.selectableCharacteristic\n    );\n    const selectedColumnsProperties2 = this.getSelectedColumns(\n      this.form.get('properties2') as FormArray,\n      this.selectableProperties2\n    );\n    const selectedColumnsComments = this.getSelectedColumns(\n      this.form.get('comments') as FormArray,\n      this.selectableComments\n    );\n\n    const mergedSelection = [\n      ...this.notSelectableProperties1,\n      ...selectedColumnsProperties1,\n      ...this.notSelectableCharacteristic,\n      ...selectedColumnsCharacteristic,\n      ...this.notSelectableProperties2,\n      ...selectedColumnsProperties2,\n      ...this.notSelectableComments1,\n      ...selectedColumnsComments,\n      ...this.notSelectableComments2,\n      ...this.factorValue,\n    ];\n\n    this.checkboxService.updateMergedSelection(mergedSelection);\n    this.continueClicked.emit();\n  }\n\n  private getSelectedColumns(formArray: FormArray, data: any[]) {\n    return formArray.controls\n      .map((control, index) => (control.value ? data[index] : null))\n      .filter((column) => column !== null);\n  }\n\n  get properties1Controls() {\n    return (this.form.get('properties1') as FormArray).controls;\n  }\n\n  get characteristicControls() {\n    return (this.form.get('characteristic') as FormArray).controls;\n  }\n\n  get properties2Controls() {\n    return (this.form.get('properties2') as FormArray).controls;\n  }\n\n  get commentsControls() {\n    return (this.form.get('comments') as FormArray).controls;\n  }\n\n  updateCounters(section: string) {\n    const formArray = this.form.get(section) as FormArray;\n    const counter = formArray.controls.filter(\n      (control) => control.value\n    ).length;\n    switch (section) {\n      case 'properties1':\n        this.selectableProperties1Counter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateProperties1Counter(counter);\n        break;\n      case 'characteristic':\n        this.selectableCharacteristicCounter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateCharacteristicCounter(counter);\n        break;\n      case 'properties2':\n        this.selectableProperties2Counter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateProperties2Counter(counter);\n        break;\n      case 'comments':\n        this.selectableCommentsCounter = formArray.controls.filter(\n          (control) => control.value\n        ).length;\n        this.checkboxService.updateCommentsCounter(counter);\n        break;\n      default:\n        break;\n    }\n  }\n\n  private updateCounter(formArray: FormArray, counter: number) {\n    counter = formArray.controls.filter((control) => control.value).length;\n\n    if (formArray === this.form.get('properties1')) {\n      this.checkboxService.updateProperties1Counter(counter);\n    } else if (formArray === this.form.get('characteristic')) {\n      this.checkboxService.updateCharacteristicCounter(counter);\n    } else if (formArray === this.form.get('properties2')) {\n      this.checkboxService.updateProperties2Counter(counter);\n    } else if (formArray === this.form.get('comments')) {\n      this.checkboxService.updateCommentsCounter(counter);\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2296,7 +2332,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 147,
+                "line": 148,
                 "jsdoctags": [
                     {
                         "name": "formBuilder",
@@ -2326,7 +2362,7 @@
                         "name": "properties1Controls",
                         "type": "",
                         "returnType": "",
-                        "line": 235
+                        "line": 236
                     }
                 },
                 "characteristicControls": {
@@ -2335,7 +2371,7 @@
                         "name": "characteristicControls",
                         "type": "",
                         "returnType": "",
-                        "line": 239
+                        "line": 240
                     }
                 },
                 "properties2Controls": {
@@ -2344,7 +2380,7 @@
                         "name": "properties2Controls",
                         "type": "",
                         "returnType": "",
-                        "line": 243
+                        "line": 244
                     }
                 },
                 "commentsControls": {
@@ -2353,7 +2389,7 @@
                         "name": "commentsControls",
                         "type": "",
                         "returnType": "",
-                        "line": 247
+                        "line": 248
                     }
                 }
             },
@@ -2565,7 +2601,7 @@
         },
         {
             "name": "MetadataUploadpageComponent",
-            "id": "component-MetadataUploadpageComponent-5516e1fe570cb7f5b08e1d1ccf1818d772cb37e921339919ff1f03a2fe06e4110c93687436cf39bde76009bd124b9be58ad4470f3a7d6d9f9ed14da20f5a0dcb",
+            "id": "component-MetadataUploadpageComponent-30ae23f80e93cb986d7881ef571d3846a0f80131b1b751d3678d851bd0d1d5d1b46e45b949f71378a50831edf8ea5ab317f0de6ce60a30850c2c24245c13ca85",
             "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2664,7 +2700,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2737,7 +2773,7 @@
         },
         {
             "name": "MetadataWorkflowComponent",
-            "id": "component-MetadataWorkflowComponent-7e23760790c3e8590b155156e30d2e6d88bbc7a7d34a10aa8ebe054f74dcd8a705c468dda1b1624352f41126059d3ff720fbf08b78436b0b6ab8222141d689ef",
+            "id": "component-MetadataWorkflowComponent-0220819aca821722af1068717d569f2133d7ec7bfd1b6fae1e13d30678dd7091ffe4ebed81d9b66049e9989046295bfe52a41e871d80adf1b0d4a69d2b8f04b3",
             "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2846,7 +2882,7 @@
                 },
                 {
                     "name": "hotSettings",
-                    "defaultValue": "{\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenRows: {\n      indicators: true,\n    },\n    hiddenColumns: {\n      indicators: true,\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        hidden_rows_hide: {\n          name: 'hidden_rows_hide',\n        },\n        hidden_rows_show: {\n          name: 'hidden_rows_show',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  }",
+                    "defaultValue": "{\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenColumns: {\n      columns: [0],\n      indicators: false\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Handsontable.GridSettings",
@@ -2984,7 +3020,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 243,
+                    "line": 240,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2997,7 +3033,7 @@
                     "optional": false,
                     "returnType": "ColumnDataObject[]",
                     "typeParameters": [],
-                    "line": 262,
+                    "line": 259,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3007,7 +3043,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 183,
+                    "line": 180,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3020,7 +3056,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 92,
+                    "line": 84,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3030,7 +3066,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 239,
+                    "line": 236,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3047,7 +3083,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 190,
+                    "line": 187,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3068,7 +3104,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 194,
+                    "line": 191,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3081,7 +3117,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 214,
+                    "line": 211,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3091,7 +3127,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 222,
+                    "line": 219,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3108,7 +3144,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 231,
+                    "line": 228,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3129,7 +3165,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 287,
+                    "line": 303,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3139,7 +3175,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 283,
+                    "line": 299,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3149,7 +3185,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 160,
+                    "line": 157,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -3163,7 +3199,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\nimport { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../model/metadatauploadjson';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenRows: {\n      indicators: true,\n    },\n    hiddenColumns: {\n      indicators: true,\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        hidden_rows_hide: {\n          name: 'hidden_rows_hide',\n        },\n        hidden_rows_show: {\n          name: 'hidden_rows_show',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n\n    this.mergedSelectionSubscription =\n      this.checkboxService.mergedSelection$.subscribe((selection) => {\n        this.mergedSelection = selection;\n        this.titlesArray = this.mergedSelection.map((item) => item.title);\n        this.titlesString = this.titlesArray.join(', ');\n        this.dataArray = this.mergedSelection.map((item) => item.data);\n        this.dataString = this.dataArray.join(', ');\n        this.updateNestedHeadersData(); // Call the function to generate the nested headers\n        this.hotInstance.updateSettings(this.hotSettings);\n      });\n\n    this.mergedSelectionSubscription =\n      this.checkboxService.mergedSelection$.subscribe((selection) => {\n        this.mergedSelection = selection;\n\n        // Update the columns in hotSettings\n        this.hotSettings.columns = this.mergedSelection;\n\n        if (this.hotInstance) {\n          // Update the Handsontable instance with new columns\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n\n    // this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData; // Populate columnData with fetched data\n        this.hotSettings.data = this.columnData;\n        this.initializeHandsontable();\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = true;\n\n  }\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings,\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const data = this.hotInstance.getData();\n      const headers = this.dataArray; // Use the separate array of headers\n      const result = [];\n\n      for (let i = 0; i < data.length; i++) {\n        // Start from the first row since we have separate headers\n        const obj: any = {};\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = data[i][j];\n        }\n        result.push(obj);\n      }\n\n      return result;\n    }\n    return []; // Return an empty array if no data is available\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const data = this.exportDataAsObject();\n    console.log(data);\n    this.metaDataInputService.submiteTable(data);\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\nimport { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../model/metadatauploadjson';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenColumns: {\n      columns: [0],\n      indicators: false\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n\n   this.mergedSelectionSubscription =\n     this.checkboxService.mergedSelection$.subscribe(\n       (selection) => {\n         this.mergedSelection = selection;\n         this.titlesArray = this.mergedSelection.map((item) => item.title);\n         this.titlesString = this.titlesArray.join(', ');\n         this.dataArray = this.mergedSelection.map((item) => item.data);\n         this.dataString = this.dataArray.join(', ');\n         this.updateNestedHeadersData(); // Call the function to generate the nested headers\n\n         // Check if hotInstance is defined before calling updateSettings\n         if (this.hotInstance) {\n           // Update the Handsontable instance with new columns\n           this.hotInstance.updateSettings({\n             ...this.hotSettings,\n             columns: this.mergedSelection,\n             colHeaders: this.titlesArray,\n           });\n         }\n       },\n       (error) => {\n         console.error('Error with mergedSelection$ subscription', error);\n       }\n     );\n\n    // this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData;\n        this.hotSettings.data = this.columnData;\n        if (!this.hotInstance) {\n          this.initializeHandsontable();\n        } else {\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = true;\n\n  }\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings,\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const dataExport = this.hotInstance.getData();\n      const headers = this.dataArray;\n      const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;\n      const columnData: ColumnDataObject[] = [];\n\n      // Create a map of unique IDs to objects in the result array\n      const resultMap = new Map(result.map((obj) => [obj.identID, obj]));\n\n      for (let i = 0; i < dataExport.length; i++) {\n        const obj: ColumnDataObject = new ColumnDataObject();\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = dataExport[i][j];\n        }\n\n        // Check if the object with the same ID exists in the result array\n        if (resultMap.has(obj.identID)) {\n          // Merge the changed data from dataExport into the existing object\n          const existingObj = resultMap.get(obj.identID);\n          for (const key in obj) {\n            if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {\n              existingObj[key] = obj[key];\n            }\n          }\n        }\n      }\n\n      // Convert the map back to an array\n      const mergedResult = Array.from(resultMap.values());\n\n      // Update the metadataJson value\n      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;\n\n      return mergedResult;\n    }\n    return [];\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const dataExport = this.exportDataAsObject();\n    this.metaDataInputService.submiteTable(dataExport);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3629,13 +3665,13 @@
         },
         {
             "name": "MetadataUploadpageModule",
-            "id": "module-MetadataUploadpageModule-f6be6edb5f4da6310b22c8c406e849242521c490e9c2b53f6966025923e85bc381cd4c0650546368f492111e5b9f3ac7fb61e96ce707316478ce8b2c8a2d8dbb",
+            "id": "module-MetadataUploadpageModule-c6d04a5d93a93bc4b88e2f2f4b8598a2bfca58108076948152a20316b20ee65d67983b84d759d80cac8414f136fb4088996978f5637c2e908af80b16712761ee",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport {MatIconModule} from '@angular/material/icon';\nimport {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatProgressBarModule } from '@angular/material/progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3749,13 +3785,13 @@
         },
         {
             "name": "WorkflowModule",
-            "id": "module-WorkflowModule-123ead55a90dcbba04c97b76dd1d47341e9593523fb1ccd960bc86675df8ba05f4b347323f32b14f3130cef5f7a3b89969d5306349c7417ef243f9c68ea26bdd",
+            "id": "module-WorkflowModule-05e56274724871e8ab9fe2d0251f42327477e0cd80d3f52b319e2870213cb0ec367af31c2a858ced1361f5a9914c6e504dbc2335721b1acc4350592cd9b3b7e6",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -4701,7 +4737,7 @@
                 "linktype": "classe",
                 "name": "ColumnDataObject",
                 "coveragePercent": 0,
-                "coverageCount": "0/42",
+                "coverageCount": "0/44",
                 "status": "low"
             },
             {
@@ -4710,7 +4746,7 @@
                 "linktype": "interface",
                 "name": "ColumnData",
                 "coveragePercent": 0,
-                "coverageCount": "0/42",
+                "coverageCount": "0/44",
                 "status": "low"
             },
             {
