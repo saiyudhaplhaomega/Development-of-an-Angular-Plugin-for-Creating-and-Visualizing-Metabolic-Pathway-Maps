@@ -3,8 +3,6 @@ import { Meta, StoryObj, applicationConfig } from '@storybook/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { MatDialogModule } from '@angular/material/dialog';
 import { importProvidersFrom } from '@angular/core';
 import { MetadataQuestComponent } from '../app/metadata-quest/metadata-quest.component';
 
@@ -15,13 +13,13 @@ const meta: Meta = {
   decorators: [
     applicationConfig({
       providers: [
+        //Core modules
         importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
+
+        // Base modules
         importProvidersFrom(FormsModule),
         importProvidersFrom(ReactiveFormsModule),
-        importProvidersFrom(HttpClientModule),
-        importProvidersFrom(OAuthModule.forRoot()),
-        importProvidersFrom(MatDialogModule),
-        // ...any other modules that your component requires
       ],
     }),
   ],
