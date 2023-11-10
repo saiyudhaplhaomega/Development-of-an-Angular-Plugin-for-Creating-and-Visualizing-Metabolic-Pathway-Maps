@@ -1,0 +1,41 @@
+Wizzard Heading: Waehle Usecase etc. sind 1,2,3...
+
+1. Auswahl welche Art von Methode: Metaproteomics (später: auch zur Auswahl Proteomics)
+  a. Which Metaproteom?  ecolocical, organism, synthetic
+    --> if metagenome in a
+    b. Specific metagenome? (gut, human etc)
+  c. Noch ein paar andere Fragen für optionale Angaben aber die würde
+ich später implementieren wollen (Electron source, pH, pressure etc.
+UND wichtig sind die angaben bei allen Proben gleich?)
+
+2. What kind of Metaproteomics (technology type)?  shotgun
+  a. Which Instruments where used for measurment?  (Orbitrap,
+  TimsTOF etc.) Vielleicht die Frage hier in Gerät (allgemein) und das
+  genaue Gerät (Name und Hersteller) unterscheiden
+  b. What did digestion method did you use?  (in gel, FASP)
+  c. Which Enzym (cleavant agent) did you use for digestion?  (Trypsin
+  etc.)
+  d. Modification Parameters? (more than 1 possible)
+  e. Dissociation method? (Kann man evtl. mit dem Instrument
+  verknüpfen, dass das automatisch festgestellt wird oder abgefragt
+  ob es damit gemacht wurde)
+  f. Precursor Mass tolerance?
+  g. Fragment mass tolerance?
+  h. Hier fehlen evtl. noch ein paar Einstellungen die wichtig zum
+  angeben sind wie MS tolerance (evtl. auch durch das Instrument
+  ersichtlich aber kann sein das die labore hier eigene Einstellungen
+  haben)
+3. Questions for Experiment:
+  a. What assay was used?
+  b. What kind of experiment was done? (heat shock etc.)
+  c. Labels used?
+4. Questions about the project:
+  a. Group?
+  b. Project?
+  c. Program?
+5. Which is the variable under investigation (factor value)?
+  a. Short explanation what a factor value is (maybe as tooltip): The
+  factor values for an experiment are the values of the variables
+  (parameters) under investigation. For example, an experiment
+  studying the effect of different temperature (heat stress) on a cell
+  culture would have “temperature” as an experimental variable.
