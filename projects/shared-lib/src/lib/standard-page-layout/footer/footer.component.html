@@ -3,15 +3,14 @@
     <mat-expansion-panel
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
-      class="footer_color"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title style="color: inherit">
           {{ "&copy;" + copyRight }}
         </mat-panel-title>
         <mat-panel-description>
           <ul *ngIf="!panelOpenState">
-            <li class="float-left p-4 footer_color" *ngFor="let category of footerContent">
+            <li class="float-left p-4" *ngFor="let category of footerContent">
               {{ category.label }}
             </li>
           </ul>
@@ -19,13 +18,13 @@
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>
-        <div class="footer-panels footer_color">
+        <div class="footer-panels">
           <!-- logo image -->
           <img class="m-auto" *ngIf="logoPath" [src]="logoPath" />
 
           <!-- panels for categories -->
           <div *ngFor="let category of footerContent">
-            <span class="font-bold footer_color">{{ category.label }}</span>
+            <span class="font-bold">{{ category.label }}</span>
             <ul>
               <li *ngFor="let link of category.children">
                 <!-- depending on provided properties, either templates for external or router links are inserted -->

@@ -58,9 +58,7 @@
               "projects/ofs/src/favicon.ico",
               "projects/ofs/src/assets"
             ],
-            "styles": [
-              "projects/ofs/src/styles.scss"
-            ],
+            "styles": ["projects/ofs/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -100,10 +98,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ofs:build:production"
+              "browserTarget": "ofs:build:production"
             },
             "development": {
-              "buildTarget": "ofs:build:development"
+              "browserTarget": "ofs:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -111,7 +109,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ofs:build"
+            "browserTarget": "ofs:build"
           }
         },
         "test": {
@@ -126,9 +124,7 @@
               "projects/ofs/src/favicon.ico",
               "projects/ofs/src/assets"
             ],
-            "styles": [
-              "projects/ofs/src/styles.scss"
-            ],
+            "styles": ["projects/ofs/src/styles.scss"],
             "scripts": []
           }
         }
@@ -158,9 +154,7 @@
               "projects/metadata-tool/src/favicon.ico",
               "projects/metadata-tool/src/assets"
             ],
-            "styles": [
-              "projects/metadata-tool/src/styles.scss"
-            ],
+            "styles": ["projects/metadata-tool/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -200,10 +194,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "metadata-tool:build:production"
+              "browserTarget": "metadata-tool:build:production"
             },
             "development": {
-              "buildTarget": "metadata-tool:build:development"
+              "browserTarget": "metadata-tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -211,7 +205,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "metadata-tool:build"
+            "browserTarget": "metadata-tool:build"
           }
         },
         "test": {
@@ -226,9 +220,7 @@
               "projects/metadata-tool/src/favicon.ico",
               "projects/metadata-tool/src/assets"
             ],
-            "styles": [
-              "projects/metadata-tool/src/styles.scss"
-            ],
+            "styles": ["projects/metadata-tool/src/styles.scss"],
             "scripts": []
           }
         },
@@ -238,12 +230,7 @@
             "configDir": "projects/metadata-tool/.storybook",
             "browserTarget": "metadata-tool:build",
             "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/metadata-tool"
-            ],
+            "compodocArgs": ["-e", "json", "-d", "projects/metadata-tool"],
             "port": 6006
           }
         },
@@ -253,12 +240,7 @@
             "configDir": "projects/metadata-tool/.storybook",
             "browserTarget": "metadata-tool:build",
             "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/metadata-tool"
-            ],
+            "compodocArgs": ["-e", "json", "-d", "projects/metadata-tool"],
             "outputDir": "dist/storybook/metadata-tool"
           }
         }
@@ -288,9 +270,7 @@
               "projects/signaling-tool/src/favicon.ico",
               "projects/signaling-tool/src/assets"
             ],
-            "styles": [
-              "projects/signaling-tool/src/styles.scss"
-            ],
+            "styles": ["projects/signaling-tool/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -330,10 +310,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "signaling-tool:build:production"
+              "browserTarget": "signaling-tool:build:production"
             },
             "development": {
-              "buildTarget": "signaling-tool:build:development"
+              "browserTarget": "signaling-tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -341,7 +321,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "signaling-tool:build"
+            "browserTarget": "signaling-tool:build"
           }
         },
         "test": {
@@ -384,9 +364,7 @@
               "projects/prophane/src/favicon.ico",
               "projects/prophane/src/assets"
             ],
-            "styles": [
-              "projects/prophane/src/styles.scss"
-            ],
+            "styles": ["projects/prophane/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -426,10 +404,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "prophane:build:production"
+              "browserTarget": "prophane:build:production"
             },
             "development": {
-              "buildTarget": "prophane:build:development"
+              "browserTarget": "prophane:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -437,7 +415,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "prophane:build"
+            "browserTarget": "prophane:build"
           }
         },
         "test": {
@@ -451,9 +429,7 @@
               "projects/prophane/src/favicon.ico",
               "projects/prophane/src/assets"
             ],
-            "styles": [
-              "projects/prophane/src/styles.scss"
-            ],
+            "styles": ["projects/prophane/src/styles.scss"],
             "scripts": []
           }
         }
@@ -483,9 +459,7 @@
               "projects/mpa/src/favicon.ico",
               "projects/mpa/src/assets"
             ],
-            "styles": [
-              "projects/mpa/src/styles.scss"
-            ],
+            "styles": ["projects/mpa/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -525,10 +499,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mpa:build:production"
+              "browserTarget": "mpa:build:production"
             },
             "development": {
-              "buildTarget": "mpa:build:development"
+              "browserTarget": "mpa:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -536,7 +510,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "mpa:build"
+            "browserTarget": "mpa:build"
           }
         },
         "test": {
@@ -551,9 +525,7 @@
               "projects/mpa/src/favicon.ico",
               "projects/mpa/src/assets"
             ],
-            "styles": [
-              "projects/mpa/src/styles.scss"
-            ],
+            "styles": ["projects/mpa/src/styles.scss"],
             "scripts": []
           }
         }
@@ -583,9 +555,7 @@
               "projects/test-example/src/favicon.ico",
               "projects/test-example/src/assets"
             ],
-            "styles": [
-              "projects/test-example/src/styles.scss"
-            ],
+            "styles": ["projects/test-example/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -625,10 +595,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "test-example:build:production"
+              "browserTarget": "test-example:build:production"
             },
             "development": {
-              "buildTarget": "test-example:build:development"
+              "browserTarget": "test-example:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -636,7 +606,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "test-example:build"
+            "browserTarget": "test-example:build"
           }
         },
         "test": {
@@ -651,9 +621,7 @@
               "projects/test-example/src/favicon.ico",
               "projects/test-example/src/assets"
             ],
-            "styles": [
-              "projects/test-example/src/styles.scss"
-            ],
+            "styles": ["projects/test-example/src/styles.scss"],
             "scripts": []
           }
         }
@@ -683,9 +651,7 @@
               "projects/lifesciencegraph/src/favicon.ico",
               "projects/lifesciencegraph/src/assets"
             ],
-            "styles": [
-              "projects/lifesciencegraph/src/styles.scss"
-            ],
+            "styles": ["projects/lifesciencegraph/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -725,10 +691,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "lifesciencegraph:build:production"
+              "browserTarget": "lifesciencegraph:build:production"
             },
             "development": {
-              "buildTarget": "lifesciencegraph:build:development"
+              "browserTarget": "lifesciencegraph:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -736,7 +702,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "lifesciencegraph:build"
+            "browserTarget": "lifesciencegraph:build"
           }
         },
         "test": {
@@ -751,9 +717,7 @@
               "projects/lifesciencegraph/src/favicon.ico",
               "projects/lifesciencegraph/src/assets"
             ],
-            "styles": [
-              "projects/lifesciencegraph/src/styles.scss"
-            ],
+            "styles": ["projects/lifesciencegraph/src/styles.scss"],
             "scripts": []
           }
         }

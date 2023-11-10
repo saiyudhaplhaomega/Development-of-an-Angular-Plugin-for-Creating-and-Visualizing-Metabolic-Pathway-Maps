@@ -1,10 +1,13 @@
 * {
-  --text-color: hsla(0, 0%, 100%, 0.7);
+  --background-color: rgb(55 65 81);
+  --text-color: hsl(0, 2%, 92%);
+
   text-align: left;
   text-decoration: none;
-  color: var(--text-color);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
+  color: var(--text-color) !important;
+  background-color: var(--background-color) !important;
 }
 
 ul {
@@ -29,12 +32,6 @@ ul {
   font-weight: 700;
 }
 
-.footer_color {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-  color: hsla(0, 0%, 100%, 0.7);
-}
-
 .mat-expansion-panel {
   box-shadow: none;
 }
@@ -48,11 +45,6 @@ ul {
   min-height: 48px;
   height: auto;
 }
-
-// .mat-expansion-panel-header-description,
-// .mat-expansion-indicator::after {
-//   color: var(--text-color) !important;
-// }
 
 .footer-panels {
   display: grid;
