@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './metadata-landing-page.component.html',
   styleUrls: ['./metadata-landing-page.component.scss'],
 })
-export class MetadataLandingPageComponent implements OnInit {
+export class MetadataLandingPageComponent {
   constructor() {}
 
   ngOnInit(): void {}

@@ -8,20 +8,26 @@ import {
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { moduleMetadata } from '@storybook/angular';
+import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import {  MetaDataCheckboxSelectionComponent  } from '../app/metadata-checkboxselection/metadata-checkboxselection.component';
+import { HttpClientModule } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
   title: 'Project/CheckboxSelectionComponent',
   component: MetaDataCheckboxSelectionComponent,
   decorators: [
-    moduleMetadata({
-      declarations: [MetaDataCheckboxSelectionComponent],
-      imports: [
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        BrowserAnimationsModule, // Needed if you're using animations
+
+    applicationConfig({
+      providers: [
+        //Core modules
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
+        importProvidersFrom(ReactiveFormsModule),
+
+        // Matirial Design
+        importProvidersFrom(MatButtonModule),
+        importProvidersFrom(MatCheckboxModule)
       ],
     }),
   ],

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MetadataDownloadpageComponent } from './metadata-downloadpage.component';
 import { MetadataDownloadpageRoutingModule } from './metadata-downloadpage-routing.module';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 
 
 

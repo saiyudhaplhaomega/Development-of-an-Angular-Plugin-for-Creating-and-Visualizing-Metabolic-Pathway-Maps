@@ -100,10 +100,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ofs:build:production"
+              "buildTarget": "ofs:build:production"
             },
             "development": {
-              "browserTarget": "ofs:build:development"
+              "buildTarget": "ofs:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -111,7 +111,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ofs:build"
+            "buildTarget": "ofs:build"
           }
         },
         "test": {
@@ -200,10 +200,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "metadata-tool:build:production"
+              "buildTarget": "metadata-tool:build:production"
             },
             "development": {
-              "browserTarget": "metadata-tool:build:development"
+              "buildTarget": "metadata-tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -211,7 +211,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "metadata-tool:build"
+            "buildTarget": "metadata-tool:build"
           }
         },
         "test": {
@@ -330,10 +330,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "signaling-tool:build:production"
+              "buildTarget": "signaling-tool:build:production"
             },
             "development": {
-              "browserTarget": "signaling-tool:build:development"
+              "buildTarget": "signaling-tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -341,7 +341,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "signaling-tool:build"
+            "buildTarget": "signaling-tool:build"
           }
         },
         "test": {
@@ -426,10 +426,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "prophane:build:production"
+              "buildTarget": "prophane:build:production"
             },
             "development": {
-              "browserTarget": "prophane:build:development"
+              "buildTarget": "prophane:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -437,7 +437,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "prophane:build"
+            "buildTarget": "prophane:build"
           }
         },
         "test": {
@@ -525,10 +525,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "mpa:build:production"
+              "buildTarget": "mpa:build:production"
             },
             "development": {
-              "browserTarget": "mpa:build:development"
+              "buildTarget": "mpa:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -536,7 +536,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mpa:build"
+            "buildTarget": "mpa:build"
           }
         },
         "test": {
@@ -625,10 +625,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "test-example:build:production"
+              "buildTarget": "test-example:build:production"
             },
             "development": {
-              "browserTarget": "test-example:build:development"
+              "buildTarget": "test-example:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -636,7 +636,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test-example:build"
+            "buildTarget": "test-example:build"
           }
         },
         "test": {
@@ -725,10 +725,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "lifesciencegraph:build:production"
+              "buildTarget": "lifesciencegraph:build:production"
             },
             "development": {
-              "browserTarget": "lifesciencegraph:build:development"
+              "buildTarget": "lifesciencegraph:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -736,7 +736,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lifesciencegraph:build"
+            "buildTarget": "lifesciencegraph:build"
           }
         },
         "test": {

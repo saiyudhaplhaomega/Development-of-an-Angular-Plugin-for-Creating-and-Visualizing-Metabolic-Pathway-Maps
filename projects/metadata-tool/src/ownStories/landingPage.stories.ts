@@ -1,46 +1,34 @@
-import { Meta, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, applicationConfig } from '@storybook/angular';
 import {  MetadataLandingPageComponent  } from '../app/metadata-landing-page/metadata-landing-page.component';
-import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterTestingModule } from '@angular/router/testing'; // Make sure to import this
-import { StandardPageLayoutModule } from 'shared-lib';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from '../app/app-routing.module';
-import { WorkflowModule } from '../app/metadata-workflow/metadata-workflow.module';
-import { MetaDataCheckboxSelectionModule } from '../app/metadata-checkboxselection/metadata-checkboxselection.module';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { MetadataDownloadpageModule } from '../app/metadata-downloadpage/metadata-downloadpage.module';
-import { MetadataUploadpageModule } from '../app/metadata-uploadpage/metadata-uploadpage.module';
+import { importProvidersFrom } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MetadataUploadpageComponent } from '../app/metadata-uploadpage/metadata-uploadpage.component';
 
 
 export default {
   title: 'Project/MetadataLandingPageComponent',
   component: MetadataLandingPageComponent,
   decorators: [
-    moduleMetadata({
-      declarations: [MetadataLandingPageComponent],
-      imports: [
-        // Top level
-        BrowserModule,
-        BrowserAnimationsModule,
+    applicationConfig({
+      providers: [
+        //Core modules
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
 
-        // specific
-        RouterTestingModule, // Mock routing
-        HttpClientModule,
-
-        // Import other Material modules as needed
+        // Matirial Design
+        importProvidersFrom(MatButtonModule),
       ],
     }),
   ],
 } as Meta;
 
-const Template = (args: MetadataLandingPageComponent) => ({
-  component: MetadataLandingPageComponent,
-  props: args,
-});
+type Story = StoryObj<typeof MetadataUploadpageComponent>;
 
-export const Default = Template.bind({});
-Default.args = {
-  // Define your args here if necessary
+export const Default: Story = {
+  render: () => ({
+    props: {},
+  }),
 };
+
