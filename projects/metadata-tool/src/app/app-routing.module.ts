@@ -32,7 +32,7 @@ const routes: Routes = [
   {
     path: 'quest',
     loadChildren: () =>
-      import('./metadata-quest/metadata-quest.module').then(
+      import('./metadata-quest-form/metadata-quest.module').then(
         (m) => m.MetadataQuestModule
       ),
   },

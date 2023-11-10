@@ -14,6 +14,9 @@ import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadp
 import { HttpClientModule } from '@angular/common/http';
 import { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';
 import { StandardPageLayoutModule } from 'dist/shared-lib';
+import { FormlyModule } from '@ngx-formly/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { StandardPageLayoutModule } from 'dist/shared-lib';
 
 
     HttpClientModule,
+       FormlyModule.forRoot(),
+       ReactiveFormsModule,
+       FormlyMaterialModule,
 
   ],
   providers: [],

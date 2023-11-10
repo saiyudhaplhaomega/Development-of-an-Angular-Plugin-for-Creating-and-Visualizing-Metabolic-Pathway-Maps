@@ -1,7 +1,8 @@
 Wizzard Heading: Waehle Usecase etc. sind 1,2,3...
 Alles auf englisch
 
-1. Auswahl welche Art von Methode: Metaproteomics (später: auch zur Auswahl Proteomics)
+1. Experiment Type: Metaproteomics (später: auch zur Auswahl Proteomics)
+
   a. Which Metaproteom?  ecolocical, organism, synthetic
     --> if metagenome in a
     b. Specific metagenome? (gut, human etc)
