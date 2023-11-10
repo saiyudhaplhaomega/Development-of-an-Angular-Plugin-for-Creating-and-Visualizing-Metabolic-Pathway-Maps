@@ -1,4 +1,5 @@
 Wizzard Heading: Waehle Usecase etc. sind 1,2,3...
+Alles auf englisch
 
 1. Auswahl welche Art von Methode: Metaproteomics (später: auch zur Auswahl Proteomics)
   a. Which Metaproteom?  ecolocical, organism, synthetic
@@ -8,6 +9,7 @@ Wizzard Heading: Waehle Usecase etc. sind 1,2,3...
 ich später implementieren wollen (Electron source, pH, pressure etc.
 UND wichtig sind die angaben bei allen Proben gleich?)
 
+Experimentelle Einstellungen/  Messeinstellung
 2. What kind of Metaproteomics (technology type)?  shotgun
   a. Which Instruments where used for measurment?  (Orbitrap,
   TimsTOF etc.) Vielleicht die Frage hier in Gerät (allgemein) und das
@@ -25,6 +27,8 @@ UND wichtig sind die angaben bei allen Proben gleich?)
   angeben sind wie MS tolerance (evtl. auch durch das Instrument
   ersichtlich aber kann sein das die labore hier eigene Einstellungen
   haben)
+
+
 3. Questions for Experiment:
   a. What assay was used?
   b. What kind of experiment was done? (heat shock etc.)
