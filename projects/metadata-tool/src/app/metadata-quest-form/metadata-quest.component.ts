@@ -184,8 +184,8 @@ export class MetadataQuestFormComponent {
           templateOptions: {
             label: 'Which is the variable under investigation (factor value)?',
             placeholder: 'Enter the factor value',
-            description:
-              'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',
+            // description:
+            //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',
           },
         },
       ],
