@@ -1,3 +1,7 @@
+.test {
+  margin: 10rem;
+}
+
 .documentation-content-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -46,7 +50,6 @@ form {
   width: 100%;
   @apply max-w-screen-2xl;
 }
-
 
 // .my-stepper {
 //   // height: 100% !important;
