@@ -10,7 +10,7 @@ import { MetadataQuestComponent } from '../app/metadata-quest/metadata-quest.com
 
 
 const meta: Meta = {
-  title: 'Questionnaire/MetadataQuestComponent',
+  title: 'Project/MetadataQuestModule',
   component: MetadataQuestComponent,
   decorators: [
     applicationConfig({
@@ -34,7 +34,5 @@ type Story = StoryObj<typeof MetadataQuestComponent>;
 export const Default: Story = {
   render: () => ({
     props: {},
-    // Here you can add any input props your component might take
-    // or output events it might emit
   }),
 };

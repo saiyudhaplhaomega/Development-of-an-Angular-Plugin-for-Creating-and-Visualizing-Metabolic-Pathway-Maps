@@ -16,6 +16,7 @@ export class AppComponent {
     { route: '/upload', label: 'Upload', requireAuth: false },
     { route: '/workflow', label: 'Workflow', requireAuth: false },
     { route: '/download', label: 'Donwload', requireAuth: false },
+    { route: '/quest', label: 'Quest', requireAuth: false },
   ];
   homelink: SimpleNavigationRoute = {
     route: '/home',

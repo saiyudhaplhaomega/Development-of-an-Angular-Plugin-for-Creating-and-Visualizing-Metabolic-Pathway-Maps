@@ -29,6 +29,13 @@ const routes: Routes = [
         (m) => m.MetadataDownloadpageModule
       ),
   },
+  {
+    path: 'quest',
+    loadChildren: () =>
+      import('./metadata-quest/metadata-quest.module').then(
+        (m) => m.MetadataQuestModule
+      ),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];
