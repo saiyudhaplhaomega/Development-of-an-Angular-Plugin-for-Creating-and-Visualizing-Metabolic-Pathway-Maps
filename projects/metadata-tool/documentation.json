@@ -2491,11 +2491,7 @@
         },
         {
             "name": "MetadataLandingPageComponent",
-<<<<<<< HEAD
-            "id": "component-MetadataLandingPageComponent-b0ce1d0509e4a974cebc234d605429e3f5feedc32ce975f650ab46b215b3fa5e6c937309338e8f75e834c03d17b7a6d573993265f313018f4f0f90b4d359d4ee",
-=======
             "id": "component-MetadataLandingPageComponent-8945becc9a50e2cade556189f2cbc79d685e56c404e9b067561956b569ee0aa65e4025dee5abb62dd6817ab65bd9aea5ac684196a8c9b68c9198dfbf957583d0",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "file": "projects/metadata-tool/src/app/metadata-landing-page/metadata-landing-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2536,11 +2532,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-<<<<<<< HEAD
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'metadata-landing-page',\r\n  templateUrl: './metadata-landing-page.component.html',\r\n  styleUrls: ['./metadata-landing-page.component.scss'],\r\n})\r\nexport class MetadataLandingPageComponent implements OnInit {\r\n  constructor() {}\r\n\r\n  ngOnInit(): void {}\r\n}\r\n",
-=======
             "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'metadata-landing-page',\n  templateUrl: './metadata-landing-page.component.html',\n  styleUrls: ['./metadata-landing-page.component.scss'],\n})\nexport class MetadataLandingPageComponent {\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2558,24 +2550,12 @@
                 "line": 8
             },
             "extends": [],
-<<<<<<< HEAD
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"flex flex-col h-full justify-between\">\r\n  <!-- content -->\r\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\r\n    <!-- link to workflow -->\r\n    <div class=\"text-center mt-20 mb-20\">\r\n      <!-- <shared-login-buttons></shared-login-buttons> -->\r\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\r\n        Start Workflow\r\n      </button>\r\n    </div>\r\n\r\n    <!-- link to tutorial -->\r\n\r\n    <!-- about -->\r\n    <section>\r\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\r\n      <p>\r\n        Embark on a seamless journey of data transformation with our\r\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\r\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\r\n        format, our tool is designed to provide you with a hassle-free\r\n        experience, ensuring your metadata is accurately and efficiently\r\n        converted to SDRF, mzID and mzML. Unlock the full potential of your data\r\n        with features tailored for precision, speed, and flexibility. The\r\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\r\n        allowing you to focus on what truly matters – making the most out of\r\n        your data. Experience the future of metadata management today!\r\n      </p>\r\n    </section>\r\n\r\n    <!-- link to repo and publication -->\r\n    <section>\r\n      <h2 class=\"text-center\">Citing</h2>\r\n      <p>Our fancy publication can be read here [LINK]</p>\r\n    </section>\r\n\r\n    <section>\r\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\r\n      <p>\r\n        Our fancy GitHub repo can be found\r\n        <a\r\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\r\n          >here</a\r\n        >.\r\n      </p>\r\n    </section>\r\n\r\n    <!-- funding -->\r\n    <section>\r\n      <h2 class=\"text-center\">Affiliations</h2>\r\n      <p>We are funded by</p>\r\n    </section>\r\n  </main>\r\n</div>\r\n"
-        },
-        {
-            "name": "MetadataQuestComponent",
-            "id": "component-MetadataQuestComponent-7be6feb3b95f1efaa60922f4b53a9c34ec8463ee8db870de0181bd99434bbe7e802b3fcee913b9a4401e004597f58c173095e0e7e8a85833b4f769f045b096f4",
-            "file": "projects/metadata-tool/src/app/questionnaire/metadata-quest.component.ts",
-=======
             "templateData": "<div class=\"flex flex-col h-full justify-between\">\n  <!-- content -->\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\n        Start Workflow\n      </button>\n    </div>\n\n    <!-- link to tutorial -->\n\n    <!-- about -->\n    <section>\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\n      <p>\n        Embark on a seamless journey of data transformation with our\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\n        format, our tool is designed to provide you with a hassle-free\n        experience, ensuring your metadata is accurately and efficiently\n        converted to SDRF, mzID and mzML. Unlock the full potential of your data\n        with features tailored for precision, speed, and flexibility. The\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\n        allowing you to focus on what truly matters – making the most out of\n        your data. Experience the future of metadata management today!\n      </p>\n    </section>\n\n    <!-- link to repo and publication -->\n    <section>\n      <h2 class=\"text-center\">Citing</h2>\n      <p>Our fancy publication can be read here [LINK]</p>\n    </section>\n\n    <section>\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\n      <p>\n        Our fancy GitHub repo can be found\n        <a\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\n          >here</a\n        >.\n      </p>\n    </section>\n\n    <!-- funding -->\n    <section>\n      <h2 class=\"text-center\">Affiliations</h2>\n      <p>We are funded by</p>\n    </section>\n  </main>\n</div>\n"
         },
         {
             "name": "MetadataQuestComponent",
             "id": "component-MetadataQuestComponent-7516f9bbdef789274e873b000ecd2ae72500cb316f60a9a680c1b53f632804c15a28366bca20efb6a40455d96e715ab2ef8f1f102896a2671ccaec2616d2bd97",
             "file": "projects/metadata-tool/src/app/metadata-quest/metadata-quest.component.ts",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2635,11 +2615,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-<<<<<<< HEAD
-            "sourceCode": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'metadata-quest',\r\n  templateUrl: './metadata-quest.component.html',\r\n  styleUrls: ['./metadata-quest.component.scss'],\r\n})\r\nexport class MetadataQuestComponent {\r\n\r\n}",
-=======
             "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder } from '@angular/forms';\n\n@Component({\n  selector: 'app-metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestComponent implements OnInit {\n  form: FormGroup;\n\n  constructor(private fb: FormBuilder) {}\n\n  ngOnInit(): void {\n    this.form = this.fb.group({\n      // Define your form structure here\n    });\n  }\n\n  onSubmit(): void {\n    if (this.form.valid) {\n      console.log(this.form.value);\n      // Handle form submission\n    }\n  }\n}\n",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2675,14 +2651,10 @@
                 ]
             },
             "extends": [],
-<<<<<<< HEAD
-            "templateData": "\r\n"
-=======
             "implements": [
                 "OnInit"
             ],
             "templateData": "<!-- metadata-quest.component.html -->\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n  <!-- Define your form fields here -->\n  <button type=\"submit\">Submit</button>\n</form>\n"
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
         },
         {
             "name": "MetadataUploadpageComponent",
@@ -3443,21 +3415,13 @@
     "modules": [
         {
             "name": "AppModule",
-<<<<<<< HEAD
-            "id": "module-AppModule-6c003f4af25f176e65652e7b1ecda92bac985205b9858dfdbd2267e72e0a1fb8837112f96c67de87c87fbf2a5ea6e50b574b39c0894d0fca276d41e794f150cb",
-=======
             "id": "module-AppModule-b8cf3a79162a60b086c85e5bb1d85b89c721f21670ff7a0fe63412ec5bf1555e7bafe3cb0bc106a268057f4816e96356f034bfd2a3e66644a30f05957f2d8631",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app.module.ts",
             "methods": [],
-<<<<<<< HEAD
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { BrowserModule } from '@angular/platform-browser';\r\n\r\nimport { AppRoutingModule } from './app-routing.module';\r\nimport { AppComponent } from './app.component';\r\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\r\n\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n\r\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\r\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\r\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\r\nimport { HttpClientModule } from '@angular/common/http';\r\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\r\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent,\r\n    MetadataLandingPageComponent,\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    BrowserAnimationsModule,\r\n    AppRoutingModule,\r\n    MatButtonModule,\r\n    StandardPageLayoutModule,\r\n    BrowserAnimationsModule,\r\n\r\n\r\n\r\n    HttpClientModule,\r\n\r\n  ],\r\n  providers: [],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule { }\r\n",
-=======
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n\n\n    HttpClientModule,\n\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "children": [
                 {
                     "type": "providers",
@@ -3702,21 +3666,13 @@
         },
         {
             "name": "MetadataQuestModule",
-<<<<<<< HEAD
-            "id": "module-MetadataQuestModule-6501dacb75b9d6b4e4ed4b0873f6711a159d7a6d6768d13cb566b0a6cf6ddf4b4352fbdbc9e92c0c2c0b4edfdaf6a1843f6257415854e6c2d1bc027349d900db",
-=======
             "id": "module-MetadataQuestModule-3496cdc34c6cae0d3c903f0ddcaad628e962aab87ed071c98c37b07138cdd85986503c238c7643acb05f89510cb72430046d5f4389f757ecbdb8d5033f3546e5",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/metadata-quest/metadata-quest.module.ts",
             "methods": [],
-<<<<<<< HEAD
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport {MatIconModule} from '@angular/material/icon';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { MetadataQuestComponent } from './metadata-quest.component';\r\n\r\n@NgModule({\r\n  declarations: [ MetadataQuestComponent ],\r\n  imports: [\r\n    CommonModule,\r\n    MatIconModule,  \r\n    MatButtonModule,\r\n  ],\r\n  exports: [MetadataQuestComponent]\r\n})\r\nexport class MetadataQuestModule { }\r\n",
-=======
             "sourceCode": "// questionnaire.module.ts\nimport { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetadataQuestComponent } from './metadata-quest.component';\n\n@NgModule({\n  declarations: [MetadataQuestComponent],\n  imports: [CommonModule, ReactiveFormsModule],\n  exports: [\n    MetadataQuestComponent, // Export if it will be used outside the module\n  ],\n})\nexport class MetadataQuestModule {\n\n} // Make sure this matches the class name exactly\n",
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             "children": [
                 {
                     "type": "providers",
@@ -3963,23 +3919,8 @@
                 "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-<<<<<<< HEAD
-                "type": "StoryObj<MetadataQuestComponent>",
-                "defaultValue": "{\r\n  render: () => ({\r\n    props: {},\r\n    // Here you can add any input props your component might take\r\n  }),\r\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\r\n  render: () => ({\r\n    props: {},\r\n  }),\r\n}"
-=======
                 "type": "Story",
                 "defaultValue": "{\n  render: () => ({\n    props: {},\n    // Here you can add any input props your component might take\n    // or output events it might emit\n  }),\n}"
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
             },
             {
                 "name": "Default",
@@ -4175,19 +4116,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-<<<<<<< HEAD
-                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "(args: MetadataLandingPageComponent) => ({\r\n  component: MetadataLandingPageComponent,\r\n  props: args,\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-=======
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
                 "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4445,23 +4373,8 @@
                     "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-<<<<<<< HEAD
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "(args: MetadataLandingPageComponent) => ({\r\n  component: MetadataLandingPageComponent,\r\n  props: args,\r\n})"
-=======
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
                 }
             ],
             "projects/metadata-tool/src/ownStories/metadataDownload.story.ts": [
@@ -5344,8 +5257,6 @@
                 "status": "low"
             },
             {
-<<<<<<< HEAD
-=======
                 "filePath": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -5356,7 +5267,6 @@
                 "status": "low"
             },
             {
->>>>>>> 315eb96801a97746def609624f26faa70b00a5b0
                 "filePath": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
