@@ -2491,7 +2491,7 @@
         },
         {
             "name": "MetadataLandingPageComponent",
-            "id": "component-MetadataLandingPageComponent-c6b468c0bb4f8198a9ab27c512047c3cf0ac9fe3c9b2d7916be9e93f11c76b3cef4d9d4d8dccf79c4e2754fd79e26273123c38b6d68d19903f9a1a53026f1f3d",
+            "id": "component-MetadataLandingPageComponent-8945becc9a50e2cade556189f2cbc79d685e56c404e9b067561956b569ee0aa65e4025dee5abb62dd6817ab65bd9aea5ac684196a8c9b68c9198dfbf957583d0",
             "file": "projects/metadata-tool/src/app/metadata-landing-page/metadata-landing-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2532,7 +2532,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'metadata-landing-page',\n  templateUrl: './metadata-landing-page.component.html',\n  styleUrls: ['./metadata-landing-page.component.scss'],\n})\nexport class MetadataLandingPageComponent implements OnInit {\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'metadata-landing-page',\n  templateUrl: './metadata-landing-page.component.html',\n  styleUrls: ['./metadata-landing-page.component.scss'],\n})\nexport class MetadataLandingPageComponent {\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2550,21 +2550,18 @@
                 "line": 8
             },
             "extends": [],
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"flex flex-col h-full justify-between\">\n  <!-- content -->\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\n        Start Workflow\n      </button>\n    </div>\n\n    <!-- link to tutorial -->\n\n    <!-- about -->\n    <section>\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\n      <p>\n        Embark on a seamless journey of data transformation with our\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\n        format, our tool is designed to provide you with a hassle-free\n        experience, ensuring your metadata is accurately and efficiently\n        converted to SDRF, mzID and mzML. Unlock the full potential of your data\n        with features tailored for precision, speed, and flexibility. The\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\n        allowing you to focus on what truly matters – making the most out of\n        your data. Experience the future of metadata management today!>\n      </p>\n    </section>\n\n    <!-- link to repo and publication -->\n    <section>\n      <h2 class=\"text-center\">Citing</h2>\n      <p>Our fancy publication can be read here [LINK]</p>\n    </section>\n\n    <section>\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\n      <p>\n        Our fancy GitHub repo can be found\n        <a\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\n          >here</a\n        >.\n      </p>\n    </section>\n\n    <!-- funding -->\n    <section>\n      <h2 class=\"text-center\">Affiliations</h2>\n      <p>We are funded by</p>\n    </section>\n  </main>\n</div>\n"
+            "templateData": "<div class=\"flex flex-col h-full justify-between\">\n  <!-- content -->\n  <main class=\"max-w-3xl mx-auto px-4 mb-auto\">\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/upload\">\n        Start Workflow\n      </button>\n    </div>\n\n    <!-- link to tutorial -->\n\n    <!-- about -->\n    <section>\n      <h2 class=\"text-center\">Metadata-Tool for Metadata Conversion</h2>\n      <p>\n        Embark on a seamless journey of data transformation with our\n        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.\n        Whether you're dealing with XML, JSON, CSV, or any other metadata\n        format, our tool is designed to provide you with a hassle-free\n        experience, ensuring your metadata is accurately and efficiently\n        converted to SDRF, mzID and mzML. Unlock the full potential of your data\n        with features tailored for precision, speed, and flexibility. The\n        Metadata-Tool for Metadata Conversion streamlines your workflow,\n        allowing you to focus on what truly matters – making the most out of\n        your data. Experience the future of metadata management today!\n      </p>\n    </section>\n\n    <!-- link to repo and publication -->\n    <section>\n      <h2 class=\"text-center\">Citing</h2>\n      <p>Our fancy publication can be read here [LINK]</p>\n    </section>\n\n    <section>\n      <h2 class=\"text-center\">Source Code <i class=\"fab fa-github\"></i></h2>\n      <p>\n        Our fancy GitHub repo can be found\n        <a\n          href=\"https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads\"\n          >here</a\n        >.\n      </p>\n    </section>\n\n    <!-- funding -->\n    <section>\n      <h2 class=\"text-center\">Affiliations</h2>\n      <p>We are funded by</p>\n    </section>\n  </main>\n</div>\n"
         },
         {
             "name": "MetadataQuestComponent",
-            "id": "component-MetadataQuestComponent-f5c1aad406fa22da54439561e99ee6cd6d06b6cb6e88232b5817d6bece94d811920ff44bc17784299fed3b63f84fbe89f924eb87d8f4118da824a7c0050d49ea",
-            "file": "projects/metadata-tool/src/app/questionnaire/metadata-quest.component.ts",
+            "id": "component-MetadataQuestComponent-7516f9bbdef789274e873b000ecd2ae72500cb316f60a9a680c1b53f632804c15a28366bca20efb6a40455d96e715ab2ef8f1f102896a2671ccaec2616d2bd97",
+            "file": "projects/metadata-tool/src/app/metadata-quest/metadata-quest.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "metadata-quest",
+            "selector": "app-metadata-quest",
             "styleUrls": [
                 "./metadata-quest.component.scss"
             ],
@@ -2576,8 +2573,39 @@
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "form",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onSubmit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -2587,7 +2615,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestComponent {\n\n}",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder } from '@angular/forms';\n\n@Component({\n  selector: 'app-metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestComponent implements OnInit {\n  form: FormGroup;\n\n  constructor(private fb: FormBuilder) {}\n\n  ngOnInit(): void {\n    this.form = this.fb.group({\n      // Define your form structure here\n    });\n  }\n\n  onSubmit(): void {\n    if (this.form.valid) {\n      console.log(this.form.value);\n      // Handle form submission\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2596,8 +2624,37 @@
                 }
             ],
             "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "fb",
+                        "type": "FormBuilder",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 11,
+                "jsdoctags": [
+                    {
+                        "name": "fb",
+                        "type": "FormBuilder",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             "extends": [],
-            "templateData": "\n"
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<!-- metadata-quest.component.html -->\n<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n  <!-- Define your form fields here -->\n  <button type=\"submit\">Submit</button>\n</form>\n"
         },
         {
             "name": "MetadataUploadpageComponent",
@@ -3358,13 +3415,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-c7ea44f1a48c05f30fbc403d0f62775089279ad236fd5b850c99ae510e2350f2564d9f1db65ead63b1b3b9165ac56dd97b1e534e182f5200be0baf2e91d4c577",
+            "id": "module-AppModule-b8cf3a79162a60b086c85e5bb1d85b89c721f21670ff7a0fe63412ec5bf1555e7bafe3cb0bc106a268057f4816e96356f034bfd2a3e66644a30f05957f2d8631",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n    WorkflowModule,\n    MetaDataCheckboxSelectionModule,\n    MetadataUploadpageModule,\n    HttpClientModule,\n    MetadataDownloadpageModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n\n\n    HttpClientModule,\n\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3386,18 +3443,6 @@
                     "elements": [
                         {
                             "name": "AppRoutingModule"
-                        },
-                        {
-                            "name": "MetaDataCheckboxSelectionModule"
-                        },
-                        {
-                            "name": "MetadataDownloadpageModule"
-                        },
-                        {
-                            "name": "MetadataUploadpageModule"
-                        },
-                        {
-                            "name": "WorkflowModule"
                         }
                     ]
                 },
@@ -3621,13 +3666,13 @@
         },
         {
             "name": "MetadataQuestModule",
-            "id": "module-MetadataQuestModule-173c795f03d7c38aba5fb89534fa74ded79a929da10fbc044a4dfe450824c59ca04e67e947fa9fa72c3cd11fca7cb789b8b49efc2def2c1c674db7ed0029e21e",
+            "id": "module-MetadataQuestModule-3496cdc34c6cae0d3c903f0ddcaad628e962aab87ed071c98c37b07138cdd85986503c238c7643acb05f89510cb72430046d5f4389f757ecbdb8d5033f3546e5",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/questionnaire/metadata-quest.module.ts",
+            "file": "projects/metadata-tool/src/app/metadata-quest/metadata-quest.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {MatIconModule} from '@angular/material/icon';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MetadataQuestComponent } from './metadata-quest.component';\n\n@NgModule({\n  declarations: [ MetadataQuestComponent ],\n  imports: [\n    CommonModule,\n    MatIconModule,  \n    MatButtonModule,\n  ],\n  exports: [MetadataQuestComponent]\n})\nexport class MetadataQuestModule { }\n",
+            "sourceCode": "// questionnaire.module.ts\nimport { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetadataQuestComponent } from './metadata-quest.component';\n\n@NgModule({\n  declarations: [MetadataQuestComponent],\n  imports: [CommonModule, ReactiveFormsModule],\n  exports: [\n    MetadataQuestComponent, // Export if it will be used outside the module\n  ],\n})\nexport class MetadataQuestModule {\n\n} // Make sure this matches the class name exactly\n",
             "children": [
                 {
                     "type": "providers",
@@ -3864,8 +3909,8 @@
                 "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -3876,6 +3921,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  render: () => ({\n    props: {},\n    // Here you can add any input props your component might take\n    // or output events it might emit\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -3971,6 +4026,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta",
+                "defaultValue": "{\n  title: 'Questionnaire/MetadataQuestComponent',\n  component: MetadataQuestComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(FormsModule),\n        importProvidersFrom(ReactiveFormsModule),\n        importProvidersFrom(HttpClientModule),\n        importProvidersFrom(OAuthModule.forRoot()),\n        importProvidersFrom(MatDialogModule),\n        // ...any other modules that your component requires\n      ],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/metadata-tool/src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4061,16 +4126,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "(args: MetadataLandingPageComponent) => ({\n  component: MetadataLandingPageComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4078,7 +4133,92 @@
                 "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
             }
         ],
-        "functions": [],
+        "functions": [
+            {
+                "name": "validateIf",
+                "file": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "conditionalFieldName",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "conditionalValue",
+                        "type": "T",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "validators",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "errorNamespace",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "'conditional'"
+                    }
+                ],
+                "returnType": "ValidatorFn",
+                "jsdoctags": [
+                    {
+                        "name": "conditionalFieldName",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "conditionalValue",
+                        "type": "T",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "validators",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "errorNamespace",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "'conditional'",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "watchField",
+                "file": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": []
+            }
+        ],
         "typealiases": [
             {
                 "name": "Story",
@@ -4086,6 +4226,28 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<>",
                 "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<>",
+                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<>",
+                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4243,18 +4405,8 @@
                     "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "(args: MetadataLandingPageComponent) => ({\n  component: MetadataLandingPageComponent,\n  props: args,\n})"
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
                 }
             ],
             "projects/metadata-tool/src/ownStories/metadataDownload.story.ts": [
@@ -4287,6 +4439,28 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/questionaire.story.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  render: () => ({\n    props: {},\n    // Here you can add any input props your component might take\n    // or output events it might emit\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta",
+                    "defaultValue": "{\n  title: 'Questionnaire/MetadataQuestComponent',\n  component: MetadataQuestComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(FormsModule),\n        importProvidersFrom(ReactiveFormsModule),\n        importProvidersFrom(HttpClientModule),\n        importProvidersFrom(OAuthModule.forRoot()),\n        importProvidersFrom(MatDialogModule),\n        // ...any other modules that your component requires\n      ],\n    }),\n  ],\n}"
                 }
             ],
             "projects/metadata-tool/src/ownStories/uploadPage.stories.ts": [
@@ -4454,7 +4628,94 @@
                 }
             ]
         },
-        "groupedFunctions": {},
+        "groupedFunctions": {
+            "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts": [
+                {
+                    "name": "validateIf",
+                    "file": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "conditionalFieldName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "conditionalValue",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "validators",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "errorNamespace",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'conditional'"
+                        }
+                    ],
+                    "returnType": "ValidatorFn",
+                    "jsdoctags": [
+                        {
+                            "name": "conditionalFieldName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "conditionalValue",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "validators",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "errorNamespace",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'conditional'",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "watchField",
+                    "file": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": []
+                }
+            ]
+        },
         "groupedEnumerations": {
             "projects/metadata-tool/src/app/webserveraddress.service.ts": [
                 {
@@ -4519,6 +4780,32 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<>",
                     "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/landingPage.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<>",
+                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/metadata-tool/src/ownStories/questionaire.story.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<>",
+                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -4595,15 +4882,75 @@
                     },
                     {
                         "path": "upload",
-                        "loadChildren": "./metadata-uploadpage/metadata-uploadpage.module#MetadataUploadpageModule"
+                        "loadChildren": "./metadata-uploadpage/metadata-uploadpage.module#MetadataUploadpageModule",
+                        "children": [
+                            {
+                                "kind": "module",
+                                "children": [
+                                    {
+                                        "name": "routes",
+                                        "filename": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage-routing.module.ts",
+                                        "module": "MetadataUploadpageRoutingModule",
+                                        "children": [
+                                            {
+                                                "path": "",
+                                                "component": "MetadataUploadpageComponent"
+                                            }
+                                        ],
+                                        "kind": "module"
+                                    }
+                                ],
+                                "module": "MetadataUploadpageModule"
+                            }
+                        ]
                     },
                     {
                         "path": "workflow",
-                        "loadChildren": "./metadata-workflow/metadata-workflow.module#WorkflowModule"
+                        "loadChildren": "./metadata-workflow/metadata-workflow.module#WorkflowModule",
+                        "children": [
+                            {
+                                "kind": "module",
+                                "children": [
+                                    {
+                                        "name": "routes",
+                                        "filename": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow-routing.module.ts",
+                                        "module": "MetadataWorkflowRoutingModule",
+                                        "children": [
+                                            {
+                                                "path": "",
+                                                "component": "MetadataWorkflowComponent"
+                                            }
+                                        ],
+                                        "kind": "module"
+                                    }
+                                ],
+                                "module": "WorkflowModule"
+                            }
+                        ]
                     },
                     {
                         "path": "download",
-                        "loadChildren": "./metadata-downloadpage/metadata-downloadpage.module#MetadataDownloadpageModule"
+                        "loadChildren": "./metadata-downloadpage/metadata-downloadpage.module#MetadataDownloadpageModule",
+                        "children": [
+                            {
+                                "kind": "module",
+                                "children": [
+                                    {
+                                        "name": "routes",
+                                        "filename": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage-routing.module.ts",
+                                        "module": "MetadataDownloadpageRoutingModule",
+                                        "children": [
+                                            {
+                                                "path": "",
+                                                "component": "MetadataDownloadpageComponent"
+                                            }
+                                        ],
+                                        "kind": "module"
+                                    }
+                                ],
+                                "module": "MetadataDownloadpageModule"
+                            }
+                        ]
                     },
                     {
                         "path": "",
@@ -4613,42 +4960,6 @@
                     {
                         "path": "**",
                         "redirectTo": "home"
-                    }
-                ],
-                "kind": "module"
-            },
-            {
-                "name": "routes",
-                "filename": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage-routing.module.ts",
-                "module": "MetadataDownloadpageRoutingModule",
-                "children": [
-                    {
-                        "path": "",
-                        "component": "MetadataDownloadpageComponent"
-                    }
-                ],
-                "kind": "module"
-            },
-            {
-                "name": "routes",
-                "filename": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage-routing.module.ts",
-                "module": "MetadataUploadpageRoutingModule",
-                "children": [
-                    {
-                        "path": "",
-                        "component": "MetadataUploadpageComponent"
-                    }
-                ],
-                "kind": "module"
-            },
-            {
-                "name": "routes",
-                "filename": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow-routing.module.ts",
-                "module": "MetadataWorkflowRoutingModule",
-                "children": [
-                    {
-                        "path": "",
-                        "component": "MetadataWorkflowComponent"
                     }
                 ],
                 "kind": "module"
@@ -4724,6 +5035,35 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "validateIf",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/metadata-quest/custom-validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "watchField",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/metadata-quest/metadata-quest.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MetadataQuestComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -4793,15 +5133,6 @@
                 "name": "MetaDataUploadJson",
                 "coveragePercent": 0,
                 "coverageCount": "0/7",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/questionnaire/metadata-quest.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "MetadataQuestComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -4884,16 +5215,6 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
                 "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -4919,6 +5240,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

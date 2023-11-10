@@ -7,7 +7,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { importProvidersFrom } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 const meta: Meta = {
   title: 'Project/SDRF Table Component',
   component: MetadataWorkflowComponent,
