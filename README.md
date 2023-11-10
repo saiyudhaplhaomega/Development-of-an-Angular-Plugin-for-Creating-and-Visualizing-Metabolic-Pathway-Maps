@@ -90,7 +90,7 @@ THEN you need to override internal styles of the material component.
 
 3) What is the actual internal component styling making trouble? > Use the browser devtools to inspect the html and find the corresponding classname.
 
-4) Put the classname into this file and test whether you can change the styling from here.
+4) Put the classname into the "material-styles-overrides.scss" file and test whether you can change the styling from here.
 
 5) Find the name of the uppermost parent element of the material component and its classname (e.g., "mat-stepper-vertical" for mat-stepper).
 
