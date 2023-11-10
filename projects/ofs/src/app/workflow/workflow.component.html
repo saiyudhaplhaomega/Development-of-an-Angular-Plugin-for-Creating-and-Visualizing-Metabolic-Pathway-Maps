@@ -1,6 +1,7 @@
 <div>
   <div class="stepper-container mx-auto p-4 flex-grow-0 flex-shrink-0">
     <mat-stepper
+    class="my-stepper"
       orientation="vertical"
       [linear]="true"
       #stepper
@@ -8,7 +9,9 @@
       [selectedIndex]="(currentStep$ | async).index"
     >
       <mat-step
-        style="visibility: visible; height: 100%"
+
+       style="background-color: red"
+
         [completed]="(completedSteps$ | async)[0]"
         [editable]="true"
       >
@@ -17,6 +20,7 @@
       </mat-step>
 
       <mat-step
+
         style="visibility: visible; height: 100%"
         [completed]="(completedSteps$ | async)[1]"
         [editable]="true"

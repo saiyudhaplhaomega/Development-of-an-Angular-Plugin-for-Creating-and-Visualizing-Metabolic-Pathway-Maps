@@ -49,12 +49,17 @@ export class WorkflowService {
   }
 
   // use this getter if you only need the current value
-  get ofsData(): DeepReadonly<OFSData> {
+  get ofsData(): OFSData {
     return this.ofsDataSubject$.value;
   }
 
+  // get ofsData(): DeepReadonly<OFSData> {
+  //   return this.ofsDataSubject$.value;
+  // }
+
   private get ofsDataClone(): OFSData {
-    return cloneDeep(this.ofsData);
+    return this.ofsData;
+    // return cloneDeep(this.ofsData);
   }
 
   // use this getter if you want to react to changes of the data object

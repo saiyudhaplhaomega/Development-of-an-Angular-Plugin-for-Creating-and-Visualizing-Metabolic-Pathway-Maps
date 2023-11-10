@@ -1,3 +1,25 @@
+.documentation-content-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+}
+
+.form-button-grid {
+  @apply mb-8 grid grid-cols-2 gap-4;
+}
+
+form {
+  @apply flex flex-col mt-8 min-h-0;
+}
+
+.inner-form-container {
+  @apply flex flex-col overflow-y-auto;
+}
+
+.outer-form-container {
+  @apply flex flex-col h-full;
+}
+
 .workflow-container {
   //   width: 1536px;
   max-height: 48rem;
@@ -24,3 +46,11 @@
   width: 100%;
   @apply max-w-screen-2xl;
 }
+
+
+// .my-stepper {
+//   // height: 100% !important;
+//   // visibility: visible !important;
+//   color: green !important;
+//   background-color: red !important;
+// }
