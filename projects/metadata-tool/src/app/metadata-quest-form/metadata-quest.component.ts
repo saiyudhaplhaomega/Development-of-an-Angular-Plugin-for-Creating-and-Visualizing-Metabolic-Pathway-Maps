@@ -39,79 +39,155 @@ export class MetadataQuestFormComponent {
 
   // This is the Logic for the first step
   firstFieldGroup = {
-      props: { label: 'Experiment Setup' },
-      fieldGroup: [
-        {
-          key: 'experimentType',
-          type: 'select',
-          templateOptions: {
-            label: 'Experiment Type',
-            options: [
-              { value: 'metaproteomics', label: 'Metaproteomics' },
-              { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement
-            ],
-          },
+    props: { label: 'Experiment Settings' },
+    fieldGroup: [
+      {
+        key: 'experimentType',
+        type: 'select',
+        templateOptions: {
+          label: 'Experiment Type',
+          options: [
+            { value: 'metaproteomics', label: 'Metaproteomics' },
+            { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement
+          ],
         },
-        {
-          key: 'metaproteomeType',
-          type: 'select',
-          templateOptions: {
-            label: 'Which Metaproteom?',
-            options: this.metagenomeTypeOptions,
-          },
-          hideExpression: "model.experimentType !== 'metaproteomics'",
+      },
+      {
+        key: 'metaproteomeType',
+        type: 'select',
+        templateOptions: {
+          label: 'Which Metaproteom?',
+          options: this.metagenomeTypeOptions,
         },
-        {
-          key: 'specificMetagenome',
-          type: 'select',
-          templateOptions: {
-            label: 'Specific Metagenome?',
-            options: this.specificMetagenomeOptions,
-          },
-          hideExpression: "model.metaproteomeType !== 'metagenome'",
+        hideExpression: "model.experimentType !== 'metaproteomics'",
+      },
+      {
+        key: 'specificMetagenome',
+        type: 'select',
+        templateOptions: {
+          label: 'Specific Metagenome?',
+          options: this.specificMetagenomeOptions,
         },
-        // You can add more conditional fields here as needed
-        ,
-      ],
-    }
-
+        hideExpression: "model.metaproteomeType !== 'metagenome'",
+      },
+      // You can add more conditional fields here as needed
+      ,
+    ],
+  };
 
   secondFieldGroup = {
-      props: { label: 'Experimental Settings/ Measurement Settings' },
+    props: { label: ' Measurement Settings' },
+    fieldGroup: [
+      {
+        key: 'technologyType',
+        type: 'select',
+        templateOptions: {
+          label: 'What kind of Metaproteomics (technology type)?',
+          options: this.technologyTypeOptions,
+        },
+      },
+      {
+        key: 'measurementInstrument',
+        type: 'input',
+        templateOptions: {
+          label: 'Which instruments were used for measurement?',
+          placeholder: 'e.g., Orbitrap, TimsTOF',
+        },
+      },
+      {
+        key: 'digestionMethod',
+        type: 'select',
+        templateOptions: {
+          label: 'What digestion method did you use?',
+          options: this.digestionMethodOptions,
+        },
+      },
+      {
+        key: 'enzymeUsed',
+        type: 'input',
+        templateOptions: {
+          label: 'Which enzyme (cleavant agent) did you use for digestion?',
+          placeholder: 'e.g., Trypsin',
+        },
+      },
+      // Add additional fields for Modification Parameters, Dissociation method, etc.
+    ],
+  };
+
+  thirdFieldGroup = {
+    props: { label: 'Questions for Experiment' },
+    fieldGroup: [
+      {
+        key: 'assayUsed',
+        type: 'input',
+        templateOptions: {
+          label: 'What assay was used?',
+          placeholder: 'Enter the assay used',
+        },
+      },
+      {
+        key: 'experimentType',
+        type: 'input',
+        templateOptions: {
+          label: 'What kind of experiment was done?',
+          placeholder: 'e.g., heat shock',
+        },
+      },
+      {
+        key: 'labelsUsed',
+        type: 'input',
+        templateOptions: {
+          label: 'Labels used?',
+          placeholder: 'Enter any labels used',
+        },
+      },
+    ],
+  };
+
+  fourthFieldGroup = {
+    props: { label: 'About the Project' },
+    fieldGroup: [
+      {
+        key: 'group',
+        type: 'input',
+        templateOptions: {
+          label: 'Group',
+          placeholder: 'Enter the group name',
+        },
+      },
+      {
+        key: 'project',
+        type: 'input',
+        templateOptions: {
+          label: 'Project',
+          placeholder: 'Enter the project name',
+        },
+      },
+      {
+        key: 'program',
+        type: 'input',
+        templateOptions: {
+          label: 'Program',
+          placeholder: 'Enter the program name',
+        },
+      },
+    ],
+  };
+
+  fifthFieldGroup =
+    {
+      props: { label: 'Variable Under Investigation (Factor Value)' },
       fieldGroup: [
         {
-          key: 'technologyType',
-          type: 'select',
-          templateOptions: {
-            label: 'What kind of Metaproteomics (technology type)?',
-            options: this.technologyTypeOptions,
-          },
-        },
-        {
-          key: 'measurementInstrument',
+          key: 'factorValue',
           type: 'input',
           templateOptions: {
-            label: 'Which instruments were used for measurement?',
-            placeholder: 'e.g., Orbitrap, TimsTOF',
+            label: 'Which is the variable under investigation (factor value)?',
+            placeholder: 'Enter the factor value',
+            description:
+              'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',
           },
         },
-        {
-          key: 'digestionMethod',
-          type: 'select',
-          templateOptions: {
-            label: 'What digestion method did you use?',
-            options: this.digestionMethodOptions,
-          },
-        },
-        {
-          key: 'enzymeUsed',
-          type: 'input',
-          templateOptions: {
-            label: 'Which enzyme (cleavant agent) did you use for digestion?',
-            placeholder: 'e.g., Trypsin',
-          },
-        },
-        // Add additional fields for Modification Parameters, Dissociation method, etc.
       ],
     }
 
@@ -122,7 +198,14 @@ export class MetadataQuestFormComponent {
   fields: FormlyFieldConfig[] = [
     {
       type: 'stepper',
-      fieldGroup: [this.firstFieldGroup, this.secondFieldGroup],
+      fieldGroup: [
+        this.firstFieldGroup,
+        this.secondFieldGroup,
+        this.thirdFieldGroup,
+        this.fourthFieldGroup,
+        this.fifthFieldGroup,
+
+      ],
     },
   ];
 
