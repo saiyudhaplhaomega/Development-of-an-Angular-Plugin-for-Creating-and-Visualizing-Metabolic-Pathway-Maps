@@ -1,6 +1,6 @@
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
-import { MetadataUploadpageComponent } from '../app/metadata-uploadpage/metadata-uploadpage.component';
+import { MetadataUploadpageComponent } from '../app/components/upload-container/metadata-uploadpage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';

@@ -1,8 +1,8 @@
 // Import moduleMetadata for Storybook decorators
 import { moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
-import {   MetadataDownloadpageComponent } from '../app/metadata-downloadpage/metadata-downloadpage.component';
-import { MetadataDownloadpageModule } from '../app/metadata-downloadpage/metadata-downloadpage.module';
+import {   MetadataDownloadpageComponent } from '../app/pages/metadata-download-page/metadata-downloadpage.component';
+import { MetadataDownloadpageModule } from '../app/pages/metadata-download-page/metadata-downloadpage.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Meta } from '@storybook/angular';
 

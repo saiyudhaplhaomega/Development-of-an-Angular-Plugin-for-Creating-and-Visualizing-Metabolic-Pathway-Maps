@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ColumnData, ColumnDataObject } from '../model/metadata-columnData';
+import { ColumnData, ColumnDataObject } from '../../model/metadata-columnData';
 import { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';
 import {
   Endpoints,
   WebserveraddressService,
-} from '../webserveraddress.service';
-import { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';
+} from '../../webserveraddress.service';
+import { MetaDataUploadJson, MetaDataUploadJsonObject } from '../../model/metadatauploadjson';
 import { HttpEventType, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { DownloadLinksJson } from '../model/download-json';
+import { DownloadLinksJson } from '../../model/download-json';
 
 @Injectable({
   providedIn: 'root',

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
-import { MetadataQuestFormComponent } from '../app/metadata-quest-form/metadata-quest.component';
+import { MetadataQuestFormComponent } from '../app/components/metadata-quest-form/metadata-quest.component';
 
 
 const meta: Meta = {

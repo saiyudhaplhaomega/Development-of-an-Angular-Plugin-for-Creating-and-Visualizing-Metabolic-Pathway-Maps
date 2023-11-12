@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 //import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
-import { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';
+import { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';
 import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
 import { MatDialog } from '@angular/material/dialog';
 import { OnInit } from '@angular/core';

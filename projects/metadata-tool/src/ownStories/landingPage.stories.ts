@@ -1,10 +1,10 @@
 import { Meta, StoryObj, applicationConfig } from '@storybook/angular';
-import {  MetadataLandingPageComponent  } from '../app/metadata-landing-page/metadata-landing-page.component';
+import {  MetadataLandingPageComponent  } from '../app/pages/metadata-landing-page/metadata-landing-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MetadataUploadpageComponent } from '../app/metadata-uploadpage/metadata-uploadpage.component';
+import { MetadataUploadpageComponent } from '../app/components/upload-container/metadata-uploadpage.component';
 
 
 export default {

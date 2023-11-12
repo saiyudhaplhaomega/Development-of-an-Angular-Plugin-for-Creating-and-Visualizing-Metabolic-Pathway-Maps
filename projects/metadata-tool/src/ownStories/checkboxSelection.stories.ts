@@ -9,7 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
-import {  MetaDataCheckboxSelectionComponent  } from '../app/metadata-checkboxselection/metadata-checkboxselection.component';
+import {  MetaDataCheckboxSelectionComponent  } from '../app/components/metadata-checkboxselection/metadata-checkboxselection.component';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 

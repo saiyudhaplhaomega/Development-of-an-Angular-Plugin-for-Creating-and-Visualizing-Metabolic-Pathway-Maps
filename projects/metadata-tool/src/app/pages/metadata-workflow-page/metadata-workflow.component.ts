@@ -6,12 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MetaDataInputService } from './metaddata-input.service';
-import { ColumnData, ColumnDataObject } from '../model/metadata-columnData';
+import { ColumnData, ColumnDataObject } from  '../../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
-import { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';
+
 import { Subscription } from 'rxjs';
-import { MetaDataUploadJsonObject } from '../model/metadatauploadjson';
+import { MetaDataUploadJsonObject } from '../../model/metadatauploadjson';
+import { CheckboxSelectionService } from '../../components/metadata-checkboxselection/checkboxselectionservice';
 
 @Component({
   selector: 'metadata-workflow',

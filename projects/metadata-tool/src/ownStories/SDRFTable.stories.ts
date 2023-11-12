@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MetadataWorkflowComponent } from '../app/metadata-workflow/metadata-workflow.component';
+import { MetadataWorkflowComponent } from '../app/pages/metadata-workflow-page/metadata-workflow.component';
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';

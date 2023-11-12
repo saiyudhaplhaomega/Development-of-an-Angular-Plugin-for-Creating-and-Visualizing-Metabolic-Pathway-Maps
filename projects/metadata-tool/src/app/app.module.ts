@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';
+import { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { WorkflowModule } from './metadata-workflow/metadata-workflow.module';
-import { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';
-import { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';
+import { WorkflowModule } from './pages/metadata-workflow-page/metadata-workflow.module';
+import { MetaDataCheckboxSelectionModule } from './components/metadata-checkboxselection/metadata-checkboxselection.module';
+import { MetadataUploadpageModule } from './components/upload-container/metadata-uploadpage.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';
+import { MetadataDownloadpageModule } from './pages/metadata-download-page/metadata-downloadpage.module';
 import { StandardPageLayoutModule } from 'dist/shared-lib';
 import { FormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
