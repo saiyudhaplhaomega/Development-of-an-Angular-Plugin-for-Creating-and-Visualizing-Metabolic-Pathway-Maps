@@ -47,7 +47,7 @@
     </ng-container>
 
     <!-- login button -->
-    <div *ngIf="hasLogin" class="ml-auto">
+    <div *ngIf="hasLogin" class="ml-auto" [routerLink]="'/login'">
       <button mat-flat-button>
         Log in
         <mat-icon>account_circle</mat-icon>
@@ -66,4 +66,5 @@
       <ng-content select="#footer"></ng-content>
     </div>
   </div>
+
 </div>

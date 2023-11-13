@@ -62,4 +62,9 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
     }
     return true;
   }
+
+  navigateLogin() {
+
+  }
+
 }

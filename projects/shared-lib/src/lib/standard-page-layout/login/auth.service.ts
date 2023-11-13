@@ -25,6 +25,7 @@ export class AuthService {
       this.setIdProvider('elixir');
       this.oauthService.configure(authConfigElixir);
     } else {
+      console.log("provider google")
       this.setIdProvider('google');
       this.oauthService.configure(authConfigGoogle);
     }

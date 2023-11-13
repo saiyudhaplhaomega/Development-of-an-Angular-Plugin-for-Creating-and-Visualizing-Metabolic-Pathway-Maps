@@ -27,7 +27,7 @@ import { TermsOfServicePageComponent } from './components/terms-of-service-page/
     AppComponent,
     SafePipe, // where to put this? leave here?
     ProphaneResultViewComponent, // should be somwhere else
-    SideBarResultsComponent, // should be somwhere else 
+    SideBarResultsComponent, // should be somwhere else
     TermsOfServicePageComponent, // should be somwhere else
     PrivacyPolicyPageComponent, // should be somwhere else
     ImpressumPageComponent, // should be somwhere else
