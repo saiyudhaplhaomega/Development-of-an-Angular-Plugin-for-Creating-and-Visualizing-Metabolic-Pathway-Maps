@@ -1,0 +1,50 @@
+.button_style{
+    background-color: white;}
+.button_style:visited{background-color: #106cc8;}
+.button_style:focus{background-color: #106cc8;}
+.button_style:active{background-color: #106cc8;}
+
+
+#create-menu-bar {
+    background-color: white;
+    margin-bottom: 1em;
+}
+
+.mat-button-toggle:hover .mat-icon {
+    color: black!important;
+}
+
+.mat-icon:hover {
+    color: black!important;
+}
+
+
+.mat-button-toggle-checked {
+    color: black!important;
+}
+
+#create-menu-bar .mat-button-toggle {
+    color: #9E9E9E!important;
+}
+
+#create-menu-bar .mat-button-toggle:last-child {
+    color: white!important;
+    margin-left: auto!important;
+    background-color: #106cc8!important;
+}
+
+#create-menu-bar .mat-button-toggle :active {
+    color: #106cc8!important;
+}
+
+.mat-button-toggle-group {
+    display: flex;
+}
+
+#create-menu-bar, .tax_table, .input_area {
+    width: 75%;
+}
+
+.input_area {
+    margin: 2em;
+}

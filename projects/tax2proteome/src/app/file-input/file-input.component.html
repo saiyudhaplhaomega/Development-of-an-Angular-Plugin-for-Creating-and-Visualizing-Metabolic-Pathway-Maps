@@ -1,0 +1,14 @@
+<button mat-raised-button (click)="fileInput.click()" class="button">
+    <fa-icon [icon]="['fas', 'upload']" ></fa-icon>
+    <span>   Choose a file…</span>
+    <input
+        #fileInput
+        type="file"
+        (change)='openFile($event)'
+        style="display:none;"
+        accept=".csv, .tsv, .txt"/>
+</button>
+<span class="file-name">
+            {{ fileName }}
+</span>
+

@@ -1,0 +1,111 @@
+<h2> Example 1: Generate protein database using Uniprot database and unchanged rank</h2>
+<h3>Tax2proteome run for a metaproteome sample containing species highly represented in the protein databases</h3>
+<p>Sample composition: Escherichia coli (taxid: 562), Yerisina pseudotuberculosis (taxid:633),
+    unknown species of the Rhizobium (taxid: 379) and Salmonella (taxid: 590) genus, and some viruses of the
+    Coronaviridae (taxid: 11118) family are assumed. </p>
+<h3>1. Select taxa for database selection by taxon IDs or name by different methods: </h3>
+<p> The taxon IDs of species or of a certain rank can be determined here: <a href="https://www.ncbi.nlm.nih.gov/taxonomy"> NCBI Taxonomy </a></p>
+<p><b>Input by name or taxon ID search: </b><br>
+    <img src="../assets/Screenshot_autocomplete.png"  alt="pic_auto" style="width:50%;height:20%;">
+</p>
+<p><b>Input by taxon IDs. Separated by comma, space, semicolon or new line: </b><br>
+    <img src="../assets/Screenshot_taxidlist.png"  alt="pic_list" style="width:50%;height:20%;">
+</p>
+<p><b>Input by upload file. All numbers contained in the file are extracted as taxon IDs: </b><br>
+    <img src="../assets/Screenshot_upload.png"  alt="pic_upload" style="width:50%;height:20%;">
+</p>
+<h3>2. Select Options </h3>
+<h4>Option database selection</h4>
+<p>Chose one of the following databases: Uniprot, NCBI-nr, Swissprot. Tax2Proteome selects all sequences
+    according the given taxa from one of these databases. Since the sample contains E.coli and Salmonella, which
+    are high represented in the databases, the smaller Uniprot Database is chosen.<br>
+    <img src="../assets/Screenshot_db_options.png"  alt="pic_db" style="width:50%;height:20%;">
+</p>
+<h4>Option rank selection</h4>
+<p>Chose rank, the higher, the more protein sequences are contained in the resulting database. Here option species is chosen,
+    so that the defined rank by user given taxon IDs remains unchanged. For high represented species like Salmonella and E.coli
+    a rank increase is unnecessary and decreases the identification rate.<br>
+    <img src="../assets/Screenshot_rank_options.png"  alt="pic_rank" style="width:50%;height:20%;">
+</p>
+<h4>Option for databases selected from the Uniprot or Swissprot protein databases</h4>
+<p>Option non-redundant merges all redundant sequences to one with concatenated fasta headers.
+    The search engine matching results are improved by using non-redundant databases, so use it!<br>
+    <img src="../assets/Screenshot_redundant_options.png"  alt="pic_redundant" style="width:50%;height:20%;">
+</p>
+<h3>3. Control input taxa </h3>
+<p>Control the selected taxa and ranks in the input table. If taxa with higher rank as specified in options are
+    given by the user, they stay unchanged.<br>
+    <img src="../assets/Screenshot_table.png"  alt="pic_table" style="width:50%;height:20%;">
+</p>
+<h3>4. Send your request for generating a protein sequence database based on public sequence databases accordingly to
+    your chosen taxa and options. </h3>
+<p>    push the  <mat-icon class="icon">send</mat-icon>   button </p>
+
+<p>    You get your database ID here: </p>
+<p>
+    <img src="../assets/check_status.png"  alt="progress" style="width:50%;height:20%;">
+</p>
+<h3>5. Check progress of database creation.</h3>
+<p>Depending on server workload, the database creation can take up to one day, but mostly it will take only few minutes.
+    You can check the status of your customized database in the progress tab, using the (in 4.) provided database ID. <br>
+    <img src="../assets/check_status_queued.png"  alt="pic_queued" style="width:50%;height:20%;"><br>
+    <img src="../assets/check_status_running.png"  alt="pic_running" style="width:50%;height:20%;">
+</p>
+<h3>6. Download your specified database by link.</h3>
+<p>
+    For database download follow the download link provided by the browser after checking progress returns status 01 - download ready. <br>
+    <img src="../assets/check_status_ready.png"  alt="pic_link" style="width:50%;height:20%;">
+</p>
+
+
+
+<h2> Example 2: Generate protein database using NCBI-nr database and genus rank</h2>
+<h3>Tax2Proteome run for species with low database representation.  </h3>
+<p>Sample composition: Cupriavidus metallidurans (taxid: 119219), Rhodotorula glutinis (taxid: 5535)</p>
+<h3>1. Select taxa for database selection by taxon IDs or name by one (or more) of the different possibilities: </h3>
+<p>For taxa input use one of the following input options: <mat-icon class="icon2">font_download</mat-icon>  or  <mat-icon class="icon2">view_list</mat-icon>  or  <mat-icon class="icon2">note_add</mat-icon>
+</p>
+<p>Example input by taxon IDs separated by comma, space, semicolon, or new line: <br>
+    <img src="../assets/Screenshot_taxidlist2.png"  alt="pic_list2" style="width:50%;height:20%;">
+</p>
+<h3>2. Select Options </h3>
+<h4>Option database selection</h4>
+<p>Chose one of the following databases: Uniprot, NCBI-nr, Swissprot. Tax2Proteome selects all sequences
+    according the given taxa from one of these databases. Since the sample contains only rare species, which
+    are low represented in the databases, the bigger NCBI Database is chosen.<br>
+    <img src="../assets/Screenshot_db_options2.png"  alt="pic_db2" style="width:50%;height:20%;">
+</p>
+<h4>Option rank selection</h4>
+<p>Chose rank, the higher, the more protein sequences contained in the resulting database.Here option genus is chosen.
+    Since the requested species are only poorly investigated, they have only few entries in the public protein databases.
+    The identification can profit from including sequences of related species.<br>
+    <img src="../assets/Screenshot_rank_options2.png"  alt="pic_rank2" style="width:50%;height:20%;">
+</p>
+<h4>Options for databases selected from the NCBI-nr protein database</h4>
+<p>Option 'reduced headers' reduces the NCBI fasta-headers to their accession IDs. This reduces the memory requirement up to 50 %.<br>
+    <img src="../assets/Screenshot_header_options2.png"  alt="pic_header" style="width:50%;height:20%;">
+</p>
+<h3>3. Control input taxa </h3>
+<p>Control the selected taxa and ranks in the input table.<br>
+    <img src="../assets/Screenshot_table2.png"  alt="pic_table2" style="width:50%;height:20%;">
+</p>
+    <h3>4. Send your request for generating a protein sequence database based on public sequence databases accordingly to
+        your chosen taxa and options. </h3>
+    <p>    push the  <mat-icon class="icon">send</mat-icon>   button </p>
+
+    <p>    You get your database ID here: </p>
+    <p>
+        <img src="../assets/check_status.png"  alt="progress" style="width:50%;height:20%;">
+    </p>
+    <h3>5. Check progress of database creation.</h3>
+    <p>Depending on server workload, the database creation can take up to one day, but mostly it will take only few minutes.
+        You can check the status of your customized database in the progress tab, using the (in 4.) provided database ID. <br>
+        <img src="../assets/check_status_queued.png"  alt="pic_queued" style="width:50%;height:20%;"><br>
+        <img src="../assets/check_status_running.png"  alt="pic_running" style="width:50%;height:20%;">
+    </p>
+    <h3>6. Download your specified database by link.</h3>
+    <p>
+        For database download follow the download link provided by the browser after checking progress returns status 01 - download ready. <br>
+        <img src="../assets/check_status_ready.png"  alt="pic_link" style="width:50%;height:20%;">
+    </p>
+

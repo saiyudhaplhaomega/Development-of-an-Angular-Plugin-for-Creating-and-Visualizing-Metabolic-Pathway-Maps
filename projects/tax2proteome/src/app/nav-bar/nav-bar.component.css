@@ -1,0 +1,31 @@
+/* 
+.tabsdemoDynamicHeight md-content {
+  background-color: transparent !important; } */
+
+mat-tab {
+    background: #F6F6F6;
+    ;
+    border: 1px solid #e1e1e1;
+}
+
+mat-tab-group {
+    background: white;
+}
+
+md-content {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1;
+}
+
+.content {
+    background: #F6F6F6;
+    padding: 4em;
+}
+
+::ng-deep .mat-ink-bar {
+    background-color: var(--primary-color, #FF5252) !important;
+}
+
+::ng-deep .ng-template {
+    background-color: var(--primary-color, #F6F6F6) !important;
+}

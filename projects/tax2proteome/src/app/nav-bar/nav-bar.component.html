@@ -1,0 +1,30 @@
+<mat-tab-group [selectedIndex]="selectedTab">
+    <mat-tab label="create" dynamicHeight>
+        <ng-template matTabContent>
+            <div class="content">
+                <app-create-menubar></app-create-menubar>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="progress" dynamicHeight>
+        <ng-template matTabContent>
+            <div class="content">
+                <app-result-page></app-result-page>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="example" dynamicHeight>
+        <ng-template matTabContent>
+            <div class="content">
+                <app-example></app-example>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="faq" dynamicHeight>
+        <ng-template matTabContent>
+            <div class="content">
+                <app-faq></app-faq>
+            </div>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

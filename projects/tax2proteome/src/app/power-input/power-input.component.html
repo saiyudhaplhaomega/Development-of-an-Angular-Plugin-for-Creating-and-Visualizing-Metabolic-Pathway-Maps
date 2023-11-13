@@ -1,0 +1,13 @@
+<mat-form-field>
+    <input matInput placeholder="Add taxon by scientific name or id" aria-label="State" [matAutocomplete]="auto"
+        [formControl]="searchTaxonCtrl">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='sendTaxEntry($event.option.value)'
+        [displayWith]="displayName">
+        <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+        <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let taxon of filteredTaxa" [value]="taxon">
+                <span>{{taxon.name}}</span>
+            </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+</mat-form-field>

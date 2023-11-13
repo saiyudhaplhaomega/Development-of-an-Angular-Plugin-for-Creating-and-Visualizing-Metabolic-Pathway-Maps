@@ -1,0 +1,101 @@
+
+<h1>FAQ</h1>
+<h2>How should I assemble my database?</h2>
+<p>You should know your sample composition or make a good estimate. With known taxon IDs you can use tax2proteome to select
+    all protein sequences from the public protein databases from NCBI or UNiProtKB. Taxon IDs can be determined using the NCBI Taxonomy website
+    <a href="https://www.ncbi.nlm.nih.gov/taxonomy"> (https://www.ncbi.nlm.nih.gov/taxonomy)</a> or using the search field.<br>
+For including the determined taxa use one of the following options or a combination of them:<br>
+    <mat-icon class="icon">font_download</mat-icon>  Text search with name or taxon ID.<br>
+    <mat-icon class="icon">view_list</mat-icon> Enter multiple taxon IDs seperated by space, comma or line break.<br>
+    <mat-icon class="icon">note_add</mat-icon> File Upload (extracts all contained numbers). Only .csv, .tsv and .txt files allowed. <br><br>
+Depending on your analyzed sample, you can choose one of the public protein databases and a taxonomic rank.
+See also FAQ
+   <a href="#A1">Which database should I use?</a>
+and
+    <a href="#A2">Which taxonomic rank should I use?</a> .
+</p>
+
+<h2 id="A1">Which database should I use?</h2>
+<p>The most important public protein databases are the UniProt Knowledgebase (UniProtKB) database
+    (https://www.uniprot.org/uniprot/) (2019) and the National Center for Biotechnology Information (NCBI)
+    non-redundant database (https://www.ncbi.nlm.nih.gov/protein).
+
+<p>  <b>NCBI-nr</b> <br>
+    The NCBI non-redundant database is a collection of sequences from several sources including UniProtKB. It is the biggest public protein database with approximately
+    220 million entries (database state 09.09.2019).
+</p>
+<p>   <b>UniProt</b><br>
+    The UniProtKB database is composed of the Swiss-Prot and TrEMBL databases and contains about 172 million sequence
+    entries (database state 09.09.2019). The combination of both is called Uniprot by this tool. The protein
+    sequences originate from translations of coding sequences (CDS) submitted to the EMBL-Bank/GenBank/DDBJ nucleotide sequence resources.</p>
+<p>   <b>SwissProt</b><br>
+    Swiss-Prot is the manually curated section of UniProtKB with minimal redundancy and contains about half a million
+    fasta entries (database state 09.09.2019). It is recommended as resource for microbial sequences only for model organisms.
+</p>
+<p>   <b>Recommandation</b><br>
+    Important for your database choice is the size of the expected database. If your sample contains many
+    different organism and/or model organisms with huge database representation, we recommend to use the
+    UniProt database. In our example samples, the UniProt selected databases contained up to 40 % less sequences,
+    which improves the identification rates. If the databases size becomes too large, the identification rate will decrease.
+    For rare species the NCBI-nr database may contain more relevant sequences.
+    </p>
+
+<h2 id="A2">Which taxonomic rank should I use?</h2>
+<p>Only a small proportion of organisms is fully sequenced so far. Currently only for model organisms or medically
+    interesting species public protein sequence databases can be considered reasonably representative. If your organisms
+    belong to one of these, you should use the rank ‘species’. If the analyzed species are poorly represented in the
+    public protein databases, increasing the rank (e.g. to 'genus' or 'family') may increase the sequence coverage by
+    including sequences of related species. However, this should be carefully considered, since an increase in the
+    database size is often accompanied by a decrease in the identification rate.
+    The entire bacterial superkingdom database (taxon ID = 2) from Uniprot or NCBI-nr is too large for the most
+    search engines and should never be used. The more specific the database is and the better the sequence coverage,
+    the better are the spectral matching results.</p>
+
+<h2 id="A3">What is the difference between 'reduced headers' and 'full headers' options?</h2>
+<p>This option is only available for  NCBI-nr selected databases to reduce the database size. If the ‘reduced headers’ option is
+chosen, the often enormous headers of NCBI non-redundant database, which contain all redundant sequence headers
+concatenated, are reduced to their accession IDs. This reduces the memory requirements for the generated database by up to 50 % or more.<br>
+    Separator of different accession IDs: SOH (\x01) <br>
+    An assignment of the accession IDs to their corresponding taxa is possible using the prot.accession2taxid and pdb.accession2taxid files from NCBI.<br>
+    <a href="ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz">ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz</a> <br>
+    <a href="ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/pdb.accession2taxid.gz">ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/pdb.accession2taxid.gz</a> <br>
+
+</p>
+<p><b>Example:</b><br>
+<u>original NCBI-nr fasta entry:</u><br>
+>WP_02.1 50S ribosomal protein L14 #NP_4.1 30S ribosomal protein S18 [halophilic eubacterium NRCC 41227]#NP_5.2
+RecName: Full=30S ribosomal protein [Salmonella enterica subsp. diarizonae serovar 38:[k]:-]#NP_6.2
+RecName: Full=30S ribosomal protein[Methylophilus]<br>
+MAYRKLGRTSSQRKAMLRDLTTDLLINESIVTTEARAKEIRKTVEKMITLGKRGDLHARR<br>
+QAAAYVRNEIASENYDEATDKYTSTTALQKLFSEIAPRYAERNGGYTRILKTEPRRGDAA<br>
+PMAIIELV<br>
+<u>NCBI-nr fasta entry with reduced headers:</u><br>
+>WP_02.1#NP_4.1#NP_5.2#NP_6.2<br>
+MAYRKLGRTSSQRKAMLRDLTTDLLINESIVTTEARAKEIRKTVEKMITLGKRGDLHARR<br>
+QAAAYVRNEIASENYDEATDKYTSTTALQKLFSEIAPRYAERNGGYTRILKTEPRRGDAA<br>
+PMAIIELV
+
+<h2 id="A4">Should I use the non-redundant option?</h2>
+<p>This option is only available for Uniprot or Swissprot selected databases. The non-redundant option merges UniprotKB
+    database fasta entries with same sequence into one entry with concatenated headers. Header seperator SOH (\x01) <br>
+    You should use it!<br>
+    <b>Example</b> <br>
+    <u>Redundant UniProtKB protein sequence entries: </u><br>
+    >tr|L0AQC3|L0AQC3_9EURY Coenzyme-B sulfoethylthiotransferase (Fragment) OS=uncultured Methanomicrobiales archaeon OX=183760 GN=mcrA PE=3 SV=1<br>
+    AAVADLAFAAKHAGVIQMGDILPARRARGPNEPGGIKFGHFADMIQADRKYPNDPARATL<br>
+    EVVGAGAMLFDQIWLGSYMSGGVGFTQYATAAYTDNILDDYTYYGMDYIKSKYKVNWQSP<br>
+    SEKDKVKATQDVVNDIATEVNLYGMEQYEQYPTALEDHFG<br>
+    >tr|XXX|YYY Coenzyme (Fragment) OS=uncultured archaeon FIN637 OX=79780 GN=mcrA PE=3 SV=1<br>
+    AAVADLAFAAKHAGVIQMGDILPARRARGPNEPGGIKFGHFADMIQADRKYPNDPARATL<br>
+    EVVGAGAMLFDQIWLGSYMSGGVGFTQYATAAYTDNILDDYTYYGMDYIKSKYKVNWQSP<br>
+    SEKDKVKATQDVVNDIATEVNLYGMEQYEQYPTALEDHFG<br>
+    <u>redundant sequences merged to one sequence with concatenated headers</u>:<br>
+    tr|L0AQC3|L0AQC3_9EURY Coenzyme-B sulfoethylthiotransferase (Fragment) OS=uncultured Methanomicrobiales archaeon
+    OX=183760 GN=mcrA PE=3 SV=1 # tr|XXX|YYY Coenzyme (Fragment) OS=uncultured archaeon FIN637 OX=79780 GN=mcrA PE=3 SV=1<br>
+    AAVADLAFAAKHAGVIQMGDILPARRARGPNEPGGIKFGHFADMIQADRKYPNDPARATL<br>
+    EVVGAGAMLFDQIWLGSYMSGGVGFTQYATAAYTDNILDDYTYYGMDYIKSKYKVNWQSP<br>
+    SEKDKVKATQDVVNDIATEVNLYGMEQYEQYPTALEDHFG<br>
+</p>
+
+<h2 id="A5">How do I get my specified database?</h2>
+<p> use download link. </p>

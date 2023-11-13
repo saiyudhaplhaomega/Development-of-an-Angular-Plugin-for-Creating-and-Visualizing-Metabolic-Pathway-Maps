@@ -1,0 +1,10 @@
+div {
+    margin: 0px!important;
+    padding: 0px!important;
+    position: absolute !important;
+    text-align: left;
+}
+
+mat-grid-list {
+    width: 100%;
+}

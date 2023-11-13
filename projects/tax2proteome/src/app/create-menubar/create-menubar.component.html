@@ -1,0 +1,44 @@
+<mat-button-toggle-group id="create-menu-bar" name="fontStyle" aria-label="Font Style" [(value)]="activeButton">
+    <mat-button-toggle class=button_style id = "0" value="power_input" (click)="highlight(0)" matTooltip="provide
+    taxon name or ID" matTooltipPosition="above">
+        <mat-icon id="01">font_download</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class=button_style id = "1" value="list_input" matTooltip="provide list of taxon IDs"
+                       matTooltipPosition="above" (click)="highlight(1)">
+        <mat-icon id="11">view_list</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class=button_style id = "2" value="file_input" matTooltip="provide file containing taxon IDs"
+                       matTooltipPosition="above" (click)="highlight(2)">
+        <mat-icon id="21">note_add</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class=button_style id = "3" value="options" matTooltip="customize your database"
+                       matTooltipPosition="above" (click)="highlight(3)">
+        <mat-icon id="31">build</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle disabled>
+    </mat-button-toggle>
+    <mat-button-toggle value="underline" matTooltip="submit and start database creation" style="float: right;"
+                       matTooltipPosition="above" (click)="sendGetRequest()" >
+        <mat-icon>send</mat-icon>
+    </mat-button-toggle>
+</mat-button-toggle-group>
+<div class="input_area">
+    <ng-container *ngIf="activeButton==='power_input'">
+        <app-power-input (messageEvent)="receiveTaxEntry($event)"></app-power-input>
+    </ng-container>
+
+    <ng-container *ngIf="activeButton==='list_input'">
+        <app-list-input></app-list-input>
+    </ng-container>
+
+    <ng-container *ngIf="activeButton==='file_input'">
+        <app-file-input></app-file-input>
+    </ng-container>
+
+    <ng-container *ngIf="activeButton==='options'">
+        <app-create-options></app-create-options>
+    </ng-container>
+</div>
+<div class="tax_table">
+    <app-tax-table></app-tax-table>
+</div>

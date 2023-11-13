@@ -1,0 +1,28 @@
+<div *ngIf="displayTaxTable">
+    <table mat-table [dataSource]="dataSource" *ngIf="dataSource" matSort class="container_table mat-elevation-z8">
+        <!-- TaxID Column -->
+        <ng-container matColumnDef="taxid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Taxon ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.taxid}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <!-- Rank Column -->
+        <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Rank </th>
+            <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <p></p>
+    <button mat-fab color="warn" matTooltip="Delete all taxa" aria-label="Delete taxa"  (click)="deleteSelectedTaxIDs()">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <p></p>
+</div>

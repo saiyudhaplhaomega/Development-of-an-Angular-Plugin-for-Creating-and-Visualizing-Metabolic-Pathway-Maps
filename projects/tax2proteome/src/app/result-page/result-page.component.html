@@ -1,0 +1,28 @@
+<h1>Check progress with your database ID:</h1>
+<div>
+    <div id="title-bar">
+        <h2>
+            <span [innerHTML]="getDownloadLink()"> </span>
+        </h2>
+    </div>
+    <div>
+        <label>
+            <textarea class="form" placeholder="database ID" #bindingInput> </textarea>
+        </label>
+    </div>
+    <div>
+        <button mat-raised-button class="button" (click)="CheckProgress()">Check status</button>
+        <p></p>
+        <h2>{{status}}</h2>
+    </div>
+    <p></p>
+    <div *ngIf="this.ready==true; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <a [href]=getDownloadUrl()> Download here </a>
+        </ng-template>
+        <ng-template #elseBlock>
+            <a></a>
+        </ng-template>
+</div>
+
+
