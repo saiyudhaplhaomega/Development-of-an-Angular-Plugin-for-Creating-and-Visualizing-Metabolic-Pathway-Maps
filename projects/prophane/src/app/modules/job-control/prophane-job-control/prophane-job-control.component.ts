@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import {ProphaneJobObject} from '../../../model/prophanejobjson';
-import {JobService} from '../../../services/job.service';
+import { ProphaneJobObject } from '../../../model/prophanejobjson';
+import { JobService } from '../../../services/job.service';
 
 @Component({
   selector: 'app-prophane-job-control',

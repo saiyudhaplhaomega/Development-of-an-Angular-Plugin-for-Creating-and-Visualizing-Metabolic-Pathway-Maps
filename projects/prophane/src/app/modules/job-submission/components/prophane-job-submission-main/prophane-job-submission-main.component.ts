@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { jobLabelData } from '../../../../model/prophaneFormData';
 import { AuthGuard, AuthService } from 'shared-lib';
 import { Subject } from 'rxjs';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { JobService } from '../../../../services/job.service';
 import { NgbModal, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';

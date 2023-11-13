@@ -20,7 +20,7 @@ import { JobService } from '../services/job.service';
 import { ProphaneTaskOptionString } from '../model/prophanetaskoptionstring';
 import { ProphaneAnnotationTaskObject } from '../model/prophaneannotationtaskjson';
 
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
 import { AuthService, UploadDialogComponent, UploadFile, UploadProgressService } from 'dist/shared-lib';

@@ -1,5 +1,33 @@
 @import "../../../master-stylesheet.scss";
 @import "./material-style-overrides.scss";
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+
+
+.rki-blue-input {
+  background: #003f97 !important;
+  color: #fff !important;
+  border-color: #003f97 !important;
+}
+
+.rki-blue-bg{
+  background: #003f97 !important;
+}
+
+* {
+   --background-color: #003f97;
+}
+
+// * {
+//   --background-color: rgb(.rki-blue-bg);
+//   --text-color: hsl(0, 2%, 92%);
+
+//   text-align: left;
+//   text-decoration: none;
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+//   font-size: 1rem;
+//   color: var(--text-color) !important;
+//   background-color: var(--background-color) !important;
+// }
 
 body {
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
@@ -2701,11 +2729,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   overflow:hidden;
 }
 
-.rki-blue-input {
-  background: #003f97 !important;
-  color: #fff !important;
-  border-color: #003f97 !important;
-}
+
 
 .ml-summary-col{
   width: 15em !important;
@@ -2715,9 +2739,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
   border-top-color: rgba(0, 63, 151, 1) !important;
 }
 
-.rki-blue-bg{
-  background: #003f97 !important;
-}
+
 
 .w-sbtn{
   width: 3em;
