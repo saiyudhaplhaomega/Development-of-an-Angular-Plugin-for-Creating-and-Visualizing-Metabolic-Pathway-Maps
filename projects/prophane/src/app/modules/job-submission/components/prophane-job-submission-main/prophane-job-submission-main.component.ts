@@ -52,7 +52,6 @@ export class ProphaneJobSubmissionMainComponent implements OnInit {
   ngOnInit() {
     this.stepperAndCardLabels = jobLabelData;
     this.prophaneJobState.initializeProphaneJobState();
-    console.log(this.prophaneJobState);
   }
 
   setCurrentStep(stepLabel: string) {

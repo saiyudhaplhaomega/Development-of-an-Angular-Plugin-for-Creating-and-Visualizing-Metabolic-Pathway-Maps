@@ -24,8 +24,7 @@
               [(ngModel)]="prophaneJobState.currentProphaneJob.parameters.reportStyle"
               [placeholder]="prophaneJobState.currentProphaneJob.parameters.reportStyle.name"
               [compareWith]="prophaneJobState.compareByID"
-              (selectionChange)="onSourceChange()"
-              [matTooltip]="prophaneJobState.currentProphaneJob.parameters.reportStyle.name">
+              (selectionChange)="onSourceChange()">
     <mat-option *ngFor="let typeItem of this.reportStyles" 
                 [value]="typeItem">
                 {{typeItem.name}}

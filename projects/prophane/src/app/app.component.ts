@@ -41,6 +41,13 @@ export class AppComponent implements OnInit {
         { label: 'de.NBI Cloud', href: 'https://www.denbi.de/cloud' },
       ],
     },
+    // {
+    //   label: 'Related Projects & Services',
+    //   children: [
+    //     { label: 'Tax2Proteome', href: 'http://www.tax2proteome.de' },
+    //    // { label: 'MPA', href: 'http://www.mpa.de' },
+    //   ],
+    // },
   ];
 
   //footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
