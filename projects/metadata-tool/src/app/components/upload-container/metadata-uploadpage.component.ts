@@ -14,7 +14,12 @@ import { OnInit } from '@angular/core';
 export class MetadataUploadContainerComponent implements OnInit {
   selectedFiles: File[] = [];
   uploadDialogId: string;
-  uploadProgress: number = 0; // Added property for tracking upload progress
+
+  uploadProgress: number = 0;
+  uploadStartTime: number;
+  timeRemaining: string = ''; // This will hold the time remaining as a string
+
+  showContainer = true;
 
   constructor(
     private dataService: MetaDataInputService,
@@ -31,34 +36,54 @@ export class MetadataUploadContainerComponent implements OnInit {
   }
 
   onUpload(): void {
+    this.uploadStartTime = Date.now();
+    this.uploadProgressService.currentProgress.subscribe((progress) => {
+      this.uploadProgress = progress;
+      if (progress < 100 && progress > 0) {
+        this.showContainer = false;
+      }
+
+      this.calculateTimeRemaining();
+    });
+
     this.uploadProgressService.reset();
+
     this.uploadProgressService.setUUID('UPLOAD');
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
-      disableClose: true,
+      disableClose: false,
       data: { successMessage: 'Upload successful.' },
     });
-
+    const onDialogClosingObservable = dialogRef.afterClosed();
     const files: MultiFileUploadData = {
-      files: this.selectedFiles.map((file) => ({
-        uploadFile: file,
-        fileID: file.name,
-      })),
+      files: [],
     };
-
-  this.dataService
-    .upload(files, this.uploadProgressService, this.dialog)
-    .subscribe(
-      (progress) => {
-        this.uploadProgress = progress;
-      },
-      (error) => {
-        console.error('Upload error:', error);
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(() => {
-      // Navigation or other logic after dialog closes
+    this.selectedFiles.forEach((file) => {
+      files.files.push({ uploadFile: file, fileID: file.name });
     });
+    for (let file of files.files) {
+      this.uploadProgressService.addToTotal(file.uploadFile.size);
+    }
+    this.dataService.upload(files, this.uploadProgressService, this.dialog);
+    //onDialogClosingObservable(this.router.navigate());
+  }
+
+  private calculateTimeRemaining(): void {
+    if (this.uploadProgress > 0) {
+      const timeElapsed = Date.now() - this.uploadStartTime;
+      const totalEstimatedTime = timeElapsed / (this.uploadProgress / 100);
+      const remainingTime = totalEstimatedTime - timeElapsed;
+      this.timeRemaining = this.formatTime(remainingTime);
+    }
+  }
+
+  private formatTime(milliseconds: number): string {
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    return `${minutes} min ${seconds} sec`;
+  }
+  deleteFile(index: number): void {
+    this.selectedFiles.splice(index, 1);
   }
 }
