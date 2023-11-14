@@ -15,10 +15,10 @@ export class MetadataUploadContainerComponent implements OnInit {
   selectedFiles: File[] = [];
   uploadDialogId: string;
 
+  // While uploading files
   uploadProgress: number = 0;
   uploadStartTime: number;
   timeRemaining: string = ''; // This will hold the time remaining as a string
-
   showContainer = true;
 
   constructor(
@@ -31,8 +31,27 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.dataService.metadataUploadJson.subscribe();
   }
 
-  onFilesSelected(event: any): void {
-    this.selectedFiles = Array.from(event.target.files);
+  onFilesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const newFiles = Array.from(input.files);
+
+      // Add only new files to the selectedFiles array
+      const uniqueNewFiles = newFiles.filter(
+        (newFile) =>
+          !this.selectedFiles.some(
+            (existingFile) =>
+              existingFile.name === newFile.name &&
+              existingFile.size === newFile.size
+          )
+      );
+
+      // Concatenate the new unique files to the existing selectedFiles
+      this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
+
+      // After adding files, you might want to reset the input
+      input.value = '';
+    }
   }
 
   onUpload(): void {
@@ -66,6 +85,9 @@ export class MetadataUploadContainerComponent implements OnInit {
     }
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
     //onDialogClosingObservable(this.router.navigate());
+
+    this.selectedFiles = []; // Clear the list of selected files
+    this.clearFileInput(); // Clear the file input in the UI
   }
 
   private calculateTimeRemaining(): void {
@@ -83,7 +105,27 @@ export class MetadataUploadContainerComponent implements OnInit {
     seconds = seconds % 60;
     return `${minutes} min ${seconds} sec`;
   }
+
   deleteFile(index: number): void {
-    this.selectedFiles.splice(index, 1);
+    this.selectedFiles = [
+      ...this.selectedFiles.slice(0, index),
+      ...this.selectedFiles.slice(index + 1),
+    ];
+  }
+  clearFileInput(): void {
+    const inputElem = document.querySelector(
+      '.upload-input'
+    ) as HTMLInputElement;
+    if (inputElem) {
+      inputElem.value = ''; // This will clear the file input in the UI
+    }
+  }
+
+  showTooltip(progressBar: any): void {
+    progressBar.tooltip.toggle(); // Shows the tooltip
+  }
+
+  hideTooltip(progressBar: any): void {
+    progressBar.tooltip.hide(); // Hides the tooltip
   }
 }

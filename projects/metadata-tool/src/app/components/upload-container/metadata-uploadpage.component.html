@@ -1,29 +1,42 @@
-<div>
-    <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
-    <p>Time remaining: {{ timeRemaining }}</p>
+
+<div class="progress-container">
+  <mat-progress-bar
+   *ngIf="uploadProgress  > 0"
+    #progressBar
+    mode="determinate"
+    [value]="uploadProgress"
+    [matTooltip]="timeRemaining"
+    matTooltipPosition="above"
+    (mouseover)="showTooltip(progressBar)"
+    (mouseout)="hideTooltip(progressBar)">
+  </mat-progress-bar>
 </div>
 <div class="upload-container" *ngIf="showContainer">
-  <h2 class="upload-title">File Upload</h2>
 
-  <input
-    class="upload-input"
-    type="file"
-    accept=".*"
-    multiple
-    (change)="onFilesSelected($event)"
-  />
+  <h2 class="upload-title">File Upload</h2>
   <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
-  <h3>Selected Files:</h3>
-  <ul>
-    <li *ngFor="let file of selectedFiles; let i = index">
-      {{ file.name }}
-      <button mat-mini-fab color="warn" (click)="deleteFile(i)">
+  <ul>`
+    <li *ngFor="let file of selectedFiles; let i = index" class="file-item">
+      <span class="file-name">{{ file.name }}</span>
+      <button mat-mini-fab color="warn" (click)="deleteFile(i)" class="delete-button">
         <mat-icon>delete</mat-icon>
       </button>
     </li>
   </ul>
 </div>
-  <button class="upload-button" (click)="onUpload()">Upload</button>
+
+ <div class="file-upload-container">
+  <button class="file-chooser-button" (click)="fileInput.click()">Choose Files</button>
+  <input
+    #fileInput
+    type="file"
+    accept="*/*"
+    multiple
+    (change)="onFilesSelected($event)"
+    style="display: none;"
+  />
+  <button class="upload-button" *ngIf="selectedFiles.length > 0" (click)="onUpload()">Upload</button>
+</div>
   <!--
   <div class="upload-progress" *ngIf="uploadProgress !== null">
     <progress max="100" [value]="uploadProgress"></progress>
@@ -34,7 +47,7 @@
 <!-- link to workflow -->
 <div class="text-center mt-20 mb-20">
   <!-- <shared-login-buttons></shared-login-buttons> -->
-  <button mat-flat-button color="primary" routerLink="/workflow">
+  <!-- <button mat-flat-button color="primary" routerLink="/workflow">
     Next Page
-  </button>
+  </button> -->
 </div>
