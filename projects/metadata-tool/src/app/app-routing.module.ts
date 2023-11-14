@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'upload',
     loadChildren: () =>
       import('./components/upload-container/metadata-uploadpage.module').then(
-        (m) => m.MetadataUploadpageModule
+        (m) => m.MetadataUploadContainerModule
       ),
   },
   {
@@ -28,14 +28,9 @@ const routes: Routes = [
         (m) => m.MetadataDownloadpageModule
       ),
   },
-  {
-    path: 'quest',
-    loadChildren: () =>
-      import('./pages/metadata-quest-page/metadata-quest-page.module').then(
-        (m) => m.MetadataQuestPageModule
-      ),
-  },
+
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'quest', loadChildren: () => import('./pages/metadata-quest-page/metadata-quest-page.module').then(m => m.MetadataQuestPageModule) },
   { path: '**', redirectTo: 'home' },
 ];
 

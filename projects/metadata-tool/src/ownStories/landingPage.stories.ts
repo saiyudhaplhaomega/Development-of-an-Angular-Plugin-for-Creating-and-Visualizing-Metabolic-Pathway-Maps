@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MetadataUploadpageComponent } from '../app/components/upload-container/metadata-uploadpage.component';
+import { MetadataUploadContainerComponent } from '../app/components/upload-container/metadata-uploadpage.component';
 
 
 export default {
@@ -24,7 +24,7 @@ export default {
   ],
 } as Meta;
 
-type Story = StoryObj<typeof MetadataUploadpageComponent>;
+type Story = StoryObj<typeof MetadataUploadContainerComponent>;
 
 export const Default: Story = {
   render: () => ({

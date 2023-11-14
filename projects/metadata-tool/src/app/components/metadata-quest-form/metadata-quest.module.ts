@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MetadataQuestFormComponent } from './metadata-quest.component';
-import { MetadataQuestRoutingModule } from './metadata-quest-routing.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,25 +19,26 @@ import { FormlyFieldStepper } from './stepper.type';
     CommonModule,
     ReactiveFormsModule,
 
-    //material design imports
-    MetadataQuestRoutingModule,
-    MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
+    // formly imports
     FormlyModule,
     FormlyMaterialModule,
-    MatStepperModule,
     FormlyModule.forRoot({
       validationMessages: [
         { name: 'required', message: 'This field is required' },
       ],
       types: [{ name: 'stepper', component: FormlyFieldStepper, wrappers: [] }],
     }),
+
+    //material design imports
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatStepperModule,
   ],
   exports: [
     MetadataQuestFormComponent,
     FormlyFieldStepper, // Export if it will be used outside the module
   ],
 })
-export class MetadataQuestModule {} // Make sure this matches the class name exactly
+export class MetadataQuestFormModule {} // Make sure this matches the class name exactly

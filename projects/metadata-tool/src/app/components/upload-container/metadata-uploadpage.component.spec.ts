@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MetadataUploadpageComponent } from './metadata-uploadpage.component';
+import { MetadataUploadContainerComponent } from './metadata-uploadpage.component';
 
 describe('MetadataUploadpageComponent', () => {
-  let component: MetadataUploadpageComponent;
-  let fixture: ComponentFixture<MetadataUploadpageComponent>;
+  let component: MetadataUploadContainerComponent;
+  let fixture: ComponentFixture<MetadataUploadContainerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MetadataUploadpageComponent]
+      declarations: [MetadataUploadContainerComponent]
     });
-    fixture = TestBed.createComponent(MetadataUploadpageComponent);
+    fixture = TestBed.createComponent(MetadataUploadContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

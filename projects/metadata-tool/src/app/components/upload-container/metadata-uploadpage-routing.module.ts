@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MetadataUploadpageComponent } from './metadata-uploadpage.component';
+import { MetadataUploadContainerComponent } from './metadata-uploadpage.component';
 
 const routes: Routes = [
-  {path: '', component: MetadataUploadpageComponent}
+  {path: '', component: MetadataUploadContainerComponent}
 ];
 
 @NgModule({

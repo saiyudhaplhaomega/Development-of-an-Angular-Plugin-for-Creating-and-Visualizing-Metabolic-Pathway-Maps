@@ -550,7 +550,7 @@
         {
             "name": "CheckboxSelectionService",
             "id": "injectable-CheckboxSelectionService-bb17aa0e82030eddc6e62dc125146d428888a2f64bd6dbe37bab3321ea49a17a8da0ce1393affee69a3e2ddc6f9fd52c74c651d958cc80ead282697752a98bd9",
-            "file": "projects/metadata-tool/src/app/metadata-checkboxselection/checkboxselectionservice.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxselectionservice.ts",
             "properties": [
                 {
                     "name": "mergedSelection$",
@@ -821,7 +821,7 @@
         {
             "name": "MetaDataDownloadService",
             "id": "injectable-MetaDataDownloadService-8ca026e0673d697f8112d3ba3591043d8d9dedacdd0c06430ed615e8d54713bbba7dc160d9a28a968b34489c8f1c780616ffbc27ca5d0e048f9d68c1777f5eae",
-            "file": "projects/metadata-tool/src/app/metadata-downloadpage/metaddata-upload.service.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metaddata-upload.service.ts",
             "properties": [],
             "methods": [
                 {
@@ -871,8 +871,8 @@
         },
         {
             "name": "MetaDataInputService",
-            "id": "injectable-MetaDataInputService-3eb5ecd8cbd1d221ed34182847c1d3ddd2aeb6e1bfdc072773ce3b2ea71c338914e8bea15784a3c5d71c1c71ac2525a637a3cddfba1ec537acd2d564f4e80d01",
-            "file": "projects/metadata-tool/src/app/metadata-workflow/metaddata-input.service.ts",
+            "id": "injectable-MetaDataInputService-6e5ff5b712750c7de04c0a6f1821b0e4ed04218990f66959d532f83de720a3f6ee1ad91991a73ab7cd18707a90e1afaaef85248ddbff452b2ef5358dbdb66bb5",
+            "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metaddata-input.service.ts",
             "properties": [
                 {
                     "name": "dummyData",
@@ -990,7 +990,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(dataExport: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = dataExport;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(dataExport: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = dataExport;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1847,7 +1847,7 @@
         {
             "name": "FormlyFieldStepper",
             "id": "component-FormlyFieldStepper-ee159c7784b8309b649a616a219c2da55cf3ee928770d640ec080b690a2f61defb1d3feb7f159c55ab0dcb12faad2db4f0a6e77b260149560409d391d08a66ed",
-            "file": "projects/metadata-tool/src/app/metadata-quest-form/stepper.type.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-quest-form/stepper.type.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1990,7 +1990,7 @@
         {
             "name": "MetaDataCheckboxSelectionComponent",
             "id": "component-MetaDataCheckboxSelectionComponent-380729dc720b1879407ad9aa1c03119e3617a2d351c68a3f017fc083238b186a3bdac56f3d80962ecbe9dd677bfe2fe6bb095aafd200a39df2f7b9752ac1ba22",
-            "file": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection.component.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/metadata-checkboxselection.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2464,7 +2464,7 @@
         {
             "name": "MetadataDownloadpageComponent",
             "id": "component-MetadataDownloadpageComponent-a6abc2439d82dfc04d54b0ee71ad8200a4003e98a38c4e60731fa9a16487f9464d3333706063d13375e21f9d81c6f7344754d79a5403ccb25a6e4ea9c8e927f0",
-            "file": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage.component.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadata-downloadpage.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2558,7 +2558,7 @@
         {
             "name": "MetadataLandingPageComponent",
             "id": "component-MetadataLandingPageComponent-8945becc9a50e2cade556189f2cbc79d685e56c404e9b067561956b569ee0aa65e4025dee5abb62dd6817ab65bd9aea5ac684196a8c9b68c9198dfbf957583d0",
-            "file": "projects/metadata-tool/src/app/metadata-landing-page/metadata-landing-page.component.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-landing-page/metadata-landing-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2621,7 +2621,7 @@
         {
             "name": "MetadataQuestFormComponent",
             "id": "component-MetadataQuestFormComponent-bcefa8fbc3079560f25287f3574a1abeb378d8e80f7922c699de5cc7169c58d202447ba72e625b71c2d4dfb4f360d74f280205532f3fdab6811718bb2b68327c",
-            "file": "projects/metadata-tool/src/app/metadata-quest-form/metadata-quest.component.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2810,12 +2810,12 @@
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit(model)\">\n  <formly-form [form]=\"form\" [fields]=\"fields\" [model]=\"model\"></formly-form>\n</form>\n"
+            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit(model)\">\n  <formly-form [form]=\"form\" [fields]=\"fields\" [model]=\"model\"></formly-form>\n</form>\n\n"
         },
         {
             "name": "MetadataUploadpageComponent",
-            "id": "component-MetadataUploadpageComponent-30ae23f80e93cb986d7881ef571d3846a0f80131b1b751d3678d851bd0d1d5d1b46e45b949f71378a50831edf8ea5ab317f0de6ce60a30850c2c24245c13ca85",
-            "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.component.ts",
+            "id": "component-MetadataUploadpageComponent-6718983c9330cb9fca2dbb9cb58fc11c1f8d5445e966d12cde8f84f6495467a0ad519f03ac7e472cfa01b0ef32429f71d24ca9b69089bfdb4672914539b76d43",
+            "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2913,7 +2913,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../metadata-workflow/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2985,9 +2985,79 @@
             "templateData": "    <div class=\"upload-container\">\n      <h2 class=\"upload-title\">File Upload</h2>\n      <input\n        class=\"upload-input\"\n        type=\"file\"\n        accept=\".*\"\n        multiple\n        (change)=\"onFilesSelected($event)\"\n      />\n      <div class=\"selected-files-box\" *ngIf=\"selectedFiles.length > 0\">\n        <h3>Selected Files:</h3>\n        <ul>\n          <li *ngFor=\"let file of selectedFiles\">{{ file.name }}</li>\n        </ul>\n      </div>\n      <button class=\"upload-button\" (click)=\"onUpload()\">Upload</button>\n      <!--\n      <div class=\"upload-progress\" *ngIf=\"uploadProgress !== null\">\n        <progress max=\"100\" [value]=\"uploadProgress\"></progress>\n      </div>\n      <p class=\"error-message\" *ngIf=\"uploadError\">{{ uploadError }}</p>\n    </div>\n    -->\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/workflow\">\n        Next Page\n      </button>\n    </div>\n"
         },
         {
+            "name": "MetadataUploadpageComponent",
+            "id": "component-MetadataUploadpageComponent-1d09064e6751d3adb1c93de28233cd96a01d07ae977f605bc37fff857948e0cf48e17a09e11a5dc13ed3391a4fef515e86097748a9ded598df60800d4c4a9028-1",
+            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "metadata-uploadpage",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./metadata-quest-page.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "title",
+                    "defaultValue": "'Metadata Upload Page'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "uploadFile",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 16,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'metadata-uploadpage', // Ensure this matches the selector used in your HTML\n  templateUrl: './metadata-quest-page.component.html', // Path to the HTML template\n})\nexport class MetadataUploadpageComponent {\n  // Define properties and methods for your component here\n  title = 'Metadata Upload Page';\n\n  constructor() {\n    // Initialization code\n  }\n\n  // Example method\n  uploadFile() {\n    // Logic for file upload\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 9
+            },
+            "extends": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "MetadataUploadpageComponent-1",
+            "templateData": "<div>\n  <app-metadata-quest></app-metadata-quest>\n\n</div>\n"
+        },
+        {
             "name": "MetadataWorkflowComponent",
-            "id": "component-MetadataWorkflowComponent-0220819aca821722af1068717d569f2133d7ec7bfd1b6fae1e13d30678dd7091ffe4ebed81d9b66049e9989046295bfe52a41e871d80adf1b0d4a69d2b8f04b3",
-            "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.component.ts",
+            "id": "component-MetadataWorkflowComponent-fcf50e88622a5f5419b66d7dd914a17ac40f283df5ecc3b8b000ee75532d5047442aa3ee7eb4c8a1e98f1a390fc750e8b3e4f33ed7881b352235afa91ce4bc89",
+            "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -3014,7 +3084,7 @@
                     "type": "any[]",
                     "optional": false,
                     "description": "",
-                    "line": 46
+                    "line": 47
                 },
                 {
                     "name": "columnData",
@@ -3024,7 +3094,7 @@
                     "type": "ColumnData[]",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 32
                 },
                 {
                     "name": "currentSearchIndex",
@@ -3034,7 +3104,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 49
+                    "line": 50
                 },
                 {
                     "name": "dataArray",
@@ -3044,7 +3114,7 @@
                     "type": "string[]",
                     "optional": false,
                     "description": "",
-                    "line": 34
+                    "line": 35
                 },
                 {
                     "name": "dataString",
@@ -3054,7 +3124,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 35
+                    "line": 36
                 },
                 {
                     "name": "HeadersData",
@@ -3064,7 +3134,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 44
+                    "line": 45
                 },
                 {
                     "name": "hotContainer",
@@ -3073,7 +3143,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "",
-                    "line": 52,
+                    "line": 53,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -3091,7 +3161,7 @@
                     "type": "Handsontable",
                     "optional": false,
                     "description": "",
-                    "line": 51
+                    "line": 52
                 },
                 {
                     "name": "hotSettings",
@@ -3101,7 +3171,7 @@
                     "type": "Handsontable.GridSettings",
                     "optional": false,
                     "description": "",
-                    "line": 54
+                    "line": 55
                 },
                 {
                     "name": "mergedSelection",
@@ -3111,7 +3181,7 @@
                     "type": "any[]",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 31
                 },
                 {
                     "name": "mergedSelectionSubscription",
@@ -3120,7 +3190,7 @@
                     "type": "Subscription",
                     "optional": false,
                     "description": "",
-                    "line": 28,
+                    "line": 29,
                     "modifierKind": [
                         123
                     ]
@@ -3133,7 +3203,7 @@
                     "type": "any[][]",
                     "optional": false,
                     "description": "",
-                    "line": 45
+                    "line": 46
                 },
                 {
                     "name": "searchResults",
@@ -3143,7 +3213,7 @@
                     "type": "any[]",
                     "optional": false,
                     "description": "",
-                    "line": 48
+                    "line": 49
                 },
                 {
                     "name": "selectableCharacteristicCounter",
@@ -3153,7 +3223,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 40
+                    "line": 41
                 },
                 {
                     "name": "selectableCommentsCounter",
@@ -3163,7 +3233,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 42
+                    "line": 43
                 },
                 {
                     "name": "selectableProperties1Counter",
@@ -3173,7 +3243,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 39
+                    "line": 40
                 },
                 {
                     "name": "selectableProperties2Counter",
@@ -3183,7 +3253,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 41
+                    "line": 42
                 },
                 {
                     "name": "showSelection",
@@ -3193,7 +3263,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 37
                 },
                 {
                     "name": "showTable",
@@ -3203,7 +3273,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 37
+                    "line": 38
                 },
                 {
                     "name": "titlesArray",
@@ -3213,7 +3283,7 @@
                     "type": "string[]",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 33
                 },
                 {
                     "name": "titlesString",
@@ -3223,7 +3293,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 33
+                    "line": 34
                 }
             ],
             "methodsClass": [
@@ -3233,7 +3303,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 240,
+                    "line": 241,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3246,7 +3316,7 @@
                     "optional": false,
                     "returnType": "ColumnDataObject[]",
                     "typeParameters": [],
-                    "line": 259,
+                    "line": 260,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3256,7 +3326,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 180,
+                    "line": 181,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3269,7 +3339,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 84,
+                    "line": 85,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3279,7 +3349,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 236,
+                    "line": 237,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3296,7 +3366,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 187,
+                    "line": 188,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3317,7 +3387,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 191,
+                    "line": 192,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -3330,7 +3400,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 211,
+                    "line": 212,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3340,7 +3410,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 219,
+                    "line": 220,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3357,7 +3427,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 228,
+                    "line": 229,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3378,7 +3448,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 303,
+                    "line": 304,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3388,7 +3458,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 299,
+                    "line": 300,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3398,7 +3468,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 157,
+                    "line": 158,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -3412,7 +3482,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from '../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\nimport { CheckboxSelectionService } from '../metadata-checkboxselection/checkboxselectionservice';\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../model/metadatauploadjson';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenColumns: {\n      columns: [0],\n      indicators: false\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n\n   this.mergedSelectionSubscription =\n     this.checkboxService.mergedSelection$.subscribe(\n       (selection) => {\n         this.mergedSelection = selection;\n         this.titlesArray = this.mergedSelection.map((item) => item.title);\n         this.titlesString = this.titlesArray.join(', ');\n         this.dataArray = this.mergedSelection.map((item) => item.data);\n         this.dataString = this.dataArray.join(', ');\n         this.updateNestedHeadersData(); // Call the function to generate the nested headers\n\n         // Check if hotInstance is defined before calling updateSettings\n         if (this.hotInstance) {\n           // Update the Handsontable instance with new columns\n           this.hotInstance.updateSettings({\n             ...this.hotSettings,\n             columns: this.mergedSelection,\n             colHeaders: this.titlesArray,\n           });\n         }\n       },\n       (error) => {\n         console.error('Error with mergedSelection$ subscription', error);\n       }\n     );\n\n    // this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData;\n        this.hotSettings.data = this.columnData;\n        if (!this.hotInstance) {\n          this.initializeHandsontable();\n        } else {\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = true;\n\n  }\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings,\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const dataExport = this.hotInstance.getData();\n      const headers = this.dataArray;\n      const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;\n      const columnData: ColumnDataObject[] = [];\n\n      // Create a map of unique IDs to objects in the result array\n      const resultMap = new Map(result.map((obj) => [obj.identID, obj]));\n\n      for (let i = 0; i < dataExport.length; i++) {\n        const obj: ColumnDataObject = new ColumnDataObject();\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = dataExport[i][j];\n        }\n\n        // Check if the object with the same ID exists in the result array\n        if (resultMap.has(obj.identID)) {\n          // Merge the changed data from dataExport into the existing object\n          const existingObj = resultMap.get(obj.identID);\n          for (const key in obj) {\n            if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {\n              existingObj[key] = obj[key];\n            }\n          }\n        }\n      }\n\n      // Convert the map back to an array\n      const mergedResult = Array.from(resultMap.values());\n\n      // Update the metadataJson value\n      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;\n\n      return mergedResult;\n    }\n    return [];\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const dataExport = this.exportDataAsObject();\n    this.metaDataInputService.submiteTable(dataExport);\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  OnInit,\n  ViewChild,\n} from '@angular/core';\nimport { MetaDataInputService } from './metaddata-input.service';\nimport { ColumnData, ColumnDataObject } from  '../../model/metadata-columnData';\nimport { ContextMenu } from 'handsontable/plugins';\nimport Handsontable from 'handsontable';\n\nimport { Subscription } from 'rxjs';\nimport { MetaDataUploadJsonObject } from '../../model/metadatauploadjson';\nimport { CheckboxSelectionService } from '../../components/metadata-checkboxselection/checkboxselectionservice';\n\n@Component({\n  selector: 'metadata-workflow',\n  templateUrl: './metadata-workflow.component.html',\n  styleUrls: ['./metadata-workflow.component.scss'],\n})\nexport class MetadataWorkflowComponent implements OnInit {\n  constructor(\n    private metaDataInputService: MetaDataInputService,\n    private checkboxService: CheckboxSelectionService,\n    private cd: ChangeDetectorRef\n  ) {}\n\n  private mergedSelectionSubscription: Subscription;\n\n  mergedSelection: any[] = [];\n  columnData: ColumnData[] = [];\n  titlesArray: string[] = [];\n  titlesString: string = '';\n  dataArray: string[] = [];\n  dataString: string = '';\n  showSelection: boolean = true;\n  showTable: boolean = false;\n\n  selectableProperties1Counter: number = 0;\n  selectableCharacteristicCounter: number = 0;\n  selectableProperties2Counter: number = 0;\n  selectableCommentsCounter: number = 0;\n\n  HeadersData = this.titlesArray;\n  nestedHeadersData: any[][] = [];\n  collapsibleColumnsData: any[] = [];\n\n  searchResults: any[] = []; // Store the search results\n  currentSearchIndex: number = -1; // Index of the currently selected search result\n\n  hotInstance!: Handsontable; // Store the Handsontable instance\n  @ViewChild('hotContainer') hotContainer!: ElementRef;\n\n  hotSettings: Handsontable.GridSettings = {\n    data: [], // Bind to the fetched data\n    columns: this.mergedSelection,\n\n    height: 'auto',\n    manualColumnResize: true,\n    licenseKey: 'non-commercial-and-evaluation',\n    multiColumnSorting: true,\n    filters: true,\n    search: true,\n    colHeaders: this.HeadersData,\n    rowHeaders: true,\n    manualRowMove: true,\n    hiddenColumns: {\n      columns: [0],\n      indicators: false\n    },\n    contextMenu: {\n      items: {\n        undo: {\n          name: 'undo',\n        },\n        redo: {\n          name: 'redo',\n        },\n        separator: ContextMenu.SEPARATOR,\n      },\n    },\n  };\n\n  ngOnInit(): void {\n\n   this.mergedSelectionSubscription =\n     this.checkboxService.mergedSelection$.subscribe(\n       (selection) => {\n         this.mergedSelection = selection;\n         this.titlesArray = this.mergedSelection.map((item) => item.title);\n         this.titlesString = this.titlesArray.join(', ');\n         this.dataArray = this.mergedSelection.map((item) => item.data);\n         this.dataString = this.dataArray.join(', ');\n         this.updateNestedHeadersData(); // Call the function to generate the nested headers\n\n         // Check if hotInstance is defined before calling updateSettings\n         if (this.hotInstance) {\n           // Update the Handsontable instance with new columns\n           this.hotInstance.updateSettings({\n             ...this.hotSettings,\n             columns: this.mergedSelection,\n             colHeaders: this.titlesArray,\n           });\n         }\n       },\n       (error) => {\n         console.error('Error with mergedSelection$ subscription', error);\n       }\n     );\n\n    // this.cd.detectChanges();\n\n    this.checkboxService.selectableProperties1Counter$.subscribe((count) => {\n      this.selectableProperties1Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCharacteristicCounter$.subscribe((count) => {\n      this.selectableCharacteristicCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableProperties2Counter$.subscribe((count) => {\n      this.selectableProperties2Counter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.selectableCommentsCounter$.subscribe((count) => {\n      this.selectableCommentsCounter = count;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.checkboxService.mergedSelection$.subscribe((selection) => {\n      this.mergedSelection = selection;\n      this.updateNestedHeadersData(); // Update nestedHeadersData\n    });\n\n    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {\n      Promise.resolve(obj.metadataJson).then((columnData) => {\n        this.columnData = columnData;\n        this.hotSettings.data = this.columnData;\n        if (!this.hotInstance) {\n          this.initializeHandsontable();\n        } else {\n          this.hotInstance.updateSettings(this.hotSettings);\n        }\n      });\n    });\n\n    // this.metaDataInputService.getColumnData().then((columnData) => {\n    //   this.columnData = columnData; // Populate columnData with fetched data\n    //   this.hotSettings.data = this.columnData; // Update data in hotSettings\n    //   this.initializeHandsontable(); // Initialize Handsontable with the data\n    // });\n  }\n\n  updateNestedHeadersData(): void {\n    // Calculate colspan values\n    const properties1Colspan = this.selectableProperties1Counter + 2;\n    const characteristicColspan = this.selectableCharacteristicCounter + 2;\n    const properties2Colspan = this.selectableProperties2Counter + 2;\n    const commentsColspan = this.selectableCommentsCounter + 6;\n\n    this.nestedHeadersData = [\n      [\n        { label: '', colspan: properties1Colspan },\n        { label: 'characteristic', colspan: characteristicColspan },\n        { label: '', colspan: properties2Colspan },\n        { label: 'comments', colspan: commentsColspan },\n        { label: 'factor value', colspan: 1 },\n      ],\n      this.titlesArray,\n    ];\n\n    this.hotSettings.nestedHeaders = this.nestedHeadersData;\n    this.hotSettings.collapsibleColumns = true;\n\n  }\n\n  private initializeHandsontable(): void {\n    this.hotInstance = new Handsontable(\n      this.hotContainer.nativeElement,\n      this.hotSettings,\n    );\n  }\n\n  onKey(event: any) {\n    this.performSearch();\n  }\n\n  private performSearch() {\n    if (this.hotInstance) {\n      const searchField = document.getElementById(\n        'search-field'\n      ) as HTMLInputElement;\n      const search = this.hotInstance.getPlugin('search');\n\n      if (search) {\n        const queryResult = search.query(searchField.value);\n        console.log(queryResult);\n\n        // Update searchResults and currentSearchIndex\n        this.searchResults = queryResult;\n        this.currentSearchIndex = 0; // Reset to the first result\n\n        this.hotInstance.render();\n      }\n    }\n  }\n\n  selectNextSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex + 1) % this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectPreviousSearchResult() {\n    if (this.searchResults.length > 0) {\n      this.currentSearchIndex =\n        (this.currentSearchIndex - 1 + this.searchResults.length) %\n        this.searchResults.length;\n      this.selectSearchResult(this.currentSearchIndex);\n    }\n  }\n\n  selectSearchResult(index: number) {\n    if (this.hotInstance) {\n      const result = this.searchResults[index];\n      this.hotInstance.selectCell(result.row, result.col);\n      this.hotInstance.scrollViewportTo(result.row, result.col);\n    }\n  }\n\n  onExportClick() {\n    this.exportData();\n  }\n\n  private exportData() {\n    if (this.hotInstance) {\n      const exportPlugin = this.hotInstance.getPlugin('exportFile');\n\n      exportPlugin.downloadFile('csv', {\n        bom: false,\n        columnDelimiter: ';',\n        columnHeaders: true,\n        exportHiddenColumns: true,\n        exportHiddenRows: true,\n        fileExtension: 'csv',\n        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',\n        mimeType: 'text/csv',\n        rowDelimiter: '\\r\\n',\n        rowHeaders: false,\n      });\n    }\n  }\n\n  exportDataAsObject(): ColumnDataObject[] {\n    if (this.hotInstance) {\n      const dataExport = this.hotInstance.getData();\n      const headers = this.dataArray;\n      const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;\n      const columnData: ColumnDataObject[] = [];\n\n      // Create a map of unique IDs to objects in the result array\n      const resultMap = new Map(result.map((obj) => [obj.identID, obj]));\n\n      for (let i = 0; i < dataExport.length; i++) {\n        const obj: ColumnDataObject = new ColumnDataObject();\n        for (let j = 0; j < headers.length; j++) {\n          const key = headers[j];\n          obj[key] = dataExport[i][j];\n        }\n\n        // Check if the object with the same ID exists in the result array\n        if (resultMap.has(obj.identID)) {\n          // Merge the changed data from dataExport into the existing object\n          const existingObj = resultMap.get(obj.identID);\n          for (const key in obj) {\n            if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {\n              existingObj[key] = obj[key];\n            }\n          }\n        }\n      }\n\n      // Convert the map back to an array\n      const mergedResult = Array.from(resultMap.values());\n\n      // Update the metadataJson value\n      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;\n\n      return mergedResult;\n    }\n    return [];\n  }\n\n  toggleSelection() {\n    this.showSelection = !this.showSelection;\n  }\n\n  submit() {\n    const dataExport = this.exportDataAsObject();\n    this.metaDataInputService.submiteTable(dataExport);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3446,7 +3516,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 21,
+                "line": 22,
                 "jsdoctags": [
                     {
                         "name": "metaDataInputService",
@@ -3481,7 +3551,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "\n<button mat-flat-button color=\"primary\" (click)=\"toggleSelection()\">\n  {{ showSelection ? 'Hide Selection' : 'Show Selection' }}\n</button>\n\n<div *ngIf=\"showSelection\">\n  <app-checkboxselection></app-checkboxselection>\n</div>\n\n\n  <h2>SDRF Table</h2>\n  <!-- Search input -->\n  <input\n    id=\"search-field\"\n    type=\"text\"\n    placeholder=\"Search...\"\n    (input)=\"onKey($event)\"\n  />\n  <div *ngIf=\"searchResults.length > 0\">\n    <ul>\n      <li\n        *ngFor=\"let result of searchResults; let i = index\"\n        [class.selected]=\"i === currentSearchIndex\"\n      >\n        {{ result.Sourcename }}\n        <!-- Display the relevant search result properties -->\n      </li>\n    </ul>\n  </div>\n  <button mat-flat-button color=\"primary\" (click)=\"selectNextSearchResult()\">\n    Next\n  </button>\n  <button mat-flat-button color=\"primary\" (click)=\"selectPreviousSearchResult()\">\n    Previous\n  </button>\n  <!-- Table -->\n  <div #hotContainer></div>\n  <!-- Export button -->\n  <button mat-flat-button color=\"primary\" (click)=\"onExportClick()\">\n    Quick Export to CSV\n  </button>\n\n  <div class=\"text-center mt-20 mb-20\">\n    <!-- <shared-login-buttons></shared-login-buttons> -->\n    <button mat-flat-button color=\"primary\" (click)=\"submit()\">\n      Submit and go to Download\n    </button>\n  </div>"
+            "templateData": "\n<button mat-flat-button color=\"primary\" (click)=\"toggleSelection()\">\n  {{ showSelection ? 'Hide Selection' : 'Show Selection' }}\n</button>\n\n<div *ngIf=\"showSelection\">\n  <app-checkboxselection></app-checkboxselection>\n</div>\n\n\n  <h2>SDRF Table</h2>\n  <!-- Search input -->\n  <input\n    id=\"search-field\"\n    type=\"text\"\n    placeholder=\"Search...\"\n    (input)=\"onKey($event)\"\n  />\n  <div *ngIf=\"searchResults.length > 0\">\n    <ul>\n      <li\n        *ngFor=\"let result of searchResults; let i = index\"\n        [class.selected]=\"i === currentSearchIndex\"\n      >\n        {{ result.Sourcename }}\n        <!-- Display the relevant search result properties -->\n      </li>\n    </ul>\n  </div>\n  <button mat-flat-button color=\"primary\" (click)=\"selectNextSearchResult()\">\n    Next\n  </button>\n  <button mat-flat-button color=\"primary\" (click)=\"selectPreviousSearchResult()\">\n    Previous\n  </button>\n  <!-- Table -->\n  <div #hotContainer></div>\n  <!-- Export button -->\n  <button mat-flat-button color=\"primary\" (click)=\"onExportClick()\">\n    Quick Export to CSV\n  </button>\n\n  <div class=\"text-center mt-20 mb-20\">\n    <!-- <shared-login-buttons></shared-login-buttons> -->\n    <button mat-flat-button color=\"primary\" (click)=\"submit()\">\n      Submit and go to Download\n    </button>\n  </div>\n"
         },
         {
             "name": "PageComponent",
@@ -3566,62 +3636,18 @@
             ],
             "stylesData": "",
             "extends": []
-        },
-        {
-            "name": "UploadProgressBarComponent",
-            "id": "component-UploadProgressBarComponent-458fe4930acf7c1bf42b9dc739297ce013d33549aff57d189a640fd5c49b47902e862d222b644a87d2c0f15495b0ef0db9494ea3ffd9227c976cb8634dfd9c9c",
-            "file": "projects/metadata-tool/src/app/upload-progress-bar/upload-progress-bar.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-upload-progress-bar",
-            "styleUrls": [
-                "./upload-progress-bar.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./upload-progress-bar.component.html"
-            ],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": false,
-            "imports": [],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-upload-progress-bar',\n  templateUrl: './upload-progress-bar.component.html',\n  styleUrls: ['./upload-progress-bar.component.scss']\n})\nexport class UploadProgressBarComponent {\n\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./upload-progress-bar.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "extends": [],
-            "templateData": "<p>upload-progress-bar works!</p>\n"
         }
     ],
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-e335778160e24698d62e093a87a8396f4fb4d6569cec0c211e9847816a631fee39581606ec1bb08cf82d2e36d5181f8bb89cc8eb327a857351ac272077f9fe9e",
+            "id": "module-AppModule-be38c7e523b23c8e1c187c176934ae3ca7036ef2fdb070217896a9b4a15529f9e95b786bda46cbf5f0ddb0bc48fd66327dad9156325cc0de0ab2f4fd173a34f8",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './metadata-workflow/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './metadata-uploadpage/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './metadata-downloadpage/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n\n\n    HttpClientModule,\n       FormlyModule.forRoot(),\n       ReactiveFormsModule,\n       FormlyMaterialModule,\n\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './pages/metadata-workflow-page/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './components/metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './components/upload-container/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './pages/metadata-download-page/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n\n\n    HttpClientModule,\n       FormlyModule.forRoot(),\n       ReactiveFormsModule,\n       FormlyMaterialModule,\n\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -3666,13 +3692,13 @@
         },
         {
             "name": "AppModule",
-            "id": "module-AppModule-4ea145c76966ec91d39cedc6330acedd829025a64f965df1cc5d4c4a43567860746a68e6d0acca917c8c05bc188ccfb13cc81f06e3bbb38f5486ae08d5b2ae0f-1",
+            "id": "module-AppModule-909fe7d43d256201070a457cefaf94c2aac39547d6538b30fe9cc24f4f9e395506e85c64a4c552097bfb0ab40e75ed400ebc3123b3f0b8ed5603188195dfe15c-1",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/upload-progress-bar/upload-progress-bar.module.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { UploadProgressBarComponent } from './upload-progress-bar.component';\n\n@NgModule({\n  declarations: [\n    // ... other components\n    UploadProgressBarComponent,\n  ],\n  // ... imports, providers, bootstrap\n})\nexport class AppModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { MetadataQuestFormComponent } from '../../components/metadata-quest-form/metadata-quest.component';\nimport { MetadataUploadpageComponent } from '../../components/upload-container/metadata-uploadpage.component';\n\n@NgModule({\n  declarations: [\n    MetadataQuestFormComponent,\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    // ... any other imports\n  ],\n  providers: [],\n\n})\nexport class AppModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3682,7 +3708,10 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "UploadProgressBarComponent"
+                            "name": "MetadataQuestFormComponent"
+                        },
+                        {
+                            "name": "MetadataUploadpageComponent"
                         }
                     ]
                 },
@@ -3706,13 +3735,13 @@
         },
         {
             "name": "AppRoutingModule",
-            "id": "module-AppRoutingModule-1edac0fac719974fcc2903aefe3e5b522ea96ad3a63a14952bcd721ea3936a4148f647e30408f27842d4d99ca8241308ae7032292bc6d2fc42a0a4bb1ad532bb",
+            "id": "module-AppRoutingModule-f161a4bf60d6c35190f97885de0ca433761ec10905a0d42ac16a480354a3d25adcf73e7d8a2ccea7ea0aaca6f522e68abf88782f12ec3b5cc29491ae811bdadb",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app-routing.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './metadata-landing-page/metadata-landing-page.component';\n\nconst routes: Routes = [\n  {\n    path: 'home',\n    component: MetadataLandingPageComponent,\n  },\n  {\n    path: 'upload',\n    loadChildren: () =>\n      \"import('./metadata-uploadpage/metadata-uploadpage.module').then(\\\n        (m) => m.MetadataUploadpageModule\\\n      )\",\n  },\n  {\n    path: 'workflow',\n    loadChildren: () =>\n      \"import('./metadata-workflow/metadata-workflow.module').then(\\\n        (m) => m.WorkflowModule\\\n      )\",\n  },\n  {\n    path: 'download',\n    loadChildren: () =>\n      \"import('./metadata-downloadpage/metadata-downloadpage.module').then(\\\n        (m) => m.MetadataDownloadpageModule\\\n      )\",\n  },\n  {\n    path: 'quest',\n    loadChildren: () =>\n      \"import('./metadata-quest-form/metadata-quest.module').then(\\\n        (m) => m.MetadataQuestModule\\\n      )\",\n  },\n  { path: '', redirectTo: 'home', pathMatch: 'full' },\n  { path: '**', redirectTo: 'home' },\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule],\n})\nexport class AppRoutingModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\n\nconst routes: Routes = [\n  {\n    path: 'home',\n    component: MetadataLandingPageComponent,\n  },\n  {\n    path: 'upload',\n    loadChildren: () =>\n      \"import('./components/upload-container/metadata-uploadpage.module').then(\\\n        (m) => m.MetadataUploadpageModule\\\n      )\",\n  },\n  {\n    path: 'workflow',\n    loadChildren: () =>\n      \"import('./pages/metadata-workflow-page/metadata-workflow.module').then(\\\n        (m) => m.WorkflowModule\\\n      )\",\n  },\n  {\n    path: 'download',\n    loadChildren: () =>\n      \"import('./pages/metadata-download-page/metadata-downloadpage.module').then(\\\n        (m) => m.MetadataDownloadpageModule\\\n      )\",\n  },\n  {\n    path: 'quest',\n    loadChildren: () =>\n      \"import('./components/metadata-quest-form/metadata-quest.module').then(\\\n        (m) => m.MetadataQuestModule\\\n      )\",\n  },\n  { path: '', redirectTo: 'home', pathMatch: 'full' },\n  { path: '**', redirectTo: 'home' },\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule],\n})\nexport class AppRoutingModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3746,7 +3775,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection.module.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/metadata-checkboxselection.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';\n\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [MetaDataCheckboxSelectionComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    MatButtonModule,\n  \n  ],\n  exports: [MetaDataCheckboxSelectionComponent]\n})\nexport class MetaDataCheckboxSelectionModule { }\n",
             "children": [
@@ -3790,7 +3819,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection-routing.module.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/metadata-checkboxselection-routing.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';\n\nconst routes: Routes = [\n  {path: '', component: MetaDataCheckboxSelectionComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\n\nexport class MetadataCheckboxSelectionRoutingModule { }\n",
             "children": [
@@ -3826,7 +3855,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage.module.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadata-downloadpage.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataDownloadpageComponent } from './metadata-downloadpage.component';\nimport { MetadataDownloadpageRoutingModule } from './metadata-downloadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n\n\n@NgModule({\n  declarations: [MetadataDownloadpageComponent],\n  imports: [\n    CommonModule,\n    MetadataDownloadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataDownloadpageComponent]\n})\nexport class MetadataDownloadpageModule { }\n",
             "children": [
@@ -3874,7 +3903,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage-routing.module.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadata-downloadpage-routing.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataDownloadpageComponent } from './metadata-downloadpage.component';\n\nconst routes: Routes = [\n  {path: '', component: MetadataDownloadpageComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataDownloadpageRoutingModule { }\n",
             "children": [
@@ -3910,7 +3939,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-quest-form/metadata-quest.module.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest.module.ts",
             "methods": [],
             "sourceCode": "// based of this concept: https://dev.to/sp90/angular-reactive-forms-conditional-validation-4aop\nimport { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetadataQuestFormComponent } from './metadata-quest.component';\nimport { MetadataQuestRoutingModule } from './metadata-quest-routing.module';\nimport { MatRadioModule } from '@angular/material/radio';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatSelectModule } from '@angular/material/select';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\nimport { MatStepperModule } from '@angular/material/stepper';\nimport { FormlyFieldStepper } from './stepper.type';\n\n@NgModule({\n  declarations: [MetadataQuestFormComponent, FormlyFieldStepper],\n  imports: [\n    // base imports\n    CommonModule,\n    ReactiveFormsModule,\n\n    //material design imports\n    MetadataQuestRoutingModule,\n    MatRadioModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatSelectModule,\n    FormlyModule,\n    FormlyMaterialModule,\n    MatStepperModule,\n    FormlyModule.forRoot({\n      validationMessages: [\n        { name: 'required', message: 'This field is required' },\n      ],\n      types: [{ name: 'stepper', component: FormlyFieldStepper, wrappers: [] }],\n    }),\n  ],\n  exports: [\n    MetadataQuestFormComponent,\n    FormlyFieldStepper, // Export if it will be used outside the module\n  ],\n})\nexport class MetadataQuestModule {} // Make sure this matches the class name exactly\n",
             "children": [
@@ -3964,7 +3993,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-quest-form/metadata-quest-routing.module.ts",
+            "file": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest-routing.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataQuestFormComponent } from './metadata-quest.component';\nimport { ReactiveFormsModule } from '@angular/forms';\n\nconst routes: Routes = [{ path: '', component: MetadataQuestFormComponent }];\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(routes),\n    ReactiveFormsModule,\n  ],\n  exports: [RouterModule],\n})\nexport class MetadataQuestRoutingModule {}\n",
             "children": [
@@ -4000,7 +4029,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.module.ts",
+            "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatProgressBarModule } from '@angular/material/progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
             "children": [
@@ -4048,7 +4077,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage-routing.module.ts",
+            "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage-routing.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\n\nconst routes: Routes = [\n  {path: '', component: MetadataUploadpageComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataUploadpageRoutingModule { }\n",
             "children": [
@@ -4084,7 +4113,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow-routing.module.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow-routing.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\n\nconst routes: Routes = [\n  {path: '', component: MetadataWorkflowComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataWorkflowRoutingModule { }\n",
             "children": [
@@ -4116,13 +4145,13 @@
         },
         {
             "name": "WorkflowModule",
-            "id": "module-WorkflowModule-05e56274724871e8ab9fe2d0251f42327477e0cd80d3f52b319e2870213cb0ec367af31c2a858ced1361f5a9914c6e504dbc2335721b1acc4350592cd9b3b7e6",
+            "id": "module-WorkflowModule-36fd29b39e7ed81cf14aad93cc9a3c2e7c5f43b2e35636741d840a171eb670adb9d18ab5f46c74e4218605307c54e9f93139467059b9ac2eee5fe479ca7dcb8c",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.module.ts",
+            "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -4217,16 +4246,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/upload-progressbar.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "() => ({\n  component: UploadProgressBarComponent,\n  props: {\n    progress: 50, // Example progress value\n  },\n})"
             },
             {
                 "name": "Default",
@@ -4674,18 +4693,6 @@
                     "defaultValue": "{\n  title: 'Project/MetadataQuestModule',\n  component: MetadataQuestFormComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        //Core modules\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(HttpClientModule),\n\n        // Base modules\n        importProvidersFrom(FormsModule),\n        importProvidersFrom(ReactiveFormsModule),\n      ],\n    }),\n  ],\n}"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/upload-progressbar.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/upload-progressbar.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: UploadProgressBarComponent,\n  props: {\n    progress: 50, // Example progress value\n  },\n})"
-                }
-            ],
             "projects/metadata-tool/src/ownStories/uploadPage.stories.ts": [
                 {
                     "name": "Default",
@@ -5018,14 +5025,14 @@
                     },
                     {
                         "path": "upload",
-                        "loadChildren": "./metadata-uploadpage/metadata-uploadpage.module#MetadataUploadpageModule",
+                        "loadChildren": "./components/upload-container/metadata-uploadpage.module#MetadataUploadpageModule",
                         "children": [
                             {
                                 "kind": "module",
                                 "children": [
                                     {
                                         "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage-routing.module.ts",
+                                        "filename": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage-routing.module.ts",
                                         "module": "MetadataUploadpageRoutingModule",
                                         "children": [
                                             {
@@ -5042,14 +5049,14 @@
                     },
                     {
                         "path": "workflow",
-                        "loadChildren": "./metadata-workflow/metadata-workflow.module#WorkflowModule",
+                        "loadChildren": "./pages/metadata-workflow-page/metadata-workflow.module#WorkflowModule",
                         "children": [
                             {
                                 "kind": "module",
                                 "children": [
                                     {
                                         "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow-routing.module.ts",
+                                        "filename": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow-routing.module.ts",
                                         "module": "MetadataWorkflowRoutingModule",
                                         "children": [
                                             {
@@ -5066,14 +5073,14 @@
                     },
                     {
                         "path": "download",
-                        "loadChildren": "./metadata-downloadpage/metadata-downloadpage.module#MetadataDownloadpageModule",
+                        "loadChildren": "./pages/metadata-download-page/metadata-downloadpage.module#MetadataDownloadpageModule",
                         "children": [
                             {
                                 "kind": "module",
                                 "children": [
                                     {
                                         "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage-routing.module.ts",
+                                        "filename": "projects/metadata-tool/src/app/pages/metadata-download-page/metadata-downloadpage-routing.module.ts",
                                         "module": "MetadataDownloadpageRoutingModule",
                                         "children": [
                                             {
@@ -5090,14 +5097,14 @@
                     },
                     {
                         "path": "quest",
-                        "loadChildren": "./metadata-quest-form/metadata-quest.module#MetadataQuestModule",
+                        "loadChildren": "./components/metadata-quest-form/metadata-quest.module#MetadataQuestModule",
                         "children": [
                             {
                                 "kind": "module",
                                 "children": [
                                     {
                                         "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/metadata-quest-form/metadata-quest-routing.module.ts",
+                                        "filename": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest-routing.module.ts",
                                         "module": "MetadataQuestRoutingModule",
                                         "children": [
                                             {
@@ -5150,7 +5157,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/metadata-checkboxselection/checkboxselectionservice.ts",
+                "filePath": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxselectionservice.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "CheckboxSelectionService",
@@ -5159,7 +5166,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/metadata-checkboxselection/metadata-checkboxselection.component.ts",
+                "filePath": "projects/metadata-tool/src/app/components/metadata-checkboxselection/metadata-checkboxselection.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "MetaDataCheckboxSelectionComponent",
@@ -5168,34 +5175,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/metadata-downloadpage/metadata-downloadpage.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "MetadataDownloadpageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/4",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/metadata-downloadpage/metaddata-upload.service.ts",
-                "type": "injectable",
-                "linktype": "injectable",
-                "name": "MetaDataDownloadService",
-                "coveragePercent": 0,
-                "coverageCount": "0/3",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/metadata-landing-page/metadata-landing-page.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "MetadataLandingPageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/3",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/metadata-quest-form/metadata-quest.component.ts",
+                "filePath": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "MetadataQuestFormComponent",
@@ -5204,7 +5184,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/metadata-quest-form/stepper.type.ts",
+                "filePath": "projects/metadata-tool/src/app/components/metadata-quest-form/stepper.type.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "FormlyFieldStepper",
@@ -5213,30 +5193,12 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/metadata-uploadpage/metadata-uploadpage.component.ts",
+                "filePath": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "MetadataUploadpageComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/7",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/metadata-workflow/metadata-workflow.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "MetadataWorkflowComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/36",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/app/metadata-workflow/metaddata-input.service.ts",
-                "type": "injectable",
-                "linktype": "injectable",
-                "name": "MetaDataInputService",
-                "coveragePercent": 0,
-                "coverageCount": "0/6",
                 "status": "low"
             },
             {
@@ -5285,12 +5247,57 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/metadata-tool/src/app/upload-progress-bar/upload-progress-bar.component.ts",
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metadata-downloadpage.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "UploadProgressBarComponent",
+                "name": "MetadataDownloadpageComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/1",
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metaddata-upload.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "MetaDataDownloadService",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-landing-page/metadata-landing-page.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MetadataLandingPageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MetadataUploadpageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MetadataWorkflowComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/36",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metaddata-input.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "MetaDataInputService",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {
@@ -5418,16 +5425,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "meta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/upload-progressbar.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
