@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';
 
 const routes: Routes = [
@@ -32,8 +31,8 @@ const routes: Routes = [
   {
     path: 'quest',
     loadChildren: () =>
-      import('./components/metadata-quest-form/metadata-quest.module').then(
-        (m) => m.MetadataQuestModule
+      import('./pages/metadata-quest-page/metadata-quest-page.module').then(
+        (m) => m.MetadataQuestPageModule
       ),
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

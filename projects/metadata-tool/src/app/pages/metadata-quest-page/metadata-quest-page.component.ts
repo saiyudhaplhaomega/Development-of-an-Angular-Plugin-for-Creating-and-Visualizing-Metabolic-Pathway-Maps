@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'metadata-uploadpage', // Ensure this matches the selector used in your HTML
+  selector: 'metadata-quest-page', // Ensure this matches the selector used in your HTML
   templateUrl: './metadata-quest-page.component.html', // Path to the HTML template
 })
-export class MetadataUploadpageComponent {
+export class MetadataQuestPageComponent {
   // Define properties and methods for your component here
-  title = 'Metadata Upload Page';
+  title = 'Metadata Quest Page';
 
   constructor() {
     // Initialization code

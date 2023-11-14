@@ -4,15 +4,13 @@ import { MetadataQuestFormComponent } from '../../components/metadata-quest-form
 import { MetadataUploadpageComponent } from '../../components/upload-container/metadata-uploadpage.component';
 
 @NgModule({
-  declarations: [
-    MetadataQuestFormComponent,
-    MetadataUploadpageComponent,
-  ],
+
+  declarations: [],
   imports: [
     BrowserModule,
     // ... any other imports
   ],
   providers: [],
-
 })
-export class AppModule {}
+export class MetadataQuestPageModule {}
+
