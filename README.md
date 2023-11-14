@@ -1,5 +1,13 @@
 # AngularPSM
 
+## Generate module page with routing
+
+Example of creating an module called `metadata-quest-page` inside the `metadata-tool` project. The route quest leads to the component and is lazy loaded in the app-rounting component. 
+
+```sh
+ng g m metadata-quest-page --project metadata-tool --route quest --module app-routing
+```
+
 ## Run storybook
 
 Make shure you have the the shared Library installed.
