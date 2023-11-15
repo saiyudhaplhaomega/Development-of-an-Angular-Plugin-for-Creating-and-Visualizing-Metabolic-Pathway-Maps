@@ -11,6 +11,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FormlyFieldStepper } from './stepper.type';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [MetadataQuestFormComponent, FormlyFieldStepper],
@@ -35,6 +37,8 @@ import { FormlyFieldStepper } from './stepper.type';
     MatInputModule,
     MatSelectModule,
     MatStepperModule,
+    MatTooltipModule,
+    MatIconModule,
   ],
   exports: [
     MetadataQuestFormComponent,

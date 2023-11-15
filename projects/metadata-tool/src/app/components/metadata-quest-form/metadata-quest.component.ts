@@ -46,6 +46,7 @@ export class MetadataQuestFormComponent {
         type: 'select',
         templateOptions: {
           label: 'Experiment Type',
+          description: "What kind of experiment was done?",
           options: [
             { value: 'metaproteomics', label: 'Metaproteomics' },
             { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement
@@ -174,23 +175,21 @@ export class MetadataQuestFormComponent {
     ],
   };
 
-  fifthFieldGroup =
-    {
-      props: { label: 'Variable Under Investigation (Factor Value)' },
-      fieldGroup: [
-        {
-          key: 'factorValue',
-          type: 'input',
-          templateOptions: {
-            label: 'Which is the variable under investigation (factor value)?',
-            placeholder: 'Enter the factor value',
-            // description:
-            //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',
-          },
+  fifthFieldGroup = {
+    props: { label: 'Variable Under Investigation (Factor Value)' },
+    fieldGroup: [
+      {
+        key: 'factorValue',
+        type: 'input',
+        templateOptions: {
+          label: 'Which is the variable under investigation (factor value)?',
+          placeholder: 'Enter the factor value',
+          // description:
+          //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',
         },
-      ],
-    }
-
+      },
+    ],
+  };
 
   form = new FormGroup({});
 
@@ -204,7 +203,6 @@ export class MetadataQuestFormComponent {
         this.thirdFieldGroup,
         this.fourthFieldGroup,
         this.fifthFieldGroup,
-
       ],
     },
   ];

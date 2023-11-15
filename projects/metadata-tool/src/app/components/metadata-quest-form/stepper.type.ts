@@ -15,7 +15,8 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
         "
       >
         <ng-template matStepLabel>{{ step.props.label }}</ng-template>
-        <formly-field [field]="step"></formly-field>
+
+        <formly-field [field]="step"> </formly-field>
 
         <div>
           <button
