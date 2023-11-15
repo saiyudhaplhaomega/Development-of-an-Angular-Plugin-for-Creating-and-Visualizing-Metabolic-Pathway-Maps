@@ -46,7 +46,7 @@ export class MetadataQuestFormComponent {
         type: 'select',
         templateOptions: {
           label: 'Experiment Type',
-          description: "What kind of experiment was done?",
+          description: 'What kind of experiment was done?',
           options: [
             { value: 'metaproteomics', label: 'Metaproteomics' },
             { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement
@@ -54,7 +54,7 @@ export class MetadataQuestFormComponent {
         },
       },
       {
-        key: 'metaproteomeType',
+        key: 'metagenomes',
         type: 'select',
         templateOptions: {
           label: 'Which Metaproteom?',
@@ -63,7 +63,7 @@ export class MetadataQuestFormComponent {
         hideExpression: "model.experimentType !== 'metaproteomics'",
       },
       {
-        key: 'specificMetagenome',
+        key: 'ecologicalMetagenomes',
         type: 'select',
         templateOptions: {
           label: 'Specific Metagenome?',
@@ -88,7 +88,7 @@ export class MetadataQuestFormComponent {
         },
       },
       {
-        key: 'measurementInstrument',
+        key: 'instrument',
         type: 'input',
         templateOptions: {
           label: 'Which instruments were used for measurement?',
@@ -96,7 +96,7 @@ export class MetadataQuestFormComponent {
         },
       },
       {
-        key: 'digestionMethod',
+        key: 'cleavantAgentDetails',
         type: 'select',
         templateOptions: {
           label: 'What digestion method did you use?',
@@ -104,7 +104,7 @@ export class MetadataQuestFormComponent {
         },
       },
       {
-        key: 'enzymeUsed',
+        key: 'modificationParameters',
         type: 'input',
         templateOptions: {
           label: 'Which enzyme (cleavant agent) did you use for digestion?',
@@ -119,7 +119,7 @@ export class MetadataQuestFormComponent {
     props: { label: 'Questions for Experiment' },
     fieldGroup: [
       {
-        key: 'assayUsed',
+        key: 'assayName',
         type: 'input',
         templateOptions: {
           label: 'What assay was used?',
@@ -127,15 +127,7 @@ export class MetadataQuestFormComponent {
         },
       },
       {
-        key: 'experimentType',
-        type: 'input',
-        templateOptions: {
-          label: 'What kind of experiment was done?',
-          placeholder: 'e.g., heat shock',
-        },
-      },
-      {
-        key: 'labelsUsed',
+        key: 'label',
         type: 'input',
         templateOptions: {
           label: 'Labels used?',
