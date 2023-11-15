@@ -1,10 +1,10 @@
 
-import { Component } from '@angular/core';
 //import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
 import { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';
 import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
 import { MatDialog } from '@angular/material/dialog';
-import { OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-metadata-upload-container',
@@ -12,6 +12,11 @@ import { OnInit } from '@angular/core';
   styleUrls: ['./metadata-uploadpage.component.scss'],
 })
 export class MetadataUploadContainerComponent implements OnInit {
+  @Output() uploadStatusChanged = new EventEmitter<{
+    progress: number;
+    started: boolean;
+  }>();
+
   selectedFiles: File[] = [];
   uploadDialogId: string;
 
@@ -29,6 +34,16 @@ export class MetadataUploadContainerComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.metadataUploadJson.subscribe();
+    // Emit the progress
+    this.uploadProgressService.currentProgress.subscribe((progress) => {
+      this.uploadProgress = progress;
+      this.uploadStatusChanged.emit({
+        progress: this.uploadProgress,
+        started: this.uploadProgress > 0,
+      });
+
+    });
+
   }
 
   onFilesSelected(event: Event): void {
@@ -58,7 +73,7 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.uploadStartTime = Date.now();
     this.uploadProgressService.currentProgress.subscribe((progress) => {
       this.uploadProgress = progress;
-      if (progress < 100 && progress > 0) {
+      if (progress > 0) {
         this.showContainer = false;
       }
 
