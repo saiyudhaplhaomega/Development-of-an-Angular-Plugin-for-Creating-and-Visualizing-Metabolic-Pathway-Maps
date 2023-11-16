@@ -1,0 +1,5 @@
+<mat-form-field class="example-full-width">
+  <mat-label>Enter a Cypher query</mat-label>
+  <textarea matInput placeholder="Match n return n;" [(ngModel)]="queryValue"></textarea>
+</mat-form-field>
+<button mat-raised-button color="accent" (click)="submit()">Submit Query</button>
