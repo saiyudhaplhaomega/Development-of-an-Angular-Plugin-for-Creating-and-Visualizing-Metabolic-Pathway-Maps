@@ -45,6 +45,8 @@ export class MetadataQuestFormComponent {
         key: 'experimentType',
         type: 'select',
         templateOptions: {
+          wrapper: ["tooltip"],
+          customTooltip: 'This is a custom tooltip for the example field',
           label: 'Experiment Type',
           description: 'What kind of experiment was done?',
           options: [
@@ -82,6 +84,8 @@ export class MetadataQuestFormComponent {
       {
         key: 'technologyType',
         type: 'select',
+        description:
+          'Methods, which are used to quantify the protein concentration of the analyzed samples. e.g., BCA, Lowry, Bradford, …',
         templateOptions: {
           label: 'What kind of Metaproteomics (technology type)?',
           options: this.technologyTypeOptions,
@@ -101,6 +105,8 @@ export class MetadataQuestFormComponent {
         templateOptions: {
           label: 'What digestion method did you use?',
           options: this.digestionMethodOptions,
+          description:
+            'Methods, which are used to proteolytic digest the protein to peptides for LC-MS/MS analysis. E.g., FASP digestion, in-gel digestion, S-trap, …',
         },
       },
       {

@@ -10,29 +10,28 @@ import { StandardPageLayoutModule } from 'dist/shared-lib';
 import { FormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MetadataLandingPageComponent,
-  ],
+  declarations: [AppComponent, MetadataLandingPageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatButtonModule,
+
     StandardPageLayoutModule,
     BrowserAnimationsModule,
 
-
-
     HttpClientModule,
-       FormlyModule.forRoot(),
-       ReactiveFormsModule,
-       FormlyMaterialModule,
+    FormlyModule.forRoot(),
+    ReactiveFormsModule,
+    FormlyMaterialModule,
 
+    // Material design imports
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

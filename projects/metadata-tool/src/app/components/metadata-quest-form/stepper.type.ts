@@ -16,9 +16,14 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
       >
         <ng-template matStepLabel>{{ step.props.label }}</ng-template>
 
-        <formly-field [field]="step"> </formly-field>
+        <div *ngFor="let subfield of step.fieldGroup">
+          <div class="field-with-icon">
+            <formly-field [field]="subfield"></formly-field>
+          </div>
+        </div>
 
         <div>
+          <!-- Navigation buttons: Back, Next, Submit -->
           <button
             matStepperPrevious
             *ngIf="index !== 0"
