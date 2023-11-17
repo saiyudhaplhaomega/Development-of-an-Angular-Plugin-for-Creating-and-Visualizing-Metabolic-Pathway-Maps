@@ -13,8 +13,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FormlyFieldStepper } from './stepper.type';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { CustomFieldWrapperComponent } from './custom-field-wrapper/custom-field-wrapper.component';
-
 
 @NgModule({
   declarations: [MetadataQuestFormComponent, FormlyFieldStepper],

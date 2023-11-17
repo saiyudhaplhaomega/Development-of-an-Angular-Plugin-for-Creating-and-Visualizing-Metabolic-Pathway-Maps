@@ -871,28 +871,28 @@
         },
         {
             "name": "MetaDataInputService",
-            "id": "injectable-MetaDataInputService-6e5ff5b712750c7de04c0a6f1821b0e4ed04218990f66959d532f83de720a3f6ee1ad91991a73ab7cd18707a90e1afaaef85248ddbff452b2ef5358dbdb66bb5",
+            "id": "injectable-MetaDataInputService-a696e5e2c695754c9ad936297577762862418989c4f0d35a32ec209c554c06f73ed52ab3aa391f0a73cdc2690990f70fa3b3609eb50d2b064ba840040ad565e7",
             "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metaddata-input.service.ts",
             "properties": [
                 {
                     "name": "dummyData",
-                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }",
+                    "defaultValue": "{\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [\n      {\n        identID: '111',\n        counter: 0,\n        sourcename: 'biogas sample 1',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf1',\n      },\n      {\n        identID: '222',\n        counter: 1,\n        sourcename: 'biogas sample 2',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf2',\n      },\n      {\n        identID: '333',\n        counter: 2,\n        sourcename: 'biogas sample 3',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf3',\n      },\n    ],\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "MetaDataUploadJson",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 18
                 },
                 {
                     "name": "metadataUploadJson",
-                    "defaultValue": "new BehaviorSubject<MetaDataUploadJson>(this.dummyData)",
+                    "defaultValue": "new BehaviorSubject<MetaDataUploadJson>(\n    this.dummyData\n  )",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 162,
+                    "line": 163,
                     "modifierKind": [
                         125
                     ]
@@ -912,13 +912,41 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 223,
+                    "line": 249,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "dataExport",
                             "type": "ColumnData[]",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "updateMetaDataUploadJson",
+                    "args": [
+                        {
+                            "name": "userData",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 167,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "userData",
+                            "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -952,7 +980,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 169,
+                    "line": 186,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -990,7 +1018,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [{\n      identID: '111',\n      counter: 0,\n      sourcename: 'biogas sample 1',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf1'\n    },\n    {\n      identID: '222',\n      counter: 1,\n      sourcename: 'biogas sample 2',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf2'\n    },\n    {\n      identID: '333',\n      counter: 2,\n      sourcename: 'biogas sample 3',\n      spectrumFile: 'sample1.mgf',\n      psmFile: 'sample1.csv',\n      group: 'MdOA',\n      projectIdentifier: 'ISAS_SDRF',\n      project: '',\n      study: '',\n      program: '',\n      biologicalReplicate: 1,\n      metagenomes: 'ecological metagenome',\n      ecologicalMetagenomes: 'biogas metagenom',\n      syntheticMetagenome: '/',\n      organismalMetagenomes: 'human gut metagenom',\n      analyticalFraction: '',\n      temperatureCondtions: '',\n      pressure: '',\n      pH: '',\n      carbonSource: '',\n      electronSource: '',\n      countIdentifiedSpezies: '',\n      assayName: 'Assay 1',\n      experimentType: 'heat shock',\n      technologyType: '',\n      technicalReplicate: 1,\n      label: 'label 1',\n      fractionIdentifier: 1,\n      cleavantAgentDetails: '',\n      instrument: '',\n      modificationParameters: '',\n      modificationParameters1: '',\n      modificationParameters2: '',\n      dissociationMethod: '',\n      precursorMassTolerance: '',\n      fragmentMassTolerance: '',\n      dataFile: 'datafile path 1',\n      fileUri: 'file uri 1',\n      mzID: 'mzID 1',\n      mzML: 'mzML 1',\n      comment: '',\n      factorValue: 'heat shock',\n      fileType: 'mgf3'\n    },]\n  }\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(this.dummyData);\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(files: MultiFileUploadData, uploadProgress: UploadProgressService, dialog: MatDialog): void {\n    this.http\n    .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n    .subscribe({\n      next: (event) => {\n        if (event.type === HttpEventType.UploadProgress) {\n          uploadProgress.changeReportLoaded(event.loaded);\n          console.log('UploadProgress event');\n          console.log(event);\n        } else if (event.type === HttpEventType.Response) {\n          console.log('Response event');\n          console.log(event);\n          console.log(event.body);\n          const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;\n          this.metadataUploadJson.next(newMetadataJson);\n          console.log(this.metadataUploadJson);\n          const params = new HttpParams(\n            {\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              }\n            }\n          );\n          this.http.repeatedGetObject<MetaDataUploadJson>(\n            'jobId',\n            this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n            params,\n            5,\n          ).subscribe((response: MetaDataUploadJson) => {\n            console.log(\"response repeat\");\n            console.log(response);\n            this.metadataUploadJson.next(response);\n          });\n        } else {\n          console.log('unknown event');\n          console.log(event);\n          console.log(event.type);\n        }\n      },\n      error: (error) => {\n        console.log(error);\n        if (error.status >= 400) {\n          // handle failed upload\n          if (dialog.getDialogById(\"UPLOAD\")) {\n            dialog.getDialogById(\"UPLOAD\").componentInstance.setUploadFailed();\n            dialog.getDialogById(\"UPLOAD\").componentInstance.uploadFailedMessage = error.statusText;\n          }\n        } else {\n          throw error;\n        }\n      },\n    });\n  }\n\n  submiteTable(dataExport: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = dataExport;\n    this.metadataUploadJson.next(uploadJson);\n    this.http.postObject<MetaDataUploadJson, MetaDataUploadJson>(this.metadataUploadJson.value, this.url.getURL(Endpoints.SUBMIT_METADATA))\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n              // SAVE DOwnload link jsn\n          });\n\n      });\n\n    }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { ColumnData, ColumnDataObject } from '../../model/metadata-columnData';\nimport { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';\nimport {\n  Endpoints,\n  WebserveraddressService,\n} from '../../webserveraddress.service';\nimport { MetaDataUploadJson, MetaDataUploadJsonObject } from '../../model/metadatauploadjson';\nimport { HttpEventType, HttpParams } from '@angular/common/http';\nimport { MatDialog } from '@angular/material/dialog';\nimport { BehaviorSubject } from 'rxjs';\nimport { DownloadLinksJson } from '../../model/download-json';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class MetaDataInputService {\n  dummyData: MetaDataUploadJson = {\n    jobId: '',\n    createInitialMetadataJobId: '',\n    fileConversionJobId: '',\n    processingFinished: false,\n    dataFilesIDs: null,\n    metadataJson: [\n      {\n        identID: '111',\n        counter: 0,\n        sourcename: 'biogas sample 1',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf1',\n      },\n      {\n        identID: '222',\n        counter: 1,\n        sourcename: 'biogas sample 2',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf2',\n      },\n      {\n        identID: '333',\n        counter: 2,\n        sourcename: 'biogas sample 3',\n        spectrumFile: 'sample1.mgf',\n        psmFile: 'sample1.csv',\n        group: 'MdOA',\n        projectIdentifier: 'ISAS_SDRF',\n        project: '',\n        study: '',\n        program: '',\n        biologicalReplicate: 1,\n        metagenomes: 'ecological metagenome',\n        ecologicalMetagenomes: 'biogas metagenom',\n        syntheticMetagenome: '/',\n        organismalMetagenomes: 'human gut metagenom',\n        analyticalFraction: '',\n        temperatureCondtions: '',\n        pressure: '',\n        pH: '',\n        carbonSource: '',\n        electronSource: '',\n        countIdentifiedSpezies: '',\n        assayName: 'Assay 1',\n        experimentType: 'heat shock',\n        technologyType: '',\n        technicalReplicate: 1,\n        label: 'label 1',\n        fractionIdentifier: 1,\n        cleavantAgentDetails: '',\n        instrument: '',\n        modificationParameters: '',\n        modificationParameters1: '',\n        modificationParameters2: '',\n        dissociationMethod: '',\n        precursorMassTolerance: '',\n        fragmentMassTolerance: '',\n        dataFile: 'datafile path 1',\n        fileUri: 'file uri 1',\n        mzID: 'mzID 1',\n        mzML: 'mzML 1',\n        comment: '',\n        factorValue: 'heat shock',\n        fileType: 'mgf3',\n      },\n    ],\n  };\n\n  public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(\n    this.dummyData\n  );\n\n  updateMetaDataUploadJson(userData: any): void {\n    // Transform userData to fit the structure of MetaDataUploadJson\n    // For example:\n    const metaData = this.dummyData.metadataJson[0];\n\n    for (const key in userData) {\n      if (userData.hasOwnProperty(key) && metaData.hasOwnProperty(key)) {\n        metaData[key] = userData[key];\n      }\n    }\n\n    // Perform any additional processing or API calls needed\n  }\n\n  constructor(\n    private http: HttpClientService,\n    private url: WebserveraddressService\n  ) {}\n\n  upload(\n    files: MultiFileUploadData,\n    uploadProgress: UploadProgressService,\n    dialog: MatDialog\n  ): void {\n    this.http\n      .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))\n      .subscribe({\n        next: (event) => {\n          if (event.type === HttpEventType.UploadProgress) {\n            uploadProgress.changeReportLoaded(event.loaded);\n            console.log('UploadProgress event');\n            console.log(event);\n          } else if (event.type === HttpEventType.Response) {\n            console.log('Response event');\n            console.log(event);\n            console.log(event.body);\n            const newMetadataJson: MetaDataUploadJson =\n              event.body as MetaDataUploadJson;\n            this.metadataUploadJson.next(newMetadataJson);\n            console.log(this.metadataUploadJson);\n            const params = new HttpParams({\n              fromObject: {\n                jobid: newMetadataJson.createInitialMetadataJobId,\n              },\n            });\n            this.http\n              .repeatedGetObject<MetaDataUploadJson>(\n                'jobId',\n                this.url.getURL(Endpoints.GET_INITIAL_METADATA),\n                params,\n                5\n              )\n              .subscribe((response: MetaDataUploadJson) => {\n                console.log('response repeat');\n                console.log(response);\n                this.metadataUploadJson.next(response);\n              });\n          } else {\n            console.log('unknown event');\n            console.log(event);\n            console.log(event.type);\n          }\n        },\n        error: (error) => {\n          console.log(error);\n          if (error.status >= 400) {\n            // handle failed upload\n            if (dialog.getDialogById('UPLOAD')) {\n              dialog\n                .getDialogById('UPLOAD')\n                .componentInstance.setUploadFailed();\n              dialog.getDialogById(\n                'UPLOAD'\n              ).componentInstance.uploadFailedMessage = error.statusText;\n            }\n          } else {\n            throw error;\n          }\n        },\n      });\n  }\n\n  submiteTable(dataExport: ColumnData[]) {\n    const uploadJson = this.metadataUploadJson.getValue();\n    uploadJson.metadataJson = dataExport;\n    this.metadataUploadJson.next(uploadJson);\n    this.http\n      .postObject<MetaDataUploadJson, MetaDataUploadJson>(\n        this.metadataUploadJson.value,\n        this.url.getURL(Endpoints.SUBMIT_METADATA)\n      )\n      .subscribe((response) => {\n        this.metadataUploadJson.next(response);\n        this.http\n          .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(\n            response,\n            'jobID',\n            this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),\n            new HttpParams()\n          )\n          .subscribe((response: DownloadLinksJson) => {\n            // SAVE DOwnload link jsn\n          });\n      });\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1010,7 +1038,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 162,
+                "line": 179,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -1846,7 +1874,7 @@
         },
         {
             "name": "FormlyFieldStepper",
-            "id": "component-FormlyFieldStepper-ee159c7784b8309b649a616a219c2da55cf3ee928770d640ec080b690a2f61defb1d3feb7f159c55ab0dcb12faad2db4f0a6e77b260149560409d391d08a66ed",
+            "id": "component-FormlyFieldStepper-15ae9d30882117ec1e85833165d556e637846ea41c9543f5f07f489745642000c45dff927ef12378ad49be3d66e3634fc1eeb1f94f1f64838d1405da81bf7b9e",
             "file": "projects/metadata-tool/src/app/components/metadata-quest-form/stepper.type.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1856,7 +1884,7 @@
             "selector": "formly-field-stepper",
             "styleUrls": [],
             "styles": [],
-            "template": "<mat-horizontal-stepper>\n  <mat-step\n    *ngFor=\"\n      let step of field.fieldGroup;\n      let index = index;\n      let last = last\n    \"\n  >\n    <ng-template matStepLabel>{{ step.props.label }}</ng-template>\n    <formly-field [field]=\"step\"></formly-field>\n\n    <div>\n      <button\n        matStepperPrevious\n        *ngIf=\"index !== 0\"\n        class=\"btn btn-primary\"\n        type=\"button\"\n      >\n        Back\n      </button>\n\n      <button\n        matStepperNext\n        *ngIf=\"!last\"\n        class=\"btn btn-primary\"\n        type=\"button\"\n        [disabled]=\"!isValid(step)\"\n      >\n        Next\n      </button>\n\n      <button\n        *ngIf=\"last\"\n        class=\"btn btn-primary\"\n        [disabled]=\"!form.valid\"\n        type=\"submit\"\n      >\n        Submit\n      </button>\n    </div>\n  </mat-step>\n</mat-horizontal-stepper>\n",
+            "template": "<mat-horizontal-stepper>\n  <mat-step\n    *ngFor=\"\n      let step of field.fieldGroup;\n      let index = index;\n      let last = last\n    \"\n  >\n    <ng-template matStepLabel>{{ step.props.label }}</ng-template>\n\n    <div *ngFor=\"let subfield of step.fieldGroup\">\n      <div class=\"field-with-icon\">\n        <formly-field [field]=\"subfield\"></formly-field>\n      </div>\n    </div>\n\n    <div>\n      <!-- Navigation buttons: Back, Next, Submit -->\n      <button\n        matStepperPrevious\n        *ngIf=\"index !== 0\"\n        class=\"btn btn-primary\"\n        type=\"button\"\n      >\n        Back\n      </button>\n\n      <button\n        matStepperNext\n        *ngIf=\"!last\"\n        class=\"btn btn-primary\"\n        type=\"button\"\n        [disabled]=\"!isValid(step)\"\n      >\n        Next\n      </button>\n\n      <button\n        *ngIf=\"last\"\n        class=\"btn btn-primary\"\n        [disabled]=\"!form.valid\"\n        type=\"submit\"\n      >\n        Submit\n      </button>\n    </div>\n  </mat-step>\n</mat-horizontal-stepper>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -1877,7 +1905,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 54,
+                    "line": 60,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1902,7 +1930,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { FieldType, FormlyFieldConfig } from '@ngx-formly/core';\n\n@Component({\n  selector: 'formly-field-stepper',\n  template: `\n    <mat-horizontal-stepper>\n      <mat-step\n        *ngFor=\"\n          let step of field.fieldGroup;\n          let index = index;\n          let last = last\n        \"\n      >\n        <ng-template matStepLabel>{{ step.props.label }}</ng-template>\n        <formly-field [field]=\"step\"></formly-field>\n\n        <div>\n          <button\n            matStepperPrevious\n            *ngIf=\"index !== 0\"\n            class=\"btn btn-primary\"\n            type=\"button\"\n          >\n            Back\n          </button>\n\n          <button\n            matStepperNext\n            *ngIf=\"!last\"\n            class=\"btn btn-primary\"\n            type=\"button\"\n            [disabled]=\"!isValid(step)\"\n          >\n            Next\n          </button>\n\n          <button\n            *ngIf=\"last\"\n            class=\"btn btn-primary\"\n            [disabled]=\"!form.valid\"\n            type=\"submit\"\n          >\n            Submit\n          </button>\n        </div>\n      </mat-step>\n    </mat-horizontal-stepper>\n  `,\n})\nexport class FormlyFieldStepper extends FieldType {\n  isValid(field: FormlyFieldConfig): boolean {\n    if (field.key) {\n      return field.formControl.valid;\n    }\n\n    return field.fieldGroup\n      ? field.fieldGroup.every((f) => this.isValid(f))\n      : true;\n  }\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { FieldType, FormlyFieldConfig } from '@ngx-formly/core';\n\n@Component({\n  selector: 'formly-field-stepper',\n  template: `\n    <mat-horizontal-stepper>\n      <mat-step\n        *ngFor=\"\n          let step of field.fieldGroup;\n          let index = index;\n          let last = last\n        \"\n      >\n        <ng-template matStepLabel>{{ step.props.label }}</ng-template>\n\n        <div *ngFor=\"let subfield of step.fieldGroup\">\n          <div class=\"field-with-icon\">\n            <formly-field [field]=\"subfield\"></formly-field>\n          </div>\n        </div>\n\n        <div>\n          <!-- Navigation buttons: Back, Next, Submit -->\n          <button\n            matStepperPrevious\n            *ngIf=\"index !== 0\"\n            class=\"btn btn-primary\"\n            type=\"button\"\n          >\n            Back\n          </button>\n\n          <button\n            matStepperNext\n            *ngIf=\"!last\"\n            class=\"btn btn-primary\"\n            type=\"button\"\n            [disabled]=\"!isValid(step)\"\n          >\n            Next\n          </button>\n\n          <button\n            *ngIf=\"last\"\n            class=\"btn btn-primary\"\n            [disabled]=\"!form.valid\"\n            type=\"submit\"\n          >\n            Submit\n          </button>\n        </div>\n      </mat-step>\n    </mat-horizontal-stepper>\n  `,\n})\nexport class FormlyFieldStepper extends FieldType {\n  isValid(field: FormlyFieldConfig): boolean {\n    if (field.key) {\n      return field.formControl.valid;\n    }\n\n    return field.fieldGroup\n      ? field.fieldGroup.every((f) => this.isValid(f))\n      : true;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -2620,7 +2648,7 @@
         },
         {
             "name": "MetadataQuestFormComponent",
-            "id": "component-MetadataQuestFormComponent-bcefa8fbc3079560f25287f3574a1abeb378d8e80f7922c699de5cc7169c58d202447ba72e625b71c2d4dfb4f360d74f280205532f3fdab6811718bb2b68327c",
+            "id": "component-MetadataQuestFormComponent-3ca7431fb02db8670874eee40b1b6b9600cb82cd823e747d0c732c5fe4e8ea09bfd0840113342021c07f29d860f2d6aff0307069b9f4a2d3e693d022fde02021",
             "file": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2652,27 +2680,27 @@
                 },
                 {
                     "name": "fields",
-                    "defaultValue": "[\n    {\n      type: 'stepper',\n      fieldGroup: [\n        this.firstFieldGroup,\n        this.secondFieldGroup,\n        this.thirdFieldGroup,\n        this.fourthFieldGroup,\n        this.fifthFieldGroup,\n\n      ],\n    },\n  ]",
+                    "defaultValue": "[\n    {\n      type: 'stepper',\n      fieldGroup: [\n        this.firstFieldGroup,\n        this.secondFieldGroup,\n        this.thirdFieldGroup,\n        this.fourthFieldGroup,\n        this.fifthFieldGroup,\n      ],\n    },\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "FormlyFieldConfig[]",
                     "optional": false,
                     "description": "",
-                    "line": 198
+                    "line": 195
                 },
                 {
                     "name": "fifthFieldGroup",
-                    "defaultValue": "{\n      props: { label: 'Variable Under Investigation (Factor Value)' },\n      fieldGroup: [\n        {\n          key: 'factorValue',\n          type: 'input',\n          templateOptions: {\n            label: 'Which is the variable under investigation (factor value)?',\n            placeholder: 'Enter the factor value',\n            // description:\n            //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',\n          },\n        },\n      ],\n    }",
+                    "defaultValue": "{\n    props: { label: 'Variable Under Investigation (Factor Value)' },\n    fieldGroup: [\n      {\n        key: 'factorValue',\n        type: 'input',\n        templateOptions: {\n          label: 'Which is the variable under investigation (factor value)?',\n          placeholder: 'Enter the factor value',\n          // description:\n          //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',\n        },\n      },\n    ],\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
                     "optional": false,
                     "description": "",
-                    "line": 177
+                    "line": 176
                 },
                 {
                     "name": "firstFieldGroup",
-                    "defaultValue": "{\n    props: { label: 'Experiment Settings' },\n    fieldGroup: [\n      {\n        key: 'experimentType',\n        type: 'select',\n        templateOptions: {\n          label: 'Experiment Type',\n          options: [\n            { value: 'metaproteomics', label: 'Metaproteomics' },\n            { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement\n          ],\n        },\n      },\n      {\n        key: 'metaproteomeType',\n        type: 'select',\n        templateOptions: {\n          label: 'Which Metaproteom?',\n          options: this.metagenomeTypeOptions,\n        },\n        hideExpression: \"model.experimentType !== 'metaproteomics'\",\n      },\n      {\n        key: 'specificMetagenome',\n        type: 'select',\n        templateOptions: {\n          label: 'Specific Metagenome?',\n          options: this.specificMetagenomeOptions,\n        },\n        hideExpression: \"model.metaproteomeType !== 'metagenome'\",\n      },\n      // You can add more conditional fields here as needed\n      ,\n    ],\n  }",
+                    "defaultValue": "{\n    props: { label: 'Experiment Settings' },\n    fieldGroup: [\n      {\n        key: 'experimentType',\n        type: 'select',\n        templateOptions: {\n          wrapper: [\"tooltip\"],\n          customTooltip: 'This is a custom tooltip for the example field',\n          label: 'Experiment Type',\n          description: 'What kind of experiment was done?',\n          options: [\n            { value: 'metaproteomics', label: 'Metaproteomics' },\n            { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement\n          ],\n        },\n      },\n      {\n        key: 'metagenomes',\n        type: 'select',\n        templateOptions: {\n          label: 'Which Metaproteom?',\n          options: this.metagenomeTypeOptions,\n        },\n        hideExpression: \"model.experimentType !== 'metaproteomics'\",\n      },\n      {\n        key: 'ecologicalMetagenomes',\n        type: 'select',\n        templateOptions: {\n          label: 'Specific Metagenome?',\n          options: this.specificMetagenomeOptions,\n        },\n        hideExpression: \"model.metaproteomeType !== 'metagenome'\",\n      },\n      // You can add more conditional fields here as needed\n      ,\n    ],\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
@@ -2688,7 +2716,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 195
+                    "line": 192
                 },
                 {
                     "name": "fourthFieldGroup",
@@ -2698,7 +2726,7 @@
                     "type": "object",
                     "optional": false,
                     "description": "",
-                    "line": 147
+                    "line": 146
                 },
                 {
                     "name": "metagenomeTypeOptions",
@@ -2722,13 +2750,13 @@
                 },
                 {
                     "name": "secondFieldGroup",
-                    "defaultValue": "{\n    props: { label: ' Measurement Settings' },\n    fieldGroup: [\n      {\n        key: 'technologyType',\n        type: 'select',\n        templateOptions: {\n          label: 'What kind of Metaproteomics (technology type)?',\n          options: this.technologyTypeOptions,\n        },\n      },\n      {\n        key: 'measurementInstrument',\n        type: 'input',\n        templateOptions: {\n          label: 'Which instruments were used for measurement?',\n          placeholder: 'e.g., Orbitrap, TimsTOF',\n        },\n      },\n      {\n        key: 'digestionMethod',\n        type: 'select',\n        templateOptions: {\n          label: 'What digestion method did you use?',\n          options: this.digestionMethodOptions,\n        },\n      },\n      {\n        key: 'enzymeUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'Which enzyme (cleavant agent) did you use for digestion?',\n          placeholder: 'e.g., Trypsin',\n        },\n      },\n      // Add additional fields for Modification Parameters, Dissociation method, etc.\n    ],\n  }",
+                    "defaultValue": "{\n    props: { label: ' Measurement Settings' },\n    fieldGroup: [\n      {\n        key: 'technologyType',\n        type: 'select',\n        description:\n          'Methods, which are used to quantify the protein concentration of the analyzed samples. e.g., BCA, Lowry, Bradford, …',\n        templateOptions: {\n          label: 'What kind of Metaproteomics (technology type)?',\n          options: this.technologyTypeOptions,\n        },\n      },\n      {\n        key: 'instrument',\n        type: 'input',\n        templateOptions: {\n          label: 'Which instruments were used for measurement?',\n          placeholder: 'e.g., Orbitrap, TimsTOF',\n        },\n      },\n      {\n        key: 'cleavantAgentDetails',\n        type: 'select',\n        templateOptions: {\n          label: 'What digestion method did you use?',\n          options: this.digestionMethodOptions,\n          description:\n            'Methods, which are used to proteolytic digest the protein to peptides for LC-MS/MS analysis. E.g., FASP digestion, in-gel digestion, S-trap, …',\n        },\n      },\n      {\n        key: 'modificationParameters',\n        type: 'input',\n        templateOptions: {\n          label: 'Which enzyme (cleavant agent) did you use for digestion?',\n          placeholder: 'e.g., Trypsin',\n        },\n      },\n      // Add additional fields for Modification Parameters, Dissociation method, etc.\n    ],\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
                     "optional": false,
                     "description": "",
-                    "line": 78
+                    "line": 81
                 },
                 {
                     "name": "specificMetagenomeOptions",
@@ -2752,13 +2780,13 @@
                 },
                 {
                     "name": "thirdFieldGroup",
-                    "defaultValue": "{\n    props: { label: 'Questions for Experiment' },\n    fieldGroup: [\n      {\n        key: 'assayUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'What assay was used?',\n          placeholder: 'Enter the assay used',\n        },\n      },\n      {\n        key: 'experimentType',\n        type: 'input',\n        templateOptions: {\n          label: 'What kind of experiment was done?',\n          placeholder: 'e.g., heat shock',\n        },\n      },\n      {\n        key: 'labelsUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'Labels used?',\n          placeholder: 'Enter any labels used',\n        },\n      },\n    ],\n  }",
+                    "defaultValue": "{\n    props: { label: 'Questions for Experiment' },\n    fieldGroup: [\n      {\n        key: 'assayName',\n        type: 'input',\n        templateOptions: {\n          label: 'What assay was used?',\n          placeholder: 'Enter the assay used',\n        },\n      },\n      {\n        key: 'label',\n        type: 'input',\n        templateOptions: {\n          label: 'Labels used?',\n          placeholder: 'Enter any labels used',\n        },\n      },\n    ],\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
                     "optional": false,
                     "description": "",
-                    "line": 117
+                    "line": 124
                 }
             ],
             "methodsClass": [
@@ -2775,7 +2803,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 212,
+                    "line": 208,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2800,11 +2828,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component} from '@angular/core';\nimport {FormGroup } from '@angular/forms';\nimport { FormlyFieldConfig } from '@ngx-formly/core';\n\n\n@Component({\n  selector: 'app-metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestFormComponent {\n  // This is the data for the first step\n  model: any = {};\n  specificMetagenomeOptions = [\n    { value: 'gut', label: 'Gut' },\n    { value: 'human', label: 'Human' },\n    // ... other options\n  ];\n\n  metagenomeTypeOptions = [\n    { value: 'ecological', label: 'Ecological' },\n    { value: 'organism', label: 'Organism' },\n    { value: 'synthetic', label: 'Synthetic' },\n    { value: 'metagenome', label: 'Metagenome' },\n    // Added for conditional display of the next field\n  ];\n\n  // This is the data for the second step\n  technologyTypeOptions = [\n    { value: 'shotgun', label: 'Shotgun' },\n    // Add other technology types as needed\n  ];\n\n  digestionMethodOptions = [\n    { value: 'inGel', label: 'In Gel' },\n    { value: 'FASP', label: 'FASP' },\n    // Add other digestion methods as needed\n  ];\n\n  // This is the Logic for the first step\n  firstFieldGroup = {\n    props: { label: 'Experiment Settings' },\n    fieldGroup: [\n      {\n        key: 'experimentType',\n        type: 'select',\n        templateOptions: {\n          label: 'Experiment Type',\n          options: [\n            { value: 'metaproteomics', label: 'Metaproteomics' },\n            { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement\n          ],\n        },\n      },\n      {\n        key: 'metaproteomeType',\n        type: 'select',\n        templateOptions: {\n          label: 'Which Metaproteom?',\n          options: this.metagenomeTypeOptions,\n        },\n        hideExpression: \"model.experimentType !== 'metaproteomics'\",\n      },\n      {\n        key: 'specificMetagenome',\n        type: 'select',\n        templateOptions: {\n          label: 'Specific Metagenome?',\n          options: this.specificMetagenomeOptions,\n        },\n        hideExpression: \"model.metaproteomeType !== 'metagenome'\",\n      },\n      // You can add more conditional fields here as needed\n      ,\n    ],\n  };\n\n  secondFieldGroup = {\n    props: { label: ' Measurement Settings' },\n    fieldGroup: [\n      {\n        key: 'technologyType',\n        type: 'select',\n        templateOptions: {\n          label: 'What kind of Metaproteomics (technology type)?',\n          options: this.technologyTypeOptions,\n        },\n      },\n      {\n        key: 'measurementInstrument',\n        type: 'input',\n        templateOptions: {\n          label: 'Which instruments were used for measurement?',\n          placeholder: 'e.g., Orbitrap, TimsTOF',\n        },\n      },\n      {\n        key: 'digestionMethod',\n        type: 'select',\n        templateOptions: {\n          label: 'What digestion method did you use?',\n          options: this.digestionMethodOptions,\n        },\n      },\n      {\n        key: 'enzymeUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'Which enzyme (cleavant agent) did you use for digestion?',\n          placeholder: 'e.g., Trypsin',\n        },\n      },\n      // Add additional fields for Modification Parameters, Dissociation method, etc.\n    ],\n  };\n\n  thirdFieldGroup = {\n    props: { label: 'Questions for Experiment' },\n    fieldGroup: [\n      {\n        key: 'assayUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'What assay was used?',\n          placeholder: 'Enter the assay used',\n        },\n      },\n      {\n        key: 'experimentType',\n        type: 'input',\n        templateOptions: {\n          label: 'What kind of experiment was done?',\n          placeholder: 'e.g., heat shock',\n        },\n      },\n      {\n        key: 'labelsUsed',\n        type: 'input',\n        templateOptions: {\n          label: 'Labels used?',\n          placeholder: 'Enter any labels used',\n        },\n      },\n    ],\n  };\n\n  fourthFieldGroup = {\n    props: { label: 'About the Project' },\n    fieldGroup: [\n      {\n        key: 'group',\n        type: 'input',\n        templateOptions: {\n          label: 'Group',\n          placeholder: 'Enter the group name',\n        },\n      },\n      {\n        key: 'project',\n        type: 'input',\n        templateOptions: {\n          label: 'Project',\n          placeholder: 'Enter the project name',\n        },\n      },\n      {\n        key: 'program',\n        type: 'input',\n        templateOptions: {\n          label: 'Program',\n          placeholder: 'Enter the program name',\n        },\n      },\n    ],\n  };\n\n  fifthFieldGroup =\n    {\n      props: { label: 'Variable Under Investigation (Factor Value)' },\n      fieldGroup: [\n        {\n          key: 'factorValue',\n          type: 'input',\n          templateOptions: {\n            label: 'Which is the variable under investigation (factor value)?',\n            placeholder: 'Enter the factor value',\n            // description:\n            //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',\n          },\n        },\n      ],\n    }\n\n\n  form = new FormGroup({});\n\n  // This is the setup for the stepper\n  fields: FormlyFieldConfig[] = [\n    {\n      type: 'stepper',\n      fieldGroup: [\n        this.firstFieldGroup,\n        this.secondFieldGroup,\n        this.thirdFieldGroup,\n        this.fourthFieldGroup,\n        this.fifthFieldGroup,\n\n      ],\n    },\n  ];\n\n  onSubmit(model) {\n    alert(JSON.stringify(this.model));\n  }\n}\n\n\n",
+            "sourceCode": "import { Component} from '@angular/core';\nimport {FormGroup } from '@angular/forms';\nimport { FormlyFieldConfig } from '@ngx-formly/core';\n\n\n@Component({\n  selector: 'app-metadata-quest',\n  templateUrl: './metadata-quest.component.html',\n  styleUrls: ['./metadata-quest.component.scss'],\n})\nexport class MetadataQuestFormComponent {\n  // This is the data for the first step\n  model: any = {};\n  specificMetagenomeOptions = [\n    { value: 'gut', label: 'Gut' },\n    { value: 'human', label: 'Human' },\n    // ... other options\n  ];\n\n  metagenomeTypeOptions = [\n    { value: 'ecological', label: 'Ecological' },\n    { value: 'organism', label: 'Organism' },\n    { value: 'synthetic', label: 'Synthetic' },\n    { value: 'metagenome', label: 'Metagenome' },\n    // Added for conditional display of the next field\n  ];\n\n  // This is the data for the second step\n  technologyTypeOptions = [\n    { value: 'shotgun', label: 'Shotgun' },\n    // Add other technology types as needed\n  ];\n\n  digestionMethodOptions = [\n    { value: 'inGel', label: 'In Gel' },\n    { value: 'FASP', label: 'FASP' },\n    // Add other digestion methods as needed\n  ];\n\n  // This is the Logic for the first step\n  firstFieldGroup = {\n    props: { label: 'Experiment Settings' },\n    fieldGroup: [\n      {\n        key: 'experimentType',\n        type: 'select',\n        templateOptions: {\n          wrapper: [\"tooltip\"],\n          customTooltip: 'This is a custom tooltip for the example field',\n          label: 'Experiment Type',\n          description: 'What kind of experiment was done?',\n          options: [\n            { value: 'metaproteomics', label: 'Metaproteomics' },\n            { value: 'proteomics', label: 'Proteomics' }, // This can be added later as per your requirement\n          ],\n        },\n      },\n      {\n        key: 'metagenomes',\n        type: 'select',\n        templateOptions: {\n          label: 'Which Metaproteom?',\n          options: this.metagenomeTypeOptions,\n        },\n        hideExpression: \"model.experimentType !== 'metaproteomics'\",\n      },\n      {\n        key: 'ecologicalMetagenomes',\n        type: 'select',\n        templateOptions: {\n          label: 'Specific Metagenome?',\n          options: this.specificMetagenomeOptions,\n        },\n        hideExpression: \"model.metaproteomeType !== 'metagenome'\",\n      },\n      // You can add more conditional fields here as needed\n      ,\n    ],\n  };\n\n  secondFieldGroup = {\n    props: { label: ' Measurement Settings' },\n    fieldGroup: [\n      {\n        key: 'technologyType',\n        type: 'select',\n        description:\n          'Methods, which are used to quantify the protein concentration of the analyzed samples. e.g., BCA, Lowry, Bradford, …',\n        templateOptions: {\n          label: 'What kind of Metaproteomics (technology type)?',\n          options: this.technologyTypeOptions,\n        },\n      },\n      {\n        key: 'instrument',\n        type: 'input',\n        templateOptions: {\n          label: 'Which instruments were used for measurement?',\n          placeholder: 'e.g., Orbitrap, TimsTOF',\n        },\n      },\n      {\n        key: 'cleavantAgentDetails',\n        type: 'select',\n        templateOptions: {\n          label: 'What digestion method did you use?',\n          options: this.digestionMethodOptions,\n          description:\n            'Methods, which are used to proteolytic digest the protein to peptides for LC-MS/MS analysis. E.g., FASP digestion, in-gel digestion, S-trap, …',\n        },\n      },\n      {\n        key: 'modificationParameters',\n        type: 'input',\n        templateOptions: {\n          label: 'Which enzyme (cleavant agent) did you use for digestion?',\n          placeholder: 'e.g., Trypsin',\n        },\n      },\n      // Add additional fields for Modification Parameters, Dissociation method, etc.\n    ],\n  };\n\n  thirdFieldGroup = {\n    props: { label: 'Questions for Experiment' },\n    fieldGroup: [\n      {\n        key: 'assayName',\n        type: 'input',\n        templateOptions: {\n          label: 'What assay was used?',\n          placeholder: 'Enter the assay used',\n        },\n      },\n      {\n        key: 'label',\n        type: 'input',\n        templateOptions: {\n          label: 'Labels used?',\n          placeholder: 'Enter any labels used',\n        },\n      },\n    ],\n  };\n\n  fourthFieldGroup = {\n    props: { label: 'About the Project' },\n    fieldGroup: [\n      {\n        key: 'group',\n        type: 'input',\n        templateOptions: {\n          label: 'Group',\n          placeholder: 'Enter the group name',\n        },\n      },\n      {\n        key: 'project',\n        type: 'input',\n        templateOptions: {\n          label: 'Project',\n          placeholder: 'Enter the project name',\n        },\n      },\n      {\n        key: 'program',\n        type: 'input',\n        templateOptions: {\n          label: 'Program',\n          placeholder: 'Enter the program name',\n        },\n      },\n    ],\n  };\n\n  fifthFieldGroup = {\n    props: { label: 'Variable Under Investigation (Factor Value)' },\n    fieldGroup: [\n      {\n        key: 'factorValue',\n        type: 'input',\n        templateOptions: {\n          label: 'Which is the variable under investigation (factor value)?',\n          placeholder: 'Enter the factor value',\n          // description:\n          //   'The factor values for an experiment are the values of the variables (parameters) under investigation. For example, an experiment studying the effect of different temperature (heat stress) on a cell culture would have “temperature” as an experimental variable.',\n        },\n      },\n    ],\n  };\n\n  form = new FormGroup({});\n\n  // This is the setup for the stepper\n  fields: FormlyFieldConfig[] = [\n    {\n      type: 'stepper',\n      fieldGroup: [\n        this.firstFieldGroup,\n        this.secondFieldGroup,\n        this.thirdFieldGroup,\n        this.fourthFieldGroup,\n        this.fifthFieldGroup,\n      ],\n    },\n  ];\n\n  onSubmit(model) {\n    alert(JSON.stringify(this.model));\n  }\n}\n\n\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
+                    "data": "mat-icon {\n  cursor: help;\n}\n",
                     "styleUrl": "./metadata-quest.component.scss"
                 }
             ],
@@ -2813,15 +2841,108 @@
             "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit(model)\">\n  <formly-form [form]=\"form\" [fields]=\"fields\" [model]=\"model\"></formly-form>\n</form>\n\n"
         },
         {
-            "name": "MetadataUploadpageComponent",
-            "id": "component-MetadataUploadpageComponent-6718983c9330cb9fca2dbb9cb58fc11c1f8d5445e966d12cde8f84f6495467a0ad519f03ac7e472cfa01b0ef32429f71d24ca9b69089bfdb4672914539b76d43",
+            "name": "MetadataQuestPageComponent",
+            "id": "component-MetadataQuestPageComponent-218cf1322ad5307bcde78c46aaf24ec27d1c1657208a31ef729d3f59b6c4ec2b07229be0e681dfed44daa6e0691bda5bf7c33846c521b024db5c933849aa5383",
+            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-metadata-quest-page",
+            "styleUrls": [
+                "./metadata-quest-page.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./metadata-quest-page.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "currentUploadProgress",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "showQuest",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "handleUploadStatusChange",
+                    "args": [
+                        {
+                            "name": "uploadStatus",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 13,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "uploadStatus",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-quest-page',\n  templateUrl: './metadata-quest-page.component.html',\n  styleUrls: ['./metadata-quest-page.component.scss'],\n})\nexport class MetadataQuestPageComponent {\n  currentUploadProgress: number;\n\n  showQuest: boolean = false;\n\n  handleUploadStatusChange(uploadStatus: {\n    progress: number;\n    started: boolean;\n  }) {\n    this.showQuest = uploadStatus.started;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./metadata-quest-page.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<!-- Parent Component Template -->\n<app-metadata-upload-container\n  (uploadStatusChanged)=\"handleUploadStatusChange($event)\">\n</app-metadata-upload-container>\n\n<app-metadata-quest *ngIf=\"showQuest\"></app-metadata-quest>\n"
+        },
+        {
+            "name": "MetadataUploadContainerComponent",
+            "id": "component-MetadataUploadContainerComponent-7b862e96483605ca241106fe4819c9857d198d96fc0f58fc233dab213d476f591da42143a502966a8a6ed6000c5428949e99b7404589a40738dff0c8d2ab36b7",
             "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-metadata-uploadpage",
+            "selector": "app-metadata-upload-container",
             "styleUrls": [
                 "./metadata-uploadpage.component.scss"
             ],
@@ -2832,7 +2953,16 @@
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "uploadStatusChanged",
+                    "defaultValue": "new EventEmitter<{\n    progress: number;\n    started: boolean;\n  }>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "EventEmitter"
+                }
+            ],
             "propertiesClass": [
                 {
                     "name": "selectedFiles",
@@ -2842,7 +2972,27 @@
                     "type": "File[]",
                     "optional": false,
                     "description": "",
-                    "line": 16
+                    "line": 20
+                },
+                {
+                    "name": "showContainer",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27
+                },
+                {
+                    "name": "timeRemaining",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
                 },
                 {
                     "name": "uploadDialogId",
@@ -2851,25 +3001,116 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 21
+                },
+                {
+                    "name": "uploadProgress",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "uploadStartTime",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
                 }
             ],
             "methodsClass": [
                 {
-                    "name": "ngOnInit",
+                    "name": "calculateTimeRemaining",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 108,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "clearFileInput",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 130,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
                 {
-                    "name": "onFilesSelected",
+                    "name": "deleteFile",
                     "args": [
                         {
-                            "name": "event",
+                            "name": "index",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 124,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "formatTime",
+                    "args": [
+                        {
+                            "name": "milliseconds",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 117,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "milliseconds",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "hideTooltip",
+                    "args": [
+                        {
+                            "name": "progressBar",
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": ""
@@ -2878,13 +3119,51 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 143,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "progressBar",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 35,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onFilesSelected",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 49,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "event",
-                            "type": "any",
+                            "type": "Event",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -2899,9 +3178,37 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 29,
+                    "line": 72,
                     "deprecated": false,
                     "deprecationMessage": ""
+                },
+                {
+                    "name": "showTooltip",
+                    "args": [
+                        {
+                            "name": "progressBar",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 139,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "progressBar",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "deprecated": false,
@@ -2913,11 +3220,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n//import { Endpoints, WebserveraddressService } from '../webserveraddress.service';\nimport { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-metadata-uploadpage',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss']\n})\nexport class MetadataUploadpageComponent implements OnInit  {\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  constructor(private dataService: MetaDataInputService, private uploadProgressService: UploadProgressService, private dialog: MatDialog ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n  }\n\n  onFilesSelected(event: any): void {\n    this.selectedFiles = Array.from(event.target.files);\n  }\n\n  onUpload(): void {\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID(\"UPLOAD\");\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: true,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(\n       file.uploadFile.size\n      );\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n  }\n\n\n\n}\n",
+            "sourceCode": "import { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';\nimport { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';\nimport { MatDialog } from '@angular/material/dialog';\nimport { Component, EventEmitter, OnInit, Output } from '@angular/core';\n\n\n@Component({\n  selector: 'app-metadata-upload-container',\n  templateUrl: './metadata-uploadpage.component.html',\n  styleUrls: ['./metadata-uploadpage.component.scss'],\n})\nexport class MetadataUploadContainerComponent implements OnInit {\n  @Output() uploadStatusChanged = new EventEmitter<{\n    progress: number;\n    started: boolean;\n  }>();\n\n  selectedFiles: File[] = [];\n  uploadDialogId: string;\n\n  // While uploading files\n  uploadProgress: number = 0;\n  uploadStartTime: number;\n  timeRemaining: string = ''; // This will hold the time remaining as a string\n  showContainer = true;\n\n  constructor(\n    private dataService: MetaDataInputService,\n    private uploadProgressService: UploadProgressService,\n    private dialog: MatDialog\n  ) {}\n\n  ngOnInit() {\n    this.dataService.metadataUploadJson.subscribe();\n    // Emit the progress\n    this.uploadProgressService.currentProgress.subscribe((progress) => {\n      this.uploadProgress = progress;\n      this.uploadStatusChanged.emit({\n        progress: this.uploadProgress,\n        started: this.uploadProgress > 0,\n      });\n\n    });\n\n  }\n\n  onFilesSelected(event: Event): void {\n    const input = event.target as HTMLInputElement;\n    if (input.files) {\n      const newFiles = Array.from(input.files);\n\n      // Add only new files to the selectedFiles array\n      const uniqueNewFiles = newFiles.filter(\n        (newFile) =>\n          !this.selectedFiles.some(\n            (existingFile) =>\n              existingFile.name === newFile.name &&\n              existingFile.size === newFile.size\n          )\n      );\n\n      // Concatenate the new unique files to the existing selectedFiles\n      this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];\n\n      // After adding files, you might want to reset the input\n      input.value = '';\n    }\n  }\n\n  onUpload(): void {\n    this.uploadStartTime = Date.now();\n    this.uploadProgressService.currentProgress.subscribe((progress) => {\n      this.uploadProgress = progress;\n      if (progress > 0) {\n        this.showContainer = false;\n      }\n\n      this.calculateTimeRemaining();\n    });\n\n    this.uploadProgressService.reset();\n\n    this.uploadProgressService.setUUID('UPLOAD');\n    const dialogRef = this.dialog.open(UploadDialogComponent, {\n      id: this.uploadDialogId,\n      disableClose: false,\n      data: { successMessage: 'Upload successful.' },\n    });\n    const onDialogClosingObservable = dialogRef.afterClosed();\n    const files: MultiFileUploadData = {\n      files: [],\n    };\n    this.selectedFiles.forEach((file) => {\n      files.files.push({ uploadFile: file, fileID: file.name });\n    });\n    for (let file of files.files) {\n      this.uploadProgressService.addToTotal(file.uploadFile.size);\n    }\n    this.dataService.upload(files, this.uploadProgressService, this.dialog);\n    //onDialogClosingObservable(this.router.navigate());\n\n    this.selectedFiles = []; // Clear the list of selected files\n    this.clearFileInput(); // Clear the file input in the UI\n  }\n\n  private calculateTimeRemaining(): void {\n    if (this.uploadProgress > 0) {\n      const timeElapsed = Date.now() - this.uploadStartTime;\n      const totalEstimatedTime = timeElapsed / (this.uploadProgress / 100);\n      const remainingTime = totalEstimatedTime - timeElapsed;\n      this.timeRemaining = this.formatTime(remainingTime);\n    }\n  }\n\n  private formatTime(milliseconds: number): string {\n    let seconds = Math.floor(milliseconds / 1000);\n    let minutes = Math.floor(seconds / 60);\n    seconds = seconds % 60;\n    return `${minutes} min ${seconds} sec`;\n  }\n\n  deleteFile(index: number): void {\n    this.selectedFiles = [\n      ...this.selectedFiles.slice(0, index),\n      ...this.selectedFiles.slice(index + 1),\n    ];\n  }\n  clearFileInput(): void {\n    const inputElem = document.querySelector(\n      '.upload-input'\n    ) as HTMLInputElement;\n    if (inputElem) {\n      inputElem.value = ''; // This will clear the file input in the UI\n    }\n  }\n\n  showTooltip(progressBar: any): void {\n    progressBar.tooltip.toggle(); // Shows the tooltip\n  }\n\n  hideTooltip(progressBar: any): void {\n    progressBar.tooltip.hide(); // Hides the tooltip\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".upload-container {\n    max-width: 400px;\n    margin: 0 auto;\n    padding: 20px;\n    border: 1px solid #ddd;\n    border-radius: 5px;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  }\n  \n  .upload-title {\n    font-size: 24px;\n    margin-bottom: 20px;\n  }\n  \n  .upload-input {\n    display: block;\n    margin-bottom: 10px;\n  }\n  \n  .upload-button {\n    padding: 10px 20px;\n    background-color: #007bff;\n    color: #fff;\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n  }\n  \n  .upload-button:hover {\n    background-color: #0056b3;\n  }\n  \n  .upload-progress {\n    margin-top: 10px;\n  }\n  \n  .error-message {\n    color: #dc3545;\n    margin-top: 5px;\n  }\n  .selected-files-box {\n    border: 1px solid #ddd;\n    padding: 10px;\n    margin-top: 20px;\n    border-radius: 5px;\n    background-color: #f9f9f9;\n  }\n  \n  .selected-files-box ul {\n    list-style-type: none;\n    padding: 0;\n  }\n  \n  .selected-files-box li {\n    margin-bottom: 5px;\n  }",
+                    "data": ".upload-container {\n  max-width: 600px;\n  margin: 40px auto;\n  /* Adjust '40px' to the amount of space you want above the container */\n  padding: 20px;\n  border: 1px solid #ddd;\n  border-radius: 5px;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n  .upload-title {\n    font-size: 24px;\n    margin-bottom: 20px;\n  }\n\n  .upload-input {\n    display: block;\n    margin-bottom: 10px;\n  }\n\n  .upload-button {\n    padding: 10px 20px;\n    background-color: #007bff;\n    color: #fff;\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n  }\n\n  .upload-button:hover {\n    background-color: #0056b3;\n  }\n\n  .upload-progress {\n    margin-top: 10px;\n  }\n\n  .error-message {\n    color: #dc3545;\n    margin-top: 5px;\n  }\n  .selected-files-box {\n    border: 1px solid #ddd;\n    padding: 10px;\n    margin-top: 20px;\n    border-radius: 5px;\n    background-color: #f9f9f9;\n  }\n\n  .selected-files-box ul {\n    list-style-type: none;\n    padding: 0;\n  }\n\n  .selected-files-box li {\n    margin-bottom: 5px;\n  }\n\n  .selected-files-box {\n    ul {\n      list-style-type: none;\n\n      li {\n        display: flex;\n        align-items: center;\n        margin-bottom: 10px;\n\n        button {\n          margin-left: 10px;\n          // Additional button styling here\n        }\n      }\n    }\n  }\n\n\n .file-item {\n   display: flex;\n   justify-content: space-between;\n   align-items: center;\n   padding-bottom: 10px;\n   /* Add some padding to space out the text/button from the border */\n   margin-bottom: 10px;\n   /* Keeps space between items */\n\n   &:not(:last-child) {\n     border-bottom: 1px solid #ccc;\n     /* Adds a border to all items except the last one */\n   }\n }\n\n .file-name {\n   flex-grow: 1;\n }\n\n .delete-button {\n   margin-left: 15px;\n }\n\n .file-upload-container {\n   display: flex;\n   justify-content: space-between;\n   align-items: center;\n  margin: 20px auto;\n }\n\n .file-chooser-button {\n   /* Add your styles for the button here */\n }\n\n .upload-button {\n   /* Add your styles for the button here */\n }\n",
                     "styleUrl": "./metadata-uploadpage.component.scss"
                 }
             ],
@@ -2947,7 +3254,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 17,
+                "line": 27,
                 "jsdoctags": [
                     {
                         "name": "dataService",
@@ -2982,77 +3289,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "    <div class=\"upload-container\">\n      <h2 class=\"upload-title\">File Upload</h2>\n      <input\n        class=\"upload-input\"\n        type=\"file\"\n        accept=\".*\"\n        multiple\n        (change)=\"onFilesSelected($event)\"\n      />\n      <div class=\"selected-files-box\" *ngIf=\"selectedFiles.length > 0\">\n        <h3>Selected Files:</h3>\n        <ul>\n          <li *ngFor=\"let file of selectedFiles\">{{ file.name }}</li>\n        </ul>\n      </div>\n      <button class=\"upload-button\" (click)=\"onUpload()\">Upload</button>\n      <!--\n      <div class=\"upload-progress\" *ngIf=\"uploadProgress !== null\">\n        <progress max=\"100\" [value]=\"uploadProgress\"></progress>\n      </div>\n      <p class=\"error-message\" *ngIf=\"uploadError\">{{ uploadError }}</p>\n    </div>\n    -->\n    <!-- link to workflow -->\n    <div class=\"text-center mt-20 mb-20\">\n      <!-- <shared-login-buttons></shared-login-buttons> -->\n      <button mat-flat-button color=\"primary\" routerLink=\"/workflow\">\n        Next Page\n      </button>\n    </div>\n"
-        },
-        {
-            "name": "MetadataUploadpageComponent",
-            "id": "component-MetadataUploadpageComponent-1d09064e6751d3adb1c93de28233cd96a01d07ae977f605bc37fff857948e0cf48e17a09e11a5dc13ed3391a4fef515e86097748a9ded598df60800d4c4a9028-1",
-            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "metadata-uploadpage",
-            "styleUrls": [],
-            "styles": [],
-            "templateUrl": [
-                "./metadata-quest-page.component.html"
-            ],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "title",
-                    "defaultValue": "'Metadata Upload Page'",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 9
-                }
-            ],
-            "methodsClass": [
-                {
-                    "name": "uploadFile",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 16,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                }
-            ],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": false,
-            "imports": [],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'metadata-uploadpage', // Ensure this matches the selector used in your HTML\n  templateUrl: './metadata-quest-page.component.html', // Path to the HTML template\n})\nexport class MetadataUploadpageComponent {\n  // Define properties and methods for your component here\n  title = 'Metadata Upload Page';\n\n  constructor() {\n    // Initialization code\n  }\n\n  // Example method\n  uploadFile() {\n    // Logic for file upload\n  }\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 9
-            },
-            "extends": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "MetadataUploadpageComponent-1",
-            "templateData": "<div>\n  <app-metadata-quest></app-metadata-quest>\n\n</div>\n"
+            "templateData": "\n<div class=\"progress-container\">\n  <mat-progress-bar\n   *ngIf=\"uploadProgress  > 0\"\n    #progressBar\n    mode=\"determinate\"\n    [value]=\"uploadProgress\"\n    [matTooltip]=\"timeRemaining\"\n    matTooltipPosition=\"above\"\n    (mouseover)=\"showTooltip(progressBar)\"\n    (mouseout)=\"hideTooltip(progressBar)\">\n  </mat-progress-bar>\n</div>\n<div class=\"upload-container\"   *ngIf=\"showContainer\">\n\n  <h2 class=\"upload-title\">File Upload</h2>\n  <div class=\"selected-files-box\" *ngIf=\"selectedFiles.length > 0\">\n  <ul>`\n    <li *ngFor=\"let file of selectedFiles; let i = index\" class=\"file-item\">\n      <span class=\"file-name\">{{ file.name }}</span>\n      <button mat-mini-fab color=\"warn\" (click)=\"deleteFile(i)\" class=\"delete-button\">\n        <mat-icon>delete</mat-icon>\n      </button>\n    </li>\n  </ul>\n</div>\n\n <div class=\"file-upload-container\">\n  <button class=\"file-chooser-button\" (click)=\"fileInput.click()\">Choose Files</button>\n  <input\n    #fileInput\n    type=\"file\"\n    accept=\"*/*\"\n    multiple\n    (change)=\"onFilesSelected($event)\"\n    style=\"display: none;\"\n  />\n  <button class=\"upload-button\" *ngIf=\"selectedFiles.length > 0\" (click)=\"onUpload()\">Upload</button>\n</div>\n  <!--\n  <div class=\"upload-progress\" *ngIf=\"uploadProgress !== null\">\n    <progress max=\"100\" [value]=\"uploadProgress\"></progress>\n  </div>\n  <p class=\"error-message\" *ngIf=\"uploadError\">{{ uploadError }}</p>\n</div>\n-->\n<!-- link to workflow -->\n<div class=\"text-center mt-20 mb-20\">\n  <!-- <shared-login-buttons></shared-login-buttons> -->\n  <!-- <button mat-flat-button color=\"primary\" routerLink=\"/workflow\">\n    Next Page\n  </button> -->\n</div>\n"
         },
         {
             "name": "MetadataWorkflowComponent",
@@ -3641,13 +3878,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-be38c7e523b23c8e1c187c176934ae3ca7036ef2fdb070217896a9b4a15529f9e95b786bda46cbf5f0ddb0bc48fd66327dad9156325cc0de0ab2f4fd173a34f8",
+            "id": "module-AppModule-5e20384a73eee559eb8af6bace06102108519a860bca96f03cf808867d068c23505633ad16c055f7693b5219f32a8f36c380d98bd707c1c00ac90b36eca15177",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\n\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\nimport { WorkflowModule } from './pages/metadata-workflow-page/metadata-workflow.module';\nimport { MetaDataCheckboxSelectionModule } from './components/metadata-checkboxselection/metadata-checkboxselection.module';\nimport { MetadataUploadpageModule } from './components/upload-container/metadata-uploadpage.module';\nimport { HttpClientModule } from '@angular/common/http';\nimport { MetadataDownloadpageModule } from './pages/metadata-download-page/metadata-downloadpage.module';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    MetadataLandingPageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n    MatButtonModule,\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n\n\n    HttpClientModule,\n       FormlyModule.forRoot(),\n       ReactiveFormsModule,\n       FormlyMaterialModule,\n\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\nimport { MatButtonModule } from '@angular/material/button';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { HttpClientModule } from '@angular/common/http';\nimport { StandardPageLayoutModule } from 'dist/shared-lib';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\nimport { MatIconModule } from '@angular/material/icon';\n\n@NgModule({\n  declarations: [AppComponent, MetadataLandingPageComponent],\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    AppRoutingModule,\n\n    StandardPageLayoutModule,\n    BrowserAnimationsModule,\n\n    HttpClientModule,\n    FormlyModule.forRoot(),\n    ReactiveFormsModule,\n    FormlyMaterialModule,\n\n    // Material design imports\n    MatButtonModule,\n    MatIconModule,\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3691,57 +3928,14 @@
             ]
         },
         {
-            "name": "AppModule",
-            "id": "module-AppModule-909fe7d43d256201070a457cefaf94c2aac39547d6538b30fe9cc24f4f9e395506e85c64a4c552097bfb0ab40e75ed400ebc3123b3f0b8ed5603188195dfe15c-1",
-            "description": "",
-            "deprecationMessage": "",
-            "deprecated": false,
-            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.module.ts",
-            "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { MetadataQuestFormComponent } from '../../components/metadata-quest-form/metadata-quest.component';\nimport { MetadataUploadpageComponent } from '../../components/upload-container/metadata-uploadpage.component';\n\n@NgModule({\n  declarations: [\n    MetadataQuestFormComponent,\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    BrowserModule,\n    // ... any other imports\n  ],\n  providers: [],\n\n})\nexport class AppModule {}\n",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": [
-                        {
-                            "name": "MetadataQuestFormComponent"
-                        },
-                        {
-                            "name": "MetadataUploadpageComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "imports",
-                    "elements": []
-                },
-                {
-                    "type": "exports",
-                    "elements": []
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": []
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
-        },
-        {
             "name": "AppRoutingModule",
-            "id": "module-AppRoutingModule-f161a4bf60d6c35190f97885de0ca433761ec10905a0d42ac16a480354a3d25adcf73e7d8a2ccea7ea0aaca6f522e68abf88782f12ec3b5cc29491ae811bdadb",
+            "id": "module-AppRoutingModule-e31ca7933600c1ad1d60b2bb20d270746df6d36990ae3d4cac722e441375390bfb92d8fe1cfab9bcbd3c758c7c81de5c9eb09e911b634bb0cbb66e8e2cc6dad8",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/app-routing.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { AppComponent } from './app.component';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\n\nconst routes: Routes = [\n  {\n    path: 'home',\n    component: MetadataLandingPageComponent,\n  },\n  {\n    path: 'upload',\n    loadChildren: () =>\n      \"import('./components/upload-container/metadata-uploadpage.module').then(\\\n        (m) => m.MetadataUploadpageModule\\\n      )\",\n  },\n  {\n    path: 'workflow',\n    loadChildren: () =>\n      \"import('./pages/metadata-workflow-page/metadata-workflow.module').then(\\\n        (m) => m.WorkflowModule\\\n      )\",\n  },\n  {\n    path: 'download',\n    loadChildren: () =>\n      \"import('./pages/metadata-download-page/metadata-downloadpage.module').then(\\\n        (m) => m.MetadataDownloadpageModule\\\n      )\",\n  },\n  {\n    path: 'quest',\n    loadChildren: () =>\n      \"import('./components/metadata-quest-form/metadata-quest.module').then(\\\n        (m) => m.MetadataQuestModule\\\n      )\",\n  },\n  { path: '', redirectTo: 'home', pathMatch: 'full' },\n  { path: '**', redirectTo: 'home' },\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule],\n})\nexport class AppRoutingModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';\n\nconst routes: Routes = [\n  {\n    path: 'home',\n    component: MetadataLandingPageComponent,\n  },\n  {\n    path: 'upload',\n    loadChildren: () =>\n      \"import('./components/upload-container/metadata-uploadpage.module').then(\\\n        (m) => m.MetadataUploadContainerModule\\\n      )\",\n  },\n  {\n    path: 'workflow',\n    loadChildren: () =>\n      \"import('./pages/metadata-workflow-page/metadata-workflow.module').then(\\\n        (m) => m.WorkflowModule\\\n      )\",\n  },\n  {\n    path: 'download',\n    loadChildren: () =>\n      \"import('./pages/metadata-download-page/metadata-downloadpage.module').then(\\\n        (m) => m.MetadataDownloadpageModule\\\n      )\",\n  },\n\n  { path: '', redirectTo: 'home', pathMatch: 'full' },\n  { path: 'quest', loadChildren: () => \"import('./pages/metadata-quest-page/metadata-quest-page.module').then(m => m.MetadataQuestPageModule)\" },\n  { path: '**', redirectTo: 'home' },\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule],\n})\nexport class AppRoutingModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3934,14 +4128,14 @@
             ]
         },
         {
-            "name": "MetadataQuestModule",
-            "id": "module-MetadataQuestModule-7cc699c7b43baf626ce8009ce82a7cac2c3228c9a1bc2186f2bcf3d23f5992d0f9d2a6bb9cf371ce03ca80bd67e7ebd7ddc2a7726a40eeb48a9557446e1aee05",
+            "name": "MetadataQuestFormModule",
+            "id": "module-MetadataQuestFormModule-a854e044b5b8dfb8c3b7a372c02bed67b4e171ffc253c8ea653b1bebb78e36dac2576bf3cc3ba937cb09f55a3579af9489eed12cd1c1f03e863b0e3bb20cd5a4",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest.module.ts",
             "methods": [],
-            "sourceCode": "// based of this concept: https://dev.to/sp90/angular-reactive-forms-conditional-validation-4aop\nimport { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetadataQuestFormComponent } from './metadata-quest.component';\nimport { MetadataQuestRoutingModule } from './metadata-quest-routing.module';\nimport { MatRadioModule } from '@angular/material/radio';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatSelectModule } from '@angular/material/select';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\nimport { MatStepperModule } from '@angular/material/stepper';\nimport { FormlyFieldStepper } from './stepper.type';\n\n@NgModule({\n  declarations: [MetadataQuestFormComponent, FormlyFieldStepper],\n  imports: [\n    // base imports\n    CommonModule,\n    ReactiveFormsModule,\n\n    //material design imports\n    MetadataQuestRoutingModule,\n    MatRadioModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatSelectModule,\n    FormlyModule,\n    FormlyMaterialModule,\n    MatStepperModule,\n    FormlyModule.forRoot({\n      validationMessages: [\n        { name: 'required', message: 'This field is required' },\n      ],\n      types: [{ name: 'stepper', component: FormlyFieldStepper, wrappers: [] }],\n    }),\n  ],\n  exports: [\n    MetadataQuestFormComponent,\n    FormlyFieldStepper, // Export if it will be used outside the module\n  ],\n})\nexport class MetadataQuestModule {} // Make sure this matches the class name exactly\n",
+            "sourceCode": "// based of this concept: https://dev.to/sp90/angular-reactive-forms-conditional-validation-4aop\nimport { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MetadataQuestFormComponent } from './metadata-quest.component';\nimport { MatRadioModule } from '@angular/material/radio';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatSelectModule } from '@angular/material/select';\nimport { FormlyModule } from '@ngx-formly/core';\nimport { FormlyMaterialModule } from '@ngx-formly/material';\nimport { MatStepperModule } from '@angular/material/stepper';\nimport { FormlyFieldStepper } from './stepper.type';\nimport { MatTooltipModule } from '@angular/material/tooltip';\nimport { MatIconModule } from '@angular/material/icon';\n\n@NgModule({\n  declarations: [MetadataQuestFormComponent, FormlyFieldStepper],\n  imports: [\n    // base imports\n    CommonModule,\n    ReactiveFormsModule,\n\n    // formly imports\n    FormlyModule,\n    FormlyMaterialModule,\n    FormlyModule.forRoot({\n      // wrappers: [ { name: 'tooltip', component: CustomFieldWrapperComponent } ],\n      validationMessages: [\n        { name: 'required', message: 'This field is required' },\n      ],\n      types: [{ name: 'stepper', component: FormlyFieldStepper, wrappers: [] }],\n    }),\n\n    //material design imports\n    MatRadioModule,\n    MatFormFieldModule,\n    MatInputModule,\n    MatSelectModule,\n    MatStepperModule,\n    MatTooltipModule,\n    MatIconModule,\n  ],\n  exports: [\n    MetadataQuestFormComponent,\n    FormlyFieldStepper, // Export if it will be used outside the module\n  ],\n})\nexport class MetadataQuestFormModule {} // Make sure this matches the class name exactly\n",
             "children": [
                 {
                     "type": "providers",
@@ -3960,11 +4154,7 @@
                 },
                 {
                     "type": "imports",
-                    "elements": [
-                        {
-                            "name": "MetadataQuestRoutingModule"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "exports",
@@ -3976,6 +4166,92 @@
                             "name": "MetadataQuestFormComponent"
                         }
                     ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "MetadataQuestPageModule",
+            "id": "module-MetadataQuestPageModule-5c1556a6cec70cc98dc61673caa8caac77b100c038439f0cffb27e9a31aa44fb6abc2e0ac986a976e521af88894defba1a593fd5b3ef20be98e7cfc49f1ad0ab",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { MetadataQuestPageRoutingModule } from './metadata-quest-page-routing.module';\nimport { MetadataQuestPageComponent } from './metadata-quest-page.component';\nimport { MetadataQuestFormModule } from '../../components/metadata-quest-form/metadata-quest.module';\nimport { MetadataUploadContainerModule } from '../../components/upload-container/metadata-uploadpage.module';\n\n@NgModule({\n  declarations: [\n    MetadataQuestPageComponent, // Only components, directives, and pipes here\n  ],\n  imports: [\n    CommonModule,\n    MetadataQuestPageRoutingModule,\n    MetadataQuestFormModule, // Modules should be included here\n    MetadataUploadContainerModule\n  ],\n})\nexport class MetadataQuestPageModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "MetadataQuestPageComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "MetadataQuestFormModule"
+                        },
+                        {
+                            "name": "MetadataQuestPageRoutingModule"
+                        },
+                        {
+                            "name": "MetadataUploadContainerModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "MetadataQuestPageRoutingModule",
+            "id": "module-MetadataQuestPageRoutingModule-e6c29a21a96978a3550cf37fac6425121203ce4a22596d7391758537ccff79ba0468ba0948a47b436889a53d5c42aa5ddc5e893340fbe00c031a51429e7afa87",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page-routing.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataQuestPageComponent } from './metadata-quest-page.component';\n\nconst routes: Routes = [{ path: '', component: MetadataQuestPageComponent }];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataQuestPageRoutingModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
                 },
                 {
                     "type": "bootstrap",
@@ -4024,14 +4300,14 @@
             ]
         },
         {
-            "name": "MetadataUploadpageModule",
-            "id": "module-MetadataUploadpageModule-c6d04a5d93a93bc4b88e2f2f4b8598a2bfca58108076948152a20316b20ee65d67983b84d759d80cac8414f136fb4088996978f5637c2e908af80b16712761ee",
+            "name": "MetadataUploadContainerModule",
+            "id": "module-MetadataUploadContainerModule-98a20b180e863ecf834a483c492a42297f35a294e069b2cfb33f48a2a85bcb785ad0d36717450ac1ae57793a3fba02f92c843f2e1debcc0d245714dd116cfde0",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatProgressBarModule } from '@angular/material/progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\n\n@NgModule({\n  declarations: [\n    MetadataUploadpageComponent,\n  ],\n  imports: [\n    CommonModule,\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n  ],\n  exports: [MetadataUploadpageComponent]\n})\nexport class MetadataUploadpageModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MetadataUploadContainerComponent } from './metadata-uploadpage.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatProgressBarModule } from '@angular/material/progress-bar';\nimport { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatTooltipModule } from '@angular/material/tooltip';\n\n@NgModule({\n  declarations: [MetadataUploadContainerComponent],\n  imports: [\n    CommonModule,\n\n    // material\n    MatIconModule,\n    MatProgressBarModule,\n    MetadataUploadpageRoutingModule,\n    MatButtonModule,\n    MatTooltipModule,\n  ],\n  exports: [MetadataUploadContainerComponent],\n})\nexport class MetadataUploadContainerModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -4041,7 +4317,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "MetadataUploadpageComponent"
+                            "name": "MetadataUploadContainerComponent"
                         }
                     ]
                 },
@@ -4057,7 +4333,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "MetadataUploadpageComponent"
+                            "name": "MetadataUploadContainerComponent"
                         }
                     ]
                 },
@@ -4073,13 +4349,13 @@
         },
         {
             "name": "MetadataUploadpageRoutingModule",
-            "id": "module-MetadataUploadpageRoutingModule-d06f0f38b7d2f6858719bddb2274cee5d70958d0daa6a4ba1d79d9bef6418d65dca5ca75a19919a881428b383c04d44023a9ade18c753ee7b3a2ba3aae7722fb",
+            "id": "module-MetadataUploadpageRoutingModule-54a39351ec6632d46746997fc6a1750853a3df5674d5c3b045d676a75b1cd6312614a000e6f8cc4fba6ac983338c12e71a1bafc96abb172f784d0c8aa8a0569e",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage-routing.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataUploadpageComponent } from './metadata-uploadpage.component';\n\nconst routes: Routes = [\n  {path: '', component: MetadataUploadpageComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataUploadpageRoutingModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MetadataUploadContainerComponent } from './metadata-uploadpage.component';\n\nconst routes: Routes = [\n  {path: '', component: MetadataUploadContainerComponent}\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class MetadataUploadpageRoutingModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -4145,13 +4421,13 @@
         },
         {
             "name": "WorkflowModule",
-            "id": "module-WorkflowModule-36fd29b39e7ed81cf14aad93cc9a3c2e7c5f43b2e35636741d840a171eb670adb9d18ab5f46c74e4218605307c54e9f93139467059b9ac2eee5fe479ca7dcb8c",
+            "id": "module-WorkflowModule-a2d2cc403eca43996d0cba670e8ea678c49336104c0a8ddc74a1f0e7884a76bea204a23dc130b3aaedfce9fc8b50e35eff524304b16c89cfd82c8dde1ab3cd79",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/metadata-workflow.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';\n\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { HotTableModule } from '@handsontable/angular';\nimport { registerAllModules } from 'handsontable/registry';\nimport { MetadataWorkflowComponent } from './metadata-workflow.component';\nimport { registerCellType, NumericCellType, } from 'handsontable/cellTypes';\nimport { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plugins';\nimport { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';\nimport { MatButtonModule } from '@angular/material/button';\nimport { CommonModule } from '@angular/common';\nimport { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';\nimport { HttpClientModule } from '@angular/common/http';\n\n\n\n// register the filtering plugins\nregisterPlugin(Filters);\nregisterPlugin(DropdownMenu);\nregisterCellType(NumericCellType);\nregisterPlugin(UndoRedo);\n\n\n// register Handsontable's modules\nregisterAllModules();\n\n@NgModule({\n  declarations: [MetadataWorkflowComponent],\n  imports: [\n    CommonModule,\n    HotTableModule,\n    MetadataWorkflowRoutingModule,\n    MatButtonModule,\n    MetaDataCheckboxSelectionModule,\n    HttpClientModule,\n  ],\n  exports: [MetadataWorkflowComponent],\n})\nexport class WorkflowModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -4201,17 +4477,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -4221,7 +4487,17 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n\n\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -4231,7 +4507,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -4241,7 +4517,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                "file": "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -4251,11 +4527,11 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
+                "defaultValue": "{\n  render: () => ({\n    props: {\n      // Initialize any required properties or mock data\n    },\n  }),\n}"
             },
             {
                 "name": "environment",
@@ -4331,26 +4607,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta",
-                "defaultValue": "{\n  title: 'Project/SDRF Table Component',\n  component: MetadataWorkflowComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(HttpClientModule),\n        importProvidersFrom(OAuthModule.forRoot()),\n        importProvidersFrom(MatDialogModule),\n        // ...any other modules that your component requires\n      ],\n    }),\n  ],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta",
-                "defaultValue": "{\n  title: 'Project/MetadataQuestModule',\n  component: MetadataQuestFormComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        //Core modules\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(HttpClientModule),\n\n        // Base modules\n        importProvidersFrom(FormsModule),\n        importProvidersFrom(ReactiveFormsModule),\n      ],\n    }),\n  ],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/metadata-tool/src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -4378,10 +4634,20 @@
                 "defaultValue": "{\n  title: 'Example/Page',\n  component: Page,\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/angular/configure/story-layout\n    layout: 'fullscreen',\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [Button, Header],\n      imports: [CommonModule],\n    }),\n  ],\n}"
             },
             {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<MetadataQuestFormComponent>",
+                "defaultValue": "{\n  title: 'Project/Questionnaire',\n  component: MetadataQuestFormComponent,\n  tags: ['autodocs'],\n  render: () => ({\n    props: {\n      model: {}, // Initialize with an empty model or a mock model as per your requirement\n      // Include other necessary props if there are any\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [MetadataQuestFormModule],\n      // No need to individually declare components or providers here,\n      // since they are all included in the module.\n    }),\n  ],\n}"
+            },
+            {
                 "name": "mockDownloadFile",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -4431,7 +4697,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -4441,7 +4707,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -4450,50 +4716,6 @@
         ],
         "functions": [],
         "typealiases": [
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<>",
-                "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<>",
-                "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<>",
-                "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<>",
-                "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
             {
                 "name": "Story",
                 "ctype": "miscellaneous",
@@ -4522,6 +4744,50 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Page>",
                 "file": "projects/metadata-tool/src/stories/Page.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<>",
+                "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<>",
+                "file": "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj",
+                "file": "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<>",
+                "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -4583,34 +4849,12 @@
             }
         ],
         "groupedVariables": {
-            "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts": [
+            "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta",
-                    "defaultValue": "{\n  title: 'Project/SDRF Table Component',\n  component: MetadataWorkflowComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(HttpClientModule),\n        importProvidersFrom(OAuthModule.forRoot()),\n        importProvidersFrom(MatDialogModule),\n        // ...any other modules that your component requires\n      ],\n    }),\n  ],\n}"
-                }
-            ],
-            "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                    "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -4620,31 +4864,53 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
+                    "file": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args) => ({\n  component: MetaDataCheckboxSelectionComponent,\n  props: {\n    ...args,\n    form: new FormGroup({\n      properties1: new FormArray([new FormControl(false)]),\n      characteristic: new FormArray([new FormControl(false)]),\n      properties2: new FormArray([new FormControl(false)]),\n      comments: new FormArray([new FormControl(false)]),\n    }),\n    selectableProperties1: [{ title: 'Property 1' }],\n    selectableCharacteristic: [{ title: 'Characteristic 1' }],\n    selectableProperties2: [{ title: 'Property 2' }],\n    selectableComments: [{ title: 'Comment 1' }],\n  },\n  template: args.template,\n})"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/landingPage.stories.ts": [
+            "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
+                    "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n\n\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<MetadataQuestFormComponent>",
+                    "defaultValue": "{\n  title: 'Project/Questionnaire',\n  component: MetadataQuestFormComponent,\n  tags: ['autodocs'],\n  render: () => ({\n    props: {\n      model: {}, // Initialize with an empty model or a mock model as per your requirement\n      // Include other necessary props if there are any\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [MetadataQuestFormModule],\n      // No need to individually declare components or providers here,\n      // since they are all included in the module.\n    }),\n  ],\n}"
+                }
+            ],
+            "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/metadataDownload.story.ts": [
+            "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -4654,7 +4920,7 @@
                     "name": "mockDownloadFile",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -4664,45 +4930,35 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "(args) => ({\n  component: MetadataDownloadpageComponent,\n  props: {\n    ...args,\n    downloadFile: mockDownloadFile,\n  },\n})"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/questionaire.story.ts": [
+            "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta",
-                    "defaultValue": "{\n  title: 'Project/MetadataQuestModule',\n  component: MetadataQuestFormComponent,\n  decorators: [\n    applicationConfig({\n      providers: [\n        //Core modules\n        importProvidersFrom(BrowserAnimationsModule),\n        importProvidersFrom(HttpClientModule),\n\n        // Base modules\n        importProvidersFrom(FormsModule),\n        importProvidersFrom(ReactiveFormsModule),\n      ],\n    }),\n  ],\n}"
                 }
             ],
-            "projects/metadata-tool/src/ownStories/uploadPage.stories.ts": [
+            "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: () => ({\n    props: {},\n  }),\n}"
+                    "defaultValue": "{\n  render: () => ({\n    props: {\n      // Initialize any required properties or mock data\n    },\n  }),\n}"
                 }
             ],
             "projects/metadata-tool/src/environments/environment.prod.ts": [
@@ -4916,58 +5172,6 @@
             ]
         },
         "groupedTypeAliases": {
-            "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<>",
-                    "file": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/metadata-tool/src/ownStories/landingPage.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<>",
-                    "file": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/metadata-tool/src/ownStories/questionaire.story.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<>",
-                    "file": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
-            "projects/metadata-tool/src/ownStories/uploadPage.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<>",
-                    "file": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "projects/metadata-tool/src/stories/Button.stories.ts": [
                 {
                     "name": "Story",
@@ -5006,6 +5210,58 @@
                     "description": "",
                     "kind": 183
                 }
+            ],
+            "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<>",
+                    "file": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<>",
+                    "file": "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<>",
+                    "file": "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
             ]
         }
     },
@@ -5025,27 +5281,7 @@
                     },
                     {
                         "path": "upload",
-                        "loadChildren": "./components/upload-container/metadata-uploadpage.module#MetadataUploadpageModule",
-                        "children": [
-                            {
-                                "kind": "module",
-                                "children": [
-                                    {
-                                        "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage-routing.module.ts",
-                                        "module": "MetadataUploadpageRoutingModule",
-                                        "children": [
-                                            {
-                                                "path": "",
-                                                "component": "MetadataUploadpageComponent"
-                                            }
-                                        ],
-                                        "kind": "module"
-                                    }
-                                ],
-                                "module": "MetadataUploadpageModule"
-                            }
-                        ]
+                        "loadChildren": "./components/upload-container/metadata-uploadpage.module#MetadataUploadContainerModule"
                     },
                     {
                         "path": "workflow",
@@ -5096,33 +5332,33 @@
                         ]
                     },
                     {
+                        "path": "",
+                        "redirectTo": "home",
+                        "pathMatch": "full"
+                    },
+                    {
                         "path": "quest",
-                        "loadChildren": "./components/metadata-quest-form/metadata-quest.module#MetadataQuestModule",
+                        "loadChildren": "./pages/metadata-quest-page/metadata-quest-page.module#MetadataQuestPageModule",
                         "children": [
                             {
                                 "kind": "module",
                                 "children": [
                                     {
                                         "name": "routes",
-                                        "filename": "projects/metadata-tool/src/app/components/metadata-quest-form/metadata-quest-routing.module.ts",
-                                        "module": "MetadataQuestRoutingModule",
+                                        "filename": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page-routing.module.ts",
+                                        "module": "MetadataQuestPageRoutingModule",
                                         "children": [
                                             {
                                                 "path": "",
-                                                "component": "MetadataQuestFormComponent"
+                                                "component": "MetadataQuestPageComponent"
                                             }
                                         ],
                                         "kind": "module"
                                     }
                                 ],
-                                "module": "MetadataQuestModule"
+                                "module": "MetadataQuestPageModule"
                             }
                         ]
-                    },
-                    {
-                        "path": "",
-                        "redirectTo": "home",
-                        "pathMatch": "full"
                     },
                     {
                         "path": "**",
@@ -5157,6 +5393,26 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxSelection.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/metadata-tool/src/app/components/metadata-checkboxselection/checkboxselectionservice.ts",
                 "type": "injectable",
                 "linktype": "injectable",
@@ -5184,6 +5440,26 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/components/metadata-quest-form/questionaire.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/metadata-tool/src/app/components/metadata-quest-form/stepper.type.ts",
                 "type": "component",
                 "linktype": "component",
@@ -5196,9 +5472,19 @@
                 "filePath": "projects/metadata-tool/src/app/components/upload-container/metadata-uploadpage.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "MetadataUploadpageComponent",
+                "name": "MetadataUploadContainerComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/18",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/components/upload-container/uploadPage.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -5256,12 +5542,52 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mockDownloadFile",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metadataDownload.story.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/metadata-tool/src/app/pages/metadata-download-page/metaddata-upload.service.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "MetaDataDownloadService",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-landing-page/landingPage.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -5277,9 +5603,19 @@
                 "filePath": "projects/metadata-tool/src/app/pages/metadata-quest-page/metadata-quest-page.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "MetadataUploadpageComponent",
+                "name": "MetadataQuestPageComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/metadata-tool/src/app/pages/metadata-workflow-page/SDRFTable.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -5297,7 +5633,7 @@
                 "linktype": "injectable",
                 "name": "MetaDataInputService",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
@@ -5325,116 +5661,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "environment",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/SDRFTable.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "meta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/checkboxSelection.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/landingPage.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "mockDownloadFile",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/metadataDownload.story.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/questionaire.story.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "meta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/metadata-tool/src/ownStories/uploadPage.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

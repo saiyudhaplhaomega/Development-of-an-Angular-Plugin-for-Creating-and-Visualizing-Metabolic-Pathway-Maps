@@ -28,7 +28,7 @@ registerAllModules();
     HotTableModule,
     MetadataWorkflowRoutingModule,
     MatButtonModule,
-    MetaDataCheckboxSelectionModule
+    MetaDataCheckboxSelectionModule,
   ],
   exports: [MetadataWorkflowComponent],
 })

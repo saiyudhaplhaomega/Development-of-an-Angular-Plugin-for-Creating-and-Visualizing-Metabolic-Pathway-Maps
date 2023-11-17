@@ -1,29 +1,30 @@
-import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
-import { MatButtonModule } from '@angular/material/button';
-import { MetadataUploadContainerComponent } from '../app/components/upload-container/metadata-uploadpage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MetadataWorkflowComponent } from './metadata-workflow.component';
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { importProvidersFrom } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
-export default {
-  title: 'Project/File Upload Component',
-  component: MetadataUploadContainerComponent,
+const meta: Meta = {
+  title: 'Project/SDRF Table Component',
+  component: MetadataWorkflowComponent,
   decorators: [
     applicationConfig({
       providers: [
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(HttpClientModule),
-        importProvidersFrom(MatButtonModule),
         importProvidersFrom(OAuthModule.forRoot()),
         importProvidersFrom(MatDialogModule),
+        // ...any other modules that your component requires
       ],
     }),
   ],
-} as Meta;
+};
 
-type Story = StoryObj<typeof MetadataUploadContainerComponent>;
+export default meta;
+
+type Story = StoryObj<typeof MetadataWorkflowComponent>;
 
 export const Default: Story = {
   render: () => ({
