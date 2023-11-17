@@ -25,19 +25,3 @@ flex-direction: column;
 overflow: auto;
 }
 
-::ng-deep .footer_color {
-color: hsla(0, 0%, 100%, 0.9) !important;
-background-color:rgb(0, 63, 151) !important;
-font-size: 12;
-}
-
-::ng-deep .header_color {
-  color: hsla(0, 0%, 100%, 0.9) !important;
-  background-color: rgb(0, 63, 151) !important;
-}
-
-::ng-deep .header_tool_name{
-  color: hsla(0, 0%, 100%, 0.9) !important;
-  background-color: rgb(0, 63, 151) !important;;
-}
-

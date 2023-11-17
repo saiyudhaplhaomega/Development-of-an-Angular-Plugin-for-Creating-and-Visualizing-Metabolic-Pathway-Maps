@@ -1,20 +1,21 @@
-::ng-deep .mat-expansion-panel-header{
-    font-size: 20;
-    font-weight: bold;
-}
-::ng-deep .mat-expansion-panel.mat-expanded,
-::ng-deep .mat-expansion-panel:hover{
-    font-size: 20;
-    font-weight: bold;
-    color: white;
-    background-color: #7986cb;
-}
-::ng-deep .mat-expansion-panel-body {
+.mat-expansion-panel {
     background-color: #e8eaf6;
-    color: black;
     text-align: left;
-  }
-  
+    }
+
+.mat-expansion-panel-header.expansion-header-tutorial {
+    &.mat-expanded {
+        font-size: 20;
+        font-weight: bold;
+        background-color: #7986cb;
+        }
+    }
+
+.mat-expansion-panel-header:hover  {
+    background-color: #7986cb !important;
+    }
+    
+
 .img-fluid{
     max-width: 20%;
     height: auto;
