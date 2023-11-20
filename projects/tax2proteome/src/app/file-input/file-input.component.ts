@@ -4,7 +4,7 @@ import {NamesService} from '../names.service';
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
-  styleUrls: ['./file-input.component.css']
+  styleUrls: ['./file-input.component.scss']
 })
 export class FileInputComponent implements OnInit {
 

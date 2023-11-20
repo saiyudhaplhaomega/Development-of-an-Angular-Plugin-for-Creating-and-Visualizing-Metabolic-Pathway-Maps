@@ -7,7 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 @Component({
   selector: 'app-tax-table',
   templateUrl: './tax-table.component.html',
-  styleUrls: ['./tax-table.component.css']
+  styleUrls: ['./tax-table.component.scss']
 })
 
 export class TaxTableComponent implements OnInit, AfterViewInit{

@@ -7,7 +7,7 @@ import { Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-power-input',
   templateUrl: './power-input.component.html',
-  styleUrls: ['./power-input.component.css']
+  styleUrls: ['./power-input.component.scss']
 })
 export class PowerInputComponent implements OnInit {
     searchTaxonCtrl = new FormControl();

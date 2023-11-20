@@ -4,7 +4,7 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 @Component({
   selector: 'app-page-footer',
   templateUrl: './page-footer.html',
-  styleUrls: ['./page-footer.css']
+  styleUrls: ['./page-footer.scss']
 })
 export class FooterComponent implements OnInit {
   constructor() {}

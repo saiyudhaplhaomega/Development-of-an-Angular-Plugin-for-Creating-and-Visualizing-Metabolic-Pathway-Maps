@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/retry';
+import { catchError, retry } from 'rxjs/operators';
 import {UserInputService, TaxData, TaxIDData} from './user-input.service';
 
 // communication with taxid database
@@ -23,16 +22,35 @@ export class NamesService {
     private userInputService: UserInputService,
   ) { }
 
-  fetchNames<T>(taxids: number[]): Observable<T> {
+    private handleError(error: HttpErrorResponse){
+        if (error.status === 0){
+          //  A client-side or network error occurred. 
+          console.error(
+            `Network Error: `, error.error);
+            // Return an observable with a user-facing error message.
+            return throwError(() => new Error('An network error occurred for API request.')); 
+        }
+        else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong.
+            console.error(
+                `Backend returned code ${error.status}, body was: `, error.error);
+            }
+            // Return an observable with a user-facing error message.
+            return throwError(() => new Error('An backend error occurred for API request.'));                
+    }
+
+    
+  fetchNames<T>(taxids: number[]) {
       let params = new HttpParams();
       params = params.set('id', taxids.toString());
       console.log(`${this.baseUrl}?${params.toString()}`);
       return this.http
           .get<T>(`${this.baseUrl}?${params.toString()}`)
-          .retry(3)
-          .catch((err: any) => {
-              return throwError('An error occurred in fetchNames:', err.error.message);
-          });
+          .pipe(
+           retry(3),
+            catchError(this.handleError)
+          ); 
   }
   async getNames(taxids: number[]){
       try {
@@ -54,10 +72,10 @@ export class NamesService {
       params = params.set('id', taxids.toString());
       return this.http
           .get<T>(`${this.Url2}?${params.toString()}`)
-          .retry(3)
-          .catch((err: any) => {
-              return throwError('An error occurred in fetch IDs:', err.error.message);
-            });
+          .pipe(
+            retry(3),
+            catchError(this.handleError)
+          );
   }
 
   async getIDs(taxids: number[]): Promise<TaxIDData[]>{

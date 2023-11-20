@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {UserInputService} from './user-input.service';
+import { catchError, retry } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 // write config file
@@ -23,6 +24,24 @@ export class ConfigService {
       private http: HttpClient,
       private userInService: UserInputService,
       ) { }
+  
+  private handleError(error: HttpErrorResponse){
+    if (error.status === 0){
+      //  A client-side or network error occurred. 
+      console.error(
+        `Network Error: `, error.error);
+        // Return an observable with a user-facing error message.
+        return throwError(() => new Error('An network error occurred.')); 
+    }
+    else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong.
+        console.error(
+            `Backend returned code ${error.status}, body was: `, error.error);
+        }
+        // Return an observable with a user-facing error message.
+        return throwError(() => new Error('An backend error occurred for API request.'));                
+  }
 
   getConfig<T>(): Observable<string> {
     if (this.userInService.selectedDatabase === 'NCBI-nr' && this.userInService.selectedHeader === 'reduced headers'){
@@ -49,11 +68,11 @@ export class ConfigService {
     params = params.set('uid', this.myId.toString());
     const urlQuery = `${this.url}?${params.toString()}`;
     return this.http
-        .get(urlQuery, {responseType: 'text'})
-        .retry(3)
-        .catch((err: any) => {
-          return throwError('An error occurred:', err.error.message);
-        });
+      .get(urlQuery, {responseType: 'text'})
+      .pipe(
+      retry(3),
+        catchError(this.handleError)
+      ); 
     }
 
   async generateConfig(){
@@ -71,11 +90,11 @@ export class ConfigService {
     params = params.set('db_id', dbId);
     const urlQuery = `${this.url2}?${params.toString()}`;
     return this.http
-        .get(urlQuery, {responseType: 'text'})
-        .retry(3)
-        .catch((err: any) => {
-          return throwError('An error occurred:', err.error.message);
-        });
+    .get(urlQuery, {responseType: 'text'})
+    .pipe(
+     retry(3),
+      catchError(this.handleError)
+    )
   }
 
   async getProgress(dbId){

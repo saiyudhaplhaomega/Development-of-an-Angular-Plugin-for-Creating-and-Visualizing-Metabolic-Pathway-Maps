@@ -4,7 +4,7 @@ import {NamesService} from '../names.service';
 @Component({
   selector: 'app-list-input',
   templateUrl: './list-input.component.html',
-  styleUrls: ['./list-input.component.css']
+  styleUrls: ['./list-input.component.scss']
 })
 export class ListInputComponent implements OnInit {
 
