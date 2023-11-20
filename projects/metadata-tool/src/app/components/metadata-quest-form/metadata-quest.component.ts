@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import {FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 
 @Component({
@@ -10,6 +10,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 })
 export class MetadataQuestFormComponent {
   // This is the data for the first step
+  options: FormlyFormOptions = {};
   model: any = {};
   specificMetagenomeOptions = [
     { value: 'gut', label: 'Gut' },
@@ -45,7 +46,7 @@ export class MetadataQuestFormComponent {
         key: 'experimentType',
         type: 'select',
         templateOptions: {
-          wrapper: ["tooltip"],
+          info: 'This is additional information',
           customTooltip: 'This is a custom tooltip for the example field',
           label: 'Experiment Type',
           description: 'What kind of experiment was done?',

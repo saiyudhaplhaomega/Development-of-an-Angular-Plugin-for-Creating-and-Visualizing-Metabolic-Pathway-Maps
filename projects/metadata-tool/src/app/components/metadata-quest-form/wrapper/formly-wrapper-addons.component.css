@@ -1,0 +1,18 @@
+.icon-right {
+  margin: 20px;
+  /* Adjust space between field and icon */
+  /* You can add additional styling here */
+}
+
+.custom-tooltip {
+  position: absolute;
+  background-color: #555;
+  /* Tooltip background */
+  color: white;
+  /* Tooltip text color */
+  padding: 4px 8px;
+  /* Tooltip padding */
+  border-radius: 4px;
+  /* Tooltip border radius */
+  /* Position and other styles as needed */
+}

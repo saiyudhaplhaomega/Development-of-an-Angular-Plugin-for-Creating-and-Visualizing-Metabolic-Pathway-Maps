@@ -13,9 +13,15 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FormlyFieldStepper } from './stepper.type';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { FormlyWrapperAddons } from './wrapper/addons.wrapper';
+import { addonsExtension } from './wrapper/addons.extensions';
 
 @NgModule({
-  declarations: [MetadataQuestFormComponent, FormlyFieldStepper],
+  declarations: [
+    MetadataQuestFormComponent,
+    FormlyFieldStepper,
+    FormlyWrapperAddons,
+  ],
   imports: [
     // base imports
     CommonModule,
@@ -25,6 +31,10 @@ import { MatIconModule } from '@angular/material/icon';
     FormlyModule,
     FormlyMaterialModule,
     FormlyModule.forRoot({
+      wrappers: [{ name: 'addons', component: FormlyWrapperAddons }],
+      extensions: [
+        { name: 'addons', extension: { onPopulate: addonsExtension } },
+      ],
       // wrappers: [ { name: 'tooltip', component: CustomFieldWrapperComponent } ],
       validationMessages: [
         { name: 'required', message: 'This field is required' },

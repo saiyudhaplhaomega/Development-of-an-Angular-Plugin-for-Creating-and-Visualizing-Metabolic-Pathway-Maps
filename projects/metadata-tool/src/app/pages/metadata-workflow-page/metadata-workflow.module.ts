@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';
 
 
-
 // register the filtering plugins
 registerPlugin(Filters);
 registerPlugin(DropdownMenu);
