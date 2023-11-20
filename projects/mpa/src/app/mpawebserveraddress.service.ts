@@ -41,9 +41,9 @@ export enum Endpoints {
   GET_SPECTRUMDATA = 'mpasearch/getspectrumdata',
   // proteinloader
   PROTEINLOADER_METADATA = 'proteinloader/fastametadata',
-  PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadfasta',
-  PROTEINLOADER_GETFASTADATA = 'proteinloader/getfastadata',
-  PROTEINLOADER_UPDATE_FASTADATA= 'proteinloader/updatefastadata',
+  PROTEINLOADER_FILEUPLOAD = 'proteinloader/uploadprotdb',
+  PROTEINLOADER_GET_PROTDBDATA = 'proteinloader/getprotdbdata',
+  PROTEINLOADER_UPDATE_PROTDBDATA= 'proteinloader/updateprotdbdata',
   // PROTEINLOADER_STATUS = 'proteinloader/jobstatus',
   DOWNLOAD_PROPHANE_TEST_DATA = ""
 

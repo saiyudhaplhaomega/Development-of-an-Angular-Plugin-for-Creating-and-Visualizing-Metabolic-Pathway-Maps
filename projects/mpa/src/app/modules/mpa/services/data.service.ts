@@ -238,7 +238,7 @@ export class DataService {
         }
       }
     )
-    return this.httpClientService.getObject<ProtDBJSONObject>(this.addressService.getEndpoint(Endpoints.PROTEINLOADER_GETFASTADATA), params)
+    return this.httpClientService.getObject<ProtDBJSONObject>(this.addressService.getEndpoint(Endpoints.PROTEINLOADER_GET_PROTDBDATA), params)
   }
 
   updateFastaData(proteinDB: ProtDBJSONObject, nodeObj: DataItem) {
@@ -251,7 +251,7 @@ export class DataService {
     )
     this.httpClientService.postObject<ProtDBJSONObject, ProtDBJSONObject>(
       proteinDB,
-      this.addressService.getEndpoint(Endpoints.PROTEINLOADER_UPDATE_FASTADATA),
+      this.addressService.getEndpoint(Endpoints.PROTEINLOADER_UPDATE_PROTDBDATA),
       params
     )
       .subscribe((response: ProtDBJSONObject) => {
