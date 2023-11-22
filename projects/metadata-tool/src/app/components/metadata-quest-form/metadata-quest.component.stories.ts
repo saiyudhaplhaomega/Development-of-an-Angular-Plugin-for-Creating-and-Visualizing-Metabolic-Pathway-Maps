@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { Meta, moduleMetadata } from '@storybook/angular';
 import { MetadataQuestFormComponent } from './metadata-quest.component';
 import { MetadataQuestFormModule } from './metadata-quest.module';
