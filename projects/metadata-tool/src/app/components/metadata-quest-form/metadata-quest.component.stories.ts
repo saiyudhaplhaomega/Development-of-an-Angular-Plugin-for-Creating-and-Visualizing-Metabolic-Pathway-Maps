@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata } from '@storybook/angular';
 import { MetadataQuestFormComponent } from './metadata-quest.component';
 import { MetadataQuestFormModule } from './metadata-quest.module';
 
@@ -12,7 +12,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<MetadataQuestFormComponent> = (args: MetadataQuestFormComponent) => ({
+const Template = (args: MetadataQuestFormComponent) => ({
   props: args,
 });
 
