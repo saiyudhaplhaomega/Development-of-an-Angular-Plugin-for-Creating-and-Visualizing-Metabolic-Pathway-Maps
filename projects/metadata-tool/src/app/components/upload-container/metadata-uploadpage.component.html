@@ -28,6 +28,8 @@
 
 
 <div class="upload-container" *ngIf="showContainer" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+  <!-- Display metadataUploadJson data -->
+  <div *ngIf="metadataUploadJson">{{ metadataUploadJson | json }}</div>
   <h2 class="upload-title">File Upload</h2>
   <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
   <ul>`
