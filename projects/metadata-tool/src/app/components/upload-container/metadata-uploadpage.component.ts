@@ -150,4 +150,5 @@ export class MetadataUploadContainerComponent implements OnInit {
   hideTooltip(progressBar: any): void {
     progressBar.tooltip.hide(); // Hides the tooltip
   }
+
 }
