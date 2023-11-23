@@ -4,6 +4,7 @@ import { MetaDataInputService } from '../../pages/metadata-workflow-page/metadda
 import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MetaDataUploadJson } from '../../model/metadatauploadjson';
 
 
 @Component({
@@ -12,7 +13,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./metadata-uploadpage.component.scss'],
 })
 export class MetadataUploadContainerComponent implements OnInit {
-  // ... (other properties and methods)
 
   onDragOver(event: DragEvent): void {
     event.preventDefault(); // Prevent the browser from performing the default action for the file drop.
@@ -43,8 +43,7 @@ export class MetadataUploadContainerComponent implements OnInit {
     { value: 'generic_mgf_mzid', viewValue: 'Generic (mgf+mzid)' },
   ];
 
-  selectedPipeline;
-  '';
+  selectedPipeline: {};
   selectedFiles: File[] = [];
   uploadDialogId: string;
 
@@ -53,6 +52,8 @@ export class MetadataUploadContainerComponent implements OnInit {
   uploadStartTime: number;
   timeRemaining: string = ''; // This will hold the time remaining as a string
   showContainer = true;
+  metadataUploadJson: MetaDataUploadJson;
+
 
   constructor(
     private dataService: MetaDataInputService,
@@ -61,7 +62,9 @@ export class MetadataUploadContainerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataService.metadataUploadJson.subscribe();
+    this.dataService.metadataUploadJson.subscribe((json) => {
+      this.metadataUploadJson = json;
+    });
     // Emit the progress
     this.uploadProgressService.currentProgress.subscribe((progress) => {
       this.uploadProgress = progress;
@@ -96,6 +99,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   }
 
   onUpload(): void {
+    // time for progress bar
     this.uploadStartTime = Date.now();
     this.uploadProgressService.currentProgress.subscribe((progress) => {
       this.uploadProgress = progress;
@@ -169,5 +173,4 @@ export class MetadataUploadContainerComponent implements OnInit {
   hideTooltip(progressBar: any): void {
     progressBar.tooltip.hide(); // Hides the tooltip
   }
-
 }

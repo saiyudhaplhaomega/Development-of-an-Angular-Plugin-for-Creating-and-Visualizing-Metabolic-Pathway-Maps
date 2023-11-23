@@ -1,5 +1,4 @@
 export interface ColumnData {
-
   identID: string;
   counter: number;
   sourcename: string;
@@ -11,8 +10,8 @@ export interface ColumnData {
   biologicalReplicate: number;
   metagenomes: string;
   ecologicalMetagenomes: string;
-  organismalMetagenomes: string; 
-  syntheticMetagenome: string; 
+  organismalMetagenomes: string;
+  syntheticMetagenome: string;
   analyticalFraction: string;
   temperatureCondtions: string;
   pressure: string;
@@ -57,8 +56,8 @@ export class ColumnDataObject implements ColumnData {
   biologicalReplicate: number;
   metagenomes: string;
   ecologicalMetagenomes: string;
-  organismalMetagenomes: string; 
-  syntheticMetagenome: string; 
+  organismalMetagenomes: string;
+  syntheticMetagenome: string;
   analyticalFraction: string;
   temperatureCondtions: string;
   pressure: string;
