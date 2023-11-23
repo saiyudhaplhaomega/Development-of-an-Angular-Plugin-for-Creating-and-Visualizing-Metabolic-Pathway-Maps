@@ -11,8 +11,21 @@
     (mouseout)="hideTooltip(progressBar)">
   </mat-progress-bar>
 </div>
-<div class="upload-container"   *ngIf="showContainer">
 
+<div class="pipeline-selection-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Choose Pipeline</mat-label>
+    <mat-select [(ngModel)]="selectedPipeline">
+      <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline.value">
+        {{ pipeline.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+{{selectedPipeline}}
+
+<div class="upload-container"   *ngIf="showContainer">
   <h2 class="upload-title">File Upload</h2>
   <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
   <ul>`

@@ -17,6 +17,15 @@ export class MetadataUploadContainerComponent implements OnInit {
     started: boolean;
   }>();
 
+  pipelines = [
+    { value: 'generic_mzid_mzml', viewValue: 'Generic (mzid+mzml)' },
+    { value: 'metaproteomeanalyzer', viewValue: 'MetaProteomeAnalyzer' },
+    { value: 'proteomediscoverer', viewValue: 'ProteomeDiscoverer' },
+    { value: 'generic_mgf_mzid', viewValue: 'Generic (mgf+mzid)' },
+  ];
+
+  selectedPipeline;
+  '';
   selectedFiles: File[] = [];
   uploadDialogId: string;
 
@@ -41,9 +50,7 @@ export class MetadataUploadContainerComponent implements OnInit {
         progress: this.uploadProgress,
         started: this.uploadProgress > 0,
       });
-
     });
-
   }
 
   onFilesSelected(event: Event): void {
