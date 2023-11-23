@@ -1,0 +1,52 @@
+// Use this file to create classes for overriding INTERNAL angular material styles.
+// If you want to style material components different from the default, please check first:
+
+// 1) Can I use the API of the Angular material component (i.e., directives, property binding)?
+
+// 2) Can I style the component via its selector (e.g. mat-stepper) or can I use a container
+//    (e.g. span for text, div for layout)?
+
+// THEN you need to override internal styles of the material component.
+
+// 3) What is the actual internal component styling making trouble?
+//    > Use the browser devtools to inspect the html and find the corresponding classname.
+
+// 4) Put the classname into this file and test whether you can change the styling from here.
+
+// 5) Find the name of the uppermost parent element of the material component and its classname
+//    (e.g., "mat-stepper-vertical" for mat-stepper).
+
+// 6) Compose parent and child classnames like so:
+// .parent-class {
+//   & .child-class {
+//     // your styling here
+//   }
+// Check that you introduce a space between "&" and .child-class!
+
+// 7) Create an individual classname for the component you want to style. Try to follow this convention:
+//    .<mat-component-name>-<target-component>
+//    Apply the individual classname to the material component in the html template of your component.
+//    Attach the individual classname to the parent classname like so:
+//   .parent-class.<individual-classname> {...}
+
+// You can also change multiple internal stylings:
+// .parent-class.<individual-classname> {
+//   & .child-class1 {...}
+//   & .child-class2 {...}
+// }
+
+// If you are confused how this works, check out these links:
+// Ampersand: https://medium.com/the-crazy-coder/what-scss-means-e448e2ac98d3
+// CSS Selectors: https://www.w3schools.com/cssref/css_selectors.php
+// Material overriding: https://betterprogramming.pub/best-way-to-overwrite-angular-materials-styles-e38dc8b84962
+
+.mat-stepper-vertical.mat-stepper-workflow {
+  & .mat-vertical-stepper-content {
+    height: 100% !important;
+    visibility: visible !important;
+  }
+
+  // & .mat-step-vet {
+  //   background-color: blue;
+  // }
+}
