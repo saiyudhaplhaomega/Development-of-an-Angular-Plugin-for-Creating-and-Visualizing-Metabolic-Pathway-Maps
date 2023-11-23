@@ -12,6 +12,25 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./metadata-uploadpage.component.scss'],
 })
 export class MetadataUploadContainerComponent implements OnInit {
+  // ... (other properties and methods)
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault(); // Prevent the browser from performing the default action for the file drop.
+    event.stopPropagation(); // Stop the event from bubbling up.
+    // You can add additional logic here, such as highlighting the drop area.
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer && event.dataTransfer.files) {
+      const files = event.dataTransfer.files;
+      this.onFilesSelected({ target: { files } } as any); // Reuse the onFilesSelected method.
+    }
+    // You can add additional logic here, such as removing highlighting from the drop area.
+  }
+
+  // ... (other properties and methods)
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
     started: boolean;
