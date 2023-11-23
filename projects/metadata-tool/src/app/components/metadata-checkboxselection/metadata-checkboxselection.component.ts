@@ -155,6 +155,33 @@ export class MetaDataCheckboxSelectionComponent {
   selectableProperties2Counter: number = 0;
   selectableCommentsCounter: number = 0;
 
+ selectables = [
+  {
+    data: this.selectableProperties1,
+    count: this.selectableProperties1Counter,
+    title: 'General Information 1',
+    formArrayName: 'properties1'
+  },
+  {
+    data: this.selectableProperties2,
+    count: this.selectableCharacteristicCounter,
+    title: 'General Information 2',
+    formArrayName: 'properties2'
+  },
+  {
+    data: this.selectableComments,
+    count: this.selectableProperties2Counter,
+    title: 'Comments',
+    formArrayName: 'comments'
+  },
+  {
+    data: this.selectableCharacteristic,
+    count: this.selectableCommentsCounter,
+    title: 'Characteristic',
+    formArrayName: 'characteristic'
+  }
+];
+
   @Output() continueClicked = new EventEmitter<void>();
 
   constructor(
@@ -203,6 +230,7 @@ export class MetaDataCheckboxSelectionComponent {
   }
 
   submit() {
+    console.log("🚀 ~ file: metadata-checkboxselection.component.ts:252 ~ MetaDataCheckboxSelectionComponent ~ submit ~ this.notSelectableProperties1,:", this.notSelectableProperties1,)
     const selectedColumnsProperties1 = this.getSelectedColumns(
       this.form.get('properties1') as FormArray,
       this.selectableProperties1
