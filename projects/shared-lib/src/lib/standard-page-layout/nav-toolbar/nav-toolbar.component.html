@@ -59,8 +59,11 @@
   <div class="flex flex-col h-full overflow-y-auto">
     <div class="overflow-y-auto">
       <!-- router slot -->
+      <div class="outer-container">
+
       <ng-content select="router-outlet"></ng-content>
     </div>
+  </div>
     <div class="mt-auto">
       <!-- footer slot -->
       <ng-content select="#footer"></ng-content>
