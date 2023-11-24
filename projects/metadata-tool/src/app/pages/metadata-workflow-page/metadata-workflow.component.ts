@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MetaDataInputService } from './metaddata-input.service';
+import { MetaDataService } from '../../services/metaddata-input.service';
 import { ColumnData, ColumnDataObject } from  '../../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
@@ -21,7 +21,7 @@ import { CheckboxSelectionService } from '../../components/metadata-checkboxsele
 })
 export class MetadataWorkflowComponent implements OnInit {
   constructor(
-    private metaDataInputService: MetaDataInputService,
+    private metaDataInputService: MetaDataService,
     private checkboxService: CheckboxSelectionService,
     private cd: ChangeDetectorRef
   ) {}

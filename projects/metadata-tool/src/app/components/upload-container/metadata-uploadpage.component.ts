@@ -1,10 +1,13 @@
 
 //import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
-import { MetaDataInputService } from '../../pages/metadata-workflow-page/metaddata-input.service';
+import { MetaDataService } from '../../services/metaddata-input.service';
 import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MetaDataUploadJson } from '../../model/metadatauploadjson';
+import { FileMetadata } from '../../model/file-metadata';
+
+
 
 @Component({
   selector: 'app-metadata-upload-container',
@@ -28,13 +31,14 @@ export class MetadataUploadContainerComponent implements OnInit {
       // Use the validFiles array for further processing
       this.onFilesSelected({ target: { files: validFiles } } as any);
     }
-    // Additional logic as needed
   }
   // ... (other properties and methods)
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
     started: boolean;
   }>();
+
+  computedData:FileMetadata
 
   pipelines: Pipeline[] = [
     {
@@ -87,7 +91,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   metadataUploadJson: MetaDataUploadJson;
 
   constructor(
-    private dataService: MetaDataInputService,
+    private dataService: MetaDataService,
     private uploadProgressService: UploadProgressService,
     private dialog: MatDialog
   ) {}
@@ -137,19 +141,20 @@ export class MetadataUploadContainerComponent implements OnInit {
       if (progress > 0) {
         this.showContainer = false;
       }
-
       this.calculateTimeRemaining();
     });
-
     this.uploadProgressService.reset();
 
     // set values
     this.uploadProgressService.setUUID('UPLOAD');
+
+    // upload suceeded dialog
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: false,
       data: { successMessage: 'Upload successful.' },
     });
+
     const onDialogClosingObservable = dialogRef.afterClosed();
     const files: MultiFileUploadData = {
       files: [],
@@ -165,6 +170,12 @@ export class MetadataUploadContainerComponent implements OnInit {
 
     this.selectedFiles = []; // Clear the list of selected files
     this.clearFileInput(); // Clear the file input in the UI
+  }
+
+  onSubmit(model: any) {
+    console.log('Model:', JSON.stringify(model));
+    // Call the service method to update the metadata
+    this.dataService.updateAllMetaDataUploadJson(model);
   }
 
   private calculateTimeRemaining(): void {
@@ -210,5 +221,4 @@ export class MetadataUploadContainerComponent implements OnInit {
     const regex = new RegExp(this.selectedPipeline.acceptedDataTypesRegex, 'i');
     return regex.test(file.name);
   }
-
 }

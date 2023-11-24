@@ -4,13 +4,13 @@ import { MetadataUploadContainerComponent } from './metadata-uploadpage.componen
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MetadataUploadpageRoutingModule } from './metadata-uploadpage-routing.module';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [MetadataUploadContainerComponent],
@@ -21,13 +21,13 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatProgressBarModule,
     MetadataUploadpageRoutingModule,
-    MatButtonModule,
     MatTooltipModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
 
   ],
   exports: [MetadataUploadContainerComponent],

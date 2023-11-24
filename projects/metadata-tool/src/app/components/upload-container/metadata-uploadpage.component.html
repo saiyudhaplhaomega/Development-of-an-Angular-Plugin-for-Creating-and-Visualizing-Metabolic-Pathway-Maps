@@ -12,7 +12,7 @@
   </mat-progress-bar>
 </div>
 
-<div class="pipeline-selection-container">
+<div class="pipeline-selection-container" *ngIf="showContainer" >
   <mat-form-field appearance="fill">
     <mat-label>Choose Pipeline</mat-label>
     <mat-select [(ngModel)]="selectedPipeline">
@@ -65,7 +65,18 @@
   </div>
 </div>
 
+<div>
   <button  *ngIf="selectedFiles.length > 0" (click)="onUpload()">Upload</button>
+  <!-- TODO: Change to mat button. Import Error. -->
+</div>
+</div>
+  pipelineValue
+  <pre>
+  {{selectedPipeline | json}}
+
+  </pre>
+  metadataUploadJson
+  <pre> {{ metadataUploadJson |json }}</pre>
 
   <!--
   <div class="upload-progress" *ngIf="uploadProgress !== null">
