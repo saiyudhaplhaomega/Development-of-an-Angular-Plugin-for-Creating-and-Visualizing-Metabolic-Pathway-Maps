@@ -6,14 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MetaDataUploadJson } from '../../model/metadatauploadjson';
 
-
 @Component({
   selector: 'app-metadata-upload-container',
   templateUrl: './metadata-uploadpage.component.html',
   styleUrls: ['./metadata-uploadpage.component.scss'],
 })
 export class MetadataUploadContainerComponent implements OnInit {
-
   onDragOver(event: DragEvent): void {
     event.preventDefault(); // Prevent the browser from performing the default action for the file drop.
     event.stopPropagation(); // Stop the event from bubbling up.
@@ -24,26 +22,64 @@ export class MetadataUploadContainerComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if (event.dataTransfer && event.dataTransfer.files) {
-      const files = event.dataTransfer.files;
-      this.onFilesSelected({ target: { files } } as any); // Reuse the onFilesSelected method.
-    }
-    // You can add additional logic here, such as removing highlighting from the drop area.
-  }
+      const files = Array.from(event.dataTransfer.files);
+      const validFiles = files.filter((file) => this.isValidFileType(file));
 
+      // Use the validFiles array for further processing
+      this.onFilesSelected({ target: { files: validFiles } } as any);
+    }
+    // Additional logic as needed
+  }
   // ... (other properties and methods)
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
     started: boolean;
   }>();
 
-  pipelines = [
-    { value: 'generic_mzid_mzml', viewValue: 'Generic (mzid+mzml)' },
-    { value: 'metaproteomeanalyzer', viewValue: 'MetaProteomeAnalyzer' },
-    { value: 'proteomediscoverer', viewValue: 'ProteomeDiscoverer' },
-    { value: 'generic_mgf_mzid', viewValue: 'Generic (mgf+mzid)' },
+  regexSpectraMgf = "/.*_Mix[A-Z]+\.mgf/";
+  regexPeptideMgf = "/Peptides_.*_Mix[A-Z]+\.mgf/";
+  regexPSM = "/PSMs_.*_Mix[A-Z]+\.csv/";
+
+  pipelines: Pipeline[] = [
+    {
+      value: 'generic_mzid_mzml',
+      viewValue: 'Generic (mzid+mzml)',
+      acceptedDataTypes: '.mzid , .mzml',
+      acceptedDataTypesRegex: '\\.mzid|\\.mzml',
+      matchingFiles: [],
+    },
+    {
+      value: 'metaproteomeanalyzer',
+      viewValue: 'MetaProteomeAnalyzer',
+      acceptedDataTypes: '.mgf , .csv',
+      acceptedDataTypesRegex: '\\.mgf|\\.csv',
+      matchingFiles: {
+        spectra: '*_MixA.mgf',
+        Peptide: 'Peptides_*_MixA.mgf',
+        PSM: 'PSMs_*_MixA.csv',
+      },
+    },
+    {
+      value: 'proteomediscoverer',
+      viewValue: 'ProteomeDiscoverer',
+      acceptedDataTypes: '.mgf , .csv',
+      acceptedDataTypesRegex: '\\.mgf|\\.csv',
+      matchingFiles: {
+        spectra: 'Fisdljsd.mgf',
+        Peptide: 'Fisdljsd.mgf',
+        PSM: 'PSMs_Fisdljsd.csv',
+      },
+    },
+    {
+      value: 'generic_mgf_mzid',
+      viewValue: 'Generic (mgf+mzid)',
+      acceptedDataTypes: '.mgf , .mzid',
+      acceptedDataTypesRegex: '\\.mgf|\\.mzid',
+      matchingFiles: {},
+    },
   ];
 
-  selectedPipeline: {};
+  selectedPipeline: Pipeline = this.pipelines[1];
   selectedFiles: File[] = [];
   uploadDialogId: string;
 
@@ -53,7 +89,6 @@ export class MetadataUploadContainerComponent implements OnInit {
   timeRemaining: string = ''; // This will hold the time remaining as a string
   showContainer = true;
   metadataUploadJson: MetaDataUploadJson;
-
 
   constructor(
     private dataService: MetaDataInputService,
@@ -74,7 +109,6 @@ export class MetadataUploadContainerComponent implements OnInit {
       });
     });
   }
-
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -112,6 +146,7 @@ export class MetadataUploadContainerComponent implements OnInit {
 
     this.uploadProgressService.reset();
 
+    // set values
     this.uploadProgressService.setUUID('UPLOAD');
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
@@ -172,5 +207,37 @@ export class MetadataUploadContainerComponent implements OnInit {
 
   hideTooltip(progressBar: any): void {
     progressBar.tooltip.hide(); // Hides the tooltip
+  }
+
+  isValidFileType(file: File): boolean {
+    const regex = new RegExp(this.selectedPipeline.acceptedDataTypesRegex, 'i');
+    return regex.test(file.name);
+  }
+
+  checkMatchingFiles(): string[] {
+    const pipeline = this.selectedPipeline;
+    const missingFileTypes = [];
+
+    if (pipeline.matchingFiles) {
+      Object.entries(pipeline.matchingFiles).forEach(([fileType, pattern]) => {
+        // Convert the pattern to a regex, assuming 'A' can be any uppercase letter
+        const regexPattern = pattern
+          .replace('A', '[A-Z]')
+          .replace(/\./g, '\\.')
+          .replace(/\*/g, '.*');
+        const regex = new RegExp(regexPattern, 'i');
+
+        // Check if any of the selectedFiles match this pattern
+        const isFilePresent = this.selectedFiles.some((file) =>
+          regex.test(file.name)
+        );
+
+        if (!isFilePresent) {
+          missingFileTypes.push(fileType);
+        }
+      });
+    }
+
+    return missingFileTypes;
   }
 }

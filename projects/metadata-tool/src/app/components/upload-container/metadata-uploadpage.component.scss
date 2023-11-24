@@ -111,3 +111,28 @@
  .upload-button {
    /* Add your styles for the button here */
  }
+
+
+.drag-drop-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* You can adjust this height as needed */
+    text-align: center;
+    color: lightblue;
+    font-size: 20px; /* Adjust font size as needed */
+    margin: 10px; /* Adjust margin as needed */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center items horizontally in the container */
+  text-align: center;
+}
+
+.upload-title {
+  flex: 1; /* Allows the title to expand and take available space */
+  margin: 0; /* Adjust as needed */
+}
+

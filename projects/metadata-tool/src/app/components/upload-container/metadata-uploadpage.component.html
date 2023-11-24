@@ -16,19 +16,21 @@
   <mat-form-field appearance="fill">
     <mat-label>Choose Pipeline</mat-label>
     <mat-select [(ngModel)]="selectedPipeline">
-      <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline.value">
+      <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline">
         {{ pipeline.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-{{selectedPipeline}}
-<pre>
-    <pre>{{ metadataUploadJson | json }}</pre>
-</pre>
 <div class="upload-container" *ngIf="showContainer" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-  <h2 class="upload-title">File Upload</h2>
+<div class="header-container">
+    <h2 class="upload-title">File Upload</h2>
+    <button class="file-chooser-button" (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+    </button>
+  </div>
+
   <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
   <ul>`
     <li *ngFor="let file of selectedFiles; let i = index" class="file-item">
@@ -41,17 +43,30 @@
 </div>
 
  <div class="file-upload-container">
-  <button class="file-chooser-button" (click)="fileInput.click()">Choose Files</button>
+  <!-- This input element is hidden! -->
   <input
     #fileInput
     type="file"
-    accept="*/*"
+    [accept]="selectedPipeline.acceptedDataTypes"
     multiple
     (change)="onFilesSelected($event)"
     style="display: none;"
   />
-  <button class="upload-button" *ngIf="selectedFiles.length > 0" (click)="onUpload()">Upload</button>
+
+
 </div>
+
+<div *ngIf="selectedFiles.length == 0">
+  <div class="drag-drop-text">
+    Drag and Drop Files here
+  </div>
+  <div>
+    Files must have an {{selectedPipeline.acceptedDataTypes}} extension.
+  </div>
+</div>
+
+  <button  *ngIf="selectedFiles.length > 0" (click)="onUpload()">Upload</button>
+
   <!--
   <div class="upload-progress" *ngIf="uploadProgress !== null">
     <progress max="100" [value]="uploadProgress"></progress>
@@ -60,9 +75,13 @@
 </div>
 -->
 <!-- link to workflow -->
-<div class="text-center mt-20 mb-20">
-  <!-- <shared-login-buttons></shared-login-buttons> -->
-  <!-- <button mat-flat-button color="primary" routerLink="/workflow">
+<!-- <div class="text-center mt-20 mb-20">
+  <shared-login-buttons></shared-login-buttons>
+  <button mat-flat-button color="primary" routerLink="/workflow">
     Next Page
-  </button> -->
-</div>
+  </button>
+</div> -->
+
+<!-- <pre>
+    <pre>{{ metadataUploadJson | json }}</pre>
+</pre> -->
