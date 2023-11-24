@@ -36,17 +36,13 @@ export class MetadataUploadContainerComponent implements OnInit {
     started: boolean;
   }>();
 
-  regexSpectraMgf = "/.*_Mix[A-Z]+\.mgf/";
-  regexPeptideMgf = "/Peptides_.*_Mix[A-Z]+\.mgf/";
-  regexPSM = "/PSMs_.*_Mix[A-Z]+\.csv/";
-
   pipelines: Pipeline[] = [
     {
       value: 'generic_mzid_mzml',
       viewValue: 'Generic (mzid+mzml)',
       acceptedDataTypes: '.mzid , .mzml',
       acceptedDataTypesRegex: '\\.mzid|\\.mzml',
-      matchingFiles: [],
+      matchingFiles: {},
     },
     {
       value: 'metaproteomeanalyzer',
@@ -109,6 +105,7 @@ export class MetadataUploadContainerComponent implements OnInit {
       });
     });
   }
+
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -214,30 +211,4 @@ export class MetadataUploadContainerComponent implements OnInit {
     return regex.test(file.name);
   }
 
-  checkMatchingFiles(): string[] {
-    const pipeline = this.selectedPipeline;
-    const missingFileTypes = [];
-
-    if (pipeline.matchingFiles) {
-      Object.entries(pipeline.matchingFiles).forEach(([fileType, pattern]) => {
-        // Convert the pattern to a regex, assuming 'A' can be any uppercase letter
-        const regexPattern = pattern
-          .replace('A', '[A-Z]')
-          .replace(/\./g, '\\.')
-          .replace(/\*/g, '.*');
-        const regex = new RegExp(regexPattern, 'i');
-
-        // Check if any of the selectedFiles match this pattern
-        const isFilePresent = this.selectedFiles.some((file) =>
-          regex.test(file.name)
-        );
-
-        if (!isFilePresent) {
-          missingFileTypes.push(fileType);
-        }
-      });
-    }
-
-    return missingFileTypes;
-  }
 }
