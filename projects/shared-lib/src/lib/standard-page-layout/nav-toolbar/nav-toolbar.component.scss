@@ -30,25 +30,17 @@ img {
   height: 64px;
 }
 
-.flex {
-  display: flex;
-}
 
-.flex-col {
-  flex-direction: column;
-}
 
 .ml-auto {
   margin-left: auto;
 }
 
 .overflow-y-auto {
-  overflow-y: auto;
+    flex-grow: 1; /* Allow this element to grow and fill available space */
+    overflow-y: auto; /* Add scrolling if content overflows */
 }
 
-.h-full {
-  height: 100%;
-}
 
 .header-tool-name {
   font-weight: 700;
@@ -58,6 +50,14 @@ img {
   padding: 20px;
   margin: 0 auto;
   max-width: 1200px;
+  min-height: 100vh;
+
   /* Or any other width as per your design */
   /* Add any additional styling as needed */
+}
+
+.flex.flex-col.h-full {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* At least as tall as the viewport */
 }
