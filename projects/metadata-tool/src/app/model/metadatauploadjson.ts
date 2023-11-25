@@ -1,6 +1,7 @@
 import { FileMetadata } from "./file-metadata";
 import { ColumnData } from "./metadata-columnData";
 
+
 export interface MetaDataUploadJson {
 	jobId: string;
 	createInitialMetadataJobId: string;

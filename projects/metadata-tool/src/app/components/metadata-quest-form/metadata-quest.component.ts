@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { MetaDataService } from '../../services/metaddata-input.service';
-import { MetaDataUploadJson } from '../../model/metadatauploadjson';
+import { ColumnData } from '../../model/metadata-columnData';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { MetaDataUploadJson } from '../../model/metadatauploadjson';
 export class MetadataQuestFormComponent {
   // This is the data for the first step
   options: FormlyFormOptions = {};
-  model = {};
+  model: ColumnData;
   specificMetagenomeOptions = [
     { value: 'gut', label: 'Gut' },
     { value: 'human', label: 'Human' },
@@ -210,7 +210,7 @@ export class MetadataQuestFormComponent {
 
   constructor(private dataService: MetaDataService) {}
 
-  onSubmit(model: any) {
+  onSubmit(model) {
     console.log('Model:', JSON.stringify(model));
     // Call the service method to update the metadata
     this.dataService.updateAllMetaDataUploadJson(model);

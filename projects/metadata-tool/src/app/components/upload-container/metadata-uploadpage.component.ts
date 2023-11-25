@@ -7,8 +7,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MetaDataUploadJson } from '../../model/metadatauploadjson';
 import { FileMetadata } from '../../model/file-metadata';
 
-
-
 @Component({
   selector: 'app-metadata-upload-container',
   templateUrl: './metadata-uploadpage.component.html',
@@ -37,8 +35,6 @@ export class MetadataUploadContainerComponent implements OnInit {
     progress: number;
     started: boolean;
   }>();
-
-  computedData:FileMetadata
 
   pipelines: Pipeline[] = [
     {
@@ -148,6 +144,19 @@ export class MetadataUploadContainerComponent implements OnInit {
     // set values
     this.uploadProgressService.setUUID('UPLOAD');
 
+    // transform selectedPipeline for setting MetadataJson
+     this.model = {
+       processingPipeline: this.selectedPipeline.value,
+       spectrumFile: '',
+       mzidFile: '',
+       psmFile: '',
+       peptideFile: '',
+     };
+     console.log('Model from pipeline:', JSON.stringify(this.model));
+     // Call the service method to update the metadata
+     this.dataService.updateAllMetaDataUploadJson(this.model);
+
+
     // upload suceeded dialog
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
@@ -172,11 +181,8 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.clearFileInput(); // Clear the file input in the UI
   }
 
-  onSubmit(model: any) {
-    console.log('Model:', JSON.stringify(model));
-    // Call the service method to update the metadata
-    this.dataService.updateAllMetaDataUploadJson(model);
-  }
+  model: FileMetadata;
+
 
   private calculateTimeRemaining(): void {
     if (this.uploadProgress > 0) {

@@ -50,21 +50,36 @@ export class MetaDataService {
       return updatedData;
     });
   }
-
   updateAllMetaDataUploadJson(model: any): void {
     try {
       const currentMetaData = this.metadataUploadJson.value;
 
+      // Determine the longer array length between metadataJson and fileMatchingData
+      const maxLength = Math.max(
+        currentMetaData.metadataJson.length,
+        currentMetaData.fileMatchingData?.length || 0
+      );
+
+      // Extend fileMatchingData to match the length of metadataJson, if necessary
+      if (!currentMetaData.fileMatchingData) {
+        currentMetaData.fileMatchingData = new Array(maxLength).fill(null);
+      } else if (currentMetaData.fileMatchingData.length < maxLength) {
+        currentMetaData.fileMatchingData = [
+          ...currentMetaData.fileMatchingData,
+          ...new Array(
+            maxLength - currentMetaData.fileMatchingData.length
+          ).fill(null),
+        ];
+      }
+
       let updatedArray;
       if (this.isFileMetadata(model)) {
-        // If model is FileMetadata, update the fileMatchingData array
         updatedArray = this.updateMetadataArray(
           currentMetaData.fileMatchingData,
           model
         );
         currentMetaData.fileMatchingData = updatedArray;
       } else {
-        // Otherwise, assume it's ColumnData and update the metadataJson array
         updatedArray = this.updateMetadataArray(
           currentMetaData.metadataJson,
           model
@@ -72,7 +87,6 @@ export class MetaDataService {
         currentMetaData.metadataJson = updatedArray;
       }
 
-      // Update the metadataUploadJson with the new data
       this.metadataUploadJson.next(currentMetaData);
     } catch (error) {
       console.error('An error occurred while updating metadata:', error);
