@@ -13,28 +13,15 @@ import { FileMetadata } from '../../model/file-metadata';
   styleUrls: ['./metadata-uploadpage.component.scss'],
 })
 export class MetadataUploadContainerComponent implements OnInit {
-  onDragOver(event: DragEvent): void {
-    event.preventDefault(); // Prevent the browser from performing the default action for the file drop.
-    event.stopPropagation(); // Stop the event from bubbling up.
-    // You can add additional logic here, such as highlighting the drop area.
+  handleFileSelection(selectedFiles: File[]) {
+    this.selectedFiles = selectedFiles
   }
 
-  onDrop(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    if (event.dataTransfer && event.dataTransfer.files) {
-      const files = Array.from(event.dataTransfer.files);
-      const validFiles = files.filter((file) => this.isValidFileType(file));
-
-      // Use the validFiles array for further processing
-      this.onFilesSelected({ target: { files: validFiles } } as any);
-    }
-  }
-  // ... (other properties and methods)
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
-    started: boolean;
   }>();
+
+  model: FileMetadata;
 
   pipelines: Pipeline[] = [
     {
@@ -101,130 +88,63 @@ export class MetadataUploadContainerComponent implements OnInit {
       this.uploadProgress = progress;
       this.uploadStatusChanged.emit({
         progress: this.uploadProgress,
-        started: this.uploadProgress > 0,
       });
     });
   }
 
-  onFilesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      const newFiles = Array.from(input.files);
-
-      // Add only new files to the selectedFiles array
-      const uniqueNewFiles = newFiles.filter(
-        (newFile) =>
-          !this.selectedFiles.some(
-            (existingFile) =>
-              existingFile.name === newFile.name &&
-              existingFile.size === newFile.size
-          )
-      );
-
-      // Concatenate the new unique files to the existing selectedFiles
-      this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
-
-      // After adding files, you might want to reset the input
-      input.value = '';
-    }
-  }
-
   onUpload(): void {
-    // time for progress bar
-    this.uploadStartTime = Date.now();
-    this.uploadProgressService.currentProgress.subscribe((progress) => {
-      this.uploadProgress = progress;
-      if (progress > 0) {
-        this.showContainer = false;
-      }
-      this.calculateTimeRemaining();
-    });
-    this.uploadProgressService.reset();
+    // Hide certain UI elements during upload
+    this.showContainer = false;
 
-    // set values
+    // Set a unique identifier for this upload session
     this.uploadProgressService.setUUID('UPLOAD');
 
-    // transform selectedPipeline for setting MetadataJson
-     this.model = {
-       processingPipeline: this.selectedPipeline.value,
-       spectrumFile: '',
-       mzidFile: '',
-       psmFile: '',
-       peptideFile: '',
-     };
-     console.log('Model from pipeline:', JSON.stringify(this.model));
-     // Call the service method to update the metadata
-     this.dataService.updateAllMetaDataUploadJson(this.model);
-
-
-    // upload suceeded dialog
-    const dialogRef = this.dialog.open(UploadDialogComponent, {
-      id: this.uploadDialogId,
-      disableClose: false,
-      data: { successMessage: 'Upload successful.' },
-    });
-
-    const onDialogClosingObservable = dialogRef.afterClosed();
-    const files: MultiFileUploadData = {
-      files: [],
+    // Prepare the metadata model based on the selected pipeline
+    this.model = {
+      processingPipeline: this.selectedPipeline.value,
+      spectrumFile: '',
+      mzidFile: '',
+      psmFile: '',
+      peptideFile: '',
     };
+
+    // Log the model for debugging
+    console.log('Model from pipeline:', JSON.stringify(this.model));
+
+    // Update the metadata with the selected pipeline information
+    this.dataService.updateAllMetaDataUploadJson(this.model);
+
+    // Prepare the files for upload
+    const files: MultiFileUploadData = { files: [] };
     this.selectedFiles.forEach((file) => {
       files.files.push({ uploadFile: file, fileID: file.name });
     });
-    for (let file of files.files) {
-      this.uploadProgressService.addToTotal(file.uploadFile.size);
-    }
+
+    // Upload the files
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
-    //onDialogClosingObservable(this.router.navigate());
 
-    this.selectedFiles = []; // Clear the list of selected files
-    this.clearFileInput(); // Clear the file input in the UI
+    // Open a dialog indicating the upload has started
+    const dialogRef = this.dialog.open(UploadDialogComponent, {
+      id: this.uploadDialogId,
+      disableClose: false,
+      data: { successMessage: 'Upload initiated.' },
+    });
+
+    // Handle post-upload actions
+    dialogRef.afterClosed().subscribe(/* ... */);
+
+    // Clear the list of selected files and reset the file input
+    this.selectedFiles = [];
+    this.clearFileInput();
   }
 
-  model: FileMetadata;
-
-
-  private calculateTimeRemaining(): void {
-    if (this.uploadProgress > 0) {
-      const timeElapsed = Date.now() - this.uploadStartTime;
-      const totalEstimatedTime = timeElapsed / (this.uploadProgress / 100);
-      const remainingTime = totalEstimatedTime - timeElapsed;
-      this.timeRemaining = this.formatTime(remainingTime);
-    }
-  }
-
-  private formatTime(milliseconds: number): string {
-    let seconds = Math.floor(milliseconds / 1000);
-    let minutes = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    return `${minutes} min ${seconds} sec`;
-  }
-
-  deleteFile(index: number): void {
-    this.selectedFiles = [
-      ...this.selectedFiles.slice(0, index),
-      ...this.selectedFiles.slice(index + 1),
-    ];
-  }
+  // Helper method to clear the file input
   clearFileInput(): void {
     const inputElem = document.querySelector(
       '.upload-input'
     ) as HTMLInputElement;
     if (inputElem) {
-      inputElem.value = ''; // This will clear the file input in the UI
+      inputElem.value = ''; // Clear the file input
     }
-  }
-
-  showTooltip(progressBar: any): void {
-    progressBar.tooltip.toggle(); // Shows the tooltip
-  }
-
-  hideTooltip(progressBar: any): void {
-    progressBar.tooltip.hide(); // Hides the tooltip
-  }
-
-  isValidFileType(file: File): boolean {
-    const regex = new RegExp(this.selectedPipeline.acceptedDataTypesRegex, 'i');
-    return regex.test(file.name);
   }
 }

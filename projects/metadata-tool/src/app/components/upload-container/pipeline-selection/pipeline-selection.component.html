@@ -1,0 +1,10 @@
+<div class="pipeline-selection-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Choose Pipeline</mat-label>
+    <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onPipelineChange()">
+      <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline">
+        {{ pipeline.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
