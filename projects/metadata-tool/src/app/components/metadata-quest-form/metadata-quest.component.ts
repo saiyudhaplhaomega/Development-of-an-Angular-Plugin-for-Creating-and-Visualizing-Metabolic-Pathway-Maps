@@ -210,7 +210,7 @@ export class MetadataQuestFormComponent {
 
   constructor(private dataService: MetaDataService) {}
 
-  onSubmit(model) {
+  onSubmit(model: ColumnData) {
     console.log('Model:', JSON.stringify(model));
     // Call the service method to update the metadata
     this.dataService.updateAllMetaDataUploadJson(model);
