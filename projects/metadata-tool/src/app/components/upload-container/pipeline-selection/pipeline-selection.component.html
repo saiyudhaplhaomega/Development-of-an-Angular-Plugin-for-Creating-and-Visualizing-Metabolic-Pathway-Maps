@@ -1,9 +1,19 @@
 <div class="pipeline-selection-container">
   <mat-form-field appearance="fill">
+<<<<<<< HEAD
     <mat-label>Choose Pipeline</mat-label>
     <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onPipelineChange()">
       <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline">
         {{ pipeline.viewValue }}
+=======
+    <mat-label>{{ label }}</mat-label>
+    <mat-select
+      [(ngModel)]="selectedPipeline"
+      (ngModelChange)="onValueChange()"
+    >
+      <mat-option *ngFor="let entry of entries" [value]="entry">
+        {{ entry.viewValue }}
+>>>>>>> a372259 (added html to prettier)
       </mat-option>
     </mat-select>
   </mat-form-field>

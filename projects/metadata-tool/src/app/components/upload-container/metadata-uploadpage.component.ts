@@ -1,16 +1,19 @@
-
 //import { Endpoints, WebserveraddressService } from '../webserveraddress.service';
-import { MetaDataService } from '../../services/metaddata-input.service';
-import { MultiFileUploadData, UploadDialogComponent, UploadProgressService } from 'shared-lib';
-import { MatDialog } from '@angular/material/dialog';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MetaDataUploadJson } from '../../model/metadatauploadjson';
-import { FileMetadata } from '../../model/file-metadata';
+import { MetaDataService } from "../../services/metaddata-input.service";
+import {
+  MultiFileUploadData,
+  UploadDialogComponent,
+  UploadProgressService
+} from "shared-lib";
+import { MatDialog } from "@angular/material/dialog";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { MetaDataUploadJson } from "../../model/metadatauploadjson";
+import { FileMetadata } from "../../model/file-metadata";
 
 @Component({
-  selector: 'app-metadata-upload-container',
-  templateUrl: './metadata-uploadpage.component.html',
-  styleUrls: ['./metadata-uploadpage.component.scss'],
+  selector: "app-metadata-upload-container",
+  templateUrl: "./metadata-uploadpage.component.html",
+  styleUrls: ["./metadata-uploadpage.component.scss"]
 })
 export class MetadataUploadContainerComponent implements OnInit {
   handleFileSelection(selectedFiles: File[]) {
@@ -25,51 +28,55 @@ export class MetadataUploadContainerComponent implements OnInit {
 
   pipelines: Pipeline[] = [
     {
-      value: 'generic_mzid_mzml',
-      viewValue: 'Generic (mzid+mzml)',
-      acceptedDataTypes: '.mzid , .mzml',
-      acceptedDataTypesRegex: '\\.mzid|\\.mzml',
-      matchingFiles: {},
+      value: "generic_mzid_mzml",
+      viewValue: "Generic (mzid+mzml)",
+      acceptedDataTypes: ".mzid , .mzml",
+      acceptedDataTypesRegex: "\\.mzid|\\.mzml",
+      matchingFiles: {}
     },
     {
-      value: 'metaproteomeanalyzer',
-      viewValue: 'MetaProteomeAnalyzer',
-      acceptedDataTypes: '.mgf , .csv',
-      acceptedDataTypesRegex: '\\.mgf|\\.csv',
+      value: "metaproteomeanalyzer",
+      viewValue: "MetaProteomeAnalyzer",
+      acceptedDataTypes: ".mgf , .csv",
+      acceptedDataTypesRegex: "\\.mgf|\\.csv",
       matchingFiles: {
-        spectra: '*_MixA.mgf',
-        Peptide: 'Peptides_*_MixA.mgf',
-        PSM: 'PSMs_*_MixA.csv',
-      },
+        spectra: "*_MixA.mgf",
+        Peptide: "Peptides_*_MixA.mgf",
+        PSM: "PSMs_*_MixA.csv"
+      }
     },
     {
-      value: 'proteomediscoverer',
-      viewValue: 'ProteomeDiscoverer',
-      acceptedDataTypes: '.mgf , .csv',
-      acceptedDataTypesRegex: '\\.mgf|\\.csv',
+      value: "proteomediscoverer",
+      viewValue: "ProteomeDiscoverer",
+      acceptedDataTypes: ".mgf , .csv",
+      acceptedDataTypesRegex: "\\.mgf|\\.csv",
       matchingFiles: {
-        spectra: 'Fisdljsd.mgf',
-        Peptide: 'Fisdljsd.mgf',
-        PSM: 'PSMs_Fisdljsd.csv',
-      },
+        spectra: "Fisdljsd.mgf",
+        Peptide: "Fisdljsd.mgf",
+        PSM: "PSMs_Fisdljsd.csv"
+      }
     },
     {
-      value: 'generic_mgf_mzid',
-      viewValue: 'Generic (mgf+mzid)',
-      acceptedDataTypes: '.mgf , .mzid',
-      acceptedDataTypesRegex: '\\.mgf|\\.mzid',
-      matchingFiles: {},
-    },
+      value: "generic_mgf_mzid",
+      viewValue: "Generic (mgf+mzid)",
+      acceptedDataTypes: ".mgf , .mzid",
+      acceptedDataTypesRegex: "\\.mgf|\\.mzid",
+      matchingFiles: {}
+    }
   ];
 
   selectedPipeline: Pipeline = this.pipelines[1];
   selectedFiles: File[] = [];
   uploadDialogId: string;
+<<<<<<< HEAD
 
   // While uploading files
   uploadProgress: number = 0;
   uploadStartTime: number;
   timeRemaining: string = ''; // This will hold the time remaining as a string
+=======
+  uploadProgress = 0;
+>>>>>>> a372259 (added html to prettier)
   showContainer = true;
   metadataUploadJson: MetaDataUploadJson;
 
@@ -87,30 +94,39 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.uploadProgressService.currentProgress.subscribe((progress) => {
       this.uploadProgress = progress;
       this.uploadStatusChanged.emit({
-        progress: this.uploadProgress,
+        progress: this.uploadProgress
       });
     });
   }
 
   onUpload(): void {
+<<<<<<< HEAD
+=======
+    console.log("Selected Files:", this.selectedFiles); // Debugging
+
+>>>>>>> a372259 (added html to prettier)
     // Hide certain UI elements during upload
     this.showContainer = false;
 
     // Set a unique identifier for this upload session
-    this.uploadProgressService.setUUID('UPLOAD');
+    this.uploadProgressService.setUUID("UPLOAD");
 
     // Prepare the metadata model based on the selected pipeline
     this.model = {
       processingPipeline: this.selectedPipeline.value,
-      spectrumFile: '',
-      mzidFile: '',
-      psmFile: '',
-      peptideFile: '',
+      spectrumFile: "",
+      mzidFile: "",
+      psmFile: "",
+      peptideFile: ""
     };
 
     // Log the model for debugging
+<<<<<<< HEAD
     console.log('Model from pipeline:', JSON.stringify(this.model));
 
+=======
+    console.log("Model from pipeline:", JSON.stringify(this.model));
+>>>>>>> a372259 (added html to prettier)
     // Update the metadata with the selected pipeline information
     this.dataService.updateAllMetaDataUploadJson(this.model);
 
@@ -127,7 +143,7 @@ export class MetadataUploadContainerComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
       disableClose: false,
-      data: { successMessage: 'Upload initiated.' },
+      data: { successMessage: "Upload initiated." }
     });
 
     // Handle post-upload actions
@@ -141,10 +157,10 @@ export class MetadataUploadContainerComponent implements OnInit {
   // Helper method to clear the file input
   clearFileInput(): void {
     const inputElem = document.querySelector(
-      '.upload-input'
+      ".upload-input"
     ) as HTMLInputElement;
     if (inputElem) {
-      inputElem.value = ''; // Clear the file input
+      inputElem.value = ""; // Clear the file input
     }
   }
 }

@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MetadataUploadContainerComponent } from './metadata-uploadpage.component';
+import { MetadataUploadContainerComponent } from "./metadata-uploadpage.component";
 
-describe('MetadataUploadpageComponent', () => {
+describe("MetadataUploadpageComponent", () => {
   let component: MetadataUploadContainerComponent;
   let fixture: ComponentFixture<MetadataUploadContainerComponent>;
 
@@ -15,7 +15,7 @@ describe('MetadataUploadpageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
