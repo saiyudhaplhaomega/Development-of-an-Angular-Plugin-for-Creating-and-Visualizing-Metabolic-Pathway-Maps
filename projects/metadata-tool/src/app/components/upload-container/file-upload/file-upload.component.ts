@@ -4,13 +4,13 @@ import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss',   '../metadata-uploadpage.component.scss'],
-
+  styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent {
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-  @Input() pipelineInformation: Pipeline;
+  @Input() acceptedDataTypes: string;
   @Output() filesSelected = new EventEmitter<File[]>();
+
 
   isDragOver = false;
   selectedFiles: File[] = [];
@@ -61,6 +61,7 @@ export class FileUploadComponent {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Add only new files to the selectedFiles array
       const uniqueNewFiles = newFiles.filter(
         (newFile) =>
@@ -74,6 +75,8 @@ export class FileUploadComponent {
 
 >>>>>>> 41f5c08 (refactor)
 
+=======
+>>>>>>> 55380e6 (bugfix)
 =======
 >>>>>>> 55380e6 (bugfix)
       // Concatenate the new unique files to the existing selectedFiles

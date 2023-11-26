@@ -24,12 +24,14 @@
     [uploadProgress]="uploadProgress">
 </app-progress-bar >
 
- <app-pipeline-selection
-        [(ngModel)]="selectedPipeline"
-        [pipelines]="pipelines">
-    </app-pipeline-selection>
+<app-pipeline-selection
+    [(ngModel)]="selectedPipeline"
+    [entries]="pipelines"
+    label='Choose Pipeline'>
+</app-pipeline-selection>
 
 <div *ngIf="showContainer"  class="upload-container">
+<<<<<<< HEAD
     <!-- Pipeline Selection Component -->
 >>>>>>> 84d1902 (styling)
 
@@ -56,6 +58,8 @@
 
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 55380e6 (bugfix)
     <!-- File Upload Component -->
     <app-file-upload
         [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"

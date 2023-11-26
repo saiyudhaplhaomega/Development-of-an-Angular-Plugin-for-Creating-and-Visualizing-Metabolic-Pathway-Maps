@@ -15,6 +15,7 @@
     </div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <!-- File Input Button -->
     <button class="file-chooser-button" (click)="fileInput.click()">
@@ -26,11 +27,14 @@
 >>>>>>> 55380e6 (bugfix)
 =======
     <div>Files must have an {{pipelineInformation.acceptedDataTypes}} extension.</div>
+=======
+    <div>Files must have an {{acceptedDataTypes}} extension.</div>
+>>>>>>> 55380e6 (bugfix)
     <!-- File Upload Button -->
 >>>>>>> 41f5c08 (refactor)
     <input #fileInput
            type="file"
-           [accept]="pipelineInformation.acceptedDataTypes"
+           [accept]="acceptedDataTypes"
            multiple
            (change)="onFilesSelected($event)"
            style="display: none;">

@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <mat-label>Choose Pipeline</mat-label>
     <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onPipelineChange()">
       <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline">
@@ -24,6 +25,12 @@
     <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onValueChange()">
 =======
 >>>>>>> a372259 (added html to prettier)
+      <mat-option *ngFor="let entry of entries" [value]="entry">
+        {{ entry.viewValue }}
+>>>>>>> 55380e6 (bugfix)
+=======
+    <mat-label>{{label}}</mat-label>
+    <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onValueChange()">
       <mat-option *ngFor="let entry of entries" [value]="entry">
         {{ entry.viewValue }}
 >>>>>>> 55380e6 (bugfix)
