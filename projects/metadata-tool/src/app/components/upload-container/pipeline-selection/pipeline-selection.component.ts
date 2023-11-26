@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-pipeline-selection',
   templateUrl: './pipeline-selection.component.html',
-  // styleUrls: ...
+  styleUrls: ['../metadata-uploadpage.component.scss'],
 })
 export class PipelineSelectionComponent {
   @Input() pipelines: Pipeline[];
