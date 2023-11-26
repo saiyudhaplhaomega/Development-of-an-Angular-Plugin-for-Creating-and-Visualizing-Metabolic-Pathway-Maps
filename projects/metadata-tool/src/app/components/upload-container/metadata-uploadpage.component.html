@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Progress Bar Component -->
 <app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
 </app-progress-bar>
@@ -18,18 +19,20 @@
   </app-file-upload>
 =======
 
+=======
+>>>>>>> a372259 (added html to prettier)
 <!-- Progress Bar Component -->
-<app-progress-bar
-    *ngIf="uploadProgress > 0"
-    [uploadProgress]="uploadProgress">
-</app-progress-bar >
+<app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
+</app-progress-bar>
 
 <app-pipeline-selection
-    [(ngModel)]="selectedPipeline"
-    [entries]="pipelines"
-    label='Choose Pipeline'>
+  [(ngModel)]="selectedPipeline"
+  [entries]="pipelines"
+  label="Choose Pipeline"
+>
 </app-pipeline-selection>
 
+<<<<<<< HEAD
 <div *ngIf="showContainer"  class="upload-container">
 <<<<<<< HEAD
     <!-- Pipeline Selection Component -->
@@ -48,6 +51,8 @@
 </app-pipeline-selection>
 
 <<<<<<< HEAD
+=======
+>>>>>>> a372259 (added html to prettier)
 <div *ngIf="showContainer" class="upload-container">
   <!-- File Upload Component -->
   <app-file-upload
@@ -55,6 +60,7 @@
     (filesSelected)="handleFileSelection($event)"
   >
   </app-file-upload>
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -74,18 +80,27 @@
 <<<<<<< HEAD
 >>>>>>> 55380e6 (bugfix)
 =======
+=======
+
+>>>>>>> a372259 (added html to prettier)
   <!-- Upload Button -->
   <div class="upload-button-container">
     <button (click)="onUpload()" class="upload-button">Upload Files</button>
   </div>
+<<<<<<< HEAD
 >>>>>>> a372259 (added html to prettier)
 =======
 >>>>>>> 84d1902 (styling)
+=======
+>>>>>>> a372259 (added html to prettier)
 </div>
 
 <!-- Display Selected Pipeline and Metadata Upload JSON -->
 <div class="display-info-container">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a372259 (added html to prettier)
   <div class="pipeline-value">
     <strong>Pipeline Value:</strong>
     <pre>{{ selectedPipeline | json }}</pre>
@@ -94,6 +109,7 @@
     <strong>Metadata Upload JSON:</strong>
     <pre>{{ metadataUploadJson | json }}</pre>
   </div>
+<<<<<<< HEAD
 =======
     <div class="pipeline-value">
         <strong>Pipeline Value:</strong>
@@ -104,4 +120,6 @@
         <pre>{{ metadataUploadJson | json }}</pre>
     </div>
 >>>>>>> 84d1902 (styling)
+=======
+>>>>>>> a372259 (added html to prettier)
 </div>
