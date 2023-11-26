@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Progress Bar Component -->
 <app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
 </app-progress-bar>
@@ -15,6 +16,22 @@
     (filesSelected)="handleFileSelection($event)"
   >
   </app-file-upload>
+=======
+
+<!-- Progress Bar Component -->
+<app-progress-bar
+    *ngIf="uploadProgress > 0"
+    [uploadProgress]="uploadProgress">
+</app-progress-bar >
+
+ <app-pipeline-selection
+        [(ngModel)]="selectedPipeline"
+        [pipelines]="pipelines">
+    </app-pipeline-selection>
+
+<div *ngIf="showContainer"  class="upload-container">
+    <!-- Pipeline Selection Component -->
+>>>>>>> 84d1902 (styling)
 
   <!-- Upload Button -->
   <div class="upload-button-container">
@@ -28,6 +45,7 @@
 >
 </app-pipeline-selection>
 
+<<<<<<< HEAD
 <div *ngIf="showContainer" class="upload-container">
   <!-- File Upload Component -->
   <app-file-upload
@@ -37,10 +55,19 @@
   </app-file-upload>
 
 <<<<<<< HEAD
+=======
+    <!-- File Upload Component -->
+    <app-file-upload
+        [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
+        (filesSelected)="handleFileSelection($event)">
+    </app-file-upload>
+
+>>>>>>> 84d1902 (styling)
     <!-- Upload Button -->
     <div class="upload-button-container">
         <button (click)="onUpload()" class="upload-button">Upload Files</button>
     </div>
+<<<<<<< HEAD
 >>>>>>> 55380e6 (bugfix)
 =======
   <!-- Upload Button -->
@@ -48,10 +75,13 @@
     <button (click)="onUpload()" class="upload-button">Upload Files</button>
   </div>
 >>>>>>> a372259 (added html to prettier)
+=======
+>>>>>>> 84d1902 (styling)
 </div>
 
 <!-- Display Selected Pipeline and Metadata Upload JSON -->
 <div class="display-info-container">
+<<<<<<< HEAD
   <div class="pipeline-value">
     <strong>Pipeline Value:</strong>
     <pre>{{ selectedPipeline | json }}</pre>
@@ -60,4 +90,14 @@
     <strong>Metadata Upload JSON:</strong>
     <pre>{{ metadataUploadJson | json }}</pre>
   </div>
+=======
+    <div class="pipeline-value">
+        <strong>Pipeline Value:</strong>
+        <pre>{{ selectedPipeline | json }}</pre>
+    </div>
+    <div class="metadata-json">
+        <strong>Metadata Upload JSON:</strong>
+        <pre>{{ metadataUploadJson | json }}</pre>
+    </div>
+>>>>>>> 84d1902 (styling)
 </div>
