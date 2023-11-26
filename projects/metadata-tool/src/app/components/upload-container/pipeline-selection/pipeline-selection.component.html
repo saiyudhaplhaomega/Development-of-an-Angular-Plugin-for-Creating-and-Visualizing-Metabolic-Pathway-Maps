@@ -1,15 +1,13 @@
 <div>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>{{ label }}</mat-label>
-      <mat-select
-        [(ngModel)]="selectedPipeline"
-        (ngModelChange)="onValueChange()"
-      >
-        <mat-option *ngFor="let entry of entries" [value]="entry">
-          {{ entry.viewValue }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <mat-select
+      [(ngModel)]="selectedPipeline"
+      (ngModelChange)="onValueChange()"
+    >
+      <mat-option *ngFor="let entry of entries" [value]="entry">
+        {{ entry.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>

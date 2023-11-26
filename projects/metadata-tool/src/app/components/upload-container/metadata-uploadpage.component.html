@@ -1,12 +1,15 @@
 <!-- Progress Bar Component -->
 <app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
 </app-progress-bar>
+<app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
+</app-progress-bar>
 
 <app-pipeline-selection
   [(ngModel)]="selectedPipeline"
   [entries]="pipelines"
   label="Choose Pipeline"
 >
+  [(ngModel)]="selectedPipeline" [entries]="pipelines" label="Choose Pipeline" >
 </app-pipeline-selection>
 
 <div *ngIf="showContainer" class="upload-container">
@@ -16,23 +19,33 @@
     (filesSelected)="handleFileSelection($event)"
   >
   </app-file-upload>
+  <div *ngIf="showContainer" class="upload-container">
+    <!-- File Upload Component -->
+    <app-file-upload
+      [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
+      (filesSelected)="handleFileSelection($event)"
+    >
+    </app-file-upload>
 
-  <!-- Upload Button -->
-  <div class="upload-button-container">
-    <button (click)="onUpload()" class="upload-button">Upload Files</button>
+    <!-- Upload Button -->
+    <div class="upload-button-container">
+      <button (click)="onUpload()" class="upload-button">Upload Files</button>
+    </div>
+    <!-- Upload Button -->
+    <div class="upload-button-container">
+      <button (click)="onUpload()" class="upload-button">Upload Files</button>
+    </div>
   </div>
-</div>
 
-<!-- Display Selected Pipeline and Metadata Upload JSON -->
-<div class="display-info-container">
-  <div class="pipeline-value">
-    <strong>Pipeline Value:</strong>
-    <pre>{{ selectedPipeline | json }}</pre>
-    <strong>Pipeline Value:</strong>
-    <pre>{{ selectedPipeline | json }}</pre>
-  </div>
-  <div class="metadata-json">
-    <strong>Metadata Upload JSON:</strong>
-    <pre>{{ metadataUploadJson | json }}</pre>
+  <!-- Display Selected Pipeline and Metadata Upload JSON -->
+  <div class="display-info-container">
+    <div class="pipeline-value">
+      <strong>Pipeline Value:</strong>
+      <pre>{{ selectedPipeline | json }}</pre>
+    </div>
+    <div class="metadata-json">
+      <strong>Metadata Upload JSON:</strong>
+      <pre>{{ metadataUploadJson | json }}</pre>
+    </div>
   </div>
 </div>
