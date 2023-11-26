@@ -16,16 +16,16 @@ import { FileMetadata } from "../../model/file-metadata";
   styleUrls: ["./metadata-uploadpage.component.scss"]
 })
 export class MetadataUploadContainerComponent implements OnInit {
-  handleFileSelection(selectedFiles: File[]) {
-    this.selectedFiles = selectedFiles
-  }
+  selectedFiles: File[] = [];
 
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
   }>();
 
+
   model: FileMetadata;
 
+<<<<<<< HEAD
   pipelines: Pipeline[] = [
     {
       value: "generic_mzid_mzml",
@@ -64,10 +64,12 @@ export class MetadataUploadContainerComponent implements OnInit {
       matchingFiles: {}
     }
   ];
+=======
+>>>>>>> 41f5c08 (refactor)
 
-  selectedPipeline: Pipeline = this.pipelines[1];
-  selectedFiles: File[] = [];
+  selectedPipeline: Pipeline;
   uploadDialogId: string;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   // While uploading files
@@ -77,6 +79,9 @@ export class MetadataUploadContainerComponent implements OnInit {
 =======
   uploadProgress = 0;
 >>>>>>> a372259 (added html to prettier)
+=======
+  uploadProgress: number = 0;
+>>>>>>> 41f5c08 (refactor)
   showContainer = true;
   metadataUploadJson: MetaDataUploadJson;
 
@@ -85,6 +90,10 @@ export class MetadataUploadContainerComponent implements OnInit {
     private uploadProgressService: UploadProgressService,
     private dialog: MatDialog
   ) {}
+
+  handleFileSelection(files: File[]) {
+    this.selectedFiles = files;
+  }
 
   ngOnInit() {
     this.dataService.metadataUploadJson.subscribe((json) => {
@@ -101,10 +110,15 @@ export class MetadataUploadContainerComponent implements OnInit {
 
   onUpload(): void {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     console.log("Selected Files:", this.selectedFiles); // Debugging
 
 >>>>>>> a372259 (added html to prettier)
+=======
+    console.log('Selected Files:', this.selectedFiles); // Debugging
+
+>>>>>>> 41f5c08 (refactor)
     // Hide certain UI elements during upload
     this.showContainer = false;
 
@@ -123,10 +137,13 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Log the model for debugging
 <<<<<<< HEAD
     console.log('Model from pipeline:', JSON.stringify(this.model));
+<<<<<<< HEAD
 
 =======
     console.log("Model from pipeline:", JSON.stringify(this.model));
 >>>>>>> a372259 (added html to prettier)
+=======
+>>>>>>> 41f5c08 (refactor)
     // Update the metadata with the selected pipeline information
     this.dataService.updateAllMetaDataUploadJson(this.model);
 
