@@ -1,16 +1,17 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 
+
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  styleUrls: ['./file-upload.component.scss',   '../metadata-uploadpage.component.scss'],
+
 })
 export class FileUploadComponent {
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-  @Input() acceptedDataTypes: string;
+  @Input() pipelineInformation: Pipeline;
   @Output() filesSelected = new EventEmitter<File[]>();
-
 
   isDragOver = false;
   selectedFiles: File[] = [];
@@ -59,21 +60,7 @@ export class FileUploadComponent {
     if (input.files) {
       const newFiles = Array.from(input.files);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      // Add only new files to the selectedFiles array
-      const uniqueNewFiles = newFiles.filter(
-        (newFile) =>
-          !this.selectedFiles.some(
-            (existingFile) =>
-              existingFile.name === newFile.name &&
-              existingFile.size === newFile.size
-          )
-      );
-=======
 
->>>>>>> 41f5c08 (refactor)
 
 =======
 >>>>>>> 55380e6 (bugfix)
@@ -81,6 +68,7 @@ export class FileUploadComponent {
 >>>>>>> 55380e6 (bugfix)
       // Concatenate the new unique files to the existing selectedFiles
 
+      this.updateFiles(newFiles);
       this.updateFiles(newFiles);
       input.value = '';
     }
@@ -92,6 +80,8 @@ export class FileUploadComponent {
       ...this.selectedFiles.slice(index + 1),
     ];
   }
+
+  matchFiles(){
 
   matchFiles(){
 

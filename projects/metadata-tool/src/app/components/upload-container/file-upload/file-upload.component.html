@@ -1,53 +1,48 @@
 <div
-     (dragover)="onDragOver($event)"
-     (dragleave)="onDragLeave($event)"
-     (drop)="onDrop($event)"
-     [class.dropfield.drag-over]="isDragOver">
+  <div
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [class.dropfield.drag-over]="isDragOver"
+>
+  [class.dropfield.drag-over]="isDragOver">
 
-    <!-- Drag and Drop Instruction Text -->
-    <div class="file-selection-row">
-        <div *ngIf="selectedFiles.length == 0" class="drag-drop-text">
-            Drag and Drop Files Here
-        </div>
-        <button class="file-chooser-button" (click)="fileInput.click()">
-            <mat-icon>upload</mat-icon> Choose Files
-        </button>
+  <!-- Drag and Drop Instruction Text -->
+  <div class="file-selection-row">
+    <div *ngIf="selectedFiles.length == 0" class="drag-drop-text">
+      Drag and Drop Files Here
     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-    <!-- File Input Button -->
     <button class="file-chooser-button" (click)="fileInput.click()">
-        <mat-icon>upload</mat-icon> Choose Files
+      <mat-icon>upload</mat-icon> Choose Files
     </button>
-=======
-    <div>Files must have an {{acceptedDataTypes}} extension.</div>
-    <!-- File Upload Button -->
->>>>>>> 55380e6 (bugfix)
-=======
-    <div>Files must have an {{pipelineInformation.acceptedDataTypes}} extension.</div>
-=======
-    <div>Files must have an {{acceptedDataTypes}} extension.</div>
->>>>>>> 55380e6 (bugfix)
-    <!-- File Upload Button -->
->>>>>>> 41f5c08 (refactor)
-    <input #fileInput
-           type="file"
-           [accept]="acceptedDataTypes"
-           multiple
-           (change)="onFilesSelected($event)"
-           style="display: none;">
+  </div>
+  <div>
+    Files must have an {{ pipelineInformation.acceptedDataTypes }} extension.
+  </div>
+  <!-- File Upload Button -->
+  <input
+    #fileInput
+    type="file"
+    [accept]="pipelineInformation.acceptedDataTypes"
+    multiple
+    (change)="onFilesSelected($event)"
+    style="display: none"
+  />
 
-    <!-- List of Selected Files -->
-    <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
-        <ul>
-            <li *ngFor="let file of selectedFiles; let i = index" class="file-item">
-                <span class="file-name">{{ file.name }}</span>
-                <button mat-mini-fab color="warn" (click)="deleteFile(i)" class="delete-button">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </li>
-        </ul>
-    </div>
+  <!-- List of Selected Files -->
+  <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
+    <ul>
+      <li *ngFor="let file of selectedFiles; let i = index" class="file-item">
+        <span class="file-name">{{ file.name }}</span>
+        <button
+          mat-mini-fab
+          color="warn"
+          (click)="deleteFile(i)"
+          class="delete-button"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </li>
+    </ul>
+  </div>
 </div>
