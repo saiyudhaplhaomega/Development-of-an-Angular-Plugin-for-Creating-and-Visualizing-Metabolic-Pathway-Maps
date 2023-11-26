@@ -16,14 +16,12 @@
       <mat-icon>upload</mat-icon> Choose Files
     </button>
   </div>
-  <div>
-    Files must have an {{ pipelineInformation.acceptedDataTypes }} extension.
-  </div>
+  <div>Files must have an {{ acceptedDataTypes }} extension.</div>
   <!-- File Upload Button -->
   <input
     #fileInput
     type="file"
-    [accept]="pipelineInformation.acceptedDataTypes"
+    [accept]="acceptedDataTypes"
     multiple
     (change)="onFilesSelected($event)"
     style="display: none"
