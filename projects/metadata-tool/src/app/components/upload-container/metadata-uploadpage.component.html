@@ -22,23 +22,32 @@
   </div>
 =======
 <app-pipeline-selection
-    [(ngModel)]="selectedPipeline"
-    [entries]="pipelines"
-    label='Choose Pipeline'>
+  [(ngModel)]="selectedPipeline"
+  [entries]="pipelines"
+  label="Choose Pipeline"
+>
 </app-pipeline-selection>
 
-<div *ngIf="showContainer"  class="upload-container">
-    <!-- File Upload Component -->
-    <app-file-upload
-        [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
-        (filesSelected)="handleFileSelection($event)">
-    </app-file-upload>
+<div *ngIf="showContainer" class="upload-container">
+  <!-- File Upload Component -->
+  <app-file-upload
+    [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
+    (filesSelected)="handleFileSelection($event)"
+  >
+  </app-file-upload>
 
+<<<<<<< HEAD
     <!-- Upload Button -->
     <div class="upload-button-container">
         <button (click)="onUpload()" class="upload-button">Upload Files</button>
     </div>
 >>>>>>> 55380e6 (bugfix)
+=======
+  <!-- Upload Button -->
+  <div class="upload-button-container">
+    <button (click)="onUpload()" class="upload-button">Upload Files</button>
+  </div>
+>>>>>>> a372259 (added html to prettier)
 </div>
 
 <!-- Display Selected Pipeline and Metadata Upload JSON -->

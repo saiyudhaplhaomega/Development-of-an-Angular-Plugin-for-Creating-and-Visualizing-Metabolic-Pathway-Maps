@@ -2,22 +2,28 @@
   <mat-form-field appearance="fill">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <mat-label>Choose Pipeline</mat-label>
     <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onPipelineChange()">
       <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline">
         {{ pipeline.viewValue }}
 =======
+=======
+>>>>>>> a372259 (added html to prettier)
     <mat-label>{{ label }}</mat-label>
     <mat-select
       [(ngModel)]="selectedPipeline"
       (ngModelChange)="onValueChange()"
     >
+<<<<<<< HEAD
       <mat-option *ngFor="let entry of entries" [value]="entry">
         {{ entry.viewValue }}
 >>>>>>> a372259 (added html to prettier)
 =======
     <mat-label>{{label}}</mat-label>
     <mat-select [(ngModel)]="selectedPipeline" (ngModelChange)="onValueChange()">
+=======
+>>>>>>> a372259 (added html to prettier)
       <mat-option *ngFor="let entry of entries" [value]="entry">
         {{ entry.viewValue }}
 >>>>>>> 55380e6 (bugfix)
