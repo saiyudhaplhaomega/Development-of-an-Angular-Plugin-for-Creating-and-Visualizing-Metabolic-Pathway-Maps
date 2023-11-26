@@ -5,12 +5,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './pipeline-selection.component.html',
   styleUrls: ['../metadata-uploadpage.component.scss'],
 })
-export class PipelineSelectionComponent {
-  @Input() pipelines: Pipeline[];
+export class SelectionComponent {
+  @Input() entries: Pipeline[];
+  @Input() label: string;
   @Input() selectedPipeline: Pipeline;
   @Output() selectedPipelineChange = new EventEmitter<Pipeline>();
 
-  onPipelineChange() {
+  onValueChange() {
     this.selectedPipelineChange.emit(this.selectedPipeline);
   }
 }

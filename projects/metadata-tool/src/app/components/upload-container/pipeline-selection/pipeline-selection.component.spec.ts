@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PipelineSelectionComponent } from './pipeline-selection.component';
+import { SelectionComponent } from './pipeline-selection.component';
 
 describe('PipelineSelectionComponent', () => {
-  let component: PipelineSelectionComponent;
-  let fixture: ComponentFixture<PipelineSelectionComponent>;
+  let component: SelectionComponent;
+  let fixture: ComponentFixture<SelectionComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PipelineSelectionComponent]
+      declarations: [SelectionComponent]
     });
-    fixture = TestBed.createComponent(PipelineSelectionComponent);
+    fixture = TestBed.createComponent(SelectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

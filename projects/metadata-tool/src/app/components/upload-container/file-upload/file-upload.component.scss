@@ -3,3 +3,19 @@
   border-color: #007bff;
   background-color: rgba(0, 123, 255, 0.1);
 }
+<<<<<<< HEAD
+=======
+
+.file-selection-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drag-drop-text {
+    flex: 1; /* Allows the text to expand and take available space */
+    text-align: left;
+    margin-right: 10px; /* Adjust spacing between text and button as needed */
+}
+
+>>>>>>> 55380e6 (bugfix)

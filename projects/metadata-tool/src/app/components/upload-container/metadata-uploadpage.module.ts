@@ -12,7 +12,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { PipelineSelectionComponent } from './pipeline-selection/pipeline-selection.component';
+import { SelectionComponent } from './pipeline-selection/pipeline-selection.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
@@ -21,7 +21,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
   declarations: [
     MetadataUploadContainerComponent,
     ProgressBarComponent,
-    PipelineSelectionComponent,
+    SelectionComponent,
     FileUploadComponent,
   ],
   imports: [
@@ -42,7 +42,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
   exports: [
     MetadataUploadContainerComponent,
     ProgressBarComponent,
-    PipelineSelectionComponent,
+    SelectionComponent,
     FileUploadComponent,
   ],
 })

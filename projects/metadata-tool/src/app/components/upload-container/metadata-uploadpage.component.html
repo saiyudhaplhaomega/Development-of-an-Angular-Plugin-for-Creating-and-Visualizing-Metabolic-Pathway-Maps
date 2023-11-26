@@ -2,6 +2,7 @@
 <app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
 </app-progress-bar>
 
+<<<<<<< HEAD
 <app-pipeline-selection [(ngModel)]="selectedPipeline" [pipelines]="pipelines">
 </app-pipeline-selection>
 
@@ -19,6 +20,25 @@
   <div class="upload-button-container">
     <button (click)="onUpload()" class="upload-button">Upload Files</button>
   </div>
+=======
+<app-pipeline-selection
+    [(ngModel)]="selectedPipeline"
+    [entries]="pipelines"
+    label='Choose Pipeline'>
+</app-pipeline-selection>
+
+<div *ngIf="showContainer"  class="upload-container">
+    <!-- File Upload Component -->
+    <app-file-upload
+        [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
+        (filesSelected)="handleFileSelection($event)">
+    </app-file-upload>
+
+    <!-- Upload Button -->
+    <div class="upload-button-container">
+        <button (click)="onUpload()" class="upload-button">Upload Files</button>
+    </div>
+>>>>>>> 55380e6 (bugfix)
 </div>
 
 <!-- Display Selected Pipeline and Metadata Upload JSON -->

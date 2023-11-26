@@ -9,11 +9,16 @@
         Drag and Drop Files Here
         <div>Files must have an {{acceptedDataTypes}} extension.</div>
     </div>
+<<<<<<< HEAD
 
     <!-- File Input Button -->
     <button class="file-chooser-button" (click)="fileInput.click()">
         <mat-icon>upload</mat-icon> Choose Files
     </button>
+=======
+    <div>Files must have an {{acceptedDataTypes}} extension.</div>
+    <!-- File Upload Button -->
+>>>>>>> 55380e6 (bugfix)
     <input #fileInput
            type="file"
            [accept]="acceptedDataTypes"

@@ -44,6 +44,7 @@ export class FileUploadComponent {
     if (input.files) {
       const newFiles = Array.from(input.files);
 
+<<<<<<< HEAD
       // Add only new files to the selectedFiles array
       const uniqueNewFiles = newFiles.filter(
         (newFile) =>
@@ -54,6 +55,8 @@ export class FileUploadComponent {
           )
       );
 
+=======
+>>>>>>> 55380e6 (bugfix)
       // Concatenate the new unique files to the existing selectedFiles
       this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
 
