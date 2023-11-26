@@ -22,8 +22,10 @@ export class MetadataUploadContainerComponent implements OnInit {
     progress: number;
   }>();
 
+
   model: FileMetadata;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   pipelines: Pipeline[] = [
@@ -126,6 +128,12 @@ export class MetadataUploadContainerComponent implements OnInit {
 =======
   uploadProgress = 0;
 >>>>>>> a372259 (added html to prettier)
+=======
+
+  selectedPipeline: Pipeline;
+  uploadDialogId: string;
+  uploadProgress: number = 0;
+>>>>>>> 41f5c08 (refactor)
   showContainer = true;
   metadataUploadJson: MetaDataUploadJson;
 
@@ -156,6 +164,7 @@ export class MetadataUploadContainerComponent implements OnInit {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     console.log("Selected Files:", this.selectedFiles); // Debugging
 
@@ -165,6 +174,10 @@ export class MetadataUploadContainerComponent implements OnInit {
 =======
     console.log("Selected Files:", this.selectedFiles); // Debugging
 >>>>>>> a372259 (added html to prettier)
+
+>>>>>>> 41f5c08 (refactor)
+=======
+    console.log('Selected Files:', this.selectedFiles); // Debugging
 
 >>>>>>> 41f5c08 (refactor)
     // Hide certain UI elements during upload
@@ -187,6 +200,7 @@ export class MetadataUploadContainerComponent implements OnInit {
 <<<<<<< HEAD
     console.log('Model from pipeline:', JSON.stringify(this.model));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     console.log("Model from pipeline:", JSON.stringify(this.model));
@@ -196,6 +210,8 @@ export class MetadataUploadContainerComponent implements OnInit {
 =======
     console.log("Model from pipeline:", JSON.stringify(this.model));
 >>>>>>> a372259 (added html to prettier)
+=======
+>>>>>>> 41f5c08 (refactor)
     // Update the metadata with the selected pipeline information
     this.dataService.updateAllMetaDataUploadJson(this.model);
 

@@ -1,15 +1,16 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
+
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  styleUrls: ['./file-upload.component.scss',   '../metadata-uploadpage.component.scss'],
+
 })
 export class FileUploadComponent {
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-  @Input() acceptedDataTypes: string;
+  @Input() pipelineInformation: Pipeline;
   @Output() filesSelected = new EventEmitter<File[]>();
-
 
   isDragOver = false;
   selectedFiles: File[] = [];
@@ -33,10 +34,24 @@ export class FileUploadComponent {
 
     if (event.dataTransfer && event.dataTransfer.files) {
       const newFiles = Array.from(event.dataTransfer.files);
-      this.selectedFiles = [...this.selectedFiles, ...newFiles];
-      // Process the files as needed
-      this.processFiles(this.selectedFiles);
+      this.updateFiles(newFiles);
     }
+  }
+
+  private updateFiles(newFiles: File[]) {
+    // Add only new files to the selectedFiles array
+    const uniqueNewFiles = newFiles.filter(
+      (newFile) =>
+        !this.selectedFiles.some(
+          (existingFile) =>
+            existingFile.name === newFile.name &&
+            existingFile.size === newFile.size
+        )
+    );
+
+    this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
+    // Emit, if files are changing
+    this.filesSelected.emit(this.selectedFiles);
   }
 
   onFilesSelected(event: Event): void {
@@ -44,6 +59,7 @@ export class FileUploadComponent {
     if (input.files) {
       const newFiles = Array.from(input.files);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       // Add only new files to the selectedFiles array
       const uniqueNewFiles = newFiles.filter(
@@ -54,13 +70,15 @@ export class FileUploadComponent {
               existingFile.size === newFile.size
           )
       );
+=======
+
+>>>>>>> 41f5c08 (refactor)
 
 =======
 >>>>>>> 55380e6 (bugfix)
       // Concatenate the new unique files to the existing selectedFiles
-      this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
 
-      // After adding files, you might want to reset the input
+      this.updateFiles(newFiles);
       input.value = '';
     }
   }
@@ -72,15 +90,7 @@ export class FileUploadComponent {
     ];
   }
 
-  private processFiles(files: File[]) {
-    // Implement your logic to process files here
-  }
+  matchFiles(){
 
-  handleFileSelection(selectedFiles: File[]) {
-    // Logic to handle selected files
-    this.selectedFiles = selectedFiles;
-
-    // Process the files as needed
-    this.processFiles(this.selectedFiles);
   }
 }
