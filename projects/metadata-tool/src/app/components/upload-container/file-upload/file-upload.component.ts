@@ -1,17 +1,21 @@
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-
-
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 
 @Component({
-  selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  selector: "app-file-upload",
+  templateUrl: "./file-upload.component.html",
+  styleUrls: ["./file-upload.component.scss"]
 })
 export class FileUploadComponent {
-  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+  @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string;
   @Output() filesSelected = new EventEmitter<File[]>();
-
 
   isDragOver = false;
   selectedFiles: File[] = [];
@@ -64,20 +68,16 @@ export class FileUploadComponent {
 
       this.updateFiles(newFiles);
       this.updateFiles(newFiles);
-      input.value = '';
+      input.value = "";
     }
   }
 
   deleteFile(index: number): void {
     this.selectedFiles = [
       ...this.selectedFiles.slice(0, index),
-      ...this.selectedFiles.slice(index + 1),
+      ...this.selectedFiles.slice(index + 1)
     ];
   }
 
-  matchFiles(){
-
-  matchFiles(){
-
-  }
+  matchFiles() {}
 }

@@ -1,12 +1,9 @@
 <div
-  <div
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
   [class.dropfield.drag-over]="isDragOver"
 >
-  [class.dropfield.drag-over]="isDragOver">
-
   <!-- Drag and Drop Instruction Text -->
   <div class="file-selection-row">
     <div *ngIf="selectedFiles.length == 0" class="drag-drop-text">
