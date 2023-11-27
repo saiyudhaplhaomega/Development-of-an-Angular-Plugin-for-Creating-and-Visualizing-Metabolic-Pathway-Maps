@@ -29,24 +29,12 @@ ng run metadata-tool:storybook
 
 ## Init Repo
 
+1. Update Node
+
 Make sure to have npm installed on your system. Then run:
 
 ```sh
 npm i
-```
-
-If some error occures like:
-
-```sh
-npm ERR! code ERESOLVE
-npm ERR! ERESOLVE unable to resolve dependency tree
-...
-```
-
-Run with `--legacy-peer-deps` based on [link](https://stackoverflow.com/questions/64573177/unable-to-resolve-dependency-tree-error-when-installing-npm-packages)
-
-```sh
-npm install --legacy-peer-deps
 ```
 
 ## Setup Backend
