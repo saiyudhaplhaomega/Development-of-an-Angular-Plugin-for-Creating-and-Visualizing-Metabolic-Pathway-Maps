@@ -27,8 +27,12 @@
   <!-- List of Selected Files -->
   <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
     <ul>
-      <li *ngFor="let file of selectedFiles; let i = index" class="file-item">
-        <span class="file-name">{{ file.name }}</span>
+      <li
+        *ngFor="let fileWithInfo of selectedFiles; let i = index"
+        class="file-item"
+      >
+        <!-- Access the name property of the File object -->
+        <span class="file-name">{{ fileWithInfo.file.name }}</span>
         <button
           mat-mini-fab
           color="warn"
