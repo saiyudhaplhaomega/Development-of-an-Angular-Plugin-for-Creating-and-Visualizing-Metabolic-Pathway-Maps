@@ -26,7 +26,7 @@ interface FileWithProcessedInfo {
 })
 export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
-  @Input() acceptedDataTypes: string;
+  @Input() acceptedDataTypes: string[];
   @Output() filesSelected = new EventEmitter<File[]>();
 
   isDragOver = false;
@@ -80,6 +80,8 @@ export class FileUploadComponent {
     );
 
     // Emit the updated selectedFiles array
+    this.categorizeFiles(); // Recategorize after updating files
+
     this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
 
@@ -95,9 +97,12 @@ export class FileUploadComponent {
     }
   }
 
-  deleteFile(index: number): void {
-    this.selectedFiles.splice(index, 1);
-    // Other necessary logic
+  deleteFile(fileToDelete: File): void {
+    this.selectedFiles = this.selectedFiles.filter(
+      (fileWithInfo) => fileWithInfo.file !== fileToDelete
+    );
+    // If you are categorizing files, re-categorize them after deletion
+    this.categorizeFiles(); // Recategorize after deleting a file
   }
 
   private processFileName(fileName: string): ProcessedFileInfo {
@@ -113,5 +118,29 @@ export class FileUploadComponent {
       sampleNumber: sampleNumber,
       extension: extension
     };
+  }
+
+  categorizedFiles: { [categoryKey: string]: { [extension: string]: File[] } } =
+    {};
+
+  private categorizeFiles(): void {
+    this.categorizedFiles = this.selectedFiles.reduce((acc, fileWithInfo) => {
+      // Extract batchDescription, sampleNumber, and extension
+      const { batchDescription, sampleNumber, extension } =
+        fileWithInfo.processedInfo;
+      const categoryKey = `${batchDescription}_${sampleNumber}`;
+
+      // Initialize the nested structure if not already present
+      if (!acc[categoryKey]) {
+        acc[categoryKey] = {};
+      }
+      if (!acc[categoryKey][extension]) {
+        acc[categoryKey][extension] = [];
+      }
+
+      // Add the file to the appropriate category
+      acc[categoryKey][extension].push(fileWithInfo.file);
+      return acc;
+    }, {});
   }
 }

@@ -25,23 +25,30 @@
   />
 
   <!-- List of Selected Files -->
-  <div class="selected-files-box" *ngIf="selectedFiles.length > 0">
-    <ul>
-      <li
-        *ngFor="let fileWithInfo of selectedFiles; let i = index"
-        class="file-item"
-      >
-        <!-- Access the name property of the File object -->
-        <span class="file-name">{{ fileWithInfo.file.name }}</span>
-        <button
-          mat-mini-fab
-          color="warn"
-          (click)="deleteFile(i)"
-          class="delete-button"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </li>
-    </ul>
+
+  <div>
+    <div *ngFor="let category of categorizedFiles | keyvalue">
+      <div *ngFor="let fileGroup of category.value | keyvalue">
+        <ul>
+          <li *ngFor="let file of fileGroup.value">
+            {{ file.name }} {{ category.key }} {{ fileGroup.key | uppercase }}
+
+            <button
+              mat-mini-fab
+              color="warn"
+              (click)="deleteFile(file)"
+              class="delete-button"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
+<table>
+  <tr>
+    <td>Inhalt</td>
+  </tr>
+</table>

@@ -24,6 +24,10 @@
   gap: 20px;
 }
 
-.file-column {
-  // Style for each column
+.file-type-column {
+  float: left;
+  width: 20%; /* Adjust width as necessary */
+  padding: 10px;
+  box-sizing: border-box;
+  /* Add more styles as needed */
 }
