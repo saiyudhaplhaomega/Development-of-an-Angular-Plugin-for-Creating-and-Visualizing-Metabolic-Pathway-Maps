@@ -3,7 +3,7 @@
     <mat-label>{{ label }}</mat-label>
     <mat-select
       [(ngModel)]="selectedPipeline"
-      (ngModelChange)="onValueChange()"
+      (ngModelChange)="onValueChange($event)"
     >
       <mat-option *ngFor="let entry of entries" [value]="entry">
         {{ entry.viewValue }}

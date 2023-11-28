@@ -15,3 +15,15 @@
   text-align: left;
   margin-right: 10px; /* Adjust spacing between text and button as needed */
 }
+
+/* file-upload.component.scss */
+
+.files-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.file-column {
+  // Style for each column
+}

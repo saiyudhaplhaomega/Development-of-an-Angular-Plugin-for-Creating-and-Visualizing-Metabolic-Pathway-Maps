@@ -7,6 +7,18 @@ import {
   EventEmitter
 } from "@angular/core";
 
+interface ProcessedFileInfo {
+  fileName: string;
+  batchDescription: string;
+  sampleNumber: string;
+  extension: string;
+}
+
+interface FileWithProcessedInfo {
+  file: File;
+  processedInfo: ProcessedFileInfo; // Assuming ProcessedFileInfo is defined as shown earlier
+}
+
 @Component({
   selector: "app-file-upload",
   templateUrl: "./file-upload.component.html",
@@ -18,7 +30,7 @@ export class FileUploadComponent {
   @Output() filesSelected = new EventEmitter<File[]>();
 
   isDragOver = false;
-  selectedFiles: File[] = [];
+  selectedFiles: FileWithProcessedInfo[] = [];
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -44,19 +56,31 @@ export class FileUploadComponent {
   }
 
   private updateFiles(newFiles: File[]) {
-    // Add only new files to the selectedFiles array
-    const uniqueNewFiles = newFiles.filter(
-      (newFile) =>
+    // Process the new files to include the processed information
+    const processedNewFiles = newFiles.map((file) => ({
+      file: file,
+      processedInfo: this.processFileName(file.name)
+    }));
+
+    // Filter out files that are already in the selectedFiles array
+    const uniqueNewFiles = processedNewFiles.filter(
+      (processedFile) =>
         !this.selectedFiles.some(
           (existingFile) =>
-            existingFile.name === newFile.name &&
-            existingFile.size === newFile.size
+            existingFile.file.name === processedFile.file.name &&
+            existingFile.file.size === processedFile.file.size
         )
     );
 
+    // Concatenate the new unique files to the existing selectedFiles array
     this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
-    // Emit, if files are changing
-    this.filesSelected.emit(this.selectedFiles);
+    console.log(
+      "🚀 ~ file: file-upload.component.ts:77 ~ FileUploadComponent ~ updateFiles ~ this.selectedFiles :",
+      this.selectedFiles
+    );
+
+    // Emit the updated selectedFiles array
+    this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
 
   onFilesSelected(event: Event): void {
@@ -67,17 +91,27 @@ export class FileUploadComponent {
       // Concatenate the new unique files to the existing selectedFiles
 
       this.updateFiles(newFiles);
-      this.updateFiles(newFiles);
       input.value = "";
     }
   }
 
   deleteFile(index: number): void {
-    this.selectedFiles = [
-      ...this.selectedFiles.slice(0, index),
-      ...this.selectedFiles.slice(index + 1)
-    ];
+    this.selectedFiles.splice(index, 1);
+    // Other necessary logic
   }
 
-  matchFiles() {}
+  private processFileName(fileName: string): ProcessedFileInfo {
+    const parts = fileName.split("_");
+    const extensionPart = parts.pop()?.split(".") || ["", ""];
+    const batchDescription = parts[0] || "";
+    const sampleNumber = extensionPart[0];
+    const extension = extensionPart[1];
+
+    return {
+      fileName: fileName,
+      batchDescription: batchDescription,
+      sampleNumber: sampleNumber,
+      extension: extension
+    };
+  }
 }
