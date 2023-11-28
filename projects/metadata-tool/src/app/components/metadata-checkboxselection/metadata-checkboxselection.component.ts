@@ -230,8 +230,7 @@ export class MetaDataCheckboxSelectionComponent {
   }
 
   submit() {
-    console.log("🚀 ~ file: metadata-checkboxselection.component.ts:252 ~ MetaDataCheckboxSelectionComponent ~ submit ~ this.notSelectableProperties1,:", this.notSelectableProperties1,)
-    const selectedColumnsProperties1 = this.getSelectedColumns(
+        const selectedColumnsProperties1 = this.getSelectedColumns(
       this.form.get('properties1') as FormArray,
       this.selectableProperties1
     );

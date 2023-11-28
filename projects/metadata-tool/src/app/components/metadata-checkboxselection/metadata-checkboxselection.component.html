@@ -1,18 +1,54 @@
 <h2>Checkbox Selection for SDRF Table (incomplete)</h2>
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="sections-container">
-    <div *ngFor="let section of selectables">
-      <h3>{{ section.title }} (Selected: {{ section.count }})</h3>
-      <div [formArrayName]="section.formArrayName">
-        <div *ngFor="let item of section.data; let i = index">
-          <label>
-            <input type="checkbox" [formControlName]="i" (change)="updateCounters(section.formArrayName)" />
-            <span>{{ item.title }}</span>
-            <!-- <mat-icon *ngIf="item.description" matTooltip="{{item.description}}">info</mat-icon> -->
-          </label>
-        </div>
+  <div>
+    <h3>General information</h3>
+    <div formArrayName="properties1">
+      <div *ngFor="let columnControl of properties1Controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" (change)="updateCounters('properties1')" />
+          <span>{{ selectableProperties1[i].title }}</span>
+            <mat-icon *ngIf="selectableProperties1[i].description" matTooltip="{{selectableProperties1[i].description}}">info</mat-icon>
+        </label>
       </div>
     </div>
   </div>
-  <button mat-flat-button color="primary" type="submit">Continue</button>
+  <div>
+    <h3>Characteristic</h3>
+    <div formArrayName="characteristic">
+      <div *ngFor="let columnControl of characteristicControls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" (change)="updateCounters('characteristic')"/>
+          <span>{{ selectableCharacteristic[i].title }}</span>
+
+        </label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>General information</h3>
+    <div formArrayName="properties2">
+      <div *ngFor="let columnControl of properties2Controls; let i = index" (change)="updateCounters('properties2')">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ selectableProperties2[i].title }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>Comments</h3>
+    <div formArrayName="comments">
+      <div *ngFor="let columnControl of commentsControls; let i = index" (change)="updateCounters('comments')">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          <span>{{ selectableComments[i].title }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<button mat-flat-button color="primary" type="submit">
+  Continue
+</button>
 </form>
