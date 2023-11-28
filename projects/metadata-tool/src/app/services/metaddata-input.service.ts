@@ -1,20 +1,26 @@
-import { Injectable } from '@angular/core';
-import { ColumnData, ColumnDataObject } from '../model/metadata-columnData';
-import { HttpClientService, MultiFileUploadData, UploadProgressService } from 'shared-lib';
+import { Injectable } from "@angular/core";
+import { ColumnData, ColumnDataObject } from "../model/metadata-columnData";
+import {
+  HttpClientService,
+  MultiFileUploadData,
+  UploadProgressService
+} from "shared-lib";
 import {
   Endpoints,
-  WebserveraddressService,
-} from '../webserveraddress.service';
-import { MetaDataUploadJson, MetaDataUploadJsonObject } from '../model/metadatauploadjson';
-import { HttpEventType, HttpParams } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
-import { DownloadLinksJson } from '../model/download-json';
-import { dummyData as data } from './dummy-data';
-import { FileMetadata } from '../model/file-metadata';
+  WebserveraddressService
+} from "../webserveraddress.service";
+import {
+  MetaDataUploadJson,
+  MetaDataUploadJsonObject
+} from "../model/metadatauploadjson";
+import { HttpEventType, HttpParams } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { BehaviorSubject } from "rxjs";
+import { DownloadLinksJson } from "../model/download-json";
+import { dummyData as data } from "./dummy-data";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class MetaDataService {
   dummyData: MetaDataUploadJson = data; // TODO: for testing purposes, remove later
@@ -28,68 +34,42 @@ export class MetaDataService {
     private url: WebserveraddressService
   ) {}
 
-  isFileMetadata(model: any): model is FileMetadata {
-    // Replace 'uniqueProperty' with a property that only exists in FileMetadata
-    return 'processingPipeline' in model;
-  }
+  updateAllMetaDataUploadJson(model: { [key: string]: any }): void {
+    console.log(
+      "🚀 ~ file: metaddata-input.service.ts:38 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ model:",
+      model
+    );
 
-  /**
-   * Updates an array of metadata objects with values from the provided model.
-   * @param dataArray The array of metadata objects to update.
-   * @param model The data model containing the new values.
-   * @returns The updated array of metadata objects.
-   */
-  private updateMetadataArray(dataArray: any[], model: any): any[] {
-    return dataArray.map((data) => {
-      const updatedData = { ...data };
-      for (const key in model) {
-        if (model.hasOwnProperty(key) && key in updatedData) {
-          updatedData[key] = model[key];
-        }
-      }
-      return updatedData;
-    });
-  }
-  updateAllMetaDataUploadJson(model: any): void {
     try {
       const currentMetaData = this.metadataUploadJson.value;
-
-      // Determine the longer array length between metadataJson and fileMatchingData
-      const maxLength = Math.max(
-        currentMetaData.metadataJson.length,
-        currentMetaData.fileMatchingData?.length || 0
+      console.log(
+        "🚀 ~ file: metaddata-input.service.ts:45 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ currentMetaData:",
+        currentMetaData
       );
+      // Update metadataJson with values from the model
+      const updatedMetadataJson = currentMetaData.metadataJson.map((data) => {
+        // Create a copy of the current data item
+        const updatedData = { ...data };
 
-      // Extend fileMatchingData to match the length of metadataJson, if necessary
-      if (!currentMetaData.fileMatchingData) {
-        currentMetaData.fileMatchingData = new Array(maxLength).fill(null);
-      } else if (currentMetaData.fileMatchingData.length < maxLength) {
-        currentMetaData.fileMatchingData = [
-          ...currentMetaData.fileMatchingData,
-          ...new Array(
-            maxLength - currentMetaData.fileMatchingData.length
-          ).fill(null),
-        ];
-      }
+        // Loop over the model's keys and update the corresponding fields
+        // in the metadataJson item
+        for (const key in model) {
+          if (model.hasOwnProperty(key) && key in updatedData) {
+            updatedData[key] = model[key];
+          }
+        }
 
-      let updatedArray;
-      if (this.isFileMetadata(model)) {
-        updatedArray = this.updateMetadataArray(
-          currentMetaData.fileMatchingData,
-          model
-        );
-        currentMetaData.fileMatchingData = updatedArray;
-      } else {
-        updatedArray = this.updateMetadataArray(
-          currentMetaData.metadataJson,
-          model
-        );
-        currentMetaData.metadataJson = updatedArray;
-      }
+        return updatedData;
+      });
 
-      this.metadataUploadJson.next(currentMetaData);
+      // Update the metadataUploadJson with the new metadataJson array
+      this.metadataUploadJson.next({
+        ...currentMetaData,
+        metadataJson: updatedMetadataJson
+      });
     } catch (error) {
-      console.error('An error occurred while updating metadata:', error);
+      console.error("An error occurred while updating metadata:", error);
+      // Further error handling can be added here
     }
   }
 
@@ -104,10 +84,10 @@ export class MetaDataService {
         next: (event) => {
           if (event.type === HttpEventType.UploadProgress) {
             uploadProgress.changeReportLoaded(event.loaded);
-            console.log('UploadProgress event');
+            console.log("UploadProgress event");
             console.log(event);
           } else if (event.type === HttpEventType.Response) {
-            console.log('Response event');
+            console.log("Response event");
             console.log(event);
             console.log(event.body);
             const newMetadataJson: MetaDataUploadJson =
@@ -116,23 +96,23 @@ export class MetaDataService {
             console.log(this.metadataUploadJson);
             const params = new HttpParams({
               fromObject: {
-                jobid: newMetadataJson.createInitialMetadataJobId,
-              },
+                jobid: newMetadataJson.createInitialMetadataJobId
+              }
             });
             this.http
               .repeatedGetObject<MetaDataUploadJson>(
-                'jobId',
+                "jobId",
                 this.url.getURL(Endpoints.GET_INITIAL_METADATA),
                 params,
                 5
               )
               .subscribe((response: MetaDataUploadJson) => {
-                console.log('response repeat');
+                console.log("response repeat");
                 console.log(response);
                 this.metadataUploadJson.next(response);
               });
           } else {
-            console.log('unknown event');
+            console.log("unknown event");
             console.log(event);
             console.log(event.type);
           }
@@ -141,18 +121,18 @@ export class MetaDataService {
           console.log(error);
           if (error.status >= 400) {
             // handle failed upload
-            if (dialog.getDialogById('UPLOAD')) {
+            if (dialog.getDialogById("UPLOAD")) {
               dialog
-                .getDialogById('UPLOAD')
+                .getDialogById("UPLOAD")
                 .componentInstance.setUploadFailed();
               dialog.getDialogById(
-                'UPLOAD'
+                "UPLOAD"
               ).componentInstance.uploadFailedMessage = error.statusText;
             }
           } else {
             throw error;
           }
-        },
+        }
       });
   }
 
@@ -170,7 +150,7 @@ export class MetaDataService {
         this.http
           .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
             response,
-            'jobID',
+            "jobID",
             this.url.getURL(Endpoints.GET_DOWNLOAD_LINKS),
             new HttpParams()
           )

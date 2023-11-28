@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpClient,
   HttpEvent,
   HttpEventType,
   HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
-import { Observable, filter, repeat, take } from 'rxjs';
-import { UploadProgressService } from './upload-progress.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from './login/auth.service';
-import { get } from 'lodash';
+  HttpParams
+} from "@angular/common/http";
+import { Observable, filter, repeat, take } from "rxjs";
+import { UploadProgressService } from "./upload-progress.service";
+import { MatDialog } from "@angular/material/dialog";
+import { AuthService } from "./login/auth.service";
+import { get } from "lodash";
 
 export interface Endpoints {}
 
@@ -31,7 +31,7 @@ export interface UploadFile {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class HttpClientService {
   //uploadFileArray: FileUploadData[];
@@ -58,20 +58,20 @@ export class HttpClientService {
   ): Observable<T2> {
     return this.http.post<T2>(url, obj, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.authService.getUserAuthorization().toString(),
+        "Content-Type": "application/json",
+        Authorization: this.authService.getUserAuthorization().toString()
       }),
-      params: params,
+      params: params
     });
   }
 
   getObject<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(url, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.authService.getUserAuthorization().toString(),
+        "Content-Type": "application/json",
+        Authorization: this.authService.getUserAuthorization().toString()
       }),
-      params: params,
+      params: params
     });
   }
 
@@ -79,7 +79,7 @@ export class HttpClientService {
     checkProperty: string,
     api: string,
     params?: HttpParams,
-    delay: number = 5_000
+    delay = 5_000
   ): Observable<T> {
     return this.getObject<T>(api, params).pipe(
       repeat({ delay: delay }),
@@ -90,15 +90,15 @@ export class HttpClientService {
 
   postFile(file: File, url: string, params?: HttpParams) {
     const fd = new FormData();
-    fd.set('Content-Type', 'multipart/form-data');
-    fd.append('uploaded_file', file);
+    fd.set("Content-Type", "multipart/form-data");
+    fd.append("uploaded_file", file);
     return this.http.post(url, fd, {
       headers: new HttpHeaders({
-        Authorization: this.authService.getUserAuthorization().toString(),
+        Authorization: this.authService.getUserAuthorization().toString()
       }),
-      observe: 'events',
+      observe: "events",
       params: params,
-      reportProgress: true,
+      reportProgress: true
     });
   }
 
@@ -107,27 +107,26 @@ export class HttpClientService {
     url: string
   ): Observable<T> {
     const fd = new FormData();
-    let multipartids: string = '';
+    let multipartids = "";
     fileList.files.forEach((file) => {
-      multipartids += file.fileID + ';';
+      multipartids += file.fileID + ";";
     });
 
-    fd.set('Content-Type', 'multipart/form-data');
-    fd.append('fileIDList', multipartids);
+    fd.set("Content-Type", "multipart/form-data");
+    fd.append("fileIDList", multipartids);
     fileList.files.map((file) => {
       fd.append(file.fileID, file.uploadFile);
     });
-    return this.http
-      .post<T>(url, fd, {
-        headers: new HttpHeaders({
-          Authorization: this.authService.getUserAuthorization().toString(),
-        }),
-        params: fileList.httpParameters,
-        reportProgress: true, // currently no way to track? (dialogid)
-      });
+    return this.http.post<T>(url, fd, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getUserAuthorization().toString()
+      }),
+      params: fileList.httpParameters,
+      reportProgress: true // currently no way to track? (dialogid)
+    });
   }
 
-    /**
+  /**
    * repeated post requests to server
    * @param obj object thats posted
    * @param checkProperty if this property is available in the response, the request will resolve, else requests will be continued
@@ -136,51 +135,46 @@ export class HttpClientService {
    * @param delay interval between requests
    * @returns observable of the response object
    */
-    repeatedPostObject<T1, T2>(
-      obj: T1,
-      checkProperty: string,
-      api: string,
-      params?: HttpParams,
-      delay: number = 5_000
-    ): Observable<T2> {
-      return this.postObject<T1, T2>(obj, api, params).pipe(
-        repeat({ delay: delay }),
-        filter((res: T2) => get(res, checkProperty) !== undefined),
-        take(1)
-      );
-    }
+  repeatedPostObject<T1, T2>(
+    obj: T1,
+    checkProperty: string,
+    api: string,
+    params?: HttpParams,
+    delay = 5_000
+  ): Observable<T2> {
+    return this.postObject<T1, T2>(obj, api, params).pipe(
+      repeat({ delay: delay }),
+      filter((res: T2) => get(res, checkProperty) !== undefined),
+      take(1)
+    );
+  }
 
   postMultiPartFilesEvents(
     fileList: MultiFileUploadData,
     url: string
   ): Observable<HttpEvent<Object>> {
     const fd = new FormData();
-    let multipartids: string = '';
+    let multipartids = "";
     fileList.files.forEach((file) => {
-      multipartids += file.fileID + ';';
+      multipartids += file.fileID + ";";
     });
 
-    fd.set('Content-Type', 'multipart/form-data');
-    fd.append('fileIDList', multipartids);
+    fd.set("Content-Type", "multipart/form-data");
+    fd.append("fileIDList", multipartids);
     fileList.files.map((file) => {
       fd.append(file.fileID, file.uploadFile);
     });
-    return this.http
-      .post(url, fd, {
-        headers: new HttpHeaders({
-          Authorization: this.authService.getUserAuthorization().toString(),
-        }),
-        observe: 'events',
-        params: fileList.httpParameters,
-        reportProgress: true, // currently no way to track? (dialogid)
-      });
+    return this.http.post(url, fd, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getUserAuthorization().toString()
+      }),
+      observe: "events",
+      params: fileList.httpParameters,
+      reportProgress: true // currently no way to track? (dialogid)
+    });
   }
 
-  performUpload(
-    dialogId: string,
-    fileList: MultiFileUploadData,
-    url: string
-  ) {
+  performUpload(dialogId: string, fileList: MultiFileUploadData, url: string) {
     //TODO: handle big file-sizes -> split upload into multiple uploads
     fileList.files.map((fileUploadData) => {
       this.uploadProgressService.addToTotal(fileUploadData.uploadFile.size);
@@ -194,13 +188,13 @@ export class HttpClientService {
     });
 
     const fd = new FormData();
-    let multipartids: string = '';
+    let multipartids = "";
     fileList.files.forEach((file) => {
-      multipartids += file.fileID + ';';
+      multipartids += file.fileID + ";";
     });
 
-    fd.set('Content-Type', 'multipart/form-data');
-    fd.append('fileIDList', multipartids);
+    fd.set("Content-Type", "multipart/form-data");
+    fd.append("fileIDList", multipartids);
     fileList.files.map((file) => {
       fd.append(file.fileID, file.uploadFile);
     });
@@ -208,11 +202,11 @@ export class HttpClientService {
     this.http
       .post(url, fd, {
         headers: new HttpHeaders({
-          Authorization: this.authService.getUserAuthorization().toString(),
+          Authorization: this.authService.getUserAuthorization().toString()
         }),
-        observe: 'events',
+        observe: "events",
         params: fileList.httpParameters,
-        reportProgress: true,
+        reportProgress: true
       })
       .subscribe({
         next: (event) => {
@@ -220,7 +214,7 @@ export class HttpClientService {
             this.uploadProgressService.changeReportLoaded(event.loaded);
             console.log(event);
           } else if (event.type === HttpEventType.Response) {
-            console.log('File uploaded');
+            console.log("File uploaded");
           }
         },
         error: (error) => {
@@ -237,7 +231,7 @@ export class HttpClientService {
           } else {
             throw error;
           }
-        },
+        }
       });
   }
 }

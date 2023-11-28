@@ -1,4 +1,5 @@
 export interface ColumnData {
+  processingPipeline?: string;
   identID: string;
   counter: number;
   sourcename: string;
@@ -38,13 +39,14 @@ export interface ColumnData {
   mzID: string;
   mzML: string;
   spectrumFile: string;
-	psmFile: string;
+  psmFile: string;
   comment: string;
   factorValue: string;
   fileType: string;
 }
 
 export class ColumnDataObject implements ColumnData {
+  processingPipeline?: string;
   identID: string;
   counter: number;
   sourcename: string;
@@ -84,7 +86,7 @@ export class ColumnDataObject implements ColumnData {
   mzID: string;
   mzML: string;
   spectrumFile: string;
-	psmFile: string;
+  psmFile: string;
   comment: string;
   factorValue: string;
   fileType: string;

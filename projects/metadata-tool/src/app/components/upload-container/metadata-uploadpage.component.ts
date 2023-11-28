@@ -8,8 +8,11 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MetaDataUploadJson } from "../../model/metadatauploadjson";
+<<<<<<< HEAD
 import { FileMetadata } from "../../model/file-metadata";
 import { pipelineData } from "./pipeline.data";
+=======
+>>>>>>> 0fcc351 (try to fix metadata file type)
 
 @Component({
   selector: "app-metadata-upload-container",
@@ -23,9 +26,50 @@ export class MetadataUploadContainerComponent implements OnInit {
     progress: number;
   }>();
 
+<<<<<<< HEAD
   model: FileMetadata;
 
   pipelines: Pipeline[] = pipelineData;
+=======
+  pipelines: Pipeline[] = [
+    {
+      value: "generic_mzid_mzml",
+      viewValue: "Generic (mzid+mzml)",
+      acceptedDataTypes: [".mzid", ".mzml"],
+      matchingFilesReges: {}
+    },
+    {
+      value: "metaproteomeanalyzer",
+      viewValue: "MetaProteomeAnalyzer",
+      acceptedDataTypes: [".mgf", ".csv"],
+      matchingFilesReges: {
+        spectra: "*_MixA.mgf",
+        Peptide: "Peptides_*_MixA.mgf",
+        PSM: "PSMs_*_MixA.csv"
+      }
+    },
+    {
+      value: "proteomediscoverer",
+      viewValue: "ProteomeDiscoverer",
+      acceptedDataTypes: [".mgf", ".csv"],
+      matchingFilesReges: {
+        spectra: "*_MixA.mgf",
+        Peptide: "Peptides_*_MixA.mgf",
+        PSM: "PSMs_*_MixA.csv"
+      }
+    },
+    {
+      value: "generic_mgf_mzid",
+      viewValue: "Generic (mgf+mzid)",
+      acceptedDataTypes: [".mgf", ".mzid"],
+      matchingFilesReges: {
+        spectra: "*_MixA.mgf",
+        Peptide: "Peptides_*_MixA.mgf",
+        PSM: "PSMs_*_MixA.csv"
+      }
+    }
+  ];
+>>>>>>> 0fcc351 (try to fix metadata file type)
 
   selectedPipeline: Pipeline = this.pipelines[1];
   uploadDialogId: string;
@@ -65,20 +109,6 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Set a unique identifier for this upload session
     this.uploadProgressService.setUUID("UPLOAD");
 
-    // Prepare the metadata model based on the selected pipeline
-    this.model = {
-      processingPipeline: this.selectedPipeline.value,
-      spectrumFile: "",
-      mzidFile: "",
-      psmFile: "",
-      peptideFile: ""
-    };
-
-    // Log the model for debugging
-    console.log("Model from pipeline:", JSON.stringify(this.model));
-    // Update the metadata with the selected pipeline information
-    this.dataService.updateAllMetaDataUploadJson(this.model);
-
     // Prepare the files for upload
     const files: MultiFileUploadData = { files: [] };
     this.selectedFiles.forEach((file) => {
@@ -97,6 +127,10 @@ export class MetadataUploadContainerComponent implements OnInit {
 
     // Handle post-upload actions
     dialogRef.afterClosed().subscribe(/* ... */);
+    // Update the metadata with the selected pipeline information
+    this.dataService.updateAllMetaDataUploadJson({
+      processingPipeline: this.selectedPipeline.value
+    });
 
     // Clear the list of selected files and reset the file input
     this.selectedFiles = [];
