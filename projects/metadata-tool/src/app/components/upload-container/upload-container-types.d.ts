@@ -11,10 +11,17 @@ interface AcceptedFiles {
   PSM?: RegExp;
 }
 
-interface CategorizedFile {
-  sampleBatch: string;
-  sampleName: string;
-  spectra?: File;
-  Peptide?: File;
-  PSM?: File;
+interface ProcessedFileInfo {
+  batchDescription: string;
+  sampleNumber: string;
+  fileCategory: keyof AcceptedFiles; // Peptode
+}
+
+interface FileWithProcessedInfo {
+  file: File;
+  processedInfo: ProcessedFileInfo; // Assuming ProcessedFileInfo is defined as shown earlier
+}
+
+interface RowData {
+  [key: string]: FileWithProcessedInfo | undefined;
 }

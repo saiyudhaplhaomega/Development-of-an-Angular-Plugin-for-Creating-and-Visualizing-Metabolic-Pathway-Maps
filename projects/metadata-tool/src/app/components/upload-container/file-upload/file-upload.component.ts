@@ -7,18 +7,6 @@ import {
   EventEmitter
 } from "@angular/core";
 
-interface ProcessedFileInfo {
-  fileName: string;
-  batchDescription: string;
-  sampleNumber: string;
-  extension: string;
-}
-
-interface FileWithProcessedInfo {
-  file: File;
-  processedInfo: ProcessedFileInfo; // Assuming ProcessedFileInfo is defined as shown earlier
-}
-
 @Component({
   selector: "app-file-upload",
   templateUrl: "./file-upload.component.html",
@@ -103,20 +91,40 @@ export class FileUploadComponent {
         const sampleName = matches[2];
 
         return {
-          fileName: fileName,
           batchDescription: sampleName, // Assuming this is the correct interpretation
-          sampleNumber: sampleBatch, // Adjust these as per your requirement
-          extension: fileName.split(".").pop() || ""
+          sampleNumber: sampleBatch, // Adjust these as per your requirement\
+          fileCategory: type as keyof AcceptedFiles
         };
       }
     }
-
     // Return a default object if no match is found
-    return {
-      fileName: fileName,
-      batchDescription: "",
-      sampleNumber: "",
-      extension: ""
-    };
+    throw new Error(`No matching pattern found for file: ${fileName}`);
+  }
+
+  categorizedRows: RowData[] = [];
+
+  categorizeFiles(processedNewFiles) {
+    // Categorize the files into rows
+    processedNewFiles.forEach((fileWithInfo) => {
+      const category = fileWithInfo.processedInfo.fileCategory;
+
+      // Find if there's already a row with this category
+      let row = this.categorizedRows.find((r) => r[category] === undefined);
+
+      if (!row) {
+        row = this.initiateRow();
+        this.categorizedRows.push(row);
+      }
+
+      row[category] = fileWithInfo;
+    });
+  }
+
+  private initiateRow(): RowData {
+    const row: RowData = {};
+    Object.keys(this.accetpedFileRegex).forEach((key) => {
+      row[key] = undefined;
+    });
+    return row;
   }
 }
