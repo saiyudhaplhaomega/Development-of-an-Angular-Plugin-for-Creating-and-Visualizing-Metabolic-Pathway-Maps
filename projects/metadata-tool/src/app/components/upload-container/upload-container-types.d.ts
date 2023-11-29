@@ -2,11 +2,19 @@ interface Pipeline {
   value: string;
   viewValue: string;
   acceptedDataTypes: string[];
-  matchingFilesReges: acceptedFiles;
+  matchingFilesReges: AcceptedFiles;
 }
 
-interface acceptedFiles {
-  spectra?: "(.*)_(.*).mgf$";
-  Peptide?: "Peptides_(.*)_(.*).csv$";
-  PSM?: "PSMs_(.*)_(.*).csv$";
+interface AcceptedFiles {
+  spectra?: RegExp;
+  Peptide?: RegExp;
+  PSM?: RegExp;
+}
+
+interface CategorizedFile {
+  sampleBatch: string;
+  sampleName: string;
+  spectra?: File;
+  Peptide?: File;
+  PSM?: File;
 }

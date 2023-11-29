@@ -27,7 +27,7 @@ interface FileWithProcessedInfo {
 export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string[];
-  @Input() accetpedFileRegex: any;
+  @Input() accetpedFileRegex: AcceptedFiles;
   @Output() filesSelected = new EventEmitter<File[]>();
 
   isDragOver = false;
@@ -55,15 +55,12 @@ export class FileUploadComponent {
       this.updateFiles(newFiles);
     }
   }
-
   private updateFiles(newFiles: File[]) {
-    // Process the new files to include the processed information
     const processedNewFiles = newFiles.map((file) => ({
       file: file,
-      processedInfo: this.processFileName(file.name)
+      processedInfo: this.extractInfoFromFilename(file.name)
     }));
 
-    // Filter out files that are already in the selectedFiles array
     const uniqueNewFiles = processedNewFiles.filter(
       (processedFile) =>
         !this.selectedFiles.some(
@@ -73,15 +70,9 @@ export class FileUploadComponent {
         )
     );
 
-    // Concatenate the new unique files to the existing selectedFiles array
     this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
-    console.log(
-      "🚀 ~ file: file-upload.component.ts:77 ~ FileUploadComponent ~ updateFiles ~ this.selectedFiles :",
-      this.selectedFiles
-    );
 
-    // Emit the updated selectedFiles array
-
+    console.log("Updated selected files:", this.selectedFiles);
     this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
 
@@ -104,47 +95,28 @@ export class FileUploadComponent {
     // If you are categorizing files, re-categorize them after deletion
   }
 
-  private processFileName(fileName: string): ProcessedFileInfo {
-    const parts = fileName.split("_");
-    const extensionPart = parts.pop()?.split(".") || ["", ""];
-    const batchDescription = parts[0] || "";
-    const sampleNumber = extensionPart[0];
-    const extension = extensionPart[1];
+  private extractInfoFromFilename(fileName: string): ProcessedFileInfo {
+    for (const [type, regex] of Object.entries(this.accetpedFileRegex)) {
+      const matches = fileName.match(regex);
+      if (matches && matches.length >= 3) {
+        const sampleBatch = matches[1];
+        const sampleName = matches[2];
 
+        return {
+          fileName: fileName,
+          batchDescription: sampleName, // Assuming this is the correct interpretation
+          sampleNumber: sampleBatch, // Adjust these as per your requirement
+          extension: fileName.split(".").pop() || ""
+        };
+      }
+    }
+
+    // Return a default object if no match is found
     return {
       fileName: fileName,
-      batchDescription: batchDescription,
-      sampleNumber: sampleNumber,
-      extension: extension
+      batchDescription: "",
+      sampleNumber: "",
+      extension: ""
     };
-  }
-
-  categorizedFiles: { [categoryKey: string]: { [extension: string]: File[] } } =
-    {};
-
-  private categorizeFiles(regex): void {
-    this.categorizedFiles = this.selectedFiles.reduce((acc, fileWithInfo) => {
-      const matches = fileWithInfo.file.name.match(regex);
-
-      if (matches) {
-        const sampleType = matches[1]; // First capturing group
-        const sampleBatch = matches[2]; // Second capturing group
-        const categoryKey = `${sampleType}_${sampleBatch}`;
-
-        // Initialize the nested structure if not already present
-        if (!acc[categoryKey]) {
-          acc[categoryKey] = {};
-        }
-        const extension = fileWithInfo.processedInfo.extension;
-        if (!acc[categoryKey][extension]) {
-          acc[categoryKey][extension] = [];
-        }
-
-        // Add the file to the appropriate category
-        acc[categoryKey][extension].push(fileWithInfo.file);
-      }
-
-      return acc;
-    }, {});
   }
 }

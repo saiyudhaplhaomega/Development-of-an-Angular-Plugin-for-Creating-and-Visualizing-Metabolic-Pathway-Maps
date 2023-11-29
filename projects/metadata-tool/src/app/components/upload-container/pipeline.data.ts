@@ -4,9 +4,9 @@ export const pipelineData: Pipeline[] = [
     viewValue: "Generic (mzid+mzml)",
     acceptedDataTypes: [".mzid", ".mzml"],
     matchingFilesReges: {
-      spectra: "(.*)_(.*).mgf$",
-      Peptide: "Peptides_(.*)_(.*).csv$",
-      PSM: "PSMs_(.*)_(.*).csv$"
+      spectra: /(.*)_(.*).mgf$/,
+      Peptide: /Peptides_(.*)_(.*).csv$/,
+      PSM: /PSMs_(.*)_(.*).csv$/
     }
   },
   {
@@ -14,9 +14,9 @@ export const pipelineData: Pipeline[] = [
     viewValue: "MetaProteomeAnalyzer",
     acceptedDataTypes: [".mgf", ".csv"],
     matchingFilesReges: {
-      spectra: "(.*)_(.*).mgf$",
-      Peptide: "Peptides_(.*)_(.*).csv$",
-      PSM: "PSMs_(.*)_(.*).csv$"
+      spectra: /(.*)_(.*).mgf$/,
+      Peptide: /Peptides_(.*)_(.*).csv$/,
+      PSM: /PSMs_(.*)_(.*).csv$/
     }
   },
   {
@@ -24,9 +24,9 @@ export const pipelineData: Pipeline[] = [
     viewValue: "ProteomeDiscoverer",
     acceptedDataTypes: [".mgf", ".csv"],
     matchingFilesReges: {
-      spectra: "(.*)_(.*).mgf$",
-      Peptide: "Peptides_(.*)_(.*).csv$",
-      PSM: "PSMs_(.*)_(.*).csv$"
+      spectra: /(.*)_(.*).mgf$/,
+      Peptide: /Peptides_(.*)_(.*).csv$/,
+      PSM: /PSMs_(.*)_(.*).csv$/
     }
   },
   {
@@ -34,9 +34,9 @@ export const pipelineData: Pipeline[] = [
     viewValue: "Generic (mgf+mzid)",
     acceptedDataTypes: [".mgf", ".mzid"],
     matchingFilesReges: {
-      spectra: "(.*)_(.*).mgf$",
-      Peptide: "Peptides_(.*)_(.*).csv$",
-      PSM: "PSMs_(.*)_(.*).csv$"
+      spectra: /(.*)_(.*).mgf$/,
+      Peptide: /Peptides_(.*)_(.*).csv$/,
+      PSM: /PSMs_(.*)_(.*).csv$/
     }
   }
 ];
