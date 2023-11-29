@@ -1,41 +1,40 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MetadataLandingPageComponent } from './pages/metadata-landing-page/metadata-landing-page.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MetadataLandingPageComponent } from "./pages/metadata-landing-page/metadata-landing-page.component";
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: MetadataLandingPageComponent,
+    path: "home",
+    component: MetadataLandingPageComponent
   },
   {
-    path: 'upload',
+    path: "upload",
     loadChildren: () =>
-      import('./components/upload-container/metadata-uploadpage.module').then(
+      import("./components/upload-container/metadata-uploadpage.module").then(
         (m) => m.MetadataUploadContainerModule
-      ),
+      )
   },
   {
-    path: 'workflow',
+    path: "workflow",
     loadChildren: () =>
-      import('./pages/metadata-workflow-page/metadata-workflow.module').then(
+      import("./pages/metadata-workflow-page/metadata-workflow.module").then(
         (m) => m.WorkflowModule
-      ),
+      )
   },
   {
-    path: 'download',
+    path: "download",
     loadChildren: () =>
-      import('./pages/metadata-download-page/metadata-downloadpage.module').then(
-        (m) => m.MetadataDownloadpageModule
-      ),
+      import(
+        "./pages/metadata-download-page/metadata-downloadpage.module"
+      ).then((m) => m.MetadataDownloadpageModule)
   },
 
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'quest', loadChildren: () => import('./pages/metadata-quest-page/metadata-quest-page.module').then(m => m.MetadataQuestPageModule) },
-  { path: '**', redirectTo: 'home' },
+  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "**", redirectTo: "home" }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
