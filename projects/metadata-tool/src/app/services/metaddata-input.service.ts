@@ -34,32 +34,21 @@ export class MetaDataService {
     private url: WebserveraddressService
   ) {}
 
-  updateAllMetaDataUploadJson(model: { [key: string]: any }): void {
+  updateAllMetaDataUploadJson(newMetadata: { [key: string]: any }): void {
     console.log(
-      "🚀 ~ file: metaddata-input.service.ts:38 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ model:",
-      model
+      "🚀 ~ file: metaddata-input.service.ts:38 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ newMetadata:",
+      newMetadata
     );
-
     try {
       const currentMetaData = this.metadataUploadJson.value;
       console.log(
-        "🚀 ~ file: metaddata-input.service.ts:45 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ currentMetaData:",
+        "🚀 ~ file: metaddata-input.service.ts:40 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ currentMetaData:",
         currentMetaData
       );
-      // Update metadataJson with values from the model
+
+      // Update metadataJson with the processingPipeline value from the model
       const updatedMetadataJson = currentMetaData.metadataJson.map((data) => {
-        // Create a copy of the current data item
-        const updatedData = { ...data };
-
-        // Loop over the model's keys and update the corresponding fields
-        // in the metadataJson item
-        for (const key in model) {
-          if (model.hasOwnProperty(key) && key in updatedData) {
-            updatedData[key] = model[key];
-          }
-        }
-
-        return updatedData;
+        return { ...data, processingPipeline: newMetadata.processingPipeline };
       });
 
       // Update the metadataUploadJson with the new metadataJson array
@@ -67,6 +56,10 @@ export class MetaDataService {
         ...currentMetaData,
         metadataJson: updatedMetadataJson
       });
+      console.log(
+        "🚀 ~ file: metaddata-input.service.ts:59 ~ MetaDataService ~ updateAllMetaDataUploadJson ~ this.metadataUploadJson:",
+        this.metadataUploadJson.value
+      );
     } catch (error) {
       console.error("An error occurred while updating metadata:", error);
       // Further error handling can be added here

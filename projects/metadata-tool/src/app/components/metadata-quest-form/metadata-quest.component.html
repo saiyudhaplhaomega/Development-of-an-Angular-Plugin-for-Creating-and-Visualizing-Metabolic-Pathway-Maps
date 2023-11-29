@@ -1,9 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-  <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
+  <formly-form
+    [form]="form"
+    [fields]="fields"
+    [model]="model"
+    [options]="options"
+  ></formly-form>
 </form>
 
-
-
 Model
-{{model| json}}
-
+{{ model | json }}

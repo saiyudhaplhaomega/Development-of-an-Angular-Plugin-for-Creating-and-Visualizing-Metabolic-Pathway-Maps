@@ -26,12 +26,14 @@
 
   <!-- List of Selected Files -->
 
-  <div>
+  <!-- <div>
     <div *ngFor="let category of categorizedFiles | keyvalue">
+      <h1>{{ category.key }}</h1>
+
       <div *ngFor="let fileGroup of category.value | keyvalue">
         <ul>
           <li *ngFor="let file of fileGroup.value">
-            {{ file.name }} {{ category.key }} {{ fileGroup.key | uppercase }}
+            {{ file.name }} {{ fileGroup.key | uppercase }}
 
             <button
               mat-mini-fab
@@ -45,10 +47,5 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
-<table>
-  <tr>
-    <td>Inhalt</td>
-  </tr>
-</table>

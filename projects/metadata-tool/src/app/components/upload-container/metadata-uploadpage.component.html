@@ -14,6 +14,7 @@
     <!-- File Upload Component -->
     <app-file-upload
       [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
+      [accetpedFileRegex]="selectedPipeline.matchingFilesReges"
       (filesSelected)="handleFileSelection($event)"
     >
     </app-file-upload>

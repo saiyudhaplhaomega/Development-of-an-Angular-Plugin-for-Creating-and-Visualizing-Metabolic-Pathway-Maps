@@ -27,6 +27,7 @@ interface FileWithProcessedInfo {
 export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string[];
+  @Input() accetpedFileRegex: any;
   @Output() filesSelected = new EventEmitter<File[]>();
 
   isDragOver = false;
@@ -123,23 +124,28 @@ export class FileUploadComponent {
   categorizedFiles: { [categoryKey: string]: { [extension: string]: File[] } } =
     {};
 
-  private categorizeFiles(): void {
+  private categorizeFiles(regex: acceptedFiles): void {
     this.categorizedFiles = this.selectedFiles.reduce((acc, fileWithInfo) => {
-      // Extract batchDescription, sampleNumber, and extension
-      const { batchDescription, sampleNumber, extension } =
-        fileWithInfo.processedInfo;
-      const categoryKey = `${batchDescription}_${sampleNumber}`;
+      const matches = fileWithInfo.file.name.match(regex);
 
-      // Initialize the nested structure if not already present
-      if (!acc[categoryKey]) {
-        acc[categoryKey] = {};
-      }
-      if (!acc[categoryKey][extension]) {
-        acc[categoryKey][extension] = [];
+      if (matches) {
+        const sampleType = matches[1]; // First capturing group
+        const sampleBatch = matches[2]; // Second capturing group
+        const categoryKey = `${sampleType}_${sampleBatch}`;
+
+        // Initialize the nested structure if not already present
+        if (!acc[categoryKey]) {
+          acc[categoryKey] = {};
+        }
+        const extension = fileWithInfo.processedInfo.extension;
+        if (!acc[categoryKey][extension]) {
+          acc[categoryKey][extension] = [];
+        }
+
+        // Add the file to the appropriate category
+        acc[categoryKey][extension].push(fileWithInfo.file);
       }
 
-      // Add the file to the appropriate category
-      acc[categoryKey][extension].push(fileWithInfo.file);
       return acc;
     }, {});
   }

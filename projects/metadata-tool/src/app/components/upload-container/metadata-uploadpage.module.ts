@@ -14,6 +14,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
 import { SelectionComponent } from "./pipeline-selection/pipeline-selection.component";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
+<<<<<<< HEAD
+=======
+import { MatTableModule } from "@angular/material/table";
+>>>>>>> af1aece (try to create table for upload)
 
 @NgModule({
   declarations: [
@@ -36,7 +40,12 @@ import { FileUploadComponent } from "./file-upload/file-upload.component";
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
+<<<<<<< HEAD
     MatButtonModule
+=======
+    MatButtonModule,
+    MatTableModule
+>>>>>>> af1aece (try to create table for upload)
   ],
   exports: [
     MetadataUploadContainerComponent,

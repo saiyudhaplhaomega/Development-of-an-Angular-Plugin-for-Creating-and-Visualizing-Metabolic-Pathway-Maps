@@ -6,7 +6,7 @@ interface Pipeline {
 }
 
 interface acceptedFiles {
-  spectra?: "*_MixA.mgf" | "a";
-  Peptide?: "Peptides_*_MixA.mgf";
-  PSM?: "PSMs_*_MixA.csv";
+  spectra?: "(.*)_(.*).mgf$";
+  Peptide?: "Peptides_(.*)_(.*).csv$";
+  PSM?: "PSMs_(.*)_(.*).csv$";
 }
