@@ -8,11 +8,8 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MetaDataUploadJson } from "../../model/metadatauploadjson";
-<<<<<<< HEAD
-import { FileMetadata } from "../../model/file-metadata";
+
 import { pipelineData } from "./pipeline.data";
-=======
->>>>>>> 0fcc351 (try to fix metadata file type)
 
 @Component({
   selector: "app-metadata-upload-container",
@@ -26,55 +23,9 @@ export class MetadataUploadContainerComponent implements OnInit {
     progress: number;
   }>();
 
-<<<<<<< HEAD
-  model: FileMetadata;
+  model;
 
   pipelines: Pipeline[] = pipelineData;
-=======
-  pipelines: Pipeline[] = [
-    {
-      value: "generic_mzid_mzml",
-      viewValue: "Generic (mzid+mzml)",
-      acceptedDataTypes: [".mzid", ".mzml"],
-      matchingFilesReges: {
-        spectra: "(.*)_(.*).mgf$",
-        Peptide: "Peptides_(.*)_(.*).csv$",
-        PSM: "PSMs_(.*)_(.*).csv$"
-      }
-    },
-    {
-      value: "metaproteomeanalyzer",
-      viewValue: "MetaProteomeAnalyzer",
-      acceptedDataTypes: [".mgf", ".csv"],
-      matchingFilesReges: {
-        spectra: "(.*)_(.*).mgf$",
-        Peptide: "Peptides_(.*)_(.*).csv$",
-        PSM: "PSMs_(.*)_(.*).csv$"
-      }
-    }
-    // {
-    //   value: "proteomediscoverer",
-    //   viewValue: "ProteomeDiscoverer",
-    //   acceptedDataTypes: [".mgf", ".csv"],
-    //   matchingFilesReges: {
-    //    spectra: ".*_MixA\.mgf$",
-    //     Peptide: "Peptides_.*_MixA\.csv$",
-    //     PSM: "PSMs_.*_MixA\.csv$"
-    //   }
-    // },
-    // {
-    //   value: "generic_mgf_mzid",
-    //   viewValue: "Generic (mgf+mzid)",
-    //   acceptedDataTypes: [".mgf", ".mzid"],
-    //   matchingFilesReges: {
-    //     spectra: ".*_MixA\.mgf$",
-    //     Peptide: "Peptides_.*_MixA\.csv$",
-    //     PSM: "PSMs_.*_MixA\.csv$"
-    //   }
-    // }
-  ];
->>>>>>> 0fcc351 (try to fix metadata file type)
-
   selectedPipeline: Pipeline = this.pipelines[1];
   uploadDialogId: string;
   uploadProgress = 0;

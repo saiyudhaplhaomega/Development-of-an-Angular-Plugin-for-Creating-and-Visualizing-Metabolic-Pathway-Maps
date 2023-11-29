@@ -81,7 +81,6 @@ export class FileUploadComponent {
     );
 
     // Emit the updated selectedFiles array
-    this.categorizeFiles(); // Recategorize after updating files
 
     this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
@@ -103,7 +102,6 @@ export class FileUploadComponent {
       (fileWithInfo) => fileWithInfo.file !== fileToDelete
     );
     // If you are categorizing files, re-categorize them after deletion
-    this.categorizeFiles(); // Recategorize after deleting a file
   }
 
   private processFileName(fileName: string): ProcessedFileInfo {
@@ -124,7 +122,7 @@ export class FileUploadComponent {
   categorizedFiles: { [categoryKey: string]: { [extension: string]: File[] } } =
     {};
 
-  private categorizeFiles(regex: acceptedFiles): void {
+  private categorizeFiles(regex): void {
     this.categorizedFiles = this.selectedFiles.reduce((acc, fileWithInfo) => {
       const matches = fileWithInfo.file.name.match(regex);
 
