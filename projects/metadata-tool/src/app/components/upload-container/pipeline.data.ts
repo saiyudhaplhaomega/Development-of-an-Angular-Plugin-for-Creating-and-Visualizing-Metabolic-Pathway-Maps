@@ -9,7 +9,7 @@ export const pipelineData: Pipeline[] = [
     acceptedDataTypes: [".mzid", ".mzml"],
     matchingFilesReges: {
       spectra: pectraRegex,
-      Peptide: peptideRegex,
+      peptide: peptideRegex,
       PSM: psmRegex
     }
   },
@@ -19,7 +19,7 @@ export const pipelineData: Pipeline[] = [
     acceptedDataTypes: [".mgf", ".csv"],
     matchingFilesReges: {
       spectra: pectraRegex,
-      Peptide: peptideRegex,
+      peptide: peptideRegex,
       PSM: psmRegex
     }
   },
@@ -29,7 +29,7 @@ export const pipelineData: Pipeline[] = [
     acceptedDataTypes: [".mgf", ".csv"],
     matchingFilesReges: {
       spectra: pectraRegex,
-      Peptide: peptideRegex,
+      peptide: peptideRegex,
       PSM: psmRegex
     }
   },
@@ -39,7 +39,7 @@ export const pipelineData: Pipeline[] = [
     acceptedDataTypes: [".mgf", ".mzid"],
     matchingFilesReges: {
       spectra: pectraRegex,
-      Peptide: peptideRegex,
+      peptide: peptideRegex,
       PSM: psmRegex
     }
   }
