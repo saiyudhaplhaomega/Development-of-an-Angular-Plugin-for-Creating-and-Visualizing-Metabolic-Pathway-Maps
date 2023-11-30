@@ -16,6 +16,8 @@ export const dummyData: MetaDataUploadJson = {
         spectrumFile: 'sample1.mgf',
         psmFile: 'PSM_sample1.csv',
         peptideFile: 'PEPTIDE_sample1.csv',
+        ontIdParamArray: [],
+        ontId2EnabledArray: [],
         ontId2Enabled: new Map<string, boolean>(
           [
             ['sourcename', true],
@@ -107,6 +109,8 @@ export const dummyData: MetaDataUploadJson = {
         spectrumFile: 'sample1.mgf',
         psmFile: 'PSM_sample1.csv',
         peptideFile: 'PEPTIDE_sample1.csv',
+        ontIdParamArray: [],
+        ontId2EnabledArray: [],
         ontId2Enabled: new Map<string, boolean>(
           [
             ['sourcename', true],
@@ -198,6 +202,8 @@ export const dummyData: MetaDataUploadJson = {
         spectrumFile: 'sample1.mgf',
         psmFile: 'PSM_sample1.csv',
         peptideFile: 'PEPTIDE_sample1.csv',
+        ontIdParamArray: [],
+        ontId2EnabledArray: [],
         ontId2Enabled: new Map<string, boolean>(
           [
             ['sourcename', true],

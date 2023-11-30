@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MetadataJson, ColumnDataObject } from "../model/metadata-columnData";
+import { MetadataJson, MetadataJsonObject } from "../model/metadata-columnData";
 import {
   HttpClientService,
   MultiFileUploadData,

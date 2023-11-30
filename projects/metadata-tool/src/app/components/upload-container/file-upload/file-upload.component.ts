@@ -17,7 +17,7 @@ export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string[];
   @Input() acceptedFileRegex: AcceptedFiles;
-  @Output() filesSelected = new EventEmitter<File[]>();
+  @Output() filesSelected = new EventEmitter<FileWithProcessedInfo[]>();
 
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
@@ -88,7 +88,7 @@ export class FileUploadComponent {
     console.log("Updated selected files:", this.selectedFiles);
     console.log("Non-matching files:", nonMatchingFiles);
 
-    this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
+    this.filesSelected.emit(this.selectedFiles);
   }
 
   onFilesSelected(event: Event): void {

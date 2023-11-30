@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MetaDataService } from '../../services/metaddata-input.service';
-import { MetadataJson, ColumnDataObject } from  '../../model/metadata-columnData';
+import { MetadataJson, MetadataJsonObject } from  '../../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
 
@@ -257,18 +257,18 @@ export class MetadataWorkflowComponent implements OnInit {
     }
   }
 
-  exportDataAsObject(): ColumnDataObject[] {
+  exportDataAsObject(): MetadataJsonObject[] {
     if (this.hotInstance) {
       const dataExport = this.hotInstance.getData();
       const headers = this.dataArray;
-      const result: ColumnDataObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;
-      const columnData: ColumnDataObject[] = [];
+      const result: MetadataJsonObject[] = this.metaDataInputService.metadataUploadJson.value.metadataJson;
+      const columnData: MetadataJsonObject[] = [];
 
       // Create a map of unique IDs to objects in the result array
       const resultMap = new Map(result.map((obj) => [obj.identID, obj]));
 
       for (let i = 0; i < dataExport.length; i++) {
-        const obj: ColumnDataObject = new ColumnDataObject();
+        const obj: MetadataJsonObject = new MetadataJsonObject();
         for (let j = 0; j < headers.length; j++) {
           const key = headers[j];
           obj[key] = dataExport[i][j];
