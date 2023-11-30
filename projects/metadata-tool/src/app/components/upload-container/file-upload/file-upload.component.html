@@ -76,6 +76,15 @@
     class="file-chooser-button"
     (click)="fileInput.click()"
   >
-    <mat-icon>upload</mat-icon> Choose Files
+    <mat-icon>insert_drive_file </mat-icon> Choose Files
   </button>
 </div>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="onUploadClick()"
+  class="upload-button"
+>
+  <mat-icon>upload </mat-icon> Upload Files
+</button>

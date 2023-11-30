@@ -19,8 +19,12 @@ export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string[];
   @Input() acceptedFileRegex: AcceptedFiles;
-  @Output() filesSelected = new EventEmitter<FileWithProcessedInfo[]>();
+  @Output() filesSelected = new EventEmitter<File[]>();
+  @Output() uploadTriggered = new EventEmitter<void>();
 
+  onUploadClick(): void {
+    this.uploadTriggered.emit();
+  }
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
   selectedFileIds: Set<string> = new Set();

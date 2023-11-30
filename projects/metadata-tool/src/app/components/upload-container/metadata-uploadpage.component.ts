@@ -9,6 +9,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MetaDataUploadJson } from "../../model/metadatauploadjson";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 import { pipelineData } from "./pipeline.data";
 import { MetadataJson, MetadataJsonObject } from "../../model/metadata-columnData";
@@ -20,6 +21,10 @@ import { MetadataJson, MetadataJsonObject } from "../../model/metadata-columnDat
 })
 export class MetadataUploadContainerComponent implements OnInit {
   selectedFiles: File[] = [];
+  // controls  material stepper logic in html
+  firstStepCompleted = false;
+  secondStepCompleted = false;
+  uploadTriggered = false;
 
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
@@ -28,16 +33,20 @@ export class MetadataUploadContainerComponent implements OnInit {
   model;
 
   pipelines: Pipeline[] = pipelineData;
-  selectedPipeline: Pipeline = this.pipelines[1];
+  selectedPipeline: Pipeline = this.pipelines[0];
   uploadDialogId: string;
   uploadProgress = 0;
   showContainer = true;
   metadataUploadJson: MetaDataUploadJson;
 
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
   constructor(
     private dataService: MetaDataService,
     private uploadProgressService: UploadProgressService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _formBuilder: FormBuilder
   ) {}
 
   handleFileSelection(files: FileWithProcessedInfo[]) {
@@ -87,6 +96,16 @@ export class MetadataUploadContainerComponent implements OnInit {
       this.uploadStatusChanged.emit({
         progress: this.uploadProgress
       });
+    });
+
+    this.firstFormGroup = this._formBuilder.group({
+      // initializations for the first form group
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      // initializations for the second form group
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      // initializations for the third form group
     });
   }
 
@@ -149,6 +168,7 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Clear the list of selected files and reset the file input
     this.selectedFiles = [];
     this.clearFileInput();
+    this.uploadTriggered = true; // Set this to true once upload is successful
   }
 
   // Helper method to clear the file input
