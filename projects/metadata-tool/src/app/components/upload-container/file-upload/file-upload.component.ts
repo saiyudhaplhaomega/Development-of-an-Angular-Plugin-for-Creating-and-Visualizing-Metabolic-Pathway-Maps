@@ -176,7 +176,7 @@ export class FileUploadComponent {
         .map((fileInfo) => fileInfo.file)
     );
 
-    this.filesSelected.emit(filesToShow);
+    this.filesSelected.emit(processedFiles);
   }
 
   // Populate a single row with all possible file categories set to undefined initially
