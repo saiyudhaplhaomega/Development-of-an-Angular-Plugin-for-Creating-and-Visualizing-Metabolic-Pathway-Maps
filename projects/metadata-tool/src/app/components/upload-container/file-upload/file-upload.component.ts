@@ -1,5 +1,7 @@
 import {
   Component,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
   ElementRef,
   Input,
@@ -22,8 +24,18 @@ export class FileUploadComponent {
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
   selectedFileIds: Set<string> = new Set();
-
+  missingFiles = true;
   categorizedRows: RowData[] = [];
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Check if 'acceptedDataTypes' or 'acceptedFileRegex' have changed
+    if (changes.acceptedDataTypes || changes.acceptedFileRegex) {
+      // Recategorize files if there are any selected files
+      if (this.selectedFiles.length > 0) {
+        this.updateFiles([]);
+      }
+    }
+  }
 
   // helper Funtion
   getObjectKeys(obj: any): string[] {
@@ -86,7 +98,18 @@ export class FileUploadComponent {
     this.categorizeFiles(this.selectedFiles);
 
     console.log("Updated selected files:", this.selectedFiles);
+
+    // display modal
     console.log("Non-matching files:", nonMatchingFiles);
+    if (nonMatchingFiles.length > 0) {
+      // Create a message string listing the non-matching files
+      const message = nonMatchingFiles.map((file) => file.name).join(",\n");
+      alert(
+        "These files do not have a matching pattern for the selected pipeline: \n" +
+          message +
+          "."
+      );
+    }
 
     this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
@@ -146,6 +169,14 @@ export class FileUploadComponent {
     this.categorizedRows = Object.values(groupedFiles);
 
     console.log("Categorized rows:", this.categorizedRows); // Debugging
+    // Collect files from categorizedRows to emit
+    const filesToShow = this.categorizedRows.flatMap((row) =>
+      Object.values(row)
+        .filter((fileInfo) => fileInfo)
+        .map((fileInfo) => fileInfo.file)
+    );
+
+    this.filesSelected.emit(filesToShow);
   }
 
   // Populate a single row with all possible file categories set to undefined initially

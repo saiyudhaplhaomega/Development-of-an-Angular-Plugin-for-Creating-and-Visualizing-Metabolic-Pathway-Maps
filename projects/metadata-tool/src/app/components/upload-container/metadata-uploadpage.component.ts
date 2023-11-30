@@ -65,24 +65,28 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Set a unique identifier for this upload session
     this.uploadProgressService.setUUID("UPLOAD");
 
-    const map = new Map<string, string>([['x', 'x'],['y', 'y']]);
-
+    const map = new Map<string, string>([
+      ["x", "x"],
+      ["y", "y"]
+    ]);
 
     // multifile object
     const files: MultiFileUploadData = { files: [] };
 
     // TODO: add actual file data
     this.metadataUploadJson.processingPipeline = this.selectedPipeline.value;
-    this.dataService.metadataUploadJson.next( this.metadataUploadJson);
+    this.dataService.metadataUploadJson.next(this.metadataUploadJson);
 
     // this.dataService.updateAllMetaDataUploadJson({
     //   processingPipeline: this.selectedPipeline.value
     // });
 
-
     // prepare metadatajson for upload
-    const metadataJsonAsFile: File = new File([JSON.stringify(this.metadataUploadJson)], 'jobObject');
-    files.files.push({uploadFile: metadataJsonAsFile, fileID: 'jobObject'});
+    const metadataJsonAsFile: File = new File(
+      [JSON.stringify(this.metadataUploadJson)],
+      "jobObject"
+    );
+    files.files.push({ uploadFile: metadataJsonAsFile, fileID: "jobObject" });
 
     // Prepare the data files for upload
     this.selectedFiles.forEach((file) => {
@@ -91,7 +95,6 @@ export class MetadataUploadContainerComponent implements OnInit {
 
     // Upload the files
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
-
 
     // no dialog for now
     // Open a dialog indicating the upload has started
@@ -104,7 +107,6 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Handle post-upload actions
     // dialogRef.afterClosed().subscribe(/* ... */);
     // Update the metadata with the selected pipeline information
-
 
     // Clear the list of selected files and reset the file input
     this.selectedFiles = [];

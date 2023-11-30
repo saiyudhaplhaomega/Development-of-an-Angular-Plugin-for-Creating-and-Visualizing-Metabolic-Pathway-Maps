@@ -63,6 +63,14 @@
       ></tr>
     </table>
   </div>
+  <!-- Conditional Message for Missing Files -->
+  <div
+    *ngIf="missingFiles && selectedFiles.length > 0"
+    class="missing-files-message"
+  >
+    Please upload the missing files.
+  </div>
+
   <button
     mat-raised-button
     class="file-chooser-button"
