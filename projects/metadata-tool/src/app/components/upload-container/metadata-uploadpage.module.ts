@@ -15,13 +15,15 @@ import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
 import { SelectionComponent } from "./pipeline-selection/pipeline-selection.component";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 import { MatTableModule } from "@angular/material/table";
+import { FileTableComponent } from "./file-upload/file-table/file-table.component";
 
 @NgModule({
   declarations: [
     MetadataUploadContainerComponent,
     ProgressBarComponent,
     SelectionComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    FileTableComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { MatTableModule } from "@angular/material/table";
     MetadataUploadContainerComponent,
     ProgressBarComponent,
     SelectionComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    FileTableComponent
   ]
 })
 export class MetadataUploadContainerModule {}

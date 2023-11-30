@@ -36,19 +36,21 @@
     </thead>
     <tbody>
       <tr *ngFor="let rowData of categorizedRows">
-        <td *ngFor="let fileType of getObjectKeys(acceptedFileRegex)">
-          <ng-container *ngIf="rowData[fileType]; else noData">
-            {{ rowData[fileType].file.name }}
-            <button
-              mat-mini-fab
-              color="warn"
-              (click)="deleteFile(rowData[fileType].file)"
-              class="delete-button"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </ng-container>
-          <ng-template #noData>""</ng-template>
+        <td *ngFor="let file of getObjectKeys(acceptedFileRegex)">
+          <!-- Apply the click event and conditional class directly to the div -->
+          <div
+            *ngIf="rowData[file]"
+            (click)="
+              toggleFileSelection(rowData[file].processedInfo.id, $event)
+            "
+            [class.selected]="
+              selectedFileIds.has(rowData[file].processedInfo.id)
+            "
+          >
+            {{ rowData[file].file.name }}
+          </div>
+          <!-- Provide an empty placeholder if no file is present -->
+          <div *ngIf="!rowData[file]">no file</div>
         </td>
       </tr>
     </tbody>

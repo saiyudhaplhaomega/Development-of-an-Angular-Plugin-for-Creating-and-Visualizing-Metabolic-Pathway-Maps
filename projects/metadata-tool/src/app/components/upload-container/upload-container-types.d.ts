@@ -22,6 +22,7 @@ interface ProcessedFileInfo {
   batchDescription: string;
   sampleNumber: string;
   fileCategory: keyof AcceptedFiles;
+  id: string;
 }
 
 interface FileWithProcessedInfo {

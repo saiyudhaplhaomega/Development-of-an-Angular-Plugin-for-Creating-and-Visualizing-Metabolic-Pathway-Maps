@@ -4,7 +4,8 @@ import {
   ElementRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  HostListener
 } from "@angular/core";
 
 @Component({
@@ -20,8 +21,16 @@ export class FileUploadComponent {
 
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
+  selectedFileIds: Set<string> = new Set();
+
   categorizedRows: RowData[] = [];
 
+  // helper Funtion
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
+
+  // Drag and Drop behaviour
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -44,6 +53,8 @@ export class FileUploadComponent {
       this.updateFiles(newFiles);
     }
   }
+
+  // Data flow of files
   private updateFiles(newFiles: File[]): void {
     const processedNewFiles: FileWithProcessedInfo[] = [];
     const nonMatchingFiles: File[] = [];
@@ -72,7 +83,7 @@ export class FileUploadComponent {
     this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
 
     // Categorize the files
-    this.categorizeFiles(uniqueNewFiles);
+    this.categorizeFiles(this.selectedFiles);
 
     console.log("Updated selected files:", this.selectedFiles);
     console.log("Non-matching files:", nonMatchingFiles);
@@ -106,6 +117,7 @@ export class FileUploadComponent {
         const sampleName = matches[2];
 
         return {
+          id: fileName,
           batchDescription: sampleName, // Assuming this is the correct interpretation
           sampleNumber: sampleBatch, // Adjust these as per your requirement\
           fileCategory: type as keyof AcceptedFiles
@@ -118,21 +130,22 @@ export class FileUploadComponent {
 
   // Categorize files into rows
   private categorizeFiles(processedFiles: FileWithProcessedInfo[]) {
-    this.categorizedRows = [];
+    const groupedFiles = processedFiles.reduce((acc, fileWithInfo) => {
+      const { batchDescription, sampleNumber } = fileWithInfo.processedInfo;
+      const groupKey = `${batchDescription}_${sampleNumber}`;
 
-    for (const fileWithInfo of processedFiles) {
-      // Find a row where the file category is not yet populated
-      let row = this.categorizedRows.find(
-        (r) => !r[fileWithInfo.processedInfo.fileCategory]
-      );
-
-      if (!row) {
-        row = this.initiateRow();
-        this.categorizedRows.push(row);
+      if (!acc[groupKey]) {
+        acc[groupKey] = this.initiateRow();
       }
 
-      row[fileWithInfo.processedInfo.fileCategory] = fileWithInfo;
-    }
+      acc[groupKey][fileWithInfo.processedInfo.fileCategory] = fileWithInfo;
+
+      return acc;
+    }, {});
+
+    this.categorizedRows = Object.values(groupedFiles);
+
+    console.log("Categorized rows:", this.categorizedRows); // Debugging
   }
 
   // Populate a single row with all possible file categories set to undefined initially
@@ -143,7 +156,38 @@ export class FileUploadComponent {
     }
     return row;
   }
-  getObjectKeys(obj: any): string[] {
-    return Object.keys(obj);
+
+  // Delete files by selecting them
+  @HostListener("window:keydown", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (
+      (event.key === "Delete" || event.key === "Backspace") &&
+      this.selectedFileIds.size > 0
+    ) {
+      this.deleteSelectedFiles();
+    }
+  }
+
+  selectedFileIndices: Set<number> = new Set();
+
+  toggleFileSelection(fileId: string, event: MouseEvent): void {
+    if (event.ctrlKey) {
+      if (this.selectedFileIds.has(fileId)) {
+        this.selectedFileIds.delete(fileId);
+      } else {
+        this.selectedFileIds.add(fileId);
+      }
+    } else {
+      this.selectedFileIds.clear();
+      this.selectedFileIds.add(fileId);
+    }
+  }
+
+  deleteSelectedFiles(): void {
+    this.selectedFiles = this.selectedFiles.filter(
+      (fileWithInfo) => !this.selectedFileIds.has(fileWithInfo.processedInfo.id)
+    );
+    this.categorizeFiles(this.selectedFiles);
+    this.selectedFileIds.clear();
   }
 }
