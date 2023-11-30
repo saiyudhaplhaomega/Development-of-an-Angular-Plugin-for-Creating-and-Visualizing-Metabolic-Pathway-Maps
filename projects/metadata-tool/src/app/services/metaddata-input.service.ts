@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ColumnData, ColumnDataObject } from "../model/metadata-columnData";
+import { MetadataJson, ColumnDataObject } from "../model/metadata-columnData";
 import {
   HttpClientService,
   MultiFileUploadData,
@@ -97,7 +97,7 @@ export class MetaDataService {
                 "jobId",
                 this.url.getURL(Endpoints.GET_INITIAL_METADATA),
                 params,
-                5
+                2000
               )
               .subscribe((response: MetaDataUploadJson) => {
                 console.log("response repeat");
@@ -129,7 +129,7 @@ export class MetaDataService {
       });
   }
 
-  submiteTable(dataExport: ColumnData[]) {
+  submiteTable(dataExport: MetadataJson[]) {
     const uploadJson = this.metadataUploadJson.getValue();
     uploadJson.metadataJson = dataExport;
     this.metadataUploadJson.next(uploadJson);

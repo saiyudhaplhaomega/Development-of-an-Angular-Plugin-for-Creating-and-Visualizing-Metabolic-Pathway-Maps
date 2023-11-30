@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MetaDataService } from '../../services/metaddata-input.service';
-import { ColumnData, ColumnDataObject } from  '../../model/metadata-columnData';
+import { MetadataJson, ColumnDataObject } from  '../../model/metadata-columnData';
 import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
 
@@ -29,7 +29,7 @@ export class MetadataWorkflowComponent implements OnInit {
   private mergedSelectionSubscription: Subscription;
 
   mergedSelection: any[] = [];
-  columnData: ColumnData[] = [];
+  columnData: MetadataJson[] = [];
   titlesArray: string[] = [];
   titlesString: string = '';
   dataArray: string[] = [];

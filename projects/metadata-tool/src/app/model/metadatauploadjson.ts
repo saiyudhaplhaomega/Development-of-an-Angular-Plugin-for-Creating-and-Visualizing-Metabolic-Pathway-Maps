@@ -1,12 +1,13 @@
-import { ColumnData } from "./metadata-columnData";
+import { MetadataJson } from "./metadata-columnData";
 
 export interface MetaDataUploadJson {
   jobId: string;
   createInitialMetadataJobId: string;
   fileConversionJobId: string;
   processingFinished: boolean;
-  metadataJson: ColumnData[];
-  dataFilesIDs: Map<string, string>;
+  metadataJson: MetadataJson[];
+  //dataFilesIDs: Map<string, string>;
+  processingPipeline: string;
 }
 
 export class MetaDataUploadJsonObject implements MetaDataUploadJson {
@@ -14,6 +15,7 @@ export class MetaDataUploadJsonObject implements MetaDataUploadJson {
   createInitialMetadataJobId: string;
   fileConversionJobId: string;
   processingFinished: boolean;
-  metadataJson: ColumnData[];
-  dataFilesIDs: Map<string, string>;
+  metadataJson: MetadataJson[];
+  //dataFilesIDs: Map<string, string>;
+  processingPipeline: string;
 }

@@ -3,6 +3,7 @@ import { MetaDataService } from "../../services/metaddata-input.service";
 import {
   MultiFileUploadData,
   UploadDialogComponent,
+  UploadFile,
   UploadProgressService
 } from "shared-lib";
 import { MatDialog } from "@angular/material/dialog";
@@ -64,8 +65,26 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Set a unique identifier for this upload session
     this.uploadProgressService.setUUID("UPLOAD");
 
-    // Prepare the files for upload
+    const map = new Map<string, string>([['x', 'x'],['y', 'y']]);
+
+
+    // multifile object
     const files: MultiFileUploadData = { files: [] };
+
+    // TODO: add actual file data
+    this.metadataUploadJson.processingPipeline = this.selectedPipeline.value;
+    this.dataService.metadataUploadJson.next( this.metadataUploadJson);
+
+    // this.dataService.updateAllMetaDataUploadJson({
+    //   processingPipeline: this.selectedPipeline.value
+    // });
+
+
+    // prepare metadatajson for upload
+    const metadataJsonAsFile: File = new File([JSON.stringify(this.metadataUploadJson)], 'jobObject');
+    files.files.push({uploadFile: metadataJsonAsFile, fileID: 'jobObject'});
+
+    // Prepare the data files for upload
     this.selectedFiles.forEach((file) => {
       files.files.push({ uploadFile: file, fileID: file.name });
     });
@@ -73,6 +92,8 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Upload the files
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
 
+
+    // no dialog for now
     // Open a dialog indicating the upload has started
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       id: this.uploadDialogId,
@@ -81,11 +102,9 @@ export class MetadataUploadContainerComponent implements OnInit {
     });
 
     // Handle post-upload actions
-    dialogRef.afterClosed().subscribe(/* ... */);
+    // dialogRef.afterClosed().subscribe(/* ... */);
     // Update the metadata with the selected pipeline information
-    this.dataService.updateAllMetaDataUploadJson({
-      processingPipeline: this.selectedPipeline.value
-    });
+
 
     // Clear the list of selected files and reset the file input
     this.selectedFiles = [];

@@ -4,7 +4,7 @@ export const pipelineData: Pipeline[] = [
     viewValue: "Generic (mzid+mzml)",
     acceptedDataTypes: [".mzid", ".mzml"],
     matchingFilesReges: {
-      spectra: /(.*)_(.*).mgf$/,
+      spectra: /(.*)_(.*).mzid$/,
       Peptide: /Peptides_(.*)_(.*).csv$/,
       PSM: /PSMs_(.*)_(.*).csv$/
     }

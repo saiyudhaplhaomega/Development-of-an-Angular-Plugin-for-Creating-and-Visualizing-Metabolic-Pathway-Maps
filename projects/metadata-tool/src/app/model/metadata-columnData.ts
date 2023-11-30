@@ -1,93 +1,31 @@
-export interface ColumnData {
-  processingPipeline?: string;
+export interface MetadataJson {
+
+  ontId2Param: Map<string, string>;
+  ontId2Enabled: Map<string, boolean>;
+
+  	// non ontology entries
   identID: string;
   counter: number;
-  sourcename: string;
-  group: string;
-  projectIdentifier: string;
-  study: string;
-  project: string;
-  program: string;
-  biologicalReplicate: number;
-  metagenomes: string;
-  ecologicalMetagenomes: string;
-  organismalMetagenomes: string;
-  syntheticMetagenome: string;
-  analyticalFraction: string;
-  temperatureCondtions: string;
-  pressure: string;
-  pH: string;
-  carbonSource: string;
-  electronSource: string;
-  countIdentifiedSpezies: string;
-  assayName: string;
-  experimentType: string;
-  technologyType: string;
-  technicalReplicate: number;
-  label: string;
-  fractionIdentifier: number;
-  cleavantAgentDetails: string;
-  instrument: string;
-  modificationParameters: string;
-  modificationParameters1: string;
-  modificationParameters2: string;
-  dissociationMethod: string;
-  precursorMassTolerance: string;
-  fragmentMassTolerance: string;
-  dataFile: string;
-  fileUri: string;
+  psmFile: string;
+	peptideFile: string;
+	spectrumFile: string;
   mzID: string;
   mzML: string;
-  spectrumFile: string;
-  psmFile: string;
-  comment: string;
-  factorValue: string;
-  fileType: string;
+
 }
 
-export class ColumnDataObject implements ColumnData {
-  processingPipeline?: string;
+export class ColumnDataObject implements MetadataJson {
+
+  ontId2Param: Map<string, string>;
+  ontId2Enabled: Map<string, boolean>;
+
+  	// non ontology entries
   identID: string;
   counter: number;
-  sourcename: string;
-  group: string;
-  projectIdentifier: string;
-  study: string;
-  project: string;
-  program: string;
-  biologicalReplicate: number;
-  metagenomes: string;
-  ecologicalMetagenomes: string;
-  organismalMetagenomes: string;
-  syntheticMetagenome: string;
-  analyticalFraction: string;
-  temperatureCondtions: string;
-  pressure: string;
-  pH: string;
-  carbonSource: string;
-  electronSource: string;
-  countIdentifiedSpezies: string;
-  assayName: string;
-  experimentType: string;
-  technologyType: string;
-  technicalReplicate: number;
-  label: string;
-  fractionIdentifier: number;
-  cleavantAgentDetails: string;
-  instrument: string;
-  modificationParameters: string;
-  modificationParameters1: string;
-  modificationParameters2: string;
-  dissociationMethod: string;
-  precursorMassTolerance: string;
-  fragmentMassTolerance: string;
-  dataFile: string;
-  fileUri: string;
+  psmFile: string;
+	peptideFile: string;
+	spectrumFile: string;
   mzID: string;
   mzML: string;
-  spectrumFile: string;
-  psmFile: string;
-  comment: string;
-  factorValue: string;
-  fileType: string;
+
 }
