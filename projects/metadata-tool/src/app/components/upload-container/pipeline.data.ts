@@ -9,8 +9,7 @@ export const pipelineData: Pipeline[] = [
     acceptedDataTypes: [".mzid", ".mzml"],
     matchingFilesReges: {
       spectra: pectraRegex,
-      peptide: peptideRegex,
-      PSM: psmRegex
+      peptide: peptideRegex
     }
   },
   {
