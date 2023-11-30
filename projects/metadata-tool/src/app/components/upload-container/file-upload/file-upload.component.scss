@@ -1,7 +1,21 @@
-.dropfield.drag-over {
-  /* Example styles for when dragging over */
-  border-color: #007bff;
-  background-color: rgba(0, 123, 255, 0.1);
+/* Define variables for colors */
+$dropfield-dragover-background: #add8e6;
+$dropfield-border: 2px dashed #ccc;
+$dropfield-dragover-border: 2px solid #ccc;
+
+.dropfield {
+  padding: 100px;
+  border: $dropfield-border;
+  text-align: center;
+  transition: background-color 0.3s;
+  margin-bottom: 40px; // Added space at the bottom
+  margin-top: 40px;
+
+  /* Nested styling for drag-over state */
+  &.drag-over {
+    background-color: $dropfield-dragover-background;
+    border: $dropfield-dragover-border;
+  }
 }
 
 .file-selection-row {
@@ -33,4 +47,15 @@
 }
 .selected {
   background-color: #e0e0e0; /* Change to your preferred color for highlighting */
+}
+/* file-upload.component.scss */
+.table-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the table */
+  align-items: center; /* Vertically center the table */
+  height: 100%; /* Adjust the height as needed */
+}
+
+.file-chooser-button {
+  margin: 40px;
 }

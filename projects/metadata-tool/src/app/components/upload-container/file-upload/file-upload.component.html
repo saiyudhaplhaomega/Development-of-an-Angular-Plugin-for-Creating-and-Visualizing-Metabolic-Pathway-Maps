@@ -2,18 +2,16 @@
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
-  [class.dropfield.drag-over]="isDragOver"
+  class="dropfield"
+  [class.drag-over]="isDragOver"
 >
   <!-- Drag and Drop Instruction Text -->
-  <div class="file-selection-row">
-    <div *ngIf="selectedFiles.length == 0" class="drag-drop-text">
-      Drag and Drop Files Here
-    </div>
-    <button class="file-chooser-button" (click)="fileInput.click()">
-      <mat-icon>upload</mat-icon> Choose Files
-    </button>
+
+  <div *ngIf="selectedFiles.length == 0">
+    <h1>Drag and Drop Files Here</h1>
+    <h1>or</h1>
   </div>
-  <div>Files must have an {{ acceptedDataTypes }} extension.</div>
+
   <!-- File Upload Button -->
   <input
     #fileInput
@@ -25,34 +23,51 @@
   />
 
   <!-- List of Selected Files -->
-
-  <table *ngIf="categorizedRows.length > 0">
-    <thead>
-      <tr>
-        <th *ngFor="let fileType of getObjectKeys(acceptedFileRegex)">
-          {{ fileType | uppercase }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rowData of categorizedRows">
-        <td *ngFor="let file of getObjectKeys(acceptedFileRegex)">
-          <!-- Apply the click event and conditional class directly to the div -->
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="categorizedRows"
+      class="mat-elevation-z8"
+      *ngIf="categorizedRows.length > 0"
+    >
+      <!-- Column Definitions -->
+      <ng-container
+        *ngFor="let fileType of getObjectKeys(acceptedFileRegex)"
+        matColumnDef="{{ fileType }}"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ fileType | uppercase }}</th>
+        <td mat-cell *matCellDef="let row">
           <div
-            *ngIf="rowData[file]"
+            *ngIf="row[fileType]"
             (click)="
-              toggleFileSelection(rowData[file].processedInfo.id, $event)
+              toggleFileSelection(row[fileType].processedInfo.id, $event)
             "
             [class.selected]="
-              selectedFileIds.has(rowData[file].processedInfo.id)
+              selectedFileIds.has(row[fileType].processedInfo.id)
             "
           >
-            {{ rowData[file].file.name }}
+            {{ row[fileType].file.name }}
           </div>
-          <!-- Provide an empty placeholder if no file is present -->
-          <div *ngIf="!rowData[file]">no file</div>
+          <div *ngIf="!row[fileType]" style="color: red">no file</div>
         </td>
-      </tr>
-    </tbody>
-  </table>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="getObjectKeys(acceptedFileRegex)"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: getObjectKeys(acceptedFileRegex)"
+      ></tr>
+    </table>
+  </div>
+  <button
+    mat-raised-button
+    class="file-chooser-button"
+    (click)="fileInput.click()"
+  >
+    <mat-icon>upload</mat-icon> Choose Files
+  </button>
 </div>
