@@ -10,11 +10,11 @@
 </app-pipeline-selection>
 
 <div *ngIf="showContainer" class="upload-container">
-  <div *ngIf="showContainer" class="upload-container">
+  <div *ngIf="showContainer">
     <!-- File Upload Component -->
     <app-file-upload
       [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
-      [accetpedFileRegex]="selectedPipeline.matchingFilesReges"
+      [acceptedFileRegex]="selectedPipeline.matchingFilesReges"
       (filesSelected)="handleFileSelection($event)"
     >
     </app-file-upload>

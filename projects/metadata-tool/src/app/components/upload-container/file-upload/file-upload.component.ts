@@ -4,7 +4,8 @@ import {
   ElementRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  HostListener
 } from "@angular/core";
 
 @Component({
@@ -15,12 +16,21 @@ import {
 export class FileUploadComponent {
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
   @Input() acceptedDataTypes: string[];
-  @Input() accetpedFileRegex: AcceptedFiles;
+  @Input() acceptedFileRegex: AcceptedFiles;
   @Output() filesSelected = new EventEmitter<File[]>();
 
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
+  selectedFileIds: Set<string> = new Set();
 
+  categorizedRows: RowData[] = [];
+
+  // helper Funtion
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
+
+  // Drag and Drop behaviour
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -43,11 +53,23 @@ export class FileUploadComponent {
       this.updateFiles(newFiles);
     }
   }
-  private updateFiles(newFiles: File[]) {
-    const processedNewFiles = newFiles.map((file) => ({
-      file: file,
-      processedInfo: this.extractInfoFromFilename(file.name)
-    }));
+
+  // Data flow of files
+  private updateFiles(newFiles: File[]): void {
+    const processedNewFiles: FileWithProcessedInfo[] = [];
+    const nonMatchingFiles: File[] = [];
+
+    newFiles.forEach((file) => {
+      try {
+        const processedInfo = this.extractInfoFromFilename(file.name);
+        processedNewFiles.push({ file, processedInfo });
+      } catch (error) {
+        console.error(
+          `Error processing file: ${file.name}. Error: ${error.message}`
+        );
+        nonMatchingFiles.push(file);
+      }
+    });
 
     const uniqueNewFiles = processedNewFiles.filter(
       (processedFile) =>
@@ -60,7 +82,12 @@ export class FileUploadComponent {
 
     this.selectedFiles = [...this.selectedFiles, ...uniqueNewFiles];
 
+    // Categorize the files
+    this.categorizeFiles(this.selectedFiles);
+
     console.log("Updated selected files:", this.selectedFiles);
+    console.log("Non-matching files:", nonMatchingFiles);
+
     this.filesSelected.emit(this.selectedFiles.map((f) => f.file));
   }
 
@@ -68,9 +95,6 @@ export class FileUploadComponent {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const newFiles = Array.from(input.files);
-
-      // Concatenate the new unique files to the existing selectedFiles
-
       this.updateFiles(newFiles);
       input.value = "";
     }
@@ -80,17 +104,20 @@ export class FileUploadComponent {
     this.selectedFiles = this.selectedFiles.filter(
       (fileWithInfo) => fileWithInfo.file !== fileToDelete
     );
-    // If you are categorizing files, re-categorize them after deletion
+
+    // Re-categorize files after deletion
+    this.categorizeFiles(this.selectedFiles);
   }
 
   private extractInfoFromFilename(fileName: string): ProcessedFileInfo {
-    for (const [type, regex] of Object.entries(this.accetpedFileRegex)) {
+    for (const [type, regex] of Object.entries(this.acceptedFileRegex)) {
       const matches = fileName.match(regex);
       if (matches && matches.length >= 3) {
         const sampleBatch = matches[1];
         const sampleName = matches[2];
 
         return {
+          id: fileName,
           batchDescription: sampleName, // Assuming this is the correct interpretation
           sampleNumber: sampleBatch, // Adjust these as per your requirement\
           fileCategory: type as keyof AcceptedFiles
@@ -101,30 +128,66 @@ export class FileUploadComponent {
     throw new Error(`No matching pattern found for file: ${fileName}`);
   }
 
-  categorizedRows: RowData[] = [];
+  // Categorize files into rows
+  private categorizeFiles(processedFiles: FileWithProcessedInfo[]) {
+    const groupedFiles = processedFiles.reduce((acc, fileWithInfo) => {
+      const { batchDescription, sampleNumber } = fileWithInfo.processedInfo;
+      const groupKey = `${batchDescription}_${sampleNumber}`;
 
-  categorizeFiles(processedNewFiles) {
-    // Categorize the files into rows
-    processedNewFiles.forEach((fileWithInfo) => {
-      const category = fileWithInfo.processedInfo.fileCategory;
-
-      // Find if there's already a row with this category
-      let row = this.categorizedRows.find((r) => r[category] === undefined);
-
-      if (!row) {
-        row = this.initiateRow();
-        this.categorizedRows.push(row);
+      if (!acc[groupKey]) {
+        acc[groupKey] = this.initiateRow();
       }
 
-      row[category] = fileWithInfo;
-    });
+      acc[groupKey][fileWithInfo.processedInfo.fileCategory] = fileWithInfo;
+
+      return acc;
+    }, {});
+
+    this.categorizedRows = Object.values(groupedFiles);
+
+    console.log("Categorized rows:", this.categorizedRows); // Debugging
   }
 
+  // Populate a single row with all possible file categories set to undefined initially
   private initiateRow(): RowData {
     const row: RowData = {};
-    Object.keys(this.accetpedFileRegex).forEach((key) => {
-      row[key] = undefined;
-    });
+    for (const key of Object.keys(this.acceptedFileRegex)) {
+      row[key as keyof AcceptedFiles] = undefined;
+    }
     return row;
+  }
+
+  // Delete files by selecting them
+  @HostListener("window:keydown", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (
+      (event.key === "Delete" || event.key === "Backspace") &&
+      this.selectedFileIds.size > 0
+    ) {
+      this.deleteSelectedFiles();
+    }
+  }
+
+  selectedFileIndices: Set<number> = new Set();
+
+  toggleFileSelection(fileId: string, event: MouseEvent): void {
+    if (event.ctrlKey) {
+      if (this.selectedFileIds.has(fileId)) {
+        this.selectedFileIds.delete(fileId);
+      } else {
+        this.selectedFileIds.add(fileId);
+      }
+    } else {
+      this.selectedFileIds.clear();
+      this.selectedFileIds.add(fileId);
+    }
+  }
+
+  deleteSelectedFiles(): void {
+    this.selectedFiles = this.selectedFiles.filter(
+      (fileWithInfo) => !this.selectedFileIds.has(fileWithInfo.processedInfo.id)
+    );
+    this.categorizeFiles(this.selectedFiles);
+    this.selectedFileIds.clear();
   }
 }
