@@ -14,8 +14,7 @@
       [(ngModel)]="task.tasklabel">
     <div class="input-group-append">
       <button
-        style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-        class="btn btn-outline-secondary w-sbtn" 
+        class="btn btn-outline-secondary w-sbtn minus_button" 
         type="button" 
         (click)='removeAnnotationTask(task, taskIndex)'>
         —
@@ -85,8 +84,7 @@
         </div>
         <div class="input-group-append">
           <button
-            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" 
+            class="btn btn-outline-secondary w-sbtn minus_button" 
             type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
@@ -103,15 +101,14 @@
           </span>
         </div>
         <input type="text" 
-              class="form-control"
+              class="form-control "
               [ngClass]="{'is-invalid': !prophaneJobState.isFormInputValid(
               this.scope + '_task_' + taskIndex + '_option_' + optionIndex,
               algoSel, 'defaultValue', true)}"
               [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
-            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" 
+            class="btn btn-outline-secondary w-sbtn minus_button" 
             type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
@@ -137,8 +134,7 @@
                [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
-            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" 
+            class="btn btn-outline-secondary w-sbtn minus_button" 
             type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
@@ -186,7 +182,7 @@
             {{algoSel.param}}
           </span>
         </div>
-        <div class="input-group-append custom-select">
+        <div class="form-control">
           <mat-select [(value)]="algoSel.defaultValue" 
                       [compareWith]="prophaneJobState.compare">
             <ng-container *ngFor="let enumVal of algoSel.values">
@@ -197,7 +193,7 @@
           </mat-select>
         </div>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary w-sbtn" 
+          <button class="btn btn-outline-secondary w-sbtn minus_button" 
                   type="button"
                   (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
@@ -221,8 +217,7 @@
           [(ngModel)]="algoSel.defaultValue">
         <div class="input-group-append">
           <button
-            style="border-bottom-right-radius: 0.25rem; border-top-right-radius: 0.25rem "
-            class="btn btn-outline-secondary w-sbtn" 
+            class="btn btn-outline-secondary w-sbtn minus_button" 
             type="button"
             (click)='prophaneJobState.removeOptionString(algoSel, task, taskIndex, optionIndex)'>
             —
@@ -261,7 +256,7 @@
               </ng-container>
             </mat-select>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary w-sbtn" 
+              <button class="btn btn-outline-secondary w-sbtn minus_button" 
                       type="button" 
                       (click)="prophaneJobState.addOptionString(task)">
                 +

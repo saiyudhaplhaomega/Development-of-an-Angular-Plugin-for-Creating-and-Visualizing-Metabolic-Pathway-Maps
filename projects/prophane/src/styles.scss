@@ -177,15 +177,6 @@ custom-table-warning {
   border-radius: 0 0.25rem 0.25rem 0;
 }
 
-.responsive-job-card {
-  width: 100%;
-  /*flex-shrink: 1;*/
-  /*flex-grow: 1;*/
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
 .content-grid-container {
   height: 100%;
   box-sizing: border-box;
@@ -404,13 +395,6 @@ textarea.cdk-textarea-autosize-measuring {
 .ml-job-form {
   margin-left: 20px !important;
 }
-
-.jobCards {
-  width: calc(100% - 18em);
-  margin-left: 0px !important;
-}
-
-
 
 .content_and_footer {
   display: flex;

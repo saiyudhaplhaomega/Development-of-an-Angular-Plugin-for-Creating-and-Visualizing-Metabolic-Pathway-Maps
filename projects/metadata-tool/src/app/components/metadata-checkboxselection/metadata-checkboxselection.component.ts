@@ -10,7 +10,7 @@ import { CheckboxSelectionService } from './checkboxselectionservice';
 export class MetaDataCheckboxSelectionComponent {
   form: FormGroup;
 
-  notSelectableProperties1 = [
+  static notSelectableProperties1 = [
     {
       data: 'identID',
       title: 'identID',
@@ -33,7 +33,7 @@ export class MetaDataCheckboxSelectionComponent {
     { data: 'group', title: 'group', type: 'text' },
   ];
 
-  notSelectableCharacteristic = [
+  static notSelectableCharacteristic = [
     {
       data: 'biologicalReplicate',
       title: 'biological replicate',
@@ -89,7 +89,7 @@ export class MetaDataCheckboxSelectionComponent {
     },
   ];
 
-  notSelectableProperties2 = [
+  static notSelectableProperties2 = [
     { data: 'assayName', title: 'assay name', type: 'text' },
     { data: 'experimentType', title: 'experiment type', type: 'text' },
   ];
@@ -98,7 +98,7 @@ export class MetaDataCheckboxSelectionComponent {
     { data: 'technologyType', title: 'technology type', type: 'text' },
   ];
 
-  notSelectableComments1 = [
+  static notSelectableComments1 = [
     { data: 'technicalReplicate', title: 'technical replicate', type: 'text' },
     { data: 'label', title: 'label', type: 'text' },
   ];
@@ -141,19 +141,27 @@ export class MetaDataCheckboxSelectionComponent {
     { data: 'psm file', title: 'psm file', type: 'text' },
   ];
 
-  notSelectableComments2 = [
+  static notSelectableComments2 = [
     { data: 'dataFile', title: 'data file', type: 'text' },
     { data: 'fileUri', title: 'file uri', type: 'text' },
     { data: 'mzID', title: 'mzID', type: 'text' },
     { data: 'mzML', title: 'mzML', type: 'text' },
   ];
 
-  factorValue = [{ data: 'factorValue', title: 'factor value', type: 'text' }];
+  static factorValue = [{ data: 'factorValue', title: 'factor value', type: 'text' }];
 
   selectableProperties1Counter: number = 0;
   selectableCharacteristicCounter: number = 0;
   selectableProperties2Counter: number = 0;
   selectableCommentsCounter: number = 0;
+
+  public static mergedSelection = [
+    ...MetaDataCheckboxSelectionComponent.notSelectableProperties1,
+    ...MetaDataCheckboxSelectionComponent.notSelectableCharacteristic,
+    ...MetaDataCheckboxSelectionComponent.notSelectableProperties2,
+    ...MetaDataCheckboxSelectionComponent.notSelectableComments1,
+    ...MetaDataCheckboxSelectionComponent.notSelectableComments2,
+    ...MetaDataCheckboxSelectionComponent.factorValue,];
 
  selectables = [
   {
@@ -216,17 +224,38 @@ export class MetaDataCheckboxSelectionComponent {
       this.form.get('comments') as FormArray,
       this.selectableCommentsCounter
     );
+
+    // Subscribe to value changes for each form control
+    this.form
+      .get('properties1')
+      .valueChanges.subscribe(() => this.submitOnChange('properties1'));
+
+    this.form
+      .get('characteristic')
+      .valueChanges.subscribe(() => this.submitOnChange('characteristic'));
+
+    this.form
+      .get('properties2')
+      .valueChanges.subscribe(() => this.submitOnChange('properties2'));
+
+    this.form
+      .get('comments')
+      .valueChanges.subscribe(() => this.submitOnChange('comments'));
   }
 
   private addCheckboxes(data: any[], formArray: FormArray, counter: number) {
     data.forEach(() => {
       formArray.push(new FormControl(false));
     });
-    // Initialize the counter based on the initially selected checkboxes
     counter = formArray.controls.filter((control) => control.value).length;
-
     // Update the counter via the service
     this.updateCounter(formArray, counter);
+  }
+
+  submitOnChange(section: string) {
+    const formArray = this.form.get(section) as FormArray;
+    this.updateCounter(formArray, formArray.controls.filter((control) => control.value).length);
+    this.submit();
   }
 
   submit() {
@@ -248,16 +277,16 @@ export class MetaDataCheckboxSelectionComponent {
     );
 
     const mergedSelection = [
-      ...this.notSelectableProperties1,
+      ...MetaDataCheckboxSelectionComponent.notSelectableProperties1,
       ...selectedColumnsProperties1,
-      ...this.notSelectableCharacteristic,
+      ...MetaDataCheckboxSelectionComponent.notSelectableCharacteristic,
       ...selectedColumnsCharacteristic,
-      ...this.notSelectableProperties2,
+      ...MetaDataCheckboxSelectionComponent.notSelectableProperties2,
       ...selectedColumnsProperties2,
-      ...this.notSelectableComments1,
+      ...MetaDataCheckboxSelectionComponent.notSelectableComments1,
       ...selectedColumnsComments,
-      ...this.notSelectableComments2,
-      ...this.factorValue,
+      ...MetaDataCheckboxSelectionComponent.notSelectableComments2,
+      ...MetaDataCheckboxSelectionComponent.factorValue,
     ];
 
     this.checkboxService.updateMergedSelection(mergedSelection);
