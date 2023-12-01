@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
 import { MetaDataService } from "../../services/metaddata-input.service";
@@ -10,6 +10,8 @@ import { MetaDataService } from "../../services/metaddata-input.service";
 })
 export class MetadataQuestFormComponent {
   // This is the data for the first step
+  @Output() questCompleted = new EventEmitter<boolean>();
+
   options: FormlyFormOptions = {};
   model = {};
   specificMetagenomeOptions = [
@@ -210,7 +212,9 @@ export class MetadataQuestFormComponent {
 
   onSubmit(model) {
     console.log("Model:", JSON.stringify(model));
-    // Call the service method to update the metadata
     this.dataService.updateAllMetaDataUploadJson(model);
+
+    // Emit the event
+    this.questCompleted.emit(true);
   }
 }
