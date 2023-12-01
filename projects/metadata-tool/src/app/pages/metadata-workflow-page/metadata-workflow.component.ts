@@ -162,11 +162,6 @@ export class MetadataWorkflowComponent implements OnInit {
         });
         console.log(this.columnDataTransform);
         this.hotSettings.data = this.columnDataTransform;
-        if (!this.hotInstance) {
-          this.initializeHandsontable();
-        } else {
-          this.hotInstance.updateSettings(this.hotSettings);
-        }
     });
 
     // this.metaDataInputService.getColumnData().then((columnData) => {
@@ -203,8 +198,15 @@ export class MetadataWorkflowComponent implements OnInit {
     this.hotInstance = new Handsontable(
       this.hotContainer.nativeElement,
       this.hotSettings,
+      
     );
+    if (this.hotInstance) {
+      this.hotInstance.destroy();
+    }
+  
+    this.hotInstance = new Handsontable(this.hotContainer.nativeElement, this.hotSettings);
   }
+
 
   onKey(event: any) {
     this.performSearch();
@@ -324,6 +326,10 @@ export class MetadataWorkflowComponent implements OnInit {
   submit() {
     const dataExport = this.exportDataAsObject();
     this.metaDataInputService.submiteTable(dataExport);
+  }
+
+  ngAfterViewInit(): void {
+    this.initializeHandsontable();
   }
 }
 

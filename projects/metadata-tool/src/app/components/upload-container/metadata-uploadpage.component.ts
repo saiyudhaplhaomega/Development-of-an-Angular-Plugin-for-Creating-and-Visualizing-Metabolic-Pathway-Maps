@@ -39,6 +39,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   uploadTriggered = false;
   metadataQuestionsCompleted = false;
   metadataTableCompleted = false;
+  fileDownloadCompleted = false;
 
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
@@ -57,6 +58,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   fileUploadFormGroup: FormGroup;
   metadataQuestionFormGroup: FormGroup;
   metadataTableFormGroup: FormGroup;
+  fileDownloadFormGroup: FormGroup;
   constructor(
     private dataService: MetaDataService,
     private uploadProgressService: UploadProgressService,
@@ -129,7 +131,9 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.metadataTableFormGroup = this._formBuilder.group({
       // initializations for the third form group
     });
-  }
+    this.fileDownloadFormGroup = this._formBuilder.group({    
+  });
+}
 
   onUpload(): void {
     console.log("Selected Files:", this.selectedFiles); // Debugging

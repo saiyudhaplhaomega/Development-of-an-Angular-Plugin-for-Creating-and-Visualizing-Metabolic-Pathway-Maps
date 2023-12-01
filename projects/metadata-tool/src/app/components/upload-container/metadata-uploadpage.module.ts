@@ -20,6 +20,7 @@ import { MetadataQuestFormModule } from "../metadata-quest-form/metadata-quest.m
 import { MatStepperModule } from "@angular/material/stepper";
 import { WorkflowModule } from "../../pages/metadata-workflow-page/metadata-workflow.module";
 import { MetaDataCheckboxSelectionModule } from "../metadata-checkboxselection/metadata-checkboxselection.module";
+import { MetadataDownloadpageModule } from "../../pages/metadata-download-page/metadata-downloadpage.module";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MetaDataCheckboxSelectionModule } from "../metadata-checkboxselection/m
     MatGridListModule,
     MatStepperModule,
     WorkflowModule,
-    MetaDataCheckboxSelectionModule
+    MetaDataCheckboxSelectionModule,
+    MetadataDownloadpageModule
   ],
   exports: [
     MetadataUploadContainerComponent,

@@ -7,7 +7,6 @@ import { registerPlugin,UndoRedo,Filters, DropdownMenu } from 'handsontable/plug
 import { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';
 
 
 // register the filtering plugins
@@ -26,8 +25,7 @@ registerAllModules();
     CommonModule,
     HotTableModule,
     MetadataWorkflowRoutingModule,
-    MatButtonModule,
-    MetaDataCheckboxSelectionModule,
+    MatButtonModule
   ],
   exports: [MetadataWorkflowComponent],
 })

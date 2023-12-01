@@ -15,13 +15,6 @@ const routes: Routes = [
       )
   },
   {
-    path: "workflow",
-    loadChildren: () =>
-      import("./pages/metadata-workflow-page/Page/metadata-workflow-page.module").then(
-        (m) => m.MetadataWorkflowPageModule
-      )
-  },
-  {
     path: "sdrf",
     loadChildren: () =>
       import("./pages/metadata-workflow-page/metadata-workflow.module").then(
