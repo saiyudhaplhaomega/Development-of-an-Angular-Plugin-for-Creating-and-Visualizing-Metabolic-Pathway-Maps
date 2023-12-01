@@ -138,12 +138,12 @@ export class MetadataWorkflowComponent implements OnInit {
     });
 
 
-    this.metaDataInputService.metadataUploadJson.subscribe((obj) => {
-      Promise.resolve(obj.metadataJson).then((columnData) => {
+    this.metaDataInputService.metadataUploadJson.subscribe((metadataUploadJson) => {
         // TODO: ugly workaround, this could be much better
-        this.columnData = columnData;
+        console.log("subscribe triggered")
+        this.columnData = metadataUploadJson.metadataJson;
         this.columnDataTransform = [];
-        columnData.forEach((col) => {
+        this.columnData.forEach((col) => {
           const colTransformed = {};
           console.log(col);
           colTransformed["counter"] = col.counter;
@@ -153,6 +153,9 @@ export class MetadataWorkflowComponent implements OnInit {
           colTransformed["peptideFile"] = col.peptideFile;
           colTransformed["psmFile"] = col.psmFile;
           colTransformed["spectrumFile"] = col.spectrumFile;
+          console.log("ontId2Param");
+          console.log(col.ontId2Param);
+          console.log("ontId2Param over");
           col.ontId2Param.forEach( (val, key) => {
             colTransformed[key] = val;
           });
@@ -165,7 +168,6 @@ export class MetadataWorkflowComponent implements OnInit {
         } else {
           this.hotInstance.updateSettings(this.hotSettings);
         }
-      });
     });
 
     // this.metaDataInputService.getColumnData().then((columnData) => {

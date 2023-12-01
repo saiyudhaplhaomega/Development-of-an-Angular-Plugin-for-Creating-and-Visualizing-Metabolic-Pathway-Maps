@@ -23,7 +23,10 @@ import { dummyData as data } from "./dummy-data";
   providedIn: "root"
 })
 export class MetaDataService {
+
   dummyData: MetaDataUploadJson = data; // TODO: for testing purposes, remove later
+  downloadUrls: string[] = [];
+
 
   public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(
     this.dummyData
@@ -33,6 +36,11 @@ export class MetaDataService {
     private http: HttpClientService,
     private url: WebserveraddressService
   ) {}
+
+  getDownloads(): string[] {
+
+    return
+  }
 
   updateAllMetaDataUploadJson(newMetadata: { [key: string]: any }): void {
     console.log(
@@ -85,6 +93,31 @@ export class MetaDataService {
             console.log(event.body);
             const newMetadataJson: MetaDataUploadJson =
               event.body as MetaDataUploadJson;
+            // const copy: MetadataJsonObject = event.body as MetadataJsonObject;
+            console.log("map or no");
+            newMetadataJson.metadataJson.forEach( (col) => {
+              console.log(col.ontId2Param instanceof Map);
+              const ontId2Param = new Map<string, string>();
+              for (const key in col.ontId2Param) {
+                ontId2Param[key] = col.ontId2Param[key];
+              }
+              col.ontId2Param = ontId2Param;
+              const ontId2Enabled = new Map<string, boolean>();
+              for (const key in col.ontId2Enabled) {
+                ontId2Enabled[key] = col.ontId2Enabled[key];
+              }
+              col.ontId2Enabled = ontId2Enabled;
+              console.log(col.ontId2Param instanceof Map);
+            });
+
+            // newMetadataJson.metadataJson.forEach( (col) => {
+            //   const ontId2Param = new Map<string, string>();
+            //   const ontId2Enabled = new Map<string, boolean>();
+            //   for (prop : col.)
+            // });
+
+
+
             this.metadataUploadJson.next(newMetadataJson);
             console.log(this.metadataUploadJson);
             const params = new HttpParams({
@@ -148,7 +181,13 @@ export class MetaDataService {
             new HttpParams()
           )
           .subscribe((response: DownloadLinksJson) => {
-            // SAVE DOwnload link jsn
+            response.mzmlFileDownloads.forEach( (url) => {
+              this.downloadUrls.push(url);
+            });
+            response.mzidFileDownloads.forEach( (url) => {
+              this.downloadUrls.push(url);
+            });
+            this.downloadUrls.push(response.sdrfFileDownload);
           });
       });
   }
