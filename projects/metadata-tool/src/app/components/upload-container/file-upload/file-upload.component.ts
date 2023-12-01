@@ -179,7 +179,7 @@ export class FileUploadComponent {
 
     this.categorizedRows = Object.values(groupedFiles);
 
-    console.log("Categorized rows:", this.categorizedRows); // Debugging
+    //console.log("Categorized rows:", this.categorizedRows); // Debugging
 
     // Collect files from categorizedRows to emit
     const filesToShow: FileWithProcessedInfo[] = this.categorizedRows.flatMap(

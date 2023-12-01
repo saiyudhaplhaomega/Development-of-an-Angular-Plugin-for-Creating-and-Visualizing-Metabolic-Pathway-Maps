@@ -88,7 +88,7 @@ export class MetadataWorkflowComponent implements OnInit {
   };
 
   ngOnInit(): void {
-   
+
     this.columnData = this.metaDataInputService.metadataUploadJson.value.metadataJson;
     this.columnDataTransform = [];
     this.columnData.forEach((col) => {
@@ -107,19 +107,19 @@ export class MetadataWorkflowComponent implements OnInit {
       this.columnDataTransform.push(colTransformed);
     });
 
-    
+
     this.hotSettings.data = this.columnDataTransform;
     const selection =  this.checkboxService.mergedSelectionSubject.value;
     this.mergedSelection = selection;
     console.log(this.mergedSelection);
     this.titlesArray = this.mergedSelection.map((item) => item.title);
     console.log("HOT INSTANCE");
-    console.log(this.hotInstance); 
+    console.log(this.hotInstance);
     this.hotSettings.columns = this.mergedSelection;
     this.hotSettings.colHeaders = this.titlesArray;
 
     // console.log(this.hotSettings.data);
-    // this.initializeHandsontable(); 
+    // this.initializeHandsontable();
 
 
     // this.cd.detectChanges();
@@ -149,7 +149,7 @@ export class MetadataWorkflowComponent implements OnInit {
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
-   
+
     // this.metaDataInputService.metadataUploadJson.next(dummyData);
     // this.metaDataInputService.getColumnData().then((columnData) => {
     //   this.columnData = columnData; // Populate columnData with fetched data
@@ -200,7 +200,7 @@ export class MetadataWorkflowComponent implements OnInit {
 
       if (search) {
         const queryResult = search.query(searchField.value);
-        console.log(queryResult);
+        // console.log(queryResult);
 
         // Update searchResults and currentSearchIndex
         this.searchResults = queryResult;
@@ -295,10 +295,15 @@ export class MetadataWorkflowComponent implements OnInit {
       const mergedResult = Array.from(resultMap.values());
 
       // Update the metadataJson value
+      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;
+      // console.log("merged result");
+      // console.log(mergedResult);
+
       this.metaDataInputService.metadataUploadJson.value.metadataJson =
         mergedResult;
       console.log('merged result');
       console.log(mergedResult);
+
       return mergedResult;
     }
     return [];
@@ -310,9 +315,9 @@ export class MetadataWorkflowComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.initializeHandsontable(); 
+    this.initializeHandsontable();
     this.metaDataInputService.metadataUploadJson.subscribe(
-  
+
       (metadataUploadJson) => {
         // TODO: ugly workaround, this could be much better
         this.columnData = metadataUploadJson.metadataJson;
@@ -333,7 +338,7 @@ export class MetadataWorkflowComponent implements OnInit {
           this.columnDataTransform.push(colTransformed);
         });
         this.hotSettings.data = this.columnDataTransform;
-        
+
         // if (this.hotInstance) {
         //   // Update the Handsontable instance with new columns
         //   this.hotInstance.updateSettings({
@@ -357,7 +362,7 @@ export class MetadataWorkflowComponent implements OnInit {
           this.dataArray = this.mergedSelection.map((item) => item.data);
           this.dataString = this.dataArray.join(', ');
           this.updateNestedHeadersData(); // Call the function to generate the nested headers
-     
+
           // if (this.hotInstance) {
             // Update the Handsontable instance with new columns
             this.hotInstance.updateSettings({
@@ -367,7 +372,7 @@ export class MetadataWorkflowComponent implements OnInit {
             });
           // } else {
           //   // Initialize Handsontable if not already initialized
-          //   // 
+          //   //
           // }
         },
         (error) => {
