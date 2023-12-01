@@ -63,13 +63,6 @@
       ></tr>
     </table>
   </div>
-  <!-- Conditional Message for Missing Files -->
-  <div
-    *ngIf="missingFiles && selectedFiles.length > 0"
-    class="missing-files-message"
-  >
-    Please upload the missing files.
-  </div>
 
   <button
     mat-raised-button
@@ -79,12 +72,17 @@
     <mat-icon>insert_drive_file </mat-icon> Choose Files
   </button>
 </div>
+<!-- Conditional Message for Missing Files -->
+<div *ngIf="missingFiles && selectedFiles.length > 0">
+  Files must be complete.
+</div>
 
 <button
   mat-raised-button
   color="primary"
   (click)="onUploadClick()"
   class="upload-button"
+  [disabled]="missingFiles"
 >
   <mat-icon>upload </mat-icon> Upload Files
 </button>

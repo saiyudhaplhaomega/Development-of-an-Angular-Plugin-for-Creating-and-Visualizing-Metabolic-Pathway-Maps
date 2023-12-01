@@ -16,15 +16,23 @@ import {
   styleUrls: ["./file-upload.component.scss"]
 })
 export class FileUploadComponent {
+  // Delete files by selecting them
+  @HostListener("window:keydown", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (
+      (event.key === "Delete" || event.key === "Backspace") &&
+      this.selectedFileIds.size > 0
+    ) {
+      this.deleteSelectedFiles();
+    }
+  }
+
   @ViewChild("fileInput") fileInput: ElementRef<HTMLInputElement>;
+
   @Input() acceptedDataTypes: string[];
   @Input() acceptedFileRegex: AcceptedFiles;
   @Output() filesSelected = new EventEmitter<FileWithProcessedInfo[]>();
   @Output() uploadTriggered = new EventEmitter<boolean>();
-
-  onUploadClick(): void {
-    this.uploadTriggered.emit(true);
-  }
 
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
@@ -42,9 +50,8 @@ export class FileUploadComponent {
     }
   }
 
-  // helper Funtion
-  getObjectKeys(obj: any): string[] {
-    return Object.keys(obj);
+  onUploadClick(): void {
+    this.uploadTriggered.emit(true);
   }
 
   // Drag and Drop behaviour
@@ -115,8 +122,6 @@ export class FileUploadComponent {
           "."
       );
     }
-
-    this.filesSelected.emit(this.selectedFiles);
   }
 
   onFilesSelected(event: Event): void {
@@ -174,14 +179,26 @@ export class FileUploadComponent {
     this.categorizedRows = Object.values(groupedFiles);
 
     console.log("Categorized rows:", this.categorizedRows); // Debugging
+
     // Collect files from categorizedRows to emit
-    const filesToShow = this.categorizedRows.flatMap((row) =>
-      Object.values(row)
-        .filter((fileInfo) => fileInfo)
-        .map((fileInfo) => fileInfo.file)
+    const filesToShow: FileWithProcessedInfo[] = this.categorizedRows.flatMap(
+      (row) =>
+        Object.values(row).filter(
+          (fileInfo) => fileInfo
+        ) as FileWithProcessedInfo[]
     );
 
-    this.filesSelected.emit(processedFiles);
+    const requiredFileCategories = Object.keys(this.acceptedFileRegex);
+
+    // Check if all required file categories are present in at least one row
+    // Check if all required file categories are present in every row
+    this.missingFiles = !this.categorizedRows.every((row) => {
+      return requiredFileCategories.every(
+        (category) => row.hasOwnProperty(category) && row[category] != null
+      );
+    });
+
+    this.filesSelected.emit(filesToShow); // Emitting filesToShow instead of processedFiles
   }
 
   // Populate a single row with all possible file categories set to undefined initially
@@ -191,17 +208,6 @@ export class FileUploadComponent {
       row[key as keyof AcceptedFiles] = undefined;
     }
     return row;
-  }
-
-  // Delete files by selecting them
-  @HostListener("window:keydown", ["$event"])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (
-      (event.key === "Delete" || event.key === "Backspace") &&
-      this.selectedFileIds.size > 0
-    ) {
-      this.deleteSelectedFiles();
-    }
   }
 
   selectedFileIndices: Set<number> = new Set();
@@ -225,5 +231,10 @@ export class FileUploadComponent {
     );
     this.categorizeFiles(this.selectedFiles);
     this.selectedFileIds.clear();
+  }
+
+  // helper Funtion
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
 }
