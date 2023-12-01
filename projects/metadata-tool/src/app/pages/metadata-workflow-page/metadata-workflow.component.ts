@@ -30,6 +30,7 @@ export class MetadataWorkflowComponent implements OnInit {
 
   mergedSelection: any[] = [];
   columnData: MetadataJson[] = [];
+  columnDataTransform: any[] = [];
   titlesArray: string[] = [];
   titlesString: string = '';
   dataArray: string[] = [];
@@ -136,10 +137,29 @@ export class MetadataWorkflowComponent implements OnInit {
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
 
+
     this.metaDataInputService.metadataUploadJson.subscribe((obj) => {
       Promise.resolve(obj.metadataJson).then((columnData) => {
+        // TODO: ugly workaround, this could be much better
         this.columnData = columnData;
-        this.hotSettings.data = this.columnData;
+        this.columnDataTransform = [];
+        columnData.forEach((col) => {
+          const colTransformed = {};
+          console.log(col);
+          colTransformed["counter"] = col.counter;
+          colTransformed["identID"] = col.identID;
+          colTransformed["mzID"] = col.mzID;
+          colTransformed["mzML"] = col.mzML;
+          colTransformed["peptideFile"] = col.peptideFile;
+          colTransformed["psmFile"] = col.psmFile;
+          colTransformed["spectrumFile"] = col.spectrumFile;
+          col.ontId2Param.forEach( (val, key) => {
+            colTransformed[key] = val;
+          });
+          this.columnDataTransform.push(colTransformed);
+        });
+        console.log(this.columnDataTransform);
+        this.hotSettings.data = this.columnDataTransform;
         if (!this.hotInstance) {
           this.initializeHandsontable();
         } else {
@@ -281,6 +301,8 @@ export class MetadataWorkflowComponent implements OnInit {
           for (const key in obj) {
             if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {
               existingObj[key] = obj[key];
+            } else {
+              existingObj["ontId2Param"][key] = obj[key];
             }
           }
         }
@@ -291,7 +313,8 @@ export class MetadataWorkflowComponent implements OnInit {
 
       // Update the metadataJson value
       this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;
-
+      console.log("merged result");
+      console.log(mergedResult);
       return mergedResult;
     }
     return [];
@@ -306,3 +329,4 @@ export class MetadataWorkflowComponent implements OnInit {
     this.metaDataInputService.submiteTable(dataExport);
   }
 }
+
