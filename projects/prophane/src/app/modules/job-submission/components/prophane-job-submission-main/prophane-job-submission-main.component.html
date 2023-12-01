@@ -36,7 +36,7 @@
 
     <ng-container *ngIf="!this.prophaneJobState.jobUnavailable">
       <app-job-stepper
-        class="min-w-100"
+
         #prophaneJobStepper
         [expertView]="prophaneJobState.expertView"
         [jobLabelData]="stepperAndCardLabels"
@@ -45,16 +45,9 @@
       >
       </app-job-stepper>
 
-      <div
-        style="
-          min-height: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        "
-      >
-        <div class="jobCards responsive-job-card">
-          <div class="card min-w-600" style="min-height: 0">
+      <div fxLayout="column wrap" fxLayoutAlign="center">
+        <div fxFlex="100%" class="jobCards">
+          <div class="card">
             <div class="card-header" style="text-align:left; font-size: 1.5rem; ">
               <h5>
                 {{ currentCardHeader }}
