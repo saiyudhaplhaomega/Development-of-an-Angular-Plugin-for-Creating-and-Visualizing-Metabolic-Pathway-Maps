@@ -21,6 +21,7 @@
       [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
       [acceptedFileRegex]="selectedPipeline.matchingFilesReges"
       (filesSelected)="handleFileSelection($event); secondStepCompleted = true"
+      (uploadTriggered)="onUpload()"
     >
     </app-file-upload>
   </mat-step>

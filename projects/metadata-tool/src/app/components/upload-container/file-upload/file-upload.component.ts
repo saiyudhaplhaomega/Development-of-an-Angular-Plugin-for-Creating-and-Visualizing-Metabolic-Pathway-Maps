@@ -20,11 +20,12 @@ export class FileUploadComponent {
   @Input() acceptedDataTypes: string[];
   @Input() acceptedFileRegex: AcceptedFiles;
   @Output() filesSelected = new EventEmitter<FileWithProcessedInfo[]>();
-  @Output() uploadTriggered = new EventEmitter<void>();
+  @Output() uploadTriggered = new EventEmitter<boolean>();
 
   onUploadClick(): void {
-    this.uploadTriggered.emit();
+    this.uploadTriggered.emit(true);
   }
+
   isDragOver = false;
   selectedFiles: FileWithProcessedInfo[] = [];
   selectedFileIds: Set<string> = new Set();
