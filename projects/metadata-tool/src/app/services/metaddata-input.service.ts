@@ -85,41 +85,22 @@ export class MetaDataService {
         next: (event) => {
           if (event.type === HttpEventType.UploadProgress) {
             uploadProgress.changeReportLoaded(event.loaded);
-            console.log("UploadProgress event");
-            console.log(event);
           } else if (event.type === HttpEventType.Response) {
-            console.log("Response event");
-            console.log(event);
-            console.log(event.body);
-            const newMetadataJson: MetaDataUploadJson =
-              event.body as MetaDataUploadJson;
+            const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;
             // const copy: MetadataJsonObject = event.body as MetadataJsonObject;
-            console.log("map or no");
             newMetadataJson.metadataJson.forEach( (col) => {
-              console.log(col.ontId2Param instanceof Map);
               const ontId2Param = new Map<string, string>();
               for (const key in col.ontId2Param) {
-                ontId2Param[key] = col.ontId2Param[key];
+                ontId2Param.set(key, col.ontId2Param[key]);
               }
               col.ontId2Param = ontId2Param;
               const ontId2Enabled = new Map<string, boolean>();
               for (const key in col.ontId2Enabled) {
-                ontId2Enabled[key] = col.ontId2Enabled[key];
+                ontId2Enabled.set(key, col.ontId2Enabled[key]);
               }
               col.ontId2Enabled = ontId2Enabled;
-              console.log(col.ontId2Param instanceof Map);
             });
-
-            // newMetadataJson.metadataJson.forEach( (col) => {
-            //   const ontId2Param = new Map<string, string>();
-            //   const ontId2Enabled = new Map<string, boolean>();
-            //   for (prop : col.)
-            // });
-
-
-
             this.metadataUploadJson.next(newMetadataJson);
-            console.log(this.metadataUploadJson);
             const params = new HttpParams({
               fromObject: {
                 jobid: newMetadataJson.createInitialMetadataJobId
@@ -133,6 +114,19 @@ export class MetaDataService {
                 2000
               )
               .subscribe((response: MetaDataUploadJson) => {
+                response.metadataJson.forEach( (col) => {
+                  const ontId2Param = new Map<string, string>();
+                  for (const key in col.ontId2Param) {
+                    ontId2Param.set(key, col.ontId2Param[key]);
+                  }
+                  col.ontId2Param = ontId2Param;
+                  const ontId2Enabled = new Map<string, boolean>();
+                  for (const key in col.ontId2Enabled) {
+                    ontId2Enabled.set(key, col.ontId2Enabled[key]);
+                  }
+                  col.ontId2Enabled = ontId2Enabled;
+                });
+                this.metadataUploadJson.next(newMetadataJson);
                 console.log("response repeat");
                 console.log(response);
                 this.metadataUploadJson.next(response);
@@ -165,6 +159,12 @@ export class MetaDataService {
   submiteTable(dataExport: MetadataJson[]) {
     const uploadJson = this.metadataUploadJson.getValue();
     uploadJson.metadataJson = dataExport;
+        // this is to overcome javascript limitation on maps
+    uploadJson.metadataJson.forEach((col) => {
+      col.ontId2EnabledArray = Array.from(col.ontId2Enabled);
+      col.ontIdParamArray = Array.from(col.ontId2Param);
+    });
+
     this.metadataUploadJson.next(uploadJson);
     this.http
       .postObject<MetaDataUploadJson, MetaDataUploadJson>(

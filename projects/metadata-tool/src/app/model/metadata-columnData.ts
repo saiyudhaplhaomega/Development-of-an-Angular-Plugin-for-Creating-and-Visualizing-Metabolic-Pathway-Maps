@@ -36,7 +36,6 @@ export class MetadataJsonObject implements MetadataJson {
   mzML: string;
 
   constructor() {
-    console.log("constructor");
     (this.identID = ''),
       (this.counter = -1),
       (this.mzID = ''),
