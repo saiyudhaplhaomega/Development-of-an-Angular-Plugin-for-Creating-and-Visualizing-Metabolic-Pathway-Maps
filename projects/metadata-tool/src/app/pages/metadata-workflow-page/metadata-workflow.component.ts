@@ -59,6 +59,7 @@ export class MetadataWorkflowComponent implements OnInit {
   hotSettings: Handsontable.GridSettings = {
     data: [], // Bind to the fetched data
     columns: this.mergedSelection,
+    collapsibleColumns: true,
 
     height: 'auto',
     manualColumnResize: true,
@@ -69,10 +70,10 @@ export class MetadataWorkflowComponent implements OnInit {
     colHeaders: this.HeadersData,
     rowHeaders: true,
     manualRowMove: true,
-    hiddenColumns: {
-      columns: [0],
-      indicators: false,
-    },
+    // hiddenColumns: {
+    //   columns: [2],
+    //   indicators: false,
+    // },
     contextMenu: {
       items: {
         undo: {
@@ -159,14 +160,14 @@ export class MetadataWorkflowComponent implements OnInit {
 
   updateNestedHeadersData(): void {
     // Calculate colspan values
-    const properties1Colspan = this.selectableProperties1Counter + 2;
+    const properties1Colspan = this.selectableProperties1Counter + 3;
     const characteristicColspan = this.selectableCharacteristicCounter + 2;
     const properties2Colspan = this.selectableProperties2Counter + 2;
     const commentsColspan = this.selectableCommentsCounter + 6;
 
     this.nestedHeadersData = [
       [
-        { label: '', colspan: properties1Colspan },
+        { label: '', colspan: properties1Colspan},
         { label: 'characteristic', colspan: characteristicColspan },
         { label: '', colspan: properties2Colspan },
         { label: 'comments', colspan: commentsColspan },
@@ -176,7 +177,7 @@ export class MetadataWorkflowComponent implements OnInit {
     ];
 
     this.hotSettings.nestedHeaders = this.nestedHeadersData;
-    this.hotSettings.collapsibleColumns = true;
+
   }
 
   private initializeHandsontable(): void {

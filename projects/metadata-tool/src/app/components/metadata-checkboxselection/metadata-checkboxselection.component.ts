@@ -11,14 +11,15 @@ export class MetaDataCheckboxSelectionComponent {
   form: FormGroup;
 
   static notSelectableProperties1 = [
+  
+    { data: 'sourcename', title: 'source name', type: 'text' },
+    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },
     {
       data: 'identID',
       title: 'identID',
       type: 'text',
       description: 'This is a Test',
     },
-    { data: 'sourcename', title: 'source name', type: 'text' },
-    { data: 'projectIdentifier', title: 'project identifier', type: 'text' },
   ];
 
   selectableProperties1 = [
