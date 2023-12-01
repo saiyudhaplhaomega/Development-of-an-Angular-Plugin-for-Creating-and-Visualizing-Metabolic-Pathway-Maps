@@ -35,7 +35,6 @@ export class MetadataWorkflowComponent implements OnInit {
   titlesString: string = '';
   dataArray: string[] = [];
   dataString: string = '';
-  showSelection: boolean = true;
   showTable: boolean = false;
 
   selectableProperties1Counter: number = 0;
@@ -320,10 +319,6 @@ export class MetadataWorkflowComponent implements OnInit {
       return mergedResult;
     }
     return [];
-  }
-
-  toggleSelection() {
-    this.showSelection = !this.showSelection;
   }
 
   submit() {

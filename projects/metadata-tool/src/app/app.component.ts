@@ -15,6 +15,7 @@ export class AppComponent {
   routes: NestedNavigationRoute[] = [
     { route: "/upload", label: "Upload", requireAuth: false },
     { route: "/workflow", label: "Workflow", requireAuth: false },
+    { route: "/sdrf", label: "sdrf", requireAuth: false },
     { route: "/download", label: "Donwload", requireAuth: false }
   ];
   homelink: SimpleNavigationRoute = {
