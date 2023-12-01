@@ -151,8 +151,9 @@ export class FileUploadComponent {
 
         return {
           id: fileName,
-          batchDescription: sampleName, // Assuming this is the correct interpretation
-          sampleNumber: sampleBatch, // Adjust these as per your requirement\
+          batchDescription: sampleName, // TODO: Assuming this is the correct interpretation --> actually no, the "groupKey" is what we need
+          // TODO: if this is changed, there needs to be a change in categorizeFiles and in uploadpage-component handleFileSelection()
+          sampleNumber: sampleBatch, // --> chnaged to be "groupKey" as in line 168
           fileCategory: type as keyof AcceptedFiles
         };
       }

@@ -88,6 +88,8 @@ export class MetaDataService {
           } else if (event.type === HttpEventType.Response) {
             const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;
             // const copy: MetadataJsonObject = event.body as MetadataJsonObject;
+            console.log("MetadataJson length");
+            console.log(newMetadataJson.metadataJson.length);
             newMetadataJson.metadataJson.forEach( (col) => {
               const ontId2Param = new Map<string, string>();
               for (const key in col.ontId2Param) {
@@ -172,7 +174,7 @@ export class MetaDataService {
         this.url.getURL(Endpoints.SUBMIT_METADATA)
       )
       .subscribe((response) => {
-        this.metadataUploadJson.next(response);
+        //this.metadataUploadJson.next(response);
         this.http
           .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
             response,
