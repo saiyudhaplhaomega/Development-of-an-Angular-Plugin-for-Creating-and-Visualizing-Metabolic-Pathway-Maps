@@ -18,6 +18,8 @@ import { MatTableModule } from "@angular/material/table";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MetadataQuestFormModule } from "../metadata-quest-form/metadata-quest.module";
 import { MatStepperModule } from "@angular/material/stepper";
+import { MetadataWorkflowRoutingModule } from "../../pages/metadata-workflow-page/metadata-workflow-routing.module";
+import { WorkflowModule } from "../../pages/metadata-workflow-page/metadata-workflow.module";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { MatStepperModule } from "@angular/material/stepper";
     MatButtonModule,
     MatTableModule,
     MatGridListModule,
-    MatStepperModule
+    MatStepperModule,
+    WorkflowModule
   ],
   exports: [
     MetadataUploadContainerComponent,

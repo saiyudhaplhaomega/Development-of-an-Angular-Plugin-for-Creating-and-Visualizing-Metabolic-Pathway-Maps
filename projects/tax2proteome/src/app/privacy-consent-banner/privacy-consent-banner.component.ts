@@ -4,7 +4,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 @Component({
   selector: 'app-privacy-consent-banner',
   templateUrl: './privacy-consent-banner.component.html',
-  styleUrls: ['./privacy-consent-banner.component.css'],
+  styleUrls: ['./privacy-consent-banner.component.scss'],
   animations: [
     trigger('policyConsent', [
       state('initial', style({

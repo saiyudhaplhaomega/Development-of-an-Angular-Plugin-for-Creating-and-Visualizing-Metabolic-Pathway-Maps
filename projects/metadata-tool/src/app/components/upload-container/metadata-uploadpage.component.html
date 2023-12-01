@@ -1,6 +1,6 @@
 <mat-vertical-stepper [linear]="true" #stepper>
   <!-- Step 1: Pipeline Selection -->
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step [stepControl]="pipelineSelectFormGroup">
     <ng-template matStepLabel>Choose Pipeline</ng-template>
     <app-pipeline-selection
       [(ngModel)]="selectedPipeline"
@@ -13,7 +13,7 @@
 
   <!-- Step 2: File Upload -->
   <mat-step
-    [stepControl]="secondFormGroup"
+    [stepControl]="fileUploadFormGroup"
     [completed]="firstStepCompleted && secondStepCompleted"
   >
     <ng-template matStepLabel>Upload Files</ng-template>
@@ -26,9 +26,23 @@
     </app-file-upload>
   </mat-step>
 
-  <!-- Step 3: Metadata Questions -->
-  <mat-step [stepControl]="thirdFormGroup" [completed]="uploadTriggered">
+  <!-- Metadata Questions Step -->
+  <mat-step
+    [stepControl]="metadataQuestionFormGroup"
+    [completed]="metadataQuestionsCompleted"
+  >
     <ng-template matStepLabel>Metadata Questions</ng-template>
-    <app-metadata-quest></app-metadata-quest>
+    <app-metadata-quest
+      (questCompleted)="onMetadataQuestCompleted($event)"
+    ></app-metadata-quest>
+  </mat-step>
+
+  <!-- Metadata Table Step -->
+  <mat-step
+    [stepControl]="metadataTableFormGroup"
+    [completed]="metadataTableCompleted"
+  >
+    <ng-template matStepLabel>Metadata Table</ng-template>
+    <metadata-workflow></metadata-workflow>
   </mat-step>
 </mat-vertical-stepper>

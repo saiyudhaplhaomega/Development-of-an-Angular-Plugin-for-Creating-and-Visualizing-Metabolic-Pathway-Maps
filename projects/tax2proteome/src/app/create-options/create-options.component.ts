@@ -5,7 +5,7 @@ import {NamesService} from '../names.service';
 @Component({
     selector: 'app-create-options',
     templateUrl: './create-options.component.html',
-    styleUrls: ['./create-options.component.css']
+    styleUrls: ['./create-options.component.scss']
 })
 export class CreateOptionsComponent implements OnInit {
 

@@ -10,7 +10,7 @@ import {NavBarComponent} from '../nav-bar/nav-bar.component';
 @Component({
   selector: 'app-create-menubar',
   templateUrl: './create-menubar.component.html',
-  styleUrls: ['./create-menubar.component.css']
+  styleUrls: ['./create-menubar.component.scss']
 })
 
 export class CreateMenubarComponent implements OnInit {
