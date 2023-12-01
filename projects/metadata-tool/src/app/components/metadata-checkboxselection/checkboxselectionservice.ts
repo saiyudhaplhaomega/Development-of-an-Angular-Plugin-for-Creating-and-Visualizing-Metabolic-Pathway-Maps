@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MetaDataCheckboxSelectionComponent } from './metadata-checkboxselection.component';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,7 @@ export class CheckboxSelectionService {
     this.selectableCommentsCounterSubject.next(count);
   }
 
-  private mergedSelectionSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public mergedSelectionSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(MetaDataCheckboxSelectionComponent.mergedSelection);
   mergedSelection$: Observable<any[]> = this.mergedSelectionSubject.asObservable();
 
   updateMergedSelection(selection: any[]) {
