@@ -214,4 +214,8 @@ export class MetadataUploadContainerComponent implements OnInit {
       this.stepper.next();
     }
   }
+
+  onHorizontalFormSubmit() {
+    this.stepper.next();
+  }
 }
