@@ -143,7 +143,7 @@ export class MetadataWorkflowComponent implements OnInit {
         this.columnDataTransform = [];
         this.columnData.forEach((col) => {
           const colTransformed = {};
-          console.log(col);
+          // console.log(col);
           colTransformed["counter"] = col.counter;
           colTransformed["identID"] = col.identID;
           colTransformed["mzID"] = col.mzID;
@@ -193,12 +193,12 @@ export class MetadataWorkflowComponent implements OnInit {
     this.hotInstance = new Handsontable(
       this.hotContainer.nativeElement,
       this.hotSettings,
-      
+
     );
     if (this.hotInstance) {
       this.hotInstance.destroy();
     }
-  
+
     this.hotInstance = new Handsontable(this.hotContainer.nativeElement, this.hotSettings);
   }
 
@@ -216,7 +216,7 @@ export class MetadataWorkflowComponent implements OnInit {
 
       if (search) {
         const queryResult = search.query(searchField.value);
-        console.log(queryResult);
+        // console.log(queryResult);
 
         // Update searchResults and currentSearchIndex
         this.searchResults = queryResult;
@@ -311,8 +311,8 @@ export class MetadataWorkflowComponent implements OnInit {
 
       // Update the metadataJson value
       this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;
-      console.log("merged result");
-      console.log(mergedResult);
+      // console.log("merged result");
+      // console.log(mergedResult);
       return mergedResult;
     }
     return [];

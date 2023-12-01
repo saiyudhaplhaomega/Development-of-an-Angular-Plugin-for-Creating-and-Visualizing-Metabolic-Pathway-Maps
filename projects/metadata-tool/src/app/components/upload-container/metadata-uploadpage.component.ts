@@ -67,14 +67,11 @@ export class MetadataUploadContainerComponent implements OnInit {
   ) {}
 
   handleFileSelection(files: FileWithProcessedInfo[]) {
-    console.log("this.handleFileSelection");
     // handle the actual files
     this.selectedFiles = files.map((f) => f.file);
     // we get all files each time, so we reset the table and map again
     this.metadataUploadJson.metadataJson = [];
     const rowMapping = new Map<string, MetadataJson>();
-    console.log("Files length");
-    console.log(files.length);
     files.forEach((f: FileWithProcessedInfo) => {
       const groupKey = f.processedInfo.batchDescription + "_" + f.processedInfo.sampleNumber;
       if (rowMapping.has(groupKey)) {
@@ -138,7 +135,6 @@ export class MetadataUploadContainerComponent implements OnInit {
 }
 
   onUpload(): void {
-    console.log("Selected Files:", this.selectedFiles); // Debugging
 
     // Hide certain UI elements during upload
     this.showContainer = false;
@@ -157,8 +153,7 @@ export class MetadataUploadContainerComponent implements OnInit {
       col.ontId2EnabledArray = Array.from(col.ontId2Enabled);
       col.ontIdParamArray = Array.from(col.ontId2Param);
     });
-    console.log("MetadataJson length");
-    console.log(this.metadataUploadJson.metadataJson.length);
+
     this.dataService.metadataUploadJson.next(this.metadataUploadJson);
 
     // this.dataService.updateAllMetaDataUploadJson({
