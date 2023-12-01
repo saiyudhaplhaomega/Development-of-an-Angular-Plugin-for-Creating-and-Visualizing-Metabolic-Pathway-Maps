@@ -465,16 +465,6 @@ input.mat-input-element {
     height: 1.125em
 }
 
-.mat-slide-toggle-content {
-    font-family: Roboto, "Helvetica Neue", sans-serif
-}
-
-.mat-slider-thumb-label-text {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    font-size: 12px;
-    font-weight: 500
-}
-
 .mat-stepper-horizontal,
 .mat-stepper-vertical {
     font-family: Roboto, "Helvetica Neue", sans-serif
@@ -2216,8 +2206,36 @@ th.mat-header-cell {
     background-color: rgba(0, 0, 0, .6)
 }
 
-.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+// toggle
+.mat-slide-toggle-content {
+    font-family: Roboto, "Helvetica Neue", sans-serif
+}
+
+.mdc-label {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+.mdc-switch__icons{
+    display:none!important;
+  }
+
+
+.mdc-switch--selected .mdc-switch__shadow {
+    background-color: rgba(0, 63, 151, 0.54)
+}
+
+
+// .mdc-switch__icon--on {
+//     background-color: green
+// }
+/*
+ .mat-slide-toggle-disabled {
     background-color: #003f97
+}
+
+.mat-slide-toggle-bar  {
+    background-color: #003f97 !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
@@ -2240,7 +2258,7 @@ th.mat-header-cell {
     background-color: #003f97
 }
 
-.mat-slide-toggle.mat-warn.mat-checked .mat-slide-toggle-thumb {
+.mat-slide-toggle.mat-warn.mat-checked .mat-mdc-slide-toggle-thumb {
     background-color: #f44336
 }
 
@@ -2358,7 +2376,7 @@ th.mat-header-cell {
 
 .mat-slider-vertical .mat-slider-ticks {
     background-image: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7) 2px, transparent 0, transparent)
-}
+} */
 
 .mat-step-header.cdk-keyboard-focused,
 .mat-step-header.cdk-program-focused,
@@ -2381,6 +2399,14 @@ th.mat-header-cell {
     background-color: rgba(0, 0, 0, .54);
     color: #fff
 }
+
+.mat-stepper-vertical{
+       & .mat-step-header{        
+             & .mat-step-text-label{
+               text-align: left;
+             }
+      }
+    }
 
 .mat-step-header .mat-step-icon-selected,
 .mat-step-header .mat-step-icon-state-done,
