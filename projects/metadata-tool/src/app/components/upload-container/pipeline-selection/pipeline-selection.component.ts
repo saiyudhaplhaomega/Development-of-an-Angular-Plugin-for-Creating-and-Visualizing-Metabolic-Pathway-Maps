@@ -25,7 +25,6 @@ export class SelectionComponent implements ControlValueAccessor {
   @Output() selectedPipelineChange = new EventEmitter<Pipeline>();
 
   selectedPipeline: Pipeline;
-
   onChange: any = () => {};
   onTouched: any = () => {};
 

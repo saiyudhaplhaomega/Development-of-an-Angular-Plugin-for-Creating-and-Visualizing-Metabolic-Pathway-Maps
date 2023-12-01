@@ -1,38 +1,33 @@
-<!-- Progress Bar Component -->
-<app-progress-bar *ngIf="uploadProgress > 0" [uploadProgress]="uploadProgress">
-</app-progress-bar>
+<mat-vertical-stepper [linear]="true" #stepper>
+  <!-- Step 1: Pipeline Selection -->
+  <mat-step [stepControl]="firstFormGroup">
+    <ng-template matStepLabel>Choose Pipeline</ng-template>
+    <app-pipeline-selection
+      [(ngModel)]="selectedPipeline"
+      [entries]="pipelines"
+      label="Choose Pipeline"
+      (ngModelChange)="firstStepCompleted = !!$event"
+    >
+    </app-pipeline-selection>
+  </mat-step>
 
-<app-pipeline-selection
-  [(ngModel)]="selectedPipeline"
-  [entries]="pipelines"
-  label="Choose Pipeline"
->
-</app-pipeline-selection>
-
-<div *ngIf="showContainer" class="upload-container">
-  <div *ngIf="showContainer">
-    <!-- File Upload Component -->
+  <!-- Step 2: File Upload -->
+  <mat-step
+    [stepControl]="secondFormGroup"
+    [completed]="firstStepCompleted && secondStepCompleted"
+  >
+    <ng-template matStepLabel>Upload Files</ng-template>
     <app-file-upload
       [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
       [acceptedFileRegex]="selectedPipeline.matchingFilesReges"
-      (filesSelected)="handleFileSelection($event)"
+      (filesSelected)="handleFileSelection($event); secondStepCompleted = true"
     >
     </app-file-upload>
+  </mat-step>
 
-    <!-- Upload Button -->
-    <div class="upload-button-container">
-      <button (click)="onUpload()" class="upload-button">Upload Files</button>
-    </div>
-  </div>
-</div>
-<!-- Display Selected Pipeline and Metadata Upload JSON -->
-<div class="display-info-container">
-  <div class="pipeline-value">
-    <strong>Pipeline Value:</strong>
-    <pre>{{ selectedPipeline | json }}</pre>
-  </div>
-  <div class="metadata-json">
-    <strong>Metadata Upload JSON:</strong>
-    <pre>{{ metadataUploadJson | json }}</pre>
-  </div>
-</div>
+  <!-- Step 3: Metadata Questions -->
+  <mat-step [stepControl]="thirdFormGroup" [completed]="uploadTriggered">
+    <ng-template matStepLabel>Metadata Questions</ng-template>
+    <app-metadata-quest></app-metadata-quest>
+  </mat-step>
+</mat-vertical-stepper>

@@ -15,6 +15,9 @@ import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
 import { SelectionComponent } from "./pipeline-selection/pipeline-selection.component";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 import { MatTableModule } from "@angular/material/table";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MetadataQuestFormModule } from "../metadata-quest-form/metadata-quest.module";
+import { MatStepperModule } from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MatTableModule } from "@angular/material/table";
   ],
   imports: [
     CommonModule,
+    MetadataQuestFormModule,
 
     // material
     MatIconModule,
@@ -37,7 +41,9 @@ import { MatTableModule } from "@angular/material/table";
     MatOptionModule,
     MatSelectModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatGridListModule,
+    MatStepperModule
   ],
   exports: [
     MetadataUploadContainerComponent,
