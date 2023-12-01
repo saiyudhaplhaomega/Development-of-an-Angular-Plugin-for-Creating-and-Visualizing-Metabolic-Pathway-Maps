@@ -36,19 +36,23 @@
         matColumnDef="{{ fileType }}"
       >
         <th mat-header-cell *matHeaderCellDef>{{ fileType | uppercase }}</th>
-        <td mat-cell *matCellDef="let row">
-          <div
-            *ngIf="row[fileType]"
-            (click)="
-              toggleFileSelection(row[fileType].processedInfo.id, $event)
-            "
-            [class.selected]="
-              selectedFileIds.has(row[fileType].processedInfo.id)
-            "
-          >
+        <td
+          mat-cell
+          *matCellDef="let row"
+          (click)="
+            row[fileType]
+              ? toggleFileSelection(row[fileType].processedInfo.id, $event)
+              : null
+          "
+          [class.selected]="
+            row[fileType] && selectedFileIds.has(row[fileType].processedInfo.id)
+          "
+          [class.no-data]="!row[fileType]"
+        >
+          <div *ngIf="row[fileType]">
             {{ row[fileType].file.name }}
           </div>
-          <div *ngIf="!row[fileType]" style="color: red">no file</div>
+          <div *ngIf="!row[fileType]" class="no-file">no file</div>
         </td>
       </ng-container>
 
@@ -71,6 +75,7 @@
   >
     <mat-icon>insert_drive_file </mat-icon> Choose Files
   </button>
+  <div>Files must have an {{ acceptedDataTypes }} extension.</div>
 </div>
 <!-- Conditional Message for Missing Files -->
 <div *ngIf="missingFiles && selectedFiles.length > 0">
