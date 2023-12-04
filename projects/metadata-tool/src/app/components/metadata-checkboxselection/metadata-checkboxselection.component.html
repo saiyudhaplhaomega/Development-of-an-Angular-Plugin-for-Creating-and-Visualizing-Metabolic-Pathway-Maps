@@ -1,50 +1,77 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
-  <div class="sections-container">
-  <div>
-    <h3>General information</h3>
-    <div formArrayName="properties1">
-      <div *ngFor="let columnControl of properties1Controls; let i = index">
-        <label>
-          <input type="checkbox" [formControlName]="i" (change)="updateCounters('properties1')" />
-          <span>{{ selectableProperties1[i].title }}</span>
-            <mat-icon *ngIf="selectableProperties1[i].description" matTooltip="{{selectableProperties1[i].description}}">info</mat-icon>
-        </label>
-      </div>
-    </div>
-  </div>
-  <div>
-    <h3>Characteristic</h3>
-    <div formArrayName="characteristic">
-      <div *ngFor="let columnControl of characteristicControls; let i = index">
-        <label>
-          <input type="checkbox" [formControlName]="i" (change)="updateCounters('characteristic')"/>
-          <span>{{ selectableCharacteristic[i].title }}</span>
-
-        </label>
-      </div>
-    </div>
-  </div>
-  <div>
-    <h3>General information</h3>
-    <div formArrayName="properties2">
-      <div *ngFor="let columnControl of properties2Controls; let i = index" (change)="updateCounters('properties2')">
-        <label>
-          <input type="checkbox" [formControlName]="i" />
-          <span>{{ selectableProperties2[i].title }}</span>
-        </label>
-      </div>
-    </div>
-  </div>
-  <div>
-    <h3>Comments</h3>
-    <div formArrayName="comments">
-      <div *ngFor="let columnControl of commentsControls; let i = index" (change)="updateCounters('comments')">
-        <label>
-          <input type="checkbox" [formControlName]="i" />
-          <span>{{ selectableComments[i].title }}</span>
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+  <mat-tab-group>
+    <!-- Tab for General Information -->
+    <mat-tab label="General Information">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="sections-container">
+          <div>
+            <div formArrayName="properties1">
+              <div *ngFor="let columnControl of properties1Controls; let i = index">
+                <label>
+                  <input type="checkbox" [formControlName]="i" (change)="updateCounters('properties1')" />
+                  <span>{{ selectableProperties1[i].title }}</span>
+                  <mat-icon *ngIf="selectableProperties1[i].description" matTooltip="{{selectableProperties1[i].description}}">info</mat-icon>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+  
+    <!-- Tab for Characteristic -->
+    <mat-tab label="Characteristic">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="sections-container">
+          <div>
+            <div formArrayName="characteristic">
+              <div *ngFor="let columnControl of characteristicControls; let i = index">
+                <label>
+                  <input type="checkbox" [formControlName]="i" (change)="updateCounters('characteristic')"/>
+                  <span>{{ selectableCharacteristic[i].title }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+  
+    <!-- Tab for General Information 2 -->
+    <mat-tab label="General Information 2">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="sections-container">
+          <div>
+            <div formArrayName="properties2">
+              <div *ngFor="let columnControl of properties2Controls; let i = index" (change)="updateCounters('properties2')">
+                <label>
+                  <input type="checkbox" [formControlName]="i" />
+                  <span>{{ selectableProperties2[i].title }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+  
+    <!-- Tab for Comments -->
+    <mat-tab label="Comments">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="sections-container">
+          <div>
+            <div formArrayName="comments">
+              <div *ngFor="let columnControl of commentsControls; let i = index" (change)="updateCounters('comments')">
+                <label>
+                  <input type="checkbox" [formControlName]="i" />
+                  <span>{{ selectableComments[i].title }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+  
 </form>
