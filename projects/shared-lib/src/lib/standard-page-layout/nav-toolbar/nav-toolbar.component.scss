@@ -30,34 +30,38 @@ img {
   height: 64px;
 }
 
-
-
 .ml-auto {
   margin-left: auto;
 }
 
 .overflow-y-auto {
-    flex-grow: 1; /* Allow this element to grow and fill available space */
-    overflow-y: auto; /* Add scrolling if content overflows */
+  flex-grow: 1; /* Allow this element to grow and fill available space */
+  overflow-y: auto; /* Add scrolling if content overflows */
 }
-
 
 .header-tool-name {
   font-weight: 700;
 }
-
 .outer-container {
   padding: 20px;
   margin: 0 auto;
   max-width: 1200px;
-  min-height: 100vh;
-
-  /* Or any other width as per your design */
-  /* Add any additional styling as needed */
+  min-height: calc(
+    100vh - 128px
+  ); /* Adjust 128px to the combined height of toolbar and footer */
 }
 
 .flex.flex-col.h-full {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* At least as tall as the viewport */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Use 100vh for full viewport height */
+}
+
+.overflow-y-auto {
+  flex-grow: 1; /* Grow to fill available space */
+  overflow-y: auto; /* Scroll if needed */
+}
+
+.mt-auto {
+  margin-top: auto; /* Push the footer to the bottom */
 }
