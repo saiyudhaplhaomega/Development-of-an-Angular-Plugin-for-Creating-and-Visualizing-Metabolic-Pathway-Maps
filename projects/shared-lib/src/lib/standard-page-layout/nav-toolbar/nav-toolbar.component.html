@@ -53,10 +53,18 @@ stretch"
 
     <!-- login button -->
     <div *ngIf="hasLogin" class="ml-auto" [routerLink]="'/login'">
-      <button mat-flat-button>
-        Log in
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <div *ngIf="!this.user">
+        <button mat-flat-button>
+          Log in
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="this.user">
+        <button mat-flat-button>
+          Log out
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        </div>
     </div>
   </mat-toolbar>
 
