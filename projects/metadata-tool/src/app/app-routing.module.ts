@@ -14,20 +14,14 @@ const routes: Routes = [
         (m) => m.MetadataUploadContainerModule
       )
   },
-  {
-    path: "sdrf",
-    loadChildren: () =>
-      import("./pages/metadata-workflow-page/metadata-workflow.module").then(
-        (m) => m.WorkflowModule
-      )
-  },
-  {
-    path: "download",
-    loadChildren: () =>
-      import(
-        "./pages/metadata-download-page/metadata-downloadpage.module"
-      ).then((m) => m.MetadataDownloadpageModule)
-  },
+  // {
+  //   path: "sdrf",
+  //   loadChildren: () =>
+  //     import("./pages/metadata-workflow-page/metadata-workflow.module").then(
+  //       (m) => m.WorkflowModule
+  //     )
+  // },
+ 
 
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "**", redirectTo: "home" }

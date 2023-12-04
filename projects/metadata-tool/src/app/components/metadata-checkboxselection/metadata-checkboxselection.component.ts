@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CheckboxSelectionService } from './checkboxselectionservice';
 import { MetaDataService } from '../../services/metaddata-input.service';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-checkboxselection',
@@ -10,7 +11,7 @@ import { MetaDataService } from '../../services/metaddata-input.service';
 })
 export class MetaDataCheckboxSelectionComponent {
   form: FormGroup;
-
+  @ViewChild(MatDrawer) drawer!: MatDrawer;
   static notSelectableProperties1 = [
   
     { data: 'sourcename', title: 'source name', type: 'text' },
@@ -374,4 +375,29 @@ export class MetaDataCheckboxSelectionComponent {
       this.checkboxService.updateCommentsCounter(counter);
     }
   }
+  expandedPanel: string | null = null;
+
+  toggleExpansionPanel(panel: string): void {
+    this.expandedPanel = this.expandedPanel === panel ? null : panel;
+  }
+
+  isPanelOpen(panel: string): boolean {
+    return this.expandedPanel === panel;
+  }
+// ----------------------------------------
+  // currentlyOpenPanel: string = '';
+
+  // // Function to check if a panel is open
+  // isPanelOpen(panel: string): boolean {
+  //   return this.currentlyOpenPanel === panel;
+  // }
+
+  // // Function to toggle the currently open panel
+  // togglePanel(panel: string): void {
+  //   if (this.isPanelOpen(panel)) {
+  //     this.currentlyOpenPanel = '';
+  //   } else {
+  //     this.currentlyOpenPanel = panel;
+  //   }
+  // }
 }

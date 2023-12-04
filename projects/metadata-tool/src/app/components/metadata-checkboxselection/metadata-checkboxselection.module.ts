@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [MetaDataCheckboxSelectionComponent],
@@ -16,7 +19,11 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatSidenavModule
+ 
 
   ],
   exports: [MetaDataCheckboxSelectionComponent]

@@ -13,10 +13,9 @@ import {
 export class AppComponent {
   title = "metadatatool";
   routes: NestedNavigationRoute[] = [
-    { route: "/upload", label: "Upload", requireAuth: false },
-    { route: "/workflow", label: "Workflow", requireAuth: false },
-    { route: "/sdrf", label: "sdrf", requireAuth: false },
-    { route: "/download", label: "Donwload", requireAuth: false }
+    // { route: "/upload", label: "Upload", requireAuth: false },
+    // { route: "/sdrf", label: "sdrf", requireAuth: false },
+
   ];
   homelink: SimpleNavigationRoute = {
     route: "/home",
@@ -28,7 +27,7 @@ export class AppComponent {
     {
       label: "About",
       children: [
-        { label: "About Prophane", route: "/about" },
+        { label: "About Metadata-Tool", route: "/about" },
         { label: "Terms of Service", route: "/termsofservice" },
         { label: "Privacy Policy", route: "/privacypolicy" },
         { label: "Impressum", route: "/impressum" }

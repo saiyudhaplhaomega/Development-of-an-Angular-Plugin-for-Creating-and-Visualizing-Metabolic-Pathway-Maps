@@ -8,7 +8,7 @@ import { MetadataWorkflowRoutingModule } from './metadata-workflow-routing.modul
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MetaDataCheckboxSelectionModule } from '../../components/metadata-checkboxselection/metadata-checkboxselection.module';
 
 // register the filtering plugins
 registerPlugin(Filters);
@@ -27,7 +27,9 @@ registerAllModules();
     HotTableModule,
     MetadataWorkflowRoutingModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MetaDataCheckboxSelectionModule,
+  
   ],
   exports: [MetadataWorkflowComponent],
 })
