@@ -15,12 +15,7 @@ export class MetaDataCheckboxSelectionComponent {
   
     { data: 'sourcename', title: 'source name', type: 'text' },
     { data: 'projectIdentifier', title: 'project identifier', type: 'text' },
-    {
-      data: 'identID',
-      title: 'identID',
-      type: 'text',
-      description: 'This is a Test',
-    },
+
   ];
 
   selectableProperties1 = [
@@ -153,6 +148,13 @@ export class MetaDataCheckboxSelectionComponent {
   static factorValue = [
     { data: 'factorValue', title: 'factor value', type: 'text' },
   ];
+  static identID = [
+  {
+    data: 'identID',
+    title: 'identID',
+    type: 'text',
+    description: 'This is a Test',
+  }]
 
   selectableProperties1Counter: number = 0;
   selectableCharacteristicCounter: number = 0;
@@ -166,6 +168,7 @@ export class MetaDataCheckboxSelectionComponent {
     ...MetaDataCheckboxSelectionComponent.notSelectableComments1,
     ...MetaDataCheckboxSelectionComponent.notSelectableComments2,
     ...MetaDataCheckboxSelectionComponent.factorValue,
+    ...MetaDataCheckboxSelectionComponent.identID,
   ];
 
   selectables = [

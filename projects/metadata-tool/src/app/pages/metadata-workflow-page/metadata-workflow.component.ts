@@ -68,10 +68,6 @@ export class MetadataWorkflowComponent implements OnInit {
     colHeaders: this.HeadersData,
     rowHeaders: true,
     manualRowMove: true,
-    // hiddenColumns: {
-    //   columns: [2],
-    //   indicators: false,
-    // },
     contextMenu: {
       items: {
         undo: {
@@ -141,10 +137,11 @@ export class MetadataWorkflowComponent implements OnInit {
 
   updateNestedHeadersData(): void {
     // Calculate colspan values
-    const properties1Colspan = this.selectableProperties1Counter + 3;
+    const properties1Colspan = this.selectableProperties1Counter + 2;
     const characteristicColspan = this.selectableCharacteristicCounter + 2;
     const properties2Colspan = this.selectableProperties2Counter + 2;
     const commentsColspan = this.selectableCommentsCounter + 6;
+    const hiddenCol = 1 +  properties1Colspan + characteristicColspan + properties2Colspan + commentsColspan;
 
     this.nestedHeadersData = [
       [
@@ -153,12 +150,16 @@ export class MetadataWorkflowComponent implements OnInit {
         { label: '', colspan: properties2Colspan },
         { label: 'comments', colspan: commentsColspan },
         { label: 'factor value', colspan: 1 },
+        { label: 'ID', colspan: 1 },
       ],
       this.titlesArray,
     ];
 
     this.hotSettings.nestedHeaders = this.nestedHeadersData;
-
+    this.hotSettings.hiddenColumns = {
+      columns: [hiddenCol],
+      indicators: false,
+    };
   }
 
   private initializeHandsontable(): void {
