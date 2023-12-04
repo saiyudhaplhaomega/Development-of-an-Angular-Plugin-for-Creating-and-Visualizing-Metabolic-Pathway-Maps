@@ -115,6 +115,9 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Emit the progress
     this.uploadProgressService.currentProgress.subscribe((progress) => {
       this.uploadProgress = progress;
+      if (this.uploadProgress != 0) {
+        this.uploadTriggered = true;
+      }
       this.uploadStatusChanged.emit({
         progress: this.uploadProgress
       });
