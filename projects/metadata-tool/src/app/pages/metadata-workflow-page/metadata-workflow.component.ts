@@ -14,9 +14,7 @@ import { ContextMenu } from 'handsontable/plugins';
 import Handsontable from 'handsontable';
 
 import { Subscription } from 'rxjs';
-import { MetaDataUploadJsonObject } from '../../model/metadatauploadjson';
 import { CheckboxSelectionService } from '../../components/metadata-checkboxselection/checkboxselectionservice';
-import { dummyData } from '../../services/dummy-data';
 
 @Component({
   selector: 'metadata-workflow',
@@ -87,12 +85,11 @@ export class MetadataWorkflowComponent implements OnInit {
   };
 
   ngOnInit(): void {
-
-    this.columnData = this.metaDataInputService.metadataUploadJson.value.metadataJson;
+    this.columnData =
+      this.metaDataInputService.metadataUploadJson.value.metadataJson;
     this.columnDataTransform = [];
     this.columnData.forEach((col) => {
       const colTransformed = {};
-      console.log(col);
       colTransformed['counter'] = col.counter;
       colTransformed['identID'] = col.identID;
       colTransformed['mzID'] = col.mzID;
@@ -106,21 +103,13 @@ export class MetadataWorkflowComponent implements OnInit {
       this.columnDataTransform.push(colTransformed);
     });
 
-
     this.hotSettings.data = this.columnDataTransform;
-    const selection =  this.checkboxService.mergedSelectionSubject.value;
+    const selection = this.checkboxService.mergedSelectionSubject.value;
     this.mergedSelection = selection;
-    console.log(this.mergedSelection);
     this.titlesArray = this.mergedSelection.map((item) => item.title);
-    console.log("HOT INSTANCE");
-    console.log(this.hotInstance);
     this.hotSettings.columns = this.mergedSelection;
     this.hotSettings.colHeaders = this.titlesArray;
-
-    // console.log(this.hotSettings.data);
-    // this.initializeHandsontable();
-
-
+    // TODO: what was this supposed to do??
     // this.cd.detectChanges();
 
     this.checkboxService.selectableProperties1Counter$.subscribe((count) => {
@@ -147,14 +136,6 @@ export class MetadataWorkflowComponent implements OnInit {
       this.mergedSelection = selection;
       this.updateNestedHeadersData(); // Update nestedHeadersData
     });
-
-
-    // this.metaDataInputService.metadataUploadJson.next(dummyData);
-    // this.metaDataInputService.getColumnData().then((columnData) => {
-    //   this.columnData = columnData; // Populate columnData with fetched data
-    //   this.hotSettings.data = this.columnData; // Update data in hotSettings
-    //   this.initializeHandsontable(); // Initialize Handsontable with the data
-    // });
   }
 
   updateNestedHeadersData(): void {
@@ -260,33 +241,26 @@ export class MetadataWorkflowComponent implements OnInit {
 
   exportDataAsObject(): MetadataJsonObject[] {
     if (this.hotInstance) {
-      const dataExport = this.hotInstance.getData();
       const headers = this.dataArray;
       const result: MetadataJsonObject[] =
         this.metaDataInputService.metadataUploadJson.value.metadataJson;
       const columnData: MetadataJsonObject[] = [];
-
+      const dataExport = this.hotInstance.getData();
       // Create a map of unique IDs to objects in the result array
       const resultMap = new Map(result.map((obj) => [obj.identID, obj]));
-
-      for (let i = 0; i < dataExport.length; i++) {
-        const obj: MetadataJsonObject = new MetadataJsonObject();
+      for (let hstRow in this.exportData) {
+        const newObj: MetadataJsonObject = new MetadataJsonObject();
         for (let j = 0; j < headers.length; j++) {
           const key = headers[j];
-          obj[key] = dataExport[i][j];
-        }
-
-        // Check if the object with the same ID exists in the result array
-        if (resultMap.has(obj.identID)) {
-          // Merge the changed data from dataExport into the existing object
-          const existingObj = resultMap.get(obj.identID);
-          for (const key in obj) {
-            if (obj.hasOwnProperty(key) && obj[key] !== existingObj[key]) {
-              existingObj[key] = obj[key];
-            } else {
-              existingObj['ontId2Param'][key] = obj[key];
-            }
+          if (newObj[key] != undefined) {
+            newObj[key] = hstRow[j];
+          } else {
+            newObj.ontId2Param.set(key, hstRow[j]);
           }
+        }
+        // Check if the object with the same ID exists in the result array
+        if (resultMap.has(newObj.identID)) {
+          resultMap.set(newObj.identID, newObj);
         }
       }
 
@@ -294,15 +268,9 @@ export class MetadataWorkflowComponent implements OnInit {
       const mergedResult = Array.from(resultMap.values());
 
       // Update the metadataJson value
-      this.metaDataInputService.metadataUploadJson.value.metadataJson = mergedResult;
-      // console.log("merged result");
-      // console.log(mergedResult);
-
-      this.metaDataInputService.metadataUploadJson.value.metadataJson =
-        mergedResult;
-      console.log('merged result');
-      console.log(mergedResult);
-
+      const json = this.metaDataInputService.metadataUploadJson.value;
+      json.metadataJson = mergedResult;
+      this.metaDataInputService.metadataUploadJson.next(json);
       return mergedResult;
     }
     return [];
@@ -316,14 +284,12 @@ export class MetadataWorkflowComponent implements OnInit {
   ngAfterViewInit() {
     this.initializeHandsontable();
     this.metaDataInputService.metadataUploadJson.subscribe(
-
       (metadataUploadJson) => {
         // TODO: ugly workaround, this could be much better
         this.columnData = metadataUploadJson.metadataJson;
         this.columnDataTransform = [];
         this.columnData.forEach((col) => {
           const colTransformed = {};
-          console.log(col);
           colTransformed['counter'] = col.counter;
           colTransformed['identID'] = col.identID;
           colTransformed['mzID'] = col.mzID;
@@ -337,18 +303,6 @@ export class MetadataWorkflowComponent implements OnInit {
           this.columnDataTransform.push(colTransformed);
         });
         this.hotSettings.data = this.columnDataTransform;
-
-        // if (this.hotInstance) {
-        //   // Update the Handsontable instance with new columns
-        //   this.hotInstance.updateSettings({
-        //     ...this.hotSettings,
-        //     columns: this.mergedSelection,
-        //     colHeaders: this.titlesArray,
-        //   });
-        // } else {
-        //   // Initialize Handsontable if not already initialized
-        //   // this.initializeHandsontable();
-        // }
         this.hotInstance.updateData(this.hotSettings.data);
       }
     );
@@ -362,17 +316,11 @@ export class MetadataWorkflowComponent implements OnInit {
           this.dataString = this.dataArray.join(', ');
           this.updateNestedHeadersData(); // Call the function to generate the nested headers
 
-          // if (this.hotInstance) {
-            // Update the Handsontable instance with new columns
-            this.hotInstance.updateSettings({
-              ...this.hotSettings,
-              columns: this.mergedSelection,
-              colHeaders: this.titlesArray,
-            });
-          // } else {
-          //   // Initialize Handsontable if not already initialized
-          //   //
-          // }
+          this.hotInstance.updateSettings({
+            ...this.hotSettings,
+            columns: this.mergedSelection,
+            colHeaders: this.titlesArray,
+          });
         },
         (error) => {
           console.error('Error with mergedSelection$ subscription', error);

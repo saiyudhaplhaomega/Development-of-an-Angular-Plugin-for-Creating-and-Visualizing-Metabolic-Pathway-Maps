@@ -1,8 +1,8 @@
 <h2>Download Files</h2>
 <div class="flex flex-col h-full justify-between">
-  <ng-container *ngFor="let url in downloadUrls()">
-    <a href="url">url</a>
-  </ng-container>
+  <tr *ngFor="let url of downloadUrls()">
+    <a href="{{url}}">{{url}}</a>
+  </tr>
   <!-- content -->
   <!-- <main class="max-w-3xl mx-auto px-4 mb-auto">
         <button (click)="downloadFile()">Download File</button>

@@ -38,8 +38,7 @@ export class MetaDataService {
   ) {}
 
   getDownloads(): string[] {
-
-    return
+    return this.downloadUrls;
   }
 
   updateAllMetaDataUploadJson(newMetadata: { [key: string]: any }): void {
@@ -60,6 +59,7 @@ export class MetaDataService {
       });
 
       // Update the metadataUploadJson with the new metadataJson array
+      console.log("updateAllMetaDataUploadJsonupdateAllMetaDataUploadJsonupdateAllMetaDataUploadJsonupdateAllMetaDataUploadJsonupdateAllMetaDataUploadJson")
       this.metadataUploadJson.next({
         ...currentMetaData,
         metadataJson: updatedMetadataJson
@@ -88,8 +88,6 @@ export class MetaDataService {
           } else if (event.type === HttpEventType.Response) {
             const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;
             // const copy: MetadataJsonObject = event.body as MetadataJsonObject;
-            console.log("MetadataJson length");
-            console.log(newMetadataJson.metadataJson.length);
             newMetadataJson.metadataJson.forEach( (col) => {
               const ontId2Param = new Map<string, string>();
               for (const key in col.ontId2Param) {
@@ -102,7 +100,7 @@ export class MetaDataService {
               }
               col.ontId2Enabled = ontId2Enabled;
             });
-            this.metadataUploadJson.next(newMetadataJson);
+            //this.metadataUploadJson.next(newMetadataJson);
             const params = new HttpParams({
               fromObject: {
                 jobid: newMetadataJson.createInitialMetadataJobId
@@ -128,9 +126,7 @@ export class MetaDataService {
                   }
                   col.ontId2Enabled = ontId2Enabled;
                 });
-                this.metadataUploadJson.next(newMetadataJson);
-                console.log("response repeat");
-                console.log(response);
+                //this.metadataUploadJson.next(newMetadataJson);
                 this.metadataUploadJson.next(response);
               });
           } else {
@@ -161,6 +157,7 @@ export class MetaDataService {
   submiteTable(dataExport: MetadataJson[]) {
     const uploadJson = this.metadataUploadJson.getValue();
     uploadJson.metadataJson = dataExport;
+
         // this is to overcome javascript limitation on maps
     uploadJson.metadataJson.forEach((col) => {
       col.ontId2EnabledArray = Array.from(col.ontId2Enabled);
@@ -174,7 +171,9 @@ export class MetaDataService {
         this.url.getURL(Endpoints.SUBMIT_METADATA)
       )
       .subscribe((response) => {
-        //this.metadataUploadJson.next(response);
+        const json = this.metadataUploadJson.value;
+        json.fileConversionJobId = response.fileConversionJobId;
+        this.metadataUploadJson.next(json);
         this.http
           .repeatedPostObject<MetaDataUploadJson, DownloadLinksJson>(
             response,

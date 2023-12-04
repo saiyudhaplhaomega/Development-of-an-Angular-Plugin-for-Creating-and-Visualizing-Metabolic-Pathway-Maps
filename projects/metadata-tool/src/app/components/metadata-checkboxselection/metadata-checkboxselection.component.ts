@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CheckboxSelectionService } from './checkboxselectionservice';
+import { MetaDataService } from '../../services/metaddata-input.service';
 
 @Component({
   selector: 'app-checkboxselection',
@@ -148,7 +149,9 @@ export class MetaDataCheckboxSelectionComponent {
     { data: 'mzML', title: 'mzML', type: 'text' },
   ];
 
-  static factorValue = [{ data: 'factorValue', title: 'factor value', type: 'text' }];
+  static factorValue = [
+    { data: 'factorValue', title: 'factor value', type: 'text' },
+  ];
 
   selectableProperties1Counter: number = 0;
   selectableCharacteristicCounter: number = 0;
@@ -161,40 +164,41 @@ export class MetaDataCheckboxSelectionComponent {
     ...MetaDataCheckboxSelectionComponent.notSelectableProperties2,
     ...MetaDataCheckboxSelectionComponent.notSelectableComments1,
     ...MetaDataCheckboxSelectionComponent.notSelectableComments2,
-    ...MetaDataCheckboxSelectionComponent.factorValue,];
+    ...MetaDataCheckboxSelectionComponent.factorValue,
+  ];
 
- selectables = [
-  {
-    data: this.selectableProperties1,
-    count: this.selectableProperties1Counter,
-    title: 'General Information 1',
-    formArrayName: 'properties1'
-  },
-  {
-    data: this.selectableProperties2,
-    count: this.selectableCharacteristicCounter,
-    title: 'General Information 2',
-    formArrayName: 'properties2'
-  },
-  {
-    data: this.selectableComments,
-    count: this.selectableProperties2Counter,
-    title: 'Comments',
-    formArrayName: 'comments'
-  },
-  {
-    data: this.selectableCharacteristic,
-    count: this.selectableCommentsCounter,
-    title: 'Characteristic',
-    formArrayName: 'characteristic'
-  }
-];
+  selectables = [
+    {
+      data: this.selectableProperties1,
+      count: this.selectableProperties1Counter,
+      title: 'General Information 1',
+      formArrayName: 'properties1',
+    },
+    {
+      data: this.selectableProperties2,
+      count: this.selectableCharacteristicCounter,
+      title: 'General Information 2',
+      formArrayName: 'properties2',
+    },
+    {
+      data: this.selectableComments,
+      count: this.selectableProperties2Counter,
+      title: 'Comments',
+      formArrayName: 'comments',
+    },
+    {
+      data: this.selectableCharacteristic,
+      count: this.selectableCommentsCounter,
+      title: 'Characteristic',
+      formArrayName: 'characteristic',
+    },
+  ];
 
   @Output() continueClicked = new EventEmitter<void>();
 
   constructor(
     private formBuilder: FormBuilder,
-    private checkboxService: CheckboxSelectionService
+    private checkboxService: CheckboxSelectionService,
   ) {
     this.form = this.formBuilder.group({
       properties1: new FormArray([]),
@@ -254,12 +258,15 @@ export class MetaDataCheckboxSelectionComponent {
 
   submitOnChange(section: string) {
     const formArray = this.form.get(section) as FormArray;
-    this.updateCounter(formArray, formArray.controls.filter((control) => control.value).length);
+    this.updateCounter(
+      formArray,
+      formArray.controls.filter((control) => control.value).length
+    );
     this.submit();
   }
 
   submit() {
-        const selectedColumnsProperties1 = this.getSelectedColumns(
+    const selectedColumnsProperties1 = this.getSelectedColumns(
       this.form.get('properties1') as FormArray,
       this.selectableProperties1
     );
