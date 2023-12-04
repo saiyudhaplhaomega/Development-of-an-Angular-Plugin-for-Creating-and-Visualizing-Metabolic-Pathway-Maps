@@ -1,31 +1,34 @@
-<h2>SDRF Table</h2>
-<!-- Search input -->
-<input
-  id="search-field"
-  type="text"
-  placeholder="Search..."
-  (input)="onKey($event)"
-/>
-<div *ngIf="searchResults.length > 0">
-  <ul>
-    <li
-      *ngFor="let result of searchResults; let i = index"
-      [class.selected]="i === currentSearchIndex"
-    >
-      {{ result.Sourcename }}
-      <!-- Display the relevant search result properties -->
-    </li>
-  </ul>
-</div>
-<button mat-flat-button color="primary" (click)="selectNextSearchResult()">
-  Next
+
+  <input
+    id="search-field"
+    type="text"
+    placeholder="Search..."
+    (input)="onKey($event)"
+  />
+  <div *ngIf="searchResults.length > 0">
+    <ul>
+      <li
+        *ngFor="let result of searchResults; let i = index"
+        [class.selected]="i === currentSearchIndex"
+      >
+        {{ result.Sourcename }}
+        <!-- Display the relevant search result properties -->
+      </li>
+    </ul>
+  </div>
+
+<button mat-icon-button color="primary" (click)="selectPreviousSearchResult()">
+  <mat-icon>arrow_back</mat-icon>
 </button>
-<button mat-flat-button color="primary" (click)="selectPreviousSearchResult()">
-  Previous
+
+<button mat-icon-button color="primary" (click)="selectNextSearchResult()">
+  <mat-icon>arrow_forward</mat-icon>
 </button>
+
 <!-- Table -->
 <div #hotContainer></div>
-<!-- Export button -->
+
 <button mat-flat-button color="primary" (click)="onExportClick()">
-  Quick Export to CSV
+Quick CSV Export
 </button>
+

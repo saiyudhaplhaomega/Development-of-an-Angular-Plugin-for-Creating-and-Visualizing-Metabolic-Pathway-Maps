@@ -187,11 +187,8 @@ export class MetadataWorkflowComponent implements OnInit {
 
       if (search) {
         const queryResult = search.query(searchField.value);
-        // console.log(queryResult);
-
-        // Update searchResults and currentSearchIndex
         this.searchResults = queryResult;
-        this.currentSearchIndex = 0; // Reset to the first result
+        this.currentSearchIndex = 0; 
 
         this.hotInstance.render();
       }
@@ -242,6 +239,7 @@ export class MetadataWorkflowComponent implements OnInit {
         mimeType: "text/csv",
         rowDelimiter: "\r\n",
         rowHeaders: false
+        //TODO: Last Column shouldnt be added
       });
     }
   }

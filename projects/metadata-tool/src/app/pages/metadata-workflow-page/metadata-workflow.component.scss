@@ -1,3 +1,20 @@
 .selected {
     background-color: yellow;
   }
+
+ 
+  .custom-icon-button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon-text {
+    font-size: 12px; 
+    margin-left: 5px;
+  }
+  

@@ -298,10 +298,10 @@ export class MetaDataCheckboxSelectionComponent {
       ...selectedColumnsComments,
       ...MetaDataCheckboxSelectionComponent.notSelectableComments2,
       ...MetaDataCheckboxSelectionComponent.factorValue,
+      ...MetaDataCheckboxSelectionComponent.identID,
     ];
 
     this.checkboxService.updateMergedSelection(mergedSelection);
-    this.continueClicked.emit();
   }
 
   private getSelectedColumns(formArray: FormArray, data: any[]) {
