@@ -10,13 +10,20 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormlyMaterialModule } from "@ngx-formly/material";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { NgParticlesModule } from "ng-particles";
+import { LandingModule } from "projects/signaling-tool/src/app/landing-page/landing-page.module";
+import { MetadataLandingPageComponent } from "./pages/metadata-landing-page/metadata-landing-page.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MetadataLandingPageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+
+    NgParticlesModule,
 
     StandardPageLayoutModule,
     BrowserAnimationsModule,
@@ -28,9 +35,11 @@ import { MatButtonModule } from "@angular/material/button";
 
     // Material design imports
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, LandingModule]
 })
 export class AppModule {}

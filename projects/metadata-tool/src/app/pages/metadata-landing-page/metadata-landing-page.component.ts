@@ -13,6 +13,10 @@ import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSli
   styleUrls: ["./metadata-landing-page.component.scss"]
 })
 export class MetadataLandingPageComponent {
+  goToLink(url: string): void {
+    window.open(url, "_blank");
+  }
+
   id = "tsparticles";
 
   /* Starting from 1.19.0 you can use a remote url (AJAX request) to a JSON with the configuration */
@@ -34,7 +38,7 @@ export class MetadataLandingPageComponent {
         },
         onHover: {
           enable: true,
-          mode: HoverMode.repulse
+          mode: HoverMode.attract
         },
         resize: true
       },
@@ -43,6 +47,10 @@ export class MetadataLandingPageComponent {
           quantity: 4
         },
         repulse: {
+          distance: 20,
+          duration: 0.4
+        },
+        attract: {
           distance: 200,
           duration: 0.4
         }
@@ -66,7 +74,7 @@ export class MetadataLandingPageComponent {
           default: OutMode.bounce
         },
         random: false,
-        speed: 6,
+        speed: 1,
         straight: false
       },
       number: {
