@@ -56,7 +56,7 @@ export class AuthService {
         console.log('token expired');
       }
     } else {
-      console.log("oh nein: savuedItem !== null && savedItem !== ''");
+      console.log("Login error: savedItem !== null && savedItem !== ''");
     }
   }
 
