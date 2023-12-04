@@ -158,6 +158,10 @@ export class MetadataUploadContainerComponent implements OnInit {
     //   processingPipeline: this.selectedPipeline.value
     // });
 
+
+
+
+
     // prepare metadatajson for upload
     const metadataJsonAsFile: File = new File(
       [JSON.stringify(this.metadataUploadJson)],
@@ -173,13 +177,17 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Upload the files
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
 
+    files.files.forEach( (file: UploadFile) => {
+      this.uploadProgressService.addToTotal(file.uploadFile.size);
+    });
+
     // no dialog for now
     // Open a dialog indicating the upload has started
-    const dialogRef = this.dialog.open(UploadDialogComponent, {
-      id: this.uploadDialogId,
-      disableClose: false,
-      data: { successMessage: "Upload initiated." }
-    });
+    // const dialogRef = this.dialog.open(UploadDialogComponent, {
+    //   id: this.uploadDialogId,
+    //   disableClose: false,
+    //   data: { successMessage: "Upload initiated." }
+    // });
 
     // Handle post-upload actions
     // dialogRef.afterClosed().subscribe(/* ... */);

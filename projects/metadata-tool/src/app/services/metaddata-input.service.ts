@@ -27,6 +27,9 @@ export class MetaDataService {
   dummyData: MetaDataUploadJson = data; // TODO: for testing purposes, remove later
   downloadUrls: string[] = [];
 
+  uploadFinish: Boolean;
+  jobFinished: Boolean;
+
 
   public metadataUploadJson = new BehaviorSubject<MetaDataUploadJson>(
     this.dummyData
@@ -79,6 +82,8 @@ export class MetaDataService {
     uploadProgress: UploadProgressService,
     dialog: MatDialog
   ): void {
+    this.uploadFinish = false;
+    this.jobFinished = false;
     this.http
       .postMultiPartFilesEvents(files, this.url.getURL(Endpoints.UPLOAD_FILES))
       .subscribe({
@@ -86,6 +91,7 @@ export class MetaDataService {
           if (event.type === HttpEventType.UploadProgress) {
             uploadProgress.changeReportLoaded(event.loaded);
           } else if (event.type === HttpEventType.Response) {
+            this.uploadFinish = true;
             const newMetadataJson: MetaDataUploadJson = event.body as MetaDataUploadJson;
             // const copy: MetadataJsonObject = event.body as MetadataJsonObject;
             newMetadataJson.metadataJson.forEach( (col) => {
@@ -115,6 +121,7 @@ export class MetaDataService {
               )
               .subscribe((response: MetaDataUploadJson) => {
                 response.metadataJson.forEach( (col) => {
+                  this.jobFinished = true;
                   const ontId2Param = new Map<string, string>();
                   for (const key in col.ontId2Param) {
                     ontId2Param.set(key, col.ontId2Param[key]);
