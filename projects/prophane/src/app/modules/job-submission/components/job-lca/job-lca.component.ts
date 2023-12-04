@@ -13,12 +13,17 @@ export class JobLcaComponent implements OnInit {
 
   readonly lcaTasks = lcaOptions;
   readonly lcaOptionStrings = JSON.parse(JSON.stringify(lcaParams));
-
+  readonly tooltipLcaMethod = 'The "LCA per group" method determines the LCA based on annotations of proteins within a protein group. The "democratic LCA" method selects the annotation that occurs most frequently across all protein groups from each protein group.'
+  readonly tooltipThreshold = 'Valid thresholds from 0.1 to 1. A threshold value of 1 returns an LCA only if all annotations of all protein group members share the same annotation; otherwise the LCA is reported as "various". With a threshold value of 0.51, Prophane returns an LCA if more than half of the annotations are the same.'
+  readonly tooltipIgnoreUnclassified ='For LCA determination only proteins are used if an annotation was found (excluding "unclassified" annotations)'
+  readonly tooltipMinNumb = 'Specify a minimum count of annotations within the annotation lineage that will be taken into account for LCA determination. Caution! This parameter is set for all annotations!'
   formErrorColor = '#f8d7da';
   formInputError = [];
+  
   constructor(public prophaneJobState: ProphaneJobStateService) {
+    console.log(this.prophaneJobState.currentProphaneJob.parameters.lcaTask)
   }
-
+  
   ngOnInit(): void {
   }
 
@@ -72,7 +77,6 @@ export class JobLcaComponent implements OnInit {
 
   isAlreadyInLCATask(optionstring: ProphaneTaskOptionString[], option): boolean {
     return optionstring.filter(i => i.param === option.param).length > 0;
-
   }
 
 }

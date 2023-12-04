@@ -405,12 +405,18 @@ export const defaultCustomMapTask: ProphaneAnnotationTaskObject =
   
 }
 
+export const CustomMapOptions: any =  {
+  scope: ['Taxonomy', 'Function'],
+  algorithm: ['acc2annot_mapper']
+}
+;
+
 export const lcaParams = [
   {name: 'lca', options: sortBy([
       {
         param: 'threshold',
         valueType: 'number',
-        defaultValue: '1',
+        defaultValue: '0.51',
         min: '0.1',
         max: '1',
         values: [],
@@ -432,7 +438,7 @@ export const lcaParams = [
         min: undefined,
         max: undefined,
         values: [],
-        isDefault: '0',
+        isDefault: '1',
         avoid: []}
     ], function (option) {
       return option.param.toLowerCase();
@@ -440,7 +446,7 @@ export const lcaParams = [
     defaultOptionStringSelection: {
       param: 'threshold',
       valueType: 'number',
-      defaultValue: '1',
+      defaultValue: '0.51',
       min: '0.1',
       max: '1',
       values: [],
@@ -464,12 +470,21 @@ export const lcaParams = [
         min: undefined,
         max: undefined,
         values: [],
-        isDefault: '0',
+        isDefault: '1',
         avoid: []},
     ], function (option) {
       return option.param.toLowerCase();
     }),
-    defaultOptionStringSelection: {}
+    defaultOptionStringSelection: {
+      param: 'ignore_unclassified',
+      valueType: 'none',
+      defaultValue: '',
+      min: undefined,
+      max: undefined,
+      values: [],
+      isDefault: '1',
+      avoid: []
+    }
   }
 ];
 
@@ -478,8 +493,26 @@ export const lcaOptions: ProphaneLcaObject[] = [
     method: 'lca',
     name: 'LCA per group',
     optionstring: [
-      {param: 'threshold', valueType: 'number', defaultValue: '1', min: '0.1', max: '1', values: [],
-       isDefault: '1', avoid: []}
+      {
+        param: 'threshold', 
+        valueType: 'number', 
+        defaultValue: '0.51', 
+        min: '0.1', 
+        max: '1', 
+        values: [],
+        isDefault: '1', 
+        avoid: [],
+      },
+      {
+      param: 'ignore_unclassified',
+      valueType: 'none',
+      defaultValue: '',
+      min: undefined,
+      max: undefined,
+      values: [],
+      isDefault: '1',
+      avoid: [],
+      }
     ],
     formOptionStringSelection: {
       param: 'minimum_number_of_annotations', valueType: 'int', defaultValue: '0', min: '0', max: '7',
@@ -488,16 +521,23 @@ export const lcaOptions: ProphaneLcaObject[] = [
   {
     method: 'democratic_lca',
     name: 'democratic LCA',
-    optionstring: [],
+    optionstring: [{
+      param: 'ignore_unclassified',
+      valueType: 'none',
+      defaultValue: '',
+      min: undefined,
+      max: undefined,
+      values: [],
+      isDefault: '1',
+      avoid: []}],
     formOptionStringSelection: {
       param: 'minimum_number_of_annotations', valueType: 'int', defaultValue: '0', min: '0', max: '7',
       values: ['0', '1', '2', '3', '4', '5', '6', '7'], isDefault: '0', avoid: []},
   },
 ];
 
-export const CustomMapOptions: any =  {
-    scope: ['Taxonomy', 'Function'],
-    algorithm: ['acc2annot_mapper']
-  }
-;
+
+
+export const defaultLcaTask: ProphaneLcaObject =
+  lcaOptions.filter(i => i['method'] === 'lca')[0]
 

@@ -10,7 +10,7 @@ import {
   optionStrings,
   prophaneReportStyles,
   quantdata,
-  lcaOptions,
+  defaultLcaTask,
   CustomMapOptions,
   defaultCustomMapTask,
 } from '../model/prophaneFormData';
@@ -85,7 +85,7 @@ export class ProphaneJobStateService {
   readonly contoptions = contaminationdata;
   readonly quantdata = quantdata;
   readonly evalueOptions = evalueOptions;
-  readonly lcaOptions = lcaOptions;
+  readonly lcaOptions = defaultLcaTask;
   readonly optionCustomMaps = CustomMapOptions;
   // readonly defaultOptionString = defaultOptionString;
   readonly databaseOptions = databaseOptions;
@@ -115,7 +115,7 @@ export class ProphaneJobStateService {
     this.currentProphaneJob.parameters.annotationTasks = this.annotationTasks;
     this.currentProphaneJob.parameters.sampleGroups =
       [] as ProphaneSampleGroupObject[];
-    this.currentProphaneJob.parameters.lcaTask = this.lcaOptions[0];
+    this.currentProphaneJob.parameters.lcaTask = this.lcaOptions;
     this.currentProphaneJob.prophaneJobUUID = ''; // empty, the request should return a job id
     this.currentProphaneJob.status = ''; // the status is set exclusively by the server
     this.currentProphaneJob.csvFilename = '';
@@ -364,9 +364,6 @@ export class ProphaneJobStateService {
           }
         }
       });
-
-
-
 
     }
   }

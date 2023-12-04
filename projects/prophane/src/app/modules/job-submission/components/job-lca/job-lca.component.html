@@ -1,14 +1,17 @@
 <!-- LCA Task method -->
 <div class="input-group mb-3">
-    <div class="input-group-prepend">
+    <div class="input-group-prepend"   
+    [matTooltip]="tooltipLcaMethod">
       <span class="input-group-text rki-blue-input">LCA method</span>
     </div>
     <mat-select class="custom-select input-group-append" 
                 style="flex: 1; overflow:hidden"
                 [(value)]="prophaneJobState.currentProphaneJob.parameters.lcaTask"
                 [compareWith]="prophaneJobState.compareByID">
-      <mat-option *ngFor="let lcamethod of lcaTasks" [value]="lcamethod">
-        {{lcamethod.name}}
+      <mat-option 
+        *ngFor="let lcamethod of lcaTasks" 
+        [value]="lcamethod">
+          {{lcamethod.name}}
       </mat-option>
     </mat-select>
   </div>
@@ -17,10 +20,11 @@
   <!-- Display of list of already added optionstrings LCA with remove button (-)-->
   
   <ng-container *ngFor="let option of this.prophaneJobState.currentProphaneJob.parameters.lcaTask.optionstring">
-    <!-- '-' = remove button -->
     <ng-container *ngIf="option.param == 'ignore_unclassified'">
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
+        <div 
+          class="input-group-prepend" 
+          [matTooltip]="tooltipIgnoreUnclassified">
           <span class="input-group-text">{{option.param}}</span>
         </div>
         <div class="input-group-append">
@@ -34,7 +38,8 @@
   
     <ng-container *ngIf="option.param == 'minimum_number_of_annotations'">
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
+        <div class="input-group-prepend"
+            [matTooltip]="tooltipMinNumb">
           <span class="input-group-text">{{option.param}}</span>
         </div>
         <input type="text" class="form-control"
@@ -53,7 +58,8 @@
   
     <ng-container *ngIf="option.param == 'threshold'">
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
+        <div class="input-group-prepend"
+        [matTooltip]="tooltipThreshold">
           <span class="input-group-text">{{option.param}}</span>
         </div>
         <input type="text" class="form-control"

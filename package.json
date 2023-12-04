@@ -11,6 +11,7 @@
     "startmpa": "ng serve mpa",
     "buildprophane": "ng build prophane",
     "startprophane": "ng serve prophane",
+    "buildtax2proteome": "ng build tax2proteome",
     "starttax2proteome": "ng serve tax2proteome",
     "buildofs": "ng build ofs",
     "startofs": "ng serve ofs",
