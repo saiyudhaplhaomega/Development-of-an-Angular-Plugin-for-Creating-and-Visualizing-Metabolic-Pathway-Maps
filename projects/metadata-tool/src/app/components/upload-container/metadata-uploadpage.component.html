@@ -45,19 +45,23 @@
     [completed]="metadataTableCompleted"
   >
     <ng-template matStepLabel>Metadata Table</ng-template>
-  
+
     <app-checkboxselection></app-checkboxselection>
     <metadata-workflow></metadata-workflow>
-
+    <!-- move button to the stepper, because the table needs to be a single component  -->
+    <div>
+      <button mat-button (click)="onSubmitAndGoToDownload()">
+        Submit and Go to Download
+      </button>
+    </div>
   </mat-step>
 
   <!-- Metadata Table Step -->
   <mat-step
     [stepControl]="fileDownloadFormGroup"
-    [completed]="fileDownloadCompleted"
+    [completed]="submitAndGoToDownloadPressed"
   >
     <ng-template matStepLabel>Download</ng-template>
     <app-metadata-downloadpage></app-metadata-downloadpage>
-
   </mat-step>
 </mat-vertical-stepper>

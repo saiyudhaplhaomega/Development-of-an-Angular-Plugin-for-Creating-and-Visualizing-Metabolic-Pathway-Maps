@@ -1,37 +1,31 @@
-  <h2>SDRF Table</h2>
-  <!-- Search input -->
-  <input
-    id="search-field"
-    type="text"
-    placeholder="Search..."
-    (input)="onKey($event)"
-  />
-  <div *ngIf="searchResults.length > 0">
-    <ul>
-      <li
-        *ngFor="let result of searchResults; let i = index"
-        [class.selected]="i === currentSearchIndex"
-      >
-        {{ result.Sourcename }}
-        <!-- Display the relevant search result properties -->
-      </li>
-    </ul>
-  </div>
-  <button mat-flat-button color="primary" (click)="selectNextSearchResult()">
-    Next
-  </button>
-  <button mat-flat-button color="primary" (click)="selectPreviousSearchResult()">
-    Previous
-  </button>
-  <!-- Table -->
-  <div #hotContainer></div>
-  <!-- Export button -->
-  <button mat-flat-button color="primary" (click)="onExportClick()">
-    Quick Export to CSV
-  </button>
-
-  <div class="text-center mt-20 mb-20">
-    <button mat-flat-button color="primary" (click)="submit()">
-      Submit and go to Download
-    </button>
-  </div>
+<h2>SDRF Table</h2>
+<!-- Search input -->
+<input
+  id="search-field"
+  type="text"
+  placeholder="Search..."
+  (input)="onKey($event)"
+/>
+<div *ngIf="searchResults.length > 0">
+  <ul>
+    <li
+      *ngFor="let result of searchResults; let i = index"
+      [class.selected]="i === currentSearchIndex"
+    >
+      {{ result.Sourcename }}
+      <!-- Display the relevant search result properties -->
+    </li>
+  </ul>
+</div>
+<button mat-flat-button color="primary" (click)="selectNextSearchResult()">
+  Next
+</button>
+<button mat-flat-button color="primary" (click)="selectPreviousSearchResult()">
+  Previous
+</button>
+<!-- Table -->
+<div #hotContainer></div>
+<!-- Export button -->
+<button mat-flat-button color="primary" (click)="onExportClick()">
+  Quick Export to CSV
+</button>

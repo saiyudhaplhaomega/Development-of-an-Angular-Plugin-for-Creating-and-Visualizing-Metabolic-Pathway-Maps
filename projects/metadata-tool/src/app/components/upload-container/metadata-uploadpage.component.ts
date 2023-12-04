@@ -23,6 +23,7 @@ import {
   MetadataJsonObject
 } from "../../model/metadata-columnData";
 import { MatStepper } from "@angular/material/stepper";
+import { MetadataWorkflowComponent } from "../../pages/metadata-workflow-page/metadata-workflow.component";
 
 @Component({
   selector: "app-metadata-upload-container",
@@ -31,8 +32,11 @@ import { MatStepper } from "@angular/material/stepper";
 })
 export class MetadataUploadContainerComponent implements OnInit {
   @ViewChild("stepper") stepper: MatStepper;
+  @ViewChild(MetadataWorkflowComponent)
+  metadataWorkflowComponent: MetadataWorkflowComponent;
 
   selectedFiles: File[] = [];
+
   // controls  material stepper logic in html
   firstStepCompleted = false;
   secondStepCompleted = false;
@@ -40,6 +44,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   metadataQuestionsCompleted = false;
   metadataTableCompleted = false;
   fileDownloadCompleted = false;
+  submitAndGoToDownloadPressed = false;
 
   @Output() uploadStatusChanged = new EventEmitter<{
     progress: number;
@@ -117,23 +122,22 @@ export class MetadataUploadContainerComponent implements OnInit {
 
     // activate for deactivating guards
 
-    this.pipelineSelectFormGroup = this._formBuilder.group({
-      // initializations for the first form group
-    });
-    this.fileUploadFormGroup = this._formBuilder.group({
-      // initializations for the second form group
-    });
-    this.metadataQuestionFormGroup = this._formBuilder.group({
-      // initializations for the third form group
-    });
-    this.metadataTableFormGroup = this._formBuilder.group({
-      // initializations for the third form group
-    });
-    this.fileDownloadFormGroup = this._formBuilder.group({});
+    // this.pipelineSelectFormGroup = this._formBuilder.group({
+    //   // initializations for the first form group
+    // });
+    // this.fileUploadFormGroup = this._formBuilder.group({
+    //   // initializations for the second form group
+    // });
+    // this.metadataQuestionFormGroup = this._formBuilder.group({
+    //   // initializations for the third form group
+    // });
+    // this.metadataTableFormGroup = this._formBuilder.group({
+    //   // initializations for the third form group
+    // });
+    // this.fileDownloadFormGroup = this._formBuilder.group({});
   }
 
   onUpload(): void {
-
     // Hide certain UI elements during upload
     this.showContainer = false;
 
@@ -225,5 +229,13 @@ export class MetadataUploadContainerComponent implements OnInit {
 
   onHorizontalFormSubmit() {
     this.stepper.next();
+  }
+
+  onSubmitAndGoToDownload() {
+    if (this.metadataWorkflowComponent) {
+      this.metadataWorkflowComponent.submit();
+    }
+    this.submitAndGoToDownloadPressed = true;
+    this.stepper.next(); // Proceed to the next step
   }
 }

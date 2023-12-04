@@ -3,23 +3,23 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MetaDataService } from '../../services/metaddata-input.service';
+  ViewChild
+} from "@angular/core";
+import { MetaDataService } from "../../services/metaddata-input.service";
 import {
   MetadataJson,
-  MetadataJsonObject,
-} from '../../model/metadata-columnData';
-import { ContextMenu } from 'handsontable/plugins';
-import Handsontable from 'handsontable';
+  MetadataJsonObject
+} from "../../model/metadata-columnData";
+import { ContextMenu } from "handsontable/plugins";
+import Handsontable from "handsontable";
 
-import { Subscription } from 'rxjs';
-import { CheckboxSelectionService } from '../../components/metadata-checkboxselection/checkboxselectionservice';
+import { Subscription } from "rxjs";
+import { CheckboxSelectionService } from "../../components/metadata-checkboxselection/checkboxselectionservice";
 
 @Component({
-  selector: 'metadata-workflow',
-  templateUrl: './metadata-workflow.component.html',
-  styleUrls: ['./metadata-workflow.component.scss'],
+  selector: "metadata-workflow",
+  templateUrl: "./metadata-workflow.component.html",
+  styleUrls: ["./metadata-workflow.component.scss"]
 })
 export class MetadataWorkflowComponent implements OnInit {
   constructor(
@@ -34,34 +34,34 @@ export class MetadataWorkflowComponent implements OnInit {
   columnData: MetadataJson[] = [];
   columnDataTransform: any[] = [];
   titlesArray: string[] = [];
-  titlesString: string = '';
+  titlesString = "";
   dataArray: string[] = [];
-  dataString: string = '';
-  showTable: boolean = false;
+  dataString = "";
+  showTable = false;
 
-  selectableProperties1Counter: number = 0;
-  selectableCharacteristicCounter: number = 0;
-  selectableProperties2Counter: number = 0;
-  selectableCommentsCounter: number = 0;
+  selectableProperties1Counter = 0;
+  selectableCharacteristicCounter = 0;
+  selectableProperties2Counter = 0;
+  selectableCommentsCounter = 0;
 
   HeadersData = this.titlesArray;
   nestedHeadersData: any[][] = [];
   collapsibleColumnsData: any[] = [];
 
   searchResults: any[] = []; // Store the search results
-  currentSearchIndex: number = -1; // Index of the currently selected search result
+  currentSearchIndex = -1; // Index of the currently selected search result
 
   hotInstance!: Handsontable; // Store the Handsontable instance
-  @ViewChild('hotContainer') hotContainer!: ElementRef;
+  @ViewChild("hotContainer") hotContainer!: ElementRef;
 
   hotSettings: Handsontable.GridSettings = {
     data: [], // Bind to the fetched data
     columns: this.mergedSelection,
     collapsibleColumns: true,
 
-    height: 'auto',
+    height: "auto",
     manualColumnResize: true,
-    licenseKey: 'non-commercial-and-evaluation',
+    licenseKey: "non-commercial-and-evaluation",
     multiColumnSorting: true,
     filters: true,
     search: true,
@@ -71,14 +71,14 @@ export class MetadataWorkflowComponent implements OnInit {
     contextMenu: {
       items: {
         undo: {
-          name: 'undo',
+          name: "undo"
         },
         redo: {
-          name: 'redo',
+          name: "redo"
         },
-        separator: ContextMenu.SEPARATOR,
-      },
-    },
+        separator: ContextMenu.SEPARATOR
+      }
+    }
   };
 
   ngOnInit(): void {
@@ -87,13 +87,13 @@ export class MetadataWorkflowComponent implements OnInit {
     this.columnDataTransform = [];
     this.columnData.forEach((col) => {
       const colTransformed = {};
-      colTransformed['counter'] = col.counter;
-      colTransformed['identID'] = col.identID;
-      colTransformed['mzID'] = col.mzID;
-      colTransformed['mzML'] = col.mzML;
-      colTransformed['peptideFile'] = col.peptideFile;
-      colTransformed['psmFile'] = col.psmFile;
-      colTransformed['spectrumFile'] = col.spectrumFile;
+      colTransformed["counter"] = col.counter;
+      colTransformed["identID"] = col.identID;
+      colTransformed["mzID"] = col.mzID;
+      colTransformed["mzML"] = col.mzML;
+      colTransformed["peptideFile"] = col.peptideFile;
+      colTransformed["psmFile"] = col.psmFile;
+      colTransformed["spectrumFile"] = col.spectrumFile;
       col.ontId2Param.forEach((val, key) => {
         colTransformed[key] = val;
       });
@@ -141,24 +141,29 @@ export class MetadataWorkflowComponent implements OnInit {
     const characteristicColspan = this.selectableCharacteristicCounter + 2;
     const properties2Colspan = this.selectableProperties2Counter + 2;
     const commentsColspan = this.selectableCommentsCounter + 6;
-    const hiddenCol = 1 +  properties1Colspan + characteristicColspan + properties2Colspan + commentsColspan;
+    const hiddenCol =
+      1 +
+      properties1Colspan +
+      characteristicColspan +
+      properties2Colspan +
+      commentsColspan;
 
     this.nestedHeadersData = [
       [
-        { label: '', colspan: properties1Colspan},
-        { label: 'characteristic', colspan: characteristicColspan },
-        { label: '', colspan: properties2Colspan },
-        { label: 'comments', colspan: commentsColspan },
-        { label: 'factor value', colspan: 1 },
-        { label: 'ID', colspan: 1 },
+        { label: "", colspan: properties1Colspan },
+        { label: "characteristic", colspan: characteristicColspan },
+        { label: "", colspan: properties2Colspan },
+        { label: "comments", colspan: commentsColspan },
+        { label: "factor value", colspan: 1 },
+        { label: "ID", colspan: 1 }
       ],
-      this.titlesArray,
+      this.titlesArray
     ];
 
     this.hotSettings.nestedHeaders = this.nestedHeadersData;
     this.hotSettings.hiddenColumns = {
       columns: [hiddenCol],
-      indicators: false,
+      indicators: false
     };
   }
 
@@ -176,9 +181,9 @@ export class MetadataWorkflowComponent implements OnInit {
   private performSearch() {
     if (this.hotInstance) {
       const searchField = document.getElementById(
-        'search-field'
+        "search-field"
       ) as HTMLInputElement;
-      const search = this.hotInstance.getPlugin('search');
+      const search = this.hotInstance.getPlugin("search");
 
       if (search) {
         const queryResult = search.query(searchField.value);
@@ -224,19 +229,19 @@ export class MetadataWorkflowComponent implements OnInit {
 
   private exportData() {
     if (this.hotInstance) {
-      const exportPlugin = this.hotInstance.getPlugin('exportFile');
+      const exportPlugin = this.hotInstance.getPlugin("exportFile");
 
-      exportPlugin.downloadFile('csv', {
+      exportPlugin.downloadFile("csv", {
         bom: false,
-        columnDelimiter: ';',
+        columnDelimiter: ";",
         columnHeaders: true,
         exportHiddenColumns: true,
         exportHiddenRows: true,
-        fileExtension: 'csv',
-        filename: 'Handsontable-CSV-file_[YYYY]-[MM]-[DD]',
-        mimeType: 'text/csv',
-        rowDelimiter: '\r\n',
-        rowHeaders: false,
+        fileExtension: "csv",
+        filename: "Handsontable-CSV-file_[YYYY]-[MM]-[DD]",
+        mimeType: "text/csv",
+        rowDelimiter: "\r\n",
+        rowHeaders: false
       });
     }
   }
@@ -250,7 +255,7 @@ export class MetadataWorkflowComponent implements OnInit {
       const dataExport = this.hotInstance.getData();
       // Create a map of unique IDs to objects in the result array
       const resultMap = new Map(result.map((obj) => [obj.identID, obj]));
-      for (let hstRow in this.exportData) {
+      for (const hstRow in this.exportData) {
         const newObj: MetadataJsonObject = new MetadataJsonObject();
         for (let j = 0; j < headers.length; j++) {
           const key = headers[j];
@@ -292,13 +297,13 @@ export class MetadataWorkflowComponent implements OnInit {
         this.columnDataTransform = [];
         this.columnData.forEach((col) => {
           const colTransformed = {};
-          colTransformed['counter'] = col.counter;
-          colTransformed['identID'] = col.identID;
-          colTransformed['mzID'] = col.mzID;
-          colTransformed['mzML'] = col.mzML;
-          colTransformed['peptideFile'] = col.peptideFile;
-          colTransformed['psmFile'] = col.psmFile;
-          colTransformed['spectrumFile'] = col.spectrumFile;
+          colTransformed["counter"] = col.counter;
+          colTransformed["identID"] = col.identID;
+          colTransformed["mzID"] = col.mzID;
+          colTransformed["mzML"] = col.mzML;
+          colTransformed["peptideFile"] = col.peptideFile;
+          colTransformed["psmFile"] = col.psmFile;
+          colTransformed["spectrumFile"] = col.spectrumFile;
           col.ontId2Param.forEach((val, key) => {
             colTransformed[key] = val;
           });
@@ -313,19 +318,19 @@ export class MetadataWorkflowComponent implements OnInit {
         (selection) => {
           this.mergedSelection = selection;
           this.titlesArray = this.mergedSelection.map((item) => item.title);
-          this.titlesString = this.titlesArray.join(', ');
+          this.titlesString = this.titlesArray.join(", ");
           this.dataArray = this.mergedSelection.map((item) => item.data);
-          this.dataString = this.dataArray.join(', ');
+          this.dataString = this.dataArray.join(", ");
           this.updateNestedHeadersData(); // Call the function to generate the nested headers
 
           this.hotInstance.updateSettings({
             ...this.hotSettings,
             columns: this.mergedSelection,
-            colHeaders: this.titlesArray,
+            colHeaders: this.titlesArray
           });
         },
         (error) => {
-          console.error('Error with mergedSelection$ subscription', error);
+          console.error("Error with mergedSelection$ subscription", error);
         }
       );
   }
