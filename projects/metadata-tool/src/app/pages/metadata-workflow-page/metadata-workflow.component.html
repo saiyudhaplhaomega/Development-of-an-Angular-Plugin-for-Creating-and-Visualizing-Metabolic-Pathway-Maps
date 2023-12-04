@@ -1,34 +1,41 @@
+<div class="search-container">
+  <div class="left-content">
+    <input
+      id="search-field"
+      type="text"
+      placeholder="Search..."
+      (input)="onKey($event)"
+    />
 
-  <input
-    id="search-field"
-    type="text"
-    placeholder="Search..."
-    (input)="onKey($event)"
-  />
-  <div *ngIf="searchResults.length > 0">
-    <ul>
-      <li
-        *ngFor="let result of searchResults; let i = index"
-        [class.selected]="i === currentSearchIndex"
-      >
-        {{ result.Sourcename }}
-        <!-- Display the relevant search result properties -->
-      </li>
-    </ul>
+    <button mat-icon-button class="arrow-button md-inactive" color="primary" (click)="selectPreviousSearchResult()">
+      <mat-icon class="material-icons arrow-icon">arrow_back</mat-icon>
+    </button>
+
+    <button mat-icon-button class="arrow-button md-inactive" color="primary" (click)="selectNextSearchResult()">
+      <mat-icon class="material-icons arrow-icon">arrow_forward</mat-icon>
+    </button>
   </div>
 
-<button mat-icon-button color="primary" (click)="selectPreviousSearchResult()">
-  <mat-icon>arrow_back</mat-icon>
-</button>
+  <div class="right-content">
+    <button mat-button (click)="onExportClick()" class="right-flex">
+      <mat-icon class="file-icon">insert_drive_file</mat-icon>
+      Quick CSV Export
+    </button>
+  </div>
+</div>
 
-<button mat-icon-button color="primary" (click)="selectNextSearchResult()">
-  <mat-icon>arrow_forward</mat-icon>
-</button>
+
+<div *ngIf="searchResults.length > 0">
+  <ul>
+    <li
+      *ngFor="let result of searchResults; let i = index"
+      [class.selected]="i === currentSearchIndex"
+    >
+      {{ result.Sourcename }}
+      <!-- Display the relevant search result properties -->
+    </li>
+  </ul>
+</div>
 
 <!-- Table -->
 <div #hotContainer></div>
-
-<button mat-flat-button color="primary" (click)="onExportClick()">
-Quick CSV Export
-</button>
-

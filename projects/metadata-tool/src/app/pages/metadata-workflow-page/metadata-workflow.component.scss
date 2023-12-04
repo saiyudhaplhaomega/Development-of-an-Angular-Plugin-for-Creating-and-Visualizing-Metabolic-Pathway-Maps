@@ -14,7 +14,49 @@
   }
   
   .custom-icon-text {
-    font-size: 12px; 
+    font-size: 10px; 
     margin-left: 5px;
   }
-  
+
+
+/* app.component.scss */
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+}
+
+.right-content {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  color: black;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+}
+
+#search-field {
+  margin-right: 8px;
+}
+
+.right-flex {
+  display: flex;
+  align-items: center;
+}
+
+.file-icon {
+  margin-left: 8px;
+}
