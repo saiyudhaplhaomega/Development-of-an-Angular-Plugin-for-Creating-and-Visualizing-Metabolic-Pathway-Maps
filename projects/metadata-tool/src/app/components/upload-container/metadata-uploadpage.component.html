@@ -8,21 +8,18 @@
       [(ngModel)]="selectedPipeline"
       [entries]="pipelines"
       label="Choose Pipeline"
-      (ngModelChange)="firstStepCompleted = !!$event"
+      (ngModelChange)="pipelineIsSelected = !!$event"
     >
     </app-pipeline-selection>
   </mat-step>
 
   <!-- Step 2: File Upload -->
-  <mat-step
-    [stepControl]="fileUploadFormGroup"
-    [completed]="firstStepCompleted && secondStepCompleted"
-  >
+  <mat-step [stepControl]="fileUploadFormGroup" [completed]="uploadTriggered">
     <ng-template matStepLabel>Upload Files</ng-template>
     <app-file-upload
       [acceptedDataTypes]="selectedPipeline.acceptedDataTypes"
       [acceptedFileRegex]="selectedPipeline.matchingFilesReges"
-      (filesSelected)="handleFileSelection($event); secondStepCompleted = true"
+      (filesSelected)="handleFileSelection($event)"
       (uploadTriggered)="onUpload()"
     >
     </app-file-upload>

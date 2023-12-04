@@ -38,7 +38,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   selectedFiles: File[] = [];
 
   // controls  material stepper logic in html
-  firstStepCompleted = false;
+  pipelineIsSelected = false;
   secondStepCompleted = false;
   uploadTriggered = false;
   metadataQuestionsCompleted = false;
@@ -162,10 +162,6 @@ export class MetadataUploadContainerComponent implements OnInit {
     //   processingPipeline: this.selectedPipeline.value
     // });
 
-
-
-
-
     // prepare metadatajson for upload
     const metadataJsonAsFile: File = new File(
       [JSON.stringify(this.metadataUploadJson)],
@@ -181,7 +177,7 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Upload the files
     this.dataService.upload(files, this.uploadProgressService, this.dialog);
 
-    files.files.forEach( (file: UploadFile) => {
+    files.files.forEach((file: UploadFile) => {
       this.uploadProgressService.addToTotal(file.uploadFile.size);
     });
 
@@ -200,11 +196,10 @@ export class MetadataUploadContainerComponent implements OnInit {
     // Clear the list of selected files and reset the file input
     this.selectedFiles = [];
     this.clearFileInput();
-    this.uploadTriggered = true; // Set this to true once upload is successful
 
-    if (this.uploadTriggered == true) {
-      this.stepper.next();
-    }
+    // Set this to true once upload is successful\
+    this.uploadTriggered = true;
+    this.stepper.next();
   }
 
   // Helper method to clear the file input
