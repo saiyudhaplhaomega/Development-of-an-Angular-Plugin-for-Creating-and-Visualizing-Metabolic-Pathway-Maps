@@ -3,8 +3,10 @@ import {
   forwardRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from "@angular/core";
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({

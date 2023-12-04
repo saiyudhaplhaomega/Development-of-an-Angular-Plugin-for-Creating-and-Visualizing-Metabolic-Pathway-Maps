@@ -48,7 +48,7 @@ export class MetadataUploadContainerComponent implements OnInit {
   model;
 
   pipelines: Pipeline[] = pipelineData;
-  selectedPipeline: Pipeline = this.pipelines[0];
+  selectedPipeline: Pipeline = this.pipelines[1];
   uploadDialogId: string;
   uploadProgress = 0;
   showContainer = true;
@@ -73,11 +73,10 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.metadataUploadJson.metadataJson = [];
     const rowMapping = new Map<string, MetadataJson>();
     files.forEach((f: FileWithProcessedInfo) => {
-      const groupKey = f.processedInfo.batchDescription + "_" + f.processedInfo.sampleNumber;
+      const groupKey =
+        f.processedInfo.batchDescription + "_" + f.processedInfo.sampleNumber;
       if (rowMapping.has(groupKey)) {
-        const existingRow: MetadataJson = rowMapping.get(
-          groupKey
-        );
+        const existingRow: MetadataJson = rowMapping.get(groupKey);
         if (f.processedInfo.fileCategory == "PSM") {
           existingRow.psmFile = f.processedInfo.id;
         } else if (f.processedInfo.fileCategory == "peptide") {
@@ -130,9 +129,8 @@ export class MetadataUploadContainerComponent implements OnInit {
     this.metadataTableFormGroup = this._formBuilder.group({
       // initializations for the third form group
     });
-    this.fileDownloadFormGroup = this._formBuilder.group({
-  });
-}
+    this.fileDownloadFormGroup = this._formBuilder.group({});
+  }
 
   onUpload(): void {
 
