@@ -21,6 +21,19 @@ const routes: Routes = [
   //       (m) => m.WorkflowModule
   //     )
   // },
+  { path: 'about',
+  loadChildren: () =>
+  import('./pages/about-metadatatool/metadatatool-about/metadatatool-about.module').then(
+    (m) => m.AboutMetadatatoolModule
+  ),
+},
+
+{ path: 'tutorial',
+loadChildren: () =>
+import('./pages/about-metadatatool/metadatatool-tutorial/metadatatool-tutorial.module').then(
+  (m) => m.MetadatatoolTutorialModule
+),
+},
  
 
   { path: "", redirectTo: "home", pathMatch: "full" },

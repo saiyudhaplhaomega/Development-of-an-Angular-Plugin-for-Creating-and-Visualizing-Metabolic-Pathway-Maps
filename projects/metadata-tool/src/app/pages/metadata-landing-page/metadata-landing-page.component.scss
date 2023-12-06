@@ -10,5 +10,37 @@
   padding: 15px 30px; // Larger padding for a bigger button
   min-width: 200px; // Minimum width for the button
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Optional shadow for depth
-  // Add more styling as needed
 }
+
+.metadata-card {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: justify;
+}
+
+.headline {
+  margin-bottom: 20px;
+}
+
+.metadata-content {
+  line-height: 1.6;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.paragraph {
+  margin-bottom: 20px;
+}
+
+mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

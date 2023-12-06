@@ -19,25 +19,35 @@
       ></ng-particles>
     </div>
 
-    <mat-card>
+    <mat-card class="metadata-card">
       <mat-card-header>
-        <mat-card-title class="text-center"
-          >Metadata-Tool for Metadata Conversion</mat-card-title
-        >
+        <mat-card-title class="text-center headline">
+          Metadata-Tool for Metadata Conversion
+        </mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        Embark on a seamless journey of data transformation with our
-        cutting-edge Metadata-Tool, your go-to solution for metadata conversion.
-        Whether you're dealing with XML, JSON, CSV, or any other metadata
-        format, our tool is designed to provide you with a hassle-free
-        experience, ensuring your metadata is accurately and efficiently
-        converted to SDRF, mzID and mzML. Unlock the full potential of your data
-        with features tailored for precision, speed, and flexibility. The
-        Metadata-Tool for Metadata Conversion streamlines your workflow,
-        allowing you to focus on what truly matters – making the most out of
-        your data. Experience the future of metadata management today!
+      <mat-card-content class="metadata-content">
+        <p class="paragraph">
+          Embark on a seamless journey of data transformation with our
+          state-of-the-art Metadata-Tool — your ultimate solution for
+          comprehensive metadata conversion and augmentation. Whether you're
+          working with file formats such as mgf, mzID, mzML, or CSV, our tool is
+          meticulously crafted to deliver a smooth and efficient experience. It
+          ensures your metadata is precisely and swiftly converted or updated
+          with additional content to standard formats like SDRF, mzID, and mzML.
+        </p>
+        <p class="paragraph">
+          Unlock the full potential of your data with features fine-tuned for
+          precision, speed, and flexibility. The Metadata-Tool for Metadata
+          Conversion streamlines your workflow, empowering you to concentrate on
+          what truly matters — extracting maximum value from your data.
+        </p>
+        <p class="paragraph">
+          Experience the future of metadata management today, where efficiency
+          meets innovation!
+        </p>
       </mat-card-content>
     </mat-card>
+
     <br />
     <mat-card>
       <button mat-flat-button color="primary" routerLink="/upload">
@@ -45,10 +55,17 @@
       </button>
     </mat-card>
 
+    <mat-card>
+      <button mat-flat-button color="secondary" routerLink="/tutorial">
+        Tutorial
+      </button>
+    </mat-card>
+
     <!-- link to repo and publication -->
-    <mat-grid-list cols="3" rowHeight="300px" gutterSize="10px">
+    <mat-grid-list cols="2" rowHeight="300px" gutterSize="10px">
       <mat-grid-tile>
-        <mat-card (click)="goToLink('your-publication-link')">
+        <!-- <mat-card (click)="goToLink('your-publication-link')"> -->
+          <mat-card>
           <mat-card-header>
             <mat-icon>article</mat-icon>
             <mat-card-title>Citing</mat-card-title>
@@ -77,17 +94,17 @@
         </mat-card>
       </mat-grid-tile>
 
-      <mat-grid-tile>
+      <!-- <mat-grid-tile>
         <mat-card>
           <mat-card-header>
             <mat-icon>business</mat-icon>
             <mat-card-title>Affiliations</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p>We are funded by...</p>
+            <p>We are funded by </p>
           </mat-card-content>
         </mat-card>
-      </mat-grid-tile>
+      </mat-grid-tile> -->
     </mat-grid-list>
   </main>
 </div>
