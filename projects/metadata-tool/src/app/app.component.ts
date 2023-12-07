@@ -16,6 +16,7 @@ export class AppComponent {
     // { route: "/upload", label: "Upload", requireAuth: false },
     // { route: "/sdrf", label: "sdrf", requireAuth: false },
 
+
   ];
   homelink: SimpleNavigationRoute = {
     route: "/home",
