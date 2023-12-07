@@ -1,7 +1,7 @@
 <mat-grid-list cols="3" rowHeight="2:1">
   <mat-grid-tile colspan="2">
-    <div style="display: flex; align-items: center;">
-      <mat-form-field appearance="fill">
+    <div style="display: flex; align-items: center; width: 100%;">
+      <mat-form-field appearance="fill"  style="width: 30%;">
         <mat-label>{{ label }}</mat-label>
         <mat-select
           flex
@@ -14,7 +14,7 @@
         </mat-select>
       </mat-form-field>
 
-      <div>
+      <div style="width: 40%;">
         supports files with an {{ selectedPipeline.acceptedDataTypes.join(' and ') }} extension.
       </div>
     </div>
