@@ -24,8 +24,10 @@ import { dummyData as data } from "./dummy-data";
 })
 export class MetaDataService {
 
+
   dummyData: MetaDataUploadJson = data; // TODO: for testing purposes, remove later
   downloadUrls: string[] = [];
+  zipUrl: string;
 
   uploadFinish: Boolean;
   jobFinished: Boolean;
@@ -42,6 +44,10 @@ export class MetaDataService {
 
   getDownloads(): string[] {
     return this.downloadUrls;
+  }
+
+  getZip(): string {
+    return this.zipUrl;
   }
 
   updateAllMetaDataUploadJson(newMetadata: { [key: string]: any }): void {
@@ -196,7 +202,11 @@ export class MetaDataService {
               this.downloadUrls.push(url);
             });
             this.downloadUrls.push(response.sdrfFileDownload);
+            this.zipUrl = response.zipDownload;
           });
-      });
+    });
   }
+
+
+
 }

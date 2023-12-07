@@ -5,5 +5,6 @@ export interface DownloadLinksJson {
 	mzidFileDownloads: string[];
 	mzmlFileDownloads: string[];
 	sdrfFileDownload: string;
+  zipDownload: string;
 
 }

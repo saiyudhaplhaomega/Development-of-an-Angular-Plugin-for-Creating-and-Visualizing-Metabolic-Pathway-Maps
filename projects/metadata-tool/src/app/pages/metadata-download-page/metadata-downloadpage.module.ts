@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MetadataDownloadpageComponent } from './metadata-downloadpage.component';
 import { MetadataDownloadpageRoutingModule } from './metadata-downloadpage-routing.module';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTable, MatTableModule } from '@angular/material/table';
 
 
 
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     MetadataDownloadpageRoutingModule,
     MatButtonModule,
+    MatTableModule,
   ],
   exports: [MetadataDownloadpageComponent]
 })

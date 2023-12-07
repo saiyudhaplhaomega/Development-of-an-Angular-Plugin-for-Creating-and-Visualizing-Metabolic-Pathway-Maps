@@ -1,10 +1,34 @@
 <h2>Download Files</h2>
 <div class="flex flex-col h-full justify-between">
-  <tr *ngFor="let url of downloadUrls()">
-    <a href="{{url}}">{{url}}</a>
-  </tr>
+
   <!-- content -->
   <!-- <main class="max-w-3xl mx-auto px-4 mb-auto">
         <button (click)="downloadFile()">Download File</button>
     </main> -->
+  <div class="table-container">
+    <!-- <table mat-table [dataSource]="downloadUrls()">
+      <ng-container matColumnDef="Individual File">
+        <th mat-header-cell *matHeaderCellDef>Individual File </th>
+        <td mat-cell *matCellDef="let emp"> {{emp}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['Individual File']"></tr>
+      <tr mat-row *matRowDef="let emprow; columns: ['Individual File'];">X</tr> -->
+
+      <!-- Column Definitions -->
+      <!-- <ng-container *ngFor="let url of downloadUrls()"> -->
+      <!-- <a href="{{url}}">{{convertUrl(url)}}</a> -->
+      <!-- </tr> -->
+        <!-- <td mat-cell *matCellDef="let url" (click)="url">
+            {{convertUrl(url)}} -->
+        <!-- </td> -->
+      <!-- </ng-container> -->
+
+    <!-- </table> -->
+    <ng-container *ngFor="let url of downloadUrls()">
+      <a mat-button href="{{url}}">{{convertUrl(url)}}</a>
+    </ng-container>
+
+    <!-- <button mat-button href="{{this.zipUrl()}}">Download as .zip archive</button> -->
+  </div>
+  <a mat-raised-button href="{{this.zipUrl()}}">Download as .zip archive</a>
 </div>

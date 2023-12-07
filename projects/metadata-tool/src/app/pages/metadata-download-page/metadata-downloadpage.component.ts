@@ -14,6 +14,16 @@ export class MetadataDownloadpageComponent {
     return this.dataService.getDownloads();
   }
 
+  zipUrl(): string {
+    return this.dataService.getZip();
+  }
+
+  convertUrl(url: string): string {
+    let converted = "";
+    converted = url.substring(url.lastIndexOf("/")+1);
+    return converted;
+  }
+
 
   // downloadFile() {
   //   this.MetaDataDownloadService.downloadFileFromServer().subscribe((data: any) => {
