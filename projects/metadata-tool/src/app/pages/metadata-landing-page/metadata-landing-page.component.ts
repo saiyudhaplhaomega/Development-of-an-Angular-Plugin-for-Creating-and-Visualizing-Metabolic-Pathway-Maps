@@ -7,6 +7,8 @@ import {
 } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
 
+
+
 @Component({
   selector: "metadata-landing-page",
   templateUrl: "./metadata-landing-page.component.html",
