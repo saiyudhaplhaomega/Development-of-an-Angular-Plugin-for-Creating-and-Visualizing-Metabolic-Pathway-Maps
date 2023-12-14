@@ -5,7 +5,8 @@
 stretch"
 >
   <mat-toolbar class="nav-toolbar-root flex-shrink-0 header-color">
-    <div class="logo-container">
+    <div class="logo-container" *ngIf="showLogo">
+      <!-- The ngIf directive will only render the logo if showLogo is true -->
       <img src="{{ logoUrl }}" alt="Logo" class="logo">
     </div>
     <!-- application name and navigation to landing page -->

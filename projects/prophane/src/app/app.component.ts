@@ -12,6 +12,7 @@ import {
 })
 export class AppComponent implements OnInit {
   title = 'prophane';
+  showLogo = false;
   routes: SimpleNavigationRoute[] = [
     { route: '/jobsubmission', label: 'Job Submission', requireAuth: true },
     { route: '/jobcontrol', label: 'Job Control', requireAuth: true },
