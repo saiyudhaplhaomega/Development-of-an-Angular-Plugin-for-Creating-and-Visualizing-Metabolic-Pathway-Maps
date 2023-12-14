@@ -33,6 +33,7 @@
     "newwebsite": "ng generate application lifesciencegraph",
     "newcomponent": "ng generate component metadata-workflow",
     "npm build": "npm install",
+    "npm audit": "npm audit",
     "compodoc": "./node_modules/.bin/compodoc -p ./tsconfig.json",
     "webpack-bundle-analyzer": "webpack-bundle-analyzer",
     "lint": "ng lint"
