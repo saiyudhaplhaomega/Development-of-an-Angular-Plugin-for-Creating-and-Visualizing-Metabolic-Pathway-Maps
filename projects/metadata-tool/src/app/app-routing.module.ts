@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { MetadataLandingPageComponent } from "./pages/metadata-landing-page/metadata-landing-page.component";
+import { LoginPageComponent } from "shared-lib";
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ import('./pages/about-metadatatool/metadatatool-tutorial/metadatatool-tutorial.m
   (m) => m.MetadatatoolTutorialModule
 ),
 },
- 
+
+  {path: "login", component: LoginPageComponent},
 
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "**", redirectTo: "home" }
