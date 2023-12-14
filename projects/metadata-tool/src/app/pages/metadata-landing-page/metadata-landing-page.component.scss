@@ -38,7 +38,7 @@
   margin-bottom: 20px;
 }
 
-:host {
+.particles-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -47,9 +47,15 @@
   z-index: -1; /* Behind other components */
 }
 
+
 mat-card-header {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.logo {
+  width: 100px; /* Adjust the width according to your design */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px; /* Add some margin to separate the logo from the title */
+}

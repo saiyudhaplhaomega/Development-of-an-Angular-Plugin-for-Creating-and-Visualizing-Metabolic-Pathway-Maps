@@ -46,6 +46,8 @@ export class AppComponent {
 
   footerLogoPath = "assets/isaslogooffizielleformrgbweiss.png";
 
+  showLogo: boolean = true;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
