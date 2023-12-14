@@ -17,7 +17,8 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
   @Input() routerLinks: NestedNavigationRoute[] = [];
   @Input() homeLink: SimpleNavigationRoute;
   @Input() hasLogin: Boolean = false;
-
+  @Input() logoUrl: string;
+  
   user: UserToken;
   guest: boolean;
 
