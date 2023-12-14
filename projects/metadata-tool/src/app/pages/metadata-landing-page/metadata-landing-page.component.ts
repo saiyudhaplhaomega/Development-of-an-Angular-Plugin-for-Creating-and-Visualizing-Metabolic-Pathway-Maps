@@ -7,6 +7,8 @@ import {
 } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
 
+
+
 @Component({
   selector: "metadata-landing-page",
   templateUrl: "./metadata-landing-page.component.html",
@@ -44,14 +46,14 @@ export class MetadataLandingPageComponent {
       },
       modes: {
         push: {
-          quantity: 4
+          quantity: 1
         },
         repulse: {
           distance: 20,
           duration: 0.4
         },
         attract: {
-          distance: 200,
+          distance: 100,
           duration: 0.4
         }
       }
@@ -62,7 +64,7 @@ export class MetadataLandingPageComponent {
       },
       links: {
         color: "#ffffff",
-        distance: 150,
+        distance: 200,
         enable: true,
         opacity: 0.5,
         width: 1
@@ -82,7 +84,7 @@ export class MetadataLandingPageComponent {
           enable: true,
           area: 800
         },
-        value: 80
+        value: 50
       },
       opacity: {
         value: 0.5
