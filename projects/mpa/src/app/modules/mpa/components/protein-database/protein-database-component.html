@@ -3,7 +3,7 @@
     <div class="card min-w-600">
       <div class="card-header custom-card-header">
         <h5>Protein Data Base</h5>
-        <button class="btn btn-outline-danger w-sbtn" matTooltip="Delete database" (click)='removeProteinDB()'>
+        <button [hidden]="this.loading || this.isPublic" class="btn btn-outline-danger w-sbtn" matTooltip="Delete database" (click)='removeProteinDB()' [disabled]="this.loading || this.isPublic">
           <mat-icon style="display: flex; justify-content: center">close</mat-icon>
         </button>
       </div>
@@ -41,7 +41,7 @@
             <tbody>
               <tr>
                 <th scope="row" class="ml-summary-col">Description
-                  <button style="background: none; border: none" (click)="setDescription()">(edit)</button>
+                  <button style="background: none; border: none" (click)="setDescription()" [hidden]="this.isPublic" [disabled]="this.isPublic">(edit)</button>
                 </th>
                 <td>
                   {{this.protDBDataObject.description}}
