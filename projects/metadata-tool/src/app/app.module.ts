@@ -15,7 +15,8 @@ import { LandingModule } from "projects/signaling-tool/src/app/landing-page/land
 import { MetadataLandingPageComponent } from "./pages/metadata-landing-page/metadata-landing-page.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [AppComponent, MetadataLandingPageComponent],
@@ -38,7 +39,9 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent, LandingModule]
