@@ -18,7 +18,8 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
 
   dataItemOfThisComponent: DataItem;
 
-  loading = true;
+  loading: boolean = true;
+  isPublic: boolean = false;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -39,6 +40,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
         .subscribe((fastaData) => {
           this.protDBDataObject = fastaData;
           this.loading = false;
+          this.isPublic = fastaData.userID === "publicDBUser"
         });
     }
   }
