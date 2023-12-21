@@ -2,6 +2,7 @@
   // TODO: how to pass any background color from importing modules?
   // if i comment this i can pass a colo from local styles.scss
   //--background-color: rgb(55 65 81);
+  --background-color: rgb(0, 0, 0); // Default background color
   --font-color: hsl(0, 2%, 92%);
 
   color: var(--font-color);

@@ -1,0 +1,16 @@
+<app-privacy-consent-banner></app-privacy-consent-banner>
+
+<shared-nav-toolbar
+  [routerLinks]="routes"
+  [applicationName]="'MdOA Omics Toolbox'"
+  [hasLogin]="true"
+  [homeLink]="homelink"
+>
+  <router-outlet></router-outlet>
+  
+  <shared-footer
+    id="footer"
+    [footerContent]="footerContent"
+    [logoPath]="footerLogoPath"
+  ></shared-footer>
+</shared-nav-toolbar>

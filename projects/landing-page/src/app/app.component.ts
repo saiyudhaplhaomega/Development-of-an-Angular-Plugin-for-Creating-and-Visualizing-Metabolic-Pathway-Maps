@@ -11,24 +11,36 @@ import {
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = "MetaForge";
-  routes: NestedNavigationRoute[] = [
-    // { route: "/upload", label: "Upload", requireAuth: false },
-    // { route: "/sdrf", label: "sdrf", requireAuth: false },
-
-
-  ];
+  title = "Multi-Dimensional-Omics Toolbox";
   homelink: SimpleNavigationRoute = {
-    route: "/home",
-    label: "Home",
-    requireAuth: false
+    route: '/home',
+    label: 'Home',
   };
+
+  routes: NestedNavigationRoute[] = [
+    {
+      label: 'Tools',
+      requireAuth: false,
+      children: [
+        { route: '/mpa', label: 'MPA' },
+        { route: '/prophane', label: 'Prophane' },
+      ],
+    },
+    {
+      label: 'Scripts',
+      requireAuth: false,
+      children: [
+        { route: '/rscripts', label: 'R Scripts' },
+        { route: '/pscripts', label: 'Python Scripts' },
+      ],
+    },
+  ];
 
   footerContent: NestedNavigationRoute[] = [
     {
       label: "About",
       children: [
-        { label: "About Metadata-Tool", route: "/about" },
+        { label: "About MdOA Toolbox", route: "/about" },
         { label: "Terms of Service", route: "/termsofservice" },
         { label: "Privacy Policy", route: "/privacypolicy" },
         { label: "Impressum", route: "/impressum" }
