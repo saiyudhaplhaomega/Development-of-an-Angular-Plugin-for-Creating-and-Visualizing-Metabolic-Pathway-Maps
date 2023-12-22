@@ -8,11 +8,21 @@ import { LoginPageComponent } from 'shared-lib';
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent },
 
-  // {
-  //   path: 'workflow',
-  //   loadChildren: () =>
-  //     import('./workflow/workflow.module').then((m) => m.WorkflowModule),
-  // },
+  {
+    path: 'mpa-page',
+    loadChildren: () =>
+      import('./pages/tools/mpa/mpa.module').then((m) => m.MpaModule),
+  },
+  {
+    path: 'prophane-page',
+    loadChildren: () =>
+      import('./pages/tools/prophane/prophane.module').then((m) => m.ProphaneModule),
+  },
+  {
+    path: 'metaforge-page',
+    loadChildren: () =>
+      import('./pages/tools/metaforge/metaforge.module').then((m) => m.MetaForgeModule),
+  },
   { path: 'login', component: LoginPageComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

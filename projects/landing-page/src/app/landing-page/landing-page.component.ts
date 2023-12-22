@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, destroyPlatform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'landing-page',

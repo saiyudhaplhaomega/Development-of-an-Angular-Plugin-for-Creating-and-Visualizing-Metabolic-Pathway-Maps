@@ -22,8 +22,9 @@ export class AppComponent {
       label: 'Tools',
       requireAuth: false,
       children: [
-        { route: '/mpa', label: 'MPA' },
-        { route: '/prophane', label: 'Prophane' },
+        { route: '/mpa-page', label: 'MPA' },
+        { route: '/prophane-page', label: 'Prophane' },
+        { route: '/metaforge-page', label: 'MetaForge' },
       ],
     },
     {

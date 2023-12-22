@@ -1,12 +1,46 @@
-<div class="flex flex-col h-full justify-between">
-  <!-- content -->
+<header>
+    <h1>Multi-Dimensional Omics Toolbox</h1>
+    <p>Welcome to a world of versatile tools for all your needs.</p>
+</header>
 
-  <main class="max-w-3xl mx-auto px-4 mb-auto">
-    <!-- link to workflow -->
-    <div class="text-center mt-20 mb-20">
-      <!-- <shared-login-buttons></shared-login-buttons> -->
+<section>
+    <h2>Featured Omics Tools</h2>
+
+    <div class="tool">
+        <div class="tool-item">
+            <a           (click)="
+            goToLink(
+              'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+            )
+          ">
+                <img src=".\assets\img\MPA.jpeg" alt="MPA">
+                <div class="tool-title">Meta Proteome Analyzer</div>
+            </a>
+            <p class="tool-description">Description of MPA.</p>
+        </div>
+
+        <div class="tool-item">
+            <a href="#tool2">
+                <img src=".\assets\img\P.png" alt="Prophane">
+                <div class="tool-title">Prophane</div>
+            </a>
+            <p class="tool-description">Description of Prophane.</p>
+        </div>
+
+        <div class="tool-item">
+            <a href="#tool3">
+                <img src=".\assets\img\Meta.png" alt="MetaForge">
+                <div class="tool-title">MetaForge</div>
+            </a>
+            <p class="tool-description">Description of MetaForge.</p>
+        </div>
+        
+        <div class="tool-item">
+            <a href="#tool3">
+                <img src=".\assets\img\R.png" alt="R Scripts">
+                <div class="tool-title">R Scripts</div>
+            </a>
+            <p class="tool-description">Statitical R scripts.</p>
+        </div>
     </div>
-
-
-  </main>
-</div>
+</section>
