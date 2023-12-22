@@ -1,46 +1,126 @@
 <header>
-    <h1>Multi-Dimensional Omics Toolbox</h1>
-    <p>Welcome to a world of versatile tools for all your needs.</p>
+  <h1>Multi-Dimensional Omics Toolbox</h1>
+  <p>Welcome to a world of versatile tools for all your needs.</p>
 </header>
-
-<section>
-    <h2>Featured Omics Tools</h2>
-
-    <div class="tool">
-        <div class="tool-item">
-            <a           (click)="
-            goToLink(
-              'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
-            )
-          ">
-                <img src=".\assets\img\MPA.jpeg" alt="MPA">
-                <div class="tool-title">Meta Proteome Analyzer</div>
-            </a>
-            <p class="tool-description">Description of MPA.</p>
-        </div>
-
-        <div class="tool-item">
-            <a href="#tool2">
-                <img src=".\assets\img\P.png" alt="Prophane">
-                <div class="tool-title">Prophane</div>
-            </a>
-            <p class="tool-description">Description of Prophane.</p>
-        </div>
-
-        <div class="tool-item">
-            <a href="#tool3">
-                <img src=".\assets\img\Meta.png" alt="MetaForge">
-                <div class="tool-title">MetaForge</div>
-            </a>
-            <p class="tool-description">Description of MetaForge.</p>
-        </div>
-        
-        <div class="tool-item">
-            <a href="#tool3">
-                <img src=".\assets\img\R.png" alt="R Scripts">
-                <div class="tool-title">R Scripts</div>
-            </a>
-            <p class="tool-description">Statitical R scripts.</p>
+<div class="content-container">
+<section class="image-grid">
+    <!-- Repeat this block for each image you want to display -->
+    <div class="GridWrapper">
+            <div class="ImageWrapper">
+                <div style="display: block">
+                    <img
+                        alt=""
+                        src=".\assets\img\MPA.jpeg"
+                        style="display: block; position: static; height: 200px; width: 200 px;"
+                        (click)="goToLink('https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads')"
+                    />
+                </div>
+            </div>
+        <div class="Description">
+            <h3 class="Title">
+               Meta Proteome Analyzer
+            </h3>
+            <p class="Text">
+               Description
+            </p>
         </div>
     </div>
+
+    <div class="GridWrapper">
+        <div class="ImageWrapper">
+            <div style="display: block">
+                <img
+                    alt=""
+                    src=".\assets\img\P.png"
+                    style="display: block; position: static; height: 200px; width: 200 px;"
+                    (click)="goToLink('https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads')"
+                />
+            </div>
+        </div>
+    <div class="Description">
+        <h3 class="Title">
+           Prophane
+        </h3>
+        <p class="Text">
+           Description
+        </p>
+    </div>
+</div>
+
+<div class="GridWrapper">
+    <div class="ImageWrapper">
+        <div style="display: block">
+            <img
+                alt=""
+                src=".\assets\img\Meta.png"
+                style="display: block; position: static; height: 200px; width: 200 px;"
+                (click)="goToLink('https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads')"
+            />
+        </div>
+    </div>
+<div class="Description">
+    <h3 class="Title">
+       MetaForge
+    </h3>
+    <p class="Text">
+       Description
+    </p>
+</div>
+</div>
+
+<div class="GridWrapper">
+    <div class="ImageWrapper">
+        <div style="display: block">
+            <img
+                alt=""
+                src=".\assets\img\R.png"
+                style="display: block; position: static; height: 200px; width: 200 px;"
+                (click)="goToLink('https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads')"
+            />
+        </div>
+    </div>
+<div class="Description">
+    <h3 class="Title">
+       R Scripts
+    </h3>
+    <p class="Text">
+       Description
+    </p>
+</div>
+</div>
 </section>
+
+<div class="update-list">
+    <!-- Your copied update list HTML goes here -->
+    <div>
+      <ul>
+        <li class="post-feed-post">
+          <div>
+            <div></div>
+            <h2 class="post-title">
+              <a href="#">MPA Website is now online
+
+              </a>
+            </h2>
+            <div class="post-meta">
+              <span>Tool added</span> | <span>Daniel Kautzner</span>
+            </div>
+          </div>
+        </li>
+
+        <li class="post-feed-post">
+          <div>
+            <div></div>
+            <h2 class="post-title">
+              <a href="#">Updated MdOA Landing Page</a>
+            </h2>
+            <div class="post-meta">
+              <span>Update</span> | <span>Daniel Kautzner</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

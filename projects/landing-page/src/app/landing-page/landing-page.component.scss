@@ -1,62 +1,115 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
 
-header {
+  header {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 20px;
-}
+  }
 
-section {
+  .content-container {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  section {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    // background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 
-h1 {
+  h1 {
     margin-bottom: 10px;
-}
+  }
 
-.tool {
+  .image-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
-}
+  }
 
-.tool-item {
-    width: 30%;
-    margin-bottom: 20px;
-}
+  .GridWrapper {
+    margin: 15px;
+    width: 200px;
+  }
 
-.tool-item img {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.tool-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.tool-description {
-    font-size: 14px;
-}
-
-.tool-item img {
+  .ImageWrapper {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 1.8411px 2.76164px rgba(47,48,53,.1);
+    margin: 0 16px;
     width: 200px;
     height: 200px;
+    overflow: hidden;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .ImageWrapper:hover {
+    transform: scale(1.05);
+  }
+  .Description {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .Title {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .Text {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .update-list {
+    flex-basis: 30%;
+    margin-top: 20px; /* Add margin-top to align with the section */
+    padding-left: 20px;
+    margin-right: 20px;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+  }
+
+  .post-feed-post {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
     border-radius: 8px;
-    margin: 0 auto; /* Center the images */
-    display: block; /* Remove extra space below inline-block images */
-}
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .post-feed-post:hover {
+    transform: scale(1.02);
+  }
+
+  .post-title a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px; /* Adjusted font size for the update list */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .post-meta {
+    font-size: 12px; /* Adjusted font size for the update list */
+    color: #888;
+  }
+
+  /* Hide boxes around each list entry and the entire list */
+  .post-feed-post {
+    border: none;
+    box-shadow: none;
+  }
