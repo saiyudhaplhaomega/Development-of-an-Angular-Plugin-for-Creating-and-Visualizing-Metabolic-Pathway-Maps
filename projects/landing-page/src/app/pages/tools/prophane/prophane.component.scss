@@ -2,19 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
 }
 
 section {
     max-width: auto; // Adjusted max-width for a wider section
-    margin: 20px auto;
+    margin: 20px 20px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -34,9 +26,9 @@ section {
 
         img {
             width: 100%;
-            max-width: 300px;
+            max-width: 200px;
             height: auto;
-            max-height: 300px;
+            max-height: 200px;
             border-radius: 8px;
             margin-bottom: 40px; // Increased margin-bottom for more space
             margin-right: 20px; // Increased margin-right for more space
