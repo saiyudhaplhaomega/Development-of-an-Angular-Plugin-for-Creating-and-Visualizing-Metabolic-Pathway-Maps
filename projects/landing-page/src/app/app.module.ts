@@ -9,14 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 
 import { StandardPageLayoutModule } from 'shared-lib';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatCardModule } from "@angular/material/card";
 import { NgParticlesModule } from "ng-particles";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
+import { LandingPageModule } from './landing-page/landing-page.module';
+
 
 @NgModule({
-  declarations: [AppComponent, LandingPageComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +28,8 @@ import { MatIconModule } from "@angular/material/icon";
     NgParticlesModule,
     MatCardModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    LandingPageModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,116 +1,135 @@
 body {
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: 'Arial', sans-serif;
-  }
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: "Arial", sans-serif;
+}
 
-  header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .content-container {
-    display: flex;
-    align-items: flex-start;
-  }
-
-  section {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    // background-color: #fff;
-    border-radius: 8px;
-    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  h1 {
-    margin-bottom: 10px;
-  }
-
-  .image-grid {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-
-
-  .GridWrapper {
-    margin: 15px;
-    width: 200px;
-  }
-
+h1 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 
   
-  .ImageWrapper {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 1.8411px 2.76164px rgba(47,48,53,.1);
-    margin: 0 16px;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
+  
+}
 
-  .ImageWrapper:hover {
-    transform: scale(1.05);
-  }
-  .Description {
-    text-align: center;
-    margin-top: 10px;
-  }
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
 
-  .Title {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
+.content-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+}
 
-  .Text {
-    font-size: 14px;
-    color: #555;
-  }
+.centered-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
 
-  .update-list {
+section {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  // background-color: #fff;
+  border-radius: 8px;
+  // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-    margin-top: 20px; /* Add margin-top to align with the section */
-    padding-left: 20px;
-    margin-right: 20px;
-    overflow: hidden;
-    border: none;
-    box-shadow: none;
-  }
+h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
 
-  .post-feed-post {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  margin: 0 auto;
+}
 
-  .post-feed-post:hover {
-    transform: scale(1.02);
-  }
+.GridWrapper {
+  margin: 15px;
+  width: 200px;
+}
 
-  .post-title a {
-    color: #333;
-    text-decoration: none;
-    font-size: 16px; /* Adjusted font size for the update list */
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-  }
+.ImageWrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1.8411px 2.76164px rgba(47, 48, 53, 0.1);
+  margin: 0 16px;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
 
-  .post-meta {
-    font-size: 12px; /* Adjusted font size for the update list */
-    color: #888;
-  }
+.ImageWrapper:hover {
+  transform: scale(1.05);
+}
+.Description {
+  text-align: center;
+  margin-top: 10px;
+}
 
-  /* Hide boxes around each list entry and the entire list */
-  .post-feed-post {
-    border: none;
-    box-shadow: none;
-  }
+.Title {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.Text {
+  font-size: 14px;
+  color: #555;
+}
+
+.update-list {
+  margin-top: 20px; 
+  padding-left: 20px;
+  margin-right: 20px;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+}
+
+.post-feed-post {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: none;
+  box-shadow: none;
+}
+
+.post-feed-post:hover {
+  transform: scale(1.02);
+}
+
+.post-title a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px; 
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.post-meta {
+  font-size: 12px; 
+  color: #888;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
