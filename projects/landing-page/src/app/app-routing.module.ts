@@ -23,6 +23,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/tools/metaforge/metaforge.module').then((m) => m.MetaForgeModule),
   },
+  {
+    path: 'app-tools',
+    loadChildren: () =>
+      import('./pages/tools/test/tools.module').then((m) => m.ToolsModule),
+  },
   { path: 'login', component: LoginPageComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

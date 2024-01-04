@@ -14,6 +14,7 @@ import { NgParticlesModule } from "ng-particles";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 import { LandingPageModule } from './landing-page/landing-page.module';
+import { ToolsModule } from './pages/tools/test/tools.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { LandingPageModule } from './landing-page/landing-page.module';
     MatCardModule,
     MatGridListModule,
     MatIconModule,
-    LandingPageModule
+    LandingPageModule,
+    ToolsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -5,14 +5,15 @@
   overflow: hidden;
   border: none;
   box-shadow: none;
+
 }
 
 .post-feed-post {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #fff;
+//background: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  //box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   border: none;
   box-shadow: none;
@@ -23,7 +24,7 @@
 }
 
 .post-title a {
-  color: #333;
+  color: #f8f8f8;
   text-decoration: none;
   font-size: 16px; 
   font-weight: bold;
@@ -33,5 +34,5 @@
 
 .post-meta {
   font-size: 12px; 
-  color: #888;
+  color: #dedede;
 }

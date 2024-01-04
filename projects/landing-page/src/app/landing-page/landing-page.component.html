@@ -1,4 +1,6 @@
 <body>
+  <app-tools></app-tools>
+
   <header>
     <h1>Multi-Dimensional Omics Toolbox</h1>
     <p>Welcome to a world of versatile tools for all your needs.</p>
@@ -6,21 +8,24 @@
 
   <div class="content-container">
     <div class="centered-content">
-      <h1>Our Tools</h1>
+      <h1>Our Metaproteomics Tools</h1>
       <section class="image-grid">
         <div class="GridWrapper" *ngFor="let tool of tools">
           <tool-card [toolData]="tool"></tool-card>
         </div>
       </section>
-      <h1>Our Scripts</h1>
+
+      <!-- <h1>Our Scripts</h1>
 
       <section class="image-grid">
         <div class="GridWrapper" *ngFor="let script of scripts">
           <tool-card [toolData]="script"></tool-card>
         </div>
-      </section>
+      </section> -->
     </div>
+
     <div class="update-list">
+      <h1>News Feed</h1>
       <update-list [updates]="updateList"></update-list>
     </div>
   </div>

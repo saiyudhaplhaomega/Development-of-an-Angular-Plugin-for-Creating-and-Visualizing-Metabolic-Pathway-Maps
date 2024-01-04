@@ -25,6 +25,7 @@ export class AppComponent {
         { route: '/mpa-page', label: 'MPA' },
         { route: '/prophane-page', label: 'Prophane' },
         { route: '/metaforge-page', label: 'MetaForge' },
+        { route: '/app-tools', label: 'Test' },
       ],
     },
     {

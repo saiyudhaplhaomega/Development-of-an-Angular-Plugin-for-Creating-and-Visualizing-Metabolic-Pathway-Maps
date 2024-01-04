@@ -7,13 +7,14 @@ import { LandingPageComponent } from './landing-page.component';
 import { ToolCardModule } from './tool-card/tool-card.module';
 import { UpdateListModule } from './update-list/update-list.module';
 import { CommonModule } from '@angular/common';
+import { ToolsModule } from '../pages/tools/test/tools.module';
 
 @NgModule({
   declarations: [LandingPageComponent],
   imports: [
     BrowserModule,
     CommonModule,
-
+    ToolsModule,
     ToolCardModule,
     UpdateListModule,
 
