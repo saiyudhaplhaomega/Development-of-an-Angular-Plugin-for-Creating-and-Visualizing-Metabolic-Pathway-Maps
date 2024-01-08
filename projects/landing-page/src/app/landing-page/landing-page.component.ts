@@ -15,7 +15,7 @@ export class LandingPageComponent implements OnInit {
     },
     {
       title: 'MPA Pathway Tool',
-      description: 'Metaproteomics analyzer patway tool',
+      description: 'Meta proteome analyzer patway tool',
       imageSrc: '',
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },

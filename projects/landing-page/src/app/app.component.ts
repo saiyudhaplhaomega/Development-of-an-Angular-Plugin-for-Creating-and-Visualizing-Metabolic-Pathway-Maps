@@ -36,6 +36,22 @@ export class AppComponent {
         { route: '/pscripts', label: 'Python Scripts' },
       ],
     },
+    {
+      label: 'Training',
+      requireAuth: false,
+      children: [
+        { route: '/workshops', label: 'Workshops' },
+        { route: '/tutorials', label: 'Tutorial' },
+      ],
+    },
+    {
+      label: 'About',
+      requireAuth: false,
+      children: [
+        { route: '/mdoa', label: 'MdOA Team' },
+        { route: '/other', label: 'Other Team' },
+      ],
+    },
   ];
 
   footerContent: NestedNavigationRoute[] = [
