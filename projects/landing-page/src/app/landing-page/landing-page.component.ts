@@ -9,8 +9,14 @@ export class LandingPageComponent implements OnInit {
   tools = [
     {
       title: 'Meta Proteome Analyzer',
-      description: 'Meta Proteome Analyzer is a powerful tool for analyzing proteomic data.',
+      description: 'Meta Proteome Analyzer is a powerful tool for analyzing (meta)proteomic data.',
       imageSrc: './assets/img/MPA.jpeg',
+      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    },
+    {
+      title: 'MPA Pathway Tool',
+      description: 'Metaproteomics analyzer patway tool',
+      imageSrc: '',
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },
     {
@@ -20,9 +26,27 @@ export class LandingPageComponent implements OnInit {
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },
     {
+      title: 'Knowledge Graph',
+      description: 'Knowledge Graph for analyzing omics data',
+      imageSrc: '',
+      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    },
+    {
+      title: 'Multiomics visualizer ',
+      description: 'Knowledge Graph for analyzing omics data',
+      imageSrc: '',
+      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    },
+    {
       title: 'MetaForge',
       description: 'MetaForge is a versatile tool for manipulating and analyzing biological metadata.',
       imageSrc: './assets/img/Meta.png',
+      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    },
+    {
+      title: 'Omics Feature Finder',
+      description: 'OFF Tool.',
+      imageSrc: '',
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },
     {

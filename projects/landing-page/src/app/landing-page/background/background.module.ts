@@ -5,21 +5,21 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 
 import { CommonModule } from '@angular/common';
-import { ToolsComponent } from './tools.component';
-import { ToolsRoutingModule } from './tools-routing.component';
+import { BackgroundComponent } from './background.component';
+import { BackgroundRoutingModule } from './background-routing.component';
 import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
-  declarations: [ToolsComponent],
+  declarations: [BackgroundComponent],
   imports: [
     CommonModule,
-    ToolsRoutingModule,
+    BackgroundRoutingModule,
     MatButtonModule,
     MatIconModule,
 
   ],
 
-  exports: [ToolsComponent],
+  exports: [BackgroundComponent],
 })
-export class ToolsModule {}
+export class BackgroundModule {}

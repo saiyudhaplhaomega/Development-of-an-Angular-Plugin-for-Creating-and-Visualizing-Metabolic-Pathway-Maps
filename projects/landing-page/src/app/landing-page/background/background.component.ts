@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-tools',
-  templateUrl: './tools.component.html',
-  styleUrls: ['./tools.component.scss'],
+  selector: 'app-background',
+  templateUrl: './background.component.html',
+  styleUrls: ['./background.component.scss'],
 })
-export class ToolsComponent implements OnInit {
+export class BackgroundComponent implements OnInit {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private requestId: number;

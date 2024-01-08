@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToolsComponent } from './tools.component';
+import { BackgroundComponent } from './background.component';
 
 describe('OfsLandingPageComponent', () => {
-  let component: ToolsComponent;
-  let fixture: ComponentFixture<ToolsComponent>;
+  let component: BackgroundComponent;
+  let fixture: ComponentFixture<BackgroundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolsComponent ]
+      declarations: [ BackgroundComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ToolsComponent);
+    fixture = TestBed.createComponent(BackgroundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'app-tools',
     loadChildren: () =>
-      import('./pages/tools/test/tools.module').then((m) => m.ToolsModule),
+      import('./landing-page/background/background.module').then((m) => m.BackgroundModule),
   },
   { path: 'login', component: LoginPageComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
