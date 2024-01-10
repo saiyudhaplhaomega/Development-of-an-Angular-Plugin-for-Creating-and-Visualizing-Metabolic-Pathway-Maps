@@ -14,12 +14,6 @@
   color: inherit !important;
 }
 
-img {
-  vertical-align: middle;
-  width: 32px;
-  border-radius: 50%;
-}
-
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
@@ -51,15 +45,6 @@ img {
   overflow-y: auto; /* Scroll if needed */
 }
 
-.logo-container {
-  overflow: hidden; /* Hide any overflow content (like square corners) */
-  border-radius: 50%; /* Create a circular container */
-}
-
 .logo {
-  height: 40px; /* Adjust the height of the logo as needed */
-  width: auto; /* Maintain aspect ratio */
-  display: block; /* Ensure the image behaves as a block element */
-  margin: 0 auto; /* Center the image within the circular container */
-  border-radius: 50%; /* Apply a circular clipping mask to the image */
+  padding: 0.5rem;
 }
