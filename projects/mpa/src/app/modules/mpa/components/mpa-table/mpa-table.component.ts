@@ -142,11 +142,11 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     this.onSelectAllGroups();
   }
 
-  getRowtype(row: ProteinGroupObject) {
+  getRowtype(row: ProteinGroupObject): string {
     return 'parentProteinGroupID' in row ? 'subgroup' : 'maingroup';
   }
 
-  getQuantification(row: ProteinGroupObject) {
+  getQuantification(row: ProteinGroupObject): number {
     let spectrumIDs = Array.from(new Set(row.psmList.map(psm => psm.spectrumID)))
     return spectrumIDs.length;
   }

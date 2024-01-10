@@ -53,9 +53,9 @@ export class SearchParameters {
             } else if (toleranceInput > 1) {
                 adjustedInput = 1;
             } else if (toleranceInput == undefined) {
-                adjustedInput = 0;
+                adjustedInput = 0.001;
             } else {
-                adjustedInput = parseFloat(toleranceInput.toPrecision(2));
+                adjustedInput = parseFloat(toleranceInput.toPrecision(5));
             }
         }
 
