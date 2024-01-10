@@ -11,7 +11,7 @@ import {
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = "metadatatool";
+  title = "MetaForge";
   routes: NestedNavigationRoute[] = [
     // { route: "/upload", label: "Upload", requireAuth: false },
     // { route: "/sdrf", label: "sdrf", requireAuth: false },
@@ -39,7 +39,8 @@ export class AppComponent {
       children: [
         { label: "DFG", href: "http://www.dfg.de" },
         { label: "de.NBI", href: "http://www.denbi.de" },
-        { label: "de.NBI Cloud", href: "https://www.denbi.de/cloud" }
+        { label: "de.NBI Cloud", href: "https://www.denbi.de/cloud" },
+        { label: "NFDI4Microbiota", href: "http://nfdi4microbiota.de" },
       ]
     }
   ];
