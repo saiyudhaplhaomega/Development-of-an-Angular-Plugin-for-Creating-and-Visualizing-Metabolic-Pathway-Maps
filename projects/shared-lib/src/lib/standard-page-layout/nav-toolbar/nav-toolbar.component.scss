@@ -1,5 +1,5 @@
 .nav-toolbar-root {
-  // TODO: how to pass any background color from importing modules?
+  // TODO: how to pass any background color from importing modules? --> Angular Theming
   // if i comment this i can pass a colo from local styles.scss
   //--background-color: rgb(55 65 81);
   --background-color: rgb(0, 0, 0); // Default background color
@@ -35,36 +35,20 @@ img {
   margin-left: auto;
 }
 
-.overflow-y-auto {
-  flex-grow: 1; /* Allow this element to grow and fill available space */
-  overflow-y: auto; /* Add scrolling if content overflows */
-}
-
-.header-tool-name {
-  font-weight: 700;
-}
-.outer-container {
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 1200px;
-  min-height: calc(
-    100vh - 128px
-  ); /* Adjust 128px to the combined height of toolbar and footer */
-}
-
-.flex.flex-col.h-full {
+.flex {
   display: flex;
+}
+
+.flex-col {
   flex-direction: column;
-  min-height: 100vh; /* Use 100vh for full viewport height */
+}
+
+.h-full {
+  height: 100%;
 }
 
 .overflow-y-auto {
-  flex-grow: 1; /* Grow to fill available space */
   overflow-y: auto; /* Scroll if needed */
-}
-
-.mt-auto {
-  margin-top: auto; /* Push the footer to the bottom */
 }
 
 .logo-container {

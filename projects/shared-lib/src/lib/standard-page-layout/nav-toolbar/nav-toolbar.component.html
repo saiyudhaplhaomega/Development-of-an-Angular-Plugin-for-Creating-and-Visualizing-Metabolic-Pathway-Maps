@@ -1,13 +1,8 @@
-<div
-  class="flex flex-col h-full"
-  fxLayout="column"
-  fxLayoutAlign="space-between
-stretch"
->
+<div class="flex flex-col h-full">
   <mat-toolbar class="nav-toolbar-root flex-shrink-0 header-color">
     <div class="logo-container" *ngIf="showLogo">
       <!-- The ngIf directive will only render the logo if showLogo is true -->
-      <img src="{{ logoUrl }}" alt="Logo" class="logo">
+      <img src="{{ logoUrl }}" alt="Logo" class="logo" />
     </div>
     <!-- application name and navigation to landing page -->
     <button class="toolbar-button" mat-flat-button routerLink="homeLink">
@@ -68,7 +63,7 @@ stretch"
           Log out
           <mat-icon>account_circle</mat-icon>
         </button>
-        </div>
+      </div>
     </div>
   </mat-toolbar>
 
