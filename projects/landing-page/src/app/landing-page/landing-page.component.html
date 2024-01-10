@@ -1,4 +1,4 @@
-<body>
+<div>
   <app-background></app-background>
 
   <header>
@@ -7,7 +7,7 @@
   </header>
 
   <div class="content-container">
-    <div class="centered-content">
+    <div class="centered-content grid-left-middle">
       <h1>Our Metaproteomics Tools</h1>
       <section class="image-grid">
         <div class="GridWrapper" *ngFor="let tool of tools">
@@ -23,9 +23,11 @@
       </section> -->
     </div>
 
-    <div class="update-list">
+    <div class="update-list grid-right">
+      <div class="transparent-box">
       <h1>News Feed</h1>
       <update-list [updates]="updateList"></update-list>
     </div>
+    </div>
   </div>
-</body>
+</div>

@@ -1,9 +1,4 @@
-body {
-  justify-content: space-between;
-  align-items: flex-start;
-  font-family: "Arial", sans-serif;
-  
-}
+
 
 app-tools {
   width: 100%;
@@ -26,10 +21,22 @@ header {
 
 .content-container {
   width: 100%;
-  display: flex;
-  justify-content: space-between; 
-  align-items: flex-start; 
-  margin-top: 20px;
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: 3fr 1fr;
+  // justify-content: space-between; 
+  // align-items: flex-start; 
+
+  padding: 1rem;
+}
+
+.grid-left-middle {
+  grid-column: 1;
+  display: unset;
+}
+
+.grid-right {
+  grid-column: 2;
 }
 
 .centered-content {
@@ -79,4 +86,8 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.transparent-box {
+  background: rgba(0, 0, 0, 0.8);
 }
