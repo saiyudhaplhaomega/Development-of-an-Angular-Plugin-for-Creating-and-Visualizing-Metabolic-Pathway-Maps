@@ -5,10 +5,12 @@
       (closed)="panelOpenState = false"
     >
       <mat-expansion-panel-header>
+        <!-- header -->
         <mat-panel-title style="color: inherit">
           {{ "&copy;" + copyRight }}
         </mat-panel-title>
         <mat-panel-description>
+          <!-- only show labels of parent routes in closed state -->
           <ul *ngIf="!panelOpenState">
             <li class="float-left p-4" *ngFor="let category of footerContent">
               {{ category.label }}
@@ -17,12 +19,10 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
+      <!-- content of open panel -->
       <ng-template matExpansionPanelContent>
         <div class="footer-panels">
-          <!-- logo image -->
-          <img class="m-auto" *ngIf="logoPath" [src]="logoPath" />
-
-          <!-- panels for categories -->
+          <!-- link panels -->
           <div *ngFor="let category of footerContent">
             <span class="font-bold">{{ category.label }}</span>
             <ul>
@@ -45,6 +45,33 @@
                 </ng-template>
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div class="footer-panels">
+          <!-- logo panels -->
+          <div *ngFor="let logo of logos">
+            <ng-container *ngIf="logo.href; then link; else noLink">
+            </ng-container>
+
+            <!--  if no href provided, dont create the anchor element -->
+            <ng-template #noLink>
+              <img
+                class="m-auto"
+                [ngStyle]="{ 'background-color': logo.backgroundColor }"
+                [src]="logo.assetPath"
+              />
+            </ng-template>
+
+            <!--  if href provided, create the anchor element -->
+            <ng-template #link>
+              <a class="m-auto logo-wrapper" [href]="logo.href" target="_blank">
+                <img
+                  [ngStyle]="{ 'background-color': logo.backgroundColor }"
+                  [src]="logo.assetPath"
+                />
+              </a>
+            </ng-template>
           </div>
         </div>
       </ng-template>

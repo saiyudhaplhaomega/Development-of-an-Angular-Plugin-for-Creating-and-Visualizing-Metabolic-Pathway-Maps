@@ -6,14 +6,19 @@
   text-decoration: none;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
-  color: var(--text-color) !important;
-  background-color: var(--background-color) !important;
+  color: var(--text-color); // !important;
+  background-color: var(--background-color); // !important;
 }
 
 ul {
   list-style-type: none;
   margin-bottom: 0;
   padding-left: 0;
+}
+
+img {
+  max-height: 100px;
+  max-width: 300px;
 }
 
 .float-left {
@@ -34,6 +39,8 @@ ul {
 
 .mat-expansion-panel {
   box-shadow: none;
+  background: none;
+  color: none;
 }
 
 .mat-accordion .mat-expansion-panel {
@@ -47,7 +54,13 @@ ul {
 }
 
 .footer-panels {
+  margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
+}
+
+.logo-wrapper {
+  display: block;
+  width: fit-content;
 }

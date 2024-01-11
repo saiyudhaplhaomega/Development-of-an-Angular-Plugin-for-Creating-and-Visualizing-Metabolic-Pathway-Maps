@@ -6,6 +6,7 @@ import {
 import { AuthService } from '../login/auth.service';
 import { UserToken } from '../login/user-token';
 import { Subscription } from 'rxjs';
+import { Logo } from '../footer/footer-logo.model';
 
 @Component({
   selector: 'shared-nav-toolbar',
@@ -17,9 +18,8 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
   @Input() routerLinks: NestedNavigationRoute[] = [];
   @Input() homeLink: SimpleNavigationRoute;
   @Input() hasLogin: Boolean = false;
-  @Input() logoUrl: string;
+  @Input() toolLogo: Logo;
   @Input() showLogo: boolean = false;
-  
 
   user: UserToken;
   guest: boolean;
@@ -32,6 +32,7 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    // subscribes to authservice and changes visible link buttons as soon as the visitor role changes
     this.Subscriptions.push(
       this.authService._user.subscribe((res) => {
         this.user = res;
@@ -48,12 +49,15 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
     this.Subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  // changes visible buttons
   updateVisibleLinks(): void {
+    // if login is not required, all links are visible
     if (!this.hasLogin) {
       this.visibleLinks = this.routerLinks;
       return;
     }
 
+    // filter for links that should be only visible upon login
     this.visibleLinks = this.routerLinks.filter((link) =>
       this.checkAuthOnLink(link)
     );
@@ -66,8 +70,5 @@ export class NavToolbarComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  navigateLogin() {
-
-  }
-
+  navigateLogin() {}
 }

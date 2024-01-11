@@ -25,6 +25,7 @@ export * from './lib/standard-page-layout/dialog/upload-dialog.component';
 export * from './lib/standard-page-layout/dialog/delete-warning-dialog.component';
 
 export * from './lib/standard-page-layout/footer/footer.component';
+export * from './lib/standard-page-layout/footer/footer-logo.model';
 
 export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';

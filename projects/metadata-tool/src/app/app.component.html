@@ -6,13 +6,9 @@
   [hasLogin]="true"
   [homeLink]="homelink"
   [showLogo]="true"
-  [logoUrl]="'assets/img/IconLogo.png'"
+  [toolLogo]="toolLogo"
 >
   <router-outlet></router-outlet>
-  
-  <shared-footer
-    id="footer"
-    [footerContent]="footerContent"
-    [logoPath]="footerLogoPath"
-  ></shared-footer>
+
+  <shared-footer id="footer" [footerContent]="footerContent"></shared-footer>
 </shared-nav-toolbar>

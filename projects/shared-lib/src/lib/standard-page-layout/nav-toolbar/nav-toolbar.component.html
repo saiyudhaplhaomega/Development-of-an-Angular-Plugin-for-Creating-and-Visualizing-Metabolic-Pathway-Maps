@@ -2,7 +2,7 @@
   <mat-toolbar class="nav-toolbar-root flex-shrink-0 header-color">
     <div class="h-full" *ngIf="showLogo">
       <!-- The ngIf directive will only render the logo if showLogo is true -->
-      <img src="{{ logoUrl }}" alt="Logo" class="h-full logo" />
+      <img src="{{ toolLogo.assetPath }}" alt="Logo" class="h-full logo" />
     </div>
     <!-- application name and navigation to landing page -->
     <button class="toolbar-button" mat-flat-button routerLink="homeLink">
