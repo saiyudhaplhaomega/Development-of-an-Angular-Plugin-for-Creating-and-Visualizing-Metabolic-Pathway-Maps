@@ -16,30 +16,6 @@ import { RouteStateService } from './services/route-state.service';
 })
 export class AppComponent implements OnInit {
   title = 'Omics Feature Finder';
-  footerLogos: Logo[] = [
-    {
-      label: 'leibniz',
-      assetPath: 'assets/standard-logos/leibniz_white.png',
-      href: 'https://www.leibniz-gemeinschaft.de',
-    },
-    {
-      label: 'ISAS',
-      assetPath: 'assets/standard-logos/isaslogooffizielleformrgbweiss.png',
-      href: 'https://www.isas.de',
-    },
-    {
-      label: 'nrw',
-      assetPath: 'assets/standard-logos/nrw_black.svg',
-      href: 'https://www.land.nrw',
-      backgroundColor: 'white',
-    },
-    {
-      label: 'bmbf',
-      assetPath: 'assets/standard-logos/bmbf.svg',
-      href: 'https://www.bmbf.de',
-      backgroundColor: 'white',
-    },
-  ];
 
   homelink: SimpleNavigationRoute = {
     route: '/home',
@@ -87,7 +63,30 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
+  footerLogos: Logo[] = [
+    {
+      label: 'leibniz',
+      assetPath: 'assets/standard-logos/leibniz_white.png',
+      href: 'https://www.leibniz-gemeinschaft.de',
+    },
+    {
+      label: 'ISAS',
+      assetPath: 'assets/standard-logos/isaslogooffizielleformrgbweiss.png',
+      href: 'https://www.isas.de',
+    },
+    {
+      label: 'nrw',
+      assetPath: 'assets/standard-logos/nrw_black.svg',
+      href: 'https://www.land.nrw',
+      backgroundColor: 'white',
+    },
+    {
+      label: 'bmbf',
+      assetPath: 'assets/standard-logos/bmbf.svg',
+      href: 'https://www.bmbf.de',
+      backgroundColor: 'white',
+    },
+  ];
 
   constructor(
     private router: Router,

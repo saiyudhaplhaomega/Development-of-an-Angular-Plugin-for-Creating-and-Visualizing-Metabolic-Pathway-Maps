@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { NestedNavigationRoute, AuthService, SimpleNavigationRoute } from 'shared-lib';
+import {
+  NestedNavigationRoute,
+  AuthService,
+  SimpleNavigationRoute,
+  Logo,
+} from 'shared-lib';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'Life Science Graphs';
@@ -37,7 +42,30 @@ export class AppComponent {
     },
   ];
 
-  footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
+  footerLogos: Logo[] = [
+    {
+      label: 'leibniz',
+      assetPath: 'assets/standard-logos/leibniz_white.png',
+      href: 'https://www.leibniz-gemeinschaft.de',
+    },
+    {
+      label: 'ISAS',
+      assetPath: 'assets/standard-logos/isaslogooffizielleformrgbweiss.png',
+      href: 'https://www.isas.de',
+    },
+    {
+      label: 'nrw',
+      assetPath: 'assets/standard-logos/nrw_black.svg',
+      href: 'https://www.land.nrw',
+      backgroundColor: 'white',
+    },
+    {
+      label: 'bmbf',
+      assetPath: 'assets/standard-logos/bmbf.svg',
+      href: 'https://www.bmbf.de',
+      backgroundColor: 'white',
+    },
+  ];
 
   constructor(private authService: AuthService) {}
 

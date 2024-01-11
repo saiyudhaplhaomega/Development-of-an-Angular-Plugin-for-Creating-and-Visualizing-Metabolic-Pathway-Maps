@@ -50,32 +50,32 @@ export class AppComponent {
     assetPath: 'assets/img/IconLogo.png',
   };
 
+  showLogo: boolean = true;
+
   footerLogos: Logo[] = [
     {
       label: 'leibniz',
-      assetPath: 'assets/leibniz_white.png',
+      assetPath: 'assets/standard-logos/leibniz_white.png',
       href: 'https://www.leibniz-gemeinschaft.de',
     },
     {
       label: 'ISAS',
-      assetPath: 'assets/isaslogooffizielleformrgbweiss.png',
+      assetPath: 'assets/standard-logos/isaslogooffizielleformrgbweiss.png',
       href: 'https://www.isas.de',
     },
     {
       label: 'nrw',
-      assetPath: 'assets/nrw_black.svg',
+      assetPath: 'assets/standard-logos/nrw_black.svg',
       href: 'https://www.land.nrw',
+      backgroundColor: 'white',
     },
     {
       label: 'bmbf',
-      assetPath: 'assets/bmbf.svg',
+      assetPath: 'assets/standard-logos/bmbf.svg',
       href: 'https://www.bmbf.de',
+      backgroundColor: 'white',
     },
   ];
-
-  footerLogoPath = 'assets/isaslogooffizielleformrgbweiss.png';
-
-  showLogo: boolean = true;
 
   constructor(private authService: AuthService) {}
 

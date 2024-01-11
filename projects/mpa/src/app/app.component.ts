@@ -3,6 +3,7 @@ import {
   AuthService,
   NestedNavigationRoute,
   SimpleNavigationRoute,
+  Logo,
 } from 'shared-lib';
 
 //import { AuthGuard } from 'dist/shared-lib';
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
   routes: NestedNavigationRoute[] = [
     { route: '/mpa', label: 'MPA', requireAuth: true },
   ];
+
   homelink: SimpleNavigationRoute = {
     route: '/jobsubmission',
     label: 'jobsubmission',
@@ -43,7 +45,30 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  footerLogoPath: string = 'assets/isaslogooffizielleformrgbweiss.png';
+  footerLogos: Logo[] = [
+    {
+      label: 'leibniz',
+      assetPath: 'assets/standard-logos/leibniz_white.png',
+      href: 'https://www.leibniz-gemeinschaft.de',
+    },
+    {
+      label: 'ISAS',
+      assetPath: 'assets/standard-logos/isaslogooffizielleformrgbweiss.png',
+      href: 'https://www.isas.de',
+    },
+    {
+      label: 'nrw',
+      assetPath: 'assets/standard-logos/nrw_black.svg',
+      href: 'https://www.land.nrw',
+      backgroundColor: 'white',
+    },
+    {
+      label: 'bmbf',
+      assetPath: 'assets/standard-logos/bmbf.svg',
+      href: 'https://www.bmbf.de',
+      backgroundColor: 'white',
+    },
+  ];
 
   constructor(private authService: AuthService) {}
 
