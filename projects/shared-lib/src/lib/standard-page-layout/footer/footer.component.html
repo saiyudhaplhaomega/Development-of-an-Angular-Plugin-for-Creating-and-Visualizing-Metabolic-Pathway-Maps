@@ -20,61 +20,59 @@
       </mat-expansion-panel-header>
 
       <!-- content of open panel -->
-      <ng-template matExpansionPanelContent>
-        <div class="footer-panels">
-          <!-- link panels -->
-          <div *ngFor="let category of footerContent">
-            <span class="font-bold">{{ category.label }}</span>
-            <ul>
-              <li *ngFor="let link of category.children">
-                <!-- depending on provided properties, either templates for external or router links are inserted -->
-                <ng-container
-                  *ngIf="
-                    link.href && !link.route;
-                    then externalLink;
-                    else routerLink
-                  "
-                >
-                </ng-container>
+      <div class="footer-panels">
+        <!-- link panels -->
+        <div *ngFor="let category of footerContent">
+          <span class="font-bold">{{ category.label }}</span>
+          <ul>
+            <li *ngFor="let link of category.children">
+              <!-- depending on provided properties, either templates for external or router links are inserted -->
+              <ng-container
+                *ngIf="
+                  link.href && !link.route;
+                  then externalLink;
+                  else routerLink
+                "
+              >
+              </ng-container>
 
-                <ng-template #externalLink>
-                  <a [href]="link.href">{{ link.label }}</a>
-                </ng-template>
-                <ng-template #routerLink>
-                  <a [routerLink]="link.route">{{ link.label }}</a>
-                </ng-template>
-              </li>
-            </ul>
-          </div>
+              <ng-template #externalLink>
+                <a [href]="link.href">{{ link.label }}</a>
+              </ng-template>
+              <ng-template #routerLink>
+                <a [routerLink]="link.route">{{ link.label }}</a>
+              </ng-template>
+            </li>
+          </ul>
         </div>
+      </div>
 
-        <div class="footer-panels">
-          <!-- logo panels -->
-          <div *ngFor="let logo of logos">
-            <ng-container *ngIf="logo.href; then link; else noLink">
-            </ng-container>
+      <div class="footer-panels">
+        <!-- logo panels -->
+        <div *ngFor="let logo of logos">
+          <ng-container *ngIf="logo.href; then link; else noLink">
+          </ng-container>
 
-            <!--  if no href provided, dont create the anchor element -->
-            <ng-template #noLink>
+          <!--  if no href provided, dont create the anchor element -->
+          <ng-template #noLink>
+            <img
+              class="m-auto"
+              [ngStyle]="{ 'background-color': logo.backgroundColor }"
+              [src]="logo.assetPath"
+            />
+          </ng-template>
+
+          <!--  if href provided, create the anchor element -->
+          <ng-template #link>
+            <a class="m-auto logo-wrapper" [href]="logo.href" target="_blank">
               <img
-                class="m-auto"
                 [ngStyle]="{ 'background-color': logo.backgroundColor }"
                 [src]="logo.assetPath"
               />
-            </ng-template>
-
-            <!--  if href provided, create the anchor element -->
-            <ng-template #link>
-              <a class="m-auto logo-wrapper" [href]="logo.href" target="_blank">
-                <img
-                  [ngStyle]="{ 'background-color': logo.backgroundColor }"
-                  [src]="logo.assetPath"
-                />
-              </a>
-            </ng-template>
-          </div>
+            </a>
+          </ng-template>
         </div>
-      </ng-template>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </footer>
