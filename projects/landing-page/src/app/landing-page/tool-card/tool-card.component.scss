@@ -1,32 +1,36 @@
-.ImageWrapper {
-  //background: #fff;
+.tool-card {
+  max-width: 340px;
+  margin: 0 10px 20px;
+  box-sizing: border-box;
+}
+
+.tool-card .ImageWrapper {
+  position: relative;
   border-radius: 16px;
   box-shadow: 0 1.8411px 2.76164px rgba(47, 48, 53, 0.1);
-
-  width: 200px;
-  height: 200px;
   overflow: hidden;
+  width: 100%;
+  height: 200px;
   transition: transform 0.3s ease;
-}
-
-.ImageWrapper:hover {
-  transform: scale(1.05);
-}
-.image-grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; 
-  margin: 0 auto;
-  
+  align-items: center;
 }
 
-.GridWrapper {
-  width: 200px;
-  height: 340px;
+.tool-card .ImageWrapper img {
+  width: 100%;
+  height: auto;
+}
+
+.tool-card:hover .ImageWrapper {
+  transform: scale(1.05);
 }
 
 .Description {
-  margin-top: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Title {
@@ -40,4 +44,5 @@
   color: #dddcdc;
   text-align: justify;
   margin-top: 10px;
+  flex-grow: 1; /* Allow the Text to grow within the container */
 }

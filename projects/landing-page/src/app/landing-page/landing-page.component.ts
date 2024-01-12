@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ToolCardComponent } from './tool-card/tool-card.component';
 @Component({
   selector: 'landing-page',
