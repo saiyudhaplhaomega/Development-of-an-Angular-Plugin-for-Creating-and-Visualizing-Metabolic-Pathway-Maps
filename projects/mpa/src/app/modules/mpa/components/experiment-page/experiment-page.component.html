@@ -54,6 +54,7 @@
                   <td>
                     <ng-container *ngIf="this.hasMpaData">
                       <mat-list dense>
+                        <mat-list-item> TargetFdr:  {{this.datStats.targetFdr}} </mat-list-item>
                         <mat-list-item> # Protein Groups: {{this.datStats.totalNoProteinGroups}} </mat-list-item>
                         <mat-list-item> # Proteins: {{this.datStats.totalNoProteins}} </mat-list-item>
                         <mat-list-item> # Peptides: {{this.datStats.totalNoPeptides}} </mat-list-item>
@@ -82,6 +83,9 @@
               </tbody>
             </table>
           </div>
+          <div>
+            <app-protein-request (calculateExperimentStats)="calculateDataStats()"></app-protein-request>
+          </div>
         </mat-tab>
 
         <!--          Tab 2: File Upload -->
@@ -102,12 +106,14 @@
 
             <ng-container *ngIf="!hasMpaData">
               <div class="tab-default-content">
-                <div style="padding: 0.5em">
+                <!-- <div style="padding: 0.5em">
                   <mat-icon class="icon-box"> search </mat-icon>
                 </div>
                 <span class="tab-text-center">
                   Waiting for Data...
-                </span>
+                </span> -->
+                <span>No data received!</span>
+                <app-protein-request (calculateExperimentStats)="calculateDataStats()"></app-protein-request>
               </div>
             </ng-container>
 

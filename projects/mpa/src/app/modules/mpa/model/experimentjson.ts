@@ -6,6 +6,7 @@ export interface ExperimentJSON {
   //experiment_data: string;
   name: string;
   creationdate: string;
+  targetFdr: string;
 
   peakListFiles: string[];
 	searchResultFiles: string[];
@@ -22,6 +23,7 @@ export class ExperimentJSONObject implements ExperimentJSON {
   //experiment_data: string;
   name: string;
   creationdate: string;
+  targetFdr: string;
 
   peakListFiles: string[];
 	searchResultFiles: string[];

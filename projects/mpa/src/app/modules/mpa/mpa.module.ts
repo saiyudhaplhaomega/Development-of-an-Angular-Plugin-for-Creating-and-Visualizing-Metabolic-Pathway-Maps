@@ -74,6 +74,7 @@ import {  MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { KeywordsTabComponent } from './components/experiment-page/keywords-tab/keywords-tab.component';
+import { ProteinRequestComponent } from './components/protein-request/protein-request.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { KeywordsTabComponent } from './components/experiment-page/keywords-tab/
     ExperimentComparisonComponent,
     FileUploadComponent,
     KeywordsTabComponent,
+    ProteinRequestComponent,
   ],
   imports: [
     CommonModule,

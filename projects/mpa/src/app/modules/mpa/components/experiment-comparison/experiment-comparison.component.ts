@@ -35,12 +35,12 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
 
     this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
       //this.experimentDataObject = experimentData;
-      if (experimentData.isSearched) {
-        this.hasMpaData = true;
-        this.mpaTableDataService.requestProteinGroups();
-      } else {
-        this.hasMpaData = false;
-      }
+      // if (experimentData.isSearched) {
+      //   this.hasMpaData = true;
+      //   this.mpaTableDataService.requestProteinGroups();
+      // } else {
+      //   this.hasMpaData = false;
+      // }
     });
   }
 

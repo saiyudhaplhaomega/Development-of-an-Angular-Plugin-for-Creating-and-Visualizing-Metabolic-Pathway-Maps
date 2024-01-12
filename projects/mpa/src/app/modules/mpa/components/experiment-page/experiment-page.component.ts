@@ -19,6 +19,7 @@ import { CompareExperimentsDialogComponentComponent } from './compare-experiment
 import { ExperimentJSONObject } from '../../model/experimentjson';
 
 interface Datstats {
+  targetFdr: string;
   totalNoProteinGroups: number;
   totalNoProteins: number;
   totalNoPeptides: number;
@@ -47,40 +48,20 @@ export class ExperimentPageComponent
   hasTaxonomyData: boolean = true;
   hasFunctionData: boolean = false;
 
-  // child node elements
   peaklistFileNode: DataItem;
   searchFileNode: DataItem;
-
-  // private _dataMap: Map<string, DataItem>;
-  // private children: string[];
-
-  uploadDialogId: string;
-  experimentDataObject: ExperimentJSONObject;
 
   constructor(
     private dataService: DataService,
     private dialog: MatDialog,
     private mpaTableDataService: MpaTableDataService
-  ) {
-    this.uploadDialogId = 'uploadDialog';
-  }
+  ) {}
 
   ngOnInit() {
     this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
 
     this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
-      this.experimentDataObject = experimentData;
-      if (this.experimentDataObject.isSearched) {
-        this.mpaTableDataService.requestProteinGroups().subscribe({
-          next: res => {
-            if (res) {
-              this.hasMpaData = true;
-              this.datStats = this.calculateDataStats(this.mpaTableDataService.mpaTableData.value);
-            }
-          }
-        });
-      }
     });
   }
 
@@ -88,21 +69,9 @@ export class ExperimentPageComponent
     //this.updateExperiment();
   }
 
-  //TODO refactoring: safe current name, set current name again if new name is not allowed
-  // onAccept(): void {
-  //   if (this.displayNameEditing.length > 24) {
-  //     this._snackBar.open('Names longer than 24 characters are not allowed!');
-  //     setTimeout(() => {this._snackBar.dismiss()},4000);
-  //     this.displayNameEditing = '';
-  //   } else if (this.displayNameEditing.length <= 0) {
-  //     this._snackBar.open('Empty names are not allowed!');
-  //     setTimeout(() => {this._snackBar.dismiss()},4000);
-  //   } else {
-  //     this.updateExperiment();
-  //   }
-  // }
-
-  // handles change of display name
+  /**
+   * handles change of display name
+   */
   onSetName(): void {
     const dialogRef = this.dialog.open(TextfieldDialogComponent, {
       disableClose: true,
@@ -123,9 +92,6 @@ export class ExperimentPageComponent
   }
 
   onSetDescription(): void {
-    /**
-     * handles description change
-     */
     const dialogRef = this.dialog.open(TextfieldDialogComponent, {
       disableClose: true,
     });
@@ -140,6 +106,55 @@ export class ExperimentPageComponent
         this.dataItemOfThisComponent.description = expDescription;
         this.updateExperiment();
       }
+    });
+  }
+
+  updateExperiment(): void {
+    if (this.dataItemOfThisComponent.uuid) {
+      this.dataService.updateExperiment(this.dataItemOfThisComponent);
+    }
+  }
+
+  onRemoveExperiment(): void {
+    this.dataService.removeDataItem(this.dataItemOfThisComponent);
+  }
+
+  public calculateDataStats(): Datstats {
+    let mpaData: ProteinGroupObject[] = this.mpaTableDataService.mpaTableData.value;
+    let proteinCount = 0;
+    let peptideCount = 0;
+    let psmCount = 0;
+    let spectrumCount = 0;
+
+    for (const group of mpaData) {
+      proteinCount += group.proteinList.length;
+      peptideCount += group.peptideList.length;
+      psmCount += group.psmList.length;
+      spectrumCount += group.spectrumIDs.length;
+    }
+
+    if(mpaData.length > 0) {
+      this.hasMpaData = true;
+    } else {
+      this.hasMpaData = false;
+    }
+
+    return {
+      targetFdr: this.mpaTableDataService.getTargetFdrValue(this.dataItemOfThisComponent.uuid),
+      totalNoProteinGroups: mpaData.length,
+      totalNoProteins: proteinCount,
+      totalNoPeptides: peptideCount,
+      totalNoPsms: psmCount,
+      totalNoSpectra: spectrumCount,
+    };
+  }
+
+  onCompareExperiments(): void {
+    const parentFolderDataObject: DataItem = this.dataService.getDataItemFromId(this.dataItemOfThisComponent.parent);
+
+    const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
+      disableClose: true,
+      data: { parentFolderDataObject: parentFolderDataObject, expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid },
     });
   }
 
@@ -167,46 +182,4 @@ export class ExperimentPageComponent
     // }
     //this.getChildNodes();
   }
-
-  updateExperiment(): void {
-    if (this.dataItemOfThisComponent.uuid) {
-      this.dataService.updateExperiment(this.dataItemOfThisComponent);
-    }
-  }
-
-  onRemoveExperiment(): void {
-    this.dataService.removeDataItem(this.dataItemOfThisComponent);
-  }
-
-  calculateDataStats(mpaData: ProteinGroupObject[]): Datstats {
-    let proteinCount = 0;
-    let peptideCount = 0;
-    let psmCount = 0;
-    let spectrumCount = 0;
-
-    for (const group of mpaData) {
-      proteinCount += group.proteinList.length;
-      peptideCount += group.peptideList.length;
-      psmCount += group.psmList.length;
-      spectrumCount += group.spectrumIDs.length;
-    }
-
-    return {
-      totalNoProteinGroups: mpaData.length,
-      totalNoProteins: proteinCount,
-      totalNoPeptides: peptideCount,
-      totalNoPsms: psmCount,
-      totalNoSpectra: spectrumCount,
-    };
-  }
-
-  onCompareExperiments(): void {
-    const parentFolderDataObject: DataItem = this.dataService.getDataItemFromId(this.dataItemOfThisComponent.parent);
-
-    const dialogRef = this.dialog.open(CompareExperimentsDialogComponentComponent, {
-      disableClose: true,
-      data: { parentFolderDataObject: parentFolderDataObject, expName: this.dataItemOfThisComponent.displayName, expID: this.dataItemOfThisComponent.uuid },
-    });
-  }
-
 }
