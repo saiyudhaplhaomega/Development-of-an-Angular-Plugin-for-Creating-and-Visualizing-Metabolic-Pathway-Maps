@@ -1,22 +1,67 @@
 <div id="scroll-container">
   <div id="header">
     <app-background></app-background>
-    <h1>Multi-Dimensional Omics Toolbox</h1>
+    <h1 class="h1-header">Multi-Dimensional Omics Toolbox</h1>
     <p>Welcome to a world of versatile tools for all your needs.</p>
   </div>
 
-  <div id="section1" class="section">
-        <h1>Our Metaproteomics Tools</h1>
-            <div class="horizontal-scroll-container image-grid">
-              <tool-card *ngFor="let tool of tools" [toolData]="tool"></tool-card>
-            </div>
+  <div id="section1" class="sectionscroll">
+    <div class="content-container">
+      <h1 class="h1-content">Our Metaproteomics Tools</h1>
+
+      <div class="centered-content">
+        <section class="image-grid">
+          <div class="GridWrapper" *ngFor="let tool of tools">
+            <tool-card [toolData]="tool"></tool-card>
+          </div>
+        </section>
+        <button class="top-distance" mat-raised-button color="primary">
+          Click here to see all tools
+        </button>
+        <div class="see-more-container">
+          <div class="text-container">
+            <p>Scroll down for scripts</p>
+          </div>
+          <div class="arrow-icon">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="section2" class="section">
-      <div class="update-list grid-right">
+  <div id="section2" class="sectionscroll">
+    <div class="content-container">
+      <div class="centered-content">
+        <h1>Our Scripts</h1>
+        <section class="image-grid">
+          <div class="GridWrapper" *ngFor="let script of scripts">
+            <tool-card [toolData]="script"></tool-card>
+          </div>
+        </section>
+        <button class="top-distance" mat-raised-button color="primary">
+          Click here to see all tools
+        </button>
+        <div class="see-more-container">
+          <div class="text-container">
+            <p>Scroll down for scripts</p>
+          </div>
+          <div class="arrow-icon">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="section3" class="sectionscroll">
+    <div class="content-container">
+      <div class="update-list">
         <div class="transparent-box">
           <h1>News Feed</h1>
           <update-list [updates]="updateList"></update-list>
         </div>
       </div>
+    </div>
+  </div>
 </div>

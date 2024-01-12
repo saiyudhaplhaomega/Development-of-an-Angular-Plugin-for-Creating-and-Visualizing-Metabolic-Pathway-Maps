@@ -1,48 +1,69 @@
-.tool-card {
-  max-width: 340px;
-  margin: 0 10px 20px;
-  box-sizing: border-box;
-}
-
-.tool-card .ImageWrapper {
-  position: relative;
+.ImageWrapper {
+  //background: #fff;
   border-radius: 16px;
   box-shadow: 0 1.8411px 2.76164px rgba(47, 48, 53, 0.1);
-  overflow: hidden;
-  width: 100%;
+
+  width: 200px;
   height: 200px;
+  overflow: hidden;
   transition: transform 0.3s ease;
-  display: flex;
-  align-items: center;
 }
 
-.tool-card .ImageWrapper img {
-  width: 100%;
-  height: auto;
-}
-
-.tool-card:hover .ImageWrapper {
+.ImageWrapper:hover {
   transform: scale(1.05);
 }
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  margin: 0 auto;
+  
+}
+.image {
+  height: 200px; 
+  width: 200px;
+  padding-bottom: 5px;
 
-.Description {
-  padding: 10px;
-  background-color: #f2f2f2;
+}
+
+.GridWrapper {
+  width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+
+.Description {
+  display: flex;
+  flex-direction: column;
+  height: 200px; /* Set a fixed height for the text container */
+  background-color: #f2f2f2; /* Background color for the description */
+  padding: 1rem;
+  align-items: center; /* Center the items horizontally */
 }
 
 .Title {
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: #ffffff;
+  font-size: 16px;
+  color: #000; /* Adjust text color */
+  text-align: center; /* Center the text within the container */
 }
 
 .Text {
   font-size: 14px;
-  color: #dddcdc;
+  color: #555; /* Adjust text color */
   text-align: justify;
   margin-top: 10px;
-  flex-grow: 1; /* Allow the Text to grow within the container */
+  flex: 1; /* Allow the text to grow to fill the container */
+}
+
+.ButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+  margin-top: auto; /* Align buttons to the bottom */
+}
+
+.ButtonWrapper button {
+  width: 100%; /* Adjust width as needed */
 }

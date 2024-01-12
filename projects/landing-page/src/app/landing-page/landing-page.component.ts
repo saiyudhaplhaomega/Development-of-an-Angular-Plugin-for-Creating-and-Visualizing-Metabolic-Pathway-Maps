@@ -25,18 +25,18 @@ export class LandingPageComponent implements OnInit {
       imageSrc: './assets/img/P.png',
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },
-    {
-      title: 'Knowledge Graph',
-      description: 'Knowledge Graph for analyzing omics data',
-      imageSrc: '',
-      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
-    },
-    {
-      title: 'Multiomics visualizer ',
-      description: 'Knowledge Graph for analyzing omics data',
-      imageSrc: '',
-      link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
-    },
+    // {
+    //   title: 'Knowledge Graph',
+    //   description: 'Knowledge Graph for analyzing omics data',
+    //   imageSrc: '',
+    //   link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    // },
+    // {
+    //   title: 'Multiomics visualizer ',
+    //   description: 'Knowledge Graph for analyzing omics data',
+    //   imageSrc: '',
+    //   link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    // },
     {
       title: 'MetaForge',
       description: 'MetaForge is a versatile tool for manipulating and analyzing biological metadata.',
@@ -49,20 +49,20 @@ export class LandingPageComponent implements OnInit {
       imageSrc: '',
       link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
     },
-    {
-        title: 'R Scripts',
-        description: 'R Scripts for statictial analyzes.',
-        imageSrc: './assets/img/R.png',
-        link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
-      },
+    // {
+    //     title: 'R Scripts',
+    //     description: 'R Scripts for statictial analyzes.',
+    //     imageSrc: './assets/img/R.png',
+    //     link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+    //   },
 
   ];
-// scripts = [    {
-//   title: 'R Scripts',
-//   description: 'R Scripts for statictial analyzes.',
-//   imageSrc: './assets/img/R.png',
-//   link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
-// },]; 
+scripts = [    {
+  title: 'R Scripts',
+  description: 'R Scripts for statictial analyzes.',
+  imageSrc: './assets/img/R.png',
+  link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads'
+},]; 
 
   updateList = [
     { title: 'MPA Website is now online', type: 'Tool added', author: 'Daniel Kautzner', link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads' },

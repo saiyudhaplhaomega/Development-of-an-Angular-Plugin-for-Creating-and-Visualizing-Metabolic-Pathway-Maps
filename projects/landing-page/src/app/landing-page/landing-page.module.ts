@@ -8,6 +8,7 @@ import { ToolCardModule } from './tool-card/tool-card.module';
 import { UpdateListModule } from './update-list/update-list.module';
 import { CommonModule } from '@angular/common';
 import { BackgroundModule } from './background/background.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [LandingPageComponent],
@@ -21,6 +22,7 @@ import { BackgroundModule } from './background/background.module';
     MatCardModule,
     MatGridListModule,
     MatIconModule,
+    MatButtonModule
 
   ],
 
