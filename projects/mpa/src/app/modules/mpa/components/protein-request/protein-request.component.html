@@ -1,0 +1,26 @@
+<div>
+    <div style="display: flex; align-items:center; width:100%;">
+        <div class="divider-line" style="width:100%;"> Proteingroup-Request Parameters</div>
+        <button style="display: inline-block;" mat-icon-button (click)="toggleExpand()">
+            <mat-icon [@indicatorRotate]="expanded ? 'expanded' : 'collapsed'">
+                expand_more
+            </mat-icon>
+        </button>
+    </div>
+    <div [@detailExpand]="expanded ? 'expand' : 'collapsed'">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="targetFdrRequest">targetFdr</span>
+            </div>
+            <div>
+                <input type="number" min="0" max="1" step="0.01" class="form-control" placeholder="0 to 1"
+                    aria-label="Request targetFdr" aria-describedby="targetFdr" (blur)="checkInput(this.targetFdr,'targetFdr')"
+                    [(ngModel)]="this.targetFdr"/>
+            </div>
+        </div>
+
+        <div>
+            <button (click)="submit()">Fetch Proteingroups</button>
+        </div>
+    </div>
+</div>

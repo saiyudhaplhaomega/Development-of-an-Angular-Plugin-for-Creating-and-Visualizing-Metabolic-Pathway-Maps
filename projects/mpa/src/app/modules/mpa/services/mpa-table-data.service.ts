@@ -23,8 +23,9 @@ export enum TaxonomyDisplaySelection {
 })
 export class MpaTableDataService {
 
-  // used to save ExperimentIDs, ProteinGroupObject[] as to prevent constant requests to the database; eliminates loadtime after initial loading
+  // used to save ExperimentIDs, ProteinGroupObject[], qValues as to prevent constant requests to the database; minimizes loadtime after initial loading
   private savedMpaDataMap: Map<string, ProteinGroupObject[]> = new Map<string, ProteinGroupObject[]>();
+  private savedTargetFdrValues: Map<string, number> = new Map<string, number>();
   private savedMpaDataIDs: string[] = [];
 
   public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
@@ -38,7 +39,7 @@ export class MpaTableDataService {
   public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
 
   public spectrumData = new BehaviorSubject<SpectrumObject>(undefined);
-  public expID = new BehaviorSubject<string>(undefined)
+  public expID = new BehaviorSubject<string>(undefined);
 
   public requestingSpectrum = new Subject<boolean>();
 
@@ -77,27 +78,37 @@ export class MpaTableDataService {
     this.spectrumDataObject$ = new BehaviorSubject<SpectrumDataObject>(new SpectrumDataObject([], ''));
   }
 
-  public requestProteinGroups(): Observable<boolean> {
+  public requestProteinGroups(targetFdr: number): Observable<boolean> {
     // check if data already saved
     // yes -> set mpaTableData to corresponding entry from savedMpaData
     // no -> check if savedMpaData exceeds size -> delete oldest entry
     let returnValue: Subject<boolean> = new Subject<boolean>();
-    if (this.savedMpaDataMap.get(this.expID.value)) {
+    if (this.savedMpaDataMap.get(this.expID.value) && this.savedTargetFdrValues.get(this.expID.value) == targetFdr) {
       this.setMpaTabledata();
-      setTimeout(() => returnValue.next(true),500); // setTimeout() to set returnValue after it is returned asObservable -> enables the subscription to catch on
+      // setTimeout() to set returnValue after it is returned asObservable -> enables the subscription to catch on
+      setTimeout(() => returnValue.next(true), 500);
     } else {
+
       // makes sure, not too much data is retained
       if (this.savedMpaDataIDs.length > 9) {
         this.savedMpaDataMap.delete(this.savedMpaDataIDs[0]);
+        this.savedTargetFdrValues.delete(this.savedMpaDataIDs[0]);
         this.savedMpaDataIDs.shift();
       }
-      this.httpClientService.postObject<ProteinGroupRequest, ProteinGroupObject[]>({
-        filename: 'sample.mgf', //sinnlos?
-        experimentID: this.expID.value,
-      }, this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS)).subscribe({
+      this.savedTargetFdrValues.set(this.expID.value, targetFdr);
+
+      const params: HttpParams = new HttpParams(
+        {
+          fromObject: {
+            experimentid: this.expID.value,
+            taskid: targetFdr.toString(),
+          }
+        });
+
+      this.httpClientService.getObject<ProteinGroupObject[]>(this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS), params).subscribe({
         next: (proteinGroups) => {
           this.savedMpaDataIDs.push(this.expID.value);
-          this.savedMpaDataMap.set(this.expID.value,proteinGroups);
+          this.savedMpaDataMap.set(this.expID.value, proteinGroups);
           this.setMpaTabledata();
           returnValue.next(true);
         },
@@ -110,11 +121,10 @@ export class MpaTableDataService {
     return returnValue.asObservable();
   }
 
-  private requestSequence() {
+  private requestSequence(): void {
     const params: HttpParams = new HttpParams(
       {
         fromObject: {
-          userID: 'sample.mgf', //userID sinnlos
           experimentID: this.expID.value,
           proteinid: this.selectedProtein.value.proteinID
         }
@@ -133,9 +143,7 @@ export class MpaTableDataService {
     });
   }
 
-  private i = 0;
-
-  private requestSpectrum() {
+  private requestSpectrum(): void {
     this.requestingSpectrum.next(true);
     const params: HttpParams = new HttpParams(
       {
@@ -152,33 +160,35 @@ export class MpaTableDataService {
         this.requestingSpectrum.next(false);
       },
       error: () => {
-        // TODO: just using mock data, remove once endpoint works
-        this.requestingSpectrum.next(false);
-        // if ((this.i % 2) == 0) {
-        //   this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData1.dataPoints, spectraMockData1.peptideSequence));
-        // } else if ((this.i % 2) != 0) {
-        //   this.spectrumDataObject$.next(new SpectrumDataObject(spectraMockData2.dataPoints, spectraMockData2.peptideSequence));
-        // }
-        this.i++;
+        console.log("requestSpectrum for experiment " + this.expID.value + " and spectrum " + this.selectedPsm.value.spectrumID + "failed!");
       }
     })
   }
 
-  emptySpectrumData() {
-    this.spectrumDataObject$.next(new SpectrumDataObject([], ''))
-  }
-
-  setPeptidesForSelectedProtein() {
+  private setPeptidesForSelectedProtein(): void {
     this.peptidesForSelectedProtein.next(this.selectedProteinGroup.value.peptideList.filter(
       peptide => this.selectedProtein.value.peptideNodes.includes(peptide.sequenceID)));
   }
 
-  setPsmsForSelectedPeptide() {
+  private setPsmsForSelectedPeptide(): void {
     this.psmsForSelectedPeptide.next(this.selectedProteinGroup.value.psmList.filter(
       psm => psm.peptideID === this.selectedPeptide.value.sequenceID));
   }
 
-  highlightIfSelected(row: ProteinGroupObject | ProteinGroupObject | ProteinObject | PeptideObject | PsmObject): boolean {
+  private saveFile(fileName: string, fileContent, fileType): void {
+    const file = new Blob([fileContent], { type: fileType });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = fileName;
+    link.click();
+    link.remove();
+  }
+
+  public emptySpectrumData(): void {
+    this.spectrumDataObject$.next(new SpectrumDataObject([], ''))
+  }
+
+  public highlightIfSelected(row: ProteinGroupObject | ProteinGroupObject | ProteinObject | PeptideObject | PsmObject): boolean {
 
     if ('proteinGroupID' in row) {
       return this.selectedProteinGroup.value && row.proteinGroupID === this.selectedProteinGroup.value.proteinGroupID;
@@ -199,7 +209,7 @@ export class MpaTableDataService {
     return false;
   }
 
-  resetCompleteSelection() {
+  public resetCompleteSelection(): void {
     this.selectedProtein.next(undefined);
     this.selectedPeptide.next(undefined);
     this.selectedPsm.next(undefined);
@@ -207,8 +217,8 @@ export class MpaTableDataService {
     this.psmsForSelectedPeptide.next([]);
   }
 
-  //uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed
-  setMpaTabledata() {
+  /** uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed */
+  public setMpaTabledata(): void {
     let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value);
     let newTableData: ProteinGroupObject[] = [];
     if (this.groupSelection == GroupSelection.SUBGROUPS) {
@@ -222,7 +232,7 @@ export class MpaTableDataService {
     this.selectedProteinGroup.next(newTableData[0]);
   }
 
-  sortTableData(tableData: ProteinGroupObject[]): ProteinGroupObject[] {
+  private sortTableData(tableData: ProteinGroupObject[]): ProteinGroupObject[] {
     let disabledGroups: ProteinGroupObject[] = [];
     let enabledGroups: ProteinGroupObject[] = [];
 
@@ -251,12 +261,12 @@ export class MpaTableDataService {
     return groups;
   }
 
-  onGroupSelection(): void {
+  public onGroupSelection(): void {
     this.setMpaTabledata();
   }
 
   //updates the 'hidden' property of the selected groups in this.mpaData and sends an update to the back-end and this.mpaTableData
-  onToggleDisableGroup(isDisableAction: boolean) {
+  public onToggleDisableGroup(isDisableAction: boolean): void {
     let groupsToUpdate: ProteinGroupObject[] = [];
     let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value);
     mpaData.map(group => {
@@ -290,14 +300,15 @@ export class MpaTableDataService {
     })
   }
 
-  downloadProteinTableData(): void {
-    this.httpClientService.postObject<{ experimentID: string, groupSelection: GroupSelection }, { message: string; }>({
+  public downloadProteinTableData(): void {
+    this.httpClientService.postObject<{ experimentID: string, groupSelection: GroupSelection, targetFdr: string }, { message: string; }>({
       experimentID: this.expID.value,
-      groupSelection: this.groupSelection
+      groupSelection: this.groupSelection,
+      targetFdr: this.savedTargetFdrValues.get(this.expID.value).toString(),
     }, this.addressService.getEndpoint(Endpoints.GET_DOWNLOADPROTEINGROUPS)).subscribe({
       next: (json) => {
         console.log(json)
-        this.onSaveFile("proteinGroupsReport", json.message, "text/csv;charset=utf-8")
+        this.saveFile("proteinGroupsReport", json.message, "text/csv;charset=utf-8")
       },
       error: () => {
         console.log('ERROR: mpa-table-data.service.downloadProteinTableData')
@@ -305,13 +316,12 @@ export class MpaTableDataService {
     });
   }
 
-  onSaveFile(fileName: string, fileContent, fileType): void {
-    const file = new Blob([fileContent], { type: fileType });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(file);
-    link.download = fileName;
-    link.click();
-    link.remove();
+  public getTargetFdrValue(expID: string): string {
+    if (this.savedTargetFdrValues.has(expID)) {
+      return this.savedTargetFdrValues.get(expID).toString();
+    } else {
+      return "not set";
+    }
   }
 
 }
