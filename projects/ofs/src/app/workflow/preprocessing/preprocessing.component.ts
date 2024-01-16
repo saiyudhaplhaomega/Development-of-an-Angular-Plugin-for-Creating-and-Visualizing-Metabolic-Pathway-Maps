@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { WorkflowService } from '../services/workflow.service';
-import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs';
+import { Component } from '@angular/core';
+import { PanelOrientation } from 'shared-lib';
 
 @Component({
   selector: 'ofs-preprocessing',
@@ -8,5 +7,7 @@ import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs'
   styleUrls: ['./preprocessing.component.scss'],
 })
 export class PreprocessingComponent {
+  orientation = PanelOrientation.VERTICAL;
+
   constructor() {}
 }
