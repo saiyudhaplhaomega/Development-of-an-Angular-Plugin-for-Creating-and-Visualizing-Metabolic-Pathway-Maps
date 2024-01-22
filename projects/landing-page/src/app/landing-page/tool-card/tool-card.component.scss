@@ -1,49 +1,45 @@
 .ImageWrapper {
   //background: #fff;
   border-radius: 16px;
-  box-shadow: 0 1.8411px 2.76164px rgba(47, 48, 53, 0.1);
+  height: 250px; 
+  width: 250px;
 
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
   transition: transform 0.3s ease;
+
 }
 
 .ImageWrapper:hover {
   transform: scale(1.05);
 }
-.image-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; 
-  margin: 0 auto;
-  
-}
-.image {
-  height: 200px; 
-  width: 200px;
-  padding-bottom: 5px;
 
+
+.image {
+  height: 250px; 
+  width: 250px;
+  padding-bottom: 5px;
+  border-radius: 25px;
 }
 
 .GridWrapper {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
+  width: 250px;
+  background-color: rgba(47, 48, 53, 0.1);
+  border-radius: 25px;
+  margin: 10px;
 }
 
 
 .Description {
   display: flex;
   flex-direction: column;
-  height: 200px; /* Set a fixed height for the text container */
-  background-color: #f2f2f2; /* Background color for the description */
+  height: 250px; 
   padding: 1rem;
-  align-items: center; /* Center the items horizontally */
+  align-items: center; 
+
 }
 
 .Title {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   color: #000; /* Adjust text color */
   text-align: center; /* Center the text within the container */
 }
@@ -52,8 +48,7 @@
   font-size: 14px;
   color: #555; /* Adjust text color */
   text-align: justify;
-  margin-top: 10px;
-  flex: 1; /* Allow the text to grow to fill the container */
+  flex: 1;
 }
 
 .ButtonWrapper {

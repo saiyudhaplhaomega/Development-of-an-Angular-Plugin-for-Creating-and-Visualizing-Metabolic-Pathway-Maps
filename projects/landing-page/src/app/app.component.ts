@@ -33,8 +33,8 @@ export class AppComponent {
       label: 'Scripts',
       requireAuth: false,
       children: [
-        { route: '/rscripts', label: 'R Scripts' },
-        { route: '/pscripts', label: 'Python Scripts' },
+        { route: '/r', label: 'R' },
+        { route: '/pscripts', label: 'Python' },
       ],
     },
     {
@@ -49,7 +49,7 @@ export class AppComponent {
       label: 'About',
       requireAuth: false,
       children: [
-        { route: '/mdoa', label: 'MdOA Team' },
+        { route: '/mdoa-team', label: 'MdOA Group' },
         { route: '/other', label: 'Other Team' },
       ],
     },

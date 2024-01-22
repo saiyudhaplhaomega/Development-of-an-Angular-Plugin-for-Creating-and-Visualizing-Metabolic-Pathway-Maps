@@ -24,6 +24,22 @@ const routes: Routes = [
       import('./pages/tools/metaforge/metaforge.module').then((m) => m.MetaForgeModule),
   },
   {
+    path: 'mdoa-team',
+    loadChildren: () =>
+      import('./pages/about/mdoa-team/mdoa-team.module').then((m) => m.MdoaTeamModule),
+  },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./pages/about/about.module').then((m) => m.AboutModule),
+  },
+  {
+    path: 'r',
+    loadChildren: () =>
+      import('./pages/scripts/r/r.module').then((m) => m.RModule),
+  },
+
+  {
     path: 'app-tools',
     loadChildren: () =>
       import('./landing-page/background/background.module').then((m) => m.BackgroundModule),

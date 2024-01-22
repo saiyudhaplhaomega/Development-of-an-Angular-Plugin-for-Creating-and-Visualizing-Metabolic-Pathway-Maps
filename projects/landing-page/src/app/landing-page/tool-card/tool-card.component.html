@@ -1,21 +1,22 @@
-<div class="GridWrapper">
-  <div class="ImageWrapper">
-    <div style="display: block">
-      <img
-        alt=""
-        [src]="toolData.imageSrc"
-        class="image"
-        (click)="goToLink(toolData.link)"
-      />
+    <div class="GridWrapper">
+      <div class="ImageWrapper">
+        <div>
+          <img
+            alt=""
+            [src]="toolData.imageSrc"
+            class="image"
+            (click)="goToLink(toolData.link)"
+          />
+        </div>
+      </div>
+      <div class="Description">
+        <h3 class="Title">{{ toolData.title }}</h3>
+        <p class="Text">{{ toolData.description }}</p>
+      </div>
+      <div>
+        <div class="ButtonWrapper">
+          <button mat-raised-button color="secondary">Learn more</button>
+          <button mat-raised-button color="primary">Explore Tool</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="Description">
-    <h3 class="Title">{{ toolData.title }}</h3>
-    <p class="Text">{{ toolData.description }}</p>
-  </div>
-  <div>
-  <div class="ButtonWrapper">
-    <button mat-raised-button color="secondary">Learn more</button>
-    <button mat-raised-button color="primary">Explore Tool</button>
-  </div>
-</div>

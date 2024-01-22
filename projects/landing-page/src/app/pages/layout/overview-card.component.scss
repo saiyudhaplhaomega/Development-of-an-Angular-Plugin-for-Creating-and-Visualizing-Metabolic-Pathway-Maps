@@ -1,0 +1,82 @@
+    .tool-overview {
+      max-width: auto;
+      margin: 20px 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+        color: #333;
+    }
+
+    .tool-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      border-radius: 8px;
+
+    }
+
+    .tool-description {
+      flex: 1;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    .tool-about {
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .logo-container{ 
+      display:flex;
+      margin-bottom: auto;
+    }
+
+    .details-container {
+      display: flex; 
+      justify-content: left;
+    }
+
+    h2 {
+      margin-right: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    h3 {
+      margin-right: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+
+    .mdc-data-table__table {
+      min-width: 0;
+      border: 0;
+      white-space: nowrap;
+      border-spacing: 0;
+      table-layout: fixed;
+  }
+    
