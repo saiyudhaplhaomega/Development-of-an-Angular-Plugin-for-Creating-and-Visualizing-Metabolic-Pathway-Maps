@@ -6,8 +6,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { WorkflowPanelDirective } from './workflow-panel-directive';
-import { WorkflowPanelService } from './workflow-panel.service';
-import { PanelOrientation } from './workflow-panel.model';
+import { WorkflowPanelService } from '../services/workflow-panel.service';
+import { PanelOrientation } from '../models/workflow-panel.model';
 
 @Component({
   selector: 'lib-workflow-panel',
@@ -17,6 +17,7 @@ import { PanelOrientation } from './workflow-panel.model';
 export class WorkflowPanelComponent implements OnInit {
   @Input() showDividerIcon: boolean = true;
   @Input() orientation: PanelOrientation = PanelOrientation.VERTICAL;
+  @Input() hasData: boolean = false;
 
   @ContentChildren(WorkflowPanelDirective)
   panels!: QueryList<WorkflowPanelDirective>;

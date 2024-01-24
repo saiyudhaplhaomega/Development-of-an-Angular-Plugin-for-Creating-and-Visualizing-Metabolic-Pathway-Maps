@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Step } from './models/workflow-steps.model';
 import { WorkflowService } from './services/workflow.service';

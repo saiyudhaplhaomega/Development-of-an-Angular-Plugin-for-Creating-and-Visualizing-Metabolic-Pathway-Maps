@@ -6,6 +6,4 @@ import { PanelOrientation } from 'shared-lib';
   templateUrl: './data-overview.component.html',
   styleUrls: ['./data-overview.component.scss'],
 })
-export class DataOverviewComponent {
-  orientation = PanelOrientation.VERTICAL;
-}
+export class DataOverviewComponent {}

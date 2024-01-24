@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import {
   CustomValidators,
   InputFormComponent,

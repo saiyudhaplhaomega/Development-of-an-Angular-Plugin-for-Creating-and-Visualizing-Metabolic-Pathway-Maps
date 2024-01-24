@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WorkflowPanelService } from './workflow-panel.service';
-import { PanelOrientation } from './workflow-panel.model';
+import { WorkflowPanelService } from '../services/workflow-panel.service';
+import { PanelOrientation } from '../models/workflow-panel.model';
 
 @Component({
   selector: 'shared-icon-divider',
   templateUrl: './icon-divider.component.html',
-  styleUrls: ['./workflow-panel.component.scss'],
+  styleUrls: ['./icon-divider.component.scss'],
 })
 export class IconDividerComponent implements OnInit {
   constructor(private panelService: WorkflowPanelService) {}

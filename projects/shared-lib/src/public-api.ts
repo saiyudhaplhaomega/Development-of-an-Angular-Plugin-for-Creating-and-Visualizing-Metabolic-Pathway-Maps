@@ -31,9 +31,9 @@ export * from './lib/input-form/input-form';
 export * from './lib/input-form/custom-validators';
 
 export * from './lib/workflow-panel/workflow-panel.module';
-export * from './lib/workflow-panel/workflow-panel-directive';
-export * from './lib/workflow-panel/workflow-panel.model';
-export * from './lib/workflow-panel/workflow-panel.component';
+export * from './lib/workflow-panel/workflow-panel/workflow-panel-directive';
+export * from './lib/workflow-panel/models/workflow-panel.model';
+export * from './lib/workflow-panel/workflow-panel/workflow-panel.component';
 
 export * from './lib/result-figures/result-figures.module';
 export * from './lib/result-figures/result-figures.component';

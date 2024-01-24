@@ -30,7 +30,6 @@ export interface SimpleMessage {
 }
 
 @Injectable({ providedIn: 'any' })
-// TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
 
@@ -48,11 +47,13 @@ export class WorkflowService {
     // });
   }
 
+  // TODO: remove for simplification
   // use this getter if you only need the current value
   get ofsData(): OFSData {
     return this.ofsDataSubject$.value;
   }
 
+  //  TODO: remove
   // get ofsData(): DeepReadonly<OFSData> {
   //   return this.ofsDataSubject$.value;
   // }
@@ -67,13 +68,14 @@ export class WorkflowService {
     return this.ofsDataSubject$;
   }
 
+  // used for testing, reads an existing config from assets
   setDummyConfig() {
     const existingConfig = dummyConfig as OFSData;
     this.setCompletedSteps(existingConfig);
     this.ofsDataSubject$.next(existingConfig);
   }
 
-  // used to set completed steps when loading existing job
+  // checks workflow data and sets stepper
   setCompletedSteps(data: OFSData) {
     if (data.responseData.overviewResponse?.classDistribution !== undefined) {
       this.stepperService.setStepComplete(0);

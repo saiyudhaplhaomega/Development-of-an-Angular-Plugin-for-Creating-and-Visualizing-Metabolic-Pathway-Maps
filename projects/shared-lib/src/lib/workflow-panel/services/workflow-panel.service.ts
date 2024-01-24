@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PanelOrientation } from './workflow-panel.model';
+import { PanelOrientation } from '../models/workflow-panel.model';
 
 @Injectable({
   providedIn: 'any',

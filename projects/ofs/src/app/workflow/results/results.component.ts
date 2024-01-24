@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { StepperService } from '../services/stepper.service';
 
 @Component({
   selector: 'ofs-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.scss']
+  styleUrls: ['./results.component.scss'],
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent {
+  public completedSteps$ = this.stepper.completedSteps$;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor(private stepper: StepperService) {}
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PanelOrientation } from 'shared-lib';
+import { StepperService } from '../services/stepper.service';
 
 @Component({
   selector: 'ofs-preprocessing',
@@ -7,7 +8,7 @@ import { PanelOrientation } from 'shared-lib';
   styleUrls: ['./preprocessing.component.scss'],
 })
 export class PreprocessingComponent {
-  orientation = PanelOrientation.VERTICAL;
+  public completedSteps$ = this.stepper.completedSteps$;
 
-  constructor() {}
+  constructor(private stepper: StepperService) {}
 }
