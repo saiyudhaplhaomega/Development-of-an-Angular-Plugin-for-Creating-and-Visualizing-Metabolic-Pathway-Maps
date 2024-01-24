@@ -6,11 +6,11 @@ import { StepperService } from '../../services/stepper.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'ofs-results-download',
-  templateUrl: './results-download.component.html',
-  styleUrls: ['./results-download.component.scss'],
+  selector: 'ofs-data-download',
+  templateUrl: './data-download.component.html',
+  styleUrls: ['./data-download.component.scss'],
 })
-export class ResultsDownloadComponent
+export class DataDownloadComponent
   extends InputFormComponent
   implements OnInit, OnDestroy
 {

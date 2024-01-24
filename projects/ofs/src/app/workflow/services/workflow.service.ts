@@ -7,13 +7,10 @@
  */
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { DeepReadonly } from 'ts-essentials';
-import { cloneDeep } from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MultiFileUploadData } from 'shared-lib';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
-import { OfsJob } from '../models/ofs-job.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
@@ -137,7 +134,7 @@ export class WorkflowService {
     const filesToUpload: MultiFileUploadData = {
       files: [
         {
-          uploadFile: config.data,
+          uploadFile: config.data as File,
           fileID: 'inputCSV',
         },
         {

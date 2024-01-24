@@ -1,3 +1,7 @@
+{{ completedSteps$ | async | json }}
+
+<div>hello</div>
+
 <div class="stepper-container mx-auto p-4 flex-grow-0 flex-shrink-0">
   <mat-stepper
     class="mat-stepper-workflow"
@@ -13,7 +17,7 @@
       <ofs-data-overview></ofs-data-overview>
     </mat-step>
 
-    <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
+    <!-- <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
       <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
       <ofs-preprocessing></ofs-preprocessing>
     </mat-step>
@@ -25,7 +29,10 @@
 
     <mat-step [completed]="(completedSteps$ | async)[3]" [editable]="true">
       <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
-      <ofs-results></ofs-results>
     </mat-step>
+
+    <mat-step [completed]="(completedSteps$ | async)[4]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[4].label }}</ng-template>
+    </mat-step> -->
   </mat-stepper>
 </div>

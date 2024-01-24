@@ -1,18 +1,21 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource as MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator as MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { Feature, FeatureProfile } from '../../models/classifier.model';
-import { WorkflowService } from '../../services/workflow.service';
+import { Feature, FeatureProfile } from '../models/classifier.model';
+import { WorkflowService } from '../services/workflow.service';
+import { StepperService } from '../services/stepper.service';
 
 @Component({
-  selector: 'ofs-results-input',
-  templateUrl: './results-input.component.html',
-  styleUrls: ['./results-input.component.scss'],
+  selector: 'ofs-panel-selection',
+  templateUrl: './panel-selection.component.html',
+  styleUrls: ['./panel-selection.component.scss'],
 })
-export class ResultsInputComponent implements OnInit, AfterViewInit {
+export class PanelSelectionComponent implements OnInit, AfterViewInit {
+  public completedSteps$ = this.stepper.completedSteps$;
+
   displayedColumns: string[] = ['select', 'featureID'];
   dataSource = new MatTableDataSource<Feature>();
   selection = new SelectionModel<string>(true, []);
@@ -22,7 +25,10 @@ export class ResultsInputComponent implements OnInit, AfterViewInit {
 
   profileSelection: FormControl = new FormControl<FeatureProfile>(null);
 
-  constructor(private workflow: WorkflowService) {}
+  constructor(
+    private workflow: WorkflowService,
+    private stepper: StepperService
+  ) {}
 
   get listOfFeatureProfiles() {
     return this.workflow.ofsData.responseData.wrapperResponse

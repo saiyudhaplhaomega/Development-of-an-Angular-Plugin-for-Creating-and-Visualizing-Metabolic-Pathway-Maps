@@ -1,4 +1,4 @@
 export interface PreprocessingResponse {
-  pvaluesMolecules: string;
+  pvaluesMolecules?: string;
   predictivePerformance: string;
 }

@@ -8,8 +8,8 @@ export enum GroupSelectionOptions {
 export interface DataGroup {
   groupName: string;
   groupPrefix: string;
-  groupStart: number;
-  groupEnd: number;
+  // groupStart: number;
+  // groupEnd: number;
 }
 
 export class DataGroup implements DataGroup {
@@ -24,14 +24,14 @@ export interface DataGroupForm extends FormGroup {
   controls: {
     groupName: FormControl;
     groupPrefix: FormControl;
-    groupStart: FormControl;
-    groupEnd: FormControl;
+    // groupStart: FormControl;
+    // groupEnd: FormControl;
   };
 }
 
 export interface OverviewConfig {
   overviewJobId: string;
-  data: File;
+  data: File | string;
   groups: DataGroup[];
   groupSelectionOptions: GroupSelectionOptions;
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Step } from '../models/workflow-steps.model';
-import { WorkflowRoutes } from '../models/workflow-routes.model';
 
 /**
  * Service to manage current step of the workflow stepper and current workflow route and synchronize both
@@ -11,23 +10,23 @@ import { WorkflowRoutes } from '../models/workflow-routes.model';
 export const steps: Step[] = [
   {
     index: 0,
-    label: 'Data Overview',
-    route: WorkflowRoutes.OVERVIEW, // TODO: remove route property
+    label: 'Data overview',
   },
   {
     index: 1,
-    label: 'Preprocessing',
-    route: WorkflowRoutes.PREPROCESSING,
+    label: 'Feature pre-selection',
   },
   {
     index: 2,
-    label: 'Wrapper',
-    route: WorkflowRoutes.WRAPPER,
+    label: 'Feature sampling',
   },
   {
     index: 3,
-    label: 'Results',
-    route: WorkflowRoutes.RESULTS,
+    label: 'Biomarker panel selection',
+  },
+  {
+    index: 4,
+    label: 'Classification',
   },
 ];
 

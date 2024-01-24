@@ -1,9 +1,9 @@
-import { Feature, FeatureProfile } from "../workflow/models/classifier.model";
+import { Feature, FeatureProfile } from '../workflow/models/classifier.model';
 
 export interface WrapperResponse {
-  wrapperJobName: string;
+  wrapperJobId?: string;
   wrapperPanel: string;
   wrapperSingleMolecule: string;
-  featureSelection: Feature[]
+  featureSelection: Feature[];
   featureSelectionProfiles: FeatureProfile[];
 }

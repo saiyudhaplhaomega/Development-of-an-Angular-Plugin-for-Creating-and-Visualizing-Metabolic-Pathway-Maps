@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { WorkflowService } from '../../services/workflow.service';
+import { Component } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { WorkflowService } from '../../services/workflow.service';
 import { OFSData } from '../../models/ofs-data.model';
 import { ClassifierResponse } from '../../../models/classifier-response.model';
 
 @Component({
-  selector: 'ofs-results-figure',
-  templateUrl: './results-figure.component.html',
-  styleUrls: ['./results-figure.component.scss'],
+  selector: 'ofs-classification-results',
+  templateUrl: './classification-results.component.html',
+  styleUrls: ['./classification-results.component.scss'],
 })
-export class ResultsFigureComponent {
+export class ClassificationResultsComponent {
   classifierImages$: Observable<string[]>;
 
   constructor(private workflow: WorkflowService) {
@@ -26,7 +26,11 @@ export class ResultsFigureComponent {
     if (!this.checkForOvervieImages(data)) {
       return [];
     }
-    return this.workflow.getResourceUrls([data.pcaImage, data.hacImage, data.scatterPlotImage]);
+    return this.workflow.getResourceUrls([
+      data.pcaImage,
+      data.hacImage,
+      data.scatterPlotImage,
+    ]);
   }
 
   checkForOvervieImages(ofsData: ClassifierResponse): boolean {
