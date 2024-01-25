@@ -54,3 +54,6 @@ projects/metadata-tool/${SSH_ENV}
 
 # test data
 projects/metadata-tool/test-data
+
+# documentation
+documentation

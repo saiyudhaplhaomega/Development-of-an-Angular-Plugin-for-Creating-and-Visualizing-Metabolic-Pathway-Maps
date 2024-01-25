@@ -4,6 +4,10 @@ import { Step } from './models/workflow-steps.model';
 import { WorkflowService } from './services/workflow.service';
 import { StepperService } from './services/stepper.service';
 
+/**
+ * Parent component for the workflow stepper. Uses workflow service to track, send,
+ *  and request data. Uses the stepper service to manage the stepper.
+ */
 @Component({
   selector: 'ofs-workflow',
   templateUrl: './workflow.component.html',
