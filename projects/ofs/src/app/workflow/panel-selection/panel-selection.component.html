@@ -1,4 +1,4 @@
-<lib-workflow-panel [hasData]="true">
+<lib-workflow-panel [hasData]="(completedSteps$ | async)[2]">
   <ng-template lib-workflowPanel>
     <div class="documentation-content-container">
       <section class="mat-typography">

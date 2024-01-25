@@ -32,13 +32,13 @@ export class PanelSelectionComponent implements OnInit, AfterViewInit {
 
   get listOfFeatureProfiles() {
     return this.workflow.ofsData.responseData.wrapperResponse
-      .featureSelectionProfiles;
+      ?.featureSelectionProfiles;
   }
 
   ngOnInit(): void {
     this.workflow.ofsData$.subscribe((features) => {
       this.dataSource.data =
-        features.responseData.wrapperResponse.featureSelection;
+        features.responseData.wrapperResponse?.featureSelection;
     });
   }
 

@@ -1,4 +1,4 @@
-<lib-workflow-panel [hasData]="true">
+<lib-workflow-panel [hasData]="(completedSteps$ | async)[3]">
   <ng-template lib-workflowPanel>
     <ofs-classification-results></ofs-classification-results>
   </ng-template>

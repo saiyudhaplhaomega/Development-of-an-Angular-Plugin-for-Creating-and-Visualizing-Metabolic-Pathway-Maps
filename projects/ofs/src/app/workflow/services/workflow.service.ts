@@ -85,12 +85,16 @@ export class WorkflowService {
       this.stepperService.setStepComplete(1);
     }
 
-    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
+    if (data.responseData.wrapperResponse?.featureSelection !== undefined) {
       this.stepperService.setStepComplete(2);
     }
 
-    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
+    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
       this.stepperService.setStepComplete(3);
+    }
+
+    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
+      this.stepperService.setStepComplete(4);
     }
   }
 
@@ -229,6 +233,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
+            this.stepperService.setStepComplete(2);
             this.loading = false;
           });
       });
@@ -249,8 +254,8 @@ export class WorkflowService {
       )
       .subscribe((response) => {
         this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(2);
-        this.stepperService.setStep(3);
+        this.stepperService.setStepComplete(3);
+        this.stepperService.setStep(4);
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
@@ -260,7 +265,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            this.stepperService.setStepComplete(3);
+            this.stepperService.setStepComplete(4);
             this.loading = false;
           });
       });

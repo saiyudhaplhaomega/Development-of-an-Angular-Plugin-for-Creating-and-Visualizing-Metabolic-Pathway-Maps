@@ -25,8 +25,8 @@ export class WorkflowComponent implements OnInit {
 
   ngOnInit(): void {
     this.stepperService.initialize();
-    // this.workflow.createOfsJob();
-    this.workflow.setDummyConfig();
+    this.workflow.createOfsJob();
+    // this.workflow.setDummyConfig();
   }
 
   get steps() {

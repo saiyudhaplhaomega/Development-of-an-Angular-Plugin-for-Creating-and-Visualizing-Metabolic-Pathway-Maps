@@ -17,7 +17,7 @@
       <ofs-data-overview></ofs-data-overview>
     </mat-step>
 
-    <!-- <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
+    <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
       <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
       <ofs-preprocessing></ofs-preprocessing>
     </mat-step>
@@ -29,10 +29,12 @@
 
     <mat-step [completed]="(completedSteps$ | async)[3]" [editable]="true">
       <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
+      <ofs-panel-selection></ofs-panel-selection>
     </mat-step>
 
     <mat-step [completed]="(completedSteps$ | async)[4]" [editable]="true">
       <ng-template matStepLabel>{{ steps[4].label }}</ng-template>
-    </mat-step> -->
+      <ofs-classification></ofs-classification>
+    </mat-step>
   </mat-stepper>
 </div>
