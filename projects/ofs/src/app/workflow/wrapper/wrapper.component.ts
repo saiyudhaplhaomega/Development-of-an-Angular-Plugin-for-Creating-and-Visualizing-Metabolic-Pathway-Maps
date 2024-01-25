@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { WorkflowService } from '../services/workflow.service';
-import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs';
+import { Component } from '@angular/core';
+import { StepperService } from '../services/stepper.service';
 
 @Component({
   selector: 'ofs-wrapper',
@@ -8,5 +7,7 @@ import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs'
   styleUrls: ['./wrapper.component.scss'],
 })
 export class WrapperComponent {
-  constructor() {}
+  public completedSteps$ = this.stepper.completedSteps$;
+
+  constructor(private stepper: StepperService) {}
 }

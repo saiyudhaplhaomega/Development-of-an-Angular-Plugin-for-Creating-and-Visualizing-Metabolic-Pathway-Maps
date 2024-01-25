@@ -1,32 +1,40 @@
-<div>
-  <div class="stepper-container mx-auto p-4 flex-grow-0 flex-shrink-0">
-    <mat-stepper
-      class="test mat-stepper-workflow"
-      orientation="vertical"
-      [linear]="true"
-      #stepper
-      (selectionChange)="setStep($event.selectedIndex)"
-      [selectedIndex]="(currentStep$ | async).index"
-    >
-      <mat-step [completed]="(completedSteps$ | async)[0]" [editable]="true">
-        <ng-template matStepLabel>{{ steps[0].label }}</ng-template>
-        <ofs-data-overview></ofs-data-overview>
-      </mat-step>
+{{ completedSteps$ | async | json }}
 
-      <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
-        <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
-        <ofs-preprocessing></ofs-preprocessing>
-      </mat-step>
+<div>hello</div>
 
-      <mat-step [completed]="(completedSteps$ | async)[2]" [editable]="true">
-        <ng-template matStepLabel>{{ steps[2].label }}</ng-template>
-        <ofs-wrapper></ofs-wrapper>
-      </mat-step>
+<div class="stepper-container mx-auto p-4 flex-grow-0 flex-shrink-0">
+  <mat-stepper
+    class="mat-stepper-workflow"
+    orientation="vertical"
+    [linear]="true"
+    #stepper
+    (selectionChange)="setStep($event.selectedIndex)"
+    [selectedIndex]="(currentStep$ | async).index"
+  >
+    <mat-step [completed]="(completedSteps$ | async)[0]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[0].label }}</ng-template>
 
-      <mat-step [completed]="(completedSteps$ | async)[3]" [editable]="true">
-        <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
-        <ofs-results></ofs-results>
-      </mat-step>
-    </mat-stepper>
-  </div>
+      <ofs-data-overview></ofs-data-overview>
+    </mat-step>
+
+    <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
+      <ofs-preprocessing></ofs-preprocessing>
+    </mat-step>
+
+    <mat-step [completed]="(completedSteps$ | async)[2]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[2].label }}</ng-template>
+      <ofs-wrapper></ofs-wrapper>
+    </mat-step>
+
+    <mat-step [completed]="(completedSteps$ | async)[3]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
+      <ofs-panel-selection></ofs-panel-selection>
+    </mat-step>
+
+    <mat-step [completed]="(completedSteps$ | async)[4]" [editable]="true">
+      <ng-template matStepLabel>{{ steps[4].label }}</ng-template>
+      <ofs-classification></ofs-classification>
+    </mat-step>
+  </mat-stepper>
 </div>

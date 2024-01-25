@@ -18,7 +18,7 @@
   <div class="outer-form-container">
     <form [formGroup]="formModel" (ngSubmit)="submitOverviewConfig()">
       <div class="inner-form-container">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="w-full">
           <ngx-mat-file-input
             placeholder="Select File for Upload"
             [formControl]="this.formModel.controls.data"

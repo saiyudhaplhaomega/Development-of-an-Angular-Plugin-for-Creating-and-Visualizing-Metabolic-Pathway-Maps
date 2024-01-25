@@ -1,13 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Step, steps } from '../models/workflow-steps.model';
-import { Router } from '@angular/router';
-import { WorkflowService } from './workflow.service';
-import { WorkflowRoutes } from '../models/workflow-routes.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Step } from '../models/workflow-steps.model';
 
 /**
  * Service to manage current step of the workflow stepper and current workflow route and synchronize both
  */
+
+// defines steps of the workflow
+export const steps: Step[] = [
+  {
+    index: 0,
+    label: 'Data overview',
+  },
+  {
+    index: 1,
+    label: 'Feature pre-selection',
+  },
+  {
+    index: 2,
+    label: 'Feature sampling',
+  },
+  {
+    index: 3,
+    label: 'Biomarker panel selection',
+  },
+  {
+    index: 4,
+    label: 'Classification',
+  },
+];
 
 @Injectable({
   providedIn: 'any',
@@ -18,7 +39,7 @@ export class StepperService {
   private _currentStep$: BehaviorSubject<Step>;
   private _completedSteps$: BehaviorSubject<boolean[]>;
 
-  constructor(private router: Router) {
+  constructor() {
     this._workflowSteps = steps;
     this._stepNumber = steps.length;
     this._completedSteps$ = new BehaviorSubject(
@@ -32,6 +53,7 @@ export class StepperService {
     return this._workflowSteps;
   }
 
+  // TODO: remove for simplification
   get stepNumber(): Readonly<number> {
     return this._stepNumber;
   }
@@ -48,6 +70,7 @@ export class StepperService {
     return this._completedSteps$;
   }
 
+  // checks whether previous or next step is allowed for navigation
   get allowPrev(): boolean {
     return (
       this.currentIndex > 0 &&
@@ -64,7 +87,6 @@ export class StepperService {
 
   // Methods
   initialize() {
-    // this.setRoute(0);
     this.setStep(0);
   }
 
@@ -81,14 +103,6 @@ export class StepperService {
   }
 
   setStep(index: number) {
-    // this.setRoute(index).then((resolved: boolean) => {
-    // if (resolved) {
     this._currentStep$.next(this._workflowSteps[index]);
-    //   }
-    // });
   }
-
-  // private setRoute(index: number) {
-  //   return this.router.navigate(['workflow', this._workflowSteps[index].route]);
-  // }
 }

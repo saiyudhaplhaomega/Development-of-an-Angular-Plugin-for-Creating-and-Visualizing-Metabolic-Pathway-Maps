@@ -1,9 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Step } from './models/workflow-steps.model';
 import { WorkflowService } from './services/workflow.service';
 import { StepperService } from './services/stepper.service';
 
+/**
+ * Parent component for the workflow stepper. Uses workflow service to track, send,
+ *  and request data. Uses the stepper service to manage the stepper.
+ */
 @Component({
   selector: 'ofs-workflow',
   templateUrl: './workflow.component.html',
@@ -26,7 +30,7 @@ export class WorkflowComponent implements OnInit {
   ngOnInit(): void {
     this.stepperService.initialize();
     this.workflow.createOfsJob();
-    //this.workflow.setDummyConfig();
+    // this.workflow.setDummyConfig();
   }
 
   get steps() {

@@ -1,4 +1,4 @@
-<lib-workflow-panel>
+<lib-workflow-panel [hasData]="(completedSteps$ | async)[1]">
   <ng-template lib-workflowPanel>
     <ofs-wrapper-input></ofs-wrapper-input>
   </ng-template>

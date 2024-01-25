@@ -50,3 +50,10 @@
   //   background-color: blue;
   // }
 }
+
+// overrides icon padding of the ngx file input icon button
+.mat-mdc-icon-button {
+  height: auto !important;
+  width: auto !important;
+  padding: 0 !important;
+}

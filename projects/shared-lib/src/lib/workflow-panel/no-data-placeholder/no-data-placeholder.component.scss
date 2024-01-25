@@ -1,0 +1,13 @@
+//TODO: is this bad practice?
+
+@import "../../../../../../node_modules/@angular/material/theming";
+@import "../../../../../../master-stylesheet.scss";
+
+.test {
+  padding: 2rem;
+  //   background-color: mat-color($mdoa-warn, 100);
+  color: mat-color($mdoa-warn, 200);
+  border-radius: 0.5rem;
+  border-width: 2px;
+  border-color: mat-color($mdoa-warn, 200);
+}

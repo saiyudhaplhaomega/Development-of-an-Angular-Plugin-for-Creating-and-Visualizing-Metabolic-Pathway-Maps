@@ -1,104 +1,63 @@
 <div class="h-full">
-  <ng-template [ngIf]="imageLinks?.length > 1 && !isLoading">
-    <mat-tab-group
-      class="h-full"
-      mat-stretch-tabs="true"
-      mat-align-tabs="center"
-      animationDuration="1000ms"
-    >
-      <mat-tab *ngFor="let image of imageLinks; let i = index">
-        <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
-        <div class="centereing-container">
-          <!-- <img class="w-full h-full object-contain min-h-0" [src]="image" /> -->
-          <object
-            type="text/html"
-            [data]="image | safe"
-            width="800px"
-            height="600px"
-            style="overflow: auto"
-          ></object>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+  <!-- first check: any image urls? -->
+  <ng-container
+    *ngIf="imageLinks?.length > 0; then hasImages; else noImages"
+  ></ng-container>
+
+  <!-- (first check) image urls available -->
+  <ng-template #hasImages>
+    <!-- second check: more than one image? -->
+    <ng-container
+      *ngIf="imageLinks?.length === 1; then singleImage; else multiImage"
+    ></ng-container>
+
+    <!-- (second check) one image -->
+    <ng-template #singleImage>
+      <div class="centereing-container">
+        <span class="mat-tab-label mat-tab-label-content">
+          {{ tabLables[0] }}
+        </span>
+        <shared-result-display
+          [imageLink]="imageLinks[0]"
+        ></shared-result-display>
+      </div>
+    </ng-template>
+
+    <!-- (second check) more than one image -->
+    <ng-template #multiImage>
+      <mat-tab-group
+        class="h-full"
+        mat-stretch-tabs="true"
+        mat-align-tabs="center"
+        animationDuration="1000ms"
+      >
+        <mat-tab *ngFor="let image of imageLinks; let i = index">
+          <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
+          <div class="centereing-container">
+            <shared-result-display
+              [imageLink]="imageLinks[i]"
+            ></shared-result-display>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-template>
   </ng-template>
 
-  <div
-    *ngIf="imageLinks?.length === 1 && !isLoading"
-    class="centereing-container"
-  >
-    <span class="mat-tab-label mat-tab-label-content">
-      {{ tabLables[0] }}
-    </span>
-    <object
-      type="text/html"
-      [data]="imageLinks[0] | safe"
-      width="800px"
-      height="600px"
-      style="overflow: auto"
-    ></object>
-    <!--<img class="w-full h-full object-contain min-h-0" [src]="imageLinks[0]" />-->
-  </div>
+  <!-- (first check) no image urls available -->
+  <ng-template #noImages>
+    <!-- third check: waiting for server? -->
+    <ng-container *ngIf="isLoading; then spinner; else noData"></ng-container>
 
-  <div
-    class="centereing-container"
-    *ngIf="isLoading && imageLinks?.length === 0"
-  >
-    <mat-spinner></mat-spinner>
-  </div>
-
-  <div
-    *ngIf="imageLinks?.length === 0 && !isLoading"
-    class="centereing-container bg-grey text-grey"
-  >
-    <p>no data yet, please submit an input</p>
-  </div>
-</div>
-
-<!-- <ng-template #result>
-  <ng-template [ngIf]="imageLinks.length === 1" [ngIfElse]="result_tabs">
-    <img class="w-full h-full object-contain" [src]="imageLinks[0]" />
+    <!-- (third check) waiting -->
+    <ng-template #spinner>
+      <div class="centereing-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+    <ng-template #noData>
+      <div class="centereing-container bg-grey text-grey">
+        <p>no data yet, please submit an input</p>
+      </div>
+    </ng-template>
   </ng-template>
-  <mat-tab-group
-    dynamicHeight
-    mat-stretch-tabs="true"
-    mat-align-tabs="center"
-    animationDuration="1000ms"
-  >
-    <mat-tab *ngFor="let image of imageLinks; let i = index">
-      <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
-      <img class="w-full h-full object-contain" [src]="image" />
-    </mat-tab>
-  </mat-tab-group>
-</ng-template> -->
-
-<!-- <ng-template #result_tabs>
-  <mat-tab-group
-    dynamicHeight
-    mat-stretch-tabs="true"
-    mat-align-tabs="center"
-    animationDuration="1000ms"
-  >
-    <mat-tab *ngFor="let image of imageLinks; let i = index">
-      <ng-template mat-tab-label> {{ tabLables[i] }} </ng-template>
-      <img class="w-full h-full object-contain" [src]="image" />
-    </mat-tab>
-  </mat-tab-group>
-</ng-template> -->
-
-<!-- <div
-  class="h-40 min-h-fit flex items-center justify-center"
-  *ngIf="isLoading || (imageLinks?.length === 0 && !isLoading)"
->
-  <div *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-  <p *ngIf="imageLinks?.length === 0 && !isLoading">
-    no data yet, please submit an input
-  </p>
 </div>
-
-<ng-container *ngFor="let image of imageLinks">
-  <div *ngIf="!isLoading">
-    <img [src]="image" />
-  </div>
-</ng-container> -->

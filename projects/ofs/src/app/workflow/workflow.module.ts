@@ -6,14 +6,13 @@ import { DataOverviewComponent } from './data-overview/data-overview.component';
 import { PreprocessingComponent } from './preprocessing/preprocessing.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ResultsComponent } from './results/results.component';
-import { ResultsFigureComponent } from './results/results-figure/results-figure.component';
 import { OverviewInputComponent } from './data-overview/overview-input/overview-input.component';
 import { OverviewResultsComponent } from './data-overview/overview-results/overview-results.component';
 import { PreprocessingInputComponent } from './preprocessing/preprocessing-input/preprocessing-input.component';
 import { PreprocessingResultsComponent } from './preprocessing/preprocessing-results/preprocessing-results.component';
 import { WrapperInputComponent } from './wrapper/wrapper-input/wrapper-input.component';
 import { WrapperResultsComponent } from './wrapper/wrapper-results/wrapper-results.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,14 +25,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ResultsInputComponent } from './results/results-input/results-input.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WorkflowPanelModule } from 'shared-lib';
-import { ResultsDownloadComponent } from './results/results-download/results-download.component';
 import { ResultFiguresModule } from 'shared-lib';
 import { WorkflowRoutingModule } from './workflow-routing.module';
+import { ClassificationComponent } from './classification/classification.component';
+import { PanelSelectionComponent } from './panel-selection/panel-selection.component';
+import { ClassificationResultsComponent } from './classification/classification-results/classification-results.component';
+import { DataDownloadComponent } from './classification/data-download/data-download.component';
 
 @NgModule({
   declarations: [
@@ -41,16 +42,16 @@ import { WorkflowRoutingModule } from './workflow-routing.module';
     DataOverviewComponent,
     PreprocessingComponent,
     WrapperComponent,
-    ResultsComponent,
-    ResultsFigureComponent,
     OverviewResultsComponent,
     OverviewInputComponent,
     PreprocessingInputComponent,
     PreprocessingResultsComponent,
     WrapperInputComponent,
     WrapperResultsComponent,
-    ResultsInputComponent,
-    ResultsDownloadComponent,
+    ClassificationComponent,
+    PanelSelectionComponent,
+    ClassificationResultsComponent,
+    DataDownloadComponent,
   ],
   imports: [
     CommonModule,

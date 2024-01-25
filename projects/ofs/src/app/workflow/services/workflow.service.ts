@@ -7,13 +7,10 @@
  */
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { DeepReadonly } from 'ts-essentials';
-import { cloneDeep } from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MultiFileUploadData } from 'shared-lib';
 import { ClassifierConfig } from '../models/classifier.model';
 import { OFSData } from '../models/ofs-data.model';
-import { OfsJob } from '../models/ofs-job.model';
 import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
@@ -30,7 +27,6 @@ export interface SimpleMessage {
 }
 
 @Injectable({ providedIn: 'any' })
-// TODO: control current step from here
 export class WorkflowService {
   loading: Boolean;
 
@@ -48,11 +44,13 @@ export class WorkflowService {
     // });
   }
 
+  // TODO: remove for simplification
   // use this getter if you only need the current value
   get ofsData(): OFSData {
     return this.ofsDataSubject$.value;
   }
 
+  //  TODO: remove
   // get ofsData(): DeepReadonly<OFSData> {
   //   return this.ofsDataSubject$.value;
   // }
@@ -67,13 +65,14 @@ export class WorkflowService {
     return this.ofsDataSubject$;
   }
 
+  // used for testing, reads an existing config from assets
   setDummyConfig() {
     const existingConfig = dummyConfig as OFSData;
     this.setCompletedSteps(existingConfig);
     this.ofsDataSubject$.next(existingConfig);
   }
 
-  // used to set completed steps when loading existing job
+  // checks workflow data and sets stepper
   setCompletedSteps(data: OFSData) {
     if (data.responseData.overviewResponse?.classDistribution !== undefined) {
       this.stepperService.setStepComplete(0);
@@ -86,12 +85,16 @@ export class WorkflowService {
       this.stepperService.setStepComplete(1);
     }
 
-    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
+    if (data.responseData.wrapperResponse?.featureSelection !== undefined) {
       this.stepperService.setStepComplete(2);
     }
 
-    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
+    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
       this.stepperService.setStepComplete(3);
+    }
+
+    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
+      this.stepperService.setStepComplete(4);
     }
   }
 
@@ -135,7 +138,7 @@ export class WorkflowService {
     const filesToUpload: MultiFileUploadData = {
       files: [
         {
-          uploadFile: config.data,
+          uploadFile: config.data as File,
           fileID: 'inputCSV',
         },
         {
@@ -230,6 +233,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
+            this.stepperService.setStepComplete(2);
             this.loading = false;
           });
       });
@@ -250,8 +254,8 @@ export class WorkflowService {
       )
       .subscribe((response) => {
         this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(2);
-        this.stepperService.setStep(3);
+        this.stepperService.setStepComplete(3);
+        this.stepperService.setStep(4);
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
@@ -261,7 +265,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            this.stepperService.setStepComplete(3);
+            this.stepperService.setStepComplete(4);
             this.loading = false;
           });
       });

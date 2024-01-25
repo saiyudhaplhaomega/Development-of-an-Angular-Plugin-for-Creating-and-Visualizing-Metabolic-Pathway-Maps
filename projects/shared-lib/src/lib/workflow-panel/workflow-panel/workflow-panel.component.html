@@ -1,0 +1,55 @@
+<div
+  class="workflow-content-container"
+  [ngClass]="{
+    vertical: orientation === 'vertical'
+  }"
+>
+  <!-- vertical layout -->
+  <ng-container *ngIf="orientation === 'vertical'">
+    <!-- display component or placeholder -->
+    <ng-container *ngIf="hasData; then has_data; else no_data"> </ng-container>
+
+    <!-- template with component -->
+    <ng-template #has_data>
+      <ng-container *ngFor="let panel of panels.toArray(); last as isLast">
+        <ng-container [ngTemplateOutlet]="panel.tpl"></ng-container>
+        <shared-icon-divider
+          *ngIf="!isLast"
+          [showIcon]="showDividerIcon"
+        ></shared-icon-divider>
+      </ng-container>
+    </ng-template>
+
+    <!-- template with placeholder -->
+    <ng-template #no_data>
+      <shared-no-data-placeholder></shared-no-data-placeholder>
+    </ng-template>
+  </ng-container>
+
+  <!-- horizontal layout -->
+  <ng-container *ngIf="orientation === 'horizontal'">
+    <div class="workflow-substep-horizontal-container">
+      <div class="workflow-substep-panel">
+        <ng-container
+          [ngTemplateOutlet]="panels.toArray()[0].tpl"
+        ></ng-container>
+      </div>
+      <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
+    </div>
+
+    <div class="workflow-substep-panel">
+      <ng-container [ngTemplateOutlet]="panels.toArray()[1].tpl"></ng-container>
+    </div>
+
+    <ng-template [ngIf]="panels.toArray().length > 2">
+      <div class="workflow-substep-horizontal-container">
+        <shared-icon-divider [showIcon]="showDividerIcon"></shared-icon-divider>
+        <div class="workflow-substep-panel">
+          <ng-container
+            [ngTemplateOutlet]="panels.toArray()[2].tpl"
+          ></ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

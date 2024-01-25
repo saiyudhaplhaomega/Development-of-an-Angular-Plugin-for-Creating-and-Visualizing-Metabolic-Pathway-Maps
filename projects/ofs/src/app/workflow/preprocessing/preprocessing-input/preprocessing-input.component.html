@@ -8,12 +8,9 @@
     </p>
   </section>
 
-    <form
-      [formGroup]="formModel"
-      class="flex flex-col h-full"
-      (ngSubmit)="submitPreprocessingConfig()"
-    >
-      <div class="inner-form-container">
+  <div class="outer-form-container">
+    <form [formGroup]="formModel" (ngSubmit)="submitPreprocessingConfig()">
+      <div class="inner-form-container pt-4">
         <mat-form-field appearance="outline">
           <mat-label>control group</mat-label>
           <mat-select formControlName="controlGroup">
@@ -63,4 +60,5 @@
         </button>
       </div>
     </form>
+  </div>
 </div>
