@@ -38,7 +38,8 @@
     "npm audit": "npm audit",
     "compodoc": "./node_modules/.bin/compodoc -p ./tsconfig.json",
     "webpack-bundle-analyzer": "webpack-bundle-analyzer",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "docu": "npx compodoc -p tsconfig.doc.json"
   },
   "private": true,
   "dependencies": {

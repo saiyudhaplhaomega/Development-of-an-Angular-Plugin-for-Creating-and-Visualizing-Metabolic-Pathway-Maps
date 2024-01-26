@@ -1,0 +1,5 @@
+{
+  "output": "documentation/",
+  "tsconfig": "tsconfig.json",
+  "packages": ["projects/ofs"]
+}
