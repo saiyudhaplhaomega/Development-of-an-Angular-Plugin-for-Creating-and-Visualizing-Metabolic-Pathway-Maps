@@ -160,6 +160,7 @@ ssh -i cloud -L 80:129.70.51.126:10001 public
 # Documentations with compodoc
 
 ## Installation
+Install compodoc ([source](https://compodoc.app/guides/installation.html)).
 
 ## Code documentation
 
@@ -167,21 +168,25 @@ If you have a license, use GitHub copilot to accelerate writing the documentatio
 
 Use JS docstrings:
 
-`/**
+```
+/**
 *  Documentaion here
-*/`
+*/
+```
 
 Use tags to declare parameters, return values, deprecation, or other ([source](https://compodoc.app/guides/jsdoc-tags.html)):
 
-`/**
+```
+/**
 * @param
 * @returns
 * @deprecated
-*/`
+*/
+```
 
 Specify parameter or return types:
 
-`
+```
   /**
    * Method to get resource URLs.
    * 
@@ -198,11 +203,12 @@ Specify parameter or return types:
     return urls;
   }
   ...
-`
+```
 
 Document components, services, or directives by adding the docstring before the decorator:
 
-`...
+```
+...
 import { StepperService } from './services/stepper.service';
 
 /**
@@ -216,11 +222,12 @@ import { StepperService } from './services/stepper.service';
 })
 export class WorkflowComponent implements OnInit {
    ...
-`
+```
 
 Document classes, parameters, methods, interface, etc. by putting a docstring in front of the corresponding declaration:
 
-`/**
+```
+/**
  * Model for features
  */
 
@@ -229,17 +236,17 @@ export interface Feature {
   * Id of the feature
   */ 
   featureID: string;
-}`
+}
+```
 
 ## Build documentation
 
-Install compodoc ([source](https://compodoc.app/guides/installation.html)).
-
 Add a 'tsconfig.doc.json' file in your workspace root containing "include" and "exclude" properties. Include all .ts files for your project root and exclude all test files for that project:
-`
+```
 {
    "include": ["./projects/ofs/**/*.ts", "./projects/other-project/**/*.ts"],
    "exclude": ["./projects/ofs/**/*.spec.ts", "./projects/other-project/**/*.spec.ts"]
-}`
+}
+```
 
 Open a terminal, navigate to workspace root and execute `npx compodoc -p tsconfig.doc.json` or register a script in your package.json and run it. The documentation files are rendered into the "documentation" directory in the workspace root. Open "overview.html" in your browser to view the documentation. For mdoa-websites, "documentation" is on .gitignore.
