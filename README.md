@@ -1,9 +1,43 @@
 # AngularPSM
 
 ## Folder structure
+
+### Concept
+
+The application structure should follow the "LIFT" concept:
+
+- locate quickly (i.e., descriptive folder structure)
+- identifiability (i.e., meaningful naming)
+- flat structure (i.e., no nested folders if possible)
+- try to be DRY (Don't Repeat Yourself, i.e., try to reuse code)
+
+### Implementation
+
 An Angular workspace contains files of one or more applications. Importantly, it contains configuration files relevant for all applications, e.g., "package.json" to specify packages and their versions, and a "master-stylesheet.scss" containing application wide style configurations.
 
-[workspace](styleguide/workspace.PNG)
+![workspace](styleguide/workspace.PNG)
+
+The projects folder contains applications and libraries. The "template-project" contains an example structure for applications.
+
+![template-project](styleguide/template-project.PNG)
+
+For an explanation of "material-style-overrides" see below.
+
+Modules are the entrypoints for Angular to build the application or parts of it ([source](https://angular.io/guide/architecture-modules)). The highest module is "app.module.ts".
+
+This is the location of the top-level component (no other components exist at this level). Locate services and models (i.e., interfaces, enums) relevant for the complete application in the respective folders.
+
+"modules" contains feature submodules, i.e., isolated functional parts of the application. Modules are lazily loaded by the router on the app level.
+
+![app-module-level](styleguide/app-folders.PNG)
+
+In analogy, a submodule (i.e., located in "app/modules") follows the same structure of the app level. Every submodule needs one routing module to be laziliy-loaded. A submodule has a "module parent" component that renders all components belonging to that module. Components, services, and models relevant for that submodule are located in respective folders. Further "subsubmodules" are also possible ("modules" folder).
+
+![sub-module-level](styleguide/module.PNG)
+
+Components may have multiple child-components located in respective folders.
+
+![component](styleguide/component.PNG)
 
 ## Pretier and ESLint setup
 
@@ -165,6 +199,7 @@ ssh -i cloud -L 80:129.70.51.126:10001 public
 # Documentations with compodoc
 
 ## Installation
+
 Install compodoc ([source](https://compodoc.app/guides/installation.html)).
 
 ## Code documentation
@@ -194,7 +229,7 @@ Specify parameter or return types:
 ```
   /**
    * Method to get resource URLs.
-   * 
+   *
    * @param {string[]} resources - The resources for which URLs are to be generated.
    * @returns {string[]} The generated URLs for the resources.
    */
@@ -239,7 +274,7 @@ Document classes, parameters, methods, interface, etc. by putting a docstring in
 export interface Feature {
   /**
   * Id of the feature
-  */ 
+  */
   featureID: string;
 }
 ```
@@ -247,6 +282,7 @@ export interface Feature {
 ## Build documentation
 
 Add a 'tsconfig.doc.json' file in your workspace root containing "include" and "exclude" properties. Include all .ts files for your project root and exclude all test files for that project:
+
 ```
 {
    "include": ["./projects/ofs/**/*.ts", "./projects/other-project/**/*.ts"],

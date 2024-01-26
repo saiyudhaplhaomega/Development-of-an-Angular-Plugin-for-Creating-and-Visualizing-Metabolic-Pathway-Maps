@@ -454,9 +454,7 @@
               "projects/tax2proteome/src/favicon.ico",
               "projects/tax2proteome/src/assets"
             ],
-            "styles": [
-              "projects/tax2proteome/src/styles.scss"
-            ],
+            "styles": ["projects/tax2proteome/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -521,9 +519,7 @@
               "projects/tax2proteome/src/favicon.ico",
               "projects/tax2proteome/src/assets"
             ],
-            "styles": [
-              "projects/tax2proteome/src/styles.scss"
-            ],
+            "styles": ["projects/tax2proteome/src/styles.scss"],
             "scripts": []
           }
         }
@@ -625,31 +621,31 @@
         }
       }
     },
-    "test-example": {
+    "template-project": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/test-example",
-      "sourceRoot": "projects/test-example/src",
+      "root": "projects/template-project",
+      "sourceRoot": "projects/template-project/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/test-example",
-            "index": "projects/test-example/src/index.html",
-            "main": "projects/test-example/src/main.ts",
-            "polyfills": "projects/test-example/src/polyfills.ts",
-            "tsConfig": "projects/test-example/tsconfig.app.json",
+            "outputPath": "dist/template-project",
+            "index": "projects/template-project/src/index.html",
+            "main": "projects/template-project/src/main.ts",
+            "polyfills": "projects/template-project/src/polyfills.ts",
+            "tsConfig": "projects/template-project/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/test-example/src/favicon.ico",
-              "projects/test-example/src/assets"
+              "projects/template-project/src/favicon.ico",
+              "projects/template-project/src/assets"
             ],
-            "styles": ["projects/test-example/src/styles.scss"],
+            "styles": ["projects/template-project/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -668,8 +664,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "projects/test-example/src/environments/environment.ts",
-                  "with": "projects/test-example/src/environments/environment.prod.ts"
+                  "replace": "projects/template-project/src/environments/environment.ts",
+                  "with": "projects/template-project/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -689,10 +685,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "test-example:build:production"
+              "browserTarget": "template-project:build:production"
             },
             "development": {
-              "browserTarget": "test-example:build:development"
+              "browserTarget": "template-project:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -700,22 +696,22 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test-example:build"
+            "browserTarget": "template-project:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/testexample/src/test.ts",
-            "polyfills": "projects/test-example/src/polyfills.ts",
-            "tsConfig": "projects/test-example/tsconfig.spec.json",
-            "karmaConfig": "projects/test-example/karma.conf.js",
+            "main": "projects/template-project/src/test.ts",
+            "polyfills": "projects/template-project/src/polyfills.ts",
+            "tsConfig": "projects/template-project/tsconfig.spec.json",
+            "karmaConfig": "projects/template-project/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/test-example/src/favicon.ico",
-              "projects/test-example/src/assets"
+              "projects/template-project/src/favicon.ico",
+              "projects/template-project/src/assets"
             ],
-            "styles": ["projects/test-example/src/styles.scss"],
+            "styles": ["projects/template-project/src/styles.scss"],
             "scripts": []
           }
         }
