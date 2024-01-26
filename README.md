@@ -1,5 +1,10 @@
 # AngularPSM
 
+## Folder structure
+An Angular workspace contains files of one or more applications. Importantly, it contains configuration files relevant for all applications, e.g., "package.json" to specify packages and their versions, and a "master-stylesheet.scss" containing application wide style configurations.
+
+[workspace](styleguide/workspace.PNG)
+
 ## Pretier and ESLint setup
 
 1. In vS Code install the eslit-prettier plugin.
