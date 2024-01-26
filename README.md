@@ -156,3 +156,90 @@ Test-Server Access:
 ssh -i cloud -L 80:129.70.51.126:10001 public
 
 <!-- This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3 and updated to somewhere around 7. -->
+
+# Documentations with compodoc
+
+## Installation
+
+## Code documentation
+
+If you have a license, use GitHub copilot to accelerate writing the documentation.
+
+Use JS docstrings:
+
+`/**
+*  Documentaion here
+*/`
+
+Use tags to declare parameters, return values, deprecation, or other ([source](https://compodoc.app/guides/jsdoc-tags.html)):
+
+`/**
+* @param
+* @returns
+* @deprecated
+*/`
+
+Specify parameter or return types:
+
+`
+  /**
+   * Method to get resource URLs.
+   * 
+   * @param {string[]} resources - The resources for which URLs are to be generated.
+   * @returns {string[]} The generated URLs for the resources.
+   */
+  getResourceUrls(resources: string[]) {
+    const urls = [];
+    for (let resource of resources) {
+      urls.push(
+        'http://localhost:8080/' + this.ofsData.job.jobId + '/' + resource
+      );
+    }
+    return urls;
+  }
+  ...
+`
+
+Document components, services, or directives by adding the docstring before the decorator:
+
+`...
+import { StepperService } from './services/stepper.service';
+
+/**
+ * Parent component for the workflow stepper. Uses workflow service to track, send,
+ *  and request data. Uses the stepper service to manage the stepper.
+ */
+@Component({
+  selector: 'ofs-workflow',
+  templateUrl: './workflow.component.html',
+  styleUrls: ['./workflow.component.scss'],
+})
+export class WorkflowComponent implements OnInit {
+   ...
+`
+
+Document classes, parameters, methods, interface, etc. by putting a docstring in front of the corresponding declaration:
+
+`/**
+ * Model for features
+ */
+
+export interface Feature {
+  /**
+  * Id of the feature
+  */ 
+  featureID: string;
+}`
+
+## Build documentation
+
+Install compodoc ([source](https://compodoc.app/guides/installation.html)).
+
+Add a 'tsconfig.doc.json' file in your workspace root containing "include" and "exclude" properties. Include all .ts files for your project root and exclude all test files for that project:
+`
+{
+   "include": ["./projects/ofs/**/*.ts", "./projects/other-project/**/*.ts"],
+   "exclude": ["./projects/ofs/**/*.spec.ts", "./projects/other-project/**/*.spec.ts"]
+}`
+
+Open a terminal, navigate to workspace root and execute `npx compodoc -p tsconfig.doc.json` or register a script in your package.json and run it. The documentation files are rendered into the "documentation" directory in the workspace root. Open "overview.html" in your browser to view the documentation. For mdoa-websites, "documentation" is on .gitignore.
