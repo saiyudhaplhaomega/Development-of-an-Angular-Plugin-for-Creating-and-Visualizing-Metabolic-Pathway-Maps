@@ -23,6 +23,7 @@ export class AppComponent {
       label: 'Tools',
       requireAuth: false,
       children: [
+        { route: '/template', label: 'Template 1' },
         { route: '/mpa-page', label: 'MPA' },
         { route: '/prophane-page', label: 'Prophane' },
         { route: '/metaforge-page', label: 'MetaForge' },

@@ -7,7 +7,11 @@ import { LoginPageComponent } from 'shared-lib';
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent },
-
+  {
+    path: 'template',
+    loadChildren: () =>
+      import('./pages/tools/template/template.module').then((m) => m.TemplateModule),
+  },
   {
     path: 'mpa-page',
     loadChildren: () =>

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { OverviewCardComponent } from '../../layout/overview-card/overview-card.component';
 @Component({
-  selector: 'metaforge-page',
-  templateUrl: './metaforge.component.html',
-  styleUrls: ['./metaforge.component.scss'],
+  selector: 'template-page',
+  templateUrl: './template.component.html',
+  styleUrls: ['./template.component.scss'],
 })
-export class MetaForgeComponent {
+export class TemplateComponent {
   tableData = [
     { rowHeader: 'User Interface', data1: 'Webapplication / Command-Line-Interface' },
     { rowHeader: 'Local Installation', data1: 'Docker, Conda'},
@@ -21,14 +21,20 @@ developerData = [
 
 updateList = [
   {
-    title: 'MetaForge Website is now online',
-    type: 'Tool added',
+    title: 'New Content',
+    type: 'Content',
     author: 'Daniel Kautzner',
     link: 'https://gitlab.com/kay.schallert/mpa-website/-/tree/mpa_development?ref_type=heads',
   },
   {
-    title: 'New Content',
-    type: 'Update',
+    title: 'Newest Version',
+    type: 'Version',
+    author: 'Daniel Kautzner',
+    link: '#',
+  },
+  {
+    title: 'Bugfixes',
+    type: 'Bugfix',
     author: 'Daniel Kautzner',
     link: '#',
   },

@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MetaForgeRoutingModule } from './metaforge-routing.component';
-import { MetaForgeComponent } from './metaforge.component';
+import {  TemplateRoutingModule } from './template-routing.component';
+import { TemplateComponent } from './template.component';
 import { OverviewCardModule } from "../../layout/overview-card/overview-card.module";
 
 @NgModule({
-    declarations: [MetaForgeComponent],
-    exports: [MetaForgeComponent],
+    declarations: [TemplateComponent],
+    exports: [TemplateComponent],
     imports: [
         CommonModule,
-        MetaForgeRoutingModule,
+        TemplateRoutingModule,
         MatButtonModule,
         MatIconModule,
         OverviewCardModule,
     ]
 })
-export class MetaForgeModule { }
+export class TemplateModule { }
