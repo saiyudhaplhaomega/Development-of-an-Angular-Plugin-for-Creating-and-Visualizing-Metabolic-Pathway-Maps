@@ -25,9 +25,9 @@ For an explanation of "material-style-overrides" see below.
 
 Modules are the entrypoints for Angular to build the application or parts of it ([source](https://angular.io/guide/architecture-modules)). The highest module is "app.module.ts".
 
-This is the location of the top-level component (no other components exist at this level). Locate services and models (i.e., interfaces, enums) relevant for the complete application in the respective folders.
+The level of "app.module.ts" is also the location of the app component (the top-level component, no other components should be located at this level). Locate services and models (i.e., interfaces, enums) relevant for the complete application in the respective folders ("services", "models").
 
-"modules" contains feature submodules, i.e., isolated functional parts of the application. Modules are lazily loaded by the router on the app level.
+The "modules" folder contains feature submodules, i.e., isolated functional parts of the application. Modules are lazily loaded by the router on the app level.
 
 ![app-module-level](Styleguide/app-folders.PNG)
 
