@@ -200,13 +200,15 @@ export class DataService {
       });
   }
 
-  updateExperiment(nodeObj) {
+  updateExperiment(nodeObj,experimentData) {
     // TODO: Set data from input
     const dbExperiment = new ExperimentJSONObject();
     dbExperiment.expid = nodeObj.uuid;
     dbExperiment.name = nodeObj.displayName;
     dbExperiment.description = nodeObj.description;
     dbExperiment.creationdate = nodeObj.creationDate;
+    dbExperiment.targetFdr = experimentData.targetFdr;
+    dbExperiment.isSearched = experimentData.isSearched;
 
     const params = new HttpParams(
       {

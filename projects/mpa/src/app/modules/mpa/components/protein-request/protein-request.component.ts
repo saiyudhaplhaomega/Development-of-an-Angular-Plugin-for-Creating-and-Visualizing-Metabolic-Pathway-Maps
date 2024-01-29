@@ -1,6 +1,6 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, EventEmitter, Output} from '@angular/core';
-import { MpaTableDataService } from '../../services/mpa-table-data.service';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { MpaTableDataService, PGRequestStatus } from '../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-protein-request',
@@ -25,19 +25,22 @@ import { MpaTableDataService } from '../../services/mpa-table-data.service';
     ]),
   ]
 })
-export class ProteinRequestComponent{
-
-  @Output("calculateExperimentStats") calculateExperimentStats: EventEmitter<any> = new EventEmitter();
+export class ProteinRequestComponent implements OnInit{
   
-  expanded: boolean = false;
+  @Input() currentTargetFDR: string;
+  @Output() updateTargetFdr = new EventEmitter<string>();
   targetFdr: number = 0.01;
+  protReqStatus: PGRequestStatus;
 
   constructor(
-    private mpaDataService: MpaTableDataService 
+    private mpaDataService: MpaTableDataService,
   ) {}
 
-  toggleExpand() {
-    this.expanded = !this.expanded;
+  ngOnInit(): void {
+   this.mpaDataService.proteinGroupRequestStatus.subscribe((status) => {
+    this.protReqStatus = status;
+   })
+   this.targetFdr = parseFloat(this.currentTargetFDR);
   }
 
   checkInput(value: number, target:string) {
@@ -51,7 +54,7 @@ export class ProteinRequestComponent{
         } else if (value == undefined) {
           adjustedInput = 0.01;
         } else {
-          adjustedInput = parseFloat(value.toPrecision(4))
+          adjustedInput = parseFloat(value.toPrecision(2))
         }
         this.targetFdr = adjustedInput;
         break;
@@ -60,9 +63,9 @@ export class ProteinRequestComponent{
   }
 
   submit() {
-    this.mpaDataService.requestProteinGroups(this.targetFdr).subscribe(() => {
-      this.calculateExperimentStats.emit();
+    this.updateTargetFdr.emit(this.targetFdr.toString());
+    this.mpaDataService.requestProteinGroups(this.targetFdr.toString()).subscribe(() => {
+      this.mpaDataService.proteinGroupRequestStatus.next(PGRequestStatus.FULFILLED)
     });
   }
-
 }

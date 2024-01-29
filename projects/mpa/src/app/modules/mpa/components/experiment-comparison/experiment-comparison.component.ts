@@ -23,6 +23,8 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
   hasFunctionData: boolean = false;
   displayNameEditing: string;
 
+  experimentData: ExperimentJSONObject;
+
   constructor(
     private _snackBar: MatSnackBar,
     private dataService: DataService,
@@ -34,7 +36,7 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
 
     this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
-      //this.experimentDataObject = experimentData;
+      this.experimentData = experimentData;
       // if (experimentData.isSearched) {
       //   this.hasMpaData = true;
       //   this.mpaTableDataService.requestProteinGroups();
@@ -76,7 +78,7 @@ export class ExperimentComparisonComponent implements OnInit,ContentComponent {
   updateExperiment(): void {
     this.dataItemOfThisComponent.displayName = this.displayNameEditing;
     if (this.dataItemOfThisComponent.uuid) {
-      this.dataService.updateExperiment(this.dataItemOfThisComponent);
+      this.dataService.updateExperiment(this.dataItemOfThisComponent,this.experimentData);
     }
   }
 

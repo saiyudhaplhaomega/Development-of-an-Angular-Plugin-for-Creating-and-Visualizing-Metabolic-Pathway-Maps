@@ -5,7 +5,7 @@ import { ProteinGroupObject } from '../../model/tableobjects';
 import { MatDialog } from '@angular/material/dialog';
 import { TextfieldDialogComponent } from '../textfield-dialog/textfield-dialog.component';
 import {
-  MpaTableDataService,
+  MpaTableDataService, PGRequestStatus,
 } from '../../services/mpa-table-data.service';
 import { ContentComponent } from '../../mpa.component';
 import {
@@ -19,7 +19,6 @@ import { CompareExperimentsDialogComponentComponent } from './compare-experiment
 import { ExperimentJSONObject } from '../../model/experimentjson';
 
 interface Datstats {
-  targetFdr: string;
   totalNoProteinGroups: number;
   totalNoProteins: number;
   totalNoPeptides: number;
@@ -38,30 +37,47 @@ export interface ProteinGroupRequest {
 })
 export class ExperimentPageComponent
   implements OnInit, OnDestroy, ContentComponent {
-  dataItemOfThisComponent: DataItem;
 
+  PGRequestStatus = PGRequestStatus;
+  dataItemOfThisComponent: DataItem;
 
   displayNameEditing: string;
 
   datStats: Datstats;
-  hasMpaData: boolean = false;
-  hasTaxonomyData: boolean = true;
-  hasFunctionData: boolean = false;
 
+  experimentData: ExperimentJSONObject;
   peaklistFileNode: DataItem;
   searchFileNode: DataItem;
+
+  // ui-related
+  selectedTab: number = 0;
+  protReqStatus: PGRequestStatus = PGRequestStatus.UNINITIATED;
+  hasMpaData: boolean = false;
 
   constructor(
     private dataService: DataService,
     private dialog: MatDialog,
     private mpaTableDataService: MpaTableDataService
-  ) {}
+  ) {
+    this.experimentData = new ExperimentJSONObject();
+  }
 
   ngOnInit() {
     this.mpaTableDataService.expID.next(this.dataItemOfThisComponent.uuid);
     this.displayNameEditing = this.dataItemOfThisComponent.displayName;
+    this.mpaTableDataService.proteinGroupRequestStatus.next(PGRequestStatus.UNINITIATED)
+    this.mpaTableDataService.proteinGroupRequestStatus.subscribe((status) => {
+      this.protReqStatus = status;
+      if (this.protReqStatus === PGRequestStatus.INITIATED) {
+        this.selectedTab = 1;
+      } else if (this.protReqStatus === PGRequestStatus.FULFILLED) {
+        this.datStats = this.calculateDataStats();
+      }
+    })
 
     this.dataService.getExperimentData(this.dataItemOfThisComponent.uuid).subscribe((experimentData: ExperimentJSONObject) => {
+      //TODO translate protDBid and fileIDs to names
+      this.experimentData = experimentData;
     });
   }
 
@@ -111,7 +127,14 @@ export class ExperimentPageComponent
 
   updateExperiment(): void {
     if (this.dataItemOfThisComponent.uuid) {
-      this.dataService.updateExperiment(this.dataItemOfThisComponent);
+      this.dataService.updateExperiment(this.dataItemOfThisComponent, this.experimentData);
+    }
+  }
+
+  updateTargetFDR(value: string) {
+    if (this.experimentData.targetFdr != value) {
+      this.experimentData.targetFdr = value;
+      this.updateExperiment();
     }
   }
 
@@ -119,7 +142,10 @@ export class ExperimentPageComponent
     this.dataService.removeDataItem(this.dataItemOfThisComponent);
   }
 
-  public calculateDataStats(): Datstats {
+  // TODO move to mpaTableDataService?
+
+  calculateDataStats(): Datstats {
+    console.log("calculating stats")
     let mpaData: ProteinGroupObject[] = this.mpaTableDataService.mpaTableData.value;
     let proteinCount = 0;
     let peptideCount = 0;
@@ -133,14 +159,13 @@ export class ExperimentPageComponent
       spectrumCount += group.spectrumIDs.length;
     }
 
-    if(mpaData.length > 0) {
+    if (mpaData.length > 0) {
       this.hasMpaData = true;
     } else {
       this.hasMpaData = false;
     }
 
     return {
-      targetFdr: this.mpaTableDataService.getTargetFdrValue(this.dataItemOfThisComponent.uuid),
       totalNoProteinGroups: mpaData.length,
       totalNoProteins: proteinCount,
       totalNoPeptides: peptideCount,
