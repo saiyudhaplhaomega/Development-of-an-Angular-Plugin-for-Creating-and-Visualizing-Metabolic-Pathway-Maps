@@ -15,11 +15,11 @@ The application structure should follow the "LIFT" concept:
 
 An Angular workspace contains files of one or more applications. Importantly, it contains configuration files relevant for all applications, e.g., "package.json" to specify packages and their versions, and a "master-stylesheet.scss" containing application wide style configurations.
 
-![workspace](styleguide/workspace.PNG)
+![workspace](Styleguide/workspace.PNG)
 
 The projects folder contains applications and libraries. The "template-project" contains an example structure for applications.
 
-![template-project](styleguide/template-project.PNG)
+![template-project](Styleguide/template-project.PNG)
 
 For an explanation of "material-style-overrides" see below.
 
@@ -29,15 +29,17 @@ This is the location of the top-level component (no other components exist at th
 
 "modules" contains feature submodules, i.e., isolated functional parts of the application. Modules are lazily loaded by the router on the app level.
 
-![app-module-level](styleguide/app-folders.PNG)
+![app-module-level](Styleguide/app-folders.PNG)
 
 In analogy, a submodule (i.e., located in "app/modules") follows the same structure of the app level. Every submodule needs one routing module to be laziliy-loaded. A submodule has a "module parent" component that renders all components belonging to that module. Components, services, and models relevant for that submodule are located in respective folders. Further "subsubmodules" are also possible ("modules" folder).
 
-![sub-module-level](styleguide/module.PNG)
+![sub-module-level](Styleguide/module.PNG)
 
 Components may have multiple child-components located in respective folders.
 
-![component](styleguide/component.PNG)
+![component](Styleguide/component.PNG)
+
+Components that are reused among multiple components should be transferred to the library project "shared-lib".
 
 ## Pretier and ESLint setup
 
