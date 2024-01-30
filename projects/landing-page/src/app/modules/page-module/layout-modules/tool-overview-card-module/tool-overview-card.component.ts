@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'overview-card',
-  templateUrl: './overview-card.component.html',
-  styleUrls: ['./overview-card.component.scss'],
+  selector: 'tool-overview-card',
+  templateUrl: './tool-overview-card.component.html',
+  styleUrls: ['./tool-overview-card.component.scss'],
 })
-export class OverviewCardComponent {
+export class ToolOverviewCardComponent {
   @Input() toolName: string = '';
   @Input() toolLogo: string = '';
   @Input() toolDescription: string = '';
