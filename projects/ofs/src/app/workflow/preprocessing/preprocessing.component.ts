@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PanelOrientation } from 'shared-lib';
 import { StepperService } from '../services/stepper.service';
 
 @Component({

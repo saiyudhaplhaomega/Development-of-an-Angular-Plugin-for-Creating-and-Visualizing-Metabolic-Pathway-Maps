@@ -35,6 +35,7 @@ import { ClassificationComponent } from './classification/classification.compone
 import { PanelSelectionComponent } from './panel-selection/panel-selection.component';
 import { ClassificationResultsComponent } from './classification/classification-results/classification-results.component';
 import { DataDownloadComponent } from './classification/data-download/data-download.component';
+import { FeatureTableComponent } from './panel-selection/feature-table/feature-table.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DataDownloadComponent } from './classification/data-download/data-downl
     PanelSelectionComponent,
     ClassificationResultsComponent,
     DataDownloadComponent,
+    FeatureTableComponent,
   ],
   imports: [
     CommonModule,
