@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ToolCardComponent } from './tool-card/tool-card.component';
+
 @Component({
   selector: 'landing-page',
   templateUrl: './landing-page.component.html',

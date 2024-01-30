@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { SmallParticle } from './classes/SmallParticle';
-import { RodsParticle } from './classes/RodesParticle';
-import { SphearicalParticle } from './classes/SphearicalParticle';
-import {RandomParticle} from './classes/RandomParticle';
-import { LongParticles } from './classes/LongParticles';
+import { SmallParticle } from './models/SmallParticle';
+import { RodsParticle } from './models/RodesParticle';
+import { SphearicalParticle } from './models/SphearicalParticle';
+import { RandomParticle } from './models/RandomParticle';
+import { LongParticles } from './models/LongParticles';
 @Component({
   selector: 'app-background',
   templateUrl: './background.component.html',

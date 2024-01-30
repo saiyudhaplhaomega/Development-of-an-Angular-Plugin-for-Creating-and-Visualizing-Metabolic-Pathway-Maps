@@ -13,8 +13,8 @@ import { MatCardModule } from "@angular/material/card";
 import { NgParticlesModule } from "ng-particles";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
-import { LandingPageModule } from './landing-page/landing-page.module';
-import { BackgroundModule } from './landing-page/background/background.module';
+import { LandingPageModule } from './modules/landing-page-module/landing-page.module';
+import { BackgroundModule } from './modules/landing-page-module/submodules/background-module/background.module';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LandingPageComponent } from './modules/landing-page-module/landing-page.component';
 import { LoginPageComponent } from 'shared-lib';
 
 // TODO: route guard? (the route guard for workflow routes still exists)
@@ -10,43 +10,37 @@ const routes: Routes = [
   {
     path: 'template',
     loadChildren: () =>
-      import('./pages/tools/template/template.module').then((m) => m.TemplateModule),
+      import('./modules/page-modules/tool-modules/template-page-module/template.module').then((m) => m.TemplateModule),
   },
   {
     path: 'mpa-page',
     loadChildren: () =>
-      import('./pages/tools/mpa/mpa.module').then((m) => m.MpaModule),
+      import('./modules/page-modules/tool-modules/mpa-page-module/mpa.module').then((m) => m.MpaModule),
   },
   {
     path: 'prophane-page',
     loadChildren: () =>
-      import('./pages/tools/prophane/prophane.module').then((m) => m.ProphaneModule),
+      import('./modules/page-modules/tool-modules/prophane-page-module/prophane.module').then((m) => m.ProphaneModule),
   },
   {
     path: 'metaforge-page',
     loadChildren: () =>
-      import('./pages/tools/metaforge/metaforge.module').then((m) => m.MetaForgeModule),
+      import('./modules/page-modules/tool-modules/metaforge-page-module/metaforge.module').then((m) => m.MetaForgeModule),
   },
   {
     path: 'mdoa-team',
     loadChildren: () =>
-      import('./pages/about/mdoa-team/mdoa-team.module').then((m) => m.MdoaTeamModule),
+      import('./modules/page-modules/about-modules/mdoa-team-module/mdoa-team.module').then((m) => m.MdoaTeamModule),
   },
   {
     path: 'about',
     loadChildren: () =>
-      import('./pages/about/about.module').then((m) => m.AboutModule),
+      import('./modules/page-modules/about-modules/about.module').then((m) => m.AboutModule),
   },
   {
     path: 'r',
     loadChildren: () =>
-      import('./pages/scripts/r/r.module').then((m) => m.RModule),
-  },
-
-  {
-    path: 'app-tools',
-    loadChildren: () =>
-      import('./landing-page/background/background.module').then((m) => m.BackgroundModule),
+      import('./modules/page-modules/script-modules/r-page-module/r.module').then((m) => m.RModule),
   },
   { path: 'login', component: LoginPageComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
