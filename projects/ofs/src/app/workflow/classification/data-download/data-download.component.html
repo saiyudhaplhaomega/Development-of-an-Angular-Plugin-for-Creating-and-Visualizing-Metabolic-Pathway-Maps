@@ -1,25 +1,35 @@
-<div class="outer-form-container">
-  <div class="inner-form-container">
-    <mat-form-field class="w-full" appearance="outline">
-      <mat-label>project name</mat-label>
-      <input type="string" matInput [formControl]="projectName" />
-      <mat-error *ngIf="projectName.invalid">{{
-        getErrorMessage(projectName)
-      }}</mat-error>
-    </mat-form-field>
+<div class="documentation-content-container">
+  <section class="mat-typography">
+    <h2>Classification</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam accusamus
+      in, vero illum sit labore rem fuga sequi aliquid sapiente nisi, modi
+      praesentium omnis illo placeat eius amet quidem non.
+    </p>
+  </section>
 
-    <div class="form-button-grid">
-      <a
-        [href]="downloadData()"
-        target="_blank"
-        download="results.zip"
-        [disabled]="!projectName.valid || (formDisabled$ | async)"
-        mat-flat-button
-        color="primary"
-        class="col-span-2"
-      >
-        Download Results
-      </a>
+  <div class="outer-form-container">
+    <div class="inner-form-container">
+      <mat-form-field class="w-full mt-4" appearance="outline">
+        <mat-label>project name</mat-label>
+        <input type="string" matInput [formControl]="projectName" />
+        <mat-error *ngIf="projectName.invalid">{{
+          getErrorMessage(projectName)
+        }}</mat-error>
+      </mat-form-field>
+
+      <div class="form-button-grid">
+        <a
+          [href]="dataUrl$ | async"
+          download="{{ projectName }}.zip"
+          [disabled]="!projectName.valid || (formDisabled$ | async)"
+          mat-flat-button
+          color="primary"
+          class="col-span-2"
+        >
+          Download Results
+        </a>
+      </div>
     </div>
   </div>
 </div>

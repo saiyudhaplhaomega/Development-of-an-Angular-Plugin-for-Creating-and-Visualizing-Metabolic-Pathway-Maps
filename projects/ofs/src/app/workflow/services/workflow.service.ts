@@ -1,10 +1,3 @@
-/**
- * Service for handling workflow related data
- * - store formdata from input form
- * - send form data to server
- * - handle accessible routes
- *
- */
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -26,6 +19,12 @@ export interface SimpleMessage {
   message: string;
 }
 
+/**
+ * Service for handling workflow related data
+ * - store formdata from input form
+ * - send form data to server
+ * - handle accessible routes
+ */
 @Injectable({ providedIn: 'any' })
 export class WorkflowService {
   loading: Boolean;
@@ -272,6 +271,8 @@ export class WorkflowService {
   }
 
   getResourceUrls(resources: string[]) {
+    console.log('urlsurlsurls');
+
     const urls = [];
     for (let resource of resources) {
       urls.push(
@@ -279,9 +280,5 @@ export class WorkflowService {
       );
     }
     return urls;
-  }
-
-  getDownloadLink(): string | undefined {
-    return this.ofsData?.responseData?.classifierResponse?.downloadLink;
   }
 }
