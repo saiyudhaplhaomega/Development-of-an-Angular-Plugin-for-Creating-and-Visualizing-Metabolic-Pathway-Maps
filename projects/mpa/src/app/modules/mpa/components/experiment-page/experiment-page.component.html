@@ -1,7 +1,8 @@
 <div class="jobCards responsive-job-card">
   <div class="card min-w-600">
     <div class="card-header custom-card-header">
-      <h2>Experiment: {{this.dataItemOfThisComponent.displayName}} <button style="background: none; border: none" (click)="onSetName()">(edit)</button></h2>
+      <h2>Experiment: {{this.dataItemOfThisComponent.displayName}} <button style="background: none; border: none"
+          (click)="onSetName()">(edit)</button></h2>
       <div>
         <button class="btn btn-outline-secondary w-sbtn" style="display:inline-block; margin-right:10px;"
           (click)="onCompareExperiments()" matTooltip="Compare to another experiment"><mat-icon
@@ -12,7 +13,7 @@
       </div>
     </div>
     <div class="card-body">
-      <mat-tab-group mat-align-tabs="center">
+      <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="this.selectedTab">
 
         <!--          Tab 1: Overview -->
         <mat-tab label="Overview">
@@ -52,18 +53,20 @@
                 <tr>
                   <th scope="row" class="ml-summary-col">Data Summary</th>
                   <td>
-                    <ng-container *ngIf="this.hasMpaData">
+                    <ng-container>
                       <mat-list dense>
-                        <mat-list-item> TargetFdr:  {{this.datStats.targetFdr}} </mat-list-item>
-                        <mat-list-item> # Protein Groups: {{this.datStats.totalNoProteinGroups}} </mat-list-item>
-                        <mat-list-item> # Proteins: {{this.datStats.totalNoProteins}} </mat-list-item>
-                        <mat-list-item> # Peptides: {{this.datStats.totalNoPeptides}} </mat-list-item>
-                        <mat-list-item> # PSMs: {{this.datStats.totalNoPsms}} </mat-list-item>
-                        <mat-list-item> # Spectra: {{this.datStats.totalNoSpectra}} </mat-list-item>
+                        <mat-list-item *ngIf="this.experimentData.isSearched === true"> targetFdr: {{this.experimentData.targetFdr}} </mat-list-item>
+                        <ng-container *ngIf="this.datStats">
+                          <mat-list-item> # Protein Groups: {{this.datStats.totalNoProteinGroups}} </mat-list-item>
+                          <mat-list-item> # Proteins: {{this.datStats.totalNoProteins}} </mat-list-item>
+                          <mat-list-item> # Peptides: {{this.datStats.totalNoPeptides}} </mat-list-item>
+                          <mat-list-item> # PSMs: {{this.datStats.totalNoPsms}} </mat-list-item>
+                          <mat-list-item> # Spectra: {{this.datStats.totalNoSpectra}} </mat-list-item>
+                        </ng-container>
                       </mat-list>
                     </ng-container>
-                    <ng-container *ngIf="!this.hasMpaData">
-                      no data received yet
+                    <ng-container *ngIf="!this.hasMpaData && !this.experimentData.isSearched">
+                      no data requested yet
                     </ng-container>
                   </td>
                 </tr>
@@ -83,13 +86,16 @@
               </tbody>
             </table>
           </div>
-          <div>
-            <app-protein-request (calculateExperimentStats)="calculateDataStats()"></app-protein-request>
+
+          <div *ngIf="this.experimentData.isSearched && this.protReqStatus != PGRequestStatus.INITIATED">
+            <div class="divider-line" style="width:100%;"> Proteingroup-Request Parameters</div>
+            <app-protein-request (updateTargetFdr)="updateTargetFDR($event)" [currentTargetFDR]="this.experimentData.targetFdr"></app-protein-request>
           </div>
+
         </mat-tab>
 
         <!--          Tab 2: File Upload -->
-        <mat-tab label="File Upload" disabled="{{hasMpaData}}">
+        <mat-tab label="File Upload" [disabled]="this.experimentData.isSearched" *ngIf="!this.experimentData.isSearched">
           <ng-template matTabContent>
             <app-file-upload [parentDataItem]="dataItemOfThisComponent"></app-file-upload>
           </ng-template>
@@ -97,25 +103,14 @@
 
         <!--          Tab 3: Protein Groups         -->
 
-        <mat-tab label="Protein Groups" [disabled]="!hasMpaData">
+        <mat-tab label="Protein Groups" [disabled]="!this.experimentData.isSearched">
           <ng-template matTabContent>
             <ng-container *ngIf="hasMpaData">
               <app-mpa-table class="mpa-table" [experimentUUID]='this.dataItemOfThisComponent.uuid'>
               </app-mpa-table>
             </ng-container>
 
-            <ng-container *ngIf="!hasMpaData">
-              <div class="tab-default-content">
-                <!-- <div style="padding: 0.5em">
-                  <mat-icon class="icon-box"> search </mat-icon>
-                </div>
-                <span class="tab-text-center">
-                  Waiting for Data...
-                </span> -->
-                <span>No data received!</span>
-                <app-protein-request (calculateExperimentStats)="calculateDataStats()"></app-protein-request>
-              </div>
-            </ng-container>
+            <ng-container *ngTemplateOutlet="proteinRequest"></ng-container>
 
           </ng-template>
         </mat-tab>
@@ -129,23 +124,32 @@
         </mat-tab> -->
 
         <!--   Tab 4: Taxonomy -->
-        <mat-tab label="Taxonomy" >
+        <mat-tab label="Taxonomy" [disabled]="!this.experimentData.isSearched || this.protReqStatus === PGRequestStatus.UNINITIATED || !this.hasMpaData">
           <ng-template matTabContent>
-            <app-taxonomy-tab></app-taxonomy-tab>
+            <ng-container *ngTemplateOutlet="proteinRequest"></ng-container>
+            <ng-container *ngIf="this.protReqStatus === PGRequestStatus.FULFILLED && this.hasMpaData">
+              <app-taxonomy-tab></app-taxonomy-tab>
+            </ng-container>
           </ng-template>
         </mat-tab>
 
         <!-- Tab 5: Keywords -->
-        <mat-tab label="Keywords">
+        <mat-tab label="Keywords" [disabled]="!this.experimentData.isSearched || this.protReqStatus === PGRequestStatus.UNINITIATED || !this.hasMpaData">
           <ng-template matTabContent>
-            <app-keywords-tab></app-keywords-tab>
+            <ng-container *ngTemplateOutlet="proteinRequest"></ng-container>
+            <ng-container *ngIf="this.protReqStatus === PGRequestStatus.FULFILLED && this.hasMpaData">
+              <app-keywords-tab></app-keywords-tab>
+            </ng-container>
           </ng-template>
         </mat-tab>
 
         <!--   Tab 6: Function -->
-        <mat-tab label="Function">
+        <mat-tab label="Function" [disabled]="!this.experimentData.isSearched || this.protReqStatus === PGRequestStatus.UNINITIATED || !this.hasMpaData">
           <ng-template matTabContent>
-            <app-function-tab></app-function-tab>
+            <ng-container *ngTemplateOutlet="proteinRequest"></ng-container>
+            <ng-container *ngIf="this.protReqStatus === PGRequestStatus.FULFILLED && this.hasMpaData">
+              <app-function-tab></app-function-tab>
+            </ng-container>
           </ng-template>
         </mat-tab>
 
@@ -171,4 +175,24 @@
 
 <ng-template #noFiles>
   no File uploaded
+</ng-template>
+
+<ng-template #proteinRequest>
+  <ng-container *ngIf="this.protReqStatus === PGRequestStatus.UNINITIATED">
+    <div class="tab-default-content">
+    <span>no data requested yet</span>
+    <app-protein-request (updateTargetFdr)="updateTargetFDR($event)" [currentTargetFDR]="this.experimentData.targetFdr"></app-protein-request>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="this.protReqStatus === PGRequestStatus.INITIATED">
+    <div class="tab-default-content">
+    <mat-spinner></mat-spinner>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="this.protReqStatus === PGRequestStatus.FULFILLED && !this.hasMpaData">
+    <div class="tab-default-content">
+    <span>Something went wrong! Try again.</span>
+    <app-protein-request (updateTargetFdr)="updateTargetFDR($event)" [currentTargetFDR]="this.experimentData.targetFdr"></app-protein-request>
+    </div>
+  </ng-container>
 </ng-template>
