@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ALLOWEDSIMPLECHARS, InputFormComponent } from 'shared-lib';
 import { WorkflowService } from '../../services/workflow.service';
 import { StepperService } from '../../services/stepper.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'ofs-data-download',
@@ -17,6 +17,12 @@ export class DataDownloadComponent
   projectName: FormControl;
 
   subscriptions: Subscription[];
+
+  dataUrl$: Observable<any> = this.workflow.ofsData$.pipe(
+    map((data) => data?.responseData?.classifierResponse?.downloadLink),
+    filter((data) => data !== undefined),
+    map((data) => this.workflow.getResourceUrls([data]))
+  );
 
   constructor(
     public builder: FormBuilder,
@@ -57,11 +63,5 @@ export class DataDownloadComponent
       }
     }
     this.enableForm();
-  }
-
-  downloadData() {
-    // TODO: method is called everytime the view is rendered = bad performance
-    // console.log(this.workflow.getDownloadLink());
-    return this.workflow.getDownloadLink();
   }
 }

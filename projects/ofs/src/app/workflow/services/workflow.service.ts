@@ -271,6 +271,8 @@ export class WorkflowService {
   }
 
   getResourceUrls(resources: string[]) {
+    console.log('urlsurlsurls');
+
     const urls = [];
     for (let resource of resources) {
       urls.push(
@@ -278,9 +280,5 @@ export class WorkflowService {
       );
     }
     return urls;
-  }
-
-  getDownloadLink(): string | undefined {
-    return this.ofsData?.responseData?.classifierResponse?.downloadLink;
   }
 }
