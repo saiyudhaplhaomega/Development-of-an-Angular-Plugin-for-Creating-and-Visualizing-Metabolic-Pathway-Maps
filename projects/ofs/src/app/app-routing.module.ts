@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OfsLandingPageComponent } from './ofs-landing-page/ofs-landing-page.component';
+import { OfsLandingPageComponent } from './components/ofs-landing-page/ofs-landing-page.component';
 
 // TODO: route guard? (the route guard for workflow routes still exists)
 
@@ -9,7 +9,9 @@ const routes: Routes = [
   {
     path: 'workflow',
     loadChildren: () =>
-      import('./workflow/workflow.module').then((m) => m.WorkflowModule),
+      import('./modules/workflow/workflow.module').then(
+        (m) => m.WorkflowModule
+      ),
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

@@ -16,6 +16,10 @@ import { RouteStateService } from './services/route-state.service';
 })
 export class AppComponent implements OnInit {
   title = 'Omics Feature Finder';
+  logo: Logo = {
+    assetPath: '../assets/logo_08.svg',
+    label: 'Omics Feature Finder',
+  };
 
   homelink: SimpleNavigationRoute = {
     route: '/home',
