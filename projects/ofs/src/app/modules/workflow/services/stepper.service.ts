@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Step } from '../models/workflow-steps.model';
+import { OFSData } from '../models/ofs-data.model';
 
 /**
  * Service to manage current step of the workflow stepper and current workflow route and synchronize both
@@ -36,8 +37,8 @@ export const steps: Step[] = [
 export class StepperService {
   private readonly _workflowSteps: Step[];
   private readonly _stepNumber: number;
-  private _currentStep$: BehaviorSubject<Step>;
-  private _completedSteps$: BehaviorSubject<boolean[]>;
+  private _currentIndex$: BehaviorSubject<number>;
+  _completedSteps$: BehaviorSubject<boolean[]>;
 
   constructor() {
     this._workflowSteps = steps;
@@ -45,7 +46,7 @@ export class StepperService {
     this._completedSteps$ = new BehaviorSubject(
       this.workflowSteps.map(() => false)
     );
-    this._currentStep$ = new BehaviorSubject(this.workflowSteps[0]);
+    this._currentIndex$ = new BehaviorSubject(0);
   }
 
   // Getters and Setters
@@ -58,12 +59,8 @@ export class StepperService {
     return this._stepNumber;
   }
 
-  get currentStep$(): Observable<Step> {
-    return this._currentStep$;
-  }
-
-  get currentIndex(): Readonly<number> {
-    return this._currentStep$.value.index;
+  get currentIndex$(): Observable<number> {
+    return this._currentIndex$;
   }
 
   get completedSteps$(): Observable<boolean[]> {
@@ -73,15 +70,15 @@ export class StepperService {
   // checks whether previous or next step is allowed for navigation
   get allowPrev(): boolean {
     return (
-      this.currentIndex > 0 &&
-      this._completedSteps$.value[this.currentIndex - 1]
+      this._currentIndex$.value > 0 &&
+      this._completedSteps$.value[this._currentIndex$.value - 1]
     );
   }
 
   get allowNext(): boolean {
     return (
-      this.currentIndex < this._stepNumber - 1 &&
-      this._completedSteps$.value[this.currentIndex]
+      this._currentIndex$.value < this._stepNumber - 1 &&
+      this._completedSteps$.value[this._currentIndex$.value]
     );
   }
 
@@ -90,19 +87,40 @@ export class StepperService {
     this.setStep(0);
   }
 
-  setStepComplete(index: number) {
-    const steps = this._completedSteps$.value;
-    steps[index] = true;
-    this._completedSteps$.next(steps);
+  updateCompletedSteps(data: OFSData) {
+    let completed = [
+      data.responseData.overviewResponse?.classDistribution != undefined,
+      data.responseData.preprocessingResponse?.predictivePerformance !=
+        undefined,
+      data.responseData.wrapperResponse?.featureSelection != undefined,
+      data.configData.classifierConfig?.selectedFeatures != undefined,
+      data.responseData.classifierResponse?.pcaImage != undefined,
+    ];
+
+    this._completedSteps$.next(completed);
+
+    completed.every((step, index) => {
+      if (!step) {
+        console.log('setStep', index);
+        this.setStep(index);
+        return false;
+      }
+    });
   }
 
-  setStepIncomplete(index: number) {
-    const steps = this._completedSteps$.value;
-    steps[index] = false;
-    this._completedSteps$.next(steps);
-  }
+  // setStepComplete(completed: boolean[]) {
+  //   this._completedSteps$.next(completed);
+  // }
+
+  // setStepIncomplete(index: number) {
+  //   const steps = [...this._completedSteps$.value];
+  //   steps[index] = false;
+  //   this._completedSteps$.next(steps);
+  // }
 
   setStep(index: number) {
-    this._currentStep$.next(this._workflowSteps[index]);
+    if (index < this._stepNumber - 1 && index >= 0) {
+      this._currentIndex$.next(index);
+    }
   }
 }

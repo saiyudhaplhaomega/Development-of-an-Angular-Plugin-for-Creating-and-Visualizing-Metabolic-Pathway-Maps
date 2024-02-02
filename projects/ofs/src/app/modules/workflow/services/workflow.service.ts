@@ -67,35 +67,35 @@ export class WorkflowService {
   // used for testing, reads an existing config from assets
   setDummyConfig() {
     const existingConfig = dummyConfig as OFSData;
-    this.setCompletedSteps(existingConfig);
+    // this.setCompletedSteps(existingConfig);
     this.ofsDataSubject$.next(existingConfig);
   }
 
   // checks workflow data and sets stepper
-  setCompletedSteps(data: OFSData) {
-    if (data.responseData.overviewResponse?.classDistribution !== undefined) {
-      this.stepperService.setStepComplete(0);
-    }
+  // setCompletedSteps(data: OFSData) {
+  //   if (data.responseData.overviewResponse?.classDistribution !== undefined) {
+  //     this.stepperService.setStepComplete(0);
+  //   }
 
-    if (
-      data.responseData.preprocessingResponse?.predictivePerformance !==
-      undefined
-    ) {
-      this.stepperService.setStepComplete(1);
-    }
+  //   if (
+  //     data.responseData.preprocessingResponse?.predictivePerformance !==
+  //     undefined
+  //   ) {
+  //     this.stepperService.setStepComplete(1);
+  //   }
 
-    if (data.responseData.wrapperResponse?.featureSelection !== undefined) {
-      this.stepperService.setStepComplete(2);
-    }
+  //   if (data.responseData.wrapperResponse?.featureSelection !== undefined) {
+  //     this.stepperService.setStepComplete(2);
+  //   }
 
-    if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
-      this.stepperService.setStepComplete(3);
-    }
+  //   if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
+  //     this.stepperService.setStepComplete(3);
+  //   }
 
-    if (data.responseData.classifierResponse?.pcaImage !== undefined) {
-      this.stepperService.setStepComplete(4);
-    }
-  }
+  //   if (data.responseData.classifierResponse?.pcaImage !== undefined) {
+  //     this.stepperService.setStepComplete(4);
+  //   }
+  // }
 
   createOfsJob() {
     /**
@@ -174,7 +174,7 @@ export class WorkflowService {
               this.ofsData.configData.overviewConfig.groups[0].groupName;
             this.ofsDataSubject$.next(response);
             // TODO: use one method for setting steps? --> setCompletedSteps
-            this.stepperService.setStepComplete(0);
+            // this.stepperService.setStepComplete(0);
             this.loading = false;
           });
       });
@@ -203,7 +203,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            this.stepperService.setStepComplete(1);
+            // this.stepperService.setStepComplete(1);
             this.loading = false;
           });
       });
@@ -232,7 +232,7 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            this.stepperService.setStepComplete(2);
+            // this.stepperService.setStepComplete(2);
             this.loading = false;
           });
       });
@@ -253,8 +253,8 @@ export class WorkflowService {
       )
       .subscribe((response) => {
         this.ofsDataSubject$.next(response);
-        this.stepperService.setStepComplete(3);
-        this.stepperService.setStep(4);
+        // this.stepperService.setStepComplete(3);
+        // this.stepperService.setStep(4);
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
@@ -264,15 +264,13 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            this.stepperService.setStepComplete(4);
+            // this.stepperService.setStepComplete(4);
             this.loading = false;
           });
       });
   }
 
   getResourceUrls(resources: string[]) {
-    console.log('urlsurlsurls');
-
     const urls = [];
     for (let resource of resources) {
       urls.push(
