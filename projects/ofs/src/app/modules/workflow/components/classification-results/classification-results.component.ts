@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { WorkflowService } from '../../../services/workflow.service';
-import { OFSData } from '../../../models/ofs-data.model';
-import { ClassifierResponse } from '../../../models/classifier-response.model';
+import { WorkflowService } from '../../services/workflow.service';
+import { OFSData } from '../../models/ofs-data.model';
+import { ClassifierResponse } from '../../models/classifier-response.model';
 
 @Component({
   selector: 'ofs-classification-results',

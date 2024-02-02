@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ALLOWEDSIMPLECHARS, InputFormComponent } from 'shared-lib';
-import { WorkflowService } from '../../../services/workflow.service';
-import { StepperService } from '../../../services/stepper.service';
+import { WorkflowService } from '../../services/workflow.service';
+import { StepperService } from '../../services/stepper.service';
 import { Observable, Subscription, filter, map, tap } from 'rxjs';
 
 @Component({

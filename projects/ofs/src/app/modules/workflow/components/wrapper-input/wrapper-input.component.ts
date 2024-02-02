@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { InputFormComponent } from 'shared-lib';
-import { WrapperForm } from '../../../models/wrapper.model';
-import { WorkflowService } from '../../../services/workflow.service';
-import { OFSData } from '../../../models/ofs-data.model';
+import { WrapperForm } from '../../models/wrapper.model';
+import { WorkflowService } from '../../services/workflow.service';
+import { OFSData } from '../../models/ofs-data.model';
 
 @Component({
   selector: 'ofs-wrapper-input',

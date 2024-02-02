@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { WorkflowService } from '../../../services/workflow.service';
+import { WorkflowService } from '../../services/workflow.service';
 import { Observable, map } from 'rxjs';
-import { OFSData } from '../../../models/ofs-data.model';
-import { WrapperResponse } from '../../../models/wrapper-response.model';
+import { OFSData } from '../../models/ofs-data.model';
+import { WrapperResponse } from '../../models/wrapper-response.model';
 
 @Component({
   selector: 'ofs-wrapper-results',

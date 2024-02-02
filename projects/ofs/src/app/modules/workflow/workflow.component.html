@@ -9,28 +9,64 @@
   >
     <mat-step [completed]="(completedSteps$ | async)[0]" [editable]="true">
       <ng-template matStepLabel>{{ steps[0].label }}</ng-template>
-
-      <ofs-data-overview></ofs-data-overview>
+      <!-- panel 1: data overview -->
+      <lib-workflow-panel [hasData]="true">
+        <ng-template lib-workflowPanel>
+          <ofs-overview-input></ofs-overview-input>
+        </ng-template>
+        <ng-template lib-workflowPanel>
+          <ofs-overview-results></ofs-overview-results>
+        </ng-template>
+      </lib-workflow-panel>
     </mat-step>
 
     <mat-step [completed]="(completedSteps$ | async)[1]" [editable]="true">
       <ng-template matStepLabel>{{ steps[1].label }}</ng-template>
-      <ofs-preprocessing></ofs-preprocessing>
+      <!-- panel 2: preprocessing -->
+      <lib-workflow-panel [hasData]="(completedSteps$ | async)[0]">
+        <ng-template lib-workflowPanel>
+          <ofs-preprocessing-input></ofs-preprocessing-input>
+        </ng-template>
+        <ng-template lib-workflowPanel>
+          <ofs-preprocessing-results></ofs-preprocessing-results>
+        </ng-template>
+      </lib-workflow-panel>
     </mat-step>
 
     <mat-step [completed]="(completedSteps$ | async)[2]" [editable]="true">
       <ng-template matStepLabel>{{ steps[2].label }}</ng-template>
-      <ofs-wrapper></ofs-wrapper>
+      <!-- panel 3: feature selection -->
+      <lib-workflow-panel [hasData]="(completedSteps$ | async)[1]">
+        <ng-template lib-workflowPanel>
+          <ofs-wrapper-input></ofs-wrapper-input>
+        </ng-template>
+        <ng-template lib-workflowPanel>
+          <ofs-wrapper-results></ofs-wrapper-results>
+        </ng-template>
+      </lib-workflow-panel>
     </mat-step>
 
     <mat-step [completed]="(completedSteps$ | async)[3]" [editable]="true">
       <ng-template matStepLabel>{{ steps[3].label }}</ng-template>
-      <ofs-panel-selection></ofs-panel-selection>
+      <!-- panel 4: feature selection-->
+      <lib-workflow-panel [hasData]="(completedSteps$ | async)[2]">
+        <ng-template lib-workflowPanel>
+          <ofs-feature-table></ofs-feature-table>
+        </ng-template>
+      </lib-workflow-panel>
     </mat-step>
 
     <mat-step [completed]="(completedSteps$ | async)[4]" [editable]="true">
       <ng-template matStepLabel>{{ steps[4].label }}</ng-template>
-      <ofs-classification></ofs-classification>
+      <!-- panel 5: classification -->
+      <lib-workflow-panel [hasData]="(completedSteps$ | async)[3]">
+        <ng-template lib-workflowPanel>
+          <ofs-classification-results></ofs-classification-results>
+        </ng-template>
+        <ng-template lib-workflowPanel>
+          <ofs-data-download></ofs-data-download>
+        </ng-template>
+      </lib-workflow-panel>
     </mat-step>
   </mat-stepper>
 </div>

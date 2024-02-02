@@ -5,13 +5,13 @@ import {
   InputFormComponent,
   ALLOWEDSIMPLECHARS,
 } from 'shared-lib';
-import { OFSData } from '../../../models/ofs-data.model';
+import { OFSData } from '../../models/ofs-data.model';
 import {
   DataGroupForm,
   GroupSelectionOptions,
   OverviewInputForm,
-} from '../../../models/overview.model';
-import { WorkflowService } from '../../../services/workflow.service';
+} from '../../models/overview.model';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-overview-input',

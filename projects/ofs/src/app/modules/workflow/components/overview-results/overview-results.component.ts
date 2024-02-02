@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { OverviewResponse } from '../../../models/overview-response.model';
-import { OFSData } from '../../../models/ofs-data.model';
-import { WorkflowService } from '../../../services/workflow.service';
+import { OverviewResponse } from '../../models/overview-response.model';
+import { OFSData } from '../../models/ofs-data.model';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-overview-results',

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { InputFormComponent } from 'shared-lib';
-import { OFSData } from '../../../models/ofs-data.model';
-import { PreprocessingConfigForm } from '../../../models/preprocessing.model';
-import { WorkflowService } from '../../../services/workflow.service';
+import { OFSData } from '../../models/ofs-data.model';
+import { PreprocessingConfigForm } from '../../models/preprocessing.model';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'ofs-preprocessing-input',

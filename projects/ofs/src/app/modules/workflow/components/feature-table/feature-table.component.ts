@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Feature, FeatureProfile } from '../../../models/classifier.model';
+import { Feature, FeatureProfile } from '../../models/classifier.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { WorkflowService } from '../../../services/workflow.service';
-import { StepperService } from '../../../services/stepper.service';
+import { WorkflowService } from '../../services/workflow.service';
+import { StepperService } from '../../services/stepper.service';
 
 @Component({
   selector: 'ofs-feature-table',
