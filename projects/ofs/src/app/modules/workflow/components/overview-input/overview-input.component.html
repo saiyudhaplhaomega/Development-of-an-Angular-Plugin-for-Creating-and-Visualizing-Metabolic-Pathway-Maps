@@ -29,15 +29,6 @@
           }}</mat-error>
         </mat-form-field>
 
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>group columns</mat-label>
-          <mat-select formControlName="groupSelectionOptions">
-            <mat-option *ngFor="let option of groupSelectionOptions" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
         <div class="mb-4">
           <mat-divider></mat-divider>
         </div>
@@ -102,26 +93,6 @@
       </div>
 
       <div class="form-button-grid">
-        <!-- <button
-          [disabled]="formDisabled$ | async"
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="addGroup()"
-        >
-          add group
-        </button>
-
-        <button
-          [disabled]="formDisabled$ | async"
-          (click)="resetForm()"
-          mat-flat-button
-          color="primary"
-          type="button"
-        >
-          reset all inputs
-        </button> -->
-
         <button
           class="col-span-2"
           [disabled]="!formModel.valid || (formDisabled$ | async)"

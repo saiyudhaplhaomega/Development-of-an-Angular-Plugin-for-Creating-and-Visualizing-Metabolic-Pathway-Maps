@@ -37,3 +37,8 @@ export * from './lib/workflow-panel/workflow-panel/workflow-panel.component';
 
 export * from './lib/result-figures/result-figures.module';
 export * from './lib/result-figures/result-figures.component';
+
+export * from './lib/stepper/stepper.module';
+export * from './lib/stepper/stepper.component';
+export * from './lib/stepper/directives/step.directive';
+export * from './lib/stepper/services/custom-stepper.service';

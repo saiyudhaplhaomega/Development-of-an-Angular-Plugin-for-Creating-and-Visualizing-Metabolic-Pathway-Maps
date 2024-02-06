@@ -5,11 +5,34 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Observable, Subscription, filter } from 'rxjs';
-import { Step } from './models/workflow-steps.model';
+import { Subscription } from 'rxjs';
 import { WorkflowService } from './services/workflow.service';
-import { StepperService } from './services/stepper.service';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatStepper } from '@angular/material/stepper';
+import { CustomStepperService, Step } from 'shared-lib';
+import { OFSData } from './models/ofs-data.model';
+
+export const workflowSteps: Step[] = [
+  {
+    index: 0,
+    label: 'Data overview',
+  },
+  {
+    index: 1,
+    label: 'Feature pre-selection',
+  },
+  {
+    index: 2,
+    label: 'Feature sampling',
+  },
+  {
+    index: 3,
+    label: 'Biomarker panel selection',
+  },
+  {
+    index: 4,
+    label: 'Classification',
+  },
+];
 
 /**
  * Parent component for the workflow stepper. Uses workflow service to track, send,
@@ -19,63 +42,61 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   selector: 'ofs-workflow',
   templateUrl: './workflow.component.html',
   styleUrls: ['./workflow.component.scss'],
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false },
-    },
-  ],
 })
-export class WorkflowComponent implements OnInit, OnDestroy, AfterViewInit {
-  public currentStepIndex$: Observable<number> =
-    this.stepperService.currentIndex$;
-  public completedSteps$: Observable<boolean[]> =
-    this.stepperService.completedSteps$;
-
+export class WorkflowComponent implements OnInit, OnDestroy {
   private Subscriptions: Subscription[];
 
-  @ViewChild('stepper') stepper;
+  public workflowSteps = workflowSteps;
+
+  public completedSteps$ = this.customStepper.completedSteps$;
+  public currentStepIndex$ = this.customStepper?.currentIndex$;
+
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private workflow: WorkflowService,
-    private stepperService: StepperService
+    private customStepper: CustomStepperService
   ) {}
 
   ngOnInit(): void {
     this.doSubscriptions();
-    this.stepperService.initialize();
     this.workflow.createOfsJob();
     // this.workflow.setDummyConfig();
-  }
-
-  ngAfterViewInit() {
-    this.stepperService.currentIndex$.subscribe((index) => {
-      this.stepper.selectedIndex = index;
-      console.log(this.stepper.selectedIndex);
-    });
   }
 
   ngOnDestroy() {
     this.Subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  get steps() {
-    return this.stepperService.workflowSteps;
-  }
-
   doSubscriptions() {
     this.Subscriptions = [
       this.workflow.ofsData$.subscribe((data) => {
-        this.stepperService.updateCompletedSteps(data);
+        this.updateStepper(data);
       }),
     ];
   }
 
-  setStep(selectedIndex: number) {
-    this.stepperService.setStep(selectedIndex);
+  updateStepper(data: OFSData) {
+    const completed = [
+      data.responseData.overviewResponse?.classDistribution != undefined,
+      data.responseData.preprocessingResponse?.predictivePerformance !=
+        undefined,
+      data.responseData.wrapperResponse?.featureSelection != undefined,
+      data.configData.classifierConfig?.selectedFeatures != undefined,
+      data.responseData.classifierResponse?.pcaImage != undefined,
+    ];
+
+    this.customStepper.completedSteps$.next(completed);
+
+    for (let index = 0; index < completed.length; index++) {
+      if (!completed[index]) {
+        this.setStep(index);
+        break;
+      }
+    }
   }
 
-  onInteract(event: any) {
-    console.log(event);
+  setStep(selectedIndex: number) {
+    this.customStepper.setStep(selectedIndex);
   }
 }

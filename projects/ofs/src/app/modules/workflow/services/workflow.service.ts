@@ -33,7 +33,6 @@ export class WorkflowService {
 
   constructor(
     private http: HttpClientService,
-    private stepperService: StepperService,
     private address: WebserveraddressService
   ) {
     this.ofsDataSubject$.next(new OFSData());

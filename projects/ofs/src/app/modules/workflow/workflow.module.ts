@@ -31,6 +31,7 @@ import { WorkflowRoutingModule } from './workflow-routing.module';
 import { ClassificationResultsComponent } from './components/classification-results/classification-results.component';
 import { DataDownloadComponent } from './components/data-download/data-download.component';
 import { FeatureTableComponent } from './components/feature-table/feature-table.component';
+import { StepperModule } from 'shared-lib';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { FeatureTableComponent } from './components/feature-table/feature-table.
     WorkflowPanelModule,
     ResultFiguresModule,
     WorkflowRoutingModule,
+    StepperModule,
   ],
   providers: [],
 })

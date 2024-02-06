@@ -1,0 +1,19 @@
+<section class="step-container">
+  <div class="step-label-container mat-typography">
+    <div class="step-index-container">
+      <span class="step-index">{{ index + 1 }}</span>
+    </div>
+    <span class="step-label">
+      {{ label }}
+    </span>
+  </div>
+  <div
+    class="step-content"
+    [ngClass]="{
+      'last-step': isLastStep,
+      finished: (completedSteps$ | async)[index]
+    }"
+  >
+    <ng-content></ng-content>
+  </div>
+</section>

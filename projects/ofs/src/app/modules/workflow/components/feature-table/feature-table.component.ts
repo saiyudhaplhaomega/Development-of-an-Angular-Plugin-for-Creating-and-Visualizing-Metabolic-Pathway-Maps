@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 import { WorkflowService } from '../../services/workflow.service';
-import { StepperService } from '../../services/stepper.service';
+import { CustomStepperService } from 'shared-lib';
 
 @Component({
   selector: 'ofs-feature-table',
@@ -23,10 +23,7 @@ export class FeatureTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(
-    private workflow: WorkflowService,
-    private stepper: StepperService
-  ) {}
+  constructor(private workflow: WorkflowService) {}
 
   get listOfFeatureProfiles() {
     return this.workflow.ofsData.responseData.wrapperResponse
