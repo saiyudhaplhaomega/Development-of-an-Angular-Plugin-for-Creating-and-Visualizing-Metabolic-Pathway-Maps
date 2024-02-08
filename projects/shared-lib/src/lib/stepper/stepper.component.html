@@ -1,5 +1,7 @@
+<!-- <ng-template *ngIf="steps.length > 0"> -->
 <ng-container *ngFor="let stepTemplate of stepTemplates.toArray(); index as i">
   <shared-step [index]="i">
     <ng-container [ngTemplateOutlet]="stepTemplate.tpl"></ng-container>
   </shared-step>
 </ng-container>
+<!-- </ng-template> -->

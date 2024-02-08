@@ -48,18 +48,17 @@ export class WorkflowComponent implements OnInit, OnDestroy {
 
   public workflowSteps = workflowSteps;
 
-  public completedSteps$ = this.customStepper.completedSteps$;
-  public currentStepIndex$ = this.customStepper?.currentIndex$;
-
-  @ViewChild('stepper') stepper: MatStepper;
+  public completedSteps$ = this.stepper.completedSteps$;
+  public currentStepIndex$ = this.stepper?.currentIndex$;
 
   constructor(
     private workflow: WorkflowService,
-    private customStepper: CustomStepperService
+    private stepper: CustomStepperService
   ) {}
 
   ngOnInit(): void {
     this.doSubscriptions();
+    this.stepper.initialize(this.workflowSteps);
     this.workflow.createOfsJob();
     // this.workflow.setDummyConfig();
   }
@@ -86,7 +85,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
       data.responseData.classifierResponse?.pcaImage != undefined,
     ];
 
-    this.customStepper.completedSteps$.next(completed);
+    this.stepper.completedSteps$.next(completed);
 
     for (let index = 0; index < completed.length; index++) {
       if (!completed[index]) {
@@ -97,6 +96,6 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   }
 
   setStep(selectedIndex: number) {
-    this.customStepper.setStep(selectedIndex);
+    this.stepper.setStep(selectedIndex);
   }
 }

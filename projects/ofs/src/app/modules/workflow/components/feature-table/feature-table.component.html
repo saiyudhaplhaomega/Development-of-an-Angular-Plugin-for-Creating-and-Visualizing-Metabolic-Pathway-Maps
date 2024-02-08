@@ -23,7 +23,12 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-flat-button (click)="applyFeatureProfile()" color="primary">
+      <button
+        [disabled]="formDisabledSubject$ | async"
+        mat-flat-button
+        (click)="applyFeatureProfile()"
+        color="primary"
+      >
         apply feature profile to selection
       </button>
 
@@ -38,6 +43,7 @@
           (keyup)="applyFilter($event)"
           placeholder="find feature"
           #input
+          [disabled]="formDisabledSubject$ | async"
         />
       </mat-form-field>
 
@@ -47,6 +53,7 @@
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
+                [disabled]="formDisabledSubject$ | async"
                 (change)="$event ? toggleAllRows() : null"
                 [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()"
@@ -58,6 +65,7 @@
                 (click)="$event.stopPropagation()"
                 (change)="$event ? selection.toggle(row.featureID) : null"
                 [checked]="selection.isSelected(row.featureID)"
+                [disabled]="formDisabledSubject$ | async"
               >
               </mat-checkbox>
             </td>
@@ -94,7 +102,12 @@
       <mat-divider></mat-divider>
     </div>
 
-    <button mat-flat-button (click)="generateResults()" color="primary">
+    <button
+      [disabled]="!selection.hasValue() || (formDisabledSubject$ | async)"
+      mat-flat-button
+      (click)="generateResults()"
+      color="primary"
+    >
       submit features and retrieve results
     </button>
   </div>

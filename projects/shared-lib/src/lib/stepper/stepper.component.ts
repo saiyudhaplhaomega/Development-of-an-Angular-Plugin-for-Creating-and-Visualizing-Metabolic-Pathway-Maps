@@ -19,14 +19,18 @@ export class StepperComponent implements OnInit {
 
   completed$ = this.stepper.completedSteps$;
 
-  @Input() steps: Step[];
+  // @Input() steps: Step[] = [];
 
   @ContentChildren(StepDirective)
   stepTemplates!: QueryList<StepDirective>;
 
   constructor(private stepper: CustomStepperService) {}
 
+  get steps() {
+    return this.stepper.workflowSteps;
+  }
+
   ngOnInit() {
-    this.stepper.initialize(this.steps);
+    // this.stepper.initialize(this.steps);
   }
 }

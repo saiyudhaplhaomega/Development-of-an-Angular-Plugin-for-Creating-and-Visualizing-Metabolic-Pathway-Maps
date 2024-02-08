@@ -8,7 +8,6 @@ import { OverviewConfig } from '../models/overview.model';
 import { PreprocessingConfig } from '../models/preprocessing.model';
 import { WrapperConfig } from '../models/wrapper.model';
 import { dummyConfig } from 'projects/ofs/src/assets/dummy-config';
-import { StepperService } from './stepper.service';
 import { HttpClientService } from 'shared-lib';
 import {
   WebserveraddressService,
@@ -36,10 +35,6 @@ export class WorkflowService {
     private address: WebserveraddressService
   ) {
     this.ofsDataSubject$.next(new OFSData());
-
-    // this.ofsDataSubject$.subscribe((data) => {
-    //   console.log(data);
-    // });
   }
 
   // TODO: remove for simplification
@@ -69,32 +64,6 @@ export class WorkflowService {
     // this.setCompletedSteps(existingConfig);
     this.ofsDataSubject$.next(existingConfig);
   }
-
-  // checks workflow data and sets stepper
-  // setCompletedSteps(data: OFSData) {
-  //   if (data.responseData.overviewResponse?.classDistribution !== undefined) {
-  //     this.stepperService.setStepComplete(0);
-  //   }
-
-  //   if (
-  //     data.responseData.preprocessingResponse?.predictivePerformance !==
-  //     undefined
-  //   ) {
-  //     this.stepperService.setStepComplete(1);
-  //   }
-
-  //   if (data.responseData.wrapperResponse?.featureSelection !== undefined) {
-  //     this.stepperService.setStepComplete(2);
-  //   }
-
-  //   if (data.configData.classifierConfig?.selectedFeatures !== undefined) {
-  //     this.stepperService.setStepComplete(3);
-  //   }
-
-  //   if (data.responseData.classifierResponse?.pcaImage !== undefined) {
-  //     this.stepperService.setStepComplete(4);
-  //   }
-  // }
 
   createOfsJob() {
     /**
@@ -172,8 +141,6 @@ export class WorkflowService {
             response.responseData.overviewResponse.controlGroup =
               this.ofsData.configData.overviewConfig.groups[0].groupName;
             this.ofsDataSubject$.next(response);
-            // TODO: use one method for setting steps? --> setCompletedSteps
-            // this.stepperService.setStepComplete(0);
             this.loading = false;
           });
       });
@@ -202,7 +169,6 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            // this.stepperService.setStepComplete(1);
             this.loading = false;
           });
       });
@@ -231,7 +197,6 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            // this.stepperService.setStepComplete(2);
             this.loading = false;
           });
       });
@@ -252,8 +217,6 @@ export class WorkflowService {
       )
       .subscribe((response) => {
         this.ofsDataSubject$.next(response);
-        // this.stepperService.setStepComplete(3);
-        // this.stepperService.setStep(4);
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
@@ -263,7 +226,6 @@ export class WorkflowService {
           )
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
-            // this.stepperService.setStepComplete(4);
             this.loading = false;
           });
       });
