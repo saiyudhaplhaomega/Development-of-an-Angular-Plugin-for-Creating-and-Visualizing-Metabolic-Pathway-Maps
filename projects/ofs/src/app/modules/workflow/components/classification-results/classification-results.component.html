@@ -10,6 +10,10 @@
   <lib-result-figures
     [imageLinks]="classifierImages$ | async"
     [isLoading]="isLoading()"
-    [tabLables]="['PCA for Feature Selection']"
+    [tabLables]="[
+      'PCA for Feature Selection',
+      'Pairwise Scatter Plot',
+      'Hierarchical Clustering'
+    ]"
   ></lib-result-figures>
 </div>

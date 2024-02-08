@@ -227,6 +227,7 @@ export class WorkflowService {
           .subscribe((response: OFSData) => {
             this.ofsDataSubject$.next(response);
             this.loading = false;
+            console.log(response);
           });
       });
   }

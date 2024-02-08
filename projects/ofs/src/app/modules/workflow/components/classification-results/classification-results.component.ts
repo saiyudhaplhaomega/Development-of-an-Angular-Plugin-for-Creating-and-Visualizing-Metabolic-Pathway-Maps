@@ -28,8 +28,8 @@ export class ClassificationResultsComponent {
     }
     return this.workflow.getResourceUrls([
       data.pcaImage,
-      data.hacImage,
       data.scatterPlotImage,
+      data.hacImage,
     ]);
   }
 

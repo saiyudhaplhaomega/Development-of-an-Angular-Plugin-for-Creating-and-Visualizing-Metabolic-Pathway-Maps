@@ -1,20 +1,11 @@
 @import "../../../../../../../node_modules/@angular/material/theming";
 @import "../../../../../../../master-stylesheet.scss";
 
-// .test {
-//   padding: 2rem;
-//   //   background-color: mat-color($mdoa-warn, 100);
-//   color: mat-color($mdoa-warn, 200);
-//   border-radius: 0.5rem;
-//   border-width: 2px;
-//   border-color: mat-color($mdoa-warn, 200);
-// }
-
 .step-container {
   --circle-diameter: 1.5rem;
   --circle-margin: 0.8rem;
   --label-padding: 2rem;
-  --border-width: 2px;
+  --border-width: 4px;
 
   padding-left: var(--label-padding);
   display: flex;

@@ -59,8 +59,8 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.doSubscriptions();
     this.stepper.initialize(this.workflowSteps);
-    this.workflow.createOfsJob();
-    // this.workflow.setDummyConfig();
+    // this.workflow.createOfsJob();
+    this.workflow.setDummyConfig();
   }
 
   ngOnDestroy() {
