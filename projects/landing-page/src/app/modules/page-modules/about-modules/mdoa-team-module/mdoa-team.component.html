@@ -1,43 +1,38 @@
-<h1>Group: Multidimensional Omics Data Analysis</h1>
-Kompetenzfelder: Metaproteomics, Modellierung, Omics Daten, Software-Entwicklung
-<p>
-  The working group Multidimensional Omics Data Analysis is a collaboration with
-  the Leibniz Institute for Analytical Sciences (ISAS). The development of novel
-  omics methods in the last 10-20 years now allows for a detailed analysis and
-  characterization of the pathogenesis of most diseases. However, these methods
-  require complex and rapid bioinformatic workflows to identify and interpret
-  the corresponding genes, proteins, and metabolites in the raw data.
-  Subsequently, prognostic and predictive markers, and possibly new therapeutic
-  targets, can be derived from the multi-omics datasets using biostatistical
-  methods and machine learning algorithms. The challenge lies in integrating
-  individual omics data with each other, with clinical data (diagnoses,
-  analyses, therapy), with information from clinical databases, and with already
-  known publications, and finally visualizing the results. In addition, omics
-  datasets enable the development of mathematical models to describe the
-  disease. These models could be used to test therapeutic approaches or could be
-  translated back to the clinic to support diagnosis and clinical decisions.
-</p>
-<p>You are interested to work with us or want to do your thesis? Write at EMAIL or see here (links)</p>
-<h1>Group Leader</h1>
-Prof. Dr.-Ing. Robert Heyer
+<team-card
+  [teamName]="'Multidimensional Omics Data Analysis'"
+  [groupFoto]="'./assets/img/groupfoto.jpeg'"
+  [keywords]="'Area of Expertise: Metaproteomics, Modelling, Omics Data, Software Development'"
+  [teamDescription]="'The working group Multidimensional Omics Data Analysis (MdOA) is a collaboration with ' +
+  'the Leibniz Institute for Analytical Sciences (ISAS) and the University Bielefeld. The development of novel ' +
+  'omics methods in the last 10-20 years now allows for a detailed analysis and ' +
+  'characterization of the pathogenesis of most diseases. However, these methods ' +
+  'require complex and rapid bioinformatic workflows to identify and interpret ' +
+  'the corresponding genes, proteins, and metabolites in the raw data. ' +
+  'Subsequently, prognostic and predictive markers, and possibly new therapeutic ' +
+  'targets, can be derived from the multi-omics datasets using biostatistical ' +
+  'methods and machine learning algorithms. The challenge lies in integrating ' +
+  'individual omics data with each other, with clinical data (diagnoses, ' +
+  'analyses, therapy), with information from clinical databases, and with already ' +
+  'known publications, and finally visualizing the results. In addition, omics ' +
+  'datasets enable the development of mathematical models to describe the ' +
+  'disease. These models could be used to test therapeutic approaches or could be ' +
+  'translated back to the clinic to support diagnosis and clinical decisions.'"
+></team-card>
 
-Bielefeld: 
-E-​Mail robert.heyer@uni-​bielefeld.de
-Telefon +49 521 106-​2908
-Raum UHG M3-​128
-
-<h1>Co-Leader</h1>
-Kay Schallert
-<h1>Members and Researcher</h1>
-
-Daniel
-
-Emanuel 
-
-
-Daniel
-Knipper, Luca
-Wolf, Maximilian
-
-Infos, Work, Connected, Email
-<h1>Former Members</h1>
+<section>
+  <div>
+    <div id="scroll-container">
+      <div class="navigation-container">
+        <div id="scroll-left" (click)="scrollLeft()">&lt;</div>
+        <h2>Team Members</h2>
+        <div id="scroll-right" (click)="scrollRight()">&gt;</div>
+      </div>
+      <div id="scroll-progress-container">
+        <div id="scroll-progress"></div>
+      </div>
+      <div id="member-container">
+        <member-card *ngFor="let member of members" [member]="member"></member-card>
+      </div>
+    </div>
+  </div>
+</section>

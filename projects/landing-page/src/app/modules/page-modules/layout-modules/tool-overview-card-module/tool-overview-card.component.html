@@ -28,13 +28,14 @@
 </section>
 
 <section class="tool-overview">
-  <h2>Developers:</h2>
+  <h2>Developers</h2>
   <div class="table-container">
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Email</th>
+          <th>Role</th>
           <th>Affiliation</th>
         </tr>
       </thead>
@@ -44,7 +45,34 @@
             <a [href]="developer.link">{{ developer.name }}</a>
           </td>
           <td>{{ developer.email }}</td>
+          <td>{{ developer.role }}</td>
           <td>{{ developer.affiliation }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-overview">
+  <h2>Honorable Mentions</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Affiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mention of mentions">
+          <td>
+            <a [href]="mention.link">{{ mention.name }}</a>
+          </td>
+          <td>{{ mention.email }}</td>
+          <td>{{ mention.role }}</td>
+          <td>{{ mention.affiliation }}</td>
         </tr>
       </tbody>
     </table>

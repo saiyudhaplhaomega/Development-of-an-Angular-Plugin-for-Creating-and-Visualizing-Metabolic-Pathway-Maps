@@ -1,22 +1,29 @@
 import { Component } from '@angular/core';
-import { OverviewCardComponent } from '../../layout/overview-card/overview-card.component';
+
 @Component({
   selector: 'metaforge-page',
   templateUrl: './metaforge.component.html',
   styleUrls: ['./metaforge.component.scss'],
 })
+
 export class MetaForgeComponent {
   tableData = [
-    { rowHeader: 'User Interface', data1: 'Webapplication / Command-Line-Interface' },
-    { rowHeader: 'Local Installation', data1: 'Docker, Conda'},
+    { rowHeader: 'User Interface', data1: 'Webapplication' },
+    { rowHeader: 'Local Installation', data1: 'No (Docker installation planned)'},
     { rowHeader: 'Input', data1: 'Value (from MPA)' },
     { rowHeader: 'Output', data1: 'Value (can be used in Prophane)'},
 
   ];
 developerData = [
-  { name: 'Developer 1', email: 'developer1@example.com', link: '/developer1', affiliation: 'University Bielefeld' },
-  { name: 'Developer 2', email: 'developer2@example.com', link: '/developer2', affiliation: 'ISAS'  },
-  { name: 'Developer 3', email: 'developer3@example.com', link: '/developer3', affiliation: 'Other'  }
+  { name: 'Kay Schallert', email: 'developer1@example.com', link: '/developer1', affiliation: 'ISAS', role: 'Lead Developer'},
+  { name: 'Daniel Kautzner', email: 'developer2@example.com', link: '/developer2', affiliation: 'University Bielefeld', role: 'Frontend, Backend, AI-Implementation'  },
+  { name: 'Bene', email: 'developer3@example.com', link: '/developer3', affiliation: 'Other', role: 'Frontend, AI-Implementation'  },
+  { name: 'Johnathan', email: 'developer3@example.com', link: '/developer3', affiliation: 'Other', role: 'Frontend' }  
+];
+
+mentionData = [
+  { name: 'Patrick', email: 'developer1@example.com', link: '/developer1', affiliation: 'OVGU', role: 'Tester' },
+  { name: 'Dirk', email: 'developer2@example.com', link: '/developer2', affiliation: 'Hochschule Anhalt', role: 'Tester'  },
 ];
 
 updateList = [

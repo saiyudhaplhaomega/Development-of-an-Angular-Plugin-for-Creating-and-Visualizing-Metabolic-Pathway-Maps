@@ -1,0 +1,55 @@
+#scroll-container {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-left: 2vw;
+    margin-right: 2vw;
+  }
+
+  #member-container {
+    display: flex;
+    overflow-x: hidden;
+    white-space: nowrap;
+    overflow-x: auto;
+    margin-top: 1vw;
+    border: 2px solid #ccc; 
+   gap: 5px;
+  }
+
+  #scroll-left,
+  #scroll-right {
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  #scroll-left {
+    left: 10px;
+  }
+
+  #scroll-right {
+    right: 10px;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .navigation-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #scroll-progress-container {
+    height: 5px;
+    background-color: #ddd;
+margin: auto; 
+  }
+  
+  #scroll-progress {
+    height: 100%;
+    width: var(--scroll-progress-width, 0);
+    background-color: #000000; /* Green color, adjust as needed */
+    transition: width 0.3s; /* Add a transition effect for smoother changes */
+  }
+  

@@ -38,9 +38,9 @@ const routes: Routes = [
       import('./modules/page-modules/about-modules/about.module').then((m) => m.AboutModule),
   },
   {
-    path: 'r',
+    path: 'template-script-page',
     loadChildren: () =>
-      import('./modules/page-modules/script-modules/r-page-module/r.module').then((m) => m.RModule),
+      import('./modules/page-modules/script-modules/template-script-page.module').then((m) => m.TemplateScriptModule),
   },
   { path: 'login', component: LoginPageComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

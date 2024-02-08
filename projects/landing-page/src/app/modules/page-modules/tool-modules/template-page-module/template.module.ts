@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {  TemplateRoutingModule } from './template-routing.component';
 import { TemplateComponent } from './template.component';
-import { OverviewCardModule } from "../../layout/overview-card/overview-card.module";
+import { ToolOverviewCardModule } from '../../layout-modules/tool-overview-card-module/tool-overview-card.module';
 
 @NgModule({
     declarations: [TemplateComponent],
@@ -14,7 +14,7 @@ import { OverviewCardModule } from "../../layout/overview-card/overview-card.mod
         TemplateRoutingModule,
         MatButtonModule,
         MatIconModule,
-        OverviewCardModule,
+        ToolOverviewCardModule,
     ]
 })
 export class TemplateModule { }

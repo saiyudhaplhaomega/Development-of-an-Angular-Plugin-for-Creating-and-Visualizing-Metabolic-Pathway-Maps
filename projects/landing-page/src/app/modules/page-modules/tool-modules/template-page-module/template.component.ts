@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OverviewCardComponent } from '../../layout/overview-card/overview-card.component';
+import { ToolOverviewCardComponent } from '../../layout-modules/tool-overview-card-module/tool-overview-card.component';
 @Component({
   selector: 'template-page',
   templateUrl: './template.component.html',
@@ -14,9 +14,14 @@ export class TemplateComponent {
 
   ];
 developerData = [
-  { name: 'Developer 1', email: 'developer1@example.com', link: '/developer1', affiliation: 'University Bielefeld' },
-  { name: 'Developer 2', email: 'developer2@example.com', link: '/developer2', affiliation: 'ISAS'  },
-  { name: 'Developer 3', email: 'developer3@example.com', link: '/developer3', affiliation: 'Other'  }
+  { name: 'Developer 1', email: 'developer1@example.com', link: '/developer1', affiliation: 'University Bielefeld', role: 'Backend'},
+  { name: 'Developer 2', email: 'developer2@example.com', link: '/developer2', affiliation: 'ISAS', role: 'Frontend' },
+  { name: 'Developer 3', email: 'developer3@example.com', link: '/developer3', affiliation: 'Other',role: 'Designer'  }
+];
+
+mentionData = [
+  { name: 'Tester 1', email: 'developer1@example.com', link: '/developer1', affiliation: 'University Bielefeld', role: 'Tester' },
+  { name: 'Helper 2', email: 'developer2@example.com', link: '/developer2', affiliation: 'ISAS', role: 'Helper/Expertise'  },
 ];
 
 updateList = [

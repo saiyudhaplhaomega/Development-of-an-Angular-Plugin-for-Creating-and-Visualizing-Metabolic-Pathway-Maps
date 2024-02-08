@@ -1,0 +1,39 @@
+.member-card {
+  box-sizing: border-box;
+  width: 400px;
+  height: 500px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  margin: 1vw;
+  border-radius: 8px;
+  background-color: beige;
+}
+
+.description-container {
+  margin: 1vw;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  text-align: left;
+}
+
+h2 {
+  font-size: 18px;
+  color: #666666;
+  text-align: left;
+}
+
+.member-card img {
+  border-radius: 0 0 8px 8px;
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
+}
+
+.member-card > div {
+  margin-bottom: 10px;
+}

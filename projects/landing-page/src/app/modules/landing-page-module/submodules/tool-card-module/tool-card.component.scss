@@ -28,25 +28,27 @@
 }
 
 
-.Description {
+.description {
   display: flex;
   flex-direction: column;
   height: 250px; 
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   align-items: center; 
 
 }
 
-.Title {
+.title {
   font-size: 18px;
   font-weight: bold;
-  color: #000; /* Adjust text color */
-  text-align: center; /* Center the text within the container */
+  color: #000; 
+  text-align: center; 
 }
 
-.Text {
+.text {
   font-size: 14px;
-  color: #555; /* Adjust text color */
+  color: #000000;
   text-align: justify;
   flex: 1;
 }
@@ -56,9 +58,9 @@
   flex-direction: column;
   gap: 10px;
   padding: 1rem;
-  margin-top: auto; /* Align buttons to the bottom */
+  margin-top: auto; 
 }
 
 .ButtonWrapper button {
-  width: 100%; /* Adjust width as needed */
+  width: 100%; 
 }

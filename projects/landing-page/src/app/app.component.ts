@@ -33,9 +33,14 @@ export class AppComponent {
     {
       label: 'Scripts',
       requireAuth: false,
+      route: '/template-script-page',
+    },
+    {
+      label: 'Knowledge Graphs',
+      requireAuth: false,
       children: [
-        { route: '/r', label: 'R' },
-        { route: '/pscripts', label: 'Python' },
+        { route: '/PharMeBINet', label: 'PharMeBINet' },
+        { route: '/Biodwh2_dwh', label: 'Biodwh2_dwh' },
       ],
     },
     {
@@ -44,6 +49,7 @@ export class AppComponent {
       children: [
         { route: '/workshops', label: 'Workshops' },
         { route: '/tutorials', label: 'Tutorial' },
+        { route: '/lectures', label: 'Study Material' },
       ],
     },
     {
