@@ -23,8 +23,8 @@
   border-radius: 50%;
   width: var(--circle-diameter);
   height: var(--circle-diameter);
-  background-color: mat-color($mdoa-primary);
-  color: mat-color($mdoa-primary, default-contrast);
+  background-color: mat-color($mdoa-accent);
+  color: mat-color($mdoa-accent, default-contrast);
   justify-content: center;
   align-items: center;
   display: inline-flex;
@@ -47,12 +47,12 @@
 
 .step-content:before {
   content: "";
-  border-left: var(--border-width) solid rgba(0, 0, 0, 0.12);
+  border-left: calc(var(--border-width) / 2) solid
+    mat-color($mdoa-primary, lighter);
   position: absolute;
   left: calc(var(--border-width) / -2);
   top: calc(var(--label-padding) / -1);
   height: calc(100% + var(--label-padding) * 2);
-  transition: height 2s;
 }
 
 .step-content.last-step:before {

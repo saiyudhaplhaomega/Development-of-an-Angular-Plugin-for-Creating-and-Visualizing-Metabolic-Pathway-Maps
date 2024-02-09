@@ -11,10 +11,6 @@
   border-right: none;
 }
 
-* {
-  --background-color: #003f97;
-}
-
 body {
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial",
@@ -22,28 +18,6 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
-.rki-blue-input {
-  background: #003f97 !important;
-  color: #fff !important;
-  border-color: #003f97 !important;
-}
-
-.rki-blue-bg {
-  background: #003f97 !important;
-}
-
-// * {
-//   --background-color: rgb(.rki-blue-bg);
-//   --text-color: hsl(0, 2%, 92%);
-
-//   text-align: left;
-//   text-decoration: none;
-//   font-family: Roboto, "Helvetica Neue", sans-serif;
-//   font-size: 1rem;
-//   color: var(--text-color) !important;
-//   background-color: var(--background-color) !important;
-// }
 
 // block text
 p {

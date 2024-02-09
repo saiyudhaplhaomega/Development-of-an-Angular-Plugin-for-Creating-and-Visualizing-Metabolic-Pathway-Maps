@@ -1,10 +1,13 @@
+@import "../../../../../../node_modules/@angular/material/theming";
+@import "../../../../../../master-stylesheet.scss";
+
 * {
   text-align: left;
   text-decoration: none;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
-  color: var(--font-color);
-  background-color: var(--background-color);
+  color: mat-color($mdoa-primary, default-contrast);
+  background-color: mat-color($mdoa-primary);
 }
 
 ul {

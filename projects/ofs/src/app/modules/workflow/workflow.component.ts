@@ -1,13 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WorkflowService } from './services/workflow.service';
-import { MatStepper } from '@angular/material/stepper';
 import { CustomStepperService, Step } from 'shared-lib';
 import { OFSData } from './models/ofs-data.model';
 
@@ -59,8 +52,8 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.doSubscriptions();
     this.stepper.initialize(this.workflowSteps);
-    // this.workflow.createOfsJob();
-    this.workflow.setDummyConfig();
+    this.workflow.createOfsJob();
+    // this.workflow.setDummyConfig();
   }
 
   ngOnDestroy() {
