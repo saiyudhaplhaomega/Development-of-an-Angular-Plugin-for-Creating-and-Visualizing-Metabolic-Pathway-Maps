@@ -80,7 +80,10 @@
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
           <tr
             mat-row
             *matRowDef="let row; columns: displayedColumns"
@@ -94,9 +97,9 @@
           </tr>
         </table>
       </div>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
     <div class="my-4">
       <mat-divider></mat-divider>
