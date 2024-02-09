@@ -1,0 +1,64 @@
+@import "../../../../../../../node_modules/@angular/material/theming";
+@import "../../../../../../../master-stylesheet.scss";
+
+.step-container {
+  --circle-diameter: 1.5rem;
+  --circle-margin: 0.8rem;
+  --label-padding: 2rem;
+  --border-width: 4px;
+
+  padding-left: var(--label-padding);
+  display: flex;
+  flex-direction: column;
+}
+
+.step-label-container {
+  display: flex;
+  flex-direction: row;
+  padding: var(--label-padding) var(--label-padding) var(--label-padding) 0;
+  align-items: center;
+}
+
+.step-index-container {
+  border-radius: 50%;
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  background-color: mat-color($mdoa-primary);
+  color: mat-color($mdoa-primary, default-contrast);
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  margin-right: var(--circle-margin);
+}
+
+.step-index {
+  position: relative;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-left: calc(var(--circle-diameter) / 2);
+  padding-left: calc(var(--circle-diameter) / 2 + var(--circle-margin));
+  padding-bottom: var(--label-padding);
+  padding-right: var(--label-padding);
+}
+
+.step-content:before {
+  content: "";
+  border-left: var(--border-width) solid rgba(0, 0, 0, 0.12);
+  position: absolute;
+  left: calc(var(--border-width) / -2);
+  top: calc(var(--label-padding) / -1);
+  height: calc(100% + var(--label-padding) * 2);
+  transition: height 2s;
+}
+
+.step-content.last-step:before {
+  height: calc(100% + var(--label-padding));
+}
+
+.step-content.finished:before {
+  border-left: var(--border-width) solid mat-color($mdoa-primary);
+}

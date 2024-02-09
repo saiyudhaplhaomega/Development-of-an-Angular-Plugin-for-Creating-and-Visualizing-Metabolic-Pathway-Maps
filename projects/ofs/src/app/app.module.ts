@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
-import { OfsLandingPageComponent } from './ofs-landing-page/ofs-landing-page.component';
+import { OfsLandingPageComponent } from './components/ofs-landing-page/ofs-landing-page.component';
 import { StandardPageLayoutModule } from 'shared-lib';
 @NgModule({
   declarations: [AppComponent, OfsLandingPageComponent],
