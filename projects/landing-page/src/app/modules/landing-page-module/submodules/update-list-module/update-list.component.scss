@@ -1,0 +1,38 @@
+.update-list {
+  margin-top: 20px; 
+  padding-left: 20px;
+  margin-right: 20px;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+
+}
+
+.post-feed-post {
+  margin-bottom: 20px;
+  padding: 15px;
+
+  border-radius: 8px;
+  //box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: none;
+  box-shadow: none;
+}
+
+.post-feed-post:hover {
+  transform: scale(1.02);
+}
+
+.post-title a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px; 
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.post-meta {
+  font-size: 12px; 
+  color: rgb(76, 76, 76);
+}

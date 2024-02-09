@@ -23,6 +23,7 @@ export class AppComponent {
       label: 'Tools',
       requireAuth: false,
       children: [
+        { route: '/template', label: 'Template 1' },
         { route: '/mpa-page', label: 'MPA' },
         { route: '/prophane-page', label: 'Prophane' },
         { route: '/metaforge-page', label: 'MetaForge' },
@@ -32,9 +33,14 @@ export class AppComponent {
     {
       label: 'Scripts',
       requireAuth: false,
+      route: '/template-script-page',
+    },
+    {
+      label: 'Knowledge Graphs',
+      requireAuth: false,
       children: [
-        { route: '/rscripts', label: 'R Scripts' },
-        { route: '/pscripts', label: 'Python Scripts' },
+        { route: '/PharMeBINet', label: 'PharMeBINet' },
+        { route: '/Biodwh2_dwh', label: 'Biodwh2_dwh' },
       ],
     },
     {
@@ -43,13 +49,14 @@ export class AppComponent {
       children: [
         { route: '/workshops', label: 'Workshops' },
         { route: '/tutorials', label: 'Tutorial' },
+        { route: '/lectures', label: 'Study Material' },
       ],
     },
     {
       label: 'About',
       requireAuth: false,
       children: [
-        { route: '/mdoa', label: 'MdOA Team' },
+        { route: '/mdoa-team', label: 'MdOA Group' },
         { route: '/other', label: 'Other Team' },
       ],
     },

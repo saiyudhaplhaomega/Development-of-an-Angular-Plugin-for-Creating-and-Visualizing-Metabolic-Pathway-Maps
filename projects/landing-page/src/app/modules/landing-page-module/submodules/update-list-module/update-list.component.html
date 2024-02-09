@@ -1,0 +1,14 @@
+<div>
+  <ul>
+    <li class="post-feed-post" *ngFor="let update of updates">
+      <div>
+        <h2 class="post-title">
+          <a [href]="update.link">{{ update.title }}</a>
+        </h2>
+        <div>
+          <span class="post-meta">{{ update.type }} |</span>  <span class="post-meta"> {{ update.author }}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

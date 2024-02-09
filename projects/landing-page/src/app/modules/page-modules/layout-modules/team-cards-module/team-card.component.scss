@@ -1,0 +1,61 @@
+.team-overview {
+  margin: 2vh 10vw;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+.team-details {
+  display: flex;
+}
+
+img {
+  width: 100%;
+  max-height: 600px;
+  height: auto;
+  border-radius: 8px;
+  margin: 1vh;
+}
+
+.team-description {
+  padding-left: 5vh;
+  padding-right: 5vh;
+  padding-bottom: 5vh;
+  font-size: 18px;
+  text-align: justify;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.logo-container {
+  display: flex;
+  margin: auto;
+}
+
+h2 {
+  margin: auto;
+  padding-top: 1vh;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.keywords{
+  text-align: center;
+  margin: 2vh;
+  font-size: 20px;
+  font-weight: bold;
+  color: #666565;
+}

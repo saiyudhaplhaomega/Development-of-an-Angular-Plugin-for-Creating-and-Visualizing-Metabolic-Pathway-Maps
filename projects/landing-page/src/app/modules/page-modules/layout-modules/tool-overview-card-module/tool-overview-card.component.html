@@ -1,0 +1,111 @@
+<div class="center">
+<section class="tool-overview">
+  <h1>{{ toolName }}</h1>
+  <div class="tool-details">
+    <div class="logo-container">
+      <img [src]="toolLogo" alt="Tool Logo" />
+    </div>
+    <div class="tool-description">
+      <p>{{ toolDescription }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-overview">
+  <h2>Usage</h2>
+  <div class="table-container">
+    <table>
+      <tbody>
+        <tr *ngFor="let rowData of data">
+          <th>{{ rowData.rowHeader }}</th>
+          <td>{{ rowData.data1 }}</td>
+          <!-- <td>{{ rowData.data2 }}</td>
+          <td>{{ rowData.data3 }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-overview">
+  <h2>Developers</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Affiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let developer of developers">
+          <td>
+            <a [href]="developer.link">{{ developer.name }}</a>
+          </td>
+          <td>{{ developer.email }}</td>
+          <td>{{ developer.role }}</td>
+          <td>{{ developer.affiliation }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-overview">
+  <h2>Honorable Mentions</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Affiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mention of mentions">
+          <td>
+            <a [href]="mention.link">{{ mention.name }}</a>
+          </td>
+          <td>{{ mention.email }}</td>
+          <td>{{ mention.role }}</td>
+          <td>{{ mention.affiliation }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-overview">
+<div class="update-container">
+  <h2>Updates</h2>
+  <div>
+    <ul>
+      <li class="post-feed-post" *ngFor="let update of updates">
+        <div>
+          <h2 class="post-title">
+            <a [href]="update.link">{{ update.title }}</a>
+          </h2>
+          <div>
+            <span class="post-meta">{{ update.type }} |</span>
+            <span class="post-meta"> {{ update.author }}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<button
+  mat-raised-button
+  color="primary"
+  class="button"
+  [routerLink]="backLink"
+>
+  {{ backLinkText }}
+</button>
+</div>

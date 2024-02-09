@@ -1,0 +1,66 @@
+.ImageWrapper {
+  //background: #fff;
+  border-radius: 16px;
+  height: 250px; 
+  width: 250px;
+
+  transition: transform 0.3s ease;
+
+}
+
+.ImageWrapper:hover {
+  transform: scale(1.05);
+}
+
+
+.image {
+  height: 250px; 
+  width: 250px;
+  padding-bottom: 5px;
+  border-radius: 25px;
+}
+
+.GridWrapper {
+  width: 250px;
+  background-color: rgba(47, 48, 53, 0.1);
+  border-radius: 25px;
+  margin: 10px;
+}
+
+
+.description {
+  display: flex;
+  flex-direction: column;
+  height: 250px; 
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center; 
+
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000; 
+  text-align: center; 
+}
+
+.text {
+  font-size: 14px;
+  color: #000000;
+  text-align: justify;
+  flex: 1;
+}
+
+.ButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+  margin-top: auto; 
+}
+
+.ButtonWrapper button {
+  width: 100%; 
+}
