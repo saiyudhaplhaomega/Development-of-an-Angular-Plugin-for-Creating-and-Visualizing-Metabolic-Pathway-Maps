@@ -1,7 +1,3 @@
-# Example
-
-This project is an example project that should serve as a template for the structure of projects in this monorepo.
-
 # Introduction
 
 - Add your project logo.
@@ -38,8 +34,6 @@ Add a detailed introduction about the project here, everything you want the read
 
 Write about how to use this project.
 
-###
-
 ### Installation
 
 - Steps on how to install this project, to use it.
@@ -48,6 +42,24 @@ Write about how to use this project.
 ```
 $ add installations steps if you have to.
 ```
+
+### Worflow
+
+#### Data specifications
+
+OFF utilizes tabular input data that should have the following specifications:
+
+- data should contain abundance information about individual molecules, i.e. features, that occur in comparable groups, e.g. 'control' and 'disease' group
+- data should be stored as tab-separated file in '.csv' format
+- rows: - The first row should contain column names
+  Each following row should represent one omics feature
+- Columns:
+  - First column (mandatory): Should be labeled ‘Description’ and contain unique feature identifiers
+  - Meta-data columns (optional): Any descriptive label, may contain cross-references to databases (e.g., KEGG) or meta-data for Features
+  - Abundance columns (mandatory): Labeld with group prefix, underscore, unique sample id (<group prefix>\_<sample id>), should contain feature abundances (absolute or relative)
+  - Group prefixes must be strings
+  - Abundance columns must contain numerical values (no missing entries, NaN, etc.)
+  - At least three abundance columns per group are mandatory (3 replicates), the more the better
 
 ### Commands
 
@@ -74,8 +86,6 @@ Write about setting up the working environment for your project.
 ### File Structure
 
 Add a file structure here with the basic details about files, below is an example.
-
-(Open your project in a terminal an type 'tree' to obtain a tree view)
 
 ```
 ofs
