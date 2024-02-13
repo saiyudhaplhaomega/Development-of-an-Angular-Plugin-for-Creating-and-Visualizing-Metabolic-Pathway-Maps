@@ -1,6 +1,9 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use './node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
+@use './dist/shared-lib/theme-mixins/footer-theme' as footer;
+@use './dist/shared-lib/theme-mixins/stepper-theme' as stepper;
+@use './dist/shared-lib/theme-mixins/workflow-panel-theme' as panel;
 
 @import 'mdoa-grey-palette.scss';
 @import 'mdoa-green-palette.scss';
@@ -43,6 +46,9 @@ $mdoa-theme: mat.define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($mdoa-theme);
+@include footer.theme($mdoa-theme);
+@include stepper.theme($mdoa-theme);
+@include panel.theme($mdoa-theme);
 
 /* You can add global styles to this file, and also import other style files */
 

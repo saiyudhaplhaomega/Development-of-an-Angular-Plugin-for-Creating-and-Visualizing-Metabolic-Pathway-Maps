@@ -1,6 +1,3 @@
-@import "../../../../../../../node_modules/@angular/material/theming";
-@import "../../../../../../../master-stylesheet.scss";
-
 .step-container {
   --circle-diameter: 1.5rem;
   --circle-margin: 0.8rem;
@@ -23,8 +20,6 @@
   border-radius: 50%;
   width: var(--circle-diameter);
   height: var(--circle-diameter);
-  background-color: mat-color($mdoa-accent);
-  color: mat-color($mdoa-accent, default-contrast);
   justify-content: center;
   align-items: center;
   display: inline-flex;
@@ -47,8 +42,8 @@
 
 .step-content:before {
   content: "";
-  border-left: calc(var(--border-width) / 2) solid
-    mat-color($mdoa-primary, lighter);
+  border-left-width: calc(var(--border-width) / 2);
+  border-style: solid;
   position: absolute;
   left: calc(var(--border-width) / -2);
   top: calc(var(--label-padding) / -1);
@@ -60,5 +55,6 @@
 }
 
 .step-content.finished:before {
-  border-left: var(--border-width) solid mat-color($mdoa-primary);
+  border-left-width: var(--border-width);
+  border-style: solid;
 }

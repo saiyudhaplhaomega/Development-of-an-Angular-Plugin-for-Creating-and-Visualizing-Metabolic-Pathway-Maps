@@ -3,5 +3,10 @@
   "dest": "../../dist/shared-lib",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "./theme-mixins/_footer-theme.scss",
+    "./theme-mixins/_stepper-theme.scss",
+    "./theme-mixins/_workflow-panel-theme.scss"
+  ]
 }

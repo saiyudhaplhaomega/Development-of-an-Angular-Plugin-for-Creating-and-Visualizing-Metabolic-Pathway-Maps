@@ -1,13 +1,42 @@
-@import "../../../../../../node_modules/@angular/material/theming";
-@import "../../../../../../master-stylesheet.scss";
+@use "sass:map";
+@use "@angular/material" as mat;
+// @import "../../../../../../master-stylesheet.scss";
 
-* {
+// get colors from theme
+// $color-config: mat.get-color-config($mdoa-theme);
+// // get primary palette
+// $primary-palette: map.get($color-config, "primary");
+
+// override material styles
+// .mat-expansion-panel-header-title,
+// .mat-expansion-panel-header-description,
+// .mat-expansion-panel {
+//   color: mat.get-color-from-palette($primary-palette, default-contrast);
+// }
+
+.mat-expansion-panel {
+  box-shadow: none;
+  background: none;
+}
+
+.mat-accordion .mat-expansion-panel {
+  border-radius: 0;
+}
+
+.mat-expansion-panel-header {
+  max-height: 96px;
+  min-height: 48px;
+  height: auto;
+}
+
+// component styles
+.footer-root {
   text-align: left;
   text-decoration: none;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
-  color: mat-color($mdoa-primary, default-contrast);
-  background-color: mat-color($mdoa-primary);
+  // color: mat.get-color-from-palette($primary-palette, default-contrast);
+  // background-color: mat.get-color-from-palette($primary-palette);
 }
 
 ul {
@@ -35,22 +64,6 @@ img {
 
 .font-bold {
   font-weight: 700;
-}
-
-.mat-expansion-panel {
-  box-shadow: none;
-  background: none;
-  color: none;
-}
-
-.mat-accordion .mat-expansion-panel {
-  border-radius: 0;
-}
-
-.mat-expansion-panel-header {
-  max-height: 96px;
-  min-height: 48px;
-  height: auto;
 }
 
 .footer-panels {
