@@ -1,0 +1,6 @@
+@mixin color($theme) {
+  .example-class {
+    color: white;
+    background-color: darkslategrey;
+  }
+}

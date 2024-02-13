@@ -9,13 +9,9 @@
 @import 'mdoa-green-palette.scss';
 @import 'mdoa-red-palette.scss';
 
-//Important for handsontable!!!!
-@import '~handsontable/dist/handsontable.full.css';
-
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.all-component-typographies();
 @include mat.core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -42,10 +38,12 @@ $mdoa-theme: mat.define-light-theme(
   )
 );
 
+@include mat.all-component-typographies();
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($mdoa-theme);
+
 @include footer.theme($mdoa-theme);
 @include stepper.theme($mdoa-theme);
 @include panel.theme($mdoa-theme);

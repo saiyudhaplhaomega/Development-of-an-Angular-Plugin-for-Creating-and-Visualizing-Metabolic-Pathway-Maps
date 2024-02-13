@@ -27,7 +27,7 @@
         [disabled]="formDisabledSubject$ | async"
         mat-flat-button
         (click)="applyFeatureProfile()"
-        color="primary"
+        color="accent"
       >
         apply feature profile to selection
       </button>
@@ -109,7 +109,7 @@
       [disabled]="!selection.hasValue() || (formDisabledSubject$ | async)"
       mat-flat-button
       (click)="generateResults()"
-      color="primary"
+      color="accent"
     >
       submit features and retrieve results
     </button>
