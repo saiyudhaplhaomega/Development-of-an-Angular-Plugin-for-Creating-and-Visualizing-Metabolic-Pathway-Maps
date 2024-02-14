@@ -1,12 +1,3 @@
-.nav-toolbar-root {
-  // TODO: how to pass any background color from importing modules? --> Angular Theming
-  // if i comment this i can pass a colo from local styles.scss
-  //--background-color: rgb(55 65 81);
-
-  // color: var(--font-color);
-  // background-color: var(--background-color);
-}
-
 .toolbar-button {
   background-color: inherit !important;
   color: inherit !important;
@@ -53,4 +44,5 @@
 
 .logo {
   padding: 0.5rem;
+  box-sizing: border-box;
 }

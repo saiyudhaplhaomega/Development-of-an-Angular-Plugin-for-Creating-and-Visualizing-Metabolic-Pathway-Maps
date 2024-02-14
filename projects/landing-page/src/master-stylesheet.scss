@@ -1,13 +1,13 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-@use './dist/shared-lib/theme-mixins/footer-theme' as footer;
-@use './dist/shared-lib/theme-mixins/stepper-theme' as stepper;
-@use './dist/shared-lib/theme-mixins/workflow-panel-theme' as panel;
+@use "@angular/material" as mat;
+// @use './dist/shared-lib/theme-mixins/footer-theme' as footer;
+// @use './dist/shared-lib/theme-mixins/stepper-theme' as stepper;
+// @use './dist/shared-lib/theme-mixins/workflow-panel-theme' as panel;
 
-@import 'mdoa-grey-palette.scss';
-@import 'mdoa-green-palette.scss';
-@import 'mdoa-red-palette.scss';
+// @import 'mdoa-grey-palette.scss';
+// @import 'mdoa-green-palette.scss';
+// @import 'mdoa-red-palette.scss';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -17,14 +17,14 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-// $mdoa-primary: mat.define-palette(mat.$indigo-palette);
-$mdoa-primary: mat.define-palette($md-mdoagrey);
-// $mdoa-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
+$mdoa-primary: mat.define-palette(mat.$indigo-palette);
+// $mdoa-primary: mat.define-palette($md-mdoagrey);
+$mdoa-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// $mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
 
 // The warn palette is optional (defaults to red).
-// $mdoa-warn: mat.define-palette(mat.$red-palette);
-$mdoa-warn: mat.define-palette($md-mdoared);
+$mdoa-warn: mat.define-palette(mat.$red-palette);
+// $mdoa-warn: mat.define-palette($md-mdoared);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -44,9 +44,9 @@ $mdoa-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($mdoa-theme);
 
-@include footer.theme($mdoa-theme);
-@include stepper.theme($mdoa-theme);
-@include panel.theme($mdoa-theme);
+// @include footer.theme($mdoa-theme);
+// @include stepper.theme($mdoa-theme);
+// @include panel.theme($mdoa-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -54,5 +54,5 @@ html,
 body {
   margin: 0;
   height: 100%;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

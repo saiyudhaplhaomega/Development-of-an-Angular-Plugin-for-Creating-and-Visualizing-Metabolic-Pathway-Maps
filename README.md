@@ -187,7 +187,7 @@ If you are confused how this works, check out these links:
 
 Theming facilitates uniform coloring and typography of applications based on a defined scheme. Such a scheme, i.e. a theme, includes a palette of colors and typography styles that should be applied to all styled components.
 
-We use Angular meterial for theming which uses with [SASS](https://sass-lang.com/documentation/), a stylesheet language that extends css by many features and is compiled to css.
+We use Angular Material for theming which uses [SASS](https://sass-lang.com/documentation/), a stylesheet language that extends css by many features and is compiled to css.
 
 [Angular guide to theming](https://material.angular.io/guide/theming)
 
@@ -198,15 +198,15 @@ A color palette is (usually) based on one color, e.g., green. The palette contai
 A color palette is stored as sass map and can be build using the [Material Design Palette Generator](http://mcg.mbitson.com/#!?mcgpalette0=%233f51b5).
 Export the generated Palette by clicking on the download icon, select "Angular JS 2" and copy the palette into an scss file.
 
-The palette contains hues between 50 and 900, accent hues used to emphasize elements, and contrast colors for each hue (see for example mdoa-grey-palette.scss).
+The palette contains hues between 50 and 900, accent hues used to emphasize elements (the "A" values, e.g., "A100"), and contrast colors for each hue (see for example mdoa-grey-palette.scss).
 
 ![](https://lh3.googleusercontent.com/B7cWRIVroduc9tSxqWaCyCGQ_M9bfsmFQKMlVfnuR2BIh_eR35gz3hO_45QKnItqA_wuXqAcmBNFVRam4Upw5Nwqhsmo6FJgMWoW=w1064-v0)
 
 ### Building a Theme
 
-An Angular Material theme consists of a primary color palette, an accent color palette, and a warning color palette. The primary palette is used as a "basic" color (e.g., for navbar), the accent palette is used to emphasize selected elements (e.g., buttons), and the warn palette is used to emphasize if something is wrong (e.g., incorrect form elements).
+An Angular Material theme consists of a primary color palette, an accent color palette, and a warning color palette. The primary palette is used as a "basic" color (e.g., for navbar), the accent palette is used to emphasize specific elements (e.g., buttons), and the warn palette is used to emphasize if something is wrong (e.g., incorrect form elements).
 
-To achieve a high color contrast you could select complementary colors for palettes, or grey/black as primary and bright colors as accent and warning. Use for example the [Adobe Color Wheel](https://color.adobe.com/de/create/color-wheel) for that.
+To achieve a high color contrast you could select complementary colors for palettes, or grey/black as primary and bright colors as accent and warning. Use for example the [Adobe Color Wheel](https://color.adobe.com/de/create/color-wheel) to find complementary colors.
 
 The theme is composed in an scss stylesheet:
 
@@ -220,11 +220,13 @@ The theme is composed in an scss stylesheet:
 @import 'mdoa-red-palette.scss';
 
 // @include imports mixins. Mixins are reusable blocks of stylings that can take arguments.
-// Core includes mixins used across all Angular Material components and should be called only once for an application.
+// Core includes mixins used across all Angular Material components
+// and should be applied only once for a project.
 @include mat.core();
 
 // define palettes as sass variables with $
-// define-palette is a sass function using a palette and optionally hues for default, lighter, darker, and text colors
+// define-palette is a sass function using a palette
+// and optionally hues for default, lighter, darker, and text colors
 $mdoa-primary: mat.define-palette($md-mdoagrey);
 $mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
 $mdoa-warn: mat.define-palette($md-mdoared);
@@ -341,9 +343,9 @@ $primary-palette: map.get($color-config, 'primary');
 }
 ```
 
-(For library components:) Define one theming file per module. Locate the theming files in "theme-mixins" at the top level of the library. Stylesheets are not exported by default when building the library but can be included in the "assets" array in ng-package.json. After building, the theme mixins are available in dist/shared-lib/theme-mixins.
+(For library components:) Define one theming file per module. Locate the theming files in "theme-mixins" at the top level of the library. Stylesheets are only exported during library building when they are included in the "assets" array in ng-package.json. After building, the theme mixins are available in dist/shared-lib/theme-mixins.
 
-7. To apply theming, theme mixins need to imported into "styles.scss" of an application project using @include.
+7. To apply theming, theme mixins need to imported into "styles.scss" of a project using @include.
 
 ```
 // styles.scss
@@ -357,6 +359,7 @@ $primary-palette: map.get($color-config, 'primary');
 // import theme
 @import './../../../mdoa-theme.scss';
 
+// themed classes are only applied when they are included
 @include example($mdoa-theme)
 ```
 

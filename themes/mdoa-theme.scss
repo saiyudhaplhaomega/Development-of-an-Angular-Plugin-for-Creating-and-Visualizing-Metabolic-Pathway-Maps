@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+@import './palettes/mdoa-green-palette.scss';
+@import './palettes/mdoa-grey-palette.scss';
+@import './palettes/mdoa-red-palette.scss';
+
+$mdoa-primary: mat.define-palette($md-mdoagrey);
+$mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
+$mdoa-warn: mat.define-palette($md-mdoared);
+
+$mdoa-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $mdoa-primary,
+      accent: $mdoa-accent,
+      warn: $mdoa-warn,
+    ),
+  )
+);
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
