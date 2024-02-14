@@ -4,13 +4,11 @@
 
 // custom theme mixins
 @use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+@use "./app/modules/test-example-content/components/theming-example/theming-example-theme"
+  as example;
 
 // angular material core styles
 @include mat.core();
-
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
 
 // custom theme
 @import "../../../themes/mdoa-theme.scss";
@@ -24,3 +22,4 @@
 
 // applies custom theme to custom component
 @include footer.theme($mdoa-theme);
+@include example.theme($mdoa-theme);

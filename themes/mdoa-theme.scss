@@ -1,13 +1,18 @@
+// @use imports the Angular Material theme functions and mixins
+// @use declarations need to be made before any @import or @include statements
 @use '@angular/material' as mat;
 
+// Import the custom palettes
 @import './palettes/mdoa-green-palette.scss';
 @import './palettes/mdoa-grey-palette.scss';
 @import './palettes/mdoa-red-palette.scss';
 
+// Define the palettes
 $mdoa-primary: mat.define-palette($md-mdoagrey);
 $mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
 $mdoa-warn: mat.define-palette($md-mdoared);
 
+// Define the theme
 $mdoa-theme: mat.define-light-theme(
   (
     color: (
@@ -18,6 +23,7 @@ $mdoa-theme: mat.define-light-theme(
   )
 );
 
+// style settings for the complete app
 html,
 body {
   margin: 0;

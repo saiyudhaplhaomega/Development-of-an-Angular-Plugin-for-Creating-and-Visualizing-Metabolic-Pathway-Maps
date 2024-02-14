@@ -13,15 +13,13 @@ The application structure should follow the "LIFT" concept:
 
 ### Implementation
 
-An Angular workspace contains files of one or more applications. Importantly, it contains configuration files relevant for all applications, e.g., "package.json" to specify packages and their versions, and a "master-stylesheet.scss" containing application wide style configurations.
+An Angular workspace contains files of one or more applications. Tt contains configuration files relevant for all applications, e.g., "package.json" to specify packages and their versions.
 
 ![workspace](Styleguide/workspace.PNG)
 
 The projects folder contains applications and libraries. The "template-project" contains an example structure for applications.
 
 ![template-project](Styleguide/template-project.PNG)
-
-For an explanation of "material-style-overrides" see below.
 
 Modules are the entrypoints for Angular to build the application or parts of it ([source](https://angular.io/guide/architecture-modules)). The highest module is "app.module.ts".
 
@@ -211,28 +209,21 @@ To achieve a high color contrast you could select complementary colors for palet
 The theme is composed in an scss stylesheet:
 
 ```
-// master-stylesheet.scss
-@use '@angular/material' as mat; // import sass functions with @use before anything else
+// @use imports the Angular Material theme functions and mixins
+// @use declarations need to be made before any @import or @include statements
+@use '@angular/material' as mat;
 
-// import palettes
-@import 'mdoa-grey-palette.scss';
-@import 'mdoa-green-palette.scss';
-@import 'mdoa-red-palette.scss';
+// Import the custom palettes
+@import './palettes/mdoa-green-palette.scss';
+@import './palettes/mdoa-grey-palette.scss';
+@import './palettes/mdoa-red-palette.scss';
 
-// @include imports mixins. Mixins are reusable blocks of stylings that can take arguments.
-// Core includes mixins used across all Angular Material components
-// and should be applied only once for a project.
-@include mat.core();
-
-// define palettes as sass variables with $
-// define-palette is a sass function using a palette
-// and optionally hues for default, lighter, darker, and text colors
+// Define the palettes
 $mdoa-primary: mat.define-palette($md-mdoagrey);
 $mdoa-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
 $mdoa-warn: mat.define-palette($md-mdoared);
 
-// define the theme
-// It's also possible to define a dark theme (mat.define-dark-theme)
+// Define the theme
 $mdoa-theme: mat.define-light-theme(
   (
     color: (
@@ -243,13 +234,47 @@ $mdoa-theme: mat.define-light-theme(
   )
 );
 
-// Import mixins for typography and color.
-// all-component-themes is a mixin that reads the defined color theme.
-// By including it, it automatically imports all css classes for Angular Material components and applies the theme.
-@include mat.all-component-typographies();
-@include mat.all-component-themes($mdoa-theme);
+```
+
+Themes are located at the workspace level in the "themes" directory. This directory also includes all cutsom palettes under "themes/palettes".
+
+### Project Stylesheets
+
+Each project contains a topmost stylesheet named "styles.scss".
 
 ```
+// @use has to be called before @import
+// angular material theme mixins and functions
+@use "@angular/material" as mat;
+
+// custom theme mixins
+@use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+@use "./app/modules/test-example-content/components/theming-example/theming-example-theme"
+  as example;
+
+// angular material core styles
+@include mat.core();
+
+// custom theme
+@import "../../../themes/mdoa-theme.scss";
+
+// applies angular material typography styles
+@include mat.all-component-typographies();
+// applies custom theme to angular material components
+@include mat.all-component-themes($mdoa-theme);
+// overrides styles of angular material components
+@import "./material-style-overrides.scss";
+
+// applies custom theme to custom component
+@include footer.theme($mdoa-theme);
+@include example.theme($mdoa-theme);
+```
+
+The order of imports in "styles.scss" is relevant for the order in which styles are applied.
+
+@use statements import mixins and functions and need to be included before anything else. First, angular material functions and mixins for custom themed components are imported. "@include mat.all-comonent-typographies" and "@include all-component-themes" import styles for angular material components. These are then overwritten by classes from "material-style-overrides.scss". Lastly, styles for custom themed components are imported.
+
+These first lines should be included in every "styles.scss" file and are followed by project specific (s)css classes.
 
 ### Applying themes to custom (library) components
 
@@ -286,13 +311,14 @@ $mdoa-theme: mat.define-light-theme(
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+@mixin color($theme) {
+
 // Get the color config from the theme.
 $color-config: mat.get-color-config($theme);
 
 // Get the primary color palette from the color-config.
 $primary-palette: map.get($color-config, 'primary');
 
-@mixin color($theme) {
   .example-class {
     color: white;
     background-color: darkslategrey;
@@ -308,13 +334,14 @@ $primary-palette: map.get($color-config, 'primary');
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+@mixin color($theme) {
+
 // Get the color config from the theme.
 $color-config: mat.get-color-config($theme);
 
 // Get the primary color palette from the color-config.
 $primary-palette: map.get($color-config, 'primary');
 
-@mixin color($theme) {
   .example-class {
     color: mat.get-color-from-palette($primary-palette, default-contrast);
     background-color:  mat.get-color-from-palette($primary-palette);
@@ -325,43 +352,36 @@ $primary-palette: map.get($color-config, 'primary');
 6. Add a theme mixin. If no theme is provided, the color mixin won't be applied. Additionally, other mixins, e.g. typography can be added at this point.
 
 ```
-// _theming-example-theme.scss
-@use 'sass:map';
-@use '@angular/material' as mat;
-
-// Get the color config from the theme.
-$color-config: mat.get-color-config($theme);
-
-// Get the primary color palette from the color-config.
-$primary-palette: map.get($color-config, 'primary');
+//_theming-example-theme.scss
+@use "sass:map";
+@use "@angular/material" as mat;
 
 @mixin color($theme) {
+  // Get the color config from the theme.
+  $color-config: mat.get-color-config($theme);
+
+  // Get the primary color palette from the color-config.
+  $primary-palette: map.get($color-config, "primary");
+
   .example-class {
     color: mat.get-color-from-palette($primary-palette, default-contrast);
-    background-color:  mat.get-color-from-palette($primary-palette);
-    }
+    background-color: mat.get-color-from-palette($primary-palette);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+
+  // add typography mixin here
 }
 ```
 
 (For library components:) Define one theming file per module. Locate the theming files in "theme-mixins" at the top level of the library. Stylesheets are only exported during library building when they are included in the "assets" array in ng-package.json. After building, the theme mixins are available in dist/shared-lib/theme-mixins.
 
-7. To apply theming, theme mixins need to imported into "styles.scss" of a project using @include.
-
-```
-// styles.scss
-@use '@angular/material' as mat;
-
-@use './app/modules/test-example-content/components/theming-example/_theming-example-theme.scss' as example
-
-// mixins for library components
-@use './dist/shared-lib/theme-mixins/footer-theme' as footer;
-
-// import theme
-@import './../../../mdoa-theme.scss';
-
-// themed classes are only applied when they are included
-@include example($mdoa-theme)
-```
+7. To apply theming, theme mixins need to imported into "styles.scss" of a project using @include (see above).
 
 # Deploying to DockerHub
 
