@@ -55,7 +55,7 @@
                   class="card-title-button-wrapper"
                   *ngIf="authService.allowExpert()"
                 >
-                  <mat-slide-toggle color="primary" (change)="onViewChange()"
+                  <mat-slide-toggle color="accent" (change)="onViewChange()"
                     >expert</mat-slide-toggle
                   >
                 </span>
@@ -87,10 +87,10 @@
                 <app-job-function
                   *ngIf="currentCardHeader === 'Functional Annotation'"
                 ></app-job-function>
-                <app-job-custom-map 
+                <app-job-custom-map
                   *ngIf="currentCardHeader === 'Custom Map Annotation'"
                 ></app-job-custom-map>
-                <app-job-lca 
+                <app-job-lca
                   *ngIf="currentCardHeader === 'Lowest Common Ancestor'"
                 ></app-job-lca>
                 <app-job-submit

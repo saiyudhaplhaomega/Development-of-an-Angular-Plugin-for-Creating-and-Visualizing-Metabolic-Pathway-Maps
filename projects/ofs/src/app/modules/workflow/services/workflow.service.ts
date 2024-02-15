@@ -126,7 +126,7 @@ export class WorkflowService {
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             response,
-            'responseData.overviewResponse.dataSparsity',
+            ['responseData', 'overviewResponse', 'dataSparsity'],
             this.address.getEndpoint(Endpoints.OVERVIEW_RESOURCE_AVAIL),
             new HttpParams()
           )
@@ -163,7 +163,7 @@ export class WorkflowService {
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
-            'responseData.preprocessingResponse.predictivePerformance',
+            ['responseData', 'preprocessingResponse', 'predictivePerformance'],
             this.address.getEndpoint(Endpoints.PREPROCESSING_RESOURCE_AVAIL),
             new HttpParams()
           )
@@ -191,7 +191,7 @@ export class WorkflowService {
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
-            'responseData.wrapperResponse.featureSelection',
+            ['responseData', 'wrapperResponse', 'featureSelection'],
             this.address.getEndpoint(Endpoints.WRAPPER_RESOURCE_AVAIL),
             new HttpParams()
           )
@@ -220,7 +220,7 @@ export class WorkflowService {
         this.http
           .repeatedPostObject<OFSData, OFSData>(
             this.ofsDataSubject$.value,
-            'responseData.classifierResponse.pcaImage',
+            ['responseData', 'classifierResponse', 'pcaImage'],
             this.address.getEndpoint(Endpoints.CLASSIFIER_RESOURCES),
             new HttpParams()
           )

@@ -29,22 +29,6 @@ export class AppComponent implements OnInit {
   routes: NestedNavigationRoute[] = [
     { route: '/workflow', label: 'workflow', requireAuth: false },
     { route: '/about', label: 'about', requireAuth: false },
-    {
-      label: 'test',
-      requireAuth: false,
-      children: [
-        { route: '/home', label: 'test1' },
-        { route: '/home', label: 'test2' },
-      ],
-    },
-    {
-      label: 'test2',
-      requireAuth: false,
-      children: [
-        { route: '/home', label: 'test1' },
-        { route: '/home', label: 'test2' },
-      ],
-    },
   ];
 
   footerContent: NestedNavigationRoute[] = [

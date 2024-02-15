@@ -1,5 +1,8 @@
-@import "../../../master-stylesheet.scss";
+@import "./master-stylesheet.scss";
 @import "./material-style-overrides.scss";
+
+//Important for handsontable!!!!
+@import "~handsontable/dist/handsontable.full.css";
 
 .rki-blue-input {
   background: #003f97 !important;

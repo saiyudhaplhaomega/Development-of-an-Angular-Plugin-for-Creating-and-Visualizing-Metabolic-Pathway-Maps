@@ -1,18 +1,38 @@
-@import "../../../master-stylesheet.scss";
-@import "./material-style-overrides.scss";
+// @use has to be called before @import
+// angular material theme mixins and functions
+@use "@angular/material" as mat;
+
+// custom theme mixins
+@use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+@use "./dist/shared-lib/theme-mixins/stepper-theme" as stepper;
+@use "./dist/shared-lib/theme-mixins/workflow-panel-theme" as panel;
+
+// angular material core styles
+@include mat.core();
 
 // adds tailwind, remember to add your project to the tailwind.config.js
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+// custom theme
+@import "../../../themes/mdoa-theme.scss";
+
+// applies angular material typography styles
+@include mat.all-component-typographies();
+// applies custom theme to angular material components
+@include mat.all-component-themes($mdoa-theme);
+// overrides styles of angular material components
+@import "./material-style-overrides.scss";
+
+// applies custom theme to custom component
+@include footer.theme($mdoa-theme);
+@include stepper.theme($mdoa-theme);
+@include panel.theme($mdoa-theme);
+
 // fixes input label bug when using tailwind and angular material (https://github.com/angular/components/issues/26102)
 .mdc-notched-outline__notch {
   border-right: none;
-}
-
-* {
-  --background-color: #003f97;
 }
 
 body {
@@ -22,28 +42,6 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
-.rki-blue-input {
-  background: #003f97 !important;
-  color: #fff !important;
-  border-color: #003f97 !important;
-}
-
-.rki-blue-bg {
-  background: #003f97 !important;
-}
-
-// * {
-//   --background-color: rgb(.rki-blue-bg);
-//   --text-color: hsl(0, 2%, 92%);
-
-//   text-align: left;
-//   text-decoration: none;
-//   font-family: Roboto, "Helvetica Neue", sans-serif;
-//   font-size: 1rem;
-//   color: var(--text-color) !important;
-//   background-color: var(--background-color) !important;
-// }
 
 // block text
 p {

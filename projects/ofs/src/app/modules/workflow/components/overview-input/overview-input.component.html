@@ -81,7 +81,7 @@
               <button
                 [disabled]="formModel.disabled"
                 mat-flat-button
-                color="primary"
+                color="accent"
                 type="button"
                 (click)="removeGroup(i)"
               >
@@ -97,7 +97,7 @@
           class="col-span-2"
           [disabled]="!formModel.valid || (formDisabled$ | async)"
           mat-flat-button
-          color="primary"
+          color="accent"
         >
           Next
         </button>

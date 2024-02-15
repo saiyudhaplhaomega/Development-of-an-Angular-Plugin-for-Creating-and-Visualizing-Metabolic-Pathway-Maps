@@ -25,7 +25,7 @@
               [placeholder]="prophaneJobState.currentProphaneJob.parameters.reportStyle.name"
               [compareWith]="prophaneJobState.compareByID"
               (selectionChange)="onSourceChange()">
-    <mat-option *ngFor="let typeItem of this.reportStyles" 
+    <mat-option *ngFor="let typeItem of this.reportStyles"
                 [value]="typeItem">
                 {{typeItem.name}}
     </mat-option>

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { WorkflowComponent } from './workflow.component';
-import { MatStepperModule } from '@angular/material/stepper';
 import { OverviewInputComponent } from './components/overview-input/overview-input.component';
 import { OverviewResultsComponent } from './components/overview-results/overview-results.component';
 import { PreprocessingInputComponent } from './components/preprocessing-input/preprocessing-input.component';
@@ -48,7 +47,6 @@ import { StepperModule } from 'shared-lib';
   ],
   imports: [
     CommonModule,
-    MatStepperModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

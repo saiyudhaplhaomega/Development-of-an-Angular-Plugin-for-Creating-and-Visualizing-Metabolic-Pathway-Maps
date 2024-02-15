@@ -7,6 +7,7 @@ import { OneComponent } from './components/one/one.component';
 import { OnedotoneComponent } from './components/one/onedotone/onedotone.component';
 import { OnedottwoComponent } from './components/one/onedottwo/onedottwo.component';
 import { TwoComponent } from './components/two/two.component';
+import { ThemingExampleComponent } from './components/theming-example/theming-example.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TwoComponent } from './components/two/two.component';
     OneComponent,
     OnedotoneComponent,
     OnedottwoComponent,
-    TwoComponent
+    TwoComponent,
+    ThemingExampleComponent
   ],
   imports: [
     CommonModule,

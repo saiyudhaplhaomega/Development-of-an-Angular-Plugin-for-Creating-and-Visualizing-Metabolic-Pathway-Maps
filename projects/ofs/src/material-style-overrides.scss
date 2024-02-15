@@ -40,17 +40,6 @@
 // CSS Selectors: https://www.w3schools.com/cssref/css_selectors.php
 // Material overriding: https://betterprogramming.pub/best-way-to-overwrite-angular-materials-styles-e38dc8b84962
 
-.mat-stepper-vertical.mat-stepper-workflow {
-  & .mat-vertical-stepper-content {
-    height: 100% !important;
-    visibility: visible !important;
-  }
-
-  // & .mat-step-vet {
-  //   background-color: blue;
-  // }
-}
-
 // overrides icon padding of the ngx file input icon button
 .mat-mdc-icon-button {
   height: auto !important;

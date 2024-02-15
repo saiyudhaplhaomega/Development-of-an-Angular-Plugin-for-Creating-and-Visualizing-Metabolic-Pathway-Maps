@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+
+@import './palettes/rki-blue-palette.scss';
+@import './palettes/rki-blue-warn-palette.scss';
+
+$prophane-primary: mat.define-palette($md-rkiblue);
+$prophane-accent: mat.define-palette($md-rkiblue-warn, 500, 200, 900);
+$prophane-warn: mat.define-palette($md-rkiblue-warn);
+
+$prophane-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $prophane-primary,
+      accent: $prophane-accent,
+      warn: $prophane-warn,
+    ),
+  )
+);
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

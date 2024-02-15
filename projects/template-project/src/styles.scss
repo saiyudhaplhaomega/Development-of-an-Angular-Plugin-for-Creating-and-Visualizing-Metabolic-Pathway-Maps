@@ -1,2 +1,25 @@
-@import "../../../master-stylesheet.scss";
+// @use has to be called before @import
+// angular material theme mixins and functions
+@use "@angular/material" as mat;
+
+// custom theme mixins
+@use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+@use "./app/modules/test-example-content/components/theming-example/theming-example-theme"
+  as example;
+
+// angular material core styles
+@include mat.core();
+
+// custom theme
+@import "../../../themes/mdoa-theme.scss";
+
+// applies angular material typography styles
+@include mat.all-component-typographies();
+// applies custom theme to angular material components
+@include mat.all-component-themes($mdoa-theme);
+// overrides styles of angular material components
 @import "./material-style-overrides.scss";
+
+// applies custom theme to custom component
+@include footer.theme($mdoa-theme);
+@include example.theme($mdoa-theme);
