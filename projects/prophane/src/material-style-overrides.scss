@@ -706,9 +706,9 @@ input.mat-input-element {
     color: rgba(0, 0, 0, .38)
 }
 
-.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-    color: #003f97
-}
+// .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+//     color: #003f97
+// }
 
 .mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
     color: #ffd740
@@ -745,10 +745,10 @@ input.mat-input-element {
     background: #ffd740
 }
 
-.mat-primary .mat-pseudo-checkbox-checked,
-.mat-primary .mat-pseudo-checkbox-indeterminate {
-    background: #003f97
-}
+// .mat-primary .mat-pseudo-checkbox-checked,
+// .mat-primary .mat-pseudo-checkbox-indeterminate {
+//     background: #003f97
+// }
 
 .mat-warn .mat-pseudo-checkbox-checked,
 .mat-warn .mat-pseudo-checkbox-indeterminate {
@@ -886,10 +886,10 @@ input.mat-input-element {
     color: rgba(0, 0, 0, .87)
 }
 
-.mat-badge-content {
-    color: #fff;
-    background: #003f97
-}
+// .mat-badge-content {
+//     color: #fff;
+//     background: #003f97
+// }
 
 @media (-ms-high-contrast: active) {
     .mat-badge-content {
@@ -1101,11 +1101,11 @@ input.mat-input-element {
     background: 0 0
 }
 
-.mat-button.mat-primary,
-.mat-icon-button.mat-primary,
-.mat-stroked-button.mat-primary {
-    color: #003f97
-}
+// .mat-button.mat-primary,
+// .mat-icon-button.mat-primary,
+// .mat-stroked-button.mat-primary {
+//     color: #003f97
+// }
 
 .mat-button.mat-accent,
 .mat-icon-button.mat-accent,
@@ -1134,11 +1134,11 @@ input.mat-input-element {
     color: rgba(0, 0, 0, .26)
 }
 
-.mat-button.mat-primary .mat-button-focus-overlay,
-.mat-icon-button.mat-primary .mat-button-focus-overlay,
-.mat-stroked-button.mat-primary .mat-button-focus-overlay {
-    background-color: #003f97
-}
+// .mat-button.mat-primary .mat-button-focus-overlay,
+// .mat-icon-button.mat-primary .mat-button-focus-overlay,
+// .mat-stroked-button.mat-primary .mat-button-focus-overlay {
+//     background-color: #003f97
+// }
 
 .mat-button.mat-accent .mat-button-focus-overlay,
 .mat-icon-button.mat-accent .mat-button-focus-overlay,
@@ -1221,12 +1221,12 @@ input.mat-input-element {
     color: rgba(0, 0, 0, .26)
 }
 
-.mat-fab.mat-primary,
-.mat-flat-button.mat-primary,
-.mat-mini-fab.mat-primary,
-.mat-raised-button.mat-primary {
-    background-color: #003f97
-}
+// .mat-fab.mat-primary,
+// .mat-flat-button.mat-primary,
+// .mat-mini-fab.mat-primary,
+// .mat-raised-button.mat-primary {
+//     background-color: #003f97
+// }
 
 .mat-fab.mat-accent,
 .mat-flat-button.mat-accent,
@@ -1406,10 +1406,10 @@ input.mat-input-element {
     background-color: #fafafa
 }
 
-.mat-checkbox-checked.mat-primary .mat-checkbox-background,
-.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
-    background-color: #003f97
-}
+// .mat-checkbox-checked.mat-primary .mat-checkbox-background,
+// .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+//     background-color: #003f97
+// }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
@@ -1446,9 +1446,9 @@ input.mat-input-element {
     }
 }
 
-.mat-checkbox:not(.mat-checkbox-disabled).mat-primary .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #003f97
-}
+// .mat-checkbox:not(.mat-checkbox-disabled).mat-primary .mat-checkbox-ripple .mat-ripple-element {
+//     background-color: #003f97
+// }
 
 .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
     background-color: #ffd740
@@ -1484,10 +1484,10 @@ input.mat-input-element {
     background: #000
 }
 
-.mat-chip.mat-standard-chip.mat-chip-selected.mat-primary {
-    background-color: #003f97;
-    color: #fff
-}
+// .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary {
+//     background-color: #003f97;
+//     color: #fff
+// }
 
 .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary .mat-chip-remove {
     color: #fff;
@@ -1606,10 +1606,10 @@ th.mat-header-cell {
     border-color: rgba(0, 0, 0, .18)
 }
 
-.mat-calendar-body-selected {
-    background-color: #003f97;
-    color: #fff
-}
+// .mat-calendar-body-selected {
+//     background-color: #003f97;
+//     color: #fff
+// }
 
 .mat-calendar-body-disabled>.mat-calendar-body-selected {
     background-color: rgba(103, 58, 183, .4)
@@ -1655,9 +1655,9 @@ th.mat-header-cell {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, .2), 0 0 0 0 rgba(0, 0, 0, .14), 0 0 0 0 rgba(0, 0, 0, .12)
 }
 
-.mat-datepicker-toggle-active {
-    color: #003f97
-}
+// .mat-datepicker-toggle-active {
+//     color: #003f97
+// }
 
 .mat-datepicker-toggle-active.mat-accent {
     color: #ffd740
@@ -1732,9 +1732,9 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .6)
 }
 
-.mat-form-field.mat-focused .mat-form-field-label {
-    color: #003f97
-}
+// .mat-form-field.mat-focused .mat-form-field-label {
+//     color: #003f97
+// }
 
 .mat-form-field.mat-focused .mat-form-field-label.mat-accent {
     color: #ffd740
@@ -1752,9 +1752,9 @@ th.mat-header-cell {
     background-color: rgba(0, 0, 0, .87)
 }
 
-.mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #003f97
-}
+// .mat-form-field.mat-focused .mat-form-field-ripple {
+//     background-color: #003f97
+// }
 
 .mat-form-field.mat-focused .mat-form-field-ripple.mat-accent {
     background-color: #ffd740
@@ -1764,9 +1764,9 @@ th.mat-header-cell {
     background-color: #f44336
 }
 
-.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after {
-    color: #003f97
-}
+// .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after {
+//     color: #003f97
+// }
 
 .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-accent .mat-form-field-infix::after {
     color: #ffd740
@@ -1850,9 +1850,9 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .87)
 }
 
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-    color: #003f97
-}
+// .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+//     color: #003f97
+// }
 
 .mat-form-field-appearance-outline.mat-focused.mat-accent .mat-form-field-outline-thick {
     color: #ffd740
@@ -1874,9 +1874,9 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .06)
 }
 
-.mat-icon.mat-primary {
-    color: #003f97
-}
+// .mat-icon.mat-primary {
+//     color: #003f97
+// }
 
 .mat-icon.mat-accent {
     color: #ffd740
@@ -1895,9 +1895,9 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .38)
 }
 
-.mat-input-element {
-    caret-color: #003f97
-}
+// .mat-input-element {
+//     caret-color: #003f97
+// }
 
 .mat-input-element::placeholder {
     color: rgba(0, 0, 0, .42)
@@ -2018,9 +2018,9 @@ th.mat-header-cell {
     background-color: #d1c4e9
 }
 
-.mat-progress-bar-fill::after {
-    background-color: #003f97
-}
+// .mat-progress-bar-fill::after {
+//     background-color: #003f97
+// }
 
 .mat-progress-bar.mat-accent .mat-progress-bar-background {
     fill: #ffe57f
@@ -2046,10 +2046,10 @@ th.mat-header-cell {
     background-color: #f44336
 }
 
-.mat-progress-spinner circle,
-.mat-spinner circle {
-    stroke: #003f97
-}
+// .mat-progress-spinner circle,
+// .mat-spinner circle {
+//     stroke: #003f97
+// }
 
 .mat-progress-spinner.mat-accent circle,
 .mat-spinner.mat-accent circle {
@@ -2065,16 +2065,16 @@ th.mat-header-cell {
     border-color: rgba(0, 0, 0, .54)
 }
 
-.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #003f97
-}
+// .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+//     border-color: #003f97
+// }
 
-.mat-radio-button.mat-primary .mat-radio-inner-circle,
-.mat-radio-button.mat-primary .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
-.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-persistent-ripple,
-.mat-radio-button.mat-primary:active .mat-radio-persistent-ripple {
-    background-color: #003f97
-}
+// .mat-radio-button.mat-primary .mat-radio-inner-circle,
+// .mat-radio-button.mat-primary .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+// .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-persistent-ripple,
+// .mat-radio-button.mat-primary:active .mat-radio-persistent-ripple {
+//     background-color: #003f97
+// }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #ffd740
@@ -2145,9 +2145,9 @@ th.mat-header-cell {
     background: rgba(0, 0, 0, .12)
 }
 
-.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-    color: #003f97
-}
+// .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+//     color: #003f97
+// }
 
 .mat-form-field.mat-focused.mat-accent .mat-select-arrow {
     color: #ffd740
@@ -2395,25 +2395,25 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .54)
 }
 
-.mat-step-header .mat-step-icon {
-    background-color: rgba(0, 0, 0, .54);
-    color: #fff
-}
+// .mat-step-header .mat-step-icon {
+//     background-color: rgba(0, 0, 0, .54);
+//     color: #fff
+// }
 
 .mat-stepper-vertical{
-       & .mat-step-header{        
+       & .mat-step-header{
              & .mat-step-text-label{
                text-align: left;
              }
       }
     }
 
-.mat-step-header .mat-step-icon-selected,
-.mat-step-header .mat-step-icon-state-done,
-.mat-step-header .mat-step-icon-state-edit {
-    background-color: #003f97;
-    color: #fff
-}
+// .mat-step-header .mat-step-icon-selected,
+// .mat-step-header .mat-step-icon-state-done,
+// .mat-step-header .mat-step-icon-state-edit {
+//     background-color: #003f97;
+//     color: #fff
+// }
 
 .mat-step-header .mat-step-icon-state-error {
     background-color: transparent;
@@ -2493,10 +2493,10 @@ th.mat-header-cell {
     background-color: rgba(209, 196, 233, .3)
 }
 
-.mat-tab-group.mat-primary .mat-ink-bar,
-.mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background-color: #003f97
-}
+// .mat-tab-group.mat-primary .mat-ink-bar,
+// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//     background-color: #003f97
+// }
 
 .mat-tab-group.mat-primary.mat-background-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary.mat-background-primary .mat-ink-bar {
@@ -2556,12 +2556,12 @@ th.mat-header-cell {
     background-color: rgba(209, 196, 233, .3)
 }
 
-.mat-tab-group.mat-background-primary .mat-tab-header,
-.mat-tab-group.mat-background-primary .mat-tab-links,
-.mat-tab-nav-bar.mat-background-primary .mat-tab-header,
-.mat-tab-nav-bar.mat-background-primary .mat-tab-links {
-    background-color: #003f97
-}
+// .mat-tab-group.mat-background-primary .mat-tab-header,
+// .mat-tab-group.mat-background-primary .mat-tab-links,
+// .mat-tab-nav-bar.mat-background-primary .mat-tab-header,
+// .mat-tab-nav-bar.mat-background-primary .mat-tab-links {
+//     background-color: #003f97
+// }
 
 .mat-tab-group.mat-background-primary .mat-tab-label,
 .mat-tab-group.mat-background-primary .mat-tab-link,
@@ -2691,10 +2691,10 @@ th.mat-header-cell {
     color: rgba(0, 0, 0, .87)
 }
 
-.mat-toolbar.mat-primary {
-    background: #003f97;
-    color: #fff
-}
+// .mat-toolbar.mat-primary {
+//     background: #003f97;
+//     color: #fff
+// }
 
 .mat-toolbar.mat-accent {
     background: #ffd740;

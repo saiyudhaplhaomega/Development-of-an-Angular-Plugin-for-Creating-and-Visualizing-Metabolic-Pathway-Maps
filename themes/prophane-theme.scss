@@ -1,12 +1,12 @@
 @use '@angular/material' as mat;
 
-@import './palettes/mdoa-green-palette.scss';
+
 @import './palettes/rki-blue-palette.scss';
-@import './palettes/mdoa-red-palette.scss';
+@import './palettes/rki-blue-warn-palette.scss';
 
 $prophane-primary: mat.define-palette($md-rkiblue);
-$prophane-accent: mat.define-palette($md-mdoagreen, 500, 200, 900);
-$prophane-warn: mat.define-palette($md-mdoared);
+$prophane-accent: mat.define-palette($md-rkiblue-warn, 500, 200, 900);
+$prophane-warn: mat.define-palette($md-rkiblue-warn);
 
 $prophane-theme: mat.define-light-theme(
   (

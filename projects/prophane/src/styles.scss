@@ -1,21 +1,51 @@
-@import "./master-stylesheet.scss";
+// @use has to be called before @import
+// angular material theme mixins and functions
+@use "@angular/material" as mat;
 
+// custom theme mixins
+@use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+
+// angular material core styles
+@include mat.core();
+
+// custom theme
+@import "../../../themes/prophane-theme.scss";
+
+// applies angular material typography styles
+@include mat.all-component-typographies();
+// applies custom theme to angular material components
+@include mat.all-component-themes($prophane-theme);
+// overrides styles of angular material components
 @import "./material-style-overrides.scss";
+
 @import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 
-.rki-blue-input {
-  background: #003f97 !important;
-  color: #fff !important;
-  border-color: #003f97 !important;
+
+// applies custom theme to custom component
+@include footer.theme($prophane-theme);
+
+body {
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial",
+    sans-serif;
+  font-size: 14px;
+  text-align: center;
 }
 
-.rki-blue-bg {
-  background: #003f97 !important;
-}
 
-* {
-  --background-color: #003f97;
-}
+// .rki-blue-input {
+//   background: #003f97 !important;
+//   color: #fff !important;
+//   border-color: #003f97 !important;
+// }
+
+// .rki-blue-bg {
+//   background: #003f97 !important;
+// }
+
+// * {
+//   --background-color: #003f97;
+// }
 
 // * {
 //   --background-color: rgb(.rki-blue-bg);
@@ -28,29 +58,6 @@
 //   color: var(--text-color) !important;
 //   background-color: var(--background-color) !important;
 // }
-
-body {
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial",
-    sans-serif;
-  font-size: 14px;
-  text-align: center;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial",
-    sans-serif;
-  font-size: 14px;
-  text-align: center;
-}
 
 .divider-line {
   display: flex;
@@ -122,9 +129,10 @@ custom-table-warning {
   font-size: 1rem;
   height: calc(1.5em + 0.75rem + 2px);
   margin-bottom: 0;
+
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
+.custom-file-input:lang(en)~.custom-file-label::after {
   content: "Browse";
 }
 
@@ -142,7 +150,7 @@ custom-table-warning {
   content: "Browse";
   background-color: #e9ecef;
   border-left: inherit;
-  // border-radius: 0 0.25rem 0.25rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 
 *,
@@ -155,6 +163,7 @@ custom-table-warning {
   position: relative;
   z-index: 2;
   height: calc(1.5em + 0.75rem + 2px);
+  width: 100%;
   margin: 0;
   opacity: 0;
 }
@@ -182,8 +191,7 @@ custom-table-warning {
   padding-bottom: 3rem;
   display: grid;
   grid-template-columns:
-    [left] minmax(250px, 1fr) [center-left] minmax(600px, 2fr)
-    [center-right] 1fr [right];
+    [left] minmax(250px, 1fr) [center-left] minmax(600px, 2fr) [center-right] 1fr [right];
   grid-gap: 1rem;
   justify-items: stretch;
 }
@@ -242,7 +250,7 @@ custom-table-warning {
   width: 1px;
   outline: 0;
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: none
 }
 
 .cdk-global-overlay-wrapper,
@@ -251,22 +259,22 @@ custom-table-warning {
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  width: 100%
 }
 
 .cdk-overlay-container {
   position: fixed;
-  z-index: 1000;
+  z-index: 1000
 }
 
 .cdk-overlay-container:empty {
-  display: none;
+  display: none
 }
 
 .cdk-global-overlay-wrapper {
   display: flex;
   position: absolute;
-  z-index: 1000;
+  z-index: 1000
 }
 
 .cdk-overlay-pane {
@@ -276,7 +284,7 @@ custom-table-warning {
   z-index: 1000;
   display: flex;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 100%
 }
 
 .cdk-overlay-backdrop {
@@ -288,27 +296,27 @@ custom-table-warning {
   z-index: 1000;
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  opacity: 0;
+  transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+  opacity: 0
 }
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
-  opacity: 1;
+  opacity: 1
 }
 
 @media screen and (-ms-high-contrast: active) {
   .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
-    opacity: 0.6;
+    opacity: .6
   }
 }
 
 .cdk-overlay-dark-backdrop {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, .32)
 }
 
 .cdk-overlay-transparent-backdrop,
 .cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
-  opacity: 0;
+  opacity: 0
 }
 
 .cdk-overlay-connected-position-bounding-box {
@@ -317,13 +325,13 @@ custom-table-warning {
   display: flex;
   flex-direction: column;
   min-width: 1px;
-  min-height: 1px;
+  min-height: 1px
 }
 
 .cdk-global-scrollblock {
   position: fixed;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: scroll
 }
 
 @keyframes cdk-text-field-autofill-start {
@@ -335,22 +343,22 @@ custom-table-warning {
 }
 
 .cdk-text-field-autofill-monitored:-webkit-autofill {
-  animation-name: cdk-text-field-autofill-start;
+  animation-name: cdk-text-field-autofill-start
 }
 
 .cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
-  animation-name: cdk-text-field-autofill-end;
+  animation-name: cdk-text-field-autofill-end
 }
 
 textarea.cdk-textarea-autosize {
-  resize: none;
+  resize: none
 }
 
 textarea.cdk-textarea-autosize-measuring {
   height: auto !important;
   overflow: hidden !important;
   padding: 2px 0 !important;
-  box-sizing: content-box !important;
+  box-sizing: content-box !important
 }
 
 .card-title-button-wrapper {
@@ -402,6 +410,7 @@ textarea.cdk-textarea-autosize-measuring {
   border: 0;
 }
 
+
 .min-w-600 {
   min-width: 600px !important;
 }
@@ -414,7 +423,7 @@ textarea.cdk-textarea-autosize-measuring {
 }
 
 .uploadprogresstext {
-  color: #003f97 !important;
+  // color: #003f97 !important;
   font-size: 30px !important;
   text-align: center !important;
   justify-content: center !important;
@@ -505,8 +514,8 @@ button.active:focus {
 }
 
 .footer {
-  color: rgba(0, 0, 0, 0.5);
-  background-color: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .04);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 12px;
   height: 140px;
@@ -535,7 +544,7 @@ button.active:focus {
 }
 
 .content-container {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vH - 140px);
   padding-bottom: 3em;
 }
 
@@ -543,7 +552,7 @@ button.active:focus {
 .footer a:visited,
 .footer a:hover,
 .footer a:active {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, .5);
 }
 
 .footer a:hover {

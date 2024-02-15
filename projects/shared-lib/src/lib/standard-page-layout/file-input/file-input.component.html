@@ -3,19 +3,19 @@
     <span class="input-group-text">{{labels.inputGroupLabel}}</span>
   </div>
   <div class="custom-file input-group-append" style="flex: 1; overflow:hidden">
-    <input type="file" 
-           [accept]="inputType" 
-           id="mpa" #selection
+    <input type="file"
+           [accept]="inputType"
+           #selection
            (change)="onFileChange(selection.files)"
            class="custom-file-input">
     <label *ngIf="!selectedFile"
            class="custom-file-label"
-           for="mpa">
+           >
       {{labels.inputLabel}}
     </label>
     <label *ngIf="selectedFile"
            class="custom-file-label"
-           for="mpa">
+           >
       {{selectedFile.name}}
     </label>
   </div>
