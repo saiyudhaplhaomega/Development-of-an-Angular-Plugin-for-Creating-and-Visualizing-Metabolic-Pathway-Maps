@@ -21,8 +21,7 @@ export class FooterContentSubElement {
 export class FooterComponent {
   @Input() logos: Logo[];
   @Input() footerContent: NestedNavigationRoute[];
-
-  copyRight = '2024. ISAS e.V.';
+  @Input() copyRight: string = '2024. ISAS e.V.';
 
   panelOpenState = false;
 }
