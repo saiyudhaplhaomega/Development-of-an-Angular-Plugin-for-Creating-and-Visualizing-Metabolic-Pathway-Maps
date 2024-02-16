@@ -4,7 +4,7 @@
     }
 
 .mat-expansion-panel-header.mat-expanded {
-        font-size: 20;
+        font-size: 20px;
         font-weight: bold;
         background-color: #7986cb;
         }
@@ -13,12 +13,6 @@
     background-color: #7986cb !important;
     }
  
-
-.img-fluid{
-    max-width: 20%;
-    height: auto;
-}
-
 .tutorial{
     background-color: #d5c0f4
 }
@@ -40,3 +34,10 @@
 .bold{
     font-weight: bold;
 }
+
+.image-container {
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    display: block;
+  }
