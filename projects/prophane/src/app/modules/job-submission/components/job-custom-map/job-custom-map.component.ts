@@ -17,18 +17,21 @@ export class JobCustomMapComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onMapChange(custom_task, custom_index, files: FileList) {
+  onMapChange(custom_task: ProphaneAnnotationTaskObject, custom_index, files: FileList) {
     // add to customMap files for upload
     // remove old file if input change
+    // also add the filename as a parameter
     if (this.prophaneJobState.customMapFiles.length >= custom_index){
       this.prophaneJobState.customMapFiles[custom_index] = files[0]
     }
     else if (this.prophaneJobState.customMapFiles.length < custom_index){
       this.prophaneJobState.customMapFiles.push(files[0])
+
     }
 
     // add filename to params path, defaultValue
-    custom_task.optionstring[0].defaultValue = files[0].name;
+    // TODO: is this safe using [0]
+    custom_task.optionstring[0].values.push(files[0].name);
   }
 
   addCustomMapTask() {

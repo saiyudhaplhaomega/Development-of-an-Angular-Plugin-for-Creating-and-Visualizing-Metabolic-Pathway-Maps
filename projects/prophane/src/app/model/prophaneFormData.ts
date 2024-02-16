@@ -326,7 +326,7 @@ export const algparams = {
         isDefault: '1',
         avoid: []
       },
-      
+
     ], function (option) {
       return option.param.toLowerCase();
     },
@@ -391,9 +391,9 @@ export const defaultAnnotationTasks: ProphaneAnnotationTaskObject[] = [
 
 ];
 
-export const defaultCustomMapTask: ProphaneAnnotationTaskObject = 
+export const defaultCustomMapTask: ProphaneAnnotationTaskObject =
 {
-  scope: 'Taxonomy',
+  scope: 'CustomMap',
   database: 'custom_map',
   databaseversion: '',
   algorithm: 'acc2annot_mapper',
@@ -402,7 +402,7 @@ export const defaultCustomMapTask: ProphaneAnnotationTaskObject =
     'options'].filter(i => i['isDefault'] === '1'),
   formOptionStringSelection:  optionStrings.filter(i => i['database'] === 'custom_map')[0][
     'algs'][0]['defaultOptionStringSelection'],
-  
+
 }
 
 export const CustomMapOptions: any =  {
@@ -494,13 +494,13 @@ export const lcaOptions: ProphaneLcaObject[] = [
     name: 'LCA per group',
     optionstring: [
       {
-        param: 'threshold', 
-        valueType: 'number', 
-        defaultValue: '0.51', 
-        min: '0.1', 
-        max: '1', 
+        param: 'threshold',
+        valueType: 'number',
+        defaultValue: '0.51',
+        min: '0.1',
+        max: '1',
         values: [],
-        isDefault: '1', 
+        isDefault: '1',
         avoid: [],
       },
       {

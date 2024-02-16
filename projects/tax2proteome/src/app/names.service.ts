@@ -12,10 +12,10 @@ import {UserInputService, TaxData, TaxIDData} from './user-input.service';
 export class NamesService {
 
   // db_result: 172.16.103.175
-  private baseUrl = 'https://tax2proteome.de/api/mquery.php';
-  // private baseUrl = "http://localhost:8000/tax2proteome/rest_tax2proteome/mquery.php"
-  private Url2 = 'https://tax2proteome.de/api/pquery.php';
-  // private Url2 = "http://localhost:8000/rest_tax2proteome/pquery.php"
+  // private baseUrl = 'https://tax2proteome.de/api/mquery';
+  private baseUrl = "http://localhost:8000/tax2proteome/api/mquery"
+  //private Url2 = 'https://tax2proteome.de/api/pquery';
+  private Url2 = "http://localhost:8000/tax2proteome/api/pquery"
 
   constructor(
     private http: HttpClient,

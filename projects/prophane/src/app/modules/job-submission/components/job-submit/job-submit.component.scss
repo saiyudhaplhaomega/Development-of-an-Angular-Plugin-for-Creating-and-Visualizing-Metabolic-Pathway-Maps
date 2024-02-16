@@ -1,0 +1,24 @@
+.table-warning {
+    background-color: #f8d7da !important;
+  }
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  /* Red */
+  color: white;
+  margin-bottom: 25px;
+}
+
+.ml-summary-col {
+  width: 15em !important;
+}
+
+.dense-list {
+  font-size: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+}

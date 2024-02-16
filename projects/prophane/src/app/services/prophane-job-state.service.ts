@@ -308,6 +308,7 @@ export class ProphaneJobStateService {
       this.filesToUpload.files.push(jobObjectFile);
       this.filesToUpload.files.push(reportFile);
       this.filesToUpload.files.push(fastaFile);
+
       // custom maps, id = file name
       if (this.customMapFiles.length > 0){
         this.customMapFiles.forEach(custommap => {
