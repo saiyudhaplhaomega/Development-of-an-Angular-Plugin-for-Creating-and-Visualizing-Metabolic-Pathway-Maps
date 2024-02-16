@@ -32,32 +32,10 @@ body {
   text-align: center;
 }
 
-
-// .rki-blue-input {
-//   background: #003f97 !important;
-//   color: #fff !important;
-//   border-color: #003f97 !important;
-// }
-
-// .rki-blue-bg {
-//   background: #003f97 !important;
-// }
-
-// * {
-//   --background-color: #003f97;
-// }
-
-// * {
-//   --background-color: rgb(.rki-blue-bg);
-//   --text-color: hsl(0, 2%, 92%);
-
-//   text-align: left;
-//   text-decoration: none;
-//   font-family: Roboto, "Helvetica Neue", sans-serif;
-//   font-size: 1rem;
-//   color: var(--text-color) !important;
-//   background-color: var(--background-color) !important;
-// }
+.rki-blue_button{
+  background-color : mat.get-color-from-palette($prophane-primary);
+  color: white
+}
 
 .divider-line {
   display: flex;
@@ -455,55 +433,6 @@ button.active:focus {
   outline-style: none !important;
 }
 
-.startbox {
-  width: 100%;
-  display: -ms-inline-flexbox;
-  display: -webkit-inline-flex;
-  display: inline-flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-content: flex-start;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-}
-
-.startbox-content {
-  margin-left: 30px;
-  text-align: left;
-}
-
-.startbox-item {
-  margin: 1em;
-  width: 35em;
-  height: 10em;
-  -webkit-order: 0;
-  -ms-flex-order: 0;
-  order: 0;
-  -webkit-flex: 0 1 auto;
-  -ms-flex: 0 1 auto;
-  flex: 0 1 auto;
-  -webkit-align-self: auto;
-  -ms-flex-item-align: auto;
-  align-self: auto;
-  padding: 15px;
-}
-
-.startbox-item-title {
-  font-weight: bold;
-  margin-bottom: 15px;
-  display: block;
-  font-size: 1.4em;
-}
 
 .showpointer:hover {
   box-shadow: 0 0 10px rgba(0, 63, 151, 1);
@@ -513,50 +442,9 @@ button.active:focus {
   cursor: pointer;
 }
 
-.footer {
-  color: rgba(0, 0, 0, .5);
-  background-color: rgba(0, 0, 0, .04);
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 12px;
-  height: 140px;
-}
-
-.footer ul {
-  float: right;
-  margin-left: 3em;
-  list-style-type: none;
-}
-
-.footer ul:first-child {
-  margin-right: 2em;
-}
-
-.footer ul:last-child {
-  margin-left: 0;
-}
-
-.footer ul li {
-  flex: 1 0 25%;
-}
-
-.footer ul li:first-child {
-  font-weight: bold;
-}
-
 .content-container {
   min-height: calc(100vH - 140px);
   padding-bottom: 3em;
-}
-
-.footer a:link,
-.footer a:visited,
-.footer a:hover,
-.footer a:active {
-  color: rgba(0, 0, 0, .5);
-}
-
-.footer a:hover {
-  text-decoration: underline;
 }
 
 .jobcontrol {
@@ -604,36 +492,7 @@ button.active:focus {
   margin-top: -10px;
 }
 
-.policy-consent {
-  display: flex;
-  align-items: center;
-  color: white;
-  height: 100px;
-  margin: 10px 20px;
-}
 
-.policy-consent a:link,
-.policy-consent a:visited,
-.policy-consent a:hover,
-.policy-consent a:active {
-  color: white;
-  text-decoration: underline;
-}
-
-.policy-consent a:hover {
-  color: #fffc26;
-  text-decoration: underline;
-}
-
-.policy-consent button {
-  background-color: #f1d600;
-  margin-left: 25px;
-  width: 150px;
-}
-
-.policy-consent button:hover {
-  background-color: #fffc26;
-}
 
 .sticky-top {
   position: sticky;
