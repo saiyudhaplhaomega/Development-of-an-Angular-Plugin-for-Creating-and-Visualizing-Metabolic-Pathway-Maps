@@ -1,0 +1,30 @@
+.policy-consent {
+    display: flex;
+    align-items: center;
+    color: white;
+    height: 100px;
+    margin: 10px 20px;
+  }
+  
+  .policy-consent a:link,
+  .policy-consent a:visited,
+  .policy-consent a:hover,
+  .policy-consent a:active {
+    color: white;
+    text-decoration: underline;
+  }
+  
+  .policy-consent a:hover {
+    color: #fffc26;
+    text-decoration: underline;
+  }
+  
+  .policy-consent button {
+    background-color: #f1d600;
+    margin-left: 25px;
+    width: 150px;
+  }
+  
+  .policy-consent button:hover {
+    background-color: #fffc26;
+  }

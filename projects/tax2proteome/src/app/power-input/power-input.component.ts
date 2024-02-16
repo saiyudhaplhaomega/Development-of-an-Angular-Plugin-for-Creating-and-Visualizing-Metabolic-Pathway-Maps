@@ -15,8 +15,8 @@ export class PowerInputComponent implements OnInit {
     isLoading = false;
     errorMsg: string;
 
-    private url = 'https://tax2proteome.de/api/query.php?q=';
-    // private url =  "http:///localhost:8000/tax2proteome/rest_tax2proteome/query.php?q="
+    // private url = 'https://tax2proteome.de/api/mquery?q=';
+    private url =  "http:///localhost:8000/tax2proteome/api/mquery?q="
     @Output() messageEvent = new EventEmitter<string>();
 
     constructor(

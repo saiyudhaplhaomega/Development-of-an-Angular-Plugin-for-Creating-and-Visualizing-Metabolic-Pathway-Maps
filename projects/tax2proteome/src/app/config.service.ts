@@ -17,8 +17,10 @@ export class ConfigService {
   resultLink = '';
   status = '';
   private myId = uuid.v4();
-  private url = 'https://tax2proteome.de/api/write_config.php';
-  private url2 = 'https://tax2proteome.de/api/get.php';
+ // private url = 'https://tax2proteome.de/api/write_config.php';
+ // private url2 = 'https://tax2proteome.de/api/get';
+  private url =  "http:///localhost:8000/tax2proteome/api/write_config"
+  private url2 =  "http:///localhost:8000/tax2proteome/api/get"
 
   constructor(
       private http: HttpClient,
