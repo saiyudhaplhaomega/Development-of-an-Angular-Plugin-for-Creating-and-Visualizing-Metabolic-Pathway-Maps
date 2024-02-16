@@ -68,7 +68,7 @@ export class AuthService {
     if (this._user.value) {
       return sessionStorage.getItem('id_token');
     } else if (this._guestemail) {
-      return 'ANONYMOUS:' + this._guestemail;
+      return 'ANONYMOUS:' + this._guestemail.value;
     } else {
       return 'ANONYMOUS:noEmail';
     }

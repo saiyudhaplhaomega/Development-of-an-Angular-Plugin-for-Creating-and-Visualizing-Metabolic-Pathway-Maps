@@ -31,7 +31,7 @@ export class JobCustomMapComponent implements OnInit {
 
     // add filename to params path, defaultValue
     // TODO: is this safe using [0]
-    custom_task.optionstring[0].defaultValue = files[0].name;
+    custom_task.optionstring[0].values.push(files[0].name);
   }
 
   addCustomMapTask() {
