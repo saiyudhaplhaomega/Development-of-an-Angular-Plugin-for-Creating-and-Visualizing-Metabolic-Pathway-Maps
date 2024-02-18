@@ -1,21 +1,4 @@
-.keywords-tab-options {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    gap: 1em;
-    margin-left: 2em;
-    align-items: center;
-}
-
-.keywords-tab ul,
-.keywords-tab li {
-    margin-top:  0;
-    margin-bottom: 0;
-    padding: 0 0 0 0;
-    list-style-type: none;
-}
-
-.keyword-category {
+.keyword-category-node {
     margin-bottom: 5px;
     box-shadow: none;
     width: 100%;
@@ -27,30 +10,74 @@
     border-bottom-color: rgba(0, 0, 0, 0.3);
 }
 
-.keyword-row {
-    display:flex;
+.keyword-tab>button {
+    font-weight: 400;
+}
+
+.keyword-tab-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 1em;
+    margin-left: 2em;
+    align-items: center;
+}
+
+.keyword-tree {
+    float: left;
+    text-align: left;
+    min-width: 80%;
+}
+
+.keyword-tree ul,
+.keyword-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.keyword-tree-node {
+    display: block;
+}
+
+.keyword-tree-node .keyword-tree-node {
+    padding-left: 20px;
+}
+
+.keyword-tree-node-row {
+    display: flex;
     justify-content: space-between;
     cursor: pointer;
 }
 
-.keyword-row>span {
-    margin-top:auto;
-    margin-bottom:auto;
-    padding-right: 3px;
-}
-
-.keyword-row:not(.keyword-row-header):not(.keyword-row-selected):hover{
+.keyword-tree-node-row:not(.keyword-tree-node-highlighted):hover {
     background-color: #fafafa;
 }
 
-.keyword-row-selected {
-    background-color:#FFDBD6;
+.keyword-tree-node-highlighted {
+    background-color: #FFDBD6;
 }
 
-.keyword-row-selected:hover {
+.keyword-tree-node-highlighted:hover {
     background-color: #f5d3d3;
 }
 
-.keyword-row-header {
-    padding-bottom: 3px !important;
+.keyword-tree-node-essentials {
+    display: flex;
+    justify-content: flex-start;
+    padding-right: 5px;
+}
+
+.keyword-tree-node-info {
+    width: 100%;
+    margin: auto;
+}
+
+.keyword-tree-node-quant {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.keyword-tree-invisible {
+    display: none;
 }
