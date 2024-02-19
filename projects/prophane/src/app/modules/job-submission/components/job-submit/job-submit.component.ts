@@ -48,6 +48,7 @@ export class JobSubmitComponent {
     return lcaTask.optionstring.filter(i => i.param == 'threshold')[0].defaultValue
   }
   get_advanced_lca_options(lcaTask) {
+    console.log(lcaTask.optionstring.filter(i => i.param != 'threshold'))
     return lcaTask.optionstring.filter(i => i.param != 'threshold')
   }
   isCustomMapWithoutFile(customMaps){
