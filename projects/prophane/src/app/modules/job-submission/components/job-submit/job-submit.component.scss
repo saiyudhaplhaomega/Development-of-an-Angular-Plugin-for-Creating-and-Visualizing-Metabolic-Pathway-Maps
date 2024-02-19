@@ -15,10 +15,14 @@
 }
 
 .dense-list {
-  font-size: 8px;
+  font-size: 30px;
+  font-style: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
   box-sizing: border-box;
+}
+.dense {
+  font-size: 10px;
 }

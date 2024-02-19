@@ -392,35 +392,42 @@ input.mat-input-element {
 }
 
 // mat list
-.mat-list-base .mat-list-item {
+/*
+.mat-mdc-list-base .mdc-list-item {
     color: rgba(0, 0, 0, .87)
 }
 
-.mat-list-base .mat-list-option {
+.mat-mdc-list-base .mat-mdc-list-option {
     color: rgba(0, 0, 0, .87)
 }
 
-.mat-list-base .mat-subheader {
+.mat-mdc-list-base .mat-subheader {
     color: rgba(0, 0, 0, .54)
 }
 
-.mat-list-item-disabled {
+.mat-mdc-list-item-disabled {
     background-color: #eee
 }
 
-.mat-list-item {
+.mat-mdc-list .mat-mdc-list-base .mdc-list {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 30px
+}
+
+.mat-mdc-item .mdc-list-item{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 8px
+}
+
+.mat-mdc-list-option {
     font-family: Roboto, "Helvetica Neue", sans-serif
 }
 
-.mat-list-option {
-    font-family: Roboto, "Helvetica Neue", sans-serif
-}
-
-.mat-list-base .mat-list-item {
+.mat-mdc-list-base .mdc-list-item {
     font-size: 16px
 }
 
-.mat-list-base .mat-list-item .mat-line {
+.mat-mdc-list-base .mdc-list-item .mat-line {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -428,15 +435,15 @@ input.mat-input-element {
     box-sizing: border-box
 }
 
-.mat-list-base .mat-list-item .mat-line:nth-child(n+2) {
+.mat-mdc-list-base .mdc-list-item .mat-line:nth-child(n+2) {
     font-size: 14px
 }
 
-.mat-list-base .mat-list-option {
+.mat-mdc-list-base .mdc-list-option {
     font-size: 16px
 }
 
-.mat-list-base .mat-list-option .mat-line {
+.mat-mdc-list-base .mat-mdc-list-option .mat-line {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -444,21 +451,21 @@ input.mat-input-element {
     box-sizing: border-box
 }
 
-.mat-list-base .mat-list-option .mat-line:nth-child(n+2) {
+.mat-mdc-list-base .mat-mdc-list-option .mat-line:nth-child(n+2) {
     font-size: 14px
 }
 
-.mat-list-base .mat-subheader {
+.mat-mdc-list-base .mat-subheader {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     font-size: 14px;
     font-weight: 500
 }
 
-.mat-list-base[dense] .mat-list-item {
+.mat-mdc-list-base[dense] .mdc-list-item {
     font-size: 12px
 }
 
-.mat-list-base[dense] .mat-list-item .mat-line {
+.mat-mdc-list-base[dense] .mdc-list-item .mat-line {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -466,15 +473,15 @@ input.mat-input-element {
     box-sizing: border-box
 }
 
-.mat-list-base[dense] .mat-list-item .mat-line:nth-child(n+2) {
+.mat-mdc-list-base[dense] .mdc-list-item .mat-line:nth-child(n+2) {
     font-size: 12px
 }
 
-.mat-list-base[dense] .mat-list-option {
+.mat-mdc-list-base[dense] .mat-mdc-list-option {
     font-size: 12px
 }
 
-.mat-list-base[dense] .mat-list-option .mat-line {
+.mat-mdc-list-base[dense] .mat-mdc-list-option .mat-line {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -482,15 +489,16 @@ input.mat-input-element {
     box-sizing: border-box
 }
 
-.mat-list-base[dense] .mat-list-option .mat-line:nth-child(n+2) {
+.mat-mdc-list-base[dense] .mat-mdc-list-option .mat-line:nth-child(n+2) {
     font-size: 12px
 }
 
-.mat-list-base[dense] .mat-subheader {
+.mat-mdc-list-base[dense] .mat-subheader {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     font-size: 12px;
     font-weight: 500
 }
+*/
 
 .mat-option {
     font-family: Roboto, "Helvetica Neue", sans-serif;

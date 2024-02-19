@@ -120,11 +120,13 @@
       </th>
       <td>
         {{ task.tasklabel }}<br>
-        <mat-list dense>
-          <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-          <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-          <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
-          <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
+        <mat-list>
+          <mat-list-item>
+            <div matListItemLine> database: {{ task.database }} ({{ task.databaseversion }}) </div>
+            <div matListItemLine> algorithm: {{ task.algorithm }}</div>
+            <div matListItemLine>  e-value: {{ getEvalue(task.optionstring) }} </div>
+            <div matListItemLine> advanced options: {{ optionstringToString(task.optionstring) }}</div>
+          </mat-list-item>
         </mat-list>
       </td>
     </tr>
@@ -153,11 +155,13 @@
       </th>
       <td>
         {{ task.tasklabel }}<br>
-        <mat-list dense>
-          <mat-list-item> database: {{ task.database }} ({{ task.databaseversion }})</mat-list-item>
-          <mat-list-item> algorithm: {{ task.algorithm }} </mat-list-item>
-          <mat-list-item> e-value: {{ getEvalue(task.optionstring) }} </mat-list-item>
-          <mat-list-item> advanced options: {{ optionstringToString(task.optionstring) }} </mat-list-item>
+        <mat-list>
+          <mat-list-item>
+            <div matListItemLine> database: {{ task.database }} ({{ task.databaseversion }}) </div>
+            <div matListItemLine> algorithm: {{ task.algorithm }}</div>
+            <div matListItemLine>  e-value: {{ getEvalue(task.optionstring) }} </div>
+            <div matListItemLine> advanced options: {{ optionstringToString(task.optionstring) }}</div>
+          </mat-list-item>
         </mat-list>
       </td>
     </tr>
@@ -180,13 +184,14 @@
       </th>
       <td>
         {{custom_task.tasklabel}}<br>
-        <mat-list dense >
-          <mat-list-item [ngClass]="!custom_task.optionstring[0].values[0] ? 'table-warning' : ''">
-            Custom Map File: {{ custom_task.optionstring[0].values[0] ?
-            custom_task.optionstring[0].values[0] : 'not selected yet' }}
+        <mat-list>
+          <mat-list-item>
+            <div matListItemLine [ngClass]="!custom_task.optionstring[0].values[0] ? 'table-warning' : ''"> 
+              Custom Map File: {{ custom_task.optionstring[0].values[0] ?
+                custom_task.optionstring[0].values[0] : 'not selected yet' }}  </div>
+            <div matListItemLine> algorithm: {{ custom_task.algorithm }}  </div>
+          <!--   <div matListItemLine> Scope: {{ custom_task.scope }} </div> -->
           </mat-list-item>
-          <mat-list-item> algorithm: {{ custom_task.algorithm }}  </mat-list-item>
-          <mat-list-item> Scope: {{ custom_task.scope }} </mat-list-item>
         </mat-list>
       </td>
     </tr>
@@ -202,14 +207,16 @@
     Lowest Common Ancestor:
   </th>
   <td>
-    <mat-list dense>
-      <mat-list-item> LCA method: {{prophaneJobState.currentProphaneJob.parameters.lcaTask.name }}</mat-list-item>
-      <ng-container  *ngIf="prophaneJobState.currentProphaneJob.parameters.lcaTask.method =='lca'">
-        <mat-list-item> Threshold: {{get_lca_threshold(prophaneJobState.currentProphaneJob.parameters.lcaTask)}} </mat-list-item>
-      </ng-container >
-      <tr *ngFor="let advanced_lca_option of get_advanced_lca_options(prophaneJobState.currentProphaneJob.parameters.lcaTask)">
-        <mat-list-item> {{advanced_lca_option.param}}: {{ advanced_lca_option.defaultValue }} </mat-list-item>
-      </tr>
+    <mat-list>
+      <mat-list-item>
+        <div matListItemLine> LCA method: {{prophaneJobState.currentProphaneJob.parameters.lcaTask.name }} </div>
+        <div matListItemLine *ngIf="prophaneJobState.currentProphaneJob.parameters.lcaTask.method =='lca'">
+          threshold: {{get_lca_threshold(prophaneJobState.currentProphaneJob.parameters.lcaTask)}}
+        </div>
+        <div matListItemLine 
+        *ngFor="let advanced_lca_option of get_advanced_lca_options(prophaneJobState.currentProphaneJob.parameters.lcaTask)">   {{advanced_lca_option.param}}: {{ advanced_lca_option.defaultValue }}
+           </div>
+      </mat-list-item>
     </mat-list>
   </td>
   </tbody>
