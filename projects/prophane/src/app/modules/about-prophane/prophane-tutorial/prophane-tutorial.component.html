@@ -1,7 +1,7 @@
 
 <div style="display: flex; justify-content: center">
   <div class="w-75 ml-5">
-    <h1 class="mt-4 mb-4" style="font-weight: bold; font-size: 1.5em;">How To Use The Prophane Webserver</h1>
+    <p class="header_2">How To Use The Prophane Webserver<p>
     <mat-accordion MatAccordion >
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header class="expansion-header-tutorial">
@@ -9,6 +9,7 @@
             Introduction
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <br>
         <p class="bold">Discover a Comprehensive Tutorial on Using the Prophane Web Service</p>
         Welcome to our hands-on tutorial, designed to guide you through the seamless utilization of the Prophane web
         service.
@@ -49,8 +50,9 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <br>
-        <img src="assets/img/login.png" alt="login" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
+        <div class="image-container">
+          <img src="assets/img/login.png" alt="login" >
+        </div><br>
         You have the option to either log in and create a user account using 'Login with Google,' or you can proceed
         without logging in.<br>
         The benefits of setting up a user account via 'Login with Google' include unrestricted
@@ -59,10 +61,11 @@
         If you choose to continue without logging in, you can provide your email address to receive notifications with a
         direct link to the analysis results. Alternatively, if you prefer not to log in and don't wish to provide an
         email address, you can manually copy the result URL for downloading and access to status information.
-        <img src="assets/img/no_login.png" alt="login" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
-
-
+        <br>
+        <div class="image-container">
+          <img src="assets/img/no_login.png" alt="login">
+        </div>
+        <br>
         <div class="tutorial">
           <p style="font-weight: bold;">Hands-On Tutorial:</p>
           Whether you choose to log in or not doesn't matter for this tutorial.
@@ -84,13 +87,13 @@
         </div>
         <div class="mt-1 mb-1"></div>
         <br>
-        <h1 style="font-weight: bold;">Standard Analysis</h1>
+                <p class="header_2">Standard Analysis<p>
         <div>The standard analysis encompasses a taxonomic analysis and a functional analysis, all configured with
           default settings.
         </div>
         <br>
         <div class="mt-1 mb-1"></div>
-        <h1 style="font-weight: bold;">Expert Mode</h1>
+        <p class="header_2">Expert Mode<p>
         <div>
           In expert mode, you gain the flexibility to finely customize each step of the workflow and add more annotation
           tasks.
@@ -112,8 +115,8 @@
           <li><strong>Lowest common ancestor:</strong> LCA per group method with a threshold of 1.</li>
         </ul>
         <br>
-        <div class="text-center">
-          <img src="assets/img/expert.png" alt="expert toggle" class="img-fluid mx-auto d-block rounded">
+        <div class="image-container" style="width: 30%;">
+          <img src="assets/img/expert.png" alt="expert toggle" >
         </div>
         <br>
         <div class="tutorial">
@@ -164,7 +167,7 @@
           exclusively, simply proceed to the next step and initiate the analysis by clicking the 'Submit' button.
         </div>
         <br>
-        <h2 style="font-weight: bold;">Report file</h2>
+        <p class="header_2">Report file<p>
         <div>
           The report file is the protein identification file derived from mass spectrometry analysis.
           It must include information about protein groups, also referred to as metaproteins or protein families.
@@ -175,16 +178,14 @@
             <li>mzTab format</li>
             <li>mzIdent1.2 format</li>
           </ul>
-          <br>
-          <div class="mt-1 mb-1"></div>
           It also accommodates data produced by search software such as:
-          <br><br>
+          <br>
           <ul class="bullet_list">
             <li>MetaProteome Analyzer in single or sample comparison format</li>
             <li>Proteome Discoverer protein group output</li>
             <li>Scaffold output</li>
           </ul>
-          <br>
+          
           Descriptions on how to generate report files can be found in <a routerLink="/about"
             style="color:blue">"About Prophane"</a>, "Input Files". <br>
           If you intend to use a different input format regularly, please contact us via email at
@@ -192,7 +193,7 @@
         </div>
         <br>
         <div></div>
-        <h2 style="font-weight: bold;">FASTA File</h2>
+        <p class="header_2">FASTA File<p>
         <div>
           The FASTA file can be plain or gzipped and should contain sequences for all identified proteins. Ensure that
           the protein accessions or IDs in the FASTA file match those used in the protein identification report. You can
@@ -206,7 +207,7 @@
         </div>
         <br>
         <div></div>
-        <h2 style="font-weight: bold;">Exclude</h2>
+        <p class="header_2">Exclude<p>
         <div>
           In the 'Exclude' option, you can omit specific proteins, such as contaminations, from the analysis based on
           their accessions and string matching.<br>
@@ -215,8 +216,9 @@
         </div>
         <br>
 
-        <img src="assets/img/input.png" alt="input" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
+          <div class="image-container">
+            <img src="assets/img/input.png" alt="input">
+          </div>
         <br>
         <div class="tutorial">
           <p style="font-weight: bold;">Hands-On Tutorial: Setting Up Your Prophane Job</p>
@@ -261,30 +263,30 @@
             <dd class="col-sm-9">Double-check to confirm that the sample name is spelled correctly. </dd>
           </dl>
         </div>
-        <br>
+       
         In this section, you have the option to categorize your samples into different sample groups. These sample
         groups are crucial for obtaining average quantification values across various samples and enable you to compare
         different sets of samples, such as untreated samples versus treated samples.
-        <br><br>
+        <br>
         The mean quantification values for each sample group will be included in the final output, which consists of the
         "summary.csv" table and the "lca_summary.mztab" file. These values are also visualized in the Krona-Plots.
         Additionally, the
         quantification values for each individual sample will be reported. However, if no sample groups are specified,
         quantification will be performed separately for each individual sample.
-        <br><br>
+        <br>
         This flexibility in sample grouping and quantification allows you to tailor your analysis to your specific
         experimental design and research goals.
-        <br><br>
+        <br>
         Please note that Prophane extracts sample names from various protein reports, so it's essential to use the exact
         same sample names as they appear in these reports to ensure accurate grouping and analysis. The "Sample Group" part of the 
         <a routerLink="/about" style="color:blue"> Prophane documentation </a>
         describes how Prophane extract sample names from different protein reports.
-        <br><br>
+        <br> <br>
 
-
-        <img src="assets/img/sample_groups.png" alt="input" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 60%;">
-
+          <div class="image-container" style="width: 60%;">
+            <img src="assets/img/sample_groups.png" alt="input">
+          </div>
+          <br>
         <div class="tutorial">
           <p class="bold">Hands-On Tutorial: Creating Sample Groups in Prophane</p>
           <div>Fill in the following fields according to the example picture.</div>
@@ -320,26 +322,25 @@
             </dd>
           </dl>
         </div>
-        <br>
         Normalized Spectral Abundance Factor (NSAF) is a label-free quantification method that normalizes the number of
         identified spectra to the size of the metaprotein. The normalization can be performed relative to the largest,
         smallest protein within the protein group, or to the mean of all protein group members. This method is suitable
         for all input protein reports that include spectral counts.
-        <br><br>
+        <br>
         <s style="text-decoration:underline;">Proteome Discoverer Protein Group Reports: Special Consideration</s>
         <br>
         It's important to note that the quantification in Proteome Discoverer protein group reports is not based on
         spectral counts, and the abundances are already normalized within these reports. Therefore, when working with
         Proteome Discoverer protein group reports, select the "raw" option to preserve the existing normalization.
-        <br><br>
+        <br>
         For more detailed information about the different normalization methods and when to use them, you can refer to
         the "Quantification" part of the 
         <a routerLink="/about" style="color:blue">Prophane documentation </a>
         describing these methods in greater detail.
         <br><br>
-        <img src="assets/img/quantification.png" alt="quantification"
-          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 60%;">
-        <img>
+        <div class="image-container" style="width: 60%;">
+          <img src="assets/img/quantification.png" alt="quantification">
+        </div>
         <br>
         <div class="tutorial">
           <p class="bold">Hands-On Tutorial: Quantification Method</p>
@@ -389,7 +390,7 @@
         </div>
         <br>
 
-        <h1 style="font-weight: bold;">Taxonomic Annotation in Prophane</h1>
+        <p class="header_2">Taxonomic Annotation in Prophane<p>
         Taxonomic annotation in Prophane involves a search within the selected reference database to find proteins that
         bear similarity to those present in your analysis. Subsequently, Prophane retrieves the associated taxon ID and
         outlines the entire taxonomic lineage of the protein that exhibits the closest resemblance to the query.<br>
@@ -407,24 +408,24 @@
         You can explore different protein databases and their unique characteristics by consulting the 
         "Annotation Databases & Algorithms & Parameters" part of the 
         <a routerLink="/about"  style="color:blue"> Prophane Documentation</a>.
-        <br>
-        <h1 style="font-weight: bold;">Parameters for Taxonomic Annotation in Prophane</h1>
-        <h2 style="font-weight: bold;">E-Value:</h2>
+        <br><br>
+        <p class="header_2">Parameters for Taxonomic Annotation in Prophane<p>
+        <p class="header_3">E-Value:<p>
         The E-value parameter defines the threshold for similarity for reported proteins. Smaller E-values indicate
         more stringent similarity criteria, resulting in reporting only very closely matching proteins. Conversely,
         larger E-values, referred to as the "relaxed" setting, expand the reporting to include more matches with varying
         degrees of similarity.
         <br>
-        <h2 style="font-weight: bold;">Advanced Options:</h2>
+        <p class="header_3">Advanced Options:<p>
         For comprehensive information on additional parameters and their functionalities, please refer to the
         <a target="_blank" style="color:blue"
           href="https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf">DIAMOND documentation</a>.
         This resource provides in-depth insights into the various options available for optimizing your
         taxonomic annotation analysis in Prophane.
 
-        <img src="assets/img/taxonomic_annotation2.png" alt="defining taxonomic task"
-          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 60%;">
-
+          <div class="image-container" style="width: 60%;">
+            <img src="assets/img/taxonomic_annotation2.png" alt="defining taxonomic task">
+          </div>
         <br>
         <div class="tutorial">
           <p class="bold">Hands-On Tutorial:: Taxonomic Annotation</p>
@@ -449,7 +450,6 @@
             <dd class="col-sm-8"> Use Default Settings, nothing to be done
           </dl>
         </div>
-        <br>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -491,11 +491,12 @@
               Label" field.</dd>
           </dl>
         </div>
-        <br>
-
-        <h1 style="font-weight: bold;">Functional Annotation in Prophane</h1>
-        description functional annotation: emapper, hmmscan, hmmsearch
-        <br><br>
+        <p class="header_2">Functional Annotation in Prophane<p>
+          Functional annotation in Prophane involves a search within the selected functional database to find proteins that
+          bear similarity to those present in your analysis. Subsequently, Prophane retrieves the annotated functions and
+          outlines different functional annotation levels of the protein that exhibits the closest resemblance to the query.<br>
+          The search algorithm employed in Prophane is hmmscan, hmmsearch or emapper.
+          <br><br>
         Prophane supports following protein functional databases:
         <ul class="bullet_list" *ngFor="let funcTask of FunctionalDatabases">
           <li>
@@ -507,24 +508,24 @@
         You can explore different protein databases and their unique characteristics by consulting the 
         "Annotation Databases & Algorithms & Parameters" part of the 
         <a routerLink="/about"  style="color:blue"> Prophane Documentation</a>.
-        <br><br>
-        <h1 style="font-weight: bold;">Parameters for Functional Annotation in Prophane</h1>
-        <h2 style="font-weight: bold;">E-Value:</h2>
+        <br> <br>
+        <p class="header_2">Parameters for Functional Annotation in Prophane<p>
+        <p class="header_3">E-Value:<p>
         The E-value parameter defines the threshold for similarity for reported proteins. Smaller E-values indicate
         more stringent similarity criteria, resulting in reporting only very closely matching proteins. Conversely,
         larger E-values, referred to as the "relaxed" setting, expand the reporting to include more matches with varying
         degrees of similarity.
         <br>
-        <h2 style="font-weight: bold;">Advanced Options:</h2>
+        <p class="header_3">Advanced Options:<p>
         For comprehensive information on additional parameters and their functionalities, please refer to the
         <a target="_blank" style="color:blue" href="">EggNog documentation</a> and <a target="_blank" style="color:blue"
           href="">HAMMr documentation</a>
         This resources provide in-depth insights into the various options available for optimizing your
         functional annotation analysis in Prophane.
 
-        <img src="assets/img/functional_annotation.png" alt="functional task"
-          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 60%;">
-        <br>
+          <div class="image-container" style="width: 60%;">
+            <img src="assets/img/functional_annotation.png" alt="functional task">
+          </div>
         <br>
         <div class="tutorial">
           <p class="bold">Hands-On Tutorial:: Taxonomic Annotation</p>
@@ -549,7 +550,7 @@
             <dd class="col-sm-8"> Use Default Settings, nothing to be done.
           </dl>
         </div>
-        <br>
+       
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -562,13 +563,15 @@
         <div class="instruction">
           <p class="bold">Step by Step Instruction: Custom Map Annotation</p>
           <dl class="row">
-            <dt class="col-sm-3"><strong>1. Task Label:</strong></dt>
+            <dt class="col-sm-3"><strong>1. Add a new custom map task</strong></dt>
+            <dd class="col-sm-9">  </dd>
+            <dt class="col-sm-3"><strong>2. Task Label:</strong></dt>
             <dd class="col-sm-9"> Name your task descriptively.</dd>
-            <dt class="col-sm-3"><strong>2. Scope:</strong></dt>
+            <dt class="col-sm-3"><strong>3. Scope:</strong></dt>
             <dd class="col-sm-9"> Define the scope of your analysis, whether it's functional or taxonomical. Please note
               that this choice does not affect the analysis itself; it is used for automated naming purposes.
             </dd>
-            <dt class="col-sm-3"><strong>3. Custom Map:</strong></dt>
+            <dt class="col-sm-3"><strong>4. Custom Map:</strong></dt>
             <dd class="col-sm-9"> Select and upload your custom map file, which contains the custom annotation
               information.
             </dd>
@@ -585,7 +588,7 @@
           </dl>
         </div>
         <br>
-        <h1 style="font-weight: bold;">Custom Map Annotation in Prophane</h1>
+        <p class="header_2">Custom Map Annotation in Prophane<p>
         Prophane allows users to upload custom maps for taxonomic or functional annotations. These user-specified custom
         maps enable the mapping of identified protein accessions to specific taxonomic or functional information. The
         "acc2annot_mapper" within Prophane matches annotations based on protein accessions.
@@ -598,13 +601,23 @@
         levels are derived from the column names in the user-provided table, which serves as the basis for annotation.
         It's important to avoid using spaces, commas, tabulators, and semicolons in the column names.
         <br><br>
-        For more detailed information about the format specifications for custom maps, please refer to the "CUustom Maps" part of the provided
-        <a routerLink="/about" fragment="annotation_database_table" style="color:blue">documentation</a>.
+        For more detailed information about the format specifications for custom maps, please refer to 
+        the "Custom Maps" part of the 
+        <a routerLink="/about"  style="color:blue"> Prophane Documentation</a>.
+        <br><br>
+        If you want to use your custom map, first add a new custom map task:
         <br>
-        <img src="assets/img/custom_map.png" alt="Custom Map Annotation"
-          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 80%;">
-        <img>
+        <div class="image-container" style="width: 60%;">
+          <img src="assets/img/Custom_map_1.png" alt="Custom Map Annotation Add Task">
+        </div>
         <br>
+        Name your tasks and choose custom map file for upload:
+        <br><br>
+        <div class="image-container" style="width: 60%;">
+          <img src="assets/img/Custom_map_2.png" alt="Custom Map Annotation">
+        </div>
+        <br>
+        
         <div class="tutorial">
           <p style="font-weight: bold;">Hands-On Tutorial: Custom Map Annotation</p>
           <ul class="nb_list">
@@ -641,8 +654,8 @@
             <dd class="col-sm-9"> Use the '-' button located on the right side of the parameter field.</dd>
           </dl>
         </div>
-        <br>
-        <h1 style="font-weight: bold;">LCA in Prophane</h1>
+
+        <p class="header_2">LCA in Prophane<p>
         The LCA approach searches hierarchical data to find the lowest common node shared by all members of
         a group. For every functional or taxonomical annotation at each annotation level, Prophane determines an LCA to
         represent all protein group members. Often, proteins within a group or metaproteins have different annotations.
@@ -659,20 +672,19 @@
 
         The <strong>"democratic LCA" </strong> method selects the annotation that occurs most frequently across all
         protein groups from each protein group. <br>
-        <br>
-        <h2 style="font-weight: bold;">Advanced Options</h2>
+
+        <p class="header_2">Advanced Options<p>
         <ul class="bullet_list">
           <li><strong>ignore_unclassified: </strong>This advanced option considers only proteins for LCA determination
             if an annotation was found (excluding "unclassified" annotations).</li>
           <li><strong>minimum_number_of_annotations: </strong>This advanced option considers only proteins for LCA
             determination if an annotation was found (excluding "unclassified" annotations).</li>
-
         </ul>
 
-        <h2 style="font-weight: bold;"></h2>
+        <p class="header_3">ignore_unclassified<p>
         The advanced option "ignore_unclassified" only takes into account for LCA-determination proteins for which an
         annotation was found (no "unclassified" annotations).<br>
-        <h2 style="font-weight: bold;">minimum_number_of_annotations</h2>
+        <p class="header_3">minimum_number_of_annotations<p>
         The "minimum_number_of_annotations" advanced option in Prophane empowers users to specify a minimum count of
         annotations within the annotation lineage that will be taken into account by the LCA methods. This feature
         proves especially useful for effectively managing annotations that might be considered extraneous or less
@@ -680,14 +692,13 @@
         For instance, when dealing with annotations like vector annotation that typically
         consist of lineage with only one-level annotations, this option allows users to filter out these less
         informative annotations, ensuring a more meaningful and accurate LCA determination process.
-        <br><br>
+        <br>
         For more detailed information about LCA determination and further explanations, please refer to the provided "LCA" part of the
         <a
           routerLink="/about" style="color:blue">Prophane documentation</a>.
-
-        <img src="assets/img/lca.png" alt="LCA" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
-        <img>
+        <div class="image-container" style="width: 60%;">
+          <img src="assets/img/LCA.png" alt="LCA">
+        </div>
 
         <br>
         <div class="tutorial">
@@ -698,17 +709,12 @@
             <dt class="col-sm-4"><strong>2. threshold</strong></dt>
             <dd class="col-sm-8"> Define a threshold value of 0.51. </dd>
             <dt class="col-sm-4"><strong>3. Add Advanced Options:</strong></dt>
-            <dd class="col-sm-8"> Choose option "ignore_unclassified" AND click the '+' button to add this advanced
-              option..
-            </dd>
-            <dt class="col-sm-4"><strong>4. Add Advanced Options:</strong></dt>
             <dd class="col-sm-8"> Choose option "minimum_numer_of_annotation" AND click the '+' button.
-            <dt class="col-sm-4"><strong>5. Minimum number of annotaions:</strong></dt>
+            <dt class="col-sm-4"><strong>4. Minimum number of annotaions:</strong></dt>
             <dd class="col-sm-8"> Enter the value 2.
             </dd>
           </dl>
         </div>
-        <br>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -717,7 +723,8 @@
             8. Submit your Job
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <h1 style="font-weight: bold;">Starting Your Prophane Analysis</h1>
+        <br>
+        <p class="header_2">Starting Your Prophane Analysis<p>
         The summary allows you to ensure that your input files and task settings are accurately configured to meet your
         analysis requirements.
         Once you've verified your inputs and settings, proceed by clicking the 'Submit' button to initiate the
@@ -734,10 +741,10 @@
         or you can use the download link you stored when submiiting the prophane job (same link is provided in the email
         notification ).
         <br>
-        <img src="assets/img/summary1.png" alt="summary" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
-        <img>
-
+        <div class="image-container" style="width: 60%;">
+          <img src="assets/img/summary1.png" alt="summary">
+        </div>
+        <br>
         <div class="tutorial">
           <p style="font-weight: bold;">Hands-On Tutorial:</p>
           <ul class="nb_list">
@@ -754,6 +761,7 @@
             Job Control
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <br>
         In the Job Control panel, accessible to registered users, you can view all your submitted jobs. This panel
         provides real-time updates on the status of your jobs, which may include being in a queue, running, completed,
         or marked as failed.
@@ -764,10 +772,10 @@
         <br><br>
         The Job Control panel offers an organized and efficient way to manage your Prophane jobs and access the outcomes
         of your analyses.
-
-        <img src="assets/img/job_control.png" alt="Job Control" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-          style="max-width: 80%;">
-        <img>
+        <br><br>
+        <div class="image-container">
+          <img src="assets/img/job_control.png" alt="Job Control" >
+        </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -777,15 +785,13 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <br>
-        <h1 style="font-weight: bold;">Accessing Your Prophane Analysis Results</h1>
-        <br>
+        <p class="header_2">Accessing Your Prophane Analysis Results<p>
         <ul class="nb_list">
           <li><strong>1. Download the result.zip File:</strong> Start by downloading the result.zip file and then unzip
             it.</li>
           <li><strong>2. Folder Structure:</strong> Upon unzipping the folder, you will encounter various subfolders.
             While most of these are specific to the Prophane analysis and may not be of direct interest to you, there
             are key folders to focus on:
-            
           </li>
           <li><strong>3. Summary of the Prophane Analysis:</strong> You can access a summary of the analysis in one of
             the following formats:
@@ -812,23 +818,39 @@
             annotations level and the more often you see various.
             You can zoom into the Krona Plot and zoom out. And you can change the showed results between sample groups and samples.</li>
         </ul>
-        <br><br>
         For more detailed information about Prophane results and further explanations, please refer to the provided "Result" part of the
         <a
           routerLink="/about" style="color:blue">Prophane documentation</a>.
 
-        <img src="assets/img/Krona.svg" alt="Krona Plot">
+        <div class="image-container">
+          <img src="assets/img/Krona.svg" alt="Krona Plot">
+        </div>
         <div class="tutorial">
           <p style="font-weight: bold;">Hands-On Tutorial:</p>
-          Check out your results.
-          Examples
-          summary.txt<br>
-          Excel import: 1. Go to data panel, 2. 
-          Two differnt row types: the group summary row with the lca and quantification results and the protein rows containing annotations per protein (multiple annotations per protein possible)
-          Krona:<br>
-          Closely related species share similar proteins, so identification of proteins in one group.
-          The comparison of the taxonomic results between swissprot and uniprot analyses show a lot more unclassified protein groups with the small swissprot database. So for 15% of the protein groups no annotation at all was possible. 
-          For the eggnog db the toplevel annotation (the main role) are cellular processes like metabolism or signalling
+          <ul class="nb_list">
+            <li>1. Download the result.zip File by clicking on download link.</li>
+            <li>2. Check out your results.</li>
+          </ul>
+          Load the summary.txt into excel and examine the results:<br>
+          <ul class="nb_list">
+            <li>Open Excel</li>
+            <li>Go to data panel.</li>
+            <li>To Fill.</li>
+            <li>Examine summary.txt: you see Two differnt row types: the group summary row with the 
+              lca and quantification results and the protein rows containing annotations per protein 
+              (multiple annotations per protein possible)</li>
+          </ul>
+          <br>
+          Check the Krona Plot:<br>
+          <ul class="nb_list">
+            <li>Open by clicking on one of the html files in the plots folder.</li>
+            <li>Examine Krona Plots: The comparison of the taxonomic results between swissprot and 
+              uniprot analyses show a lot more unclassified protein groups with the small swissprot 
+              database. So for 15% of the protein groups no annotation at all was possible. )
+              Closely related species share similar proteins, so identification of proteins in one group.
+              For the eggnog db the toplevel annotation (the main role) are cellular processes like metabolism or signalling</li>
+          </ul>
+
         </div>
       </mat-expansion-panel>
     </mat-accordion>

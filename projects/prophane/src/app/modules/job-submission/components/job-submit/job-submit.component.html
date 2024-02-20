@@ -67,19 +67,16 @@
       not defined (expert option)
     </td>
   </tr>
-  <tr *ngFor="let group of prophaneJobState.currentProphaneJob.parameters.sampleGroups">
-    <th scope="row" class="ml-summary-col"> Sample Groups: </th>
+  <tr>
+    <th scope="row" class="ml-summary-col"> Sample Groups:</th>
     <td>
-      {{ group.groupname }}
-      <br>
-      <mat-list dense>
-        <mat-list-item *ngFor="let member of group.groupmembersGUI"> {{ member.name }} </mat-list-item>
+        <mat-list>
+          <mat-list-item *ngFor="let group of prophaneJobState.currentProphaneJob.parameters.sampleGroups">
+            <span matListItemTitle>{{ group.groupname }}</span>
+            <span matListItemLine *ngFor="let member of group.groupmembersGUI"> {{ member.name }}</span>
+          </mat-list-item>
       </mat-list>
     </td>
-  </tr>
-  <tr>
-    <th scope="row" class="ml-summary-col"></th>
-    <td></td>
   </tr>
   </tbody>
 </table>

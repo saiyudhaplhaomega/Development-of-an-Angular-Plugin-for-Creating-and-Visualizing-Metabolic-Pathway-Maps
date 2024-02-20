@@ -28,9 +28,16 @@
 
 .bullet_list{
     list-style-type: disc;
-    margin-left: 20px;
+    margin-left: 30px;
+    padding: 0; 
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
+.bullet_list li {
+    margin-bottom: 3px; 
+  }
+  
 .bold{
     font-weight: bold;
 }
@@ -40,4 +47,22 @@
     height: auto;
     margin: auto;
     display: block;
+    text-align: center;
+    overflow: hidden;
   }
+
+.image-container img {
+    width: 100%; 
+    height: auto;
+    display: block;
+}
+
+.header_2{
+    font-weight: bold;
+    font-size:20px
+}
+
+.header_3{
+    font-weight: bold;
+    font-size:16px
+}
