@@ -43,14 +43,14 @@
         matching FASTA
         file.
         <br><br>
-        <h2 style="font-weight: bold;">Report files</h2>
+        <p class="header_2">Report files<p>
         The report file is the protein identification file of the mass spectrometry analysis and must contain
         information about protein groups (also known as metaprotein or protein-families).
         Prophane supports various different input formats, as listed below. If you plan to use another input format on a
         regulary basis, please contact us (support&#64;prophane.de).<br>
 
         So far, Prophane supports proteomic search result data provided in:
-        <br><br>
+        <br>
         <ul class="bullet_list">
           <li>generic input format</li>
           <li>mzTab format</li>
@@ -64,8 +64,7 @@
           <li>Proteome Discoverer protein group output</li>
           <li>Scaffold output</li>
         </ul>
-        <br>
-        <h2 style="font-weight: bold;">FASTA file</h2>
+        <p class="header_2">FASTA file<p>
         The FASTA file can be plain or gzipped and should contain sequences for all identified proteins. Ensure that
         the protein accessions or IDs in the FASTA file match those used in the protein identification report. You can
         use the same FASTA file you used for peptide-spectrum matching. However, if the FASTA file is excessively
@@ -75,11 +74,10 @@
         consistent data processing by Prophane. Sequence IDs with two or more pipes, such as Uniprot protein
         accessions, will be processed (e.g. from
         sp|O70558|SPR2G_MOUSE to 070558).
-        <br><br>
-
-        <h2 style="font-weight: bold;">Report Files Formats</h2>
         <br>
-        <h2 style="font-weight: bold;">Generic Format</h2>
+
+        <p class="header_2">Report Files Formats<p>
+        <p class="header_3">Generic Format<p>
         A generic table format (tab separated values) that is designed to be easy to recreate. The column "protein
         accessions"
         contains all protein accessions of one protein group and the quantification is based on spectral counts per
@@ -110,7 +108,7 @@
           </tbody>
         </table>
         <br>
-        <h2 style="font-weight: bold;">mzTab 1.0.0 exchange format</h2>
+        <p class="header_3">mzTab 1.0.0 exchange format<p>
         Data provided in the mzTab exchange format can be processed by prophane. Protein group information must be
         provided in the ambiguity_members column. PSM section must be present. To distinguish between different samples,
         the entries in the column
@@ -118,8 +116,8 @@
         must also
         be kept if only one ms run is analyzed.
         Quantification is performed by counting the spectra/PSMs assigned to a protein group.
-        <br><br>
-        <h2 style="font-weight: bold;">mzIdentML1.2.0 exchange format</h2>
+        <br>
+        <p class="header_3">mzIdentML1.2.0 exchange format<p>
         Data provided in the mzIdentML 1.2.0 exchange format containing ProteinAmbiguityGroup can be processed by
         Prophane.
         In the mzIdent 1.2.0 version there is the possibility of summarizing similar proteins in 'ProteinAmbiguityGroup'
@@ -128,14 +126,14 @@
         doesn't
         support protein groups, these files cannot be processed by Prophane.
         Quantification is performed by counting the spectra/PSMs assigned to a protein group.
-        <br><br>
-        <h2 style="font-weight: bold;">MPA (single experiment)</h2>
+        <br>
+        <p class="header_3">MPA (single experiment)<p>
         Data provided by Metaproteome Analyzer (MPA) can be used by exporting metaprotein report (CSV).
-        <br><br>
-        <h2 style="font-weight: bold;">MPA (multiple experiment)</h2>
+        <br>
+        <p class="header_3">MPA (multiple experiment)<p>
         Data provided by Metaproteome Analyzer (MPA) can be used by exporting metaprotein multisample report (CSV).
-        <br><br>
-        <h2 style="font-weight: bold;">Protein Discoverer protein group</h2>
+        <br>
+        <p class="header_3">Protein Discoverer protein group<p>
         Proteome Discoverer protein-group data export:
         1. check for filters set under "Display Folters -> Proteins", and remove the filter for master proteins
         2. go to Protein Groups table and request "Show associated tables -> Proteins"
@@ -148,10 +146,10 @@
 
         If you use scaled or normalized abundance values we strongly recommend selecting "Raw value (no normalization)"
         in step "Quantification method".
-        <br><br>
-        <h2 style="font-weight: bold;">Scaffold</h2>
+        <br>
+        <p class="header_3">Scaffold<p>
         Data provided by Scaffold can be used by exporting Scaffold's protein report (TSV/XLS).
-        <br><br>
+        <br>
 
 
       </mat-expansion-panel>
@@ -163,19 +161,18 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <br>
-        <h2 style="font-weight: bold;">Usage of sample groups</h2>
+        <p class="header_2">Usage of sample groups<p>
         The definition of sample groups are relevant for getting
         mean quantification values about different samples. This allows a comparison of different sample groups,
         e.g untreated samples vs. treated samples.
         Sample group mean quantification values are reported in the "summary.txt" or "lca_summary.mztab" file and
         displayed in the Krona-Plots. The quantification values for each sample are reported additionally.
         If no groups are specified, quantification is carried out for each sample separately.
-        <br><br>
-        <h2 style="font-weight: bold;">Sample name extraction of different report files by Prophane</h2>
+        <br>
+        <p class="header_2">Sample name extraction of different report files by Prophane<p>
         The following table describes how Prophane extract sample names from different protein reports. Use the same
         sample names within sample group definition.
         <div id="sample_name_table">
-          <h3>Sample name extraction of different input files:</h3>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -261,6 +258,7 @@
         identified spectra
         to the metaprotein size (to the largest, smallest protein of the protein group or to the mean of all protein
         group members).
+        <br><br>
         <div id="table_normalization">
           <table class="table table-striped">
             <thead>
@@ -304,17 +302,17 @@
         Taxonomic annotation searches the selected reference database for similar proteins, retrieves the associated
         taxon ID and specifies the entire taxonomic lineage of this protein.
         The search algorithm DIAMOND BLASTP searches for sequence homologies in the specified protein database.
-        <img src="assets/img/taxonomic_annotation_schema.png" alt="Taxonomic Annotation With DIAMOND Blast p"
-          class="img-fluid mx-auto d-block rounded mt-2 mb-2" style="max-width: 80%;">
-        <img>
-        <br><br>
+        <div class="image-container">
+          <img src="assets/img/taxonomic_annotation_schema.png" alt="Taxonomic Annotation With DIAMOND Blast p">
+        </div>
+        <br>
         Prophane supports following protein sequence databases:
         <ul class="bullet_list" *ngFor="let db of TaxonomicDatabases ">
           <li>
             <span>{{db.name}}</span>
           </li>
         </ul>
-        <br>
+        
         Prophane reports always the taxonomic lineage of the protein with the highest scoring match.
         The evalue defines how similar the reported proteins have to be to be reported. The smaller the evalue, the more
         similar the protein match.
@@ -338,7 +336,7 @@
           </li>
         </ul>
         <br>
-        <h2 style="font-weight: bold;">Profile-HMM Databases</h2>
+        <p class="header_2">Functional Annotation with Profile-HMM Databases<p>
 
         Prophane utilizes the HMMER3 algorithm to search functional profile-HMM databases, which include PFAM, TIGRFAM,
         Resfams, CAzY/dbCAN, and FOAM. You have the option to choose between two search modes:
@@ -359,9 +357,13 @@
         guide:
         <a target="_blank" href="https://eddylab.org/software/hmmer/Userguide.pdf">
           https://eddylab.org/software/hmmer/Userguide.pdf</a>
-        <img src="assets/img/functional_annotation_hmmer.png" alt="Functional Annotation via HMMER3">
+        <div class="image-container">
+          <img src="assets/img/functional_annotation_hmmer.png" alt="Functional Annotation via HMMER3">
+        </div>
+        
         <br>
-        <h2 style="font-weight: bold;">Eggnog DatabaseFunctional Annotation with EggNOG Database and emapper</h2>
+        <p class="header_2">Functional Annotation with EggNOG Database and emapper<p>
+
         In Prophane, when utilizing the EggNOG database and emapper for functional annotation, the approach is based
         on precomputed orthology assignments rather than homology. Orthologs, also known as orthologous genes, are
         genes found in different species that share a common origin from a single gene in the last common ancestor.
@@ -378,7 +380,9 @@
         EggNog wiki:
         <a target="_blank" href="https://github.com/eggnogdb/eggnog-mapper/wiki">
           https://github.com/eggnogdb/eggnog-mapper/wiki</a>
-        <img src="assets/img/functional_annotation_emapper.png" alt="Functional Annotation via EMAPPER">
+          <div class="image-container">
+            <img src="assets/img/functional_annotation_emapper.png" alt="Functional Annotation via EMAPPER">
+          </div>
 
       </mat-expansion-panel>
 
@@ -466,7 +470,7 @@
         algorithms and doing a great job in the curation and maintenance of protein annotation databases. Prophane
         provides the following annotation combinations:
         <br><br>
-        <h2 style="font-weight: bold;">Annotation Databases</h2>
+        <p class="header_2">Annotation Databases<p>
 
         <table class="table table-striped">
           <thead>
@@ -588,7 +592,7 @@
           </tbody>
         </table>
         <br>
-        <h2 style="font-weight: bold;"> Annotation Algorithms Parameters</h2>
+        <p class="header_2"> Annotation Algorithms Parameters<p>
         <table class="table table-striped" id="paramter_table">
           <thead>
             <tr>
@@ -660,10 +664,10 @@
         represent all protein group members. Often, proteins within a group or metaproteins have different annotations.
         To obtain a unified representative for all members, Prophane determines the lowest common ancestor among them.
         If this is not possible the assigned LCA-value is referred to as "various".
-        <br><br>
-        Two different methods und two advanced options are available for LCA determination: <br><br>
-        <h2 style="font-weight: bold;">LCA method: LCA per group</h2>
-
+        <br>
+        Two different methods und two advanced options are available for LCA determination: <br>
+        <br>
+        <p class="header_2">LCA method: LCA per group<p>
 
         The "LCA per group" method determines the LCA based on annotations of proteins within a
         protein group.
@@ -675,23 +679,31 @@
         reported as "various".
         With a threshold value of 0.51, Prophane returns an LCA if more than half of the annotations are
         the same. <br>
-        <img src="assets/img/group_lca.png" alt="group LCA method">
+        <div class="image-container">
+          <img src="assets/img/group_lca.png" alt="group LCA method">
+        </div>
         <br>
-        <h2 style="font-weight: bold;">LCA method: democratic LCA</h2>
+        <p class="header_2">LCA method: democratic LCA<p>
         The "democratic LCA" method selects the annotation that occurs most frequently across all
         protein groups from each protein group. <br>
         The democratic LCA method chooses of all annotations always the one, which is the most often identified about
         all protein groups. So with this method you get the smallest variance in the results.
         Depending on the chosen LCA-method, you get different results. Compare Picture 1 und 2.
-        <img src="assets/img/democratic_lca.png" alt="democratic LCA method">
+        <div class="image-container">
+          <img src="assets/img/democratic_lca.png" alt="democratic LCA method">
+        </div>
 
         <br>
-        <h2 style="font-weight: bold;">Advanced Option: ignore_unclassified</h2>
+        <p class="header_2">Advanced Option: ignore_unclassified<p>
         This advanced option considers only proteins for LCA determination if an annotation was found (excluding
         "unclassified" annotations).
-        <img src="assets/img/lca_ignore_unclassified.png" alt="parameter ignore_unclassified">
+        <div class="image-container">
+          <img src="assets/img/lca_ignore_unclassified.png" alt="parameter ignore_unclassified">
+        </div>
+
+
         <br>
-        <h2 style="font-weight: bold;">Advanced Option: minimum_number_of_annotations</h2>
+        <p class="header_2"> Advanced Option: minimum_number_of_annotations<p>
         The "minimum_number_of_annotations" advanced option in Prophane empowers users to specify a minimum count of
         annotations within the annotation lineage that will be taken into account by the LCA methods. This feature
         proves especially useful for effectively managing annotations that might be considered extraneous or less
@@ -699,7 +711,10 @@
         For instance, when dealing with annotations like vector annotation that typically
         consist of lineage with only one-level annotations, this option allows users to filter out these less
         informative annotations, ensuring a more meaningful and accurate LCA determination process.
-        <img src="assets/img/lca_min_nb.png" alt="parameter min_nb_of-annotations">
+        <div class="image-container">
+          <img src="assets/img/lca_min_nb.png" alt="parameter min_nb_of-annotations">
+        </div>
+
         <br>
       </mat-expansion-panel>
 
@@ -713,7 +728,7 @@
         <br>
         Once an analysis is completed you can download all results as a single archive
         in the Job Control section or via link for unregistered users.<br><br>
-        <h2 style="font-weight: bold;">Structure of the Result Folder</h2>
+        <p class="header_2">Structure of the Result Folder<p>
         <table class="table table-striped" id="paramter_table">
           <thead>
             <tr>
@@ -739,16 +754,18 @@
               <td> mztab </td>
             </tr>
             <tr>
+              <tr>
+                <td>plots/plot_of_{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}'
+                  }}.v{{ '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.html</td>
+                <td>interactive Krona plots</td>
+                <td> HTML </td>
+              </tr>
+              <tr>
               <td>pgs/protein_groups.sql</td>
               <td>SQL database of protein groups</td>
               <td> TSV </td>
             </tr>
-            <tr>
-              <td>plots/plot_of_{{ '{' }}annot_type{{ '}' }}_annot_by_{{ '{' }}tool{{ '}' }}_on_{{ '{' }}db_type{{ '}'
-                }}.v{{ '{' }}db_version{{ '}' }}.task{{ '{' }}taskid{{ '}' }}.html</td>
-              <td>interactive krona plots</td>
-              <td> HTML </td>
-            </tr>
+
             <tr>
               <td>seqs/all.faa</td>
               <td>all accessions from the proteomic search result and their respective protein sequences</td>
@@ -853,7 +870,7 @@
           </tbody>
         </table>
         <br>
-        <h2 style="font-weight: bold;">The summary.txt File</h2><br>
+        <p class="header_2">The summary.txt File<p><br>
         The summary.txt file is a tab-separated file that can be easily imported into Excel via the data panel for
         further analysis.
         The file begins with a header row, followed by information about protein groups.
@@ -927,27 +944,25 @@
         Values in brackets, e.g., "(60)/150," indicate that no LCA with
         support above the given threshold could be identified. <br>
         A value of "0/0" is used when no lineage information is available, corresponding to 'unclassified' entries.
+        <br><br>
+
+        <!-- <p class="header_2"> The lca_summary.mztab File<p>
         <br>
 
         <br><br>
-        <h2 style="font-weight: bold;">The lca_summary.mztab File</h2>
+        <p class="header_2">The protein_summary.mztab File<p>
         <br>
-
-        <br><br>
-        <h2 style="font-weight: bold;">The protein_summary.mztab File</h2>
-        <br>
-
-
-        <h2 style="font-weight: bold;">Krona Plots</h2>
+        -->
+        <p class="header_2">Krona Plots<p>
         Krona plots are a powerful visualization tool in Prophane, allowing users to explore and interpret the taxonomic
         or functional abundances of metagenomic data with ease.
         Krona plots are automatically generated for each task in Prophane. The size of each field in the Krona plot
         corresponds to the normalized quantification values, providing a visual representation of the relative
         abundance.
         Krona plots support the viewing of results for different sample groups and different samples and provide an interactive zoom function.
-        <img src="assets/img/Krona.svg" alt="Krona Plot" class="img-fluid mx-auto d-block rounded mt-2 mb-2"
-        style="max-width: 80%;">
-
+        <div class="image-container">
+          <img src="assets/img/Krona.svg" alt="Krona Plot">
+        </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
