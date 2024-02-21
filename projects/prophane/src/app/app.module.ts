@@ -20,8 +20,6 @@ import { PrivacyPolicyPageComponent } from './components/privacy-policy-page/pri
 import { TermsOfServicePageComponent } from './components/terms-of-service-page/terms-of-service-page.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

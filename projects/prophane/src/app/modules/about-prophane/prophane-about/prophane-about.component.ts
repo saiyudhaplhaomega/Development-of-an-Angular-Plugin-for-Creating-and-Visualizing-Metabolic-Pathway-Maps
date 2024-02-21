@@ -11,11 +11,21 @@ export class ProphaneAboutComponent implements OnInit {
   readonly TaxonomicDatabases = databaseOptions.filter((x) => x['scope'] === 'Taxonomy') ;
   readonly FunctionalDatabases = databaseOptions.filter((x) => x['scope'] === 'Function') ;
   readonly LcaMethods = lcaParams
-
+  step = 0;
   constructor() { }
 
 
   ngOnInit(): void {
   }
+  setStep(index: number) {
+    this.step = index;
+  }
 
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }

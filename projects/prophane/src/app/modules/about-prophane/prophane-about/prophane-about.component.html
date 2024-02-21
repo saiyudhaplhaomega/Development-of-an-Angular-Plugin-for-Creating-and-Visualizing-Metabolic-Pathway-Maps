@@ -3,7 +3,7 @@
   <div class="w-75 ml-5">
     <h1 class="mt-4 mb-4" style="font-weight: bold; font-size: 1.5em;">Prophane Documentation</h1>
     <mat-accordion MatAccordion>
-      <mat-expansion-panel expanded>
+      <mat-expansion-panel expanded  [expanded]="step === 0" (opened)="setStep(0)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Prophane Workflow Description
@@ -30,9 +30,12 @@
         <div class="image-container">
         <img src="assets/img/workflow_new.png" alt=" Workflow">
         </div>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Input Files
@@ -150,11 +153,13 @@
         <p class="header_3">Scaffold<p>
         Data provided by Scaffold can be used by exporting Scaffold's protein report (TSV/XLS).
         <br>
-
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Sample Groups
@@ -244,10 +249,13 @@
             </tbody>
           </table>
         </div>
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Quantification
@@ -290,9 +298,13 @@
             </tbody>
           </table>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Taxonomic Annotation
@@ -319,10 +331,13 @@
         For information regarding additional parameters, please check the DIAMOND documentation:
         <a target="_blank"
           href="https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf">https://github.com/bbuchfink/diamond/raw/master/diamond_manual.pdf</a>
-
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Functional Annotation
@@ -383,10 +398,13 @@
           <div class="image-container">
             <img src="assets/img/functional_annotation_emapper.png" alt="Functional Annotation via EMAPPER">
           </div>
-
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Custom Map
@@ -456,10 +474,13 @@
             </tr>
           </tbody>
         </table>
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Annotation Databases & Algorithms & Parameters
@@ -646,12 +667,15 @@
               href="eddylab.org/software/hmmer/Userguide.pdf">HMMER3 documentation</a></li>
           <li><strong>EMAPPER: </strong><a target="_blank" style="color:blue"
               href="https://github.com/eggnogdb/eggnog-mapper/wiki">EMAPPER documentation</a></li>
-
         </ul>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 8" (opened)="setStep(8)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Lowest Common Ancestor (LCA)
@@ -714,12 +738,15 @@
         <div class="image-container">
           <img src="assets/img/lca_min_nb.png" alt="parameter min_nb_of-annotations">
         </div>
-
         <br>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 9" (opened)="setStep(9)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Output
@@ -963,9 +990,13 @@
         <div class="image-container">
           <img src="assets/img/Krona.svg" alt="Krona Plot">
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 10" (opened)="setStep(10)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Funding and Support
@@ -977,9 +1008,13 @@
           <li>Deutsche Forschungsgesellschaft (DFG), "Research Software Sustainability"</li>
           <li>de.NBI, computational ressources and support</li>
         </ul>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 11" (opened)="setStep(11)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Contact
@@ -989,6 +1024,9 @@
         In case of questions or problems, do not hesitate to contact us:
         <br><br>
         <b>support&#64;prophane.de</b>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

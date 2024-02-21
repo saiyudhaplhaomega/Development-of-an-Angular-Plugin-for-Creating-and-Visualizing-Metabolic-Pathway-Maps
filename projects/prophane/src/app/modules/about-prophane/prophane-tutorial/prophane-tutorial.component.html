@@ -2,8 +2,8 @@
 <div style="display: flex; justify-content: center">
   <div class="w-75 ml-5">
     <p class="header_2">How To Use The Prophane Webserver<p>
-    <mat-accordion MatAccordion >
-      <mat-expansion-panel expanded>
+    <mat-accordion MatAccordion>
+      <mat-expansion-panel expanded [expanded]="step === 0" (opened)="setStep(0)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title class="primary">
             Introduction
@@ -25,9 +25,12 @@
         The initial segment of each step's description begins with a concise overview, outlining the actions to be
         undertaken, followed by a meticulous, step-by-step guide on defining your analysis. Subsequently, a distinct
         pink box presents the specific steps employed for the tutorial test analysis.<br>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             Download of Test Data
@@ -41,9 +44,13 @@
           samples (comprising three samples from patients before dietary changes and three after) along with a
           corresponding database.
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             Login vs. no Login
@@ -70,10 +77,14 @@
           <p style="font-weight: bold;">Hands-On Tutorial:</p>
           Whether you choose to log in or not doesn't matter for this tutorial.
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             The Expert Mode
@@ -101,7 +112,7 @@
           incorporate
           user-defined annotation maps. Additionally, you have control over the grouping of samples, quantification
           algorithms,
-          and the lowest common ancestor (LCA) algorithm.
+          and the lowest common ancestor (LCA) algorithm.dense
         </div>
         <br>
         <div class="mt-1 mb-1"></div>
@@ -123,9 +134,13 @@
           <p style="font-weight: bold;">Hands-On Tutorial:</p>
           <div>Activate the expert toggle!</div>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             1. Input
@@ -236,9 +251,13 @@
               exclude all albumin proteins from the Prophane analysis.</dd>
           </dl>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             2. Sample Groups
@@ -303,10 +322,13 @@
               picture above).</dd>
           </dl>
         </div>
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             3. Quantification
@@ -349,10 +371,13 @@
             <dd class="col-sm-9"> Choose NSAF (normalized to mean metaprotein)</dd>
           </dl>
         </div>
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             4. Taxonomic Annotation
@@ -450,9 +475,13 @@
             <dd class="col-sm-8"> Use Default Settings, nothing to be done
           </dl>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             5. Functional Annotation
@@ -550,10 +579,13 @@
             <dd class="col-sm-8"> Use Default Settings, nothing to be done.
           </dl>
         </div>
-       
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 8" (opened)="setStep(8)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             6. Custom Map Annotation
@@ -624,10 +656,13 @@
             <li>Skip this part and go to next step.</li>
           </ul>
         </div>
-
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 9" (opened)="setStep(9)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             7. Lowest Common Ancestor (LCA)
@@ -715,9 +750,13 @@
             </dd>
           </dl>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 10" (opened)="setStep(10)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             8. Submit your Job
@@ -752,10 +791,14 @@
             <li>2. Click "Submit" button.</li>
           </ul>
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 11" (opened)="setStep(11)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             Job Control
@@ -776,9 +819,13 @@
         <div class="image-container">
           <img src="assets/img/job_control.png" alt="Job Control" >
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 12" (opened)="setStep(12)"  >
         <mat-expansion-panel-header class="expansion-header-tutorial">
           <mat-panel-title>
             Prophane Results
@@ -852,6 +899,9 @@
           </ul>
 
         </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
