@@ -16,6 +16,10 @@ export enum Endpoints {
 
   GET_PROPHANE_JOB = 'getJob',
   GET_PROPHANE_JOBS = 'prophaneJobList',
+
+  DOWNLOAD_JOB = 'prophaneDownload',
+  VIEW_JOB = 'results',
+
 }
 
 @Injectable({
@@ -23,7 +27,6 @@ export enum Endpoints {
 })
 export class WebserveraddressService {
   public getURL(endpoint: Endpoints): string {
-    //return WebserverUrls.TEST + endpoint;
     return WebserverUrls.TEST + endpoint;
   }
 }
