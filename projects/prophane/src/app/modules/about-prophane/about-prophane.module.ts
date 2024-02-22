@@ -5,6 +5,7 @@ import { AboutProphaneRoutingModule } from './about-prophane-routing.module';
 import { ProphaneAboutComponent } from './prophane-about/prophane-about.component';
 import { ProphaneTutorialComponent } from './prophane-tutorial/prophane-tutorial.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -17,6 +18,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CommonModule,
     AboutProphaneRoutingModule,
     MatExpansionModule,
+    MatButtonModule,
   ]
 })
 export class AboutProphaneModule { }
