@@ -13,7 +13,7 @@ import { ProtDBJSONObject } from '../model/protdbjson';
 
 // TODO: properly set everywhere
 export enum NodeType {
-  User = 'user',
+  User = 'USER',
   Experiment = 'experiment',
   ProteinDB = 'proteindb',
   PeakList = 'peaklist',

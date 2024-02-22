@@ -40,11 +40,11 @@ export class DataNavigationTreeComponent implements OnInit, OnDestroy {
   isVisible(treeNode: DataItem): boolean {
     let isVisible = true;
     let child = treeNode;
-    while (child.type !== 'user') {
+    while (child.type !== 'USER') {
       const parent = this.treeNodes.find(
         (search) => search.id === child.parent
       );
-      if (!parent.expanded) {
+      if (!parent?.expanded) {
         isVisible = false;
         break;
       }
