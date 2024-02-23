@@ -66,3 +66,19 @@
     font-weight: bold;
     font-size:16px
 }
+
+#table_normalization {
+    flex-grow: 1; 
+    overflow-x: auto;
+  }
+  
+  @media (max-width: 576px) {
+    .table td,
+    .table th {
+      font-size: 0.8rem;
+    }
+  }
+
+  .table{
+    font-size:10px
+  }
