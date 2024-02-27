@@ -36,8 +36,8 @@
         {{ job.statusmessage }}
       </td>
       <td>
-        <span *ngIf="job.downloadURL != ''"><a href="/results/{{ job.prophaneJobUUID }}">View</a></span> |
-        <span *ngIf="job.downloadURL != ''"><a href="{{ job.downloadURL }}">Download</a></span>
+        <span *ngIf="job.downloadURL != ''"><a href="{{ getView(job.prophaneJobUUID) }}">View</a></span> |
+        <span *ngIf="job.downloadURL != ''"><button (click)="getDownload(job.prophaneJobUUID)">Download</button></span>
       </td>
       <td>
         <button mat-flat-button color="warn" (click)="confirmDelete(i, job.prophaneJobUUID)">delete</button>

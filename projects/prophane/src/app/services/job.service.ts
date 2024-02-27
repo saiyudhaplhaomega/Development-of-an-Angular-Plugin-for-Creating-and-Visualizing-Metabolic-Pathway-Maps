@@ -6,24 +6,25 @@ import { ProphaneJobObject } from '../model/prophanejobjson';
 
 import { HttpClientService } from 'shared-lib';
 import { Endpoints, WebserveraddressService } from '../prophane-webserveraddress.service';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobService {
-  constructor(private jsonUpload: HttpClientService, private address: WebserveraddressService) {}
+
+  constructor(private httpClient: HttpClientService, private address: WebserveraddressService) {}
 
   getJobs(): Observable<ProphaneJobObject[]> {
-    return this.jsonUpload.postObject<ProphaneJobObject[], ProphaneJobObject[]>(
+    return this.httpClient.postObject<ProphaneJobObject[], ProphaneJobObject[]>(
       [],
       this.address.getURL(Endpoints.GET_PROPHANE_JOBS)
     );
   }
 
   getJob(uuid: string): Observable<ProphaneJobObject> {
-    return this.jsonUpload.getObject<ProphaneJobObject>(
+    return this.httpClient.getObject<ProphaneJobObject>(
       this.address.getURL(Endpoints.GET_PROPHANE_JOB) + "/" + uuid
     );
   }
@@ -39,7 +40,7 @@ export class JobService {
 
   requestJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
     try {
-      const observeMe = this.jsonUpload.postObject<
+      const observeMe = this.httpClient.postObject<
         ProphaneJobObject,
         ProphaneJobObject
       >(job, this.address.getURL(Endpoints.PROPHANE_REQUEST_JOB));
@@ -51,7 +52,7 @@ export class JobService {
   }
 
   saveJob(job: ProphaneJobObject): Observable<ProphaneJobObject> {
-    return this.jsonUpload.postObject<ProphaneJobObject, ProphaneJobObject>(
+    return this.httpClient.postObject<ProphaneJobObject, ProphaneJobObject>(
       job,
       this.address.getURL(Endpoints.PROPHANE_SAVE_JOB_FORM)
     );
@@ -60,7 +61,7 @@ export class JobService {
 
   /** DELETE: delete the job from the server */
   deleteJob(jobToDelete: ProphaneJobObject) {
-    this.jsonUpload
+    this.httpClient
       .postObject<ProphaneJobObject, ProphaneJobObject>(
         jobToDelete,
         this.address.getURL(Endpoints.PROPHANE_DELETE_JOB)
@@ -71,7 +72,7 @@ export class JobService {
   }
 
   submitJob(filesToUpload): Observable<HttpEvent<Object>> {
-      return this.jsonUpload
+      return this.httpClient
       .postMultiPartFilesEvents(filesToUpload, this.address.getURL(Endpoints.PROPHANE_FILEUPLOAD));
   }
 
@@ -90,4 +91,34 @@ export class JobService {
       return of(result as T);
     };
   }
+
+  getKrona(id: string) {
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          name: id
+        }
+      });
+    return this.httpClient.getFile(
+      this.address.getURL(Endpoints.DOWNLOAD_JOB),
+      params
+    );
+  }
+
+  downloadResults(id: string) {
+    console.log("calling download");
+    console.log(id);
+    console.log(this.address.getURL(Endpoints.DOWNLOAD_JOB));
+    const params: HttpParams = new HttpParams(
+      {
+        fromObject: {
+          name: id
+        }
+      });
+    return this.httpClient.getFile(
+      this.address.getURL(Endpoints.DOWNLOAD_JOB),
+      params
+    );
+  }
+
 }

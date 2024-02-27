@@ -79,6 +79,17 @@ export class HttpClientService {
     });
   }
 
+  getFile(url: string, params?: HttpParams) {
+    console.log("calling " + url);
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/force-download"',
+        Authorization: this.authService.getUserAuthorization().toString(),
+      }),
+      params: params,
+    });
+  }
+
   getObject<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(url, {
       headers: new HttpHeaders({

@@ -9,7 +9,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from 'dist/shared-lib';
+import { AuthService } from 'shared-lib';
 import { ErrorStatusProviderService } from './error-status-provider.service';
 
 @Injectable({
