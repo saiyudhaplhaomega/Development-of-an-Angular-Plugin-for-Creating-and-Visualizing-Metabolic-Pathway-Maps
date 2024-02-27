@@ -911,6 +911,94 @@
           }
         }
       }
+    },
+    "pathway-visualization": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/pathway-visualization",
+      "sourceRoot": "projects/pathway-visualization/src",
+      "prefix": "vis",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/pathway-visualization",
+            "index": "projects/pathway-visualization/src/index.html",
+            "main": "projects/pathway-visualization/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/pathway-visualization/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/pathway-visualization/src/favicon.ico",
+              "projects/pathway-visualization/src/assets"
+            ],
+            "styles": ["projects/pathway-visualization/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "pathway-visualization:build:production"
+            },
+            "development": {
+              "browserTarget": "pathway-visualization:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "pathway-visualization:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/pathway-visualization/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/pathway-visualization/src/favicon.ico",
+              "projects/pathway-visualization/src/assets"
+            ],
+            "styles": ["projects/pathway-visualization/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
     }
   },
 

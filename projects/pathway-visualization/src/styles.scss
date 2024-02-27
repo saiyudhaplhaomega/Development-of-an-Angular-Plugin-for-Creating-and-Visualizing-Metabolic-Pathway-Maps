@@ -1,0 +1,21 @@
+// @use has to be called before @import
+// angular material theme mixins and functions
+@use "@angular/material" as mat;
+
+// custom theme mixins
+@use "./dist/shared-lib/theme-mixins/footer-theme" as footer;
+@use "./dist/shared-lib/theme-mixins/stepper-theme" as stepper;
+@use "./dist/shared-lib/theme-mixins/workflow-panel-theme" as panel;
+
+// angular material core styles
+@include mat.core();
+
+// custom theme
+@import "../../../themes/mdoa-theme.scss";
+
+// applies angular material typography styles
+@include mat.all-component-typographies();
+// applies custom theme to angular material components
+@include mat.all-component-themes($mdoa-theme);
+// overrides styles of angular material components
+@import "./material-style-overrides.scss";
