@@ -60,7 +60,8 @@ export class MPAComponent implements OnInit, OnDestroy {
   private navigateOutlet(dataItem: DataItem) {
     this.treeOutlet.clear();
     let componentRef: ComponentRef<any>;
-    switch (dataItem.type) {
+    //TODO: had to introduce fix as some items had 'user' and some 'USER' as type
+    switch (dataItem.type.toLowerCase()) {
       case NodeType.User: {
         console.log('inside user');
         componentRef = this.treeOutlet.createComponent(UserPageComponent);

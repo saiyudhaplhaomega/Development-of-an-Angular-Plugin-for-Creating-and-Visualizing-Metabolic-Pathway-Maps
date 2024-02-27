@@ -1,5 +1,5 @@
 export interface ProtDBJSON {
-  protdb_id: string;
+  protdbId: string;
   name: string;
   description: string;
   creationdate: string;
@@ -11,7 +11,7 @@ export interface ProtDBJSON {
   //status: string;
 }
 export class ProtDBJSONObject implements ProtDBJSON {
-  protdb_id: string;
+  protdbId: string;
   name: string;
   description: string;
   creationdate: string;
