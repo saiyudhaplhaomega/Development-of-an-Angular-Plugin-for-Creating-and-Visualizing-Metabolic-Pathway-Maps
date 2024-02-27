@@ -205,7 +205,7 @@ export class FolderPageComponent
           .subscribe((result) => {
             if (result != null) {
               if (protDBNode !== null) {
-                protDBNode.uuid = result.protdb_id;
+                protDBNode.uuid = result.protdbId;
                 this.dataService.updateNode(protDBNode);
               }
             }

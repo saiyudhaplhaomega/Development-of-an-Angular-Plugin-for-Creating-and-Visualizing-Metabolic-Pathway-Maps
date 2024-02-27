@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavService } from '../../services/nav.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { DataService } from '../../services/data.service';
+import { DataService, NodeType } from '../../services/data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataItem } from '../../model/data-item';
 import { Subscription } from 'rxjs';
@@ -40,7 +40,7 @@ export class DataNavigationTreeComponent implements OnInit, OnDestroy {
   isVisible(treeNode: DataItem): boolean {
     let isVisible = true;
     let child = treeNode;
-    while (child.type !== 'USER') {
+    while (child.type.toLowerCase() !== NodeType.User) {
       const parent = this.treeNodes.find(
         (search) => search.id === child.parent
       );

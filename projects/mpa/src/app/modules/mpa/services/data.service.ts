@@ -13,7 +13,7 @@ import { ProtDBJSONObject } from '../model/protdbjson';
 
 // TODO: properly set everywhere
 export enum NodeType {
-  User = 'USER',
+  User = 'user',
   Experiment = 'experiment',
   ProteinDB = 'proteindb',
   PeakList = 'peaklist',
@@ -247,7 +247,7 @@ export class DataService {
     const params = new HttpParams(
       {
         fromObject: {
-          jobid: proteinDB.protdb_id,
+          jobid: proteinDB.protdbId,
         }
       }
     )
