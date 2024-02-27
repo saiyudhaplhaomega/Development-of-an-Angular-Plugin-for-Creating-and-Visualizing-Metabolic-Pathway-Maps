@@ -1,5 +1,5 @@
-<div style="min-height: 300px;" class="keywords-tab">
-    <div class="keywords-tab-options">
+<div style="min-height: 300px;" class="keyword-tab">
+    <div class="keyword-tab-options">
         <mat-form-field style="width: 20%; margin-right: 15px;">
             <input matInput placeholder="Filter" (keyup)="applyFilter()" [(ngModel)]="filterString">
         </mat-form-field>
@@ -8,29 +8,59 @@
             <button mat-button (click)="collapseAll()">Collapse all</button>
         </div>
     </div>
-    <mat-accordion multi>
-        <ng-container *ngFor="let key of this.keyArray">
-            <mat-expansion-panel class="keyword-category">
-                <mat-expansion-panel-header class="keyword-category-header">
-                    {{key.toString()}}
-                </mat-expansion-panel-header>
-                <ng-template matExpansionPanelContent>
-                    <ul class="keyword-list">
-                        <li class="keyword-row-header keyword-row">
-                            <span>Description</span>
-                            <span>Quantification</span>
-                        </li>
-                        <li *ngFor="let keyword of this.dataMap.get(key)" class="keyword-row" [ngClass]="{'keyword-row-selected': keyword.description == selectedKeyword}"
-                            (click)="keywordClicked(keyword)">
-                            <span>{{keyword.description}}</span>
-                            <span>765</span>
-                        </li>
-                    </ul>
-                </ng-template>
-            </mat-expansion-panel>
-        </ng-container>
-    </mat-accordion>
-    <ng-container *ngIf="!(this.keyArray.length > 0)">
-        <p>No matching data found!</p>
-    </ng-container>
+    <div class="keyword-tree">
+        <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <!-- This is the tree node template for the category-header nodes -->
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: isCategoryNode" class="keyword-tree-node"
+                [style.display]="node.displayed ? 'block' : 'none'">
+                <div class="keyword-tree-node-row" (click)="nodeClicked(node)"
+                    [ngClass]="{'keyword-tree-node-highlighted': node.accession == selectedKeyword.accession}">
+                    <div class="keyword-tree-node-essentials">
+                        <button mat-button cdkTreeNodeToggle>
+                            <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                        </button>
+                        <span class="keyword-tree-node-info">{{node.id}}</span>
+                        <span class="keyword-tree-node-info">{{node.accession}}</span>
+                    </div>
+                    <span class="keyword-tree-node-quant">Category</span>
+                </div>
+                <div [@detailExpand]="treeControl.isExpanded(node) ? 'expanded' : 'collapsed'">
+                    <ng-container cdkTreeNodeOutlet></ng-container>
+                </div>
+            </cdk-nested-tree-node>
+            <!-- This is the tree node template for standard,expandable nodes -->
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="keyword-tree-node"
+                [style.display]="node.displayed ? 'block' : 'none'">
+                <div class="keyword-tree-node-row" (click)="nodeClicked(node)"
+                    [ngClass]="{'keyword-tree-node-highlighted': node.accession == selectedKeyword.accession}">
+                    <div class="keyword-tree-node-essentials">
+                        <button mat-button cdkTreeNodeToggle>
+                            <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                        </button>
+                        <span class="keyword-tree-node-info">{{node.id}}</span>
+                        <span class="keyword-tree-node-info">{{node.accession}}</span>
+                    </div>
+                    <span class="keyword-tree-node-quant">4234329048230958</span>
+                </div>
+                <div [@detailExpand]="treeControl.isExpanded(node) ? 'expanded' : 'collapsed'">
+                    <ng-container cdkTreeNodeOutlet></ng-container>
+                </div>
+            </cdk-nested-tree-node>
+
+            <!-- template for leaf nodes (i.e. the outer most nodes) -->
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="keyword-tree-node"
+                [style.display]="node.displayed ? 'block' : 'none'">
+                <div class="keyword-tree-node-row" (click)="nodeClicked(node)"
+                    [ngClass]="{'keyword-tree-node-highlighted': node.accession == selectedKeyword.accession}">
+                    <div class="keyword-tree-node-essentials">
+                        <button mat-button disabled></button>
+                        <span class="keyword-tree-node-info">{{node.id}}</span>
+                        <span class="keyword-tree-node-info">{{node.accession}}</span>
+                    </div>
+                    <span class="keyword-tree-node-quant">{{node.protIds}}</span>
+                    <span class="keyword-tree-node-quant">4234329048230958</span>
+                </div>
+            </cdk-nested-tree-node>
+        </cdk-tree>
+    </div>
 </div>

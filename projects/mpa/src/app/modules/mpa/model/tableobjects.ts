@@ -1,3 +1,6 @@
+import { KeywordJSON, KeywordObject } from "./keywordjson";
+import { TaxonomyJSON } from "./taxonomyjson";
+
 export enum GroupingOptions {
   OCCAM = 'OCCAMSRAZOR',
   ANTIOCCAM = 'ANTIOCCAMSRAZOR'
@@ -59,6 +62,20 @@ export interface SpectrumJSON {
   spectrumString: string;
   peptideSequence: string;
   peakArray;
+}
+
+export interface ProteinGroupDataJSON {
+  proteinGroups: ProteinGroupObject[];
+  taxRoot: TaxonomyJSON;
+  kwRoot: KeywordJSON;
+  targetFdr: String;
+}
+
+export class ProteinGroupDataObject {
+  proteinGroups: ProteinGroupObject[];
+  taxRoot: TaxonomyJSON;
+  kwRoot: KeywordObject;
+  targetFdr: String;
 }
 
 export class ProteinGroupObject implements ProteinGroupJSON {

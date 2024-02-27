@@ -146,7 +146,7 @@ export class ExperimentPageComponent
 
   calculateDataStats(): Datstats {
     console.log("calculating stats")
-    let mpaData: ProteinGroupObject[] = this.mpaTableDataService.mpaTableData.value;
+    let mpaData: ProteinGroupObject[] = this.mpaTableDataService.proteinTableData.value;
     let proteinCount = 0;
     let peptideCount = 0;
     let psmCount = 0;

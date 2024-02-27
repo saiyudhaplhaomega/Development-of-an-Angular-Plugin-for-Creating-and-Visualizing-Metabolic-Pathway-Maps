@@ -2,7 +2,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, Input } from '@angular/core';
-import { TaxonomyNode, TaxonomyTreeJSONObject } from '../../../model/taxonomytreejson';
+import { TaxonomyJSON, TaxonomyObject } from '../../../model/taxonomyjson';
+import { MpaTableDataService } from '../../../services/mpa-table-data.service';
 
 @Component({
   selector: 'app-taxonomy-tab',
@@ -21,98 +22,62 @@ import { TaxonomyNode, TaxonomyTreeJSONObject } from '../../../model/taxonomytre
 })
 export class TaxonomyTabComponent implements OnInit {
 
-  @Input() experimentUUID: string;
+  dataSource: ArrayDataSource<TaxonomyObject>;
+  treeControl: NestedTreeControl<TaxonomyObject>;
+  selectedTaxNode: TaxonomyObject;
 
-  dataSource: ArrayDataSource<TaxonomyNode>;
-  treeControl: NestedTreeControl<TaxonomyNode>;
-  selectedTaxNode: TaxonomyNode;
-
-  //TODO delete mock-data
-  taxonomyNodes: TaxonomyTreeJSONObject;
+  rootNode: TaxonomyObject;
   hasTaxNodes: boolean
   filterString: string;
 
-  constructor() {
-    this.taxonomyNodes = new TaxonomyTreeJSONObject();
-    this.taxonomyNodes.rootNode = {
-      id: '0',
-      description: 'root',
-      children: [
-        {
-          id: '1', description: 'Fruit', children: [
-            {
-              id: '3', description: 'Apple', children: [
-                {
-                  id: '3', description: 'Apple2', children: [
-                    { id: '9', description: 'wurst', children: [], displayed: true },
-                    { id: '9', description: 'Apple3', children: [], displayed: true }
-                  ], displayed: true
-                },
-                { id: '9', description: 'Cucumber', children: [], displayed: true }
-              ], displayed: true
-            },
-            { id: '4', description: 'Banana', children: [], displayed: true },
-            { id: '5', description: 'Peach', children: [], displayed: true }
-          ], displayed: true
-        },
-        {
-          id: '2', description: 'Vegetables', children: [
-            {
-              id: '6', description: 'Seasonal', children: [
-                {
-                  id: '8', description: 'Fall', children: [
-                    { id: '8', description: 'Pumpkin', children: [], displayed: true },
-                    { id: '8', description: 'Carrots', children: [], displayed: true }
-                  ], displayed: true
-                },
-                { id: '8', description: 'Summer', children: [], displayed: true },
-                { id: '9', description: 'Cucumber', children: [], displayed: true }
-              ], displayed: true
-            },
-            {
-              id: '7', description: 'Green', children: [
-                { id: '8', description: 'Zucchini', children: [], displayed: true },
-                { id: '9', description: 'Cucumber', children: [], displayed: true }
-              ], displayed: true
-            }
-          ], displayed: true
-        }
-      ],
-      displayed: true,
-    };
-
-    this.filterString = '';
-    this.hasTaxNodes = true;
-    this.selectedTaxNode = new TaxonomyNode();
-
-    this.dataSource = new ArrayDataSource(this.taxonomyNodes.rootNode.children);
-    this.treeControl = new NestedTreeControl<TaxonomyNode>(node => node.children);
+  constructor(
+    public mpaTableDataService: MpaTableDataService
+  ) {
   }
 
   ngOnInit(): void {
+    this.mpaTableDataService.taxonomyData.subscribe((newData) => {
+      this.rootNode = newData;
+    })
+    this.filterString = '';
+    this.hasTaxNodes = true;
+    this.selectedTaxNode = new TaxonomyObject();
+
+    this.dataSource = new ArrayDataSource(this.rootNode.children);
+    this.treeControl = new NestedTreeControl<TaxonomyObject>(node => node.children);
   }
 
-  hasChild = (_: number, node: TaxonomyNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: TaxonomyObject) => !!node.children && node.children.length > 0;
 
   applyFilter(): void {
-    //TODO test push
-    let nodes = this.taxonomyNodes.rootNode.children;
+    let nodes = this.rootNode.children;
     for (let i in nodes) {
       this.filterChildren(nodes[i]);
     }
   }
 
-  //TODO clean-up
-  filterChildren(node: TaxonomyNode) {
+  /**
+   * Filters nodes based on scientificname and all other names
+   * @param node 
+   */
+  filterChildren(node: TaxonomyJSON) {
     let regExp = new RegExp(this.filterString, 'i');
     let descendants = this.treeControl.getDescendants(node);
-    if (regExp.test(node.description)) {
+    if (regExp.test(node.scientificname)) {
       node.displayed = true;
       descendants.map(desc => desc.displayed = true);
 
       //this section is to make sure matches in multiple sequential levels get considered and displayed (i.e. parent: Bacteria, child with children: Acidobacterioa when 'bacte' is searched)
       let descMatched = false;
-      descendants.map(desc => regExp.test(desc.description) ? descMatched = true : '');
+      descendants.map(desc => {
+        let descNames: string[] = [desc.scientificname,...desc.othernames];
+        for (let name in descNames) {
+          if (regExp.test(name)) {
+            descMatched = true;
+            break;
+          }
+        }
+      });
       if (descMatched) {
         this.treeControl.expand(node);
         this.treeControl.expandDescendants(node);
@@ -123,7 +88,15 @@ export class TaxonomyTabComponent implements OnInit {
     } else {
       if (node.children.length > 0) {
         let descMatched = false;
-        descendants.map(desc => regExp.test(desc.description) ? descMatched = true : '');
+        descendants.map(desc => {
+          let descNames: string [] = [desc.scientificname,...desc.othernames];
+          for (let name in descNames) {
+            if (regExp.test(name)) {
+              descMatched = true;
+              break;
+            }
+          }
+        });
         if (descMatched) {
           node.displayed = true;
           this.treeControl.expand(node);
@@ -141,17 +114,17 @@ export class TaxonomyTabComponent implements OnInit {
     }
   }
 
-  //TODO implement insertion into detail-view-component
-  nodeClicked(node: TaxonomyNode): void {
+  // //TODO implement insertion into detail-view-component
+  nodeClicked(node: TaxonomyJSON): void {
     !this.treeControl.isExpanded(node) ? this.treeControl.expand(node) : {};
     this.selectedTaxNode = node;
   }
 
   expandAll() {
-    this.treeControl.expandDescendants(this.taxonomyNodes.rootNode);
+    this.treeControl.expandDescendants(this.rootNode);
   }
 
   collapseAll() {
-    this.treeControl.collapseDescendants(this.taxonomyNodes.rootNode);
+    this.treeControl.collapseDescendants(this.rootNode);
   }
 }
