@@ -1,0 +1,8 @@
+<div class="search-container">
+    <div class="input-button-container">
+        <input class="search-input" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" placeholder="Search by ID">
+        <button class="search-button" (click)="onSearch()">
+            <i class="fas fa-search"></i>
+        </button>
+  </div>
+  
