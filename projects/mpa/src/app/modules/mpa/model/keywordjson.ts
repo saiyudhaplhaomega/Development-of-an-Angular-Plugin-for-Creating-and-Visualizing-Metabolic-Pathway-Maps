@@ -1,26 +1,30 @@
-export enum UniProtKeywordCategories {
-    BIOLOGICAL_PROCESS = 'Biological Process',
-    CELLULAR_COMPONENT = 'Cellular Component',
-    CODING_SEQUENCE_DIVERSITY = 'Coding Sequence Diversity',
-    DEVELOPMENTAL_STAGE = 'Developmental Stage',
+export enum UniProtKeywordCategory {
+    BIOLOGICAL_PROCESS = 'Biological process',
+    CELLULAR_COMPONENT = 'Cellular component',
+    CODING_SEQUENCE_DIVERSITY = 'Coding sequence diversity',
+    DEVELOPMENTAL_STAGE = 'Developmental stage',
     DISEASE = 'Disease',
     DOMAIN = 'Domain',
     LIGAND = 'Ligand',
-    MOLECULAR_FUNCTION = 'Molecular Function',
-    POST_TRANSLATIONAL_MODIFICATION = 'Post-Translational Modification',
-    TECHNICAL_TERM = 'Technical Term',
-}
-
-export class UniProtKeyword {
-    category: UniProtKeywordCategories;
-    description: string;
-    //proteinids: [];
+    MOLECULAR_FUNCTION = 'Molecular function',
+    POST_TRANSLATIONAL_MODIFICATION = 'PTM',
+    TECHNICAL_TERM = 'Technical term',
 }
 
 export interface KeywordJSON {
-    keywords: UniProtKeyword[]
+    accession: string;
+    id: string;
+    category?: UniProtKeywordCategory;
+    children?: KeywordJSON[];
+    proteinIds?: string[];
+    displayed: boolean;
 }
 
-export class KeywordJSONObject implements KeywordJSON {
-    keywords: UniProtKeyword[];
+export class KeywordObject implements KeywordJSON {
+    accession: string;
+    id: string;
+    category?: UniProtKeywordCategory;
+    children?: KeywordJSON[];
+    proteinIds?: string[];
+    displayed: boolean = true;
 }

@@ -18,7 +18,7 @@
             <button mat-button cdkTreeNodeToggle>
               <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
             </button>
-            <span class="taxonomy-tree-node-info">{{node.description}}</span>
+            <span class="taxonomy-tree-node-info">{{node.scientificname}}</span>
           </div>
           <span class="taxonomy-tree-node-quant">4234329048230958</span>
         </div>
@@ -33,8 +33,9 @@
         <div class="taxonomy-tree-node-row" (click)="nodeClicked(node)" [ngClass]="{'taxonomy-tree-node-highlighted': node.id == selectedTaxNode.id}">
           <div class="taxonomy-tree-node-essentials">
             <button mat-button disabled></button>
-            <span class="taxonomy-tree-node-info">{{node.description}}</span>
+            <span class="taxonomy-tree-node-info">{{node.scientificname}}</span>
           </div>
+          <span class="taxonomy-tree-node-quant">{{node.protIds}}</span>
           <span class="taxonomy-tree-node-quant">4234329048230958</span>
         </div>
       </cdk-nested-tree-node>

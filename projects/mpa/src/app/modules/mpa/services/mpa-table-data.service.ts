@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from 'dist/shared-lib';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Endpoints, WebserveraddressService } from '../../../mpawebserveraddress.service';
-import { ProteinGroupRequest } from '../components/experiment-page/experiment-page.component';
 import { SpectrumDataObject } from '../components/spectrum-viewer/spectrum-data-object';
-import { PeptideObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject } from '../model/tableobjects';
+import { PeptideObject, ProteinGroupDataObject, ProteinGroupObject, ProteinObject, ProteinSequenceObject, PsmObject, SpectrumObject } from '../model/tableobjects';
+import { TaxonomyObject } from '../model/taxonomyjson';
+import { KeywordObject } from '../model/keywordjson';
 
 export enum GroupSelection {
   MAINGROUPS = 'maingroups',
@@ -32,35 +33,30 @@ export class MpaTableDataService {
 
   // used to save ExperimentIDs, ProteinGroupObject[], qValues as to prevent constant requests to the database; minimizes loadtime after initial loading
   private maxNumSaved: number = 5;
-  private savedMpaDataMap: Map<string, {targetFdr:string,protGroups:ProteinGroupObject[]}> = new Map<string, {targetFdr:string,protGroups:ProteinGroupObject[]}>();
+  private mpaDataMap: Map<string, ProteinGroupDataObject> = new Map<string, ProteinGroupDataObject>();
   private savedExpIds: string[] = [];
 
-  public mpaTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
+  public expID = new BehaviorSubject<string>(undefined);
+  public proteinTableData = new BehaviorSubject<ProteinGroupObject[]>([]);
+  public keywordData = new BehaviorSubject<KeywordObject>(new KeywordObject());
+  public taxonomyData = new BehaviorSubject<TaxonomyObject>(new TaxonomyObject());
+  public proteinSequenceData = new BehaviorSubject<ProteinSequenceObject>(undefined);
+  public spectrumData = new BehaviorSubject<SpectrumObject>(undefined);
+  public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
 
+  public selectedPeptide = new BehaviorSubject<PeptideObject>(undefined);
+  public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
   public selectedProteinGroup = new BehaviorSubject<ProteinGroupObject>(undefined);
   public selectedProtein = new BehaviorSubject<ProteinObject>(undefined);
   public peptidesForSelectedProtein = new BehaviorSubject<PeptideObject[]>([]);
   public psmsForSelectedPeptide = new BehaviorSubject<PsmObject[]>([]);
 
+  public requestingProteinSequence = false;
+  public requestingSpectrum = new Subject<boolean>();
   public proteinGroupRequestStatus = new BehaviorSubject<PGRequestStatus>(PGRequestStatus.UNINITIATED);
 
-  public selectedPeptide = new BehaviorSubject<PeptideObject>(undefined);
-  public selectedPsm = new BehaviorSubject<PsmObject>(undefined);
-
-  public spectrumData = new BehaviorSubject<SpectrumObject>(undefined);
-  public expID = new BehaviorSubject<string>(undefined);
-
-  public requestingSpectrum = new Subject<boolean>();
-
-  public proteinSequenceData = new BehaviorSubject<ProteinSequenceObject>(undefined);
-  public requestingProteinSequence = false;
-
   public groupSelection: GroupSelection = GroupSelection.MAINGROUPS;
-
   public taxonomyDisplaySelection = TaxonomyDisplaySelection.FLAT;
-
-  // initialize BehaviorSubject with new, empty SpectrumDataObject
-  public spectrumDataObject$: BehaviorSubject<SpectrumDataObject>
 
   constructor(
     private httpClientService: HttpClientService,
@@ -95,28 +91,27 @@ export class MpaTableDataService {
     let returnValue: Subject<boolean> = new Subject<boolean>();
     let isStored: boolean = false;
 
-    if (this.savedMpaDataMap.has(this.expID.value)) {
-      if (this.savedMpaDataMap.get(this.expID.value).targetFdr === targetFdr) {
+    if (this.mpaDataMap.has(this.expID.value)) {
+      if (this.mpaDataMap.get(this.expID.value).targetFdr === targetFdr) {
         isStored = true;
       } else {
-        // if targetFdr doesn't match previously used targetFdr -> delete entry from storage
-        this.savedMpaDataMap.delete(this.expID.value);
+        this.mpaDataMap.delete(this.expID.value);
       }
     }
 
     if (isStored) {
       // setTimeout() to set returnValue after it is returned asObservable -> enables the subscription to catch on
-      console.log("pulled data from storage");
-      this.setMpaTabledata();
+      this.setMPAData();
       setTimeout(() => {
         returnValue.next(true);
         this.proteinGroupRequestStatus.next(PGRequestStatus.FULFILLED);
       }, 500);
+
     } else {
       // makes sure, not too much data is retained
       //TODO change to check for mb stored?
       if (this.savedExpIds.length >= this.maxNumSaved) {
-        this.savedMpaDataMap.delete(this.savedExpIds[0]);
+        this.mpaDataMap.delete(this.savedExpIds[0]);
         this.savedExpIds.shift();
       }
 
@@ -128,12 +123,15 @@ export class MpaTableDataService {
           }
         });
 
-      this.httpClientService.getObject<ProteinGroupObject[]>(this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS), params).subscribe({
-        next: (proteinGroups) => {
-          console.log("saved data updated:");
+      this.httpClientService.getObject<ProteinGroupDataObject>(this.addressService.getEndpoint(Endpoints.GET_PROTEIN_GROUPS), params).subscribe({
+        next: (mpaData) => {
+          console.log(mpaData)
+          // sort proteinGroups after receiving them -> should expedite sorting at alter stages, as they arrive in random order from the back-end
+          let sortedProteinGroups = this.sortProteinTableData(mpaData.proteinGroups);
+          mpaData.proteinGroups = sortedProteinGroups;
           this.savedExpIds.push(this.expID.value);
-          this.savedMpaDataMap.set(this.expID.value,{targetFdr:targetFdr,protGroups:proteinGroups});
-          this.setMpaTabledata();
+          this.mpaDataMap.set(this.expID.value,mpaData);
+          this.setMPAData();
           returnValue.next(true);
         },
         error: () => {
@@ -241,22 +239,26 @@ export class MpaTableDataService {
     this.psmsForSelectedPeptide.next([]);
   }
 
-  /** uses sorted mpaData to set mpaTableData based on groupSelection and if the group is set to be displayed */
-  public setMpaTabledata(): void {
-    let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value).protGroups;
-    let newTableData: ProteinGroupObject[] = [];
+  /** sets mpaTableData based on groupSelection and if the group is set to be displayed
+   * basically, call this method after modifying any part of the current dataSet
+  */
+  public setMPAData(): void {
+    let proteinTableData: ProteinGroupObject[] = this.mpaDataMap.get(this.expID.value).proteinGroups;
+    let newProteinTableData: ProteinGroupObject[] = [];
     if (this.groupSelection == GroupSelection.SUBGROUPS) {
-      mpaData.map(group => group.proteinSubGroupList.map(subgroup => newTableData.push(subgroup)));
+      proteinTableData.map(group => group.proteinSubGroupList.map(subgroup => newProteinTableData.push(subgroup)));
     }
     else {
-      newTableData = mpaData.filter(group => group.proteinSubGroupList)
+      newProteinTableData = proteinTableData.filter(group => group.proteinSubGroupList)
     }
-    newTableData = this.sortTableData(newTableData);
-    this.mpaTableData.next(newTableData);
-    this.selectedProteinGroup.next(newTableData[0]);
+    newProteinTableData = this.sortProteinTableData(newProteinTableData);
+    this.proteinTableData.next(newProteinTableData);
+    this.keywordData.next(this.mpaDataMap.get(this.expID.value).kwRoot);
+    this.taxonomyData.next(this.mpaDataMap.get(this.expID.value).taxRoot);
+    this.selectedProteinGroup.next(newProteinTableData[0]);
   }
 
-  private sortTableData(tableData: ProteinGroupObject[]): ProteinGroupObject[] {
+  private sortProteinTableData(tableData: ProteinGroupObject[]): ProteinGroupObject[] {
     let disabledGroups: ProteinGroupObject[] = [];
     let enabledGroups: ProteinGroupObject[] = [];
 
@@ -286,15 +288,14 @@ export class MpaTableDataService {
   }
 
   public onGroupSelection(): void {
-    this.setMpaTabledata();
+    this.setMPAData();
   }
 
   //updates the 'hidden' property of the selected groups in this.mpaData and sends an update to the back-end and this.mpaTableData
   public onToggleDisableGroup(isDisableAction: boolean): void {
     let groupsToUpdate: ProteinGroupObject[] = [];
-    let mpaData: ProteinGroupObject[] = this.savedMpaDataMap.get(this.expID.value).protGroups;
-    let targetFdr: string = this.savedMpaDataMap.get(this.expID.value).targetFdr;
-    mpaData.map(group => {
+    let mpaData: ProteinGroupDataObject = this.mpaDataMap.get(this.expID.value);
+    mpaData.proteinGroups.map(group => {
       if (group.isSelected) {
         group.hidden = (isDisableAction) ? true : false;
         let strippedGroup = new ProteinGroupObject;
@@ -318,18 +319,16 @@ export class MpaTableDataService {
         subgroup.isSelected = false;
       })
     })
-    this.savedMpaDataMap.set(this.expID.value, {targetFdr:targetFdr,protGroups:mpaData});
-    this.setMpaTabledata();
-    this.httpClientService.postObject<ProteinGroupObject[], any>(groupsToUpdate, this.addressService.getEndpoint(Endpoints.POST_UPDATE_PROTEIN_GROUPS)).subscribe({
-      next: ans => { }//TODO evaluate answer?
-    })
+    this.mpaDataMap.set(this.expID.value, mpaData);
+    this.setMPAData();
+    this.httpClientService.postObject<ProteinGroupObject[], any>(groupsToUpdate, this.addressService.getEndpoint(Endpoints.POST_UPDATE_PROTEIN_GROUPS));
   }
 
   public downloadProteinTableData(): void {
     this.httpClientService.postObject<{ experimentID: string, groupSelection: GroupSelection, targetFdr: string }, { message: string; }>({
       experimentID: this.expID.value,
       groupSelection: this.groupSelection,
-      targetFdr: this.savedMpaDataMap.get(this.expID.value).targetFdr.toString(),
+      targetFdr: this.mpaDataMap.get(this.expID.value).targetFdr.toString(),
     }, this.addressService.getEndpoint(Endpoints.GET_DOWNLOADPROTEINGROUPS)).subscribe({
       next: (json) => {
         console.log(json)
@@ -342,8 +341,8 @@ export class MpaTableDataService {
   }
 
   public getTargetFdrValue(expID: string): string {
-    if (this.savedMpaDataMap.has(expID)) {
-      return this.savedMpaDataMap.get(expID).targetFdr.toString();
+    if (this.mpaDataMap.has(expID)) {
+      return this.mpaDataMap.get(expID).targetFdr.toString();
     } else {
       return "not set";
     }

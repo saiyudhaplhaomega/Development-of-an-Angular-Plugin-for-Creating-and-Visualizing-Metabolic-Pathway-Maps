@@ -56,6 +56,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
     'representativeDescription',
     'checkbox'
   ];
+
   dataSource: MatTableDataSource<ProteinGroupObject>;
   showDetails: boolean = false;
   selectedAll: boolean = false;
@@ -73,8 +74,7 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.mpaTableDataService.mpaTableData.subscribe((mpaTableData) => {
-      //TODO sort IDs -> integer sort, then pass to dataSource.data
+    this.mpaTableDataService.proteinTableData.subscribe((mpaTableData) => {
       this.dataSource.data = mpaTableData;
     });
 
@@ -101,24 +101,6 @@ export class MpaTableComponent implements OnInit, AfterViewInit {
       // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
       // this.dataSource.filter = filterValue;
     }
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //       this.selection.clear() :
-  //       this.dataSource.data.forEach(row => this.selection.select(row));
-  // }
-  //
-  // toggleRow(row) {
-  //   this.selection.toggle(row);
-  // }
 
   onExpand(row: ProteinGroupObject): void {
     if (this.expandedElement === row.proteinGroupID) {

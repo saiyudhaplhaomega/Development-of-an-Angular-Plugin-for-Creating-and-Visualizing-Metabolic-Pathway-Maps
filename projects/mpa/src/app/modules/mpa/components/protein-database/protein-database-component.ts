@@ -28,7 +28,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
   ) {}
 
   ngOnInit() {
-    this.protDBDataObject.protdb_id = this.dataItemOfThisComponent.uuid;
+    this.protDBDataObject.protdbId = this.dataItemOfThisComponent.uuid;
     this.protDBDataObject.creationdate =
       this.dataItemOfThisComponent.creationDate;
     this.protDBDataObject.description =
@@ -36,7 +36,7 @@ export class ProteinDatabaseComponent implements OnInit, ContentComponent {
     this.protDBDataObject.name = this.dataItemOfThisComponent.displayName;
     if (this.dataItemOfThisComponent.uuid !== null) {
       this.dataService
-        .getFastaData(this.protDBDataObject.protdb_id)
+        .getFastaData(this.protDBDataObject.protdbId)
         .subscribe((fastaData) => {
           this.protDBDataObject = fastaData;
           this.loading = false;
