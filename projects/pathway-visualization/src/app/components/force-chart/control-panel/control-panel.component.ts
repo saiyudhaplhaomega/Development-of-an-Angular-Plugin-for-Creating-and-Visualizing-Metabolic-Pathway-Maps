@@ -1,31 +1,33 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-control-panel',
-  template: `
-    <div class="control-panel">
-      <button (click)="zoomIn()"><i class="fas fa-search-plus"></i></button>
-      <button (click)="zoomOut()"><i class="fas fa-search-minus"></i></button>
-      <button (click)="panGraph()"><i class="fas fa-arrows-alt"></i></button>
-      <button (click)="selectNode()"><i class="fas fa-mouse-pointer"></i></button>
-      <button (click)="refreshGraph()"><i class="fas fa-sync"></i></button>
-      <button (click)="toggleCallbackMode()"><i class="fas fa-code"></i></button>
-      <button (click)="toggleTextBoxMode()"><i class="fas fa-edit"></i></button>
-      <button (click)="uploadFile()"><i class="fas fa-file-upload"></i></button>
-    </div>
-  `,
+  templateUrl: `control-panel.component.html`,
   styleUrls: ['force-chart.component.css']
 })
 export class ControlPanelComponent {
+  @Input() activeToolName: string;
+  @Input() panEnabled: boolean;
+  @Input() brushEnabled: boolean;
+  @Input() textBoxMode: boolean;
+  @Output() searchEvent = new EventEmitter<void>();
   @Output() zoomInEvent = new EventEmitter<void>();
   @Output() zoomOutEvent = new EventEmitter<void>();
   @Output() panGraphEvent = new EventEmitter<void>();
   @Output() selectNodeEvent = new EventEmitter<void>();
   @Output() refreshGraphEvent = new EventEmitter<void>();
   @Output() toggleCallbackModeEvent = new EventEmitter<void>();
+  @Output() snapModeEvent = new EventEmitter<void>();
+  @Output() orthogonalEvent = new EventEmitter<void>();
+  @Output() shortagePathEvent = new EventEmitter<void>();
+  // @Output() enableFBSEvent = new EventEmitter<void>();
+  @Output() arrowAnimationEvent = new EventEmitter<void>();
   @Output() toggleTextBoxModeEvent = new EventEmitter<void>();
   @Output() uploadFileEvent = new EventEmitter<void>();
 
+  search() {
+    this.searchEvent.emit();
+  }
   zoomIn() {
     this.zoomInEvent.emit();
   }
@@ -46,8 +48,26 @@ export class ControlPanelComponent {
     this.refreshGraphEvent.emit();
   }
 
-  toggleCallbackMode() {
-    this.toggleCallbackModeEvent.emit();
+  toggleCallbackMode(mode) {
+    this.toggleCallbackModeEvent.emit(mode);
+  }
+
+  snapMode() {
+    this.snapModeEvent.emit();
+  }
+
+  orthogonalMode() {
+    this.orthogonalEvent.emit();
+  }
+
+  shortagePath() {
+    this.shortagePathEvent.emit();
+  }
+  // enableFBS() {
+  //   this.enableFBSEvent.emit();
+  // }
+  arrowAnimation() {
+    this.arrowAnimationEvent.emit();
   }
 
   toggleTextBoxMode() {

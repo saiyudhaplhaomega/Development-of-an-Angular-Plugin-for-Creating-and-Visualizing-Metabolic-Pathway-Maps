@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   template: `
     <div class="search-container">
       <div class="input-button-container">
-        <input class="search-input" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" placeholder="Search by ID">
+        <input class="search-input" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" [placeholder]="searchPlaceholder">
         <button class="search-button" (click)="onSearch()">
           <i class="fas fa-search"></i>
         </button>
@@ -21,6 +21,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SearchBarComponent {
   @Input() searchText: string = '';
+  @Input() searchPlaceholder: string = 'Search by ID';
   @Input() suggestions: string[] = [];
   @Output() searchTextChangedEvent = new EventEmitter<string>();
   @Output() searchEvent = new EventEmitter<void>();

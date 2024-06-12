@@ -1,0 +1,18 @@
+
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="svg_12">
+   <path stroke="#000" id="svg_2" d="m4.85774,28.07535c-0.85774,-3.60251 -3.77406,-25.2176 20.9289,-25.9038c24.70296,-0.68619 21.10044,26.24689 21.10044,26.24689c0,0 -40.48541,-0.17155 -40.48541,-0.17155" opacity="NaN" fill="none" stroke="#0fffff"/>
+   <path stroke="#000" id="svg_3" d="m25.78664,28.41844c-2.23013,0 -3.43097,-2.05858 -0.85774,-5.66109c2.57322,-3.60251 4.11716,-6.17574 4.11716,-6.17574c0,0 1.20084,7.71967 0.17155,9.09206c-1.02929,1.37239 -1.20084,2.74477 -3.43097,2.74477z" opacity="NaN" fill="#0fffff"/>
+   <text stroke="#000" transform="matrix(0.652932 0 0 0.652932 -216.086 -192.923)" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_4" y="363.80962" x="355.15253" fill="#000000">FPS</text>
+   <path stroke="#000" id="svg_5" d="m4,23.44354l5.83264,0.17155" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_6" d="m6.57322,12.12135l4.9749,3.25942" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_7" d="m14.46445,4.57322l3.43097,5.14645" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_8" d="m25.44354,2l-0.17155,5.66109" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_9" d="m36.76573,4.74477l-2.40168,4.11716" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_10" d="m44.48541,12.636l-4.6318,2.91632" opacity="NaN" fill="#0fffff"/>
+   <path stroke="#000" id="svg_11" d="m46.88708,23.61509l-5.48955,-0.17155" opacity="NaN" fill="#0fffff"/>
+  </g>
+ </g>
+</svg>

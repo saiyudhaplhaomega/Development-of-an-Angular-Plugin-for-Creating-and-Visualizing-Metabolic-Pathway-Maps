@@ -1,0 +1,308 @@
+{
+    "edges": [
+        {
+            "dataRef": "",
+            "edgeId": 0,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_0",
+            "modelElementRef": "",
+            "source": 0,
+            "target": 5
+        },
+        {
+            "dataRef": "",
+            "edgeId": 1,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_1",
+            "modelElementRef": "",
+            "source": 5,
+            "target": 1
+        },
+        {
+            "dataRef": "",
+            "edgeId": 2,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_2",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 5
+        },
+        {
+            "dataRef": "",
+            "edgeId": 3,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_3",
+            "modelElementRef": "",
+            "source": 5,
+            "target": 4
+        },
+        {
+            "dataRef": "",
+            "edgeId": 4,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_4",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 5
+        },
+        {
+            "dataRef": "",
+            "edgeId": 5,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_5",
+            "modelElementRef": "",
+            "source": 5,
+            "target": 2
+        },
+        {
+            "dataRef": "",
+            "edgeId": 6,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_6",
+            "modelElementRef": "",
+            "source": 0,
+            "target": 6
+        },
+        {
+            "dataRef": "",
+            "edgeId": 7,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_7",
+            "modelElementRef": "",
+            "source": 6,
+            "target": 2
+        },
+        {
+            "dataRef": "",
+            "edgeId": 8,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_8",
+            "modelElementRef": "",
+            "source": 3,
+            "target": 6
+        },
+        {
+            "dataRef": "",
+            "edgeId": 9,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_9",
+            "modelElementRef": "",
+            "source": 6,
+            "target": 4
+        },
+        {
+            "dataRef": "",
+            "edgeId": 10,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_10",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 8
+        },
+        {
+            "dataRef": "",
+            "edgeId": 11,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_11",
+            "modelElementRef": "",
+            "source": 8,
+            "target": 3
+        },
+        {
+            "dataRef": "",
+            "edgeId": 12,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_12",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 8
+        },
+        {
+            "dataRef": "",
+            "edgeId": 13,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_13",
+            "modelElementRef": "",
+            "source": 8,
+            "target": 2
+        },
+        {
+            "dataRef": "",
+            "edgeId": 14,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_14",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 7
+        },
+        {
+            "dataRef": "",
+            "edgeId": 15,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_15",
+            "modelElementRef": "",
+            "source": 7,
+            "target": 2
+        },
+        {
+            "dataRef": "",
+            "edgeId": 16,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_16",
+            "modelElementRef": "",
+            "source": 0,
+            "target": 7
+        },
+        {
+            "dataRef": "",
+            "edgeId": 17,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_17",
+            "modelElementRef": "",
+            "source": 7,
+            "target": 2
+        },
+        {
+            "dataRef": "",
+            "edgeId": 18,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_18",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 7
+        },
+        {
+            "dataRef": "",
+            "edgeId": 19,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_19",
+            "modelElementRef": "",
+            "source": 7,
+            "target": 4
+        },
+        {
+            "dataRef": "",
+            "edgeId": 20,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_20",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 7
+        },
+        {
+            "dataRef": "",
+            "edgeId": 21,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_21",
+            "modelElementRef": "",
+            "source": 7,
+            "target": 3
+        }
+    ],
+    "level": "molecular",
+    "nodes": [
+        {
+            "dataRef": "",
+            "label": "node_0",
+            "modelElementRef": "",
+            "nodeId": 0,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_1",
+            "modelElementRef": "",
+            "nodeId": 1,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_2",
+            "modelElementRef": "",
+            "nodeId": 2,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_3",
+            "modelElementRef": "",
+            "nodeId": 3,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_4",
+            "modelElementRef": "",
+            "nodeId": 4,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_5",
+            "modelElementRef": "",
+            "nodeId": 5,
+            "nodeType": "diamond",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_6",
+            "modelElementRef": "",
+            "nodeId": 6,
+            "nodeType": "diamond",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_7",
+            "modelElementRef": "",
+            "nodeId": 7,
+            "nodeType": "diamond",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "dataRef": "",
+            "label": "node_8",
+            "modelElementRef": "",
+            "nodeId": 8,
+            "nodeType": "diamond",
+            "x": 0,
+            "y": 0
+        }
+    ]
+}

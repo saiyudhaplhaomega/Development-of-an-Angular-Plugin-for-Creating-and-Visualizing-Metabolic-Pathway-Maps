@@ -1,0 +1,36 @@
+<div class="control-panel">
+    <!-- <button (click)="search()" [style.background-color]="activeToolName=='search' ? 'blue' : 'initial'" [style.color]="activeToolName=='search' ? 'white' : 'initial'" title="Search"><i class="fas fa-search"></i></button> -->
+    <button (click)="zoomIn()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+    <button (click)="zoomOut()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+    <button (click)="panGraph()" [style.background-color]="panEnabled ? 'blue' : 'initial'" [style.color]="panEnabled ? 'white' : 'initial'" title="Pan Graph"><i class="fas fa-arrows-alt"></i></button>
+    <button (click)="selectNode()" [style.background-color]="brushEnabled ? 'blue' : 'initial'" [style.color]="brushEnabled ? 'white' : 'initial'" title="Select Node"><i class="fas fa-mouse-pointer"></i></button>
+    <button (click)="refreshGraph()" title="Refresh Graph"><i class="fas fa-sync"></i></button>
+    <button (click)="toggleCallbackMode('exploration')" [style.background-color]="activeToolName == 'exploration' ? 'blue' : 'initial'" [style.color]="activeToolName == 'exploration' ? 'white' : 'initial'" title="Toggle Callback Mode exploration"><i class="fas fa-bomb"></i></button>
+    <button (click)="toggleCallbackMode('editing')" [style.background-color]="activeToolName == 'editing' ? 'blue' : 'initial'" [style.color]="activeToolName == 'editing' ? 'white' : 'initial'" title="Toggle Callback Mode editing"><i class="fas fa-user-edit"></i></button>
+    <button (click)="snapMode()" [style.background-color]="activeToolName=='snapMode' ? 'blue' : 'initial'" [style.color]="activeToolName=='snapMode' ? 'white' : 'initial'" title="Snapping Node"><i class="fas fa-hand-sparkles"></i></button>
+    <button (click)="orthogonalMode()" [style.background-color]="activeToolName=='orthogonalMode' ? 'blue' : 'initial'" [style.color]="activeToolName=='orthogonalMode' ? 'white' : 'initial'" title="Orthogonal Mode"><i class="fas fa-vector-square"></i></button>
+    <button (click)="arrowAnimation()" [style.background-color]="activeToolName=='arrowAnimation' ? 'blue' : 'initial'" [style.color]="activeToolName=='arrowAnimation' ? 'white' : 'initial'" title="Arrow Animation"><i class="fas fa-radiation-alt"></i></button>
+    <!-- <button (click)="enableFBS()" [style.background-color]="activeToolName=='enableFPS' ? 'blue' : 'initial'" [style.color]="activeToolName=='enableFPS' ? 'white' : 'initial'" title="Enable FPS"> 
+        <svg width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <title>Layer 1</title>
+                <g stroke="null" id="svg_12">
+                <path stroke="#000" stroke="black" fill="none" opacity="NaN" d="m3.61921,13.0528c-0.3323,-1.39567 -1.46213,-9.7697 8.10819,-10.03554c9.57032,-0.26584 8.17465,10.16846 8.17465,10.16846c0,0 -15.68469,-0.06646 -15.68469,-0.06646" id="svg_2"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m11.7274,13.18571c-0.86399,0 -1.32921,-0.79753 -0.3323,-2.1932c0.99691,-1.39567 1.59505,-2.39258 1.59505,-2.39258c0,0 0.46522,2.99072 0.06646,3.52241c-0.39876,0.53169 -0.46522,1.06337 -1.32921,1.06337z" id="svg_3"/>
+                <text stroke="#000" fill="#000000" x="355.15253" y="363.80962" id="svg_4" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" transform="matrix(0.252956 0 0 0.252956 -81.9779 -72.5655)">FPS</text>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m3.28691,11.25836l2.25966,0.06646" id="svg_5"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m4.28381,6.87196l1.92736,1.26275" id="svg_6"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m7.341,3.9477l1.32921,1.99382" id="svg_7"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m11.59447,2.95079l-0.06646,2.1932" id="svg_8"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m15.98087,4.01416l-0.93045,1.59505" id="svg_9"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m18.9716,7.07135l-1.79443,1.12983" id="svg_10"/>
+                <path stroke="#000" fill="#0fffff" opacity="NaN" d="m19.90204,11.32482l-2.12674,-0.06646" id="svg_11"/>
+                </g>
+            </g>
+        </svg>
+    </button> -->
+    <button (click)="shortagePath()" [style.background-color]="activeToolName=='shortagePath' ? 'blue' : 'initial'" [style.color]="activeToolName=='shortagePath' ? 'white' : 'initial'" title="Shortage Path">
+        <svg class="svg-icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M832 640h-192c-35.2 0-64-28.8-64-64s28.8-64 64-64h192s192-214 192-320-86-192-192-192-192 86-192 192c0 51 44.4 126.8 90.6 192H640c-105.8 0-192 86.2-192 192s86.2 192 192 192h192c35.2 0 64 28.8 64 64s-28.8 64-64 64H371c-32 49.6-67.6 95.4-94.6 128H832c105.8 0 192-86.2 192-192s-86.2-192-192-192z m0-512c35.4 0 64 28.6 64 64s-28.6 64-64 64-64-28.6-64-64 28.6-64 64-64zM192 512c-106 0-192 86-192 192s192 320 192 320 192-214 192-320-86-192-192-192z m0 256c-35.4 0-64-28.6-64-64s28.6-64 64-64 64 28.6 64 64-28.6 64-64 64z"  /></svg>    </button>
+    <button (click)="toggleTextBoxMode()" [style.background-color]="activeToolName=='textBoxMode' ? 'blue' : 'initial'" [style.color]="activeToolName=='textBoxMode' ? 'white' : 'initial'" title="Toggle Text Box Mode"><i class="fas fa-edit"></i></button>
+    <button (click)="uploadFile()" title="Upload File"><i class="fas fa-file-upload"></i></button>
+</div>

@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="file-upload-container">
+    <input type="file" (change)="onFileSelected($event)" id="fileInput" #fileInput hidden />
+</div>
+<app-search-bar
+    *ngIf="activeToolName != 'shortagePath'"
+    [searchText]="searchText"
+    [suggestions]="suggestions"
+    (searchTextChangedEvent)="onSearchTextChanged($event)"
+    (searchEvent)="onSearch()"
+    (suggestionClickEvent)="onSuggestionClick($event)"
+></app-search-bar>
+<div *ngIf="activeToolName == 'shortagePath'">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- First search bar for shortagePathFromNode -->
+            <shortest-path-bar
+                [searchText]="shortagePathFromNode"
+                [suggestions]="suggestions"
+                (searchTextChangedEvent)="onSearchTextChanged($event)"
+                searchPlaceholder="Search From"
+                (searchEvent)="onSearch()"
+                (suggestionClickEvent)="onSuggestionClickSrtPathFrom($event)"
+            ></shortest-path-bar>
+        </div>
+        <div class="col-md-9">
+            <!-- Second search bar for shortagePathToNode -->
+            <shortest-path-bar
+                [searchText]="shortagePathToNode"
+                [suggestions]="suggestionsPaths"
+                searchPlaceholder="Search to"
+                (searchTextChangedEvent)="onSearchTextChangedPaths($event)"
+                (searchEvent)="onSearch()"
+                (suggestionClickEvent)="onSuggestionClickSrtPathTo($event)"
+            ></shortest-path-bar>
+        </div>
+    </div>
+    
+</div>
+
+<div class="main-container">
+<app-control-panel
+    [panEnabled]="panEnabled"
+    [brushEnabled]="brushEnabled"
+    [textBoxMode] = "textBoxMode"
+    [activeToolName]="activeToolName"
+    (searchEvent)="searchEnable()"
+    (zoomInEvent)="zoomIn()"
+    (zoomOutEvent)="zoomOut()"
+    (panGraphEvent)="panGraph()"
+    (selectNodeEvent)="selectNode()"
+    (refreshGraphEvent)="refreshGraph()"
+    (toggleCallbackModeEvent)="toggleCallbackMode($event)"
+    (snapModeEvent)="snapMode()"
+    (orthogonalEvent)="orthogonalMode()"
+    (shortagePathEvent)="shortagePathEnabled()"
+    (enableFBSEvent)="enableFBS()"
+    (arrowAnimationEvent)="arrowAnimation()"
+    (toggleTextBoxModeEvent)="toggleTextBoxMode()"
+    (uploadFileEvent)="uploadFile()"
+></app-control-panel>
+
+    <svg width="1" height="1"></svg>
+    <figure #container></figure>
+    <div class="row">
+        <div class="col">
+            <!-- Display FPS -->
+            <!-- <p id="fps" class="mt-3">FPS: {{ fps.toString().slice(0,7) || '' }}</p> -->
+            <div class="custom-control custom-switch">
+                <input (click)="enableFBS()" type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1">
+                    FPS</label>
+            </div>
+            <p *ngIf="fpsEnabled">{{ fps }}</p>
+        </div>
+        <div *ngIf="hirarchyActiveIndex !== 0" class="col">
+            <!-- Back button -->
+            <!-- <button class="btn btn-primary mb-3" (click)="revertBackToParent()">Back</button> -->
+        
+            <!-- Title for the list -->
+            <h5>Stack</h5>
+            <!-- Display hierarchy nodes in a list -->
+            <ul class="list-group sequence-list">
+                <li *ngFor="let node of hirarchyNodes; let i = index" 
+                    (click)="selectHirarchy(i)" 
+                    class="list-group-item"
+                    [class.active]="hirarchyActiveIndex === i">
+                    ({{ node.split('_')[2] }}){{ node.split('_').pop().replace('.json', '') }}
+                </li>
+            </ul>
+        </div>
+        
+        
+        <div class="col">
+            <!-- Placeholder for other content -->
+        </div>
+    </div>
+</div>

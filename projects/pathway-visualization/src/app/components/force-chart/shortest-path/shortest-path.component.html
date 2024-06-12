@@ -1,0 +1,13 @@
+<div class="search-container">
+    <div class="input-button-container">
+      <input class="search-input" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" [placeholder]="searchPlaceholder">
+      <button *ngIf="searchPlaceholder !='Search From'" class="search-button" (click)="onSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <ul class="suggestions-list" *ngIf="suggestions.length">
+      <li *ngFor="let suggestion of suggestions" (click)="onSuggestionClick(suggestion)">
+        {{ suggestion }} 
+      </li>
+    </ul>
+  </div>

@@ -1,19 +1,3 @@
-canvas {
-    transform: scale(1);
-    transform-origin: top left;
-    border-radius: 15px;
-    border: solid gray 0.5px;
-}
-
-.sequence-list {
-    padding: 10px 20px; /* Adjust padding as needed */
-}
-
-.sequence-list li {
-    margin-bottom: 10px; /* Adjust margin between list items */
-}
-
-
 .links line {
     stroke: #999;
     stroke-opacity: 0.6;
@@ -53,7 +37,6 @@ svg {
     border-radius: 15px;
     border: solid gray 0.5px;
 }
-
 
 .search-container {
     position: relative;
