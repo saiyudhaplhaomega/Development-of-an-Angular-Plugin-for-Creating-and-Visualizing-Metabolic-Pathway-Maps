@@ -47,6 +47,7 @@
     (searchEvent)="searchEnable()"
     (zoomInEvent)="zoomIn()"
     (zoomOutEvent)="zoomOut()"
+    (toolTipEvent)="enableToolTip()"
     (panGraphEvent)="panGraph()"
     (selectNodeEvent)="selectNode()"
     (refreshGraphEvent)="refreshGraph()"
@@ -56,6 +57,7 @@
     (shortagePathEvent)="shortagePathEnabled()"
     (enableFBSEvent)="enableFBS()"
     (arrowAnimationEvent)="arrowAnimation()"
+    (dynamicEvent)="dynamic()"
     (toggleTextBoxModeEvent)="toggleTextBoxMode()"
     (uploadFileEvent)="uploadFile()"
 ></app-control-panel>
@@ -72,6 +74,15 @@
                     FPS</label>
             </div>
             <p *ngIf="fpsEnabled">{{ fps }}</p>
+        </div>
+        <div class="col">
+            <!-- Display FPS -->
+            <!-- <p id="fps" class="mt-3">FPS: {{ fps.toString().slice(0,7) || '' }}</p> -->
+            <div class="custom-control custom-switch">
+                <input (click)="orthogonalMode()" type="checkbox" class="custom-control-input" id="orthogonalMode">
+                <label class="custom-control-label" for="orthogonalMode">
+                    Orthogonal Mode</label>
+            </div>
         </div>
         <div *ngIf="hirarchyActiveIndex !== 0" class="col">
             <!-- Back button -->

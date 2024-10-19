@@ -1,3 +1,6 @@
+<ng-container *ngIf="componentToLoad" [ngComponentOutlet]="componentToLoad"></ng-container>
 <app-force-chart
     (callbacks)="callbacks($event)"
+    [configuration]="configuration"
 ></app-force-chart>
+

@@ -13,6 +13,7 @@ export class ControlPanelComponent {
   @Output() searchEvent = new EventEmitter<void>();
   @Output() zoomInEvent = new EventEmitter<void>();
   @Output() zoomOutEvent = new EventEmitter<void>();
+  @Output() toolTipEvent = new EventEmitter<void>();
   @Output() panGraphEvent = new EventEmitter<void>();
   @Output() selectNodeEvent = new EventEmitter<void>();
   @Output() refreshGraphEvent = new EventEmitter<void>();
@@ -22,6 +23,7 @@ export class ControlPanelComponent {
   @Output() shortagePathEvent = new EventEmitter<void>();
   // @Output() enableFBSEvent = new EventEmitter<void>();
   @Output() arrowAnimationEvent = new EventEmitter<void>();
+  @Output() dynamicEvent = new EventEmitter<void>();
   @Output() toggleTextBoxModeEvent = new EventEmitter<void>();
   @Output() uploadFileEvent = new EventEmitter<void>();
 
@@ -31,7 +33,9 @@ export class ControlPanelComponent {
   zoomIn() {
     this.zoomInEvent.emit();
   }
-
+  showTooltip(){
+    this.toolTipEvent.emit();
+  }
   zoomOut() {
     this.zoomOutEvent.emit();
   }
@@ -68,6 +72,9 @@ export class ControlPanelComponent {
   // }
   arrowAnimation() {
     this.arrowAnimationEvent.emit();
+  }
+  dynamic() {
+    this.dynamicEvent.emit();
   }
 
   toggleTextBoxMode() {

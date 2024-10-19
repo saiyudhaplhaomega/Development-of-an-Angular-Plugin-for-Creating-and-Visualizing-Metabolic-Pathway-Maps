@@ -12,6 +12,8 @@ import { MainComponent } from './components/force-chart/force-chart.component';
 import { ControlPanelComponent } from './components/force-chart/control-panel/control-panel.component';
 import { SearchBarComponent } from './components/force-chart/search-container/search-container.component';
 import { ShortestPathComponent } from './components/force-chart/shortest-path/shortest-path.component';
+import { MolecularExplorationComponent } from './molecular-exploration/molecular-exploration.component';
+import { MolecularEditingComponent } from './molecular-editing/molecular-editing.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ShortestPathComponent } from './components/force-chart/shortest-path/sh
     MainComponent,
     ControlPanelComponent,
     SearchBarComponent,
-    ShortestPathComponent
+    ShortestPathComponent,
+    MolecularExplorationComponent,
+    MolecularEditingComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

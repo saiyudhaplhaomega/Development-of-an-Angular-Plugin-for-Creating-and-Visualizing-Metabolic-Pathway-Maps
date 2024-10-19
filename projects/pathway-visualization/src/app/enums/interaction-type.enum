@@ -1,0 +1,6 @@
+export enum InteractionType {
+  NODECLICK = 'nodeClick',
+  NODEHOVER = 'nodeHover',
+  EDGECLICK = 'edgeClick',
+  EDGEHOVER = 'edgeHover'
+}
