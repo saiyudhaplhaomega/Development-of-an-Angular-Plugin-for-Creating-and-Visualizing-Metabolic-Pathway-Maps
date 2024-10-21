@@ -240,7 +240,7 @@ Contributions to this project are welcome! Please fork the repository, make your
 
 ## Credits
 
-This project was created by Saiyudh Mannan.
+This project was created by Saiyudh Mannan, Emanuel Lange, Daniel Walke.
 
 ## License
 

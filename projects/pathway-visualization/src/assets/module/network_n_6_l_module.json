@@ -1,185 +1,223 @@
 {
     "edges": [
         {
+            "color": 0.4,
             "dataRef": "",
             "edgeId": 0,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": 933.9,
             "label": "edge_0",
             "modelElementRef": "",
             "source": 0,
-            "target": 1
+            "target": 1,
+            "width": 0.3
         },
         {
+            "color": 0.9,
             "dataRef": "",
             "edgeId": 1,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": -507.0,
             "label": "edge_1",
             "modelElementRef": "",
             "source": 1,
-            "target": 2
+            "target": 2,
+            "width": 0.6
         },
         {
+            "color": 0.5,
             "dataRef": "",
             "edgeId": 2,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": 846.4,
             "label": "edge_2",
             "modelElementRef": "",
             "source": 2,
-            "target": 3
+            "target": 3,
+            "width": 0.8
         },
         {
+            "color": 0.4,
             "dataRef": "",
             "edgeId": 3,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": 161.6,
             "label": "edge_3",
             "modelElementRef": "",
             "source": 3,
-            "target": 4
+            "target": 4,
+            "width": 0.4
         },
         {
+            "color": 0.3,
             "dataRef": "",
             "edgeId": 4,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": -614.6,
             "label": "edge_4",
             "modelElementRef": "",
             "source": 4,
-            "target": 5
+            "target": 5,
+            "width": 0.8
         },
         {
+            "color": 0.1,
             "dataRef": "",
             "edgeId": 5,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": -402.9,
             "label": "edge_5",
             "modelElementRef": "",
-            "source": 4,
-            "target": 6
+            "source": 5,
+            "target": 6,
+            "width": 0.2
         },
         {
+            "color": 1.0,
             "dataRef": "",
             "edgeId": 6,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": -890.3,
             "label": "edge_6",
             "modelElementRef": "",
-            "source": 4,
-            "target": 7
+            "source": 6,
+            "target": 7,
+            "width": 0.1
         },
         {
+            "color": 0.3,
             "dataRef": "",
             "edgeId": 7,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": -293.6,
             "label": "edge_7",
             "modelElementRef": "",
-            "source": 4,
-            "target": 8
+            "source": 7,
+            "target": 8,
+            "width": 0.7
         },
         {
+            "color": 0.8,
             "dataRef": "",
             "edgeId": 8,
             "edgeType": "undirected",
-            "flux": 0,
+            "flux": 764.5,
             "label": "edge_8",
             "modelElementRef": "",
-            "source": 4,
-            "target": 9
+            "source": 7,
+            "target": 9,
+            "width": 0.9
         }
     ],
     "level": "module",
     "nodes": [
         {
+            "color": 0.1,
             "dataRef": "",
             "label": "node_0",
             "modelElementRef": "",
             "nodeId": 0,
             "nodeType": "circle",
+            "width": 0.6,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.3,
             "dataRef": "",
             "label": "node_1",
             "modelElementRef": "",
             "nodeId": 1,
             "nodeType": "circle",
+            "width": 0.7,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.0,
             "dataRef": "",
             "label": "node_2",
             "modelElementRef": "",
             "nodeId": 2,
             "nodeType": "circle",
+            "width": 0.0,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.1,
             "dataRef": "",
             "label": "node_3",
             "modelElementRef": "",
             "nodeId": 3,
             "nodeType": "circle",
+            "width": 0.3,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.6,
             "dataRef": "",
             "label": "node_4",
             "modelElementRef": "",
             "nodeId": 4,
             "nodeType": "circle",
+            "width": 0.6,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.5,
             "dataRef": "",
             "label": "node_5",
             "modelElementRef": "",
             "nodeId": 5,
             "nodeType": "circle",
+            "width": 0.5,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.6,
             "dataRef": "",
             "label": "node_6",
             "modelElementRef": "",
             "nodeId": 6,
             "nodeType": "circle",
+            "width": 0.6,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.4,
             "dataRef": "",
             "label": "node_7",
             "modelElementRef": "",
             "nodeId": 7,
             "nodeType": "circle",
+            "width": 0.1,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.5,
             "dataRef": "",
             "label": "node_8",
             "modelElementRef": "",
             "nodeId": 8,
             "nodeType": "circle",
+            "width": 0.2,
             "x": 0,
             "y": 0
         },
         {
+            "color": 0.1,
             "dataRef": "",
             "label": "node_9",
             "modelElementRef": "",
             "nodeId": 9,
             "nodeType": "circle",
+            "width": 0.0,
             "x": 0,
             "y": 0
         }
