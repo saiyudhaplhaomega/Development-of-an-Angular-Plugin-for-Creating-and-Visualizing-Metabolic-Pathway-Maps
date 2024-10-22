@@ -842,8 +842,8 @@ export class MainComponent implements OnInit {
     // Calculate the angle of the line
     let angle = Math.atan2(endY - startY, endX - startX);
     // Calculate the position of the arrowhead (adjusted to be a bit back from the end)
-    const arrowEndX = endX - Math.cos(angle) * 10;
-    const arrowEndY = endY - Math.sin(angle) * 10;
+    const arrowEndX = endX - Math.cos(angle) * (10 * this.zoomScale);
+    const arrowEndY = endY - Math.sin(angle) * (10 * this.zoomScale);
 
     // Draw the arrow
     const arrowSize = 10; // Size of the arrow
