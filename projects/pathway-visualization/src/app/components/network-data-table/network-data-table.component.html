@@ -1,0 +1,87 @@
+<p>network-data-table works!</p>
+<div class="container">
+    <h2>Select a Molecular File</h2>
+    <select class="form-control" (change)="onFileSelect($event)">
+      <option value="" disabled selected>Select a file</option>
+      <option *ngFor="let file of molecularFiles" [value]="file">
+        {{ file }}
+      </option>
+    </select>
+    <!--
+    <div *ngIf="fileContent">
+      <h3>File Content:</h3>
+      <pre>{{ fileContent | json }}</pre>
+    </div>
+    -->
+    <!--<div *ngIf="selectedFile" class="mt-4">
+      <h3>Selected File: {{ selectedFile }}</h3>
+      <h4>Nodes</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Node ID</th>
+            <th>Label</th>
+            <th>Model Element Ref</th>
+            <th>Data Ref</th>
+            <th>Type</th>
+            <th>Is Secondary Metabolite</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Additional Data</th>
+          </tr>
+        </thead>
+        <tbody> -->
+          <!--*ngFor directive to iterate over the nodes and display them from network-canvas.component.ts-->
+          <!--<tr *ngFor="let node of nodes">
+            <td>{{ node.nodeId }}</td>
+            <td>{{ node.label }}</td>
+            <td>{{ node.modelElementRef }}</td>
+            <td>{{ node.dataRef }}</td>
+            <td>{{ node.nodeType }}</td>
+            <td>{{ node.isSecondaryMetabolite }}</td>
+            <td>{{ node.size }}</td>
+            <td>{{ node.color }}</td>
+            <td>{{ node.x }}</td>
+            <td>{{ node.y }}</td>
+            <td>{{ getNodeAdditionalData(node.dataRef) | json }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Edges</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Edge ID</th>
+            <th>Label</th>
+            <th>Model Element Ref</th>
+            <th>Data Ref</th>
+            <th>Width</th>
+            <th>Color</th>
+            <th>Type</th>
+            <th>Flux</th>
+            <th>Source</th>
+            <th>Target</th>
+            <th>Additional Data</th>
+          </tr>
+        </thead>
+        <tbody>-->
+          <!--*ngFor directive to iterate over the edges and display them from network-canvas.component.ts-->
+          <!--<tr *ngFor="let edge of edges">
+            <td>{{ edge.edgeId }}</td>
+            <td>{{ edge.label }}</td>
+            <td>{{ edge.modelElementRef }}</td>
+            <td>{{ edge.dataRef }}</td>
+            <td>{{ edge.width }}</td>
+            <td>{{ edge.color }}</td>
+            <td>{{ edge.edgeType }}</td>
+            <td>{{ edge.flux }}</td>
+            <td>{{ edge.source }}</td>
+            <td>{{ edge.target }}</td>
+            <td>{{ getEdgeAdditionalData(edge.dataRef) | json }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+  </div>

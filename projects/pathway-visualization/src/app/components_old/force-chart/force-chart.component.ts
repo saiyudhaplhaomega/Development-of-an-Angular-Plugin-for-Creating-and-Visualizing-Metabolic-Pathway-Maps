@@ -610,6 +610,7 @@ export class MainComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
+
       reader.onload = (e: any) => {
         const graph = JSON.parse(e.target.result);
         this.rowData = JSON.stringify(graph);

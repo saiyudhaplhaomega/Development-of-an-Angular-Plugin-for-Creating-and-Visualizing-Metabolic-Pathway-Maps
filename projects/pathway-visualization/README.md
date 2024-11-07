@@ -41,28 +41,19 @@ The project uses the following dependencies:
 ## Installation
 
 To install and run the project locally, follow these steps:
-
-1. Unzip:
-   ```
-   Unzip pathway_visualization.zip file
    ```
 
-2. Navigate to the project directory:
-   ```
-   cd pathway_visualization
-   ```
-
-3. Install dependencies:
+1. Install dependencies:
    ```
    npm install --force
    ```
 
-4. Start the development server:
+2. Start the development server:
    ```
    ng serve pathway-visualization
    ```
 
-5. Open your browser and navigate to `http://localhost:4200/` to view the application.
+3. Open your browser and navigate to `http://localhost:4200/` to view the application.
 
 
 ## Generating Files and Directory Structure
