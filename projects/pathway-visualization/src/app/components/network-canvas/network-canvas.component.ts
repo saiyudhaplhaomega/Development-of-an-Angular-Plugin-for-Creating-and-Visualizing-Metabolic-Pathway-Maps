@@ -7,6 +7,7 @@ import { Edge, NetworkMap, Node } from '../../models/network-elements.model';
 import { distinctUntilChanged } from 'rxjs';
 import { NetworkData } from '../../models/network-data.model';
 import { SimulationService } from './simulation.service';
+import { Configuration } from '../../models/configuration.model';
 
 @Component({
   selector: 'vis-network-canvas',
@@ -19,6 +20,7 @@ export class NetworkCanvasComponent implements OnInit {
   edgesData: Edge[] = [];
   networkMap: NetworkMap | undefined;
   dataMap: NetworkData | undefined;
+  configuration: Configuration | undefined;
   ctx: CanvasRenderingContext2D;
   private simulation: any;
   height = window.innerHeight * 0.9;
@@ -44,9 +46,12 @@ export class NetworkCanvasComponent implements OnInit {
   searchNodeId: number = -1;
   private dragNode: boolean = false;
   public hirarchyActiveIndex: number = 0;
+  private resizeListener: () => void; //for the grid changing size with the screen
+  //public showGrid: boolean = true;
+
 
   @ViewChild('container', { static: true }) canvasContainerRef: ElementRef;
-  @Input() configuration: any;
+  //@Input() configuration: any;
   @Output() callbacks = new EventEmitter();
 
 
@@ -63,6 +68,18 @@ export class NetworkCanvasComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.hierarchy = this.configuration.hierarchy;
+    this.tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+      
+    this.networkCanvasService.config$
+      .pipe(distinctUntilChanged())
+      .subscribe(config => {
+        this.configuration = config;
+        // Update other configuration properties as needed
+      });
+
     this.networkCanvasService.networkData$
       .pipe(distinctUntilChanged())
       .subscribe(networkData => {
@@ -79,10 +96,14 @@ export class NetworkCanvasComponent implements OnInit {
       .subscribe(networkMap => {
         //console.log('this is network map in canvas', networkMap);
         this.networkMap = networkMap;
+        if (this.networkMap) {
+          this.drawCanvas(this.networkMap);
+        }
       });
   //console.log('this is network map in canvas', this.networkMap);
     
       //canvas
+    
       const mainCanvas = d3
       .select(this.canvasContainerRef.nativeElement)
       .append('canvas')
@@ -90,15 +111,21 @@ export class NetworkCanvasComponent implements OnInit {
       .attr('width', this.width)
       .attr('height', this.height);
     this.canvas = mainCanvas.node();
+    
     // get reference to the context of the canvas elements
-    this.ctx = mainCanvas
-      .node()
-      .getContext('2d', { willReadFrequently: true });
+    //const mainCanvas = d3.select(this.canvasRef.nativeElement);
+    this.ctx = mainCanvas.node().getContext('2d', { willReadFrequently: true });
+
+
+    // Add resize event listener
+    this.resizeListener = () => this.onResize();
+    window.addEventListener('resize', this.resizeListener);
   }
   
   initializeNetwork() {
       console.log('this is network map in canvas', this.networkMap.nodes);
       console.log('this is network data in canvas', this.dataMap.edgeData);
+      console.log('this is show grid', this.configuration.showGrid);
   }
   get nodeInformation(): Node[] {
     return this.networkCanvasService.nodes;
@@ -237,6 +264,22 @@ export class NetworkCanvasComponent implements OnInit {
 
    });
   }
+  //changing the grid size with changing screen 
+  ngOnDestroy() {
+    // Remove resize event listener
+    window.removeEventListener('resize', this.resizeListener);
+  }
+
+  onResize() {
+    this.width = window.innerWidth * 0.82;
+    this.height = window.innerHeight * 0.9;
+    d3.select(this.canvas)
+      .attr('width', this.width)
+      .attr('height', this.height);
+    if (this.networkMap) {
+      this.drawCanvas(this.networkMap);
+    }
+  }
   //drawing the grid 
   drawGrid() {
     if(!this.configuration.showGrid) return false;
@@ -299,6 +342,7 @@ export class NetworkCanvasComponent implements OnInit {
     }
     return this.draggingNode = this.simulation.find(x / this.zoomScale, y / this.zoomScale);
   }
+  
   drawCanvas(graph: any) {
     const distanceScale = d3.scaleThreshold()
       .domain([1, 11, 101, 1001, 10000]) // Breakpoints for the input values
@@ -318,7 +362,7 @@ export class NetworkCanvasComponent implements OnInit {
       this.ctx.beginPath();
       this.ctx.moveTo(edge.source.x, edge.source.y);
       this.ctx.lineTo(edge.target.x, edge.target.y);
-      this.ctx.lineWidth = Math.sqrt(edge.value);
+      //this.ctx.lineWidth = Math.sqrt(edge.value);
       this.ctx.strokeStyle = '#ccc';
       this.ctx.stroke();
     });
@@ -397,7 +441,8 @@ export class NetworkCanvasComponent implements OnInit {
       })
       .on('mousemove', this.onMouseMove.bind(this))
       .on('mouseout', this.onMouseOut.bind(this));
-  }
+  } 
+  
   private onMouseMove(event: any) {
     if (this.activeToolName == 'selectNode') return false;
 
@@ -715,12 +760,21 @@ drawNodes(nodes, gridSpacing) {
     }
     ctx.beginPath();
     // Set the color based on node.color condition
-    const nodeColor = colorScale(node.color) //node.color === 1 ? 'red' : 'black';
-    const nodeSize = widthScale(node.width);
+    //const nodeColor = 'green';//node.color === 1 ? 'red' : 'black'; //colorScale(node.color)
+
+    // Set the color based on node type
+    let nodeColor = 'black';
+    if (node.nodeType === 'circle') {
+      nodeColor = colorScale(0.2);
+    } else if (node.nodeType === 'diamond') {
+      nodeColor = 'orange';
+    }
+    const nodeSize = widthScale(0.5); //node.width if you want to get it from the data
     
     this.ctx.fillStyle = nodeColor;
     if (node.nodeType === 'circle') {
       ctx.arc(node.x * this.zoomScale, node.y * this.zoomScale, nodeSize * this.zoomScale, 0, Math.PI * 2);
+      
     } else if (node.nodeType === 'diamond') {
       // Draw diamond
       const halfSize = nodeSize * this.zoomScale; // Adjust size based on this.zoomScale
