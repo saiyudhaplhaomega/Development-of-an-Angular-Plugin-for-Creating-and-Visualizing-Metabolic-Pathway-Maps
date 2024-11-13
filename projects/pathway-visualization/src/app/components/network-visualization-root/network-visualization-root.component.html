@@ -1,5 +1,17 @@
 <p>network-visualization-root works!</p>
-<vis-search-bar></vis-search-bar>
-<vis-toolbar></vis-toolbar>
 <vis-network-data-table></vis-network-data-table>
+<vis-search-bar
+*ngIf="activeToolName != 'shortagePath'"
+    [searchText]="searchText"
+    [suggestions]="suggestions"
+    (searchTextChangedEvent)="onSearchTextChanged($event)"
+    (searchEvent)="onSearch()"
+    (suggestionClickEvent)="onSuggestionClick($event)"
+    ></vis-search-bar>
+
+    
+       
+
+<vis-toolbar></vis-toolbar>
+
 <vis-network-canvas></vis-network-canvas>

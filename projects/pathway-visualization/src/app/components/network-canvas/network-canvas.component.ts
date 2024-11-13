@@ -100,6 +100,7 @@ export class NetworkCanvasComponent implements OnInit {
           this.drawCanvas(this.networkMap);
         }
       });
+      
   //console.log('this is network map in canvas', this.networkMap);
     
       //canvas
@@ -143,8 +144,8 @@ export class NetworkCanvasComponent implements OnInit {
     return this.networkManagerService.getEdgeAdditionalData(dataRef);
   }
 
-
-
+  
+  
 
 
   //Draw the links
@@ -356,7 +357,7 @@ export class NetworkCanvasComponent implements OnInit {
       .force("y", d3.forceY(this.height / 2).strength(0.01)) // Minimize y force
       .force("center", d3.forceCenter(this.width / 2, this.height / 2))//.strength(0.01)); // Minimize center force
   
-
+    this.networkCanvasService.setSimulation(this.simulation); // Set simulation in the service
     // Draw links
     graph.edges.forEach(edge => {
       this.ctx.beginPath();

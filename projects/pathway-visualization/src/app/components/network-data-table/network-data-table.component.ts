@@ -32,8 +32,12 @@ export class NetworkDataTableComponent implements OnInit {
     this.networkManagerService.handleFileSelection(file).subscribe(() => {
       this.selectedFile = file;
       this.networkCanvasService.networkData =  this.networkManagerService.getNetworkData();
-      this.networkCanvasService.networkMap = this.networkManagerService.getNetworkMap();
+      const networkMap = this.networkManagerService.getNetworkMap();
+      console.log('Setting networkMap in NetworkDataTableComponent', networkMap);
+      this.networkCanvasService.networkMap = networkMap;
+
     });
+
   }
 
   //these fucntions are for the html side to retrieve data.

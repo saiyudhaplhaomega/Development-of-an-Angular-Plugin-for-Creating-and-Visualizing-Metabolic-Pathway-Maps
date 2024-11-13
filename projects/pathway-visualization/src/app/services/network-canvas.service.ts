@@ -11,6 +11,7 @@ export class NetworkCanvasService {
   private _dataSubject = new BehaviorSubject<NetworkData | undefined>(undefined);
   private _mapSubject = new BehaviorSubject<NetworkMap | undefined>(undefined);
   private _configSubject = new BehaviorSubject<Configuration | undefined>(undefined);
+  private simulation: d3.Simulation<any, any>;
 
   public networkData$ = this._dataSubject.asObservable();
   public networkMap$ = this._mapSubject.asObservable();
@@ -109,6 +110,16 @@ export class NetworkCanvasService {
       this._dataSubject.value.level = value;
       this._dataSubject.next(this._dataSubject.value);
     }
+  }
+
+  //simulation service from canvas.ts to other components 
+  //such as search-bar.component.ts.
+  setSimulation(simulation: d3.Simulation<any, any>) {
+    this.simulation = simulation;
+  }
+
+  getSimulation(): d3.Simulation<any, any> {
+    return this.simulation;
   }
 }
 

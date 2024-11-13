@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NetworkVisualizationRootComponent } from './components/network-visualization-root/network-visualization-root.component';
@@ -10,6 +9,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { NetworkCanvasComponent } from './components/network-canvas/network-canvas.component';
 import { NetworkDataTableComponent } from './components/network-data-table/network-data-table.component';
+import { NetworkCanvasService } from './services/network-canvas.service';
 //import { TestChartComponent } from './components/test-chart/test-chart.component';
 //import { CanvasTestComponent } from './components/canvas-test/canvas-test.component';
 
@@ -40,7 +40,7 @@ import { NetworkDataTableComponent } from './components/network-data-table/netwo
    //MolecularEditingComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [],
+  providers: [NetworkCanvasService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
