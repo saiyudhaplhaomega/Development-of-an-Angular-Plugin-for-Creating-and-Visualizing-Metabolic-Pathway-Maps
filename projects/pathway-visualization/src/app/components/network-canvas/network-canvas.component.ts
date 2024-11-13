@@ -23,7 +23,7 @@ export class NetworkCanvasComponent implements OnInit {
   configuration: Configuration | undefined;
   ctx: CanvasRenderingContext2D;
   private simulation: any;
-  height = window.innerHeight * 0.9;
+  height = window.innerHeight * 0.9; 
   width = window.innerWidth * 0.82;
   private nodesWithinBrush: any = [];
   private nodes: any[] = [];

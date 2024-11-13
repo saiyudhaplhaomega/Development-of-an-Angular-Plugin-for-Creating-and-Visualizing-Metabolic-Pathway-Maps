@@ -1,17 +1,26 @@
 <p>network-visualization-root works!</p>
-<vis-network-data-table></vis-network-data-table>
-<vis-search-bar
-*ngIf="activeToolName != 'shortagePath'"
-    [searchText]="searchText"
-    [suggestions]="suggestions"
-    (searchTextChangedEvent)="onSearchTextChanged($event)"
-    (searchEvent)="onSearch()"
-    (suggestionClickEvent)="onSuggestionClick($event)"
-    ></vis-search-bar>
-
-    
-       
-
-<vis-toolbar></vis-toolbar>
-
-<vis-network-canvas></vis-network-canvas>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <vis-network-data-table></vis-network-data-table>
+    </div>
+    <div class="col-12">
+      <vis-search-bar
+        *ngIf="activeToolName != 'shortagePath'"
+        [searchText]="searchText"
+        [suggestions]="suggestions"
+        (searchTextChangedEvent)="onSearchTextChanged($event)"
+        (searchEvent)="onSearch()"
+        (suggestionClickEvent)="onSuggestionClick($event)"
+      ></vis-search-bar>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-2 ">
+      <vis-toolbar></vis-toolbar>
+    </div>
+    <div class="col-md-10 ">
+      <vis-network-canvas></vis-network-canvas>
+    </div>
+  </div>
+</div>
