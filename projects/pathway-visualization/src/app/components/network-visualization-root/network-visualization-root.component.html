@@ -1,25 +1,49 @@
-<p>network-visualization-root works!</p>
+<!--<p>network-visualization-root works!</p>-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12">
+    
+    <div class="col-md-4">
+        <vis-search-bar
+          *ngIf="activeToolName != 'shortagePath'"
+          [searchText]="searchText"
+          [suggestions]="suggestions"
+          (searchTextChangedEvent)="onSearchTextChanged($event)"
+          (searchEvent)="onSearch()"
+          (suggestionClickEvent)="onSuggestionClick($event)"
+        ></vis-search-bar>
+      </div>
+    <div class="col-md-8">
       <vis-network-data-table></vis-network-data-table>
     </div>
-    <div class="col-12">
-      <vis-search-bar
-        *ngIf="activeToolName != 'shortagePath'"
-        [searchText]="searchText"
-        [suggestions]="suggestions"
-        (searchTextChangedEvent)="onSearchTextChanged($event)"
-        (searchEvent)="onSearch()"
-        (suggestionClickEvent)="onSuggestionClick($event)"
-      ></vis-search-bar>
-    </div>
+    
   </div>
   <div class="row no-gutters">
-    <div class="col-md-2 ">
-      <vis-toolbar></vis-toolbar>
+    <div class="col-md-1 ">
+      <vis-toolbar
+        [panEnabled]="panEnabled"
+        [brushEnabled]="brushEnabled"
+        [textBoxMode] = "textBoxMode"
+        [activeToolName]="activeToolName"
+        (searchEvent)="searchEnable()"
+        (zoomInEvent)="zoomIn()"
+        (zoomOutEvent)="zoomOut()"
+        (toolTipEvent)="enableToolTip()"
+        (panGraphEvent)="panGraph()"
+        (selectNodeEvent)="selectNode()"
+        (refreshGraphEvent)="refreshGraph()"
+        (toggleCallbackModeEvent)="toggleCallbackMode($event)"
+        (snapModeEvent)="snapMode()"
+        (orthogonalEvent)="orthogonalMode()"
+        (shortagePathEvent)="shortagePathEnabled()"
+        (arrowAnimationEvent)="arrowAnimation()"
+        (dynamicEvent)="dynamic()"
+        (toggleTextBoxModeEvent)="toggleTextBoxMode()"
+      >
+        //(enableFBSEvent)="enableFBS()"
+        /////(uploadFileEvent)="uploadFile()"
+      </vis-toolbar>
     </div>
-    <div class="col-md-10 ">
+    <div class="col-md-11 ">
       <vis-network-canvas></vis-network-canvas>
     </div>
   </div>

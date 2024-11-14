@@ -23,8 +23,8 @@ export class NetworkCanvasComponent implements OnInit {
   configuration: Configuration | undefined;
   ctx: CanvasRenderingContext2D;
   private simulation: any;
-  height = window.innerHeight * 0.9; 
-  width = window.innerWidth * 0.82;
+  height = window.innerHeight ; 
+  width = window.innerWidth ;
   private nodesWithinBrush: any = [];
   private nodes: any[] = [];
   private canvas;
@@ -143,9 +143,6 @@ export class NetworkCanvasComponent implements OnInit {
   getEdgeAdditionalData(dataRef: string): any {
     return this.networkManagerService.getEdgeAdditionalData(dataRef);
   }
-
-  
-  
 
 
   //Draw the links
@@ -309,7 +306,6 @@ export class NetworkCanvasComponent implements OnInit {
       this.ctx.stroke();
 
     }
-
     // Vertical lines
     for (let x = zoomAdjustedGridSpacing; x < this.width * 100; x += zoomAdjustedGridSpacing) {
       this.ctx.beginPath();
@@ -346,7 +342,7 @@ export class NetworkCanvasComponent implements OnInit {
   
   drawCanvas(graph: any) {
     const distanceScale = d3.scaleThreshold()
-      .domain([1, 11, 101, 1001, 10000]) // Breakpoints for the input values
+      .domain([1, 11, 101, 1001, 1000]) // Breakpoints for the input values
       .range([80, 60, 30, 5, 1]); // Output values for the corresponding ranges
     // Clear canvas
     this.ctx.clearRect(0, 0, this.width, this.height);
