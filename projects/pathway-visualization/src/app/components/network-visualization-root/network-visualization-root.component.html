@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
     
-    <div class="col-md-4">
+    <div class="col-md-4 pt-4">
         <vis-search-bar
           *ngIf="activeToolName != 'shortagePath'"
           [searchText]="searchText"
@@ -12,7 +12,7 @@
           (suggestionClickEvent)="onSuggestionClick($event)"
         ></vis-search-bar>
       </div>
-    <div class="col-md-8">
+    <div class="col-md-8 pt-4">
       <vis-network-data-table></vis-network-data-table>
     </div>
     
@@ -35,10 +35,11 @@
         (snapModeEvent)="snapMode()"
         (orthogonalEvent)="orthogonalMode()"
         (shortagePathEvent)="shortagePathEnabled()"
-        (arrowAnimationEvent)="arrowAnimation()"
+        
         (dynamicEvent)="dynamic()"
         (toggleTextBoxModeEvent)="toggleTextBoxMode()"
       >
+      //(arrowAnimationEvent)="arrowAnimation()"
         //(enableFBSEvent)="enableFBS()"
         /////(uploadFileEvent)="uploadFile()"
       </vis-toolbar>

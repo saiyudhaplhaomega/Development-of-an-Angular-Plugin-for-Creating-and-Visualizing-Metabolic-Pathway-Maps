@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NetworkManagerService } from '../../services/network-manager.service';
 import { NetworkCanvasService } from '../../services/network-canvas.service';
 import { NetworkMap, Node } from '../../models/network-elements.model';
-import { distinctUntilChanged } from 'rxjs';
+import { distinctUntilChanged, Subscription } from 'rxjs';
 
 @Component({
   selector: 'vis-search-bar',
@@ -14,6 +14,7 @@ export class SearchBarComponent implements OnInit {
   suggestionsPaths: string[] = [];
   searchNodeId: number = -1;
   networkMap: NetworkMap | undefined;
+  private searchNodeIdSubscription: Subscription;
   @Input() searchText: string = '';
   @Input() searchPlaceholder: string = 'Search by ID';
   @Input() suggestions: string[] = [];
@@ -36,6 +37,14 @@ export class SearchBarComponent implements OnInit {
           this.nodesData = this.networkMap.nodes;
         }
       });
+    this.searchNodeIdSubscription = this.networkCanvasService.searchNodeId$.subscribe(id => {
+      this.searchNodeId = id;
+    });
+  }
+  ngOnDestroy() {
+    if (this.searchNodeIdSubscription) {
+      this.searchNodeIdSubscription.unsubscribe();
+    }
   }
   /*
   onSearchTextChanged(text: string) {
@@ -65,16 +74,22 @@ export class SearchBarComponent implements OnInit {
       
   }
   
-    onSearch() {
-      const targetNode = this.nodesData.find(node => node.label === this.searchText);
-      if (targetNode) {
-        this.searchNodeId = Number(targetNode.nodeId);
-        const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
+  onSearch() {
+    const targetNode = this.nodesData.find(node => node.label === this.searchText);
+    if (targetNode) {
+      this.networkCanvasService.searchNodeId = Number(targetNode.nodeId);
+      const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
+      if (simulation) {
+        console.log('Restarting simulation');
         simulation.alpha(0.01).restart();
-        //this.searchEvent.emit();
-        //console.log('searching the search is working',targetNode.nodeId);
+      } else {
+        console.error('Simulation is not initialized');
       }
+      this.searchEvent.emit();
+    } else {
+      console.error('Target node not found');
     }
+  }
   
     onSuggestionClick(suggestion: string) {
       this.searchText = suggestion;

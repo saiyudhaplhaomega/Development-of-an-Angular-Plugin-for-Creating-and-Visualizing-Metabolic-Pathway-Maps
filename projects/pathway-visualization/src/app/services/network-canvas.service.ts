@@ -11,11 +11,15 @@ export class NetworkCanvasService {
   private _dataSubject = new BehaviorSubject<NetworkData | undefined>(undefined);
   private _mapSubject = new BehaviorSubject<NetworkMap | undefined>(undefined);
   private _configSubject = new BehaviorSubject<Configuration | undefined>(undefined);
+  private searchNodeIdSubject = new BehaviorSubject<number>(-1);
+  private activeToolNameSubject = new BehaviorSubject<string>('search');
   private simulation: d3.Simulation<any, any>;
 
   public networkData$ = this._dataSubject.asObservable();
   public networkMap$ = this._mapSubject.asObservable();
   public config$ = this._configSubject.asObservable();
+  public searchNodeId$ = this.searchNodeIdSubject.asObservable();
+  public activeToolName$ = this.activeToolNameSubject.asObservable(); 
   constructor() { }
 
   // TODO: Implement a method that sets the network map and network data ,a setter for configuration too. 
@@ -120,6 +124,22 @@ export class NetworkCanvasService {
 
   getSimulation(): d3.Simulation<any, any> {
     return this.simulation;
+  }
+
+  public get searchNodeId(): number {
+    return this.searchNodeIdSubject.value;
+  }
+  
+  public set searchNodeId(value: number) {
+    this.searchNodeIdSubject.next(value);
+  }
+  
+  public get activeToolName(): string {
+    return this.activeToolNameSubject.value;
+  }
+  
+  public set activeToolName(value: string) {
+    this.activeToolNameSubject.next(value);
   }
 }
 

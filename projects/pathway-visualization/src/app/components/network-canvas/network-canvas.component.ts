@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { NetworkCanvasService } from '../../services/network-canvas.service';
 import { NetworkManagerService } from '../../services/network-manager.service';
 import { Edge, NetworkMap, Node } from '../../models/network-elements.model';
-import { distinctUntilChanged } from 'rxjs';
+import { distinctUntilChanged, Subscription } from 'rxjs';
 import { NetworkData } from '../../models/network-data.model';
 import { SimulationService } from './simulation.service';
 import { Configuration } from '../../models/configuration.model';
@@ -47,6 +47,8 @@ export class NetworkCanvasComponent implements OnInit {
   private dragNode: boolean = false;
   public hirarchyActiveIndex: number = 0;
   private resizeListener: () => void; //for the grid changing size with the screen
+  private searchNodeIdSubscription: Subscription;
+  private activeToolNameSubscription: Subscription;
   //public showGrid: boolean = true;
 
 
@@ -68,6 +70,13 @@ export class NetworkCanvasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchNodeIdSubscription = this.networkCanvasService.searchNodeId$.subscribe(id => {
+      this.searchNodeId = id;
+    });
+  
+    this.activeToolNameSubscription = this.networkCanvasService.activeToolName$.subscribe(toolName => {
+      this.activeToolName = toolName;
+    });
     // this.hierarchy = this.configuration.hierarchy;
     this.tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
@@ -116,11 +125,22 @@ export class NetworkCanvasComponent implements OnInit {
     // get reference to the context of the canvas elements
     //const mainCanvas = d3.select(this.canvasRef.nativeElement);
     this.ctx = mainCanvas.node().getContext('2d', { willReadFrequently: true });
+   
+    // Initialize the simulation
+    this.simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id((d: any) => d.nodeId))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(this.width / 2, this.height / 2))
+    .on('tick', () => this.tick(this.ctx, this.nodes));
 
+    // Set the simulation in the service
+    this.networkCanvasService.setSimulation(this.simulation);
 
     // Add resize event listener
     this.resizeListener = () => this.onResize();
     window.addEventListener('resize', this.resizeListener);
+
+    
   }
   
   initializeNetwork() {
@@ -266,6 +286,15 @@ export class NetworkCanvasComponent implements OnInit {
   ngOnDestroy() {
     // Remove resize event listener
     window.removeEventListener('resize', this.resizeListener);
+    //do i need to unsubscribe the subscription ? on ngOnDestroy? think about it
+    
+    if (this.searchNodeIdSubscription) {
+      this.searchNodeIdSubscription.unsubscribe();
+    }
+  
+    if (this.activeToolNameSubscription) {
+      this.activeToolNameSubscription.unsubscribe();
+    }
   }
 
   onResize() {
@@ -762,7 +791,7 @@ drawNodes(nodes, gridSpacing) {
     // Set the color based on node type
     let nodeColor = 'black';
     if (node.nodeType === 'circle') {
-      nodeColor = colorScale(0.2);
+      nodeColor = colorScale(0.4);
     } else if (node.nodeType === 'diamond') {
       nodeColor = 'orange';
     }
