@@ -103,7 +103,6 @@ export class NetworkManagerService {
   private nodeAdditionalDataMap = new Map<string, any>();
   private edgeAdditionalDataMap = new Map<string, any>();
   selectedFile: string | null = null; //A variable to store the name of the file that the user selects.
-  private activeToolName: string = 'search';
 
   constructor(
     private http: HttpClient, 
@@ -456,13 +455,7 @@ export class NetworkManagerService {
   getNetworkMap(): NetworkMap | undefined {
     return this.networkService.networkMap;
   }
-  getActiveToolName(): string {
-    return this.activeToolName;
-  }
-
-  setActiveToolName(toolName: string): void {
-    this.activeToolName = toolName;
-  }
+  
 }
 
 function switchMap<T, R>(project: (value: T, index: number) => Observable<R>): (source: Observable<T>) => Observable<R> {

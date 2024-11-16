@@ -30,7 +30,6 @@ export class NetworkVisualizationRootComponent implements OnInit {
     private networkCanvasService: NetworkCanvasService) {}
 
   ngOnInit() {
-    this.activeToolName = this.networkManagerService.getActiveToolName();
     this.networkCanvasService.networkMap$
       .pipe(distinctUntilChanged())
       .subscribe(networkMap => {
@@ -96,12 +95,10 @@ export class NetworkVisualizationRootComponent implements OnInit {
   //toolbar functions ;;;;;;;;;;;;;;;;;;;;
   searchEnable() {
     this.networkCanvasService.activeToolName = 'search';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
   }
 
   zoomIn() {
     this.networkCanvasService.activeToolName = 'zoomIn';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     this.activeToolName = 'zoomIn'
     this.zoomScale *= 1.1;
     if(this.zoomScale > 1.5) {
@@ -115,7 +112,6 @@ export class NetworkVisualizationRootComponent implements OnInit {
 
   zoomOut() {
     this.networkCanvasService.activeToolName = 'zoomOut';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     // Implement zoom out logic
     this.zoomScale /= 1.1;
     if(this.zoomScale < 1.5) {
@@ -128,46 +124,38 @@ export class NetworkVisualizationRootComponent implements OnInit {
  
   enableToolTip() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'tooltip' ? 'search' : 'tooltip';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
   }
 
   panGraph() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'panEnable' ? 'search' : 'panEnable';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
   }
 
   selectNode() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'selectNode' ? 'search' : 'selectNode';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
   }
 
   refreshGraph() {
     this.networkCanvasService.activeToolName = 'search';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     // Implement refresh graph logic
   }
 
   toggleCallbackMode(mode) {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == mode ? 'search' : mode;
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     this.previouslyHoveredNode = null;
   }
 
   snapMode() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'snapMode' ? 'search' : 'snapMode';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
   }
 
   orthogonalMode() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'orthogonalMode' ? 'search' : 'orthogonalMode';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     this.orthogonalEnabled =  !this.orthogonalEnabled;
     if (this.networkCanvasService.getSimulation()) this.networkCanvasService.getSimulation().alpha(0.3).restart();
   }
 
   shortagePathEnabled() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'shortagePath' ? 'search' : 'shortagePath';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
     if (this.networkCanvasService.getSimulation()) this.networkCanvasService.getSimulation().alpha(0.3).restart();
     // Implement shortage path logic
   }
@@ -230,13 +218,11 @@ export class NetworkVisualizationRootComponent implements OnInit {
   }
  */
   dynamic() {
-    this.activeToolName = this.activeToolName == 'dynamic' ? 'search' : 'dynamic';
-    this.networkManagerService.setActiveToolName(this.activeToolName);
+    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'dynamic' ? 'search' : 'dynamic';
   }
 
   toggleTextBoxMode() {
-    this.activeToolName = this.activeToolName == 'textBoxMode' ? 'search' : 'textBoxMode';
-    this.networkManagerService.setActiveToolName(this.activeToolName);
+    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'textBoxMode' ? 'search' : 'textBoxMode';
   }
 
 }
