@@ -49,6 +49,8 @@ export class NetworkCanvasComponent implements OnInit {
   private resizeListener: () => void; //for the grid changing size with the screen
   private searchNodeIdSubscription: Subscription;
   private activeToolNameSubscription: Subscription;
+  private canvasSubscription: Subscription;
+  private ctxSubscription: Subscription;
   //public showGrid: boolean = true;
 
 
@@ -77,6 +79,19 @@ export class NetworkCanvasComponent implements OnInit {
     this.activeToolNameSubscription = this.networkCanvasService.activeToolName$.subscribe(toolName => {
       this.activeToolName = toolName;
     });
+    
+    this.canvasSubscription = this.networkCanvasService.canvas$.subscribe(canvas => {
+      if (canvas) {
+        this.canvas = canvas;
+      }
+    });
+
+    this.ctxSubscription = this.networkCanvasService.ctx$.subscribe(ctx => {
+      if (ctx) {
+        this.ctx = ctx;
+      }
+    });
+
     // this.hierarchy = this.configuration.hierarchy;
     this.tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
@@ -120,18 +135,18 @@ export class NetworkCanvasComponent implements OnInit {
       .classed('main-canvas', true)
       .attr('width', this.width)
       .attr('height', this.height);
-    this.canvas = mainCanvas.node();
+      this.networkCanvasService.canvas = mainCanvas.node();
     
     // get reference to the context of the canvas elements
     //const mainCanvas = d3.select(this.canvasRef.nativeElement);
-    this.ctx = mainCanvas.node().getContext('2d', { willReadFrequently: true });
+    this.networkCanvasService.ctx = mainCanvas.node().getContext('2d', { willReadFrequently: true });
    
     // Initialize the simulation
     this.simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id((d: any) => d.nodeId))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(this.width / 2, this.height / 2))
-    .on('tick', () => this.tick(this.ctx, this.nodes));
+    .on('tick', () => this.tick(this.networkCanvasService.ctx, this.nodes));
 
     // Set the simulation in the service
     this.networkCanvasService.setSimulation(this.simulation);
@@ -294,6 +309,13 @@ export class NetworkCanvasComponent implements OnInit {
   
     if (this.activeToolNameSubscription) {
       this.activeToolNameSubscription.unsubscribe();
+    }
+    if (this.canvasSubscription) {
+      this.canvasSubscription.unsubscribe();
+    }
+
+    if (this.ctxSubscription) {
+      this.ctxSubscription.unsubscribe();
     }
   }
 

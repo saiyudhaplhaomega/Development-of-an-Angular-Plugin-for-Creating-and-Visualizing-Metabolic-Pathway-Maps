@@ -25,6 +25,10 @@ export class NetworkVisualizationRootComponent implements OnInit {
   public orthogonalEnabled: boolean = false;
   private searchNodeIdSubscription: Subscription;
   private activeToolNameSubscription: Subscription;
+  private canvasSubscription: Subscription;
+  private ctxSubscription: Subscription;
+  private canvas: HTMLCanvasElement | null = null;
+  private ctx: CanvasRenderingContext2D | null = null;
 
   constructor(private networkManagerService: NetworkManagerService,
     private networkCanvasService: NetworkCanvasService) {}
@@ -46,6 +50,17 @@ export class NetworkVisualizationRootComponent implements OnInit {
       this.activeToolNameSubscription = this.networkCanvasService.activeToolName$.subscribe(toolName => {
         this.activeToolName = toolName;
       });
+      this.canvasSubscription = this.networkCanvasService.canvas$.subscribe(canvas => {
+        if (canvas) {
+          this.canvas = canvas;
+        }
+      });
+  
+      this.ctxSubscription = this.networkCanvasService.ctx$.subscribe(ctx => {
+        if (ctx) {
+          this.ctx = ctx;
+        }
+      });
   }
   //need to unsubscribe from the subscriptions or not ?
   
@@ -59,6 +74,13 @@ export class NetworkVisualizationRootComponent implements OnInit {
     if (this.activeToolNameSubscription) {
       this.activeToolNameSubscription.unsubscribe();
     }
+    if (this.canvasSubscription) {
+      this.canvasSubscription.unsubscribe();
+    }
+
+    if (this.ctxSubscription) {
+      this.ctxSubscription.unsubscribe();
+    }
   }
   onSearchTextChanged(text: string) {
     this.searchText = text;
@@ -69,13 +91,13 @@ export class NetworkVisualizationRootComponent implements OnInit {
   }
 
   onSearch() {
-    console.log('onSearch triggered in NetworkVisualizationRootComponent');
+    //console.log('onSearch triggered in NetworkVisualizationRootComponent');
     const targetNode = this.nodesData.find(node => node.label === this.searchText);
     if (targetNode) {
       this.networkCanvasService.searchNodeId = Number(targetNode.nodeId);
       const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
       if (simulation) {
-        console.log('Restarting simulation on net-vis-root for searchNodeId ',this.searchNodeId);
+        //console.log('Restarting simulation on net-vis-root for searchNodeId ',this.searchNodeId);
         simulation.alpha(0.01).restart();
       } else {
         console.error('Simulation is not initialized');
@@ -162,8 +184,8 @@ export class NetworkVisualizationRootComponent implements OnInit {
  /*
   arrowAnimation() {
     const gridSpacing = 50;
-    this.activeToolName = this.activeToolName == 'arrowAnimation' ? 'search' : 'arrowAnimation';
-    this.networkManagerService.setActiveToolName(this.activeToolName);
+    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'arrowAnimation' ? 'search' : 'arrowAnimation';
+    //this.networkManagerService.setActiveToolName(this.activeToolName);
     const canvas = this.canvas;
     const ctx = canvas.getContext('2d');
 

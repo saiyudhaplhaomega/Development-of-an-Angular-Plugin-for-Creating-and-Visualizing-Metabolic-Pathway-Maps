@@ -13,6 +13,8 @@ export class NetworkCanvasService {
   private _configSubject = new BehaviorSubject<Configuration | undefined>(undefined);
   private searchNodeIdSubject = new BehaviorSubject<number>(-1);
   private activeToolNameSubject = new BehaviorSubject<string>('search');
+  private canvasSubject = new BehaviorSubject<HTMLCanvasElement | null>(null);
+  private ctxSubject = new BehaviorSubject<CanvasRenderingContext2D | null>(null);
   private simulation: d3.Simulation<any, any>;
 
   public networkData$ = this._dataSubject.asObservable();
@@ -20,6 +22,9 @@ export class NetworkCanvasService {
   public config$ = this._configSubject.asObservable();
   public searchNodeId$ = this.searchNodeIdSubject.asObservable();
   public activeToolName$ = this.activeToolNameSubject.asObservable(); 
+  public canvas$ = this.canvasSubject.asObservable();
+  public ctx$ = this.ctxSubject.asObservable();
+
   constructor() { }
 
   // TODO: Implement a method that sets the network map and network data ,a setter for configuration too. 
@@ -140,6 +145,23 @@ export class NetworkCanvasService {
   
   public set activeToolName(value: string) {
     this.activeToolNameSubject.next(value);
+  }
+  // Getter and Setter for canvas
+  public get canvas(): HTMLCanvasElement | null {
+    return this.canvasSubject.value;
+  }
+
+  public set canvas(value: HTMLCanvasElement | null) {
+    this.canvasSubject.next(value);
+  }
+
+  // Getter and Setter for ctx
+  public get ctx(): CanvasRenderingContext2D | null {
+    return this.ctxSubject.value;
+  }
+
+  public set ctx(value: CanvasRenderingContext2D | null) {
+    this.ctxSubject.next(value);
   }
 }
 

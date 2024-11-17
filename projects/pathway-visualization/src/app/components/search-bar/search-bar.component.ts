@@ -91,12 +91,25 @@ export class SearchBarComponent implements OnInit {
     }
   }
   
-    onSuggestionClick(suggestion: string) {
-      this.searchText = suggestion;
-      this.suggestions = [];  // Optionally clear the suggestions list
+  onSuggestionClick(suggestion: string) {
+    this.searchText = suggestion;
+    this.suggestions = [];  // Optionally clear the suggestions list
+  
+    if (suggestion.trim() === '') {
+      this.networkCanvasService.searchNodeId = -1;
+      const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
+      if (simulation) {
+        console.log('Restarting simulation with searchNodeId set to -1');
+        simulation.alpha(0.01).restart();
+      } else {
+        console.error('Simulation is not initialized');
+      }
+    } else {
       this.onSearch();  // Optionally trigger the search immediately
-      this.suggestionClickEvent.emit(suggestion);
     }
+  
+    this.suggestionClickEvent.emit(suggestion);
+  }
 
   /*
   onSearch() {

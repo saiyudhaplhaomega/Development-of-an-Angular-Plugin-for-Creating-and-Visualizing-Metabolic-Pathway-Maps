@@ -420,6 +420,17 @@ export class NetworkManagerService {
         throw new Error(`Unknown level: ${level}`);
     }
   }
+  //Common functions to draw and inject to several components
+  
+
+
+
+
+
+
+
+
+
   //setting the networkMap
   private setNetworkMap(map: NetworkMap): void {
     this.networkService.networkMap = map;
