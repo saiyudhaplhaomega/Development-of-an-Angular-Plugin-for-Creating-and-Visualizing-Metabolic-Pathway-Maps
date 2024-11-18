@@ -57,7 +57,7 @@ export class NetworkCanvasComponent implements OnInit {
   @ViewChild('container', { static: true }) canvasContainerRef: ElementRef;
   //@Input() configuration: any;
   @Output() callbacks = new EventEmitter();
-
+  @Output() arrowAnimationEvent = new EventEmitter<void>();
 
   constructor(
     private element: ElementRef,
@@ -390,7 +390,67 @@ export class NetworkCanvasComponent implements OnInit {
     }
     return this.draggingNode = this.simulation.find(x / this.zoomScale, y / this.zoomScale);
   }
-  
+  arrowAnimation() {
+    const gridSpacing = 50;
+    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'arrowAnimation' ? 'search' : 'arrowAnimation';
+    //this.networkManagerService.setActiveToolName(this.activeToolName);
+    const canvas = this.canvas;
+    const ctx = canvas.getContext('2d');
+
+    let currentEdgeIndex = 0; // Track the current edge being animated
+    const totalEdges = this.edgesData.length;
+
+    const animateArrow = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+        this.drawGrid();
+        this.drawLinks(gridSpacing);
+        this.drawNodes(this.nodesData, gridSpacing);
+
+        if (currentEdgeIndex < totalEdges) {
+            const edge: any = this.edgesData[currentEdgeIndex];
+            const sourceNode = this.nodesData.find(node => node.nodeId === edge.source.nodeId);
+            const targetNode = this.nodesData.find(node => node.nodeId === edge.target.nodeId);
+
+            if (sourceNode && targetNode) {
+                // Update progress for the current edge
+                // Initialize animationProgress if it doesn't exist
+                if (edge.animationProgress === undefined) {
+                    edge.animationProgress = 0;
+                }
+                //edge.animationProgress = edge.animationProgress || 0;
+
+                // Calculate the current position of the arrow
+                const startX = sourceNode.x * this.zoomScale;
+                const startY = sourceNode.y * this.zoomScale;
+                const endX = targetNode.x * this.zoomScale;
+                const endY = targetNode.y * this.zoomScale;
+
+                const interpolatedX = startX * (1 - edge.animationProgress) + endX * edge.animationProgress;
+                const interpolatedY = startY * (1 - edge.animationProgress) + endY * edge.animationProgress;
+
+                // Draw the arrow at the interpolated position
+                this.drawArrow(ctx, { x: startX, y: startY }, { x: interpolatedX, y: interpolatedY });
+
+                // Update animation progress
+                edge.animationProgress += 0.005; // Adjust speed here
+
+                // Check if the arrow has reached the end
+                if (edge.animationProgress >= 1) {
+                    edge.animationProgress = 0; // Reset for the next arrow
+                    currentEdgeIndex++; // Move to the next edge
+                }
+            }
+        } else {
+            currentEdgeIndex = 0; // Reset to the first edge
+        }
+
+        if(this.activeToolName === 'arrowAnimation') requestAnimationFrame(animateArrow); // Continue the animation
+    };
+
+    // Start the animation
+    requestAnimationFrame(animateArrow);
+    this.arrowAnimationEvent.emit();
+  }
   drawCanvas(graph: any) {
     const distanceScale = d3.scaleThreshold()
       .domain([1, 11, 101, 1001, 1000]) // Breakpoints for the input values
