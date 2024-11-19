@@ -122,6 +122,8 @@ export class NetworkCanvasComponent implements OnInit {
         this.networkMap = networkMap;
         if (this.networkMap) {
           this.drawCanvas(this.networkMap);
+          this.nodesData = this.networkMap.nodes;
+          this.edgesData = this.networkMap.edges;
         }
       });
       
@@ -391,12 +393,12 @@ export class NetworkCanvasComponent implements OnInit {
     return this.draggingNode = this.simulation.find(x / this.zoomScale, y / this.zoomScale);
   }
   arrowAnimation() {
-    console.log('Arrow Animation method is called');
+    //console.log('Arrow Animation method is called');
     const gridSpacing = 50;
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName === 'arrowAnimation' ? 'search' : 'arrowAnimation';
     const canvas = this.canvas;
     const ctx = canvas.getContext('2d');
-  
+    //console.log('this.edgesData', this.edgesData);
     let currentEdgeIndex = 0; // Track the current edge being animated
     const totalEdges = this.edgesData.length;
   
@@ -405,11 +407,13 @@ export class NetworkCanvasComponent implements OnInit {
       this.drawGrid();
       this.drawLinks(gridSpacing);
       this.drawNodes(this.nodesData, gridSpacing);
-  
+      console.log('currentEdgeIndex', currentEdgeIndex);
+      console.log('totalEdges', totalEdges);
       if (currentEdgeIndex < totalEdges) {
         const edge: any = this.edgesData[currentEdgeIndex];
-        const sourceNode = this.nodesData.find(node => parseInt(node.nodeId, 10) === parseInt(edge.source.nodeId, 10));
-        const targetNode = this.nodesData.find(node => parseInt(node.nodeId, 10) === parseInt(edge.target.nodeId, 10));
+        console.log('edge', edge);
+        const sourceNode = this.nodesData.find(node => node.nodeId === edge.source.nodeId);
+        const targetNode = this.nodesData.find(node => node.nodeId === edge.target.nodeId);
   
         if (sourceNode && targetNode) {
           // Initialize animationProgress if it doesn't exist
