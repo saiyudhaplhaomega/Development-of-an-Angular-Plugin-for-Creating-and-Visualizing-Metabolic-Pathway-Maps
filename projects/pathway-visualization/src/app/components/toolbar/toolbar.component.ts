@@ -75,8 +75,10 @@ export class ToolbarComponent {
     this.shortagePathEvent.emit();
   }
 
-  arrowAnimation() {
+  triggerArrowAnimation() {
+    //console.log('Arrow Animation button clicked in toolbar comp');
     this.arrowAnimationEvent.emit();
+    this.activeToolName = this.activeToolName === 'arrowAnimation' ? 'search' : 'arrowAnimation';
   }
 
   dynamic() {

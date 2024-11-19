@@ -17,8 +17,8 @@
     </div>
     
   </div>
-  <div class="row no-gutters">
-    <div class="col-md-1 ">
+  <div class="row no-gutters" #canvasContainer>
+    <div  class="col-md-1 ">
       <vis-toolbar
         [panEnabled]="panEnabled"
         [brushEnabled]="brushEnabled"
@@ -35,7 +35,7 @@
         (snapModeEvent)="snapMode()"
         (orthogonalEvent)="orthogonalMode()"
         (shortagePathEvent)="shortagePathEnabled()"
-        
+        (arrowAnimationEvent)="handleArrowAnimationEvent()"
         (dynamicEvent)="dynamic()"
         (toggleTextBoxModeEvent)="toggleTextBoxMode()"
       >

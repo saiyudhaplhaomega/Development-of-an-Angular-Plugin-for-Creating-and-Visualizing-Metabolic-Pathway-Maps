@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NetworkCanvasService } from '../../services/network-canvas.service';
 import { Edge, Node } from '../../models/network-elements.model';
 import { distinctUntilChanged, Subscription } from 'rxjs';
 import { NetworkManagerService } from '../../services/network-manager.service';
+import { NetworkCanvasComponent } from '../network-canvas/network-canvas.component';
 
 @Component({
   selector: 'vis-network-visualization-root',
   templateUrl: './network-visualization-root.component.html',
   styleUrls: ['./network-visualization-root.component.scss']
 })
-export class NetworkVisualizationRootComponent implements OnInit {
-  activeToolName: string = 'search';
+export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
+  @ViewChild('canvasContainer', { static: true }) canvasContainerRef: ElementRef;
+  @ViewChild(NetworkCanvasComponent) networkCanvasComponent: NetworkCanvasComponent;
+  public activeToolName: string;
   searchText: string = '';
   suggestions: string[] = [];
   nodesData: Node[] = [];
@@ -47,9 +50,10 @@ export class NetworkVisualizationRootComponent implements OnInit {
         this.searchNodeId = id;
       });
     
-      this.activeToolNameSubscription = this.networkCanvasService.activeToolName$.subscribe(toolName => {
+      this.networkCanvasService.activeToolName$.subscribe(toolName => {
         this.activeToolName = toolName;
       });
+      
       this.canvasSubscription = this.networkCanvasService.canvas$.subscribe(canvas => {
         if (canvas) {
           this.canvas = canvas;
@@ -239,6 +243,17 @@ export class NetworkVisualizationRootComponent implements OnInit {
     requestAnimationFrame(animateArrow);
   }
  */
+ 
+  //By emitting an event from toolbar.component.ts and handling it in network-visualization-root.component.ts, you can call the arrowAnimation method in network-canvas.component.ts. 
+  //This approach allows you to trigger the arrowAnimation method from the toolbar and handle it in the root component.
+  handleArrowAnimationEvent() {
+    //console.log('handleArrowAnimationEvent called');
+    if (this.networkCanvasComponent && typeof this.networkCanvasComponent.arrowAnimation === 'function') {
+      this.networkCanvasComponent.arrowAnimation();
+    } else {
+      console.error('arrowAnimation method not found on canvas component');
+    }
+  }
   dynamic() {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'dynamic' ? 'search' : 'dynamic';
   }
