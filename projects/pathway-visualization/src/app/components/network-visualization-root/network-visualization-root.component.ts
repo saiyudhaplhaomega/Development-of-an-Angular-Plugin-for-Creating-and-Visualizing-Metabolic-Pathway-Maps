@@ -196,8 +196,12 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
       console.error('arrowAnimation method not found on canvas component');
     }
   }
-  dynamic() {
-    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'dynamic' ? 'search' : 'dynamic';
+  handleDynamicEvent() {
+    if (this.networkCanvasComponent && typeof this.networkCanvasComponent.dynamic === 'function') {
+      this.networkCanvasComponent.dynamic();
+    } else {
+      console.error('dynamic method not found on network canvas component');
+    }
   }
 
   toggleTextBoxMode() {

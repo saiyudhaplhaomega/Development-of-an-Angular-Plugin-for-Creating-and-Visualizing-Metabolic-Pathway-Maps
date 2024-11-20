@@ -78,11 +78,12 @@ export class ToolbarComponent {
   triggerArrowAnimation() {
     //console.log('Arrow Animation button clicked in toolbar comp');
     this.arrowAnimationEvent.emit();
-    this.activeToolName = this.activeToolName === 'arrowAnimation' ? 'search' : 'arrowAnimation';
+    //this.activeToolName = this.activeToolName === 'arrowAnimation' ? 'search' : 'arrowAnimation';
   }
 
-  dynamic() {
+  triggerDynamic() {
     this.dynamicEvent.emit();
+    //this.activeToolName = this.activeToolName === 'dynamic' ? 'search' : 'dynamic';
   }
 
   toggleTextBoxMode() {

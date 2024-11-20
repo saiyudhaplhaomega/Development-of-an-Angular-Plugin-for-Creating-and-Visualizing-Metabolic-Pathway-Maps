@@ -58,7 +58,7 @@ export class NetworkCanvasComponent implements OnInit {
   //@Input() configuration: any;
   @Output() callbacks = new EventEmitter();
   @Output() arrowAnimationEvent = new EventEmitter<void>();
-
+  @Output() dynamicAnimationEvent = new EventEmitter<void>();
   constructor(
     private element: ElementRef,
     private zone: NgZone,
@@ -274,7 +274,7 @@ export class NetworkCanvasComponent implements OnInit {
        if (isNaN(link.animationProgress)) {
          link.animationProgress = 0;
        }
-       if (link.animationProgress==1 && this.activeToolName == 'arrowAnimation') {
+       if (link.animationProgress==1 && this.networkCanvasService.activeToolName == 'arrowAnimation') {
          link.animationProgress = 0.2;
        }
        // Calculate interpolated positions
@@ -282,7 +282,7 @@ export class NetworkCanvasComponent implements OnInit {
        const interpolatedY = startY * (1 - link.animationProgress) + endY * link.animationProgress;
 
        // Draw the arrow with grid-aligned positions
-       if(this.activeToolName === 'dynamic')
+       if(this.networkCanvasService.activeToolName === 'dynamic')
           this.drawDot(ctx, { x: startX, y: startY }, { x: interpolatedX, y: interpolatedY });
        else  
           this.drawArrow(ctx, { x: startX, y: startY }, { x: interpolatedX, y: interpolatedY });
@@ -411,7 +411,7 @@ export class NetworkCanvasComponent implements OnInit {
       console.log('totalEdges', totalEdges);
       if (currentEdgeIndex < totalEdges) {
         const edge: any = this.edgesData[currentEdgeIndex];
-        console.log('edge', edge);
+        //console.log('edge', edge);
         const sourceNode = this.nodesData.find(node => node.nodeId === edge.source.nodeId);
         const targetNode = this.nodesData.find(node => node.nodeId === edge.target.nodeId);
   
@@ -826,6 +826,65 @@ drawDirectionArrow(ctx: CanvasRenderingContext2D, start: any, end: any) {
 
   // Restore the context to its original state
   ctx.restore();
+}
+dynamic(){
+  this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'dynamic' ? 'search' : 'dynamic';
+  const gridSpacing = 50;
+  console.log('Dynamic animation method is called');
+  const canvas = this.canvas;
+  const ctx = canvas.getContext('2d');
+
+  let currentEdgeIndex = 0; // Track the current edge being animated
+  const totalEdges = this.edgesData.length;
+
+  const animateArrow = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+      this.drawGrid();
+      this.drawLinks(gridSpacing);
+      this.drawNodes(this.nodesData, gridSpacing);
+
+      if (currentEdgeIndex < totalEdges) {
+          const edge:any = this.edgesData[currentEdgeIndex];
+          const sourceNode = this.nodesData.find(node => node.nodeId === edge.source.nodeId);
+          const targetNode = this.nodesData.find(node => node.nodeId === edge.target.nodeId);
+
+          if (sourceNode && targetNode) {
+              // Update progress for the current edge
+              if (edge.animationProgress === undefined) {
+                edge.animationProgress = 0;
+              }
+
+              // Calculate the current position of the arrow
+              const startX = sourceNode.x * this.zoomScale;
+              const startY = sourceNode.y * this.zoomScale;
+              const endX = targetNode.x * this.zoomScale;
+              const endY = targetNode.y * this.zoomScale;
+
+              const interpolatedX = startX * (1 - edge.animationProgress) + endX * edge.animationProgress;
+              const interpolatedY = startY * (1 - edge.animationProgress) + endY * edge.animationProgress;
+
+              // Draw the arrow at the interpolated position
+              this.drawDot(ctx, { x: startX, y: startY }, { x: interpolatedX, y: interpolatedY });
+
+              // Update animation progress
+              edge.animationProgress += 0.005; // Adjust speed here
+
+              // Check if the arrow has reached the end
+              if (edge.animationProgress >= 1) {
+                  edge.animationProgress = 0; // Reset for the next arrow
+                  currentEdgeIndex++; // Move to the next edge
+              }
+          }
+      } else {
+          currentEdgeIndex = 0; // Reset to the first edge
+      }
+
+      if(this.networkCanvasService.activeToolName === 'dynamic') requestAnimationFrame(animateArrow); // Continue the animation
+  };
+
+  // Start the animation
+  requestAnimationFrame(animateArrow);
+  this.dynamicAnimationEvent.emit();
 }
 
 drawDot(ctx: CanvasRenderingContext2D, source: any, target: any) {
