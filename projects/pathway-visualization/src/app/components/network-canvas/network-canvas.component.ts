@@ -351,19 +351,19 @@ export class NetworkCanvasComponent implements OnInit {
     //const zoomAdjustedScaleSpacing = scaleSpacing;
 
     // Horizontal lines
-    for (let y = zoomAdjustedGridSpacing; y < this.height * 100; y += zoomAdjustedGridSpacing) {
+    for (let y = zoomAdjustedGridSpacing; y < this.height ; y += zoomAdjustedGridSpacing) {
       this.ctx.beginPath();
       this.ctx.moveTo(0, y);
-      this.ctx.lineTo(this.width * 100, y);
+      this.ctx.lineTo(this.width , y);
       ctx.lineWidth = 0.5;
       this.ctx.stroke();
 
     }
     // Vertical lines
-    for (let x = zoomAdjustedGridSpacing; x < this.width * 100; x += zoomAdjustedGridSpacing) {
+    for (let x = zoomAdjustedGridSpacing; x < this.width ; x += zoomAdjustedGridSpacing) {
       this.ctx.beginPath();
       this.ctx.moveTo(x, 0);
-      this.ctx.lineTo(x, this.height * 100);
+      this.ctx.lineTo(x, this.height );
       ctx.lineWidth = 0.5;
       this.ctx.stroke();
     }
@@ -371,13 +371,13 @@ export class NetworkCanvasComponent implements OnInit {
     // Draw scale values
     ctx.fillStyle = 'black'; // Adjust color as needed
     ctx.font = '12px Arial'; // Adjust font as needed
-    for (let y = zoomAdjustedScaleSpacing; y < this.height * 100; y += zoomAdjustedScaleSpacing) {
+    for (let y = zoomAdjustedScaleSpacing; y < this.height ; y += zoomAdjustedScaleSpacing) {
      // ctx.fillText((y / this.zoomScale).toFixed(0).toString(), 5, y);
       ctx.fillText((y).toFixed(0).toString(), 5, y);
     }
 
     // Draw scale values
-    for (let x = zoomAdjustedScaleSpacing; x < this.width * 100; x += zoomAdjustedScaleSpacing) {
+    for (let x = zoomAdjustedScaleSpacing; x < this.width ; x += zoomAdjustedScaleSpacing) {
       //ctx.fillText((x / this.zoomScale).toFixed(0).toString(), x, 15);
       ctx.fillText((x).toFixed(0).toString(), x, 15);
     }
