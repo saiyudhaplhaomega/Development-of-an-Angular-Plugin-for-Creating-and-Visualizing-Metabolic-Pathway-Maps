@@ -123,29 +123,20 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
     this.networkCanvasService.activeToolName = 'search';
   }
 
-  zoomIn() {
-    this.networkCanvasService.activeToolName = 'zoomIn';
-    this.activeToolName = 'zoomIn'
-    this.zoomScale *= 1.1;
-    if(this.zoomScale > 1.5) {
-      this.roundingEnabled = true;
+  handleZoomInEvent() {
+    if (this.networkCanvasComponent && typeof this.networkCanvasComponent.zoomIn === 'function') {
+      this.networkCanvasComponent.zoomIn();
     } else {
-      this.roundingEnabled = false;
+      console.error('zoomIn method not found on network canvas component');
     }
-    this.networkCanvasService.getSimulation().alpha(0.3).restart();
-    // Implement zoom in logic
   }
 
-  zoomOut() {
-    this.networkCanvasService.activeToolName = 'zoomOut';
-    // Implement zoom out logic
-    this.zoomScale /= 1.1;
-    if(this.zoomScale < 1.5) {
-      this.roundingEnabled = false;
+  handleZoomOutEvent() {
+    if (this.networkCanvasComponent && typeof this.networkCanvasComponent.zoomOut === 'function') {
+      this.networkCanvasComponent.zoomOut();
     } else {
-      this.roundingEnabled = true;
+      console.error('zoomOut method not found on network canvas component');
     }
-    this.networkCanvasService.getSimulation().alpha(0.3).restart();
   }
  
   enableToolTip() {

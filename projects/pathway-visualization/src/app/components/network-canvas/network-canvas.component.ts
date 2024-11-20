@@ -938,7 +938,7 @@ drawNodes(nodes, gridSpacing) {
     } else if (node.nodeType === 'diamond') {
       nodeColor = 'orange';
     }
-    const nodeSize = widthScale(0.5); //node.width if you want to get it from the data
+    const nodeSize = widthScale(0.9); //node.width if you want to get it from the data
     
     this.ctx.fillStyle = nodeColor;
     if (node.nodeType === 'circle') {
@@ -990,6 +990,40 @@ drawNodes(nodes, gridSpacing) {
     }
   });
 }
+
+zoomIn() {
+  this.networkCanvasService.activeToolName = 'zoomIn'
+  this.zoomScale *= 1.1;
+  if(this.zoomScale > 1.5) {
+    this.roundingEnabled = true;
+  } else {
+    this.roundingEnabled = false;
+  }
+  this.simulation.alpha(0.3).restart();
+}
+
+zoomOut() {
+  this.networkCanvasService.activeToolName = 'zoomOut'
+  this.zoomScale /= 1.1;
+  if(this.zoomScale < 1.5) {
+    this.roundingEnabled = false;
+  } else {
+    this.roundingEnabled = true;
+  }
+  this.simulation.alpha(0.3).restart();
+}
+applyZoom() {
+  // Clear the canvas
+  this.ctx.clearRect(0, 0, this.width / this.zoomScale, this.height / this.zoomScale);
+
+  // // Update the scale part of the transform
+  this.ctx.scale(this.zoomScale, this.zoomScale);
+
+  // // Clear the canvas and redraw with the updated scale
+  this.tick(this.ctx, this.nodesData); // Assuming you have a tick function to redraw nodes and links
+
+}
+
 drawArrow(ctx: CanvasRenderingContext2D, source: any, target: any) {
   const {x: startX, y:startY} = source;
   const {x: endX, y:endY} = target;
