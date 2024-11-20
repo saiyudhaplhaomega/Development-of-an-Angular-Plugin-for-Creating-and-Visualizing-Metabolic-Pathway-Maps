@@ -554,7 +554,7 @@ export class NetworkCanvasComponent implements OnInit {
   } 
   
   private onMouseMove(event: any) {
-    if (this.activeToolName == 'selectNode') return false;
+    if (this.networkCanvasService.activeToolName == 'selectNode') return false;
 
     // Get mouse coordinates relative to the canvas
     const mouseX = event.offsetX / this.zoomScale;
@@ -569,7 +569,7 @@ export class NetworkCanvasComponent implements OnInit {
         return;
     }
     // Check if the hovered node is the same as the previous one
-    if (this.previouslyHoveredNode !== closestNode && this.activeToolName =='tooltip') {
+    if (this.previouslyHoveredNode !== closestNode && this.networkCanvasService.activeToolName =='tooltip') {
         this.previouslyHoveredNode = closestNode;
         
         // Existing tooltip functionality
@@ -585,7 +585,7 @@ export class NetworkCanvasComponent implements OnInit {
             .on("click", () => this.closeTooltip());
         
     }
-    if(['editing', 'exploration'].includes(this.activeToolName) && this.previouslyHoveredNode !== closestNode){
+    if(['editing', 'exploration'].includes(this.networkCanvasService.activeToolName) && this.previouslyHoveredNode !== closestNode){
       this.previouslyHoveredNode = closestNode;
       this.callBack('hover', event);
     }
@@ -617,7 +617,7 @@ export class NetworkCanvasComponent implements OnInit {
     
     this.drawLinks(gridSpacing);
     this.drawNodes(nodes, gridSpacing);
-    if (this.activeToolName == 'selectNode') {
+    if (this.networkCanvasService.activeToolName == 'selectNode') {
       // Draw brush selection
       ctx.beginPath();
       // ctx.rect(this.brushX0, this.brushY0, this.brushX1 - this.brushX0, this.brushY1 - this.brushY0);
@@ -639,17 +639,17 @@ export class NetworkCanvasComponent implements OnInit {
   dragstarted(event: any, d: any) {
     this.dragNode = false;
     this.nodesWithinBrush = [];
-    if(this.searchNodeId == -1 && this.activeToolName == 'search') return false; 
-    if (!event.active && this.activeToolName != 'selectNode') this.simulation.alphaTarget(0.3).restart();
+    if(this.searchNodeId == -1 && this.networkCanvasService.activeToolName == 'search') return false; 
+    if (!event.active && this.networkCanvasService.activeToolName != 'selectNode') this.simulation.alphaTarget(0.3).restart();
 
-    if (this.activeToolName == 'panEnable') {
+    if (this.networkCanvasService.activeToolName == 'panEnable') {
       const dx = event.dx / this.zoomScale;
       const dy = event.dy / this.zoomScale;
       this.nodes.forEach(node => {
         node.fx = node.x + dx;
         node.fy = node.y + dy;
       });
-    } else if (this.activeToolName === 'snapMode') {
+    } else if (this.networkCanvasService.activeToolName === 'snapMode') {
       const dx = event.dx / this.zoomScale;
       const dy = event.dy / this.zoomScale;
       this.nodes.forEach(node => {
@@ -663,15 +663,15 @@ export class NetworkCanvasComponent implements OnInit {
     }
   }
   dragged(event: any, d: any) {
-    if(this.searchNodeId == -1 && ['search', 'tooltip'].includes(this.activeToolName)) return false; 
+    if(this.searchNodeId == -1 && ['search', 'tooltip'].includes(this.networkCanvasService.activeToolName)) return false; 
     this.dragNode = true;
-    if (this.activeToolName == 'selectNode') {
+    if (this.networkCanvasService.activeToolName == 'selectNode') {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = event.sourceEvent.clientX - rect.left;
       const mouseY = event.sourceEvent.clientY - rect.top;
       this.brushX1 = mouseX / this.zoomScale;
       this.brushY1 = mouseY / this.zoomScale;
-    } else if (this.activeToolName == 'panEnable') {
+    } else if (this.networkCanvasService.activeToolName == 'panEnable') {
       // Adjust position of all nodes based on drag event
       const dx = event.dx / this.zoomScale;
       const dy = event.dy / this.zoomScale;
@@ -690,12 +690,12 @@ export class NetworkCanvasComponent implements OnInit {
   }
 
   dragended(event: any, d: any) {
-    if(this.searchNodeId == -1 && ['search', 'tooltip'].includes(this.activeToolName)) return false; 
-    if (this.activeToolName == 'selectNode') {
+    if(this.searchNodeId == -1 && ['search', 'tooltip'].includes(this.networkCanvasService.activeToolName)) return false; 
+    if (this.networkCanvasService.activeToolName == 'selectNode') {
       const filteredNode = this.filterNodesWithinBrush(this.nodes, this.brushX0, this.brushY0, this.brushX1, this.brushY1);
       this.brushended(filteredNode);
       this.simulation.alphaTarget(0.01).restart();
-    } else if (this.activeToolName == 'textBoxMode') {
+    } else if (this.networkCanvasService.activeToolName == 'textBoxMode') {
       this.createTextBoxAt(event);
     }
     if (!['panEnable','selectNode','snapMode', 'exploration', 'editing', 'search', 'tooltip', 'zoomIn', 'zoomOut'].includes(this.activeToolName)) {
@@ -703,7 +703,7 @@ export class NetworkCanvasComponent implements OnInit {
       event.subject.fy = null;
     }
     
-    if (this.activeToolName == 'panEnable') {
+    if (this.networkCanvasService.activeToolName == 'panEnable') {
       const dx = event.dx / this.zoomScale;
       const dy = event.dy / this.zoomScale;
 
@@ -725,7 +725,7 @@ export class NetworkCanvasComponent implements OnInit {
 doubleClicked(event: MouseEvent) {
   this.callBack('doubleClick', event);
   this.closeTooltip();
-  if (['textBoxMode', 'exploration', 'editing'].includes(this.activeToolName)) return false;
+  if (['textBoxMode', 'exploration', 'editing'].includes(this.networkCanvasService.activeToolName)) return false;
   this.dragNode = true;
   // Get the coordinates of the click relative to the canvas
   const mouseX = event.offsetX / this.zoomScale;
@@ -781,10 +781,10 @@ loadData(fileName) {
 } */
 //inside the Canvas function 
 callBack(type: string, event) {
-  if(['exploration', 'editing'].includes(this.activeToolName)) {
+  if(['exploration', 'editing'].includes(this.networkCanvasService.activeToolName)) {
     const callbacks = {
       [this.nodeLevel]: {
-        [this.activeToolName]: {
+        [this.networkCanvasService.activeToolName]: {
           [type]: {}
         }
       }
@@ -863,7 +863,7 @@ drawNodes(nodes, gridSpacing) {
     
    // Redraw nodes
    nodes.forEach(node => {
-    if(['zoomIn', 'zoomOut'].includes(this.activeToolName) && this.roundingEnabled) {
+    if(['zoomIn', 'zoomOut'].includes(this.networkCanvasService.activeToolName) && this.roundingEnabled) {
      // Apply grid snapping to node positions
       node.x = Math.round(node.x / gridSpacing) * gridSpacing;
       node.y = Math.round(node.y / gridSpacing) * gridSpacing;
@@ -895,7 +895,7 @@ drawNodes(nodes, gridSpacing) {
       ctx.closePath();
     }
     let fillStyle = node.color;
-    if(this.activeToolName == 'selectNode' && this.isNodeInBrush(node)) fillStyle = '#FF5722';
+    if(this.networkCanvasService.activeToolName == 'selectNode' && this.isNodeInBrush(node)) fillStyle = '#FF5722';
     if (this.searchNodeId && this.searchNodeId === node.nodeId) fillStyle = '#FF5722';
 
 
@@ -926,7 +926,7 @@ drawNodes(nodes, gridSpacing) {
     ctx.font = `${12 * this.zoomScale}px Arial`; // Adjust font size based on this.zoomScale
     ctx.fillText(node.nodeId, node.x * this.zoomScale - 10 * this.zoomScale, node.y * this.zoomScale - 10 * this.zoomScale);
 
-    if (this.activeToolName == 'selectNode' && this.isNodeInBrush(node)) {
+    if (this.networkCanvasService.activeToolName == 'selectNode' && this.isNodeInBrush(node)) {
       this.nodesWithinBrush.push(node);
     }
   });

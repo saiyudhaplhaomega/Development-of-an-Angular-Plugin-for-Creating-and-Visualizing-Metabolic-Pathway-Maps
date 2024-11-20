@@ -185,64 +185,6 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
     if (this.networkCanvasService.getSimulation()) this.networkCanvasService.getSimulation().alpha(0.3).restart();
     // Implement shortage path logic
   }
- /*
-  arrowAnimation() {
-    const gridSpacing = 50;
-    this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == 'arrowAnimation' ? 'search' : 'arrowAnimation';
-    //this.networkManagerService.setActiveToolName(this.activeToolName);
-    const canvas = this.canvas;
-    const ctx = canvas.getContext('2d');
-
-    let currentEdgeIndex = 0; // Track the current edge being animated
-    const totalEdges = this.edgesData.length;
-
-    const animateArrow = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-        this.drawGrid();
-        this.drawLinks(gridSpacing);
-        this.drawNodes(this.nodesData, gridSpacing);
-
-        if (currentEdgeIndex < totalEdges) {
-            const edge = this.edgesData[currentEdgeIndex];
-            const sourceNode = this.nodesData.find(node => node.nodeId === edge.source.nodeId);
-            const targetNode = this.nodesData.find(node => node.nodeId === edge.target.nodeId);
-
-            if (sourceNode && targetNode) {
-                // Update progress for the current edge
-                edge.animationProgress = edge.animationProgress || 0;
-
-                // Calculate the current position of the arrow
-                const startX = sourceNode.x * this.zoomScale;
-                const startY = sourceNode.y * this.zoomScale;
-                const endX = targetNode.x * this.zoomScale;
-                const endY = targetNode.y * this.zoomScale;
-
-                const interpolatedX = startX * (1 - edge.animationProgress) + endX * edge.animationProgress;
-                const interpolatedY = startY * (1 - edge.animationProgress) + endY * edge.animationProgress;
-
-                // Draw the arrow at the interpolated position
-                this.drawArrow(ctx, { x: startX, y: startY }, { x: interpolatedX, y: interpolatedY });
-
-                // Update animation progress
-                edge.animationProgress += 0.005; // Adjust speed here
-
-                // Check if the arrow has reached the end
-                if (edge.animationProgress >= 1) {
-                    edge.animationProgress = 0; // Reset for the next arrow
-                    currentEdgeIndex++; // Move to the next edge
-                }
-            }
-        } else {
-            currentEdgeIndex = 0; // Reset to the first edge
-        }
-
-        if(this.activeToolName === 'arrowAnimation') requestAnimationFrame(animateArrow); // Continue the animation
-    };
-
-    // Start the animation
-    requestAnimationFrame(animateArrow);
-  }
- */
  
   //By emitting an event from toolbar.component.ts and handling it in network-visualization-root.component.ts, you can call the arrowAnimation method in network-canvas.component.ts. 
   //This approach allows you to trigger the arrowAnimation method from the toolbar and handle it in the root component.
