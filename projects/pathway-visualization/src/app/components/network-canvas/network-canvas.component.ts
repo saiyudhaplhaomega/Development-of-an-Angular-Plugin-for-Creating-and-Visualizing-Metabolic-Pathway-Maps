@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as d3 from 'd3';
 import { NetworkCanvasService } from '../../services/network-canvas.service';
 import { NetworkManagerService } from '../../services/network-manager.service';
-import { Edge, NetworkMap, Node } from '../../models/network-elements.model';
+import { Edge, Level, NetworkMap, Node } from '../../models/network-elements.model';
 import { distinctUntilChanged, Subscription } from 'rxjs';
 import { NetworkData } from '../../models/network-data.model';
 import { SimulationService } from './simulation.service';
@@ -18,11 +18,16 @@ export class NetworkCanvasComponent implements OnInit {
   hierarchy: string[] = ['MOLECULAR', 'MODULE', 'ORGANELLE']
   nodesData: Node[] = [];
   edgesData: Edge[] = [];
+  level:Level;
   networkMap: NetworkMap | undefined;
   dataMap: NetworkData | undefined;
   configuration: Configuration | undefined;
   ctx: CanvasRenderingContext2D;
   private simulation: any;
+  hirarchyNodes: any = [];
+  suggestionsPaths: string[] = [];
+  shortagePathFromNode = '';
+  shortagePathToNode = '';
   height = window.innerHeight ; 
   width = window.innerWidth ;
   private nodesWithinBrush: any = [];
@@ -70,7 +75,7 @@ export class NetworkCanvasComponent implements OnInit {
   ) {
     //this.networkManagerService.initNetworkManager();
   }
-
+  
   ngOnInit() {
     this.searchNodeIdSubscription = this.networkCanvasService.searchNodeId$.subscribe(id => {
       this.searchNodeId = id;
@@ -121,13 +126,15 @@ export class NetworkCanvasComponent implements OnInit {
         //console.log('this is network map in canvas', networkMap);
         this.networkMap = networkMap;
         if (this.networkMap) {
+          this.setLevel(this.networkMap.level);
+          this.hirarchyNodes.push(this.networkMap.level);
           this.drawCanvas(this.networkMap);
           this.nodesData = this.networkMap.nodes;
           this.edgesData = this.networkMap.edges;
         }
       });
       
-  //console.log('this is network map in canvas', this.networkMap);
+  //console.log('this is network map level in canvas', this.hirarchyNodes);
     
       //canvas
     
@@ -1174,6 +1181,38 @@ createTextBoxAt(event: any) {
     }
   });
 }
-
+refreshGraph() {
+  this.closeTooltip()
+  this.activeToolName == 'search';
+  this.zoomScale = 1;
+  d3.selectAll('.input-text-box').remove();
+  if (this.nodesData.length) {
+    this.nodesData = [];
+    this.edgesData = [];
+    this.nodes = [];
+    this.hirarchyNodes = [];
+    this.suggestionsPaths = [];
+    this.shortagePathFromNode = '';
+    this.shortagePathToNode = '';
+    this.activeToolName = 'search';
+    this.hirarchyActiveIndex = 0;
+    this.drawCanvas({ edges: [], nodes: [] })
+    //this.simulation.alpha(1).restart();
+  }
+  //this.fileInput.nativeElement.value = '';
+}
+setLevel(levelString: string) {
+  if (levelString === Level.MOLECULAR) {
+    this.level = Level.MOLECULAR;
+  } else if (levelString === Level.MODULE) {
+    this.level = Level.MODULE;
+  } else if (levelString === Level.ORGANELLE) {
+    this.level = Level.ORGANELLE;
+  } else if (levelString === Level.COMMUNITY) {
+    this.level = Level.COMMUNITY;
+  } else {
+    console.error('Unknown level:', levelString);
+  }
+}
 
 }

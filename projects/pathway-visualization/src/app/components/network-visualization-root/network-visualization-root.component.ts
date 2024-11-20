@@ -152,8 +152,11 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
   }
 
   refreshGraph() {
-    this.networkCanvasService.activeToolName = 'search';
-    // Implement refresh graph logic
+    if (this.networkCanvasComponent && typeof this.networkCanvasComponent.refreshGraph === 'function') {
+      this.networkCanvasComponent.refreshGraph();
+    } else {
+      console.error('refreshGraph method not found on network canvas component');
+    }
   }
 
   toggleCallbackMode(mode) {
