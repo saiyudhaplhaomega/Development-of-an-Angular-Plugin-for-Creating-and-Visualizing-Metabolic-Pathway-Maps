@@ -1,0 +1,197 @@
+{
+    "edges": [
+        {
+            "dataRef": "aa4a61e8-d5d2-4efa-a142-5cc04eeaed86",
+            "edgeId": 0,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_0",
+            "modelElementRef": "",
+            "source": 0,
+            "target": 1
+        },
+        {
+            "dataRef": "235fcaa9-0472-491e-a85c-2659729191cd",
+            "edgeId": 1,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_1",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 2
+        },
+        {
+            "dataRef": "93ee41ff-a3f8-4f3e-8287-bbf567fc69e3",
+            "edgeId": 2,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_2",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 3
+        },
+        {
+            "dataRef": "af2503d3-d560-46a9-970d-146976c84656",
+            "edgeId": 3,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_3",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 6
+        },
+        {
+            "dataRef": "e722b1ab-d46f-45c0-9bef-415750b0f0f1",
+            "edgeId": 4,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_4",
+            "modelElementRef": "",
+            "source": 3,
+            "target": 4
+        },
+        {
+            "dataRef": "e2349b4d-2e9d-435e-b884-88b701c5b8a3",
+            "edgeId": 5,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_5",
+            "modelElementRef": "",
+            "source": 3,
+            "target": 7
+        },
+        {
+            "dataRef": "3319f896-343d-41a4-9b99-54ab6efecadc",
+            "edgeId": 6,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_6",
+            "modelElementRef": "",
+            "source": 4,
+            "target": 5
+        },
+        {
+            "dataRef": "d1ed55f6-10aa-4501-9c4e-185769ccffc2",
+            "edgeId": 7,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_7",
+            "modelElementRef": "",
+            "source": 4,
+            "target": 8
+        },
+        {
+            "dataRef": "c87c350f-63cc-4b32-8f21-8e7ae153774c",
+            "edgeId": 8,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_8",
+            "modelElementRef": "",
+            "source": 4,
+            "target": 9
+        }
+    ],
+    "level": "module",
+    "nodes": [
+        {
+            "dataRef": "589da2a0-1836-460e-869d-69d580fd312a",
+            "isSecondaryMetabolite": false,
+            "label": "node_0",
+            "modelElementRef": "",
+            "nodeId": 0,
+            "nodeType": "circle",
+            "x": 68,
+            "y": 82
+        },
+        {
+            "dataRef": "fdbd222a-f8fb-4917-98bb-5b1deb05fa4e",
+            "isSecondaryMetabolite": false,
+            "label": "node_1",
+            "modelElementRef": "",
+            "nodeId": 1,
+            "nodeType": "circle",
+            "x": 40,
+            "y": 88
+        },
+        {
+            "dataRef": "e114869f-edc4-4178-82fc-7d2e977578a1",
+            "isSecondaryMetabolite": false,
+            "label": "node_2",
+            "modelElementRef": "",
+            "nodeId": 2,
+            "nodeType": "circle",
+            "x": 19,
+            "y": 56
+        },
+        {
+            "dataRef": "5cfea9bb-43e5-4ebc-a6cc-3e10b9a99916",
+            "isSecondaryMetabolite": false,
+            "label": "node_3",
+            "modelElementRef": "",
+            "nodeId": 3,
+            "nodeType": "circle",
+            "x": 76,
+            "y": 6
+        },
+        {
+            "dataRef": "9380832f-31f8-4bdd-aa53-e3dc22e89d12",
+            "isSecondaryMetabolite": false,
+            "label": "node_4",
+            "modelElementRef": "",
+            "nodeId": 4,
+            "nodeType": "circle",
+            "x": 7,
+            "y": 54
+        },
+        {
+            "dataRef": "da6f1e27-4ef1-4749-9915-dcf995b90c8f",
+            "isSecondaryMetabolite": false,
+            "label": "node_5",
+            "modelElementRef": "",
+            "nodeId": 5,
+            "nodeType": "circle",
+            "x": 75,
+            "y": 86
+        },
+        {
+            "dataRef": "2bf3c71a-8575-471a-a087-1e97a067e8b5",
+            "isSecondaryMetabolite": false,
+            "label": "node_6",
+            "modelElementRef": "",
+            "nodeId": 6,
+            "nodeType": "circle",
+            "x": 57,
+            "y": 82
+        },
+        {
+            "dataRef": "11fc2310-f8eb-4e43-b233-3778a5058cb8",
+            "isSecondaryMetabolite": false,
+            "label": "node_7",
+            "modelElementRef": "",
+            "nodeId": 7,
+            "nodeType": "circle",
+            "x": 83,
+            "y": 1
+        },
+        {
+            "dataRef": "269e932c-0b23-42cc-8f4f-b816a7fdb15a",
+            "isSecondaryMetabolite": false,
+            "label": "node_8",
+            "modelElementRef": "",
+            "nodeId": 8,
+            "nodeType": "circle",
+            "x": 39,
+            "y": 0
+        },
+        {
+            "dataRef": "a830269a-d9da-4ed2-9c2f-e3209c2d55b5",
+            "isSecondaryMetabolite": false,
+            "label": "node_9",
+            "modelElementRef": "",
+            "nodeId": 9,
+            "nodeType": "circle",
+            "x": 18,
+            "y": 71
+        }
+    ]
+}

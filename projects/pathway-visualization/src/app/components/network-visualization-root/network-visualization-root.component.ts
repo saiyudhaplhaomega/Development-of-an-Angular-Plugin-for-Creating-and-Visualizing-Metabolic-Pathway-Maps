@@ -16,6 +16,7 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
   public activeToolName: string;
   searchText: string = '';
   suggestions: string[] = [];
+  shortestPath: any[] = [];
   nodesData: Node[] = [];
   edgesData: Edge[] = [];
   searchNodeId: number = -1;
@@ -30,8 +31,13 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
   private activeToolNameSubscription: Subscription;
   private canvasSubscription: Subscription;
   private ctxSubscription: Subscription;
+  private shortestPathSubscription: Subscription;
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
+  shortagePathFromNode: string = '';
+  private shortagePathFromNodestore: string = '';
+  shortagePathToNode: string = '';
+  suggestionsPaths: string[] = [];
 
   constructor(private networkManagerService: NetworkManagerService,
     private networkCanvasService: NetworkCanvasService) {}
@@ -49,6 +55,10 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
       this.searchNodeIdSubscription = this.networkCanvasService.searchNodeId$.subscribe(id => {
         this.searchNodeId = id;
       });
+
+      this.activeToolNameSubscription = this.networkCanvasService.activeToolName$.subscribe(toolName => {
+        this.activeToolName = toolName;
+      });
     
       this.networkCanvasService.activeToolName$.subscribe(toolName => {
         this.activeToolName = toolName;
@@ -64,6 +74,9 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
         if (ctx) {
           this.ctx = ctx;
         }
+      });
+      this.shortestPathSubscription = this.networkCanvasService.shortestPath$.subscribe(path => {
+        this.shortestPath = path;
       });
   }
   //need to unsubscribe from the subscriptions or not ?
@@ -85,8 +98,12 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
     if (this.ctxSubscription) {
       this.ctxSubscription.unsubscribe();
     }
+    if (this.shortestPathSubscription) {
+      this.shortestPathSubscription.unsubscribe();
+    }
   }
   onSearchTextChanged(text: string) {
+    console.log('Search text changed in root:', text);
     this.searchText = text;
     this.suggestions = this.nodesData
       .map(node => node.label)
@@ -94,27 +111,149 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
       .slice(0, 5);  // Limit to 5 suggestions for simplicity
   }
 
+  onSearchTextChangedPaths(text: string) {
+    console.log('Search text changed for paths in root:', text);
+    this.suggestionsPaths = this.nodesData
+      .map(node => node.label)
+      .filter(nodeId => nodeId.includes(text))
+      .slice(0, 5);  // Limit to 5 suggestions for simplicity
+  }
+
   onSearch() {
-    //console.log('onSearch triggered in NetworkVisualizationRootComponent');
-    const targetNode = this.nodesData.find(node => node.label === this.searchText);
-    if (targetNode) {
-      this.networkCanvasService.searchNodeId = Number(targetNode.nodeId);
-      const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
-      if (simulation) {
-        //console.log('Restarting simulation on net-vis-root for searchNodeId ',this.searchNodeId);
-        simulation.alpha(0.01).restart();
+    //console.log('Search triggered in root');
+    //console.log('shortagePathFromNode in root:', this.shortagePathFromNode);
+    //console.log('shortagePathToNode in root:', this.shortagePathToNode);
+    console.log('press search for shortest path')
+    if (this.activeToolName !== 'shortagePath') {
+      // General search logic
+      const targetNode = this.nodesData.find(node => node.label === this.searchText);
+      if (targetNode) {
+        this.networkCanvasService.searchNodeId = Number(targetNode.nodeId);
+        const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
+        if (simulation) {
+          simulation.alpha(0.01).restart();
+        } else {
+          console.error('Simulation is not initialized');
+        }
       } else {
-        console.error('Simulation is not initialized');
+        console.error('Target node not found');
       }
     } else {
-      console.error('Target node not found');
+      // Shortage path logic
+      //console.log('Shortage path from:', this.shortagePathFromNodestore, 'to:', this.shortagePathToNode);
+      if (this.shortagePathFromNodestore && this.shortagePathToNode) {
+        const fromNode = this.nodesData.find(node => node.label === this.shortagePathFromNodestore);
+        const toNode = this.nodesData.find(node => node.label === this.shortagePathToNode);
+        if (fromNode && toNode) {
+          this.networkCanvasService.searchNodeId = Number(fromNode.nodeId);
+          const simulation = this.networkCanvasService.getSimulation(); // Get simulation from the service
+          if (simulation) {
+            
+            this.shortestPath = this.findShortestPath(this.shortagePathFromNodestore, this.shortagePathToNode);
+            this.networkCanvasService.setShortestPath(this.findShortestPath(this.shortagePathFromNodestore, this.shortagePathToNode));
+            simulation.alpha(0.01).restart();
+          } else {
+            console.error('Simulation is not initialized');
+          }
+          //this.shortestPath = this.findShortestPath(this.shortagePathFromNodestore, this.shortagePathToNode);
+         
+
+        } else {
+          console.error('From or To node not found');
+        }
+      } else {
+        console.error('Both From and To nodes must have values');
+      }
     }
   }
 
   onSuggestionClick(suggestion: string) {
+    //console.log('Suggestion clicked in root:', suggestion);
     this.searchText = suggestion;
     this.suggestions = [];  // Optionally clear the suggestions list
-    this.onSearch();  // Optionally trigger the search immediately
+    //this.onSearch();  // Optionally trigger the search immediately
+  }
+
+  onSuggestionClickSrtPathFrom(suggestion: string) {
+    //console.log('Suggestion clicked for shortage path from in root:', suggestion);
+    this.shortagePathFromNode = suggestion;
+    this.shortagePathFromNodestore =this.shortagePathFromNode;
+    //console.log('shortagePathFromNode in root set to:', this.shortagePathFromNode);
+    this.suggestions = [];  // Optionally clear the suggestions list
+  }
+  
+  onSuggestionClickSrtPathTo(suggestion: string) {
+    //console.log('Suggestion clicked for shortage path to in root:', suggestion);
+    this.shortagePathToNode = suggestion;
+    //console.log('shortagePathToNode in root set to:', this.shortagePathToNode);
+    //console.log('shortagePathFromNode in root set to:', this.shortagePathFromNodestore);
+    this.suggestionsPaths = [];  // Optionally clear the suggestions list
+    //this.shortestPath = this.findShortestPath(this.shortagePathFromNode, this.shortagePathToNode);
+    this.shortestPath = this.findShortestPath(this.shortagePathFromNode, this.shortagePathToNode);
+  }
+  
+  findShortestPath(sourceNodeId: string, targetNodeId: string): any[] {
+    //console.log('Finding shortest path in findShortestPath in root from ', sourceNodeId, 'to', targetNodeId);
+    const sourceNode = this.nodesData.find(node => node.label === sourceNodeId);
+    const targetNode = this.nodesData.find(node => node.label === targetNodeId);
+
+    if (!sourceNode || !targetNode) {
+      console.error("Source or target node not found!");
+      return [];
+    }
+    // Initialize distances to all nodes as infinity, except the source node as 0
+    const distances: { [key: string]: number } = {};
+    this.nodesData.forEach(node => {
+      distances[node.label] = node.label === sourceNodeId ? 0 : Infinity;
+    });
+
+    // Initialize previous nodes
+    const previous: { [key: string]: string | null } = {};
+
+    // Queue to keep track of nodes to visit
+    const queue: string[] = [];
+    queue.push(sourceNodeId);
+
+    while (queue.length > 0) {
+      // Extract node with the minimum distance from the queue
+      const currentNodeId = queue.shift()!;
+      const currentNode = this.nodesData.find(node => node.label === currentNodeId);
+
+      if (!currentNode) continue;
+
+      // Explore neighboring nodes
+      this.edgesData.forEach(edge => {
+        if (edge.source === currentNodeId) {
+          const neighborId = edge.target;
+          const distanceToNeighbor = distances[currentNodeId] + 1; // Assuming unweighted edges
+
+          if (distanceToNeighbor < distances[neighborId]) {
+            distances[neighborId] = distanceToNeighbor;
+            previous[neighborId] = currentNodeId;
+            queue.push(neighborId);
+          }
+        } else if (edge.target === currentNodeId) {
+          const neighborId = edge.source;
+          const distanceToNeighbor = distances[currentNodeId] + 1; // Assuming unweighted edges
+
+          if (distanceToNeighbor < distances[neighborId]) {
+            distances[neighborId] = distanceToNeighbor;
+            previous[neighborId] = currentNodeId;
+            queue.push(neighborId);
+          }
+        }
+      });
+    }
+
+    // Reconstruct shortest path from source to target
+    const shortestPath: string[] = [];
+    let currentNode = targetNodeId;
+    while (currentNode !== sourceNodeId) {
+      shortestPath.unshift(currentNode);
+      currentNode = previous[currentNode]!;
+    }
+    shortestPath.unshift(sourceNodeId);
+    return shortestPath;
   }
 
 
@@ -159,7 +298,7 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleCallbackMode(mode) {
+  toggleCallbackMode(mode: string) {
     this.networkCanvasService.activeToolName = this.networkCanvasService.activeToolName == mode ? 'search' : mode;
     this.previouslyHoveredNode = null;
   }

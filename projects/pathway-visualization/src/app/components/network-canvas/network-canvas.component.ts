@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, NgZone, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, NgZone, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as d3 from 'd3';
 import { NetworkCanvasService } from '../../services/network-canvas.service';
@@ -14,7 +14,7 @@ import { Configuration } from '../../models/configuration.model';
   templateUrl: './network-canvas.component.html',
   styleUrls: ['./network-canvas.component.scss']
 })
-export class NetworkCanvasComponent implements OnInit {
+export class NetworkCanvasComponent implements OnInit, OnDestroy {
   hierarchy: string[] = ['MOLECULAR', 'MODULE', 'ORGANELLE']
   nodesData: Node[] = [];
   edgesData: Edge[] = [];
@@ -45,7 +45,7 @@ export class NetworkCanvasComponent implements OnInit {
   private previouslyHoveredNode: any = null;
   //default setting it to molecular
   public nodeLevel: string = 'molecular';
-  private shortestPath: any[] = [];
+  shortestPath: any[] = [];
   public roundingEnabled: boolean = false;
   public orthogonalEnabled: boolean = false;
   searchNodeId: number = -1;
@@ -56,6 +56,7 @@ export class NetworkCanvasComponent implements OnInit {
   private activeToolNameSubscription: Subscription;
   private canvasSubscription: Subscription;
   private ctxSubscription: Subscription;
+  private shortestPathSubscription: Subscription;
   //public showGrid: boolean = true;
 
 
@@ -74,6 +75,13 @@ export class NetworkCanvasComponent implements OnInit {
     
   ) {
     //this.networkManagerService.initNetworkManager();
+    this.networkCanvasService.activeToolName$.subscribe(toolName => {
+      this.activeToolName = toolName;
+      if (this.activeToolName === 'shortagePath' && this.simulation) {
+        //console.log('this is shortage path', this.shortestPath);
+        this.simulation.alpha(0.3).restart();
+      }
+    });
   }
   
   ngOnInit() {
@@ -164,9 +172,34 @@ export class NetworkCanvasComponent implements OnInit {
     this.resizeListener = () => this.onResize();
     window.addEventListener('resize', this.resizeListener);
 
-    
+    this.shortestPathSubscription = this.networkCanvasService.shortestPath$.subscribe(path => {
+      this.shortestPath = path;
+      //this.updateCanvas();
+    });
   }
+  ngOnDestroy() {
+    // Remove resize event listener
+    window.removeEventListener('resize', this.resizeListener);
+    //do i need to unsubscribe the subscription ? on ngOnDestroy? think about it
+    
+    if (this.searchNodeIdSubscription) {
+      this.searchNodeIdSubscription.unsubscribe();
+    }
   
+    if (this.activeToolNameSubscription) {
+      this.activeToolNameSubscription.unsubscribe();
+    }
+    if (this.canvasSubscription) {
+      this.canvasSubscription.unsubscribe();
+    }
+
+    if (this.ctxSubscription) {
+      this.ctxSubscription.unsubscribe();
+    }
+    if (this.shortestPathSubscription) {
+      this.shortestPathSubscription.unsubscribe();
+    }
+  }
   initializeNetwork() {
       console.log('this is network map in canvas', this.networkMap.nodes);
       console.log('this is network data in canvas', this.dataMap.edgeData);
@@ -307,26 +340,7 @@ export class NetworkCanvasComponent implements OnInit {
    });
   }
   //changing the grid size with changing screen 
-  ngOnDestroy() {
-    // Remove resize event listener
-    window.removeEventListener('resize', this.resizeListener);
-    //do i need to unsubscribe the subscription ? on ngOnDestroy? think about it
-    
-    if (this.searchNodeIdSubscription) {
-      this.searchNodeIdSubscription.unsubscribe();
-    }
   
-    if (this.activeToolNameSubscription) {
-      this.activeToolNameSubscription.unsubscribe();
-    }
-    if (this.canvasSubscription) {
-      this.canvasSubscription.unsubscribe();
-    }
-
-    if (this.ctxSubscription) {
-      this.ctxSubscription.unsubscribe();
-    }
-  }
 
   onResize() {
     this.width = window.innerWidth * 0.82;
@@ -573,6 +587,7 @@ export class NetworkCanvasComponent implements OnInit {
     // Close the tooltip if no node is close enough
     if (!closestNode) {
         this.closeTooltip();
+        this.previouslyHoveredNode = null;
         return;
     }
     // Check if the hovered node is the same as the previous one
@@ -789,15 +804,11 @@ loadData(fileName) {
 //inside the Canvas function 
 callBack(type: string, event) {
   if(['exploration', 'editing'].includes(this.networkCanvasService.activeToolName)) {
-    const callbacks = {
-      [this.nodeLevel]: {
-        [this.networkCanvasService.activeToolName]: {
-          [type]: {}
-        }
-      }
-    }
     const node = this.simulationService.nearestNode(event, this.nodes,this.zoomScale);
-    this.callbacks.emit({param:callbacks, event, node});
+    const callback = this.networkCanvasService.config.callbacks[this.nodeLevel][this.networkCanvasService.activeToolName][type];
+    if (typeof callback === 'function') {
+      callback(event);
+    }
   }
 }
 private tooltipHTML(d: any): string {
@@ -1214,5 +1225,6 @@ setLevel(levelString: string) {
     console.error('Unknown level:', levelString);
   }
 }
+
 
 }

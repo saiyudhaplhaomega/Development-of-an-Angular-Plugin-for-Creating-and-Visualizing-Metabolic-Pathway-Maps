@@ -1,0 +1,97 @@
+{
+    "edges": [
+        {
+            "dataRef": "f7b136ac-728b-4c7c-b6bf-68a3a7a2ca70",
+            "edgeId": 0,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_0",
+            "modelElementRef": "",
+            "source": 0,
+            "target": 1
+        },
+        {
+            "dataRef": "c9b7a18d-7f28-42d5-8819-ab357a4267e9",
+            "edgeId": 1,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_1",
+            "modelElementRef": "",
+            "source": 1,
+            "target": 2
+        },
+        {
+            "dataRef": "4f7a0e51-5ba3-4a38-8444-03615d97b590",
+            "edgeId": 2,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_2",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 3
+        },
+        {
+            "dataRef": "ef689697-6543-4936-8ce9-2775c75fc5db",
+            "edgeId": 3,
+            "edgeType": "undirected",
+            "flux": 0,
+            "label": "edge_3",
+            "modelElementRef": "",
+            "source": 2,
+            "target": 4
+        }
+    ],
+    "level": "module",
+    "nodes": [
+        {
+            "dataRef": "0c59d20d-fd83-4f6c-915c-c2cc02523d39",
+            "isSecondaryMetabolite": false,
+            "label": "node_0",
+            "modelElementRef": "",
+            "nodeId": 0,
+            "nodeType": "circle",
+            "x": 44,
+            "y": 79
+        },
+        {
+            "dataRef": "6dd3c7c9-ee0e-4b3d-a131-f64a3146e0c9",
+            "isSecondaryMetabolite": false,
+            "label": "node_1",
+            "modelElementRef": "",
+            "nodeId": 1,
+            "nodeType": "circle",
+            "x": 41,
+            "y": 62
+        },
+        {
+            "dataRef": "8283d744-ee40-4d5c-a55b-ffa6ca93d283",
+            "isSecondaryMetabolite": false,
+            "label": "node_2",
+            "modelElementRef": "",
+            "nodeId": 2,
+            "nodeType": "circle",
+            "x": 0,
+            "y": 32
+        },
+        {
+            "dataRef": "b27f6ac0-1df1-4b60-b23d-62abd90565ce",
+            "isSecondaryMetabolite": false,
+            "label": "node_3",
+            "modelElementRef": "",
+            "nodeId": 3,
+            "nodeType": "circle",
+            "x": 87,
+            "y": 51
+        },
+        {
+            "dataRef": "ff90fd37-ad73-4c96-82c7-c1fccad0f168",
+            "isSecondaryMetabolite": false,
+            "label": "node_4",
+            "modelElementRef": "",
+            "nodeId": 4,
+            "nodeType": "circle",
+            "x": 98,
+            "y": 36
+        }
+    ]
+}

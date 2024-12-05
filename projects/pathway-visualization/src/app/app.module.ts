@@ -10,6 +10,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { NetworkCanvasComponent } from './components/network-canvas/network-canvas.component';
 import { NetworkDataTableComponent } from './components/network-data-table/network-data-table.component';
 import { NetworkCanvasService } from './services/network-canvas.service';
+import { HirarchyComponent } from './components/hirarchy/hirarchy.component';
 //import { TestChartComponent } from './components/test-chart/test-chart.component';
 //import { CanvasTestComponent } from './components/canvas-test/canvas-test.component';
 
@@ -29,6 +30,7 @@ import { NetworkCanvasService } from './services/network-canvas.service';
     SearchBarComponent,
     NetworkCanvasComponent,
     NetworkDataTableComponent,
+    HirarchyComponent,
 
   //  TestChartComponent,
    // CanvasTestComponent,

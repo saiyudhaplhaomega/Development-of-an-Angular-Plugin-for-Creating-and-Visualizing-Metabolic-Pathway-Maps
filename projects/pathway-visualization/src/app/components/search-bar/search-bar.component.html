@@ -1,28 +1,30 @@
 <!--<p>search-bar works!</p>  -->
 <div class="search-container container">
-   <!--
-    <div class="input-button-container">
-        <input class="search-input" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" placeholder="Search by ID">
-        <button class="search-button" (click)="onSearch()">
+  <div class="row justify-content-left">
+    <div class="col-md-12">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" [placeholder]="searchPlaceholder">
+        <div class="input-group-append">
+          <button *ngIf="searchPlaceholder !='Search From'" class="btn btn-outline-secondary" type="button" (click)="onSearch()">
             <i class="fas fa-search"></i>
-        </button>
-  </div>
---> 
-<div class="row justify-content-left">
-  <div class="col-md-12">
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" [(ngModel)]="searchText" (input)="onSearchTextChanged($any($event).target.value)" [placeholder]="searchPlaceholder">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
-          <i class="fas fa-search"></i>
-        </button>
+          </button>
+        </div>
       </div>
+      <ul class="list-group suggestions-list" *ngIf="searchPlaceholder === 'Search From' && suggestions.length && searchText">
+        <li class="list-group-item" *ngFor="let suggestion of suggestions" (click)="onSuggestionClickSrtPathFrom(suggestion)">
+          {{ suggestion }}
+        </li>
+      </ul>
+      <ul class="list-group suggestions-list" *ngIf="searchPlaceholder === 'Search To' && suggestions.length && searchText">
+        <li class="list-group-item" *ngFor="let suggestion of suggestions" (click)="onSuggestionClickSrtPathTo(suggestion)">
+          {{ suggestion }}
+        </li>
+      </ul>
+      <ul class="list-group suggestions-list" *ngIf="searchPlaceholder !== 'Search From' && searchPlaceholder !== 'Search To' && suggestions.length && searchText">
+        <li class="list-group-item" *ngFor="let suggestion of suggestions" (click)="onSuggestionClick(suggestion)">
+          {{ suggestion }}
+        </li>
+      </ul>
     </div>
-    <ul class="list-group suggestions-list" *ngIf="suggestions.length && searchText">
-      <li class="list-group-item" *ngFor="let suggestion of suggestions" (click)="onSuggestionClick(suggestion)">
-        {{ suggestion }}
-      </li>
-    </ul>
   </div>
 </div>
-  </div>

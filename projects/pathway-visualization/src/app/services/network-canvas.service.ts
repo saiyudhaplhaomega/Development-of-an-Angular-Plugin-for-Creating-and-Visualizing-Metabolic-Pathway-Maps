@@ -13,17 +13,23 @@ export class NetworkCanvasService {
   private _configSubject = new BehaviorSubject<Configuration | undefined>(undefined);
   private searchNodeIdSubject = new BehaviorSubject<number>(-1);
   private activeToolNameSubject = new BehaviorSubject<string>('search');
+  private hirarchySubject = new BehaviorSubject<number>(0);
   private canvasSubject = new BehaviorSubject<HTMLCanvasElement | null>(null);
   private ctxSubject = new BehaviorSubject<CanvasRenderingContext2D | null>(null);
   private simulation: d3.Simulation<any, any>;
+  private shortestPathSubject = new BehaviorSubject<string[]>([]);
+  private hirarchyNodesSubject = new BehaviorSubject<string[]>([]);
 
   public networkData$ = this._dataSubject.asObservable();
   public networkMap$ = this._mapSubject.asObservable();
   public config$ = this._configSubject.asObservable();
   public searchNodeId$ = this.searchNodeIdSubject.asObservable();
   public activeToolName$ = this.activeToolNameSubject.asObservable(); 
+  public hirarchyActiveIndex$ = this.hirarchySubject.asObservable();
   public canvas$ = this.canvasSubject.asObservable();
   public ctx$ = this.ctxSubject.asObservable();
+  public shortestPath$ = this.shortestPathSubject.asObservable();
+  public hirarchyNodes$ = this.hirarchyNodesSubject.asObservable();
 
   constructor() { }
 
@@ -162,6 +168,31 @@ export class NetworkCanvasService {
 
   public set ctx(value: CanvasRenderingContext2D | null) {
     this.ctxSubject.next(value);
+  }
+
+  setShortestPath(path: string[]) {
+    this.shortestPathSubject.next(path);
+  }
+
+  getShortestPath() {
+    return this.shortestPathSubject.getValue();
+  }
+
+  // Getter and Setter for ctx
+  public get hirarchyActiveIndex(): number | null {
+    return this.hirarchySubject.value;
+  }
+
+  public set hirarchyActiveIndex(value: number | null) {
+    this.hirarchySubject.next(value);
+  }
+  setHirarchyNodes(nodes: string[]) {
+    const uniqueNodes = Array.from(new Set(nodes)); // Ensure unique values
+    this.hirarchyNodesSubject.next(uniqueNodes); // Replace existing nodes with unique ones
+  }  
+
+  getHirarchyNodes() {
+    return this.hirarchyNodesSubject.getValue();
   }
 }
 

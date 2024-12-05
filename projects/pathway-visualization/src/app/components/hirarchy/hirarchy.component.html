@@ -1,0 +1,23 @@
+<p>hirarchy works!</p>
+<div class="custom-control custom-switch">
+    <input (click)="orthogonalMode()" type="checkbox" class="custom-control-input" id="orthogonalMode">
+    <label class="custom-control-label" for="orthogonalMode">
+        Orthogonal Mode</label>
+</div>
+
+<div *ngIf="hirarchyActiveIndex !== 0" class="col">
+    <!-- Back button -->
+    <!-- <button class="btn btn-primary mb-3" (click)="revertBackToParent()">Back</button> -->
+
+    <!-- Title for the list -->
+    <h5>Stack</h5>
+    <!-- Display hierarchy nodes in a list -->
+    <ul class="list-group sequence-list">
+        <li *ngFor="let node of hirarchyNodes; let i = index" 
+            (click)="selectHirarchy(i)" 
+            class="list-group-item"
+            [class.active]="hirarchyActiveIndex === i">
+            ({{ i }}){{ node.split('_').pop().replace('.json', '') }}
+        </li>
+    </ul>
+</div>
