@@ -279,9 +279,14 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
      
      if(isInShortestPath && this.activeToolName ==='shortagePath') {
       console.log('this. source', link.source.label , 'this target', link.target.label);
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2.5;
       ctx.setLineDash([]);
       ctx.strokeStyle = 'red'
+     }
+     if(!isInShortestPath){
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([]);
+      ctx.strokeStyle = 'black';
      } 
 
      // Draw orthogonal edges if either source or target is organelle
@@ -997,7 +1002,7 @@ drawDot(ctx: CanvasRenderingContext2D, source: any, target: any) {
   let angle = Math.atan2(endY - startY, endX - startX);
 
   // Draw a dot at the current interpolated position (endX, endY)
-  const dotRadius = 1.5; // You can adjust the size of the dot here
+  const dotRadius = 2.2; // You can adjust the size of the dot here
 
   ctx.save();
   // Set the color of the dot
@@ -1040,6 +1045,7 @@ drawNodes(nodes, gridSpacing) {
     } else if (node.nodeType === 'diamond') {
       nodeColor = 'orange';
     }
+    //console.log('this shortes path in drawNodes', this.shortestPath.includes(node.Level));
     const nodeSize = widthScale(0.9); //node.width if you want to get it from the data
     
     this.ctx.fillStyle = nodeColor;
