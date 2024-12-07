@@ -33,7 +33,8 @@ export class NetworkDataTableComponent implements OnInit {
       this.selectedFile = file;
       this.networkCanvasService.networkData =  this.networkManagerService.getNetworkData();
       const networkMap = this.networkManagerService.getNetworkMap();
-      //console.log('Setting networkMap in NetworkDataTableComponent', networkMap);
+      // console.log('Setting networkMap in NetworkDataTableComponent', this.selectedFile);
+      this.networkCanvasService.setHirarchyNodes(`${this.networkCanvasService.level}/${file}`);
       this.networkCanvasService.networkMap = networkMap;
 
     });

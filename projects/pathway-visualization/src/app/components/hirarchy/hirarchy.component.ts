@@ -45,24 +45,10 @@ export class HirarchyComponent {
   }
   selectHirarchy(index) {
     const parentFileName = this.hirarchyNodes[index];
+    
     this.hirarchyNodes = this.hirarchyNodes.slice(0, index + 1); // removed 
     this.hirarchyActiveIndex = index; // update the current index
     this.networkCanvasService.hirarchyActiveIndex = index;
-
-    // if (parentFileName) this.loadDataByNameAndIndex(parentFileName, index);
-  }
-  loadData(fileName) {
-    // d3.json(`assets/${fileName}`).then((data: any) => {
-    //   this.nodesData = data.nodes;
-    //   this.edgesData = data.edges;
-    //   this.shortestPath = [];
-    //   this.activeToolName = 'search'
-    //   this.drawCanvas(data);  // Call drawGraph with the loaded data
-    //   this.hirarchyActiveIndex = this.hirarchyActiveIndex + 1;
-    //   if (!this.hirarchyNodes.includes(fileName)) this.hirarchyNodes.push(fileName);
-
-    // }).catch((e) => {
-    //   alert(`There is available file named ${fileName}`)
-    // })
+    if(parentFileName) this.networkCanvasService.selectHirarchy = index;
   }
 }

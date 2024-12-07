@@ -183,37 +183,37 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
   }
   
   onSuggestionClickSrtPathTo(suggestion: string) {
-    //console.log('Suggestion clicked for shortage path to in root:', suggestion);
+    console.log('Suggestion clicked for shortage path to in root:', suggestion);
     this.shortagePathToNode = suggestion;
     //console.log('shortagePathToNode in root set to:', this.shortagePathToNode);
     //console.log('shortagePathFromNode in root set to:', this.shortagePathFromNodestore);
     this.suggestionsPaths = [];  // Optionally clear the suggestions list
-    //this.shortestPath = this.findShortestPath(this.shortagePathFromNode, this.shortagePathToNode);
     this.shortestPath = this.findShortestPath(this.shortagePathFromNode, this.shortagePathToNode);
   }
   
   findShortestPath(sourceNodeId: string, targetNodeId: string): any[] {
-    //console.log('Finding shortest path in findShortestPath in root from ', sourceNodeId, 'to', targetNodeId);
+    // console.log('Finding shortest path in findShortestPath in root from ', sourceNodeId, 'to', targetNodeId);
     const sourceNode = this.nodesData.find(node => node.label === sourceNodeId);
     const targetNode = this.nodesData.find(node => node.label === targetNodeId);
+    console.log('sourceNode:', this.nodesData.length);
 
     if (!sourceNode || !targetNode) {
       console.error("Source or target node not found!");
       return [];
     }
+    
     // Initialize distances to all nodes as infinity, except the source node as 0
     const distances: { [key: string]: number } = {};
     this.nodesData.forEach(node => {
       distances[node.label] = node.label === sourceNodeId ? 0 : Infinity;
     });
-
+    
     // Initialize previous nodes
     const previous: { [key: string]: string | null } = {};
-
+   
     // Queue to keep track of nodes to visit
     const queue: string[] = [];
     queue.push(sourceNodeId);
-
     while (queue.length > 0) {
       // Extract node with the minimum distance from the queue
       const currentNodeId = queue.shift()!;
@@ -223,8 +223,16 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
 
       // Explore neighboring nodes
       this.edgesData.forEach(edge => {
-        if (edge.source === currentNodeId) {
-          const neighborId = edge.target;
+        const sourceNode = typeof edge.source === 'string'
+          ? this.nodesData.find(node => node.nodeId === edge.source) // Resolve string to Node
+          : edge.source;
+
+        const targetNode = typeof edge.target === 'string'
+          ? this.nodesData.find(node => node.nodeId === edge.target)
+          : edge.target;
+
+        if (sourceNode.label === currentNodeId) {
+          const neighborId = targetNode.label;
           const distanceToNeighbor = distances[currentNodeId] + 1; // Assuming unweighted edges
 
           if (distanceToNeighbor < distances[neighborId]) {
@@ -232,8 +240,8 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
             previous[neighborId] = currentNodeId;
             queue.push(neighborId);
           }
-        } else if (edge.target === currentNodeId) {
-          const neighborId = edge.source;
+        } else if (targetNode.label === currentNodeId) {
+          const neighborId = sourceNode.label;
           const distanceToNeighbor = distances[currentNodeId] + 1; // Assuming unweighted edges
 
           if (distanceToNeighbor < distances[neighborId]) {
@@ -244,15 +252,17 @@ export class NetworkVisualizationRootComponent implements OnInit, OnDestroy {
         }
       });
     }
-
+    
     // Reconstruct shortest path from source to target
     const shortestPath: string[] = [];
     let currentNode = targetNodeId;
+    
     while (currentNode !== sourceNodeId) {
       shortestPath.unshift(currentNode);
       currentNode = previous[currentNode]!;
     }
     shortestPath.unshift(sourceNodeId);
+    console.log('Shortest path:', shortestPath);
     return shortestPath;
   }
 

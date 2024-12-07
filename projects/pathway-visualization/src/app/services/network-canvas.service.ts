@@ -12,8 +12,9 @@ export class NetworkCanvasService {
   private _mapSubject = new BehaviorSubject<NetworkMap | undefined>(undefined);
   private _configSubject = new BehaviorSubject<Configuration | undefined>(undefined);
   private searchNodeIdSubject = new BehaviorSubject<number>(-1);
-  private activeToolNameSubject = new BehaviorSubject<string>('search');
   private hirarchySubject = new BehaviorSubject<number>(0);
+  private selectHirarchySubject = new BehaviorSubject<number>(0);
+  private activeToolNameSubject = new BehaviorSubject<string>('search');
   private canvasSubject = new BehaviorSubject<HTMLCanvasElement | null>(null);
   private ctxSubject = new BehaviorSubject<CanvasRenderingContext2D | null>(null);
   private simulation: d3.Simulation<any, any>;
@@ -24,12 +25,15 @@ export class NetworkCanvasService {
   public networkMap$ = this._mapSubject.asObservable();
   public config$ = this._configSubject.asObservable();
   public searchNodeId$ = this.searchNodeIdSubject.asObservable();
-  public activeToolName$ = this.activeToolNameSubject.asObservable(); 
   public hirarchyActiveIndex$ = this.hirarchySubject.asObservable();
+  public selectHirarchy$ = this.selectHirarchySubject.asObservable();
+  public activeToolName$ = this.activeToolNameSubject.asObservable(); 
   public canvas$ = this.canvasSubject.asObservable();
   public ctx$ = this.ctxSubject.asObservable();
+  
   public shortestPath$ = this.shortestPathSubject.asObservable();
   public hirarchyNodes$ = this.hirarchyNodesSubject.asObservable();
+
 
   constructor() { }
 
@@ -150,6 +154,7 @@ export class NetworkCanvasService {
   }
   
   public set activeToolName(value: string) {
+    console.log('active tools service');
     this.activeToolNameSubject.next(value);
   }
   // Getter and Setter for canvas
@@ -170,6 +175,23 @@ export class NetworkCanvasService {
     this.ctxSubject.next(value);
   }
 
+  // Getter and Setter for hirarchy
+  public get hirarchyActiveIndex(): number | null {
+    return this.hirarchySubject.value;
+  }
+
+  public set hirarchyActiveIndex(value: number | null) {
+    this.hirarchySubject.next(value);
+  }
+
+  public get selectHirarchy(): number | null {
+    return this.selectHirarchySubject.value;
+  }
+
+  public set selectHirarchy(value: number | null) {
+    this.selectHirarchySubject.next(value);
+  }
+
   setShortestPath(path: string[]) {
     this.shortestPathSubject.next(path);
   }
@@ -178,19 +200,35 @@ export class NetworkCanvasService {
     return this.shortestPathSubject.getValue();
   }
 
-  // Getter and Setter for ctx
-  public get hirarchyActiveIndex(): number | null {
-    return this.hirarchySubject.value;
-  }
+  setHirarchyNodes(node: string) {
+    let currentNodes = this.getHirarchyNodes(); // Get the existing hierarchy nodes
+  
+    const label = node.split('/').shift(); // Extract the first part of the new node string
 
-  public set hirarchyActiveIndex(value: number | null) {
-    this.hirarchySubject.next(value);
+    let updatedNodes;
+    if (node === 'reset') {
+      updatedNodes = [currentNodes[0]]; // Reset to the first node
+    } else {
+      // Search for a matching label in currentNodes and replace it
+      const existingIndex = currentNodes.findIndex(currentNode => 
+        currentNode.split('/').shift() === label
+      );
+  
+      if (existingIndex !== -1) {
+        // Replace the matching node
+        currentNodes[existingIndex] = node;
+      } else {
+        // Add the new node if no match is found
+        currentNodes.push(node);
+      }
+  
+      // Use Set to ensure uniqueness
+      updatedNodes = Array.from(new Set(currentNodes));
+    }
+  
+    this.hirarchyNodesSubject.next(updatedNodes); // Update the hierarchy nodes
   }
-  setHirarchyNodes(nodes: string[]) {
-    const uniqueNodes = Array.from(new Set(nodes)); // Ensure unique values
-    this.hirarchyNodesSubject.next(uniqueNodes); // Replace existing nodes with unique ones
-  }  
-
+  
   getHirarchyNodes() {
     return this.hirarchyNodesSubject.getValue();
   }

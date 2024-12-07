@@ -11,17 +11,17 @@ import { mapTo, mergeMap } from 'rxjs/operators';
 
 //Molecular Callbacks
 const MolecularExplorationCallback : Callbacks= {
-  hover: (event: NetworkInteractionEvent) => {console.log('this is hover event', event);} ,
-  click: (event: NetworkInteractionEvent) => {console.log('this is click event', event);} ,
-  doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick event', event);} ,
-  rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick event', event);} ,
+  hover: (event: NetworkInteractionEvent) => {console.log('this is hover on Molecular Explo level event', event);} ,
+  click: (event: NetworkInteractionEvent) => {console.log('this is click on Molecular Explo event', event);} ,
+  doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick on Molecular Explo event', event);} ,
+  rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick on Molecular Explo event', event);} ,
   }
 
   const MolecularEditingCallback : Callbacks= {
-    hover: (event: NetworkInteractionEvent) => {console.log('this is hover event', event);} ,
-    click: (event: NetworkInteractionEvent) => {console.log('this is click event', event);} ,
-    doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick event', event);} ,
-    rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick event', event);} ,
+    hover: (event: NetworkInteractionEvent) => {console.log('this is hover on Molecular Edit event', event);} ,
+    click: (event: NetworkInteractionEvent) => {console.log('this is click on Molecular Edit event', event);} ,
+    doubleclick: (event: NetworkInteractionEvent) => {console.log('this is on Molecular Edit doubleclick event', event);} ,
+    rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick on Molecular Edit event', event);} ,
     }
 
 const molecularModeCallback :ModeCallbacks = {
@@ -31,17 +31,17 @@ const molecularModeCallback :ModeCallbacks = {
 
 //Modular Callbacks
 const modularExplorationCallback : Callbacks= {
-  hover: (event: NetworkInteractionEvent) => {console.log('this is hover event', event);} ,
-  click: (event: NetworkInteractionEvent) => {console.log('this is click event', event);} ,
-  doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick event', event);} ,
-  rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick event', event);} ,
+  hover: (event: NetworkInteractionEvent) => {console.log('this is hover on Modular Explo event', event);} ,
+  click: (event: NetworkInteractionEvent) => {console.log('this is click on Modular Explo event', event);} ,
+  doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick on Modular Explo event', event);} ,
+  rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick on Modular Explo event', event);} ,
   }
 
   const modularEditingCallback : Callbacks= {
-    hover: (event: NetworkInteractionEvent) => {console.log('this is hover event', event);} ,
-    click: (event: NetworkInteractionEvent) => {console.log('this is click event', event);} ,
-    doubleclick: (event: NetworkInteractionEvent) => {console.log('this is doubleclick event', event);} ,
-    rightclick: (event: NetworkInteractionEvent) => {console.log('this is rightclick event', event);} ,
+    hover: (event: NetworkInteractionEvent) => {console.log('this is hover on Modular Edit event', event);} ,
+    click: (event: NetworkInteractionEvent) => {console.log('this is click on Modular Editevent', event);} ,
+    doubleclick: (event: NetworkInteractionEvent) => {console.log('this is on Modular Edit doubleclick event', event);} ,
+    rightclick: (event: NetworkInteractionEvent) => {console.log('this is  on Modular Edit rightclick event', event);} ,
     }
 
 

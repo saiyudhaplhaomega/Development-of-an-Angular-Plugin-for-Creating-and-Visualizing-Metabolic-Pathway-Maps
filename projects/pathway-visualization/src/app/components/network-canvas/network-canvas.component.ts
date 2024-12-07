@@ -78,9 +78,17 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
     this.networkCanvasService.activeToolName$.subscribe(toolName => {
       this.activeToolName = toolName;
       if (this.activeToolName === 'shortagePath' && this.simulation) {
-        //console.log('this is shortage path', this.shortestPath);
         this.simulation.alpha(0.3).restart();
       }
+      if(this.activeToolName === 'orthogonalMode' && this.simulation) {
+        this.orthogonalEnabled =  !this.orthogonalEnabled;
+      } else {
+        this.orthogonalEnabled = false;
+      }
+    });
+
+    this.networkCanvasService.selectHirarchy$.subscribe(index => {
+      this.selectHirarchy(index);
     });
   }
   
@@ -134,15 +142,15 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
         //console.log('this is network map in canvas', networkMap);
         this.networkMap = networkMap;
         if (this.networkMap) {
+          
           this.setLevel(this.networkMap.level);
-          this.hirarchyNodes.push(this.networkMap.level);
+          
           this.drawCanvas(this.networkMap);
           this.nodesData = this.networkMap.nodes;
           this.edgesData = this.networkMap.edges;
         }
       });
       
-  //console.log('this is network map level in canvas', this.hirarchyNodes);
     
       //canvas
     
@@ -172,7 +180,10 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
     this.resizeListener = () => this.onResize();
     window.addEventListener('resize', this.resizeListener);
 
-    this.shortestPathSubscription = this.networkCanvasService.shortestPath$.subscribe(path => {
+    this.shortestPathSubscription = this.networkCanvasService.shortestPath$
+      .pipe(distinctUntilChanged())
+      .subscribe(path => {
+        
       this.shortestPath = path;
       //this.updateCanvas();
     });
@@ -251,6 +262,7 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
         endY = Math.round(link.target.y / gridSpacing) * gridSpacing * this.zoomScale;
      }
      // Determine if the link is part of the shortest path
+     //console.log('this. source', link.source.label , 'this target', link.target.label);
      const isInShortestPath = this.shortestPath.includes(link.source.label) && this.shortestPath.includes(link.target.label);
 
      // Set line color to red if it's part of the shortest path, otherwise use the default color
@@ -264,7 +276,9 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
      }
      ctx.lineWidth = link.width;
      ctx.strokeStyle = colorScale(link.color);
+     
      if(isInShortestPath && this.activeToolName ==='shortagePath') {
+      console.log('this. source', link.source.label , 'this target', link.target.label);
       ctx.lineWidth = 1.5;
       ctx.setLineDash([]);
       ctx.strokeStyle = 'red'
@@ -568,7 +582,7 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
     d3.select(this.canvas)
       .on('dblclick', this.doubleClicked.bind(this))
       .on('contextmenu', (event)=>{
-        this.callBack('rightClick', event);
+        this.callBack('rightclick', event);
       })
       .on('mousemove', this.onMouseMove.bind(this))
       .on('mouseout', this.onMouseOut.bind(this));
@@ -745,7 +759,7 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
 
 //function inside the drawCanvas
 doubleClicked(event: MouseEvent) {
-  this.callBack('doubleClick', event);
+  this.callBack('doubleclick', event);
   this.closeTooltip();
   if (['textBoxMode', 'exploration', 'editing'].includes(this.networkCanvasService.activeToolName)) return false;
   this.dragNode = true;
@@ -770,12 +784,40 @@ doubleClicked(event: MouseEvent) {
   if (clickedNode) {
     if (this.hierarchy && this.hierarchy[this.hirarchyActiveIndex + 1]) {
       this.nodeLevel = this.hierarchy[this.hirarchyActiveIndex + 1].toLocaleLowerCase();
-      const fileName = `${this.nodeLevel}/network_n_${clickedNode.nodeId}_l_${this.nodeLevel}.json`
-      
-      
+      /**
+       * 
+       {
+            "dataRef": "7cd5085e-c1d3-4060-8d33-90657f5d1fa3",
+            "isSecondaryMetabolite": false,
+            "label": "node_1",
+            "modelElementRef": "",
+            "nodeId": 1,
+            "nodeType": "circle",
+            "x": 517.573928211363,
+            "y": 438.11883561416687,
+            "color": 0,
+            "size": 0,
+            "index": 1,
+            "vy": 0,
+            "vx": 0,
+            "fx": 517.573928211363,
+            "fy": 438.11883561416687
+        }
+            
+       */
+      const fileName = `${this.nodeLevel}/${clickedNode.dataRef}network_n_${clickedNode.nodeId}_e_4_l_${this.nodeLevel}.json`
+     // `1e4a3b3e-3095-414b-80bc-173a4bfdcdeanetwork_n_15_e_4_l_module_15`
+     // 15 will be unique 
+     // the file unique hash shuld store 1e4a3b3e-3095-414b-80bc-173a4bfdcdea
+      //http://localhost:4200/assets/module/7cd5085e-c1d3-4060-8d33-90657f5d1fa3network_n_1_l_module.json 
+      //5efd0be6-1416-48fb-85f4-92c7deece4f5
+      //8ba396ca-1110-400b-8f5b-32a8690eedc5
       ///////////////////////////////////////////////////////////////
       //this.loadData(fileName);///////////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////////
+      //Current Name module/network_n_42_l_module.json
+      //this.loadData('module/1e4a3b3e-3095-414b-80bc-173a4bfdcdeanetwork_n_5_e_4_l_module.json')
+      this.loadData(fileName);
     } else {
       alert('File not found!')
     }
@@ -786,21 +828,28 @@ doubleClicked(event: MouseEvent) {
 ////////////////////////////////////////
 ////////////////////////////////////////
 //bring data into here 
-/*
+
 loadData(fileName) {
   d3.json(`assets/${fileName}`).then((data: any) => {
+    
     this.nodesData = data.nodes;
     this.edgesData = data.edges;
     this.shortestPath = [];
     this.activeToolName = 'search'
+    const hirarchyNodes = this.networkCanvasService.getHirarchyNodes();
     this.drawCanvas(data);  // Call drawGraph with the loaded data
+    if (!hirarchyNodes.includes(fileName)) {
+      this.networkCanvasService.setHirarchyNodes(fileName);
+    }
     this.hirarchyActiveIndex = this.hirarchyActiveIndex + 1;
-    if (!this.hirarchyNodes.includes(fileName)) this.hirarchyNodes.push(fileName);
+    this.networkCanvasService.hirarchyActiveIndex = this.hirarchyActiveIndex;
+    //const networkMap = this.networkManagerService.getNetworkMap();
+    this.networkCanvasService.networkMap = data;
 
   }).catch((e) => {
     alert(`There is available file named ${fileName}`)
   })
-} */
+} 
 //inside the Canvas function 
 callBack(type: string, event) {
   if(['exploration', 'editing'].includes(this.networkCanvasService.activeToolName)) {
@@ -810,6 +859,41 @@ callBack(type: string, event) {
       callback(event);
     }
   }
+}
+revertBackToParent(index) {
+  if (this.hirarchyActiveIndex > 0) {
+
+    this.hirarchyActiveIndex = this.hirarchyActiveIndex - 1;
+    const parentNode = this.hirarchyNodes[this.hirarchyActiveIndex];
+
+    // Remove all nodes after the parent node in the hierarchy
+    this.hirarchyNodes.splice(this.hirarchyActiveIndex + 1);
+
+    if (parentNode) this.loadData(parentNode);
+  }
+}
+selectHirarchy(index) {
+  const hirarchyNodes = this.networkCanvasService.getHirarchyNodes();
+  const parentFileName = hirarchyNodes[index];
+  this.hirarchyActiveIndex = index;
+  if (parentFileName) this.loadDataByNameAndIndex(parentFileName, index);
+}
+loadDataByNameAndIndex(fileName, index) {
+  d3.json(`assets/${fileName}`).then((data: any) => {
+    this.nodesData = data.nodes;
+    this.edgesData = data.edges;
+    this.shortestPath = [];
+    this.activeToolName = 'search'
+    this.nodeLevel = this.hierarchy[index].toLocaleLowerCase();
+    this.drawCanvas(data);
+    const hirarchyNodes = this.networkCanvasService.getHirarchyNodes();
+    if (!hirarchyNodes.includes(fileName)) {
+      this.networkCanvasService.setHirarchyNodes(fileName);
+    }
+
+  }).catch((e) => {
+    alert(`There is available file named ${fileName}`)
+  })
 }
 private tooltipHTML(d: any): string {
   return `
