@@ -810,8 +810,11 @@ doubleClicked(event: MouseEvent) {
         }
             
        */
-      const fileName = `${this.nodeLevel}/${clickedNode.dataRef}network_n_${clickedNode.nodeId}_e_4_l_${this.nodeLevel}.json`
-     // `1e4a3b3e-3095-414b-80bc-173a4bfdcdeanetwork_n_15_e_4_l_module_15`
+      //const fileName = `${this.nodeLevel}/${clickedNode.dataRef}network_n_${clickedNode.nodeId}_e_4_l_${this.nodeLevel}.json`
+      const fileName = `${this.nodeLevel}/${clickedNode.dataRef}network_n_0_e_0_l_${this.nodeLevel}.json`
+
+     //const fileName = `${this.nodeLevel}/${clickedNode.dataRef}network_l_${this.nodeLevel}.json`
+      // `1e4a3b3e-3095-414b-80bc-173a4bfdcdeanetwork_n_15_e_4_l_module_15`
      // 15 will be unique 
      // the file unique hash shuld store 1e4a3b3e-3095-414b-80bc-173a4bfdcdea
       //http://localhost:4200/assets/module/7cd5085e-c1d3-4060-8d33-90657f5d1fa3network_n_1_l_module.json 

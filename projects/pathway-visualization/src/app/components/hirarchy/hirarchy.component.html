@@ -16,7 +16,9 @@
             (click)="selectHirarchy(i)" 
             class="list-group-item"
             [class.active]="hirarchyActiveIndex === i">
-            ({{ i }}){{ node.split('_').pop().replace('.json', '') }}
+            
+            {{ node.split('_').pop().replace('.json', '') }} - 
+            ({{ extractDynamicValue(node) }})
         </li>
     </ul>
 </div>

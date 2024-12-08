@@ -49,6 +49,20 @@ export class HirarchyComponent {
     this.hirarchyNodes = this.hirarchyNodes.slice(0, index + 1); // removed 
     this.hirarchyActiveIndex = index; // update the current index
     this.networkCanvasService.hirarchyActiveIndex = index;
-    if(parentFileName) this.networkCanvasService.selectHirarchy = index;
+    
+    
+    if(index+1 < this.hirarchyNodes.length) {
+      this.hirarchyNodes = this.hirarchyNodes.slice(0, index + 1); 
+      this.networkCanvasService.setHirarchyNodes('reset', index);
+    }
+    if(parentFileName) {
+      this.networkCanvasService.selectHirarchy = index;
+    }
+  }
+  extractDynamicValue(node: string): string | null {
+    if (typeof node !== 'string') return null;
+    const match = node.match(/\/([^/]+?)network_n_/);
+    const dataRef = match ? match[1] : null;
+    return dataRef;
   }
 }

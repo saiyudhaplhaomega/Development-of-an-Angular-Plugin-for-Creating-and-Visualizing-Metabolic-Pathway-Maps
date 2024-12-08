@@ -200,33 +200,26 @@ export class NetworkCanvasService {
     return this.shortestPathSubject.getValue();
   }
 
-  setHirarchyNodes(node: string) {
-    let currentNodes = this.getHirarchyNodes(); // Get the existing hierarchy nodes
-  
-    const label = node.split('/').shift(); // Extract the first part of the new node string
-
+  setHirarchyNodes(node: string, index?: number): void {
+    const currentNodes = this.getHirarchyNodes(); // Existing hierarchy nodes
+    const label = node.split('/')[0]; // Extract the first part of the new node string
     let updatedNodes;
-    if (node === 'reset') {
-      updatedNodes = [currentNodes[0]]; // Reset to the first node
+  
+    if (node === 'reset' && index !== undefined && index + 1 < currentNodes.length) {
+      updatedNodes = Array.from(new Set(currentNodes.slice(0, index + 1)));
     } else {
-      // Search for a matching label in currentNodes and replace it
-      const existingIndex = currentNodes.findIndex(currentNode => 
-        currentNode.split('/').shift() === label
-      );
+      const existingIndex = currentNodes.findIndex(currentNode => currentNode.startsWith(label));
   
       if (existingIndex !== -1) {
-        // Replace the matching node
-        currentNodes[existingIndex] = node;
+        currentNodes[existingIndex] = node; // Replace matching node
       } else {
-        // Add the new node if no match is found
-        currentNodes.push(node);
+        currentNodes.push(node); // Add new node
       }
   
-      // Use Set to ensure uniqueness
-      updatedNodes = Array.from(new Set(currentNodes));
+      updatedNodes = Array.from(new Set(currentNodes)); // Ensure uniqueness
     }
   
-    this.hirarchyNodesSubject.next(updatedNodes); // Update the hierarchy nodes
+    this.hirarchyNodesSubject.next(updatedNodes); // Update hierarchy nodes
   }
   
   getHirarchyNodes() {
