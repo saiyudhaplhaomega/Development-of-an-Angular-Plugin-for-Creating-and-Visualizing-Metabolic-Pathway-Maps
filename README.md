@@ -42,21 +42,24 @@ Existing visualization tools are often complex, slow, or difficult to integrate.
 * **Deployment:** Docker-compatible
 * **Comparison Tools:** Ngx-Graph, GraphViz, Escher
 
-**Images** (placed alongside README in the repo):
+---
 
-* `image1.png` — architecture / flow overview.
-* `image2.png` — UI mockup (search bar, toolbar, orthogonal mode).
-* `image3.png` — event/callback flowchart for node interactions.
+## 🧩 Visual Overview
 
-Insert images in markdown like:
+<div align="center">
+  <img src="image1.png" alt="Architecture Overview" width="800"/>
+  <p><em>Figure 1. Architecture overview of the plugin.</em></p>
+</div>
 
-```md
-![Architecture overview](image1.png)
-![UI mockup](image2.png)
-![Callback flowchart](image3.png)
-```
+<div align="center">
+  <img src="image2.png" alt="UI Mockup" width="800"/>
+  <p><em>Figure 2. User Interface mockup showing search bar, toolbar, and visualization panel.</em></p>
+</div>
 
-(Place the three PNG files in the same folder as this README so they render on GitHub.)
+<div align="center">
+  <img src="image3.png" alt="Callback Flowchart" width="800"/>
+  <p><em>Figure 3. Flow of node interaction events and callback structure.</em></p>
+</div>
 
 ---
 
