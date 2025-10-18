@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AngularPSM
 
 ## Folder structure
@@ -503,3 +504,6 @@ Add a 'tsconfig.doc.json' file in your workspace root containing "include" and "
 ```
 
 Open a terminal, navigate to workspace root and execute `npx compodoc -p tsconfig.doc.json` or register a script in your package.json and run it. The documentation files are rendered into the "documentation" directory in the workspace root. Open "overview.html" in your browser to view the documentation. For mdoa-websites, "documentation" is on .gitignore.
+=======
+# Development-of-an-Angular-Plugin-for-Creating-and-Visualizing-Metabolic-Pathway-Maps
+>>>>>>> f9cbad58e120a21aa8b677aa3fa32467e572a6f4

@@ -1,20 +1,19 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Node modules
+/node_modules/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Angular build output
+/dist/
+/.out-tsc/
+/.tmp/
+/.bazel-out/
+/.angular/cache/
 
-# Node
-/node_modules
+# Logs
 npm-debug.log
 yarn-error.log
 
-# Bun
-bun.lockb
-
-# IDEs and editors
+# IDEs / editors
+.vscode/
 .idea/
 .project
 .classpath
@@ -23,37 +22,33 @@ bun.lockb
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
-**/.vscode/
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-.dockerrc
-metadata-tool.code-workspace
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
 # System files
 .DS_Store
 Thumbs.db
 
+# Lock files
 package-lock.json
 pnpm-lock.yaml
-.aider*
-projects/metadata-tool/${SSH_ENV}
+bun.lockb
 
-# test data
+# Docker / Workspace
+.dockerrc
+metadata-tool.code-workspace
+
+# Test data
 projects/metadata-tool/test-data
 
-# documentation
+# Documentation
 documentation
+
+# Tailwind / Sass cache
+.sass-cache/
+
+# Coverage reports
+/coverage/
+
+# Miscellaneous
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings/
