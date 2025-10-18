@@ -499,9 +499,10 @@ export class NetworkCanvasComponent implements OnInit, OnDestroy {
       .range([80, 60, 30, 5, 1]); // Output values for the corresponding ranges
     // Clear canvas
     this.ctx.clearRect(0, 0, this.width, this.height);
+    //console.log('this is network node length', this.networkMap.nodes.length);
     this.simulation = d3.forceSimulation()
-      .force("link", d3.forceLink().id((d: any) => d.nodeId).distance(distanceScale(this.nodesData.length))) // Keep the link force
-      .force("charge", d3.forceManyBody().strength(-distanceScale(this.nodesData.length))) // Minimize charge force
+      .force("link", d3.forceLink().id((d: any) => d.nodeId).distance(distanceScale(this.networkMap.nodes.length))) // Keep the link force
+      .force("charge", d3.forceManyBody().strength(-distanceScale(this.networkMap.nodes.length))) // Minimize charge force
       .force("x", d3.forceX(this.width / 2).strength(0.01)) // Minimize x force
       .force("y", d3.forceY(this.height / 2).strength(0.01)) // Minimize y force
       .force("center", d3.forceCenter(this.width / 2, this.height / 2))//.strength(0.01)); // Minimize center force
