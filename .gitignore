@@ -52,3 +52,5 @@ documentation
 /libpeerconnection.log
 testem.log
 /typings/
+.angular/
+.angular/
